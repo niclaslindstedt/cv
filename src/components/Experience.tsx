@@ -9,7 +9,10 @@ export function Experience({ experience }: Props) {
     <Section id="experience" title="Experience">
       <ol className="timeline">
         {experience.map((item) => (
-          <li key={`${item.company}-${item.startDate}`} className="timeline-item">
+          <li
+            key={`${item.company}-${item.startDate}`}
+            className="timeline-item"
+          >
             <div className="timeline-meta">
               <span>{formatRange(item.startDate, item.endDate)}</span>
               {item.engagement && (

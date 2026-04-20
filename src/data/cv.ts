@@ -114,7 +114,8 @@ export const cv: CV = {
     {
       role: "IT Architect",
       company: "BookBeat AB",
-      companyDescription: "Audiobook streaming service with over 1 million users.",
+      companyDescription:
+        "Audiobook streaming service with over 1 million users.",
       startDate: "2024-04",
       endDate: null,
     },
@@ -136,7 +137,8 @@ export const cv: CV = {
     {
       role: "CTO & Co-Founder",
       company: "Symptoms Europe AB",
-      companyDescription: "eHealth startup focused on patient-doctor communication.",
+      companyDescription:
+        "eHealth startup focused on patient-doctor communication.",
       startDate: "2015-11",
       endDate: "2020-01",
       engagement: "half-time",
