@@ -101,6 +101,14 @@ export const cv: CV = {
       stack: ["Rust"],
       repo: "https://github.com/niclaslindstedt/ztf",
     },
+    {
+      name: "oss-spec",
+      tagline: "Keeps open source projects aligned with a shared spec.",
+      description:
+        "Bootstraps and validates open source repos against OSS_SPEC.md. `init` interprets a freeform prompt via zag into a structured manifest and writes a complete repo to disk — LICENSE, README, AGENTS.md with agent symlinks, CI/release/pages workflows, docs, examples, website skeleton, language manifest, and a starter `.claude/` skill — then creates the GitHub remote. `validate` checks any local or remote repo against the spec with optional auto-fix and one-issue-per-violation filing on GitHub. The generated repos ship the §12 CLI discoverability contract so coding agents can self-serve.",
+      stack: ["Rust"],
+      repo: "https://github.com/niclaslindstedt/oss-spec",
+    },
   ],
   experience: [
     {
@@ -181,6 +189,8 @@ export const cv: CV = {
     ],
     ai: [
       "Spec-driven development",
+      "AI-driven project bootstrapping",
+      "Spec-compliance validation",
       "Multi-agent orchestration",
       "Multi-provider LLM integration",
       "Agent sandboxing & isolation",
