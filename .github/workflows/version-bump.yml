@@ -1,0 +1,29 @@
+name: Version Bump
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump type (auto | patch | minor | major)'
+        required: false
+        default: 'auto'
+        type: choice
+        options: ['auto', 'patch', 'minor', 'major']
+
+permissions:
+  contents: read
+
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
+      - name: Tag and push
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: bash scripts/release.sh "$BUMP"

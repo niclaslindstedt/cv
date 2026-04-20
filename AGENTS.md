@@ -9,7 +9,7 @@ files (e.g. `CLAUDE.md`) are symlinks pointing here (see
 
 `niclaslindstedt.se` — a personal site / CV built with Vite, React 18,
 and TypeScript. The built output is a static site deployed to GitHub
-Pages via `.github/workflows/deploy.yml`. There is no backend, no tests
+Pages via `.github/workflows/pages.yml`. There is no backend, no tests
 yet, and no CLI.
 
 ## Build and test commands
@@ -73,6 +73,10 @@ and `utils/date.ts`. Nothing in `data/` or `utils/` imports from
   packages first, then relative, separated by a blank line.
 - **Commit style**: conventional commits (`feat:`, `fix:`, `chore:`, …)
   per `OSS_SPEC.md` §8.1.
+- **PR conventions**: PR titles must follow Conventional Commits format
+  because the title becomes the squash-merge commit on `main`. Individual
+  in-branch commits are not changelog-relevant. Squash-merge is the only
+  permitted merge strategy.
 
 ## Documentation sync points
 
@@ -84,7 +88,7 @@ When you change X, update Y:
 | `Makefile` targets      | `README.md` Scripts section, `.github/workflows/ci.yml` |
 | `src/` top-level layout | `README.md` Structure section                           |
 | `src/data/cv.ts` types  | Any component consuming the changed field               |
-| Node version in CI      | `.github/workflows/deploy.yml` (keep them in sync)      |
+| Node version in CI      | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)  |
 
 ## Test conventions
 
@@ -111,11 +115,20 @@ Invoke `maintenance` when you've landed a batch of changes and want a
 single pass that brings drift-prone artifacts back in sync. Invoke a
 specific `update-*` skill when you know which artifact is stale.
 
+## Website staleness policy
+
+This project does not yet ship a dedicated `website/` directory with a
+source-extraction script (see `OSS_SPEC.md` §11.2). The deployed site
+**is** the built React app. When a `website/` scaffold is added, it must
+be regenerated whenever source-derived content changes; the `pages.yml`
+workflow must chain the extraction step before the build step so that
+the deployed site always reflects the latest released version.
+
 ## OSS_SPEC.md conformance
 
-`OSS_SPEC.md` lives at the repo root for reference. The project does
-**not** yet claim full conformance — it follows the spec's formatting /
-linting / CI layer but omits CHANGELOG automation, governance docs, the
-website/docs split, pre-commit hooks, and several other requirements.
-Expand conformance incrementally; don't wholesale-apply the spec in a
-single sweep.
+`OSS_SPEC.md` lives at the repo root for reference. The project
+**intentionally uses a proprietary license** (all rights reserved) rather
+than an SPDX-identified open-source license — it is a personal site, not
+an OSS library. This is a known deviation from §2 of the spec. All other
+spec requirements are followed to the extent applicable for a frontend
+static site with no CLI and no LLM calls.
