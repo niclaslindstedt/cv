@@ -105,7 +105,7 @@ export const cv: CV = {
       name: "oss-spec",
       tagline: "Keeps open source projects aligned with a shared spec.",
       description:
-        "Bootstraps and validates open source repos against OSS_SPEC.md. `init` interprets a freeform prompt via zag into a structured manifest and writes a complete repo to disk — LICENSE, README, AGENTS.md with agent symlinks, CI/release/pages workflows, docs, examples, website skeleton, language manifest, and a starter `.claude/` skill — then creates the GitHub remote. `validate` checks any local or remote repo against the spec with optional auto-fix and one-issue-per-violation filing on GitHub. The generated repos ship the §12 CLI discoverability contract so coding agents can self-serve.",
+        "Bootstraps new open source repos against a shared spec, then keeps them aligned over time. A freeform prompt is interpreted into a structured manifest that writes a complete repo to disk — license, docs, CI, release pipelines, and agent conventions — and creates the GitHub remote. Validating an existing repo reports and auto-fixes conformance gaps, or files one GitHub issue per violation.",
       stack: ["Rust"],
       repo: "https://github.com/niclaslindstedt/oss-spec",
     },
