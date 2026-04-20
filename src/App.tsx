@@ -18,7 +18,9 @@ export function App() {
         <Skills skills={cv.skills} />
       </main>
       <footer className="footer container">
-        <span>© {new Date().getFullYear()} {cv.name}</span>
+        <span>
+          © {new Date().getFullYear()} {cv.name}
+        </span>
       </footer>
     </div>
   );

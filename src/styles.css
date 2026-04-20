@@ -8,8 +8,15 @@
   --accent-soft: rgba(122, 183, 255, 0.12);
   --radius: 10px;
   --max-width: 860px;
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   color-scheme: dark;
 }
 
