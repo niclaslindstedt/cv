@@ -17,48 +17,50 @@ yet, and no CLI.
 Prefer `make` targets over raw `npm run` commands so local and CI stay
 in sync:
 
-| Command          | What it does                            |
-| ---------------- | --------------------------------------- |
-| `make install`   | `npm ci`                                |
-| `make dev`       | Start Vite dev server                   |
-| `make build`     | Type-check and produce production build |
-| `make preview`   | Preview the production build            |
-| `make lint`      | ESLint + TypeScript type-check          |
-| `make typecheck` | `tsc -b --noEmit` only                  |
-| `make fmt`       | Prettier rewrite in place               |
-| `make fmt-check` | Prettier check without writing          |
-| `make test`      | Placeholder — no tests yet              |
-| `make clean`     | Remove `dist/` and Vite cache           |
+| Command          | What it does                                                           |
+| ---------------- | ---------------------------------------------------------------------- |
+| `make install`   | `npm ci`                                                               |
+| `make dev`       | Start Vite dev server                                                  |
+| `make build`     | Type-check and produce production build                                |
+| `make preview`   | Preview the production build                                           |
+| `make lint`      | ESLint + TypeScript type-check                                         |
+| `make typecheck` | `tsc -b --noEmit` only                                                 |
+| `make fmt`       | Prettier rewrite in place                                              |
+| `make fmt-check` | Prettier check without writing                                         |
+| `make validate`  | Validate `src/data/cv.json` against `schemas/cv.schema.json` (ajv-cli) |
+| `make test`      | Placeholder — no tests yet                                             |
+| `make clean`     | Remove `dist/` and Vite cache                                          |
 
-CI (`.github/workflows/ci.yml`) runs `make fmt-check`, `make lint`, and
-`make build` on every push and pull request.
+CI (`.github/workflows/ci.yml`) runs `make fmt-check`, `make validate`,
+`make lint`, and `make build` on every push and pull request.
 
 ## Architecture summary
 
 ```
 src/
-├── App.tsx          # root component — composes sections in order
-├── main.tsx         # React 18 entry, mounts <App /> into #root
-├── styles.css       # global CSS
-├── components/      # one file per section (Hero, Focus, Projects, …)
-│                     plus a generic <Section /> wrapper
-├── data/cv.ts       # all CV content + TypeScript types
-└── utils/date.ts    # date helpers used by Experience / Education
+├── App.tsx             # root component — composes sections in order
+├── main.tsx            # React 18 entry, mounts <App /> into #root
+├── styles.css          # global CSS
+├── components/         # one file per section (Hero, Focus, Projects, …)
+│                         plus a generic <Section /> wrapper
+├── data/cv.json        # CV content (validated by schemas/cv.schema.json)
+├── data/cv.types.ts    # TypeScript types mirroring the schema
+└── utils/date.ts       # date helpers used by Experience / Education
 ```
 
-Dependency direction: `components/*` and `App.tsx` consume `data/cv.ts`
-and `utils/date.ts`. Nothing in `data/` or `utils/` imports from
-`components/`. Keep it that way.
+Dependency direction: `App.tsx` consumes `data/cv.json`; components
+consume `data/cv.types.ts` and `utils/date.ts`. Nothing in `data/` or
+`utils/` imports from `components/`. Keep it that way.
 
 ## Where new code goes
 
-| Change                                       | Location                                                |
-| -------------------------------------------- | ------------------------------------------------------- |
-| New CV section (e.g. Talks, Awards)          | `src/components/<Name>.tsx` + slot into `src/App.tsx`   |
-| New field on existing section                | Extend the type in `src/data/cv.ts`, then the component |
-| Content-only edits (roles, projects, skills) | `src/data/cv.ts` — no component change usually needed   |
-| Date formatting / parsing                    | `src/utils/date.ts`                                     |
-| Global styles, layout, typography            | `src/styles.css`                                        |
+| Change                                       | Location                                                                       |
+| -------------------------------------------- | ------------------------------------------------------------------------------ |
+| New CV section (e.g. Talks, Awards)          | `src/components/<Name>.tsx` + slot into `src/App.tsx`                          |
+| New field on existing section                | Extend `schemas/cv.schema.json` and `src/data/cv.types.ts`, then the component |
+| Content-only edits (roles, projects, skills) | `src/data/cv.json` — prefer the `update-cv` skill                              |
+| Date formatting / parsing                    | `src/utils/date.ts`                                                            |
+| Global styles, layout, typography            | `src/styles.css`                                                               |
 
 ## Conventions
 
@@ -82,13 +84,14 @@ and `utils/date.ts`. Nothing in `data/` or `utils/` imports from
 
 When you change X, update Y:
 
-| If you change …         | Also update …                                           |
-| ----------------------- | ------------------------------------------------------- |
-| `package.json` scripts  | `Makefile`, `README.md` Scripts section                 |
-| `Makefile` targets      | `README.md` Scripts section, `.github/workflows/ci.yml` |
-| `src/` top-level layout | `README.md` Structure section                           |
-| `src/data/cv.ts` types  | Any component consuming the changed field               |
-| Node version in CI      | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)  |
+| If you change …          | Also update …                                                        |
+| ------------------------ | -------------------------------------------------------------------- |
+| `package.json` scripts   | `Makefile`, `README.md` Scripts section                              |
+| `Makefile` targets       | `README.md` Scripts section, `.github/workflows/ci.yml`              |
+| `src/` top-level layout  | `README.md` Structure section                                        |
+| `schemas/cv.schema.json` | `src/data/cv.types.ts` + any component consuming the changed field   |
+| `src/data/cv.types.ts`   | `schemas/cv.schema.json` + any component consuming the changed field |
+| Node version in CI       | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)               |
 
 ## Test conventions
 
@@ -106,10 +109,11 @@ The repo has **no tests yet**. When tests are added:
 The repo ships Claude skills under `.agent/skills/` (with
 `.claude/skills` symlinked to it — `OSS_SPEC.md` §21.2):
 
-| Skill           | Purpose                                       |
-| --------------- | --------------------------------------------- |
-| `update-readme` | Resync `README.md` with the code it describes |
-| `maintenance`   | Umbrella skill — routes to every `update-*`   |
+| Skill           | Purpose                                                                    |
+| --------------- | -------------------------------------------------------------------------- |
+| `update-cv`     | Add/update/remove entries in `src/data/cv.json`; recommends what to change |
+| `update-readme` | Resync `README.md` with the code it describes                              |
+| `maintenance`   | Umbrella skill — routes to every `update-*`                                |
 
 Invoke `maintenance` when you've landed a batch of changes and want a
 single pass that brings drift-prone artifacts back in sync. Invoke a

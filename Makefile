@@ -1,4 +1,4 @@
-.PHONY: install build test lint typecheck fmt fmt-check release clean dev preview
+.PHONY: install build test lint typecheck fmt fmt-check validate release clean dev preview
 
 install:
 	npm ci
@@ -21,6 +21,9 @@ fmt:
 
 fmt-check:
 	npm run format:check
+
+validate:
+	npm run validate:cv
 
 dev:
 	npm run dev

@@ -1,7 +1,7 @@
 # niclaslindstedt.se
 
 [![CI](https://github.com/niclaslindstedt/niclaslindstedt.se/actions/workflows/ci.yml/badge.svg)](https://github.com/niclaslindstedt/niclaslindstedt.se/actions/workflows/ci.yml)
-[![Deploy](https://github.com/niclaslindstedt/niclaslindstedt.se/actions/workflows/pages.yml/badge.svg)](https://github.com/niclaslindstedt/niclaslindstedt.se/actions/workflows/pages.yml)
+[![Pages](https://github.com/niclaslindstedt/niclaslindstedt.se/actions/workflows/pages.yml/badge.svg)](https://github.com/niclaslindstedt/niclaslindstedt.se/actions/workflows/pages.yml)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
 Personal site and CV for Niclas Lindstedt — AI/agentic coding work, built
@@ -9,9 +9,9 @@ with Vite, React 18, and TypeScript.
 
 ## Why?
 
-- **Single source of truth** — all CV content lives in `src/data/cv.ts`; no CMS, no database.
+- **Single source of truth** — all CV content lives in `src/data/cv.json`, validated against `schemas/cv.schema.json`; no CMS, no database.
 - **Static output** — deploys as a plain HTML/CSS/JS bundle; no server required.
-- **Type-safe content** — TypeScript strict mode ensures every component gets the shape it expects.
+- **Type-safe content** — TypeScript strict mode and JSON-schema validation both guard the data shape.
 - **Fast iteration** — Vite's instant dev server and HMR make local edits visible in milliseconds.
 - **Fully automated deploy** — every push to `main` ships to GitHub Pages automatically.
 
@@ -34,30 +34,33 @@ make install
 make dev    # start Vite dev server at http://localhost:5173
 ```
 
-Edit `src/data/cv.ts` to update content. Changes hot-reload instantly.
+Edit `src/data/cv.json` to update content (types live in `src/data/cv.types.ts`). Changes hot-reload instantly. Prefer the `update-cv` Claude skill for guided edits and recommendations.
 
 ## Usage
 
 All developer entry points are exposed via `make`:
 
-| Command          | What it does                            |
-| ---------------- | --------------------------------------- |
-| `make install`   | `npm ci`                                |
-| `make dev`       | Start Vite dev server                   |
-| `make build`     | Type-check and produce production build |
-| `make preview`   | Preview the production build            |
-| `make lint`      | ESLint + TypeScript type-check          |
-| `make typecheck` | `tsc -b --noEmit` only                  |
-| `make fmt`       | Prettier rewrite in place               |
-| `make fmt-check` | Prettier check without writing          |
-| `make test`      | Run the test suite                      |
-| `make release`   | Cut a new release (CI-managed)          |
-| `make clean`     | Remove `dist/` and Vite cache           |
+| Command          | What it does                                                 |
+| ---------------- | ------------------------------------------------------------ |
+| `make install`   | `npm ci`                                                     |
+| `make dev`       | Start Vite dev server                                        |
+| `make build`     | Type-check and produce production build                      |
+| `make preview`   | Preview the production build                                 |
+| `make lint`      | ESLint + TypeScript type-check                               |
+| `make typecheck` | `tsc -b --noEmit` only                                       |
+| `make fmt`       | Prettier rewrite in place                                    |
+| `make fmt-check` | Prettier check without writing                               |
+| `make validate`  | Validate `src/data/cv.json` against `schemas/cv.schema.json` |
+| `make test`      | Run the test suite                                           |
+| `make release`   | Cut a new release (CI-managed)                               |
+| `make clean`     | Remove `dist/` and Vite cache                                |
 
 ## Configuration
 
-No runtime config file. All content is edited directly in `src/data/cv.ts`.
-No environment variables are required for local development.
+No runtime config file. All content is edited directly in `src/data/cv.json`
+(shape enforced by `schemas/cv.schema.json`; TypeScript types in
+`src/data/cv.types.ts`). No environment variables are required for local
+development.
 
 For CI and deployment the following GitHub secret must be set:
 
@@ -76,8 +79,9 @@ examples beyond the live site itself.
 ## Troubleshooting
 
 **Build fails with TypeScript errors**
-Run `make typecheck` for the full error list. Most errors originate in
-`src/data/cv.ts` — verify all required fields match their declared types.
+Run `make typecheck` for the full error list. If the error points at
+`src/data/cv.json`, run `make validate` — schema errors usually give a
+clearer message than the structural type mismatch.
 
 **Dev server is slow to start**
 Delete the Vite cache: `make clean`, then `make dev`.

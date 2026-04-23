@@ -1,4 +1,4 @@
-import type { Experience as ExperienceItem } from "../data/cv";
+import type { Experience as ExperienceItem } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { Section } from "./Section";
 

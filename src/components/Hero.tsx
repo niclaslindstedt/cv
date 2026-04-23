@@ -1,4 +1,4 @@
-import type { CV } from "../data/cv";
+import type { CV } from "../data/cv.types";
 
 type Props = { cv: CV };
 

@@ -1,4 +1,4 @@
-import type { Education as EducationItem } from "../data/cv";
+import type { Education as EducationItem } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { Section } from "./Section";
 

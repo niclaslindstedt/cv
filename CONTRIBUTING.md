@@ -47,12 +47,12 @@ Breaking changes: append `!` to the type (`feat!:`) or add a
 
 ## Branch naming
 
-| Change type     | Pattern          |
-| --------------- | ---------------- |
-| New feature     | `feat/<slug>`    |
-| Bug fix         | `fix/<slug>`     |
-| Documentation   | `docs/<slug>`    |
-| Chore / tooling | `chore/<slug>`   |
+| Change type     | Pattern        |
+| --------------- | -------------- |
+| New feature     | `feat/<slug>`  |
+| Bug fix         | `fix/<slug>`   |
+| Documentation   | `docs/<slug>`  |
+| Chore / tooling | `chore/<slug>` |
 
 ## Testing expectations
 
@@ -64,13 +64,13 @@ Tests do not exist yet. When added:
 
 ## Documentation expectations
 
-| If you change …         | Also update …                               |
-| ----------------------- | ------------------------------------------- |
-| `package.json` scripts  | `Makefile`, `README.md` Usage section       |
-| `Makefile` targets      | `README.md` Usage section, `ci.yml`         |
-| `src/` top-level layout | `README.md` Structure section, `AGENTS.md`  |
-| `src/data/cv.ts` types  | Components that consume the changed field   |
-| Node version in CI      | `.nvmrc`, `deploy.yml` (keep them in sync)  |
+| If you change …         | Also update …                              |
+| ----------------------- | ------------------------------------------ |
+| `package.json` scripts  | `Makefile`, `README.md` Usage section      |
+| `Makefile` targets      | `README.md` Usage section, `ci.yml`        |
+| `src/` top-level layout | `README.md` Structure section, `AGENTS.md` |
+| `src/data/cv.ts` types  | Components that consume the changed field  |
+| Node version in CI      | `.nvmrc`, `deploy.yml` (keep them in sync) |
 
 ## Pull request process
 

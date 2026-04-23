@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "validate:cv": "ajv validate -c ajv-formats --spec=draft2020 --strict=false -s schemas/cv.schema.json -d src/data/cv.json"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -22,6 +23,9 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "ajv": "^8.18.0",
+    "ajv-cli": "^5.0.0",
+    "ajv-formats": "^3.0.1",
     "eslint": "^10.2.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
