@@ -31,6 +31,14 @@ export function Hero({ cv, onOpenTimeline }: Props) {
         >
           Timeline view
         </button>
+        <button
+          type="button"
+          className="hero-download"
+          onClick={() => window.print()}
+          aria-label="Download CV as PDF (opens print dialog)"
+        >
+          Download PDF ↓
+        </button>
       </div>
     </header>
   );
