@@ -162,7 +162,8 @@
         "cloud",
         "databases",
         "ai",
-        "devops"
+        "devops",
+        "practices"
       ],
       "properties": {
         "languages": { "$ref": "#/$defs/stringList" },
@@ -170,7 +171,8 @@
         "cloud": { "$ref": "#/$defs/stringList" },
         "databases": { "$ref": "#/$defs/stringList" },
         "ai": { "$ref": "#/$defs/stringList" },
-        "devops": { "$ref": "#/$defs/stringList" }
+        "devops": { "$ref": "#/$defs/stringList" },
+        "practices": { "$ref": "#/$defs/stringList" }
       }
     },
     "stringList": {

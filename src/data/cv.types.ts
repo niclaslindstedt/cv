@@ -48,6 +48,7 @@ export type Skills = {
   databases: string[];
   ai: string[];
   devops: string[];
+  practices: string[];
 };
 
 export type CV = {
