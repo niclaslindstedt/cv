@@ -11,6 +11,14 @@ export type Project = {
   repo: string;
 };
 
+export type Assignment = {
+  role: string;
+  client: string;
+  clientDescription: string;
+  startDate: string;
+  endDate: string | null;
+};
+
 export type Experience = {
   role: string;
   company: string;
@@ -18,6 +26,7 @@ export type Experience = {
   startDate: string;
   endDate: string | null;
   engagement?: string;
+  assignments?: Assignment[];
 };
 
 export type Education = {
@@ -42,7 +51,7 @@ export type CV = {
   name: string;
   title: string;
   location: string;
-  links: { linkedin: string; github: string };
+  links: { linkedin: string; github: string; blog: string };
   summary: string;
   focus: FocusArea[];
   projects: Project[];

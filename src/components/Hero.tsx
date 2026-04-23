@@ -10,6 +10,14 @@ export function Hero({ cv }: Props) {
       <p className="hero-summary">{cv.summary}</p>
       <div className="hero-meta">
         <span>{cv.location}</span>
+        <a
+          className="hero-blog"
+          href={cv.links.blog}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Blog ↗
+        </a>
         <a href={cv.links.github} target="_blank" rel="noreferrer">
           GitHub
         </a>
