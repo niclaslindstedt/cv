@@ -390,7 +390,7 @@ a:hover {
   color: var(--fg);
 }
 
-.skills-group ul {
+.skills-group > ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -399,7 +399,7 @@ a:hover {
   gap: 6px;
 }
 
-.skills-group li {
+.skills-group > ul > li {
   display: inline-flex;
 }
 
