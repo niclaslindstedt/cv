@@ -14,6 +14,7 @@ const GROUPS: { key: keyof SkillsData; label: string }[] = [
   { key: "cloud", label: "Cloud" },
   { key: "databases", label: "Databases" },
   { key: "devops", label: "DevOps" },
+  { key: "practices", label: "Practices" },
 ];
 
 const KIND_LABELS: Record<SkillUsage["kind"], string> = {

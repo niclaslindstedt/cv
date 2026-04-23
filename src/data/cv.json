@@ -59,14 +59,38 @@
       "company": "BookBeat AB",
       "companyDescription": "Audiobook streaming service with over 1 million users.",
       "startDate": "2024-04",
-      "endDate": null
+      "endDate": null,
+      "skills": [
+        "Agentic Workflows",
+        "AI Agents",
+        "RAG",
+        "Chatbots",
+        "AI",
+        "Cybersecurity",
+        "Software Architecture",
+        ".NET",
+        "Kubernetes",
+        "APIs",
+        "Azure"
+      ]
     },
     {
       "role": "CTO",
       "company": "IBNQ AB",
       "companyDescription": "Digitalizing family offices.",
       "startDate": "2023-09",
-      "endDate": "2024-04"
+      "endDate": "2024-04",
+      "skills": [
+        "Software Architecture",
+        "IT Strategy",
+        "Technical Direction",
+        "Team Management",
+        ".NET",
+        "Azure",
+        "DevOps",
+        "React",
+        "Cybersecurity"
+      ]
     },
     {
       "role": "Senior Manager",
@@ -80,21 +104,67 @@
           "client": "SEB",
           "clientDescription": "Major Swedish bank; worked in the private loans team.",
           "startDate": "2020-02",
-          "endDate": "2020-12"
+          "endDate": "2020-12",
+          "skills": [
+            "Scrum",
+            "DevOps",
+            "TypeScript",
+            "SQL",
+            "CI/CD",
+            "React",
+            "Problem Solving",
+            "Documentation",
+            "Software Architecture",
+            "C#",
+            "Agile Methodologies",
+            "Communication"
+          ]
         },
         {
           "role": "Senior Developer",
           "client": "Mitt Skolval",
           "clientDescription": "Edutech startup digitalizing school selection for Swedish municipalities.",
           "startDate": "2021-01",
-          "endDate": "2021-05"
+          "endDate": "2021-05",
+          "skills": [
+            "DevOps",
+            "TypeScript",
+            "SQL",
+            "CI/CD",
+            "Cybersecurity",
+            "React",
+            "Problem Solving",
+            "Documentation",
+            "Software Architecture",
+            "IT Strategy",
+            "Agile Methodologies",
+            "Communication"
+          ]
         },
         {
           "role": "CTO",
           "client": "Mitt Skolval",
           "clientDescription": "Edutech startup digitalizing school selection for Swedish municipalities.",
           "startDate": "2021-06",
-          "endDate": "2023-09"
+          "endDate": "2023-09",
+          "skills": [
+            "DevOps",
+            "TypeScript",
+            "SQL",
+            "Technical Direction",
+            "CI/CD",
+            "Cybersecurity",
+            "React",
+            "Problem Solving",
+            "Documentation",
+            "Software Architecture",
+            "Leadership",
+            "IT Strategy",
+            "Engineering Management",
+            "Agile Methodologies",
+            "Team Management",
+            "Communication"
+          ]
         }
       ]
     },
@@ -104,7 +174,24 @@
       "companyDescription": "eHealth startup focused on patient-doctor communication.",
       "startDate": "2015-11",
       "endDate": "2020-01",
-      "engagement": "half-time"
+      "engagement": "half-time",
+      "skills": [
+        "DevOps",
+        "SQL",
+        "Technical Direction",
+        "CI/CD",
+        "Cybersecurity",
+        "Problem Solving",
+        "Software Architecture",
+        "Leadership",
+        "IT Strategy",
+        "Engineering Management",
+        "C#",
+        "Agile Methodologies",
+        "Team Management",
+        "New Business Development",
+        "Communication"
+      ]
     },
     {
       "role": "Senior Software Engineer",
@@ -112,7 +199,18 @@
       "companyDescription": "FinTech startup building a forecasting platform.",
       "startDate": "2015-09",
       "endDate": "2020-01",
-      "engagement": "half-time"
+      "engagement": "half-time",
+      "skills": [
+        "DevOps",
+        "TypeScript",
+        "SQL",
+        "CI/CD",
+        "Cybersecurity",
+        "Problem Solving",
+        "Software Architecture",
+        "C#",
+        "Communication"
+      ]
     },
     {
       "role": "Founder",
@@ -142,7 +240,15 @@
     }
   ],
   "skills": {
-    "languages": ["Rust", "C#", "TypeScript", "Python", "JavaScript", "C++"],
+    "languages": [
+      "Rust",
+      "C#",
+      "TypeScript",
+      "Python",
+      "JavaScript",
+      "SQL",
+      "C++"
+    ],
     "frameworks": [".NET", "React", "React Native", "Vue"],
     "cloud": ["Azure", "AWS"],
     "databases": [
@@ -157,11 +263,15 @@
       "AI-driven project bootstrapping",
       "Spec-compliance validation",
       "Multi-agent orchestration",
+      "Agentic Workflows",
+      "AI Agents",
+      "AI",
       "Multi-provider LLM integration",
       "Agent sandboxing & isolation",
       "Agent permissions & security",
       "Agent-in-the-loop testing",
       "RAG",
+      "Chatbots",
       "Prompt engineering",
       "AI evaluations",
       "Claude Code",
@@ -170,6 +280,28 @@
       "GitHub Copilot",
       "Ollama"
     ],
-    "devops": ["Docker", "Kubernetes", "CI/CD", "Infrastructure as Code"]
+    "devops": [
+      "DevOps",
+      "Docker",
+      "Kubernetes",
+      "CI/CD",
+      "APIs",
+      "Infrastructure as Code"
+    ],
+    "practices": [
+      "Software Architecture",
+      "IT Strategy",
+      "Technical Direction",
+      "Engineering Management",
+      "Team Management",
+      "Leadership",
+      "Cybersecurity",
+      "Agile Methodologies",
+      "Scrum",
+      "Problem Solving",
+      "Documentation",
+      "Communication",
+      "New Business Development"
+    ]
   }
 }
