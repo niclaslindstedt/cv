@@ -9,14 +9,21 @@ import { Skills } from "./components/Skills";
 import { Timeline } from "./components/Timeline";
 import cv from "./data/cv.json";
 import { buildSkillUsageMap } from "./utils/skills";
+import { useTheme } from "./utils/theme";
 
 export function App() {
   const skillUsages = buildSkillUsageMap(cv);
   const [timelineOpen, setTimelineOpen] = useState(false);
+  const { theme, toggle: toggleTheme } = useTheme();
   return (
     <div className="page">
       <main className="container">
-        <Hero cv={cv} onOpenTimeline={() => setTimelineOpen(true)} />
+        <Hero
+          cv={cv}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          onOpenTimeline={() => setTimelineOpen(true)}
+        />
         <Focus focus={cv.focus} />
         <Projects projects={cv.projects} />
         <Experience experience={cv.experience} />
