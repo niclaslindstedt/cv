@@ -213,24 +213,43 @@ a:hover {
 }
 
 .timeline-promotion {
-  margin-top: -8px;
+  margin-top: -4px;
+  padding-left: 18px;
 }
 
 .timeline-promotion::before {
   content: "";
   position: absolute;
-  left: 8px;
-  top: -16px;
-  height: 20px;
-  border-left: 1.5px dashed var(--accent);
-  opacity: 0.55;
+  left: 0;
+  top: -14px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 2px;
 }
 
-.promotion-icon {
-  display: inline-block;
-  margin-right: 6px;
-  color: var(--accent);
+.timeline-promotion::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 12px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.promotion-badge {
+  align-self: flex-start;
+  padding: 1px 8px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 0.7rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  width: fit-content;
 }
 
 .timeline-meta {
@@ -310,22 +329,39 @@ a:hover {
 }
 
 .assignment-promotion {
-  margin-top: -6px;
+  margin-top: -4px;
+  padding-left: 14px;
 }
 
 .assignment-promotion::before {
   content: "";
   position: absolute;
-  left: 6px;
-  top: -12px;
-  height: 16px;
-  border-left: 1.5px dashed var(--accent);
-  opacity: 0.55;
+  left: 0;
+  top: -10px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.assignment-promotion::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 10px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
 }
 
 .assignment-meta {
   color: var(--fg-muted);
   font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
 }
 
 .assignment-body h4 {
