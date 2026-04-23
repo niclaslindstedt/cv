@@ -25,17 +25,15 @@ export function Experience({ experience }: Props) {
               }
             >
               <div className="timeline-meta">
-                <span>
-                  {isPromotion && (
-                    <span
-                      className="promotion-icon"
-                      aria-label="Promotion at same company"
-                    >
-                      ↑
-                    </span>
-                  )}
-                  {formatRange(item.startDate, item.endDate)}
-                </span>
+                {isPromotion && (
+                  <span
+                    className="promotion-badge"
+                    aria-label="Promotion at same company"
+                  >
+                    Promoted
+                  </span>
+                )}
+                <span>{formatRange(item.startDate, item.endDate)}</span>
                 {item.engagement && (
                   <span className="timeline-engagement">{item.engagement}</span>
                 )}
@@ -81,13 +79,13 @@ export function Experience({ experience }: Props) {
                             <div className="assignment-meta">
                               {aIsPromotion && (
                                 <span
-                                  className="promotion-icon"
+                                  className="promotion-badge"
                                   aria-label="Promotion at same client"
                                 >
-                                  ↑
+                                  Promoted
                                 </span>
                               )}
-                              {formatRange(a.startDate, a.endDate)}
+                              <span>{formatRange(a.startDate, a.endDate)}</span>
                             </div>
                             <div className="assignment-body">
                               <h4>
