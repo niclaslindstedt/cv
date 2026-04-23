@@ -19,6 +19,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: make fmt-check
+      - run: make validate
       - run: make lint
       - run: make build
       - run: make test

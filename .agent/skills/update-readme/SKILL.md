@@ -26,14 +26,16 @@ git diff --name-only "${BASE:-$(git rev-list --max-parents=0 HEAD)}..$HEAD"
 
 ## Mapping: source → README section to update
 
-| Source of truth           | README section                |
-| ------------------------- | ----------------------------- |
-| `package.json` scripts    | Scripts                       |
-| `Makefile` targets        | Scripts / Build               |
-| `src/` top-level layout   | Structure                     |
-| `src/data/cv.ts`          | (site content — README blurb) |
-| `.github/workflows/*.yml` | Badges, CI section            |
-| `OSS_SPEC.md` presence    | Links / Contributing          |
+| Source of truth           | README section                 |
+| ------------------------- | ------------------------------ |
+| `package.json` scripts    | Scripts                        |
+| `Makefile` targets        | Scripts / Build                |
+| `src/` top-level layout   | Structure                      |
+| `src/data/cv.json`        | (site content — README blurb)  |
+| `src/data/cv.types.ts`    | (type contract — README blurb) |
+| `schemas/cv.schema.json`  | Why / Configuration            |
+| `.github/workflows/*.yml` | Badges, CI section             |
+| `OSS_SPEC.md` presence    | Links / Contributing           |
 
 ## Update checklist
 

@@ -4,7 +4,7 @@ import { Focus } from "./components/Focus";
 import { Hero } from "./components/Hero";
 import { Projects } from "./components/Projects";
 import { Skills } from "./components/Skills";
-import { cv } from "./data/cv";
+import cv from "./data/cv.json";
 
 export function App() {
   return (

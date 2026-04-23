@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       bump:
-        description: 'Version bump type (auto | patch | minor | major)'
+        description: "Version bump type (auto | patch | minor | major)"
         required: false
-        default: 'auto'
+        default: "auto"
         type: choice
-        options: ['auto', 'patch', 'minor', 'major']
+        options: ["auto", "patch", "minor", "major"]
 
 permissions:
   contents: read

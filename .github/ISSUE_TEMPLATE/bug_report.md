@@ -1,9 +1,9 @@
 ---
 name: Bug report
 about: Something is broken or looks wrong
-title: 'fix: '
+title: "fix: "
 labels: bug
-assignees: ''
+assignees: ""
 ---
 
 ## Describe the bug

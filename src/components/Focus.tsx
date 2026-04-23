@@ -1,4 +1,4 @@
-import type { FocusArea } from "../data/cv";
+import type { FocusArea } from "../data/cv.types";
 import { formatMonth } from "../utils/date";
 import { Section } from "./Section";
 

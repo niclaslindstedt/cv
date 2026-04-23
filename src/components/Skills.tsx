@@ -1,4 +1,4 @@
-import type { Skills as SkillsData } from "../data/cv";
+import type { Skills as SkillsData } from "../data/cv.types";
 import { Section } from "./Section";
 
 type Props = { skills: SkillsData };
