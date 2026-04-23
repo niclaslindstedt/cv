@@ -2,13 +2,16 @@ import type { Experience as ExperienceItem } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { Section } from "./Section";
 
-type Props = { experience: ExperienceItem[] };
+type Props = {
+  experience: ExperienceItem[];
+  onSkillClick: (skill: string) => void;
+};
 
 function sameName(a: string, b: string) {
   return a.toLowerCase() === b.toLowerCase();
 }
 
-export function Experience({ experience }: Props) {
+export function Experience({ experience, onSkillClick }: Props) {
   return (
     <Section id="experience" title="Experience">
       <ol className="timeline">
@@ -52,7 +55,15 @@ export function Experience({ experience }: Props) {
                 {item.skills && item.skills.length > 0 && (
                   <ul className="entry-skills">
                     {item.skills.map((skill) => (
-                      <li key={skill}>{skill}</li>
+                      <li key={skill}>
+                        <button
+                          type="button"
+                          className="entry-skill-btn"
+                          onClick={() => onSkillClick(skill)}
+                        >
+                          {skill}
+                        </button>
+                      </li>
                     ))}
                   </ul>
                 )}
@@ -101,7 +112,15 @@ export function Experience({ experience }: Props) {
                               {a.skills && a.skills.length > 0 && (
                                 <ul className="entry-skills">
                                   {a.skills.map((skill) => (
-                                    <li key={skill}>{skill}</li>
+                                    <li key={skill}>
+                                      <button
+                                        type="button"
+                                        className="entry-skill-btn"
+                                        onClick={() => onSkillClick(skill)}
+                                      >
+                                        {skill}
+                                      </button>
+                                    </li>
                                   ))}
                                 </ul>
                               )}
