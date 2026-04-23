@@ -1,8 +1,8 @@
 import type { CV } from "../data/cv.types";
 
-type Props = { cv: CV };
+type Props = { cv: CV; onOpenTimeline: () => void };
 
-export function Hero({ cv }: Props) {
+export function Hero({ cv, onOpenTimeline }: Props) {
   return (
     <header className="hero">
       <p className="hero-eyebrow">{cv.title}</p>
@@ -24,6 +24,13 @@ export function Hero({ cv }: Props) {
         <a href={cv.links.linkedin} target="_blank" rel="noreferrer">
           LinkedIn
         </a>
+        <button
+          type="button"
+          className="hero-timeline-btn"
+          onClick={onOpenTimeline}
+        >
+          Timeline view
+        </button>
         <button
           type="button"
           className="hero-download"
