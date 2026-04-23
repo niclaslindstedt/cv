@@ -19,8 +19,8 @@ export function Projects({ projects }: Props) {
             </header>
             <p className="project-description">{project.description}</p>
             <ul className="project-stack">
-              {project.stack.map((tech) => (
-                <li key={tech}>{tech}</li>
+              {project.skills.map((skill) => (
+                <li key={skill}>{skill}</li>
               ))}
             </ul>
           </article>
