@@ -26,10 +26,11 @@
     "links": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["linkedin", "github"],
+      "required": ["linkedin", "github", "blog"],
       "properties": {
         "linkedin": { "type": "string", "format": "uri" },
-        "github": { "type": "string", "format": "uri" }
+        "github": { "type": "string", "format": "uri" },
+        "blog": { "type": "string", "format": "uri" }
       }
     },
     "focus": {

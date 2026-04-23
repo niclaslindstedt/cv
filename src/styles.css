@@ -85,9 +85,24 @@ a:hover {
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 16px;
   color: var(--fg-muted);
   font-size: 0.95rem;
+}
+
+.hero-blog {
+  padding: 4px 12px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  border-radius: 999px;
+}
+
+.hero-blog:hover {
+  text-decoration: none;
+  border-color: var(--accent);
 }
 
 .section {

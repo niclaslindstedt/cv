@@ -51,7 +51,7 @@ export type CV = {
   name: string;
   title: string;
   location: string;
-  links: { linkedin: string; github: string };
+  links: { linkedin: string; github: string; blog: string };
   summary: string;
   focus: FocusArea[];
   projects: Project[];

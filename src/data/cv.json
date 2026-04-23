@@ -5,7 +5,8 @@
   "location": "Sweden",
   "links": {
     "linkedin": "https://www.linkedin.com/in/niclaslindstedt",
-    "github": "https://www.github.com/niclaslindstedt"
+    "github": "https://www.github.com/niclaslindstedt",
+    "blog": "https://blog.niclaslindstedt.se"
   },
   "summary": "IT architect, deep into agentic coding. I build open-source tools that make AI coding agents easier to orchestrate, sandbox, test, and connect to the rest of the world.",
   "focus": [
