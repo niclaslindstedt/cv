@@ -1,9 +1,12 @@
 import type { Project } from "../data/cv.types";
 import { Section } from "./Section";
 
-type Props = { projects: Project[] };
+type Props = {
+  projects: Project[];
+  onSkillClick: (skill: string) => void;
+};
 
-export function Projects({ projects }: Props) {
+export function Projects({ projects, onSkillClick }: Props) {
   return (
     <Section id="projects" title="Open-source projects">
       <div className="projects">
@@ -20,7 +23,15 @@ export function Projects({ projects }: Props) {
             <p className="project-description">{project.description}</p>
             <ul className="project-stack">
               {project.skills.map((skill) => (
-                <li key={skill}>{skill}</li>
+                <li key={skill}>
+                  <button
+                    type="button"
+                    className="project-stack-btn"
+                    onClick={() => onSkillClick(skill)}
+                  >
+                    {skill}
+                  </button>
+                </li>
               ))}
             </ul>
           </article>

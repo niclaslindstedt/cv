@@ -2,9 +2,12 @@ import type { Education as EducationItem } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { Section } from "./Section";
 
-type Props = { education: EducationItem[] };
+type Props = {
+  education: EducationItem[];
+  onSkillClick: (skill: string) => void;
+};
 
-export function Education({ education }: Props) {
+export function Education({ education, onSkillClick }: Props) {
   return (
     <Section id="education" title="Education">
       <ul className="education-list">
@@ -20,7 +23,15 @@ export function Education({ education }: Props) {
             {item.skills && item.skills.length > 0 && (
               <ul className="entry-skills">
                 {item.skills.map((skill) => (
-                  <li key={skill}>{skill}</li>
+                  <li key={skill}>
+                    <button
+                      type="button"
+                      className="entry-skill-btn"
+                      onClick={() => onSkillClick(skill)}
+                    >
+                      {skill}
+                    </button>
+                  </li>
                 ))}
               </ul>
             )}

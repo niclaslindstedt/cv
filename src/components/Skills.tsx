@@ -5,6 +5,7 @@ import { Section } from "./Section";
 type Props = {
   skills: SkillsData;
   usages: Map<string, SkillUsage[]>;
+  onSkillClick: (skill: string) => void;
 };
 
 const GROUPS: { key: keyof SkillsData; label: string }[] = [
@@ -17,14 +18,7 @@ const GROUPS: { key: keyof SkillsData; label: string }[] = [
   { key: "practices", label: "Practices" },
 ];
 
-const KIND_LABELS: Record<SkillUsage["kind"], string> = {
-  project: "Project",
-  experience: "Role",
-  assignment: "Assignment",
-  education: "Education",
-};
-
-export function Skills({ skills, usages }: Props) {
+export function Skills({ skills, usages, onSkillClick }: Props) {
   return (
     <Section id="skills" title="Skills">
       <div className="skills">
@@ -34,32 +28,23 @@ export function Skills({ skills, usages }: Props) {
             <ul>
               {skills[group.key].map((skill) => {
                 const used = usages.get(skill) ?? [];
+                const isEmpty = used.length === 0;
                 return (
                   <li key={skill}>
-                    {used.length > 0 ? (
-                      <details className="skill-pill">
-                        <summary>
-                          {skill}
-                          <span className="skill-usage-count">
-                            {used.length}
-                          </span>
-                        </summary>
-                        <ul className="skill-usage-list">
-                          {used.map((u, i) => (
-                            <li key={`${u.kind}-${u.label}-${i}`}>
-                              <span className="skill-usage-kind">
-                                {KIND_LABELS[u.kind]}
-                              </span>
-                              <span>{u.label}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </details>
-                    ) : (
-                      <span className="skill-pill skill-pill-empty">
-                        {skill}
-                      </span>
-                    )}
+                    <button
+                      type="button"
+                      className={
+                        isEmpty
+                          ? "skill-pill skill-pill-btn skill-pill-empty"
+                          : "skill-pill skill-pill-btn"
+                      }
+                      onClick={() => onSkillClick(skill)}
+                    >
+                      <span>{skill}</span>
+                      {!isEmpty && (
+                        <span className="skill-usage-count">{used.length}</span>
+                      )}
+                    </button>
                   </li>
                 );
               })}
