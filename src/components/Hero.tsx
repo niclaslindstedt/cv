@@ -24,6 +24,14 @@ export function Hero({ cv }: Props) {
         <a href={cv.links.linkedin} target="_blank" rel="noreferrer">
           LinkedIn
         </a>
+        <button
+          type="button"
+          className="hero-download"
+          onClick={() => window.print()}
+          aria-label="Download CV as PDF (opens print dialog)"
+        >
+          Download PDF ↓
+        </button>
       </div>
     </header>
   );

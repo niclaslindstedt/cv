@@ -552,6 +552,26 @@ details.skill-pill[open] .skill-usage-count {
   font-size: 0.85rem;
 }
 
+.hero-download {
+  padding: 4px 12px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.hero-download:hover {
+  background: var(--accent-soft);
+}
+
+.hero-download:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 @media (max-width: 640px) {
   .timeline-item {
     grid-template-columns: 1fr;
@@ -566,5 +586,263 @@ details.skill-pill[open] .skill-usage-count {
   .assignment-item {
     grid-template-columns: 1fr;
     gap: 4px;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 1.5cm;
+  }
+
+  :root {
+    --bg: #ffffff;
+    --bg-elev: #ffffff;
+    --border: #cccccc;
+    --fg: #111111;
+    --fg-muted: #444444;
+    --accent: #111111;
+    --accent-soft: transparent;
+    color-scheme: light;
+  }
+
+  html,
+  body {
+    background: #ffffff;
+    color: #111111;
+  }
+
+  body {
+    font-size: 10.5pt;
+    line-height: 1.4;
+  }
+
+  .page {
+    padding: 0;
+  }
+
+  .container {
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero {
+    order: 0;
+    padding: 0 0 12px;
+    margin-bottom: 16px;
+    border-color: #999;
+  }
+
+  #experience {
+    order: 1;
+  }
+
+  #education {
+    order: 2;
+  }
+
+  #skills {
+    order: 3;
+  }
+
+  #focus {
+    order: 4;
+  }
+
+  #projects {
+    order: 5;
+  }
+
+  .section {
+    margin-bottom: 18px;
+  }
+
+  .hero-download {
+    display: none !important;
+  }
+
+  .hero-name {
+    font-size: 20pt;
+    margin-bottom: 4px;
+  }
+
+  .hero-eyebrow {
+    font-size: 9pt;
+    margin-bottom: 4px;
+    color: #444;
+  }
+
+  .hero-summary {
+    font-size: 10.5pt;
+    margin-bottom: 8px;
+    max-width: none;
+  }
+
+  .hero-meta {
+    gap: 10px;
+    font-size: 9.5pt;
+    color: #444;
+  }
+
+  .hero-blog {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: #111;
+    font-weight: 600;
+  }
+
+  .hero-meta a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-weight: 400;
+    color: #555;
+  }
+
+  .section-title {
+    font-size: 10pt;
+    color: #111;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #999;
+    padding-bottom: 2px;
+  }
+
+  .focus-list li,
+  .project,
+  .skill-pill,
+  details.skill-pill,
+  details.skill-pill[open] {
+    background: transparent !important;
+    border-color: #bbb !important;
+  }
+
+  .entry-skills li,
+  .project-stack li,
+  .timeline-engagement,
+  .skill-usage-count,
+  .assignments > summary {
+    background: transparent !important;
+    color: #333 !important;
+    padding: 0 !important;
+  }
+
+  .entry-skills {
+    gap: 4px 10px;
+  }
+
+  .entry-skills li::after {
+    content: " ·";
+    color: #999;
+  }
+
+  .entry-skills li:last-child::after {
+    content: "";
+  }
+
+  #projects .project {
+    padding: 4px 0;
+    border: 0;
+    border-bottom: 1px dotted #bbb;
+    border-radius: 0;
+  }
+
+  #projects .project-description {
+    display: none;
+  }
+
+  #projects .project-stack {
+    display: none;
+  }
+
+  #projects .project-head h3 {
+    font-size: 11pt;
+    display: inline;
+  }
+
+  #projects .project-tagline {
+    display: inline;
+    color: #444;
+  }
+
+  #projects .project-tagline::before {
+    content: " — ";
+  }
+
+  details.skill-pill > summary {
+    list-style: none;
+    padding: 0;
+  }
+
+  .skill-usage-count,
+  .skill-usage-list {
+    display: none !important;
+  }
+
+  .skill-pill,
+  details.skill-pill {
+    border: 1px solid #bbb !important;
+    border-radius: 999px;
+    padding: 1px 8px;
+    font-size: 9.5pt;
+  }
+
+  details.assignments {
+    display: block;
+  }
+
+  details.assignments > summary {
+    display: none;
+  }
+
+  details.assignments > *:not(summary) {
+    display: block !important;
+  }
+
+  .timeline-item,
+  .assignment-item,
+  .education-list > li,
+  .project {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  a {
+    color: #111;
+    text-decoration: none;
+  }
+
+  .footer {
+    border-color: #bbb;
+    color: #555;
+    font-size: 9pt;
+    margin-top: 16px;
+  }
+
+  .timeline-promotion,
+  .assignment-promotion {
+    padding-left: 0;
+    margin-top: 0;
+  }
+
+  .timeline-promotion::before,
+  .timeline-promotion::after,
+  .assignment-promotion::before,
+  .assignment-promotion::after {
+    display: none;
+  }
+
+  .promotion-badge {
+    background: transparent;
+    color: #111;
+    border: 1px solid #999;
+    padding: 0 4px;
+    font-size: 8pt;
   }
 }
