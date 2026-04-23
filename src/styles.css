@@ -439,6 +439,10 @@ a:hover {
   display: inline-flex;
 }
 
+.skills-group > ul > li:has(> details[open]) {
+  flex-basis: 100%;
+}
+
 .skill-pill {
   padding: 3px 10px;
   font-size: 0.85rem;
