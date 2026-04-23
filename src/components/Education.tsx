@@ -17,6 +17,13 @@ export function Education({ education }: Props) {
             <p>
               {item.institution} · {item.level} · {item.credits}
             </p>
+            {item.skills && item.skills.length > 0 && (
+              <ul className="entry-skills">
+                {item.skills.map((skill) => (
+                  <li key={skill}>{skill}</li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>

@@ -24,6 +24,7 @@ fmt-check:
 
 validate:
 	npm run validate:cv
+	npm run validate:skill-tags
 
 dev:
 	npm run dev

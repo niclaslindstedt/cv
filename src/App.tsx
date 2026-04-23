@@ -5,8 +5,10 @@ import { Hero } from "./components/Hero";
 import { Projects } from "./components/Projects";
 import { Skills } from "./components/Skills";
 import cv from "./data/cv.json";
+import { buildSkillUsageMap } from "./utils/skills";
 
 export function App() {
+  const skillUsages = buildSkillUsageMap(cv);
   return (
     <div className="page">
       <main className="container">
@@ -15,7 +17,7 @@ export function App() {
         <Projects projects={cv.projects} />
         <Experience experience={cv.experience} />
         <Education education={cv.education} />
-        <Skills skills={cv.skills} />
+        <Skills skills={cv.skills} usages={skillUsages} />
       </main>
       <footer className="footer container">
         <span>

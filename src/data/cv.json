@@ -21,35 +21,35 @@
       "name": "zag",
       "tagline": "One CLI for all your AI coding agents.",
       "description": "Wraps Claude, Codex, Gemini, Copilot, and Ollama behind a single command so you can switch between them without learning five different CLIs. Adds cross-provider features on top: model size aliases, automatic provider/model selection, git worktree isolation, Docker sandboxing, structured JSON output with schema validation, and unified session logs. Ships as a CLI, a Rust library crate, and SDKs for TypeScript, Python, C#, Swift, Java, and Kotlin.",
-      "stack": ["Rust"],
+      "skills": ["Rust"],
       "repo": "https://github.com/niclaslindstedt/zag"
     },
     {
       "name": "zig",
       "tagline": "Describe workflows. Share them. Run them.",
       "description": "Orchestration CLI for AI coding agents. Describe a workflow in natural language, capture it as a shareable .zwf file, and replay it anywhere with a single command. Embeds zag for the underlying orchestration primitives. Ships with an HTTP API and an embedded React chat UI for designing workflows interactively.",
-      "stack": ["Rust"],
+      "skills": ["Rust"],
       "repo": "https://github.com/niclaslindstedt/zig"
     },
     {
       "name": "zad",
       "tagline": "Agent adapter system.",
       "description": "Connects AI agents to external services (Discord, GitHub, Slack, and more) through scoped service configurations instead of MCP servers. Fine-grained permission files go beyond what upstream APIs offer, with Ed25519-signed policies stored in the OS keychain so an agent with filesystem access can't silently widen its own scope. New providers are a single Rust trait implementation.",
-      "stack": ["Rust"],
+      "skills": ["Rust"],
       "repo": "https://github.com/niclaslindstedt/zad"
     },
     {
       "name": "ztf",
       "tagline": "Complex E2E testing using zag verification.",
       "description": "Agent-assisted end-to-end testing with TOML scenario files. Uses an explicit arrange/act/assert structure with programmatic checks, then optionally delegates nuanced verdicts to an AI reviewer for the cases regex assertions can't cleanly handle. Machine-readable output makes it easy to plug into other tools.",
-      "stack": ["Rust"],
+      "skills": ["Rust"],
       "repo": "https://github.com/niclaslindstedt/ztf"
     },
     {
       "name": "oss-spec",
       "tagline": "Keeps open source projects aligned with a shared spec.",
       "description": "Bootstraps new open source repos against a shared spec, then keeps them aligned over time. A freeform prompt is interpreted into a structured manifest that writes a complete repo to disk — license, docs, CI, release pipelines, and agent conventions — and creates the GitHub remote. Validating an existing repo reports and auto-fixes conformance gaps, or files one GitHub issue per violation.",
-      "stack": ["Rust"],
+      "skills": ["Rust"],
       "repo": "https://github.com/niclaslindstedt/oss-spec"
     }
   ],

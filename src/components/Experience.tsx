@@ -24,6 +24,13 @@ export function Experience({ experience }: Props) {
                 {item.role} · <span className="company">{item.company}</span>
               </h3>
               <p>{item.companyDescription}</p>
+              {item.skills && item.skills.length > 0 && (
+                <ul className="entry-skills">
+                  {item.skills.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              )}
               {item.assignments && item.assignments.length > 0 && (
                 <details className="assignments">
                   <summary>
@@ -45,6 +52,13 @@ export function Experience({ experience }: Props) {
                             <span className="company">{a.client}</span>
                           </h4>
                           <p>{a.clientDescription}</p>
+                          {a.skills && a.skills.length > 0 && (
+                            <ul className="entry-skills">
+                              {a.skills.map((skill) => (
+                                <li key={skill}>{skill}</li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
                       </li>
                     ))}

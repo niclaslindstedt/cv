@@ -71,12 +71,12 @@
     "project": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "tagline", "description", "stack", "repo"],
+      "required": ["name", "tagline", "description", "skills", "repo"],
       "properties": {
         "name": { "type": "string", "minLength": 1 },
         "tagline": { "type": "string", "minLength": 1 },
         "description": { "type": "string", "minLength": 1 },
-        "stack": {
+        "skills": {
           "type": "array",
           "minItems": 1,
           "items": { "type": "string", "minLength": 1 }
@@ -103,6 +103,7 @@
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
         "engagement": { "type": "string", "minLength": 1 },
+        "skills": { "$ref": "#/$defs/stringList" },
         "assignments": {
           "type": "array",
           "minItems": 1,
@@ -127,7 +128,8 @@
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": {
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
-        }
+        },
+        "skills": { "$ref": "#/$defs/stringList" }
       }
     },
     "education": {
@@ -147,7 +149,8 @@
         "level": { "type": "string", "minLength": 1 },
         "credits": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
-        "endDate": { "$ref": "#/$defs/yearMonth" }
+        "endDate": { "$ref": "#/$defs/yearMonth" },
+        "skills": { "$ref": "#/$defs/stringList" }
       }
     },
     "skills": {

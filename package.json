@@ -12,7 +12,8 @@
     "typecheck": "tsc -b --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "validate:cv": "ajv validate -c ajv-formats --spec=draft2020 --strict=false -s schemas/cv.schema.json -d src/data/cv.json"
+    "validate:cv": "ajv validate -c ajv-formats --spec=draft2020 --strict=false -s schemas/cv.schema.json -d src/data/cv.json",
+    "validate:skill-tags": "node scripts/validate-skill-tags.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

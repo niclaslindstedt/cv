@@ -7,7 +7,7 @@ export type Project = {
   name: string;
   tagline: string;
   description: string;
-  stack: string[];
+  skills: string[];
   repo: string;
 };
 
@@ -17,6 +17,7 @@ export type Assignment = {
   clientDescription: string;
   startDate: string;
   endDate: string | null;
+  skills?: string[];
 };
 
 export type Experience = {
@@ -26,6 +27,7 @@ export type Experience = {
   startDate: string;
   endDate: string | null;
   engagement?: string;
+  skills?: string[];
   assignments?: Assignment[];
 };
 
@@ -36,6 +38,7 @@ export type Education = {
   credits: string;
   startDate: string;
   endDate: string;
+  skills?: string[];
 };
 
 export type Skills = {
