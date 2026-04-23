@@ -24,6 +24,33 @@ export function Experience({ experience }: Props) {
                 {item.role} · <span className="company">{item.company}</span>
               </h3>
               <p>{item.companyDescription}</p>
+              {item.assignments && item.assignments.length > 0 && (
+                <details className="assignments">
+                  <summary>
+                    {item.assignments.length} assignment
+                    {item.assignments.length === 1 ? "" : "s"}
+                  </summary>
+                  <ol className="assignments-list">
+                    {item.assignments.map((a) => (
+                      <li
+                        key={`${a.client}-${a.startDate}`}
+                        className="assignment-item"
+                      >
+                        <div className="assignment-meta">
+                          {formatRange(a.startDate, a.endDate)}
+                        </div>
+                        <div className="assignment-body">
+                          <h4>
+                            {a.role} ·{" "}
+                            <span className="company">{a.client}</span>
+                          </h4>
+                          <p>{a.clientDescription}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </details>
+              )}
             </div>
           </li>
         ))}

@@ -101,7 +101,32 @@
         "endDate": {
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
-        "engagement": { "type": "string", "minLength": 1 }
+        "engagement": { "type": "string", "minLength": 1 },
+        "assignments": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/assignment" }
+        }
+      }
+    },
+    "assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "client",
+        "clientDescription",
+        "startDate",
+        "endDate"
+      ],
+      "properties": {
+        "role": { "type": "string", "minLength": 1 },
+        "client": { "type": "string", "minLength": 1 },
+        "clientDescription": { "type": "string", "minLength": 1 },
+        "startDate": { "$ref": "#/$defs/yearMonth" },
+        "endDate": {
+          "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
+        }
       }
     },
     "education": {
