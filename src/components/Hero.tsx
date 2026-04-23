@@ -40,6 +40,14 @@ export function Hero({ cv, theme, onToggleTheme, onOpenTimeline }: Props) {
         </button>
         <button
           type="button"
+          className="hero-download"
+          onClick={() => window.print()}
+          aria-label="Download CV as PDF (opens print dialog)"
+        >
+          Download PDF ↓
+        </button>
+        <button
+          type="button"
           className="theme-toggle"
           onClick={onToggleTheme}
           aria-label={`Switch to ${nextTheme} mode`}
