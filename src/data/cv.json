@@ -29,6 +29,7 @@
     "projects": "Open-source projects",
     "experience": "Experience",
     "education": "Education",
+    "courses": "Courses",
     "skills": "Skills"
   },
   "focus": [
@@ -339,6 +340,29 @@
       "credits": "60 ECTS",
       "startDate": "2010-01",
       "endDate": "2010-12"
+    }
+  ],
+  "courses": [
+    {
+      "name": "Game Programming in Windows – Introduction",
+      "code": "DT108G",
+      "institution": "Mid Sweden University",
+      "credits": "12 ECTS",
+      "completedDate": "2015-08"
+    },
+    {
+      "name": "Game Design",
+      "code": "2AD148",
+      "institution": "Uppsala University",
+      "credits": "7.5 ECTS",
+      "completedDate": "2015-07"
+    },
+    {
+      "name": "Online Introduction to Law",
+      "code": "2JF068",
+      "institution": "Uppsala University",
+      "credits": "15 ECTS",
+      "completedDate": "2015-06"
     }
   ],
   "skills": [
