@@ -11,8 +11,6 @@ import {
 import type { CV } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 
-type Orientation = "horizontal" | "vertical";
-
 type TimelineKind = "experience" | "assignment" | "education";
 
 type TimelineItem = {
@@ -44,10 +42,10 @@ type Props = {
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 8;
 const BASE_MONTH_PX = 14;
-const LANE_SIZE = 48;
-const LANE_GAP = 8;
-const TRACK_HEADER = 26;
-const TRACK_GAP = 18;
+const LANE_SIZE = 40;
+const LANE_GAP = 6;
+const TRACK_HEADER = 22;
+const TRACK_GAP = 10;
 const AXIS_SIZE = 40;
 const MONTH_NAMES = [
   "Jan",
@@ -184,7 +182,6 @@ function buildItems(cv: CV): TimelineItem[] {
 }
 
 export function Timeline({ cv, open, onClose }: Props) {
-  const [orientation, setOrientation] = useState<Orientation>("horizontal");
   const [scale, setScale] = useState(1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -341,7 +338,6 @@ export function Timeline({ cv, open, onClose }: Props) {
   if (!open) return null;
 
   const now = nowMonthIndex();
-  const isHorizontal = orientation === "horizontal";
 
   const yearTicks: { month: number; label: string }[] = [];
   const firstYear = Math.ceil(minMonth / 12);
@@ -361,12 +357,8 @@ export function Timeline({ cv, open, onClose }: Props) {
     }
   }
 
-  const contentWidth = isHorizontal
-    ? axisLength
-    : AXIS_SIZE + trackOffsets.total;
-  const contentHeight = isHorizontal
-    ? AXIS_SIZE + trackOffsets.total
-    : axisLength;
+  const contentWidth = axisLength;
+  const contentHeight = AXIS_SIZE + trackOffsets.total;
 
   const axisPos = (m: number) => (m - minMonth) * monthPx;
 
@@ -377,26 +369,18 @@ export function Timeline({ cv, open, onClose }: Props) {
     const timeLen = Math.max(monthPx * 0.5, (endIdx - startIdx) * monthPx);
     const perpPos = trackOffset + TRACK_HEADER + item.lane * LANE_SIZE;
     const perpSize = LANE_SIZE - LANE_GAP;
-    const style: CSSProperties = isHorizontal
-      ? {
-          left: timePos,
-          width: timeLen,
-          top: perpPos,
-          height: perpSize,
-        }
-      : {
-          top: timePos,
-          height: timeLen,
-          left: perpPos,
-          width: perpSize,
-        };
+    const style: CSSProperties = {
+      left: timePos,
+      width: timeLen,
+      top: perpPos,
+      height: perpSize,
+    };
     const ongoing = item.endDate === null;
     const classes = [
       "timeline-vis-item",
       `timeline-vis-${item.kind}`,
       ongoing ? "is-ongoing" : "",
       selectedId === item.id ? "is-selected" : "",
-      isHorizontal ? "is-h" : "is-v",
     ]
       .filter(Boolean)
       .join(" ");
@@ -424,23 +408,10 @@ export function Timeline({ cv, open, onClose }: Props) {
         <div className="timeline-vis-title">
           <strong>Career timeline</strong>
           <span className="timeline-vis-hint">
-            {isHorizontal ? "Ctrl+scroll to zoom" : "Ctrl+scroll to zoom"} ·
-            pinch on touch · drag to pan
+            Ctrl+scroll to zoom · pinch on touch · drag to pan
           </span>
         </div>
         <div className="timeline-vis-controls">
-          <button
-            type="button"
-            className="timeline-vis-btn"
-            onClick={() =>
-              setOrientation((o) =>
-                o === "horizontal" ? "vertical" : "horizontal",
-              )
-            }
-            aria-label="Toggle orientation"
-          >
-            {isHorizontal ? "⇅ Vertical" : "⇆ Horizontal"}
-          </button>
           <div className="timeline-vis-zoom">
             <button
               type="button"
@@ -486,7 +457,7 @@ export function Timeline({ cv, open, onClose }: Props) {
 
       <div
         ref={viewportRef}
-        className={`timeline-vis-viewport timeline-vis-${orientation}`}
+        className="timeline-vis-viewport"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerEnd}
@@ -498,27 +469,15 @@ export function Timeline({ cv, open, onClose }: Props) {
         >
           <div
             className="timeline-vis-axis"
-            style={
-              isHorizontal
-                ? { left: 0, top: 0, width: axisLength, height: AXIS_SIZE }
-                : {
-                    top: 0,
-                    left: 0,
-                    height: axisLength,
-                    width: AXIS_SIZE,
-                  }
-            }
+            style={{ left: 0, top: 0, width: axisLength, height: AXIS_SIZE }}
           >
             {yearTicks.map((tick) => {
               const pos = axisPos(tick.month);
-              const style: CSSProperties = isHorizontal
-                ? { left: pos }
-                : { top: pos };
               return (
                 <div
                   key={`y-${tick.month}`}
                   className="timeline-vis-tick timeline-vis-tick-year"
-                  style={style}
+                  style={{ left: pos }}
                 >
                   <span className="timeline-vis-tick-label">{tick.label}</span>
                 </div>
@@ -526,14 +485,11 @@ export function Timeline({ cv, open, onClose }: Props) {
             })}
             {monthTicks.map((tick) => {
               const pos = axisPos(tick.month);
-              const style: CSSProperties = isHorizontal
-                ? { left: pos }
-                : { top: pos };
               return (
                 <div
                   key={`m-${tick.month}`}
                   className="timeline-vis-tick timeline-vis-tick-month"
-                  style={style}
+                  style={{ left: pos }}
                 >
                   {showMonthLabels && (
                     <span className="timeline-vis-tick-label">
@@ -547,32 +503,20 @@ export function Timeline({ cv, open, onClose }: Props) {
 
           <div
             className="timeline-vis-tracks"
-            style={
-              isHorizontal
-                ? {
-                    left: 0,
-                    top: AXIS_SIZE,
-                    width: axisLength,
-                    height: trackOffsets.total,
-                  }
-                : {
-                    left: AXIS_SIZE,
-                    top: 0,
-                    width: trackOffsets.total,
-                    height: axisLength,
-                  }
-            }
+            style={{
+              left: 0,
+              top: AXIS_SIZE,
+              width: axisLength,
+              height: trackOffsets.total,
+            }}
           >
             {yearTicks.map((tick) => {
               const pos = axisPos(tick.month);
-              const style: CSSProperties = isHorizontal
-                ? { left: pos, top: 0, bottom: 0 }
-                : { top: pos, left: 0, right: 0 };
               return (
                 <div
                   key={`g-${tick.month}`}
                   className="timeline-vis-gridline"
-                  style={style}
+                  style={{ left: pos, top: 0, bottom: 0 }}
                 />
               );
             })}
@@ -580,26 +524,17 @@ export function Timeline({ cv, open, onClose }: Props) {
             {tracks.map((track, idx) => {
               const offset = trackOffsets.offsets[idx];
               const size = TRACK_HEADER + track.lanes * LANE_SIZE;
-              const bandStyle: CSSProperties = isHorizontal
-                ? {
-                    left: 0,
-                    width: axisLength,
-                    top: offset,
-                    height: size,
-                  }
-                : {
-                    top: 0,
-                    height: axisLength,
-                    left: offset,
-                    width: size,
-                  };
-              const headerStyle: CSSProperties = isHorizontal
-                ? { left: 0, top: offset, height: TRACK_HEADER }
-                : {
-                    top: 0,
-                    left: offset,
-                    width: TRACK_HEADER,
-                  };
+              const bandStyle: CSSProperties = {
+                left: 0,
+                width: axisLength,
+                top: offset,
+                height: size,
+              };
+              const headerStyle: CSSProperties = {
+                left: 0,
+                top: offset,
+                height: TRACK_HEADER,
+              };
               return (
                 <div
                   key={track.key}
