@@ -878,14 +878,14 @@ button.skill-pill-btn:focus-visible {
   position: absolute;
   display: flex;
   align-items: center;
-  padding: 6px 12px;
+  padding: 8px 14px;
   font: inherit;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--fg);
   background: var(--accent-soft);
   border: 1px solid rgba(122, 183, 255, 0.35);
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
   text-align: left;
@@ -930,9 +930,9 @@ button.skill-pill-btn:focus-visible {
 .timeline-vis-item-label {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   min-width: 0;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .timeline-vis-item-title {
