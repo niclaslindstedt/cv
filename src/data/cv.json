@@ -87,12 +87,7 @@
       "name": "oss-spec",
       "tagline": "Keeps open source projects aligned with a shared spec.",
       "description": "Bootstraps new open source repos against a shared spec, then keeps them aligned over time. A freeform prompt is interpreted into a structured manifest that writes a complete repo to disk — license, docs, CI, release pipelines, and agent conventions — and creates the GitHub remote. Validating an existing repo reports and auto-fixes conformance gaps, or files one GitHub issue per violation.",
-      "skills": [
-        "Rust",
-        "Spec-driven development",
-        "AI-driven project bootstrapping",
-        "Spec-compliance validation"
-      ],
+      "skills": ["Rust", "Spec-driven development"],
       "repo": "https://github.com/niclaslindstedt/oss-spec"
     }
   ],
@@ -116,12 +111,10 @@
         "AI Agents",
         "RAG",
         "Chatbots",
-        "AI",
         "Cybersecurity",
         "Software Architecture",
         ".NET",
         "Kubernetes",
-        "APIs",
         "Azure",
         "Mentoring"
       ]
@@ -147,7 +140,6 @@
         "Team Management",
         ".NET",
         "Azure",
-        "DevOps",
         "React",
         "Cybersecurity",
         "GDPR",
@@ -175,17 +167,13 @@
           "stack": ["C#", "Azure", "React", "TypeScript", "Miniservices"],
           "skills": [
             "Scrum",
-            "DevOps",
             "TypeScript",
             "SQL",
             "CI/CD",
             "React",
-            "Problem Solving",
-            "Documentation",
             "Software Architecture",
             "C#",
             "Agile Methodologies",
-            "Communication",
             "Azure DevOps"
           ]
         },
@@ -204,18 +192,14 @@
             "MySQL"
           ],
           "skills": [
-            "DevOps",
             "TypeScript",
             "SQL",
             "CI/CD",
             "Cybersecurity",
             "React",
-            "Problem Solving",
-            "Documentation",
             "Software Architecture",
             "IT Strategy",
-            "Agile Methodologies",
-            "Communication"
+            "Agile Methodologies"
           ]
         },
         {
@@ -233,22 +217,18 @@
             "MySQL"
           ],
           "skills": [
-            "DevOps",
             "TypeScript",
             "SQL",
             "Technical Direction",
             "CI/CD",
             "Cybersecurity",
             "React",
-            "Problem Solving",
-            "Documentation",
             "Software Architecture",
             "Leadership",
             "IT Strategy",
             "Engineering Management",
             "Agile Methodologies",
             "Team Management",
-            "Communication",
             "GDPR",
             "Regulatory Compliance",
             "Technology Roadmapping"
@@ -272,12 +252,10 @@
         "Docker"
       ],
       "skills": [
-        "DevOps",
         "SQL",
         "Technical Direction",
         "CI/CD",
         "Cybersecurity",
-        "Problem Solving",
         "Software Architecture",
         "Leadership",
         "IT Strategy",
@@ -285,8 +263,6 @@
         "C#",
         "Agile Methodologies",
         "Team Management",
-        "New Business Development",
-        "Communication",
         "GDPR",
         "CE marking",
         "Regulatory Compliance",
@@ -310,15 +286,12 @@
         "Microsoft SQL Server"
       ],
       "skills": [
-        "DevOps",
         "TypeScript",
         "SQL",
         "CI/CD",
         "Cybersecurity",
-        "Problem Solving",
         "Software Architecture",
-        "C#",
-        "Communication"
+        "C#"
       ]
     },
     {
@@ -354,12 +327,9 @@
       "label": "AI",
       "items": [
         "Spec-driven development",
-        "AI-driven project bootstrapping",
-        "Spec-compliance validation",
         "Multi-agent orchestration",
         "Agentic Workflows",
         "AI Agents",
-        "AI",
         "Multi-provider LLM integration",
         "Agent sandboxing & isolation",
         "Agent permissions & security",
@@ -413,14 +383,7 @@
     {
       "key": "devops",
       "label": "DevOps",
-      "items": [
-        "DevOps",
-        "Docker",
-        "Kubernetes",
-        "CI/CD",
-        "APIs",
-        "Infrastructure as Code"
-      ]
+      "items": ["Docker", "Kubernetes", "CI/CD", "Infrastructure as Code"]
     },
     {
       "key": "practices",
@@ -430,10 +393,7 @@
         "Microservices",
         "Miniservices",
         "Agile Methodologies",
-        "Scrum",
-        "Problem Solving",
-        "Documentation",
-        "Communication"
+        "Scrum"
       ]
     },
     {
@@ -447,8 +407,7 @@
         "IT Strategy",
         "Technical Direction",
         "Technology Roadmapping",
-        "Project Management",
-        "New Business Development"
+        "Project Management"
       ]
     },
     {
