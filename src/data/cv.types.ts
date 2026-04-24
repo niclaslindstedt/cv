@@ -42,6 +42,7 @@ export type Company = {
   description: string;
   url?: string;
   terminated?: boolean;
+  stack?: string[];
 };
 
 export type Assignment = {
