@@ -490,6 +490,18 @@ a:hover {
   font-size: 0.95rem;
 }
 
+.education-credits {
+  display: inline-block;
+  padding: 1px 10px;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  border-radius: 999px;
+  line-height: 1.4;
+  vertical-align: baseline;
+}
+
 .skills {
   display: grid;
   gap: 20px;
@@ -1390,6 +1402,7 @@ button.skill-pill-btn:focus-visible {
   .project-stack li,
   .project-stack-btn,
   .timeline-engagement,
+  .education-credits,
   .skill-usage-count,
   .assignments > summary {
     background: transparent !important;
