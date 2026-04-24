@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
@@ -17,6 +17,20 @@ export function App() {
   const [timelineOpen, setTimelineOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
+
+  useEffect(() => {
+    document.title = cv.meta.documentTitle;
+    let meta = document.querySelector<HTMLMetaElement>(
+      'meta[name="description"]',
+    );
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "description");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", cv.meta.description);
+  }, []);
+
   return (
     <div className="page">
       <main className="container">
@@ -26,14 +40,24 @@ export function App() {
           onToggleTheme={toggleTheme}
           onOpenTimeline={() => setTimelineOpen(true)}
         />
-        <Focus focus={cv.focus} />
-        <Projects projects={cv.projects} onSkillClick={setSelectedSkill} />
+        <Focus title={cv.sections.focus} focus={cv.focus} />
+        <Projects
+          title={cv.sections.projects}
+          projects={cv.projects}
+          onSkillClick={setSelectedSkill}
+        />
         <Experience
+          title={cv.sections.experience}
           experience={cv.experience}
           onSkillClick={setSelectedSkill}
         />
-        <Education education={cv.education} onSkillClick={setSelectedSkill} />
+        <Education
+          title={cv.sections.education}
+          education={cv.education}
+          onSkillClick={setSelectedSkill}
+        />
         <Skills
+          title={cv.sections.skills}
           skills={cv.skills}
           usages={skillUsages}
           onSkillClick={setSelectedSkill}
