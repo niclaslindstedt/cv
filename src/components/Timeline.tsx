@@ -11,6 +11,7 @@ import {
 import timelineData from "../data/timeline.json";
 import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
+import { useLang } from "../utils/i18n";
 
 type Props = {
   open: boolean;
@@ -28,20 +29,6 @@ const AXIS_SIZE = 40;
 const GH_DAILY_THRESHOLD = 30;
 const GH_WEEKLY_THRESHOLD = 10;
 const GH_DAYS_PER_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-const MONTH_NAMES = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
 
 const layout = timelineData as TimelineData;
 
@@ -61,15 +48,6 @@ function nowMonthIndex(): number {
 
 function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-}
-
-function formatMonthDay(iso: string): string {
-  const [, m, d] = iso.split("-").map(Number);
-  return `${MONTH_NAMES[m - 1]} ${d}`;
-}
-
-function pluralCommits(n: number): string {
-  return `${n} commit${n === 1 ? "" : "s"}`;
 }
 
 function daysInMonth(year: number, month: number): number {
@@ -144,6 +122,7 @@ function ghOpacity(
 }
 
 export function Timeline({ open, onClose }: Props) {
+  const { lang, t, ui } = useLang();
   const [scale, setScale] = useState(1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -295,6 +274,13 @@ export function Timeline({ open, onClose }: Props) {
 
   if (!open) return null;
 
+  const monthNames = ui.months;
+
+  function formatMonthDay(iso: string): string {
+    const [, m, d] = iso.split("-").map(Number);
+    return `${monthNames[m - 1]} ${d}`;
+  }
+
   const now = nowMonthIndex();
 
   const yearTicks: { month: number; label: string }[] = [];
@@ -311,7 +297,7 @@ export function Timeline({ open, onClose }: Props) {
     for (let m = minMonth; m <= maxMonth; m++) {
       if (m % 12 === 0) continue;
       const monthNum = ((m % 12) + 12) % 12;
-      monthTicks.push({ month: m, label: MONTH_NAMES[monthNum] });
+      monthTicks.push({ month: m, label: monthNames[monthNum] });
     }
   }
 
@@ -340,8 +326,11 @@ export function Timeline({ open, onClose }: Props) {
     const height = LANE_SIZE - LANE_GAP;
     const style: CSSProperties = { left, width, top, height };
 
+    const barTitle = t(bar.title);
+    const barSubtitle = t(bar.subtitle);
+
     if (bar.kind === "github" && bar.github) {
-      const year = Number(bar.title);
+      const year = Number(barTitle);
       const mode: "day" | "week" | "month" =
         monthPx >= GH_DAILY_THRESHOLD
           ? "day"
@@ -349,7 +338,10 @@ export function Timeline({ open, onClose }: Props) {
             ? "week"
             : "month";
       const { cells } = computeGhCells(year, bar.github.dailyCommits, monthPx);
-      const ghTitle = `${bar.github.totalCommits} commits in ${year}`;
+      const ghTitle = ui.timeline.commitsInYear(
+        bar.github.totalCommits,
+        barTitle,
+      );
       return (
         <button
           key={bar.id}
@@ -385,9 +377,10 @@ export function Timeline({ open, onClose }: Props) {
       );
     }
 
-    const title = `${bar.title} · ${bar.subtitle}\n${formatRange(
+    const title = `${barTitle} · ${barSubtitle}\n${formatRange(
       bar.startDate,
       bar.endDate,
+      lang,
     )}`;
 
     return (
@@ -401,8 +394,8 @@ export function Timeline({ open, onClose }: Props) {
         title={title}
       >
         <span className="timeline-vis-item-label">
-          <span className="timeline-vis-item-title">{bar.title}</span>
-          <span className="timeline-vis-item-sub">{bar.subtitle}</span>
+          <span className="timeline-vis-item-title">{barTitle}</span>
+          <span className="timeline-vis-item-sub">{barSubtitle}</span>
         </span>
       </button>
     );
@@ -412,10 +405,8 @@ export function Timeline({ open, onClose }: Props) {
     <div className="timeline-vis-overlay" role="dialog" aria-modal="true">
       <div className="timeline-vis-toolbar">
         <div className="timeline-vis-title">
-          <strong>Career timeline</strong>
-          <span className="timeline-vis-hint">
-            Ctrl+scroll to zoom · pinch on touch · drag to pan
-          </span>
+          <strong>{ui.timeline.title}</strong>
+          <span className="timeline-vis-hint">{ui.timeline.hint}</span>
         </div>
         <div className="timeline-vis-controls">
           <div className="timeline-vis-zoom">
@@ -423,7 +414,7 @@ export function Timeline({ open, onClose }: Props) {
               type="button"
               className="timeline-vis-btn"
               onClick={() => zoomAt(1 / 1.3)}
-              aria-label="Zoom out"
+              aria-label={ui.timeline.zoomOut}
             >
               −
             </button>
@@ -434,7 +425,7 @@ export function Timeline({ open, onClose }: Props) {
               type="button"
               className="timeline-vis-btn"
               onClick={() => zoomAt(1.3)}
-              aria-label="Zoom in"
+              aria-label={ui.timeline.zoomIn}
             >
               +
             </button>
@@ -442,16 +433,16 @@ export function Timeline({ open, onClose }: Props) {
               type="button"
               className="timeline-vis-btn"
               onClick={() => setScale(1)}
-              aria-label="Reset zoom"
+              aria-label={ui.timeline.resetZoom}
             >
-              Reset
+              {ui.timeline.reset}
             </button>
           </div>
           <button
             type="button"
             className="timeline-vis-close"
             onClick={handleClose}
-            aria-label="Close timeline"
+            aria-label={ui.timeline.close}
           >
             <span aria-hidden="true">✕</span>
           </button>
@@ -472,7 +463,7 @@ export function Timeline({ open, onClose }: Props) {
                 height: trackHeight[t],
               }}
             >
-              {track.label}
+              {track.label[lang] ?? track.label.en}
             </div>
           ))}
         </div>
@@ -580,47 +571,48 @@ export function Timeline({ open, onClose }: Props) {
                 type="button"
                 className="timeline-vis-btn"
                 onClick={() => setSelectedId(null)}
-                aria-label="Close details"
+                aria-label={ui.timeline.closeDetails}
               >
                 ✕
               </button>
             </div>
-            <h3 className="timeline-vis-details-title">{selectedItem.title}</h3>
+            <h3 className="timeline-vis-details-title">
+              {t(selectedItem.title)}
+            </h3>
             <p className="timeline-vis-details-sub">
               <span className="timeline-vis-commit-pill">
-                {pluralCommits(selectedItem.github.totalCommits)}
+                {ui.timeline.commits(selectedItem.github.totalCommits)}
               </span>
             </p>
             <p className="timeline-vis-details-dates">
-              Jan {selectedItem.title} – Dec {selectedItem.title}
+              {ui.timeline.yearRange(t(selectedItem.title))}
             </p>
             <p className="timeline-vis-details-desc">
-              Busiest month: {MONTH_NAMES[selectedItem.github.busiestMonth - 1]}{" "}
-              ·{" "}
+              {ui.timeline.busiestMonth}:{" "}
+              {monthNames[selectedItem.github.busiestMonth - 1]} ·{" "}
               <span className="timeline-vis-commit-pill">
-                {pluralCommits(selectedItem.github.busiestMonthCount)}
+                {ui.timeline.commits(selectedItem.github.busiestMonthCount)}
               </span>
               <br />
-              Busiest week:{" "}
+              {ui.timeline.busiestWeek}:{" "}
               {formatMonthDay(selectedItem.github.busiestWeekStart)} ·{" "}
               <span className="timeline-vis-commit-pill">
-                {pluralCommits(selectedItem.github.busiestWeekCount)}
+                {ui.timeline.commits(selectedItem.github.busiestWeekCount)}
               </span>
               <br />
-              Busiest day: {formatMonthDay(
-                selectedItem.github.busiestDay,
-              )} ·{" "}
+              {ui.timeline.busiestDay}:{" "}
+              {formatMonthDay(selectedItem.github.busiestDay)} ·{" "}
               <span className="timeline-vis-commit-pill">
-                {pluralCommits(selectedItem.github.busiestDayCount)}
+                {ui.timeline.commits(selectedItem.github.busiestDayCount)}
               </span>
             </p>
             <a
               className="timeline-vis-details-link"
-              href={`${selectedItem.github.profileUrl}?tab=overview&from=${selectedItem.title}-01-01&to=${selectedItem.title}-12-31`}
+              href={`${selectedItem.github.profileUrl}?tab=overview&from=${t(selectedItem.title)}-01-01&to=${t(selectedItem.title)}-12-31`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              View on GitHub →
+              {ui.timeline.viewOnGitHub}
             </a>
             <p className="timeline-vis-details-when">
               @{selectedItem.github.username}
@@ -634,24 +626,26 @@ export function Timeline({ open, onClose }: Props) {
               className={`timeline-vis-pill timeline-vis-${selectedItem.kind}`}
             >
               {selectedItem.kind === "experience"
-                ? "Job"
+                ? ui.timeline.job
                 : selectedItem.kind === "assignment"
-                  ? "Assignment"
-                  : "Education"}
+                  ? ui.timeline.assignment
+                  : ui.timeline.education}
             </span>
             <button
               type="button"
               className="timeline-vis-btn"
               onClick={() => setSelectedId(null)}
-              aria-label="Close details"
+              aria-label={ui.timeline.closeDetails}
             >
               ✕
             </button>
           </div>
-          <h3 className="timeline-vis-details-title">{selectedItem.title}</h3>
-          <p className="timeline-vis-details-sub">{selectedItem.subtitle}</p>
+          <h3 className="timeline-vis-details-title">
+            {t(selectedItem.title)}
+          </h3>
+          <p className="timeline-vis-details-sub">{t(selectedItem.subtitle)}</p>
           <p className="timeline-vis-details-dates">
-            {formatRange(selectedItem.startDate, selectedItem.endDate)}
+            {formatRange(selectedItem.startDate, selectedItem.endDate, lang)}
             <span className="timeline-vis-details-duration">
               {" · "}
               {formatDuration(
@@ -659,17 +653,21 @@ export function Timeline({ open, onClose }: Props) {
                 selectedItem.isOngoing
                   ? now
                   : monthIndex(selectedItem.endDate ?? selectedItem.startDate),
+                ui.timeline.yUnit,
+                ui.timeline.mUnit,
               )}
             </span>
           </p>
-          {selectedItem.description && (
+          {t(selectedItem.description) && (
             <p className="timeline-vis-details-desc">
-              {selectedItem.description}
+              {t(selectedItem.description)}
             </p>
           )}
           {selectedItem.skills.length > 0 ? (
             <>
-              <h4 className="timeline-vis-details-skills-title">Skills used</h4>
+              <h4 className="timeline-vis-details-skills-title">
+                {ui.timeline.skillsUsed}
+              </h4>
               <ul className="timeline-vis-details-skills">
                 {selectedItem.skills.map((skill) => (
                   <li key={skill}>{skill}</li>
@@ -677,12 +675,10 @@ export function Timeline({ open, onClose }: Props) {
               </ul>
             </>
           ) : (
-            <p className="timeline-vis-details-empty">
-              No skills tagged on this entry.
-            </p>
+            <p className="timeline-vis-details-empty">{ui.timeline.noSkills}</p>
           )}
           <p className="timeline-vis-details-when">
-            Starts {formatMonth(selectedItem.startDate)}
+            {ui.timeline.starts} {formatMonth(selectedItem.startDate, lang)}
           </p>
         </aside>
       )}
@@ -690,12 +686,19 @@ export function Timeline({ open, onClose }: Props) {
   );
 }
 
-function formatDuration(startMonth: number, endMonth: number): string {
+function formatDuration(
+  startMonth: number,
+  endMonth: number,
+  yUnit: string,
+  mUnit: string,
+): string {
   const total = Math.max(0, endMonth - startMonth);
   const years = Math.floor(total / 12);
   const months = total % 12;
+  const ySep = yUnit.length > 1 ? " " : "";
+  const mSep = mUnit.length > 1 ? " " : "";
   const parts: string[] = [];
-  if (years > 0) parts.push(`${years}y`);
-  if (months > 0 || years === 0) parts.push(`${months}m`);
+  if (years > 0) parts.push(`${years}${ySep}${yUnit}`);
+  if (months > 0 || years === 0) parts.push(`${months}${mSep}${mUnit}`);
   return parts.join(" ");
 }

@@ -1,3 +1,5 @@
+import type { LocalizedString } from "./cv.types";
+
 export type TimelineKind = "experience" | "assignment" | "education" | "github";
 
 export type TimelineSegment = {
@@ -23,9 +25,9 @@ export type GitHubPayload = {
 export type TimelineBar = {
   id: string;
   kind: TimelineKind;
-  title: string;
-  subtitle: string;
-  description: string;
+  title: LocalizedString;
+  subtitle: LocalizedString;
+  description: LocalizedString;
   skills: string[];
   startDate: string;
   endDate: string | null;
@@ -37,7 +39,7 @@ export type TimelineBar = {
 
 export type TimelineTrack = {
   key: TimelineKind;
-  label: string;
+  label: LocalizedString;
   bars: TimelineBar[];
 };
 

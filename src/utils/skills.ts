@@ -1,9 +1,9 @@
-import type { CV, Company } from "../data/cv.types";
+import type { CV, Company, LocalizedString } from "../data/cv.types";
 
 export type SkillUsage = {
   kind: "project" | "experience" | "assignment" | "education";
-  label: string;
-  role?: string;
+  label: string | LocalizedString;
+  role?: LocalizedString;
   startDate?: string;
   endDate?: string | null;
 };
@@ -124,11 +124,4 @@ export function yearsOfExperience(
   if (curEnd > curStart) totalMonths += curEnd - curStart;
 
   return totalMonths / 12;
-}
-
-export function formatYearsOfExperience(years: number): string {
-  if (years <= 0) return "no recorded experience";
-  if (years < 1) return "< 1 year";
-  const rounded = Math.round(years);
-  return rounded === 1 ? "1 year" : `${rounded} years`;
 }

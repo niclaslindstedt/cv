@@ -1,23 +1,20 @@
 import { useEffect } from "react";
 
+import type { LocalizedString } from "../data/cv.types";
 import { formatRange } from "../utils/date";
-import {
-  formatYearsOfExperience,
-  yearsOfExperience,
-  type SkillUsage,
-} from "../utils/skills";
+import { useLang } from "../utils/i18n";
+import { yearsOfExperience, type SkillUsage } from "../utils/skills";
+
+function isLocalized(
+  value: string | LocalizedString,
+): value is LocalizedString {
+  return typeof value === "object" && value !== null && "en" in value;
+}
 
 type Props = {
   skill: string | null;
   usages: SkillUsage[];
   onClose: () => void;
-};
-
-const KIND_LABELS: Record<SkillUsage["kind"], string> = {
-  project: "Project",
-  experience: "Role",
-  assignment: "Assignment",
-  education: "Education",
 };
 
 const KIND_ORDER: Record<SkillUsage["kind"], number> = {
@@ -39,6 +36,11 @@ function sortUsages(usages: SkillUsage[]): SkillUsage[] {
 }
 
 export function SkillModal({ skill, usages, onClose }: Props) {
+  const { lang, t, ui } = useLang();
+
+  const resolveLabel = (v: string | LocalizedString) =>
+    isLocalized(v) ? t(v) : v;
+
   useEffect(() => {
     if (!skill) return;
     const onKey = (e: KeyboardEvent) => {
@@ -62,12 +64,19 @@ export function SkillModal({ skill, usages, onClose }: Props) {
   const years = yearsOfExperience(usages);
   const sorted = sortUsages(usages);
 
+  const kindLabels: Record<SkillUsage["kind"], string> = {
+    project: ui.skillModal.project,
+    experience: ui.skillModal.role,
+    assignment: ui.skillModal.assignment,
+    education: ui.skillModal.education,
+  };
+
   return (
     <div
       className="skill-modal-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label={`${skill} usage`}
+      aria-label={ui.skillModal.usageAria(skill)}
       onClick={onClose}
     >
       <div className="skill-modal" onClick={(e) => e.stopPropagation()}>
@@ -76,7 +85,7 @@ export function SkillModal({ skill, usages, onClose }: Props) {
             <span className="skill-modal-name">{skill}</span>
             {years > 0 && (
               <span className="skill-modal-years">
-                {formatYearsOfExperience(years)}
+                {ui.skillModal.yearsLabel(years)}
               </span>
             )}
           </h2>
@@ -84,7 +93,7 @@ export function SkillModal({ skill, usages, onClose }: Props) {
             type="button"
             className="skill-modal-close"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={ui.skillModal.close}
           >
             ✕
           </button>
@@ -92,33 +101,32 @@ export function SkillModal({ skill, usages, onClose }: Props) {
         {sorted.length > 0 ? (
           <ul className="skill-modal-list">
             {sorted.map((u, i) => (
-              <li
-                key={`${u.kind}-${u.label}-${i}`}
-                className="skill-modal-item"
-              >
-                <span className="skill-modal-kind">{KIND_LABELS[u.kind]}</span>
+              <li key={`${u.kind}-${i}`} className="skill-modal-item">
+                <span className="skill-modal-kind">{kindLabels[u.kind]}</span>
                 <div className="skill-modal-label">
                   {u.role ? (
                     <>
-                      <span className="skill-modal-role">{u.role}</span>
-                      <span className="skill-modal-sublabel">{u.label}</span>
+                      <span className="skill-modal-role">{t(u.role)}</span>
+                      <span className="skill-modal-sublabel">
+                        {resolveLabel(u.label)}
+                      </span>
                     </>
                   ) : (
-                    <span className="skill-modal-role">{u.label}</span>
+                    <span className="skill-modal-role">
+                      {resolveLabel(u.label)}
+                    </span>
                   )}
                 </div>
                 {u.startDate && (
                   <span className="skill-modal-range">
-                    {formatRange(u.startDate, u.endDate ?? null)}
+                    {formatRange(u.startDate, u.endDate ?? null, lang)}
                   </span>
                 )}
               </li>
             ))}
           </ul>
         ) : (
-          <p className="skill-modal-empty">
-            No recorded usage in experience, assignments, or education yet.
-          </p>
+          <p className="skill-modal-empty">{ui.skillModal.empty}</p>
         )}
       </div>
     </div>

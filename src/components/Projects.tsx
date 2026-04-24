@@ -1,4 +1,5 @@
 import type { Project } from "../data/cv.types";
+import { useLang } from "../utils/i18n";
 import { Section } from "./Section";
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
 };
 
 export function Projects({ title, projects, onSkillClick }: Props) {
+  const { t } = useLang();
   return (
     <Section id="projects" title={title}>
       <div className="projects">
@@ -19,9 +21,9 @@ export function Projects({ title, projects, onSkillClick }: Props) {
                   {project.name}
                 </a>
               </h3>
-              <p className="project-tagline">{project.tagline}</p>
+              <p className="project-tagline">{t(project.tagline)}</p>
             </header>
-            <p className="project-description">{project.description}</p>
+            <p className="project-description">{t(project.description)}</p>
             {project.stack && project.stack.length > 0 && (
               <ul className="project-stack">
                 {project.stack.map((tech) => (

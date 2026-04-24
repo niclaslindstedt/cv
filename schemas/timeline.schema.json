@@ -24,6 +24,15 @@
       "type": "string",
       "enum": ["experience", "assignment", "education", "github"]
     },
+    "localizedString": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "sv"],
+      "properties": {
+        "en": { "type": "string" },
+        "sv": { "type": "string" }
+      }
+    },
     "isoMonth": {
       "type": "string",
       "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
@@ -47,7 +56,7 @@
       "required": ["key", "label", "bars"],
       "properties": {
         "key": { "$ref": "#/$defs/kind" },
-        "label": { "type": "string", "minLength": 1 },
+        "label": { "$ref": "#/$defs/localizedString" },
         "bars": {
           "type": "array",
           "items": { "$ref": "#/$defs/bar" }
@@ -73,9 +82,9 @@
       "properties": {
         "id": { "type": "string", "minLength": 1 },
         "kind": { "$ref": "#/$defs/kind" },
-        "title": { "type": "string" },
-        "subtitle": { "type": "string" },
-        "description": { "type": "string" },
+        "title": { "$ref": "#/$defs/localizedString" },
+        "subtitle": { "$ref": "#/$defs/localizedString" },
+        "description": { "$ref": "#/$defs/localizedString" },
         "skills": {
           "type": "array",
           "items": { "type": "string" }

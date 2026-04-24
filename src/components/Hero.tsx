@@ -1,4 +1,5 @@
-import type { CV } from "../data/cv.types";
+import type { CV, Language } from "../data/cv.types";
+import { useLang } from "../utils/i18n";
 import type { Theme } from "../utils/theme";
 
 type Props = {
@@ -9,14 +10,16 @@ type Props = {
 };
 
 export function Hero({ cv, theme, onToggleTheme, onOpenTimeline }: Props) {
-  const nextTheme = theme === "dark" ? "light" : "dark";
+  const { lang, setLang, t, ui } = useLang();
+  const themeLabel =
+    theme === "dark" ? ui.theme.switchToLight : ui.theme.switchToDark;
   return (
     <header className="hero">
-      <p className="hero-eyebrow">{cv.title}</p>
+      <p className="hero-eyebrow">{t(cv.title)}</p>
       <h1 className="hero-name">{cv.name}</h1>
-      <p className="hero-summary">{cv.summary}</p>
+      <p className="hero-summary">{t(cv.summary)}</p>
       <div className="hero-meta">
-        <span>{cv.location}</span>
+        <span>{t(cv.location)}</span>
         {cv.links.map((link) => (
           <a
             key={link.url}
@@ -25,7 +28,7 @@ export function Hero({ cv, theme, onToggleTheme, onOpenTimeline }: Props) {
             target="_blank"
             rel="noreferrer"
           >
-            {link.label}
+            {t(link.label)}
           </a>
         ))}
         <button
@@ -33,27 +36,99 @@ export function Hero({ cv, theme, onToggleTheme, onOpenTimeline }: Props) {
           className="hero-timeline-btn"
           onClick={onOpenTimeline}
         >
-          {cv.actions.timeline}
+          {t(cv.actions.timeline)}
         </button>
         <button
           type="button"
           className="hero-download"
           onClick={() => window.print()}
-          aria-label="Download CV as PDF (opens print dialog)"
+          aria-label={ui.hero.downloadAria}
         >
-          {cv.actions.downloadPdf}
+          {t(cv.actions.downloadPdf)}
         </button>
+        <LanguageToggle lang={lang} setLang={setLang} />
         <button
           type="button"
           className="theme-toggle"
           onClick={onToggleTheme}
-          aria-label={`Switch to ${nextTheme} mode`}
-          title={`Switch to ${nextTheme} mode`}
+          aria-label={themeLabel}
+          title={themeLabel}
         >
           {theme === "dark" ? <SunIcon /> : <MoonIcon />}
         </button>
       </div>
     </header>
+  );
+}
+
+function LanguageToggle({
+  lang,
+  setLang,
+}: {
+  lang: Language;
+  setLang: (lang: Language) => void;
+}) {
+  const { ui } = useLang();
+  return (
+    <div className="lang-toggle" role="group" aria-label="Language">
+      <button
+        type="button"
+        className="lang-toggle-btn"
+        aria-pressed={lang === "en"}
+        aria-label={ui.hero.languageEnglish}
+        title={ui.hero.languageEnglish}
+        onClick={() => setLang("en")}
+      >
+        <FlagEN />
+      </button>
+      <button
+        type="button"
+        className="lang-toggle-btn"
+        aria-pressed={lang === "sv"}
+        aria-label={ui.hero.languageSwedish}
+        title={ui.hero.languageSwedish}
+        onClick={() => setLang("sv")}
+      >
+        <FlagSV />
+      </button>
+    </div>
+  );
+}
+
+function FlagEN() {
+  return (
+    <svg viewBox="0 0 60 30" aria-hidden="true" role="img">
+      <clipPath id="flag-en-clip">
+        <rect width="60" height="30" rx="3" />
+      </clipPath>
+      <g clipPath="url(#flag-en-clip)">
+        <rect width="60" height="30" fill="#012169" />
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6" />
+        <path
+          d="M0,0 L60,30 M60,0 L0,30"
+          stroke="#C8102E"
+          strokeWidth="2"
+          clipPath="url(#flag-en-clip)"
+        />
+        <path d="M30,0 V30 M0,15 H60" stroke="#fff" strokeWidth="10" />
+        <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6" />
+      </g>
+    </svg>
+  );
+}
+
+function FlagSV() {
+  return (
+    <svg viewBox="0 0 60 30" aria-hidden="true" role="img">
+      <clipPath id="flag-sv-clip">
+        <rect width="60" height="30" rx="3" />
+      </clipPath>
+      <g clipPath="url(#flag-sv-clip)">
+        <rect width="60" height="30" fill="#006AA7" />
+        <rect x="18" width="6" height="30" fill="#FECC00" />
+        <rect y="12" width="60" height="6" fill="#FECC00" />
+      </g>
+    </svg>
   );
 }
 
