@@ -1,12 +1,18 @@
 :root {
   --bg: #0b0d10;
   --bg-elev: #12151a;
+  --glass-bg: rgba(18, 21, 26, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --glass-highlight: rgba(255, 255, 255, 0.04);
+  --orb-1: rgba(122, 183, 255, 0.22);
+  --orb-2: rgba(180, 130, 255, 0.16);
+  --orb-3: rgba(120, 220, 200, 0.12);
   --border: #1f242c;
   --fg: #e6e9ef;
   --fg-muted: #8a93a1;
   --accent: #7ab7ff;
   --accent-soft: rgba(122, 183, 255, 0.12);
-  --overlay: rgba(8, 10, 13, 0.92);
+  --overlay: rgba(8, 10, 13, 0.72);
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
   --radius: 10px;
   --max-width: 860px;
@@ -25,14 +31,20 @@
 }
 
 :root[data-theme="light"] {
-  --bg: #ffffff;
+  --bg: #f6f8fb;
   --bg-elev: #f4f6f9;
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-border: rgba(11, 13, 16, 0.06);
+  --glass-highlight: rgba(255, 255, 255, 0.6);
+  --orb-1: rgba(0, 98, 204, 0.14);
+  --orb-2: rgba(180, 120, 220, 0.12);
+  --orb-3: rgba(80, 180, 160, 0.1);
   --border: #e1e5ec;
   --fg: #0b0d10;
   --fg-muted: #5a6270;
   --accent: #0062cc;
   --accent-soft: rgba(0, 98, 204, 0.1);
-  --overlay: rgba(244, 246, 249, 0.92);
+  --overlay: rgba(244, 246, 249, 0.72);
   --shadow: 0 12px 40px rgba(11, 13, 16, 0.15);
   color-scheme: light;
 }
@@ -51,6 +63,44 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -15%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(40vmax 40vmax at 18% 12%, var(--orb-1), transparent 60%),
+    radial-gradient(38vmax 38vmax at 82% 28%, var(--orb-2), transparent 60%),
+    radial-gradient(45vmax 45vmax at 58% 88%, var(--orb-3), transparent 60%);
+  filter: blur(30px) saturate(120%);
+  animation: orb-drift 42s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes orb-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-3%, 2%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(3%, -2%, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
+}
+
 a {
   color: var(--accent);
   text-decoration: none;
@@ -61,8 +111,15 @@ a:hover {
 }
 
 .page {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   padding: 48px 24px 64px;
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
 }
 
 .container {
@@ -150,9 +207,11 @@ a:hover {
   align-items: baseline;
   gap: 12px;
   padding: 10px 14px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  background: var(--bg-elev);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
 }
 
 .focus-area {
@@ -171,9 +230,11 @@ a:hover {
 
 .project {
   padding: 20px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  background: var(--bg-elev);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
 }
 
 .project-head {
@@ -806,7 +867,8 @@ button.skill-pill-btn:focus-visible {
   display: grid;
   grid-template-rows: auto 1fr;
   background: var(--overlay);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
   color: var(--fg);
 }
 
@@ -1131,8 +1193,10 @@ button.skill-pill-btn:focus-visible {
   max-height: 60vh;
   overflow: auto;
   padding: 16px 18px;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   z-index: 10;
@@ -1280,7 +1344,8 @@ button.skill-pill-btn:focus-visible {
   place-items: center;
   padding: 24px;
   background: var(--overlay);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
 }
 
 .skill-modal {
@@ -1289,8 +1354,10 @@ button.skill-pill-btn:focus-visible {
   max-height: min(640px, calc(100dvh - 48px));
   display: grid;
   grid-template-rows: auto 1fr;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
@@ -1303,8 +1370,8 @@ button.skill-pill-btn:focus-visible {
   justify-content: space-between;
   gap: 12px;
   padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-elev);
+  border-bottom: 1px solid var(--glass-border);
+  background: var(--glass-highlight);
 }
 
 .skill-modal-title {
@@ -1475,6 +1542,12 @@ button.skill-pill-btn:focus-visible {
   :root[data-theme="light"] {
     --bg: #ffffff;
     --bg-elev: #ffffff;
+    --glass-bg: #ffffff;
+    --glass-border: #cccccc;
+    --glass-highlight: #ffffff;
+    --orb-1: transparent;
+    --orb-2: transparent;
+    --orb-3: transparent;
     --border: #cccccc;
     --fg: #111111;
     --fg-muted: #444444;
@@ -1487,6 +1560,20 @@ button.skill-pill-btn:focus-visible {
   body {
     background: #ffffff;
     color: #111111;
+  }
+
+  body::before {
+    display: none;
+  }
+
+  .focus-list li,
+  .project,
+  .timeline-vis-details,
+  .skill-modal,
+  .skill-modal-overlay,
+  .timeline-vis-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   body {
