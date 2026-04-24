@@ -60,6 +60,29 @@ All developer entry points are exposed via `make`:
 automatically on `npm ci`, `npm run build`, `npm run dev`, `npm run lint`,
 and `npm run typecheck`, or on demand via `make generate`.
 
+## Structure
+
+```
+src/
+├── App.tsx              # root component — composes CV sections in order
+├── main.tsx             # React 18 entry, mounts <App /> into #root
+├── output.ts            # shared console output helpers
+├── styles.css           # global CSS (includes print-optimised CV styles)
+├── components/          # Hero, Focus, Projects, Experience, Skills,
+│                        # Education, Timeline, SkillModal, Section
+├── data/
+│   ├── cv.json          # CV content (validated against schemas/cv.schema.json)
+│   ├── cv.types.ts      # types mirroring the CV schema
+│   └── timeline.types.ts
+└── utils/               # date, skills, and theme helpers
+```
+
+Top-level supporting directories: `schemas/` (JSON schemas), `scripts/`
+(timeline generator, release helpers, validators), `docs/` (contributor
+guides), and `.agent/skills/` (Claude maintenance skills, symlinked from
+`.claude/skills/`). See [AGENTS.md](AGENTS.md) for architecture rules and
+dependency direction.
+
 ## Configuration
 
 No runtime config file. All content is edited directly in `src/data/cv.json`
