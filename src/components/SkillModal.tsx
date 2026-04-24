@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 
-import { formatMonth, formatRange } from "../utils/date";
-import { firstUsedDate, type SkillUsage } from "../utils/skills";
+import { formatRange } from "../utils/date";
+import {
+  formatYearsOfExperience,
+  yearsOfExperience,
+  type SkillUsage,
+} from "../utils/skills";
 
 type Props = {
   skill: string | null;
@@ -55,7 +59,7 @@ export function SkillModal({ skill, usages, onClose }: Props) {
 
   if (!skill) return null;
 
-  const since = firstUsedDate(usages);
+  const years = yearsOfExperience(usages);
   const sorted = sortUsages(usages);
 
   return (
@@ -70,9 +74,9 @@ export function SkillModal({ skill, usages, onClose }: Props) {
         <header className="skill-modal-head">
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{skill}</span>
-            {since && (
-              <span className="skill-modal-since">
-                since {formatMonth(since)}
+            {years > 0 && (
+              <span className="skill-modal-years">
+                {formatYearsOfExperience(years)}
               </span>
             )}
           </h2>
