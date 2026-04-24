@@ -586,21 +586,33 @@ export function Timeline({ open, onClose }: Props) {
               </button>
             </div>
             <h3 className="timeline-vis-details-title">{selectedItem.title}</h3>
-            <p className="timeline-vis-details-sub">{selectedItem.subtitle}</p>
+            <p className="timeline-vis-details-sub">
+              <span className="timeline-vis-commit-pill">
+                {pluralCommits(selectedItem.github.totalCommits)}
+              </span>
+            </p>
             <p className="timeline-vis-details-dates">
               Jan {selectedItem.title} – Dec {selectedItem.title}
             </p>
             <p className="timeline-vis-details-desc">
               Busiest month: {MONTH_NAMES[selectedItem.github.busiestMonth - 1]}{" "}
-              · {pluralCommits(selectedItem.github.busiestMonthCount)}
+              ·{" "}
+              <span className="timeline-vis-commit-pill">
+                {pluralCommits(selectedItem.github.busiestMonthCount)}
+              </span>
               <br />
               Busiest week:{" "}
               {formatMonthDay(selectedItem.github.busiestWeekStart)} ·{" "}
-              {pluralCommits(selectedItem.github.busiestWeekCount)}
+              <span className="timeline-vis-commit-pill">
+                {pluralCommits(selectedItem.github.busiestWeekCount)}
+              </span>
               <br />
               Busiest day: {formatMonthDay(
                 selectedItem.github.busiestDay,
-              )} · {pluralCommits(selectedItem.github.busiestDayCount)}
+              )} ·{" "}
+              <span className="timeline-vis-commit-pill">
+                {pluralCommits(selectedItem.github.busiestDayCount)}
+              </span>
             </p>
             <a
               className="timeline-vis-details-link"
