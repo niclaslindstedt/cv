@@ -174,22 +174,34 @@ function buildLayout(cv) {
     prepared.filter((p) => p.kind === def.key),
   );
 
+  for (const bars of byTrack) {
+    const sorted = [...bars].sort((a, b) => {
+      if (a.barStart !== b.barStart) return a.barStart - b.barStart;
+      return a.id.localeCompare(b.id);
+    });
+    const laneEnds = [];
+    for (const bar of sorted) {
+      let laneIdx = laneEnds.findIndex((end) => end <= bar.barStart);
+      if (laneIdx === -1) {
+        laneIdx = laneEnds.length;
+        laneEnds.push(0);
+      }
+      laneEnds[laneIdx] = bar.barEndExclusive;
+      bar.lane = laneIdx;
+    }
+  }
+
   const intervals = [];
   for (let i = 0; i < breakpoints.length - 1; i++) {
     const startMonth = breakpoints[i];
     const endMonth = breakpoints[i + 1];
     const trackActiveCounts = [];
     for (let t = 0; t < trackDefs.length; t++) {
-      const active = byTrack[t]
-        .filter(
-          (p) => p.barStart <= startMonth && p.barEndExclusive >= endMonth,
-        )
-        .sort((a, b) => {
-          if (a.barStart !== b.barStart) return a.barStart - b.barStart;
-          return a.id.localeCompare(b.id);
-        });
-      active.forEach((p, idx) => {
-        p.segments.push({ startMonth, endMonth, activeLane: idx });
+      const active = byTrack[t].filter(
+        (p) => p.barStart <= startMonth && p.barEndExclusive >= endMonth,
+      );
+      active.forEach((p) => {
+        p.segments.push({ startMonth, endMonth, activeLane: p.lane });
       });
       trackActiveCounts.push(active.length);
     }
