@@ -16,6 +16,7 @@
     "sections",
     "focus",
     "projects",
+    "companies",
     "experience",
     "education",
     "skills"
@@ -42,6 +43,11 @@
       "type": "array",
       "minItems": 1,
       "items": { "$ref": "#/$defs/project" }
+    },
+    "companies": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/company" }
     },
     "experience": {
       "type": "array",
@@ -130,20 +136,29 @@
         "repo": { "type": "string", "format": "uri" }
       }
     },
+    "company": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "description"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "description": "Stable slug used to reference this company from experience/assignment entries."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "terminated": { "type": "boolean" }
+      }
+    },
     "experience": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "role",
-        "company",
-        "companyDescription",
-        "startDate",
-        "endDate"
-      ],
+      "required": ["role", "companyId", "startDate", "endDate"],
       "properties": {
         "role": { "type": "string", "minLength": 1 },
-        "company": { "type": "string", "minLength": 1 },
-        "companyDescription": { "type": "string", "minLength": 1 },
+        "companyId": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": {
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
@@ -161,17 +176,10 @@
     "assignment": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "role",
-        "client",
-        "clientDescription",
-        "startDate",
-        "endDate"
-      ],
+      "required": ["role", "clientId", "startDate", "endDate"],
       "properties": {
         "role": { "type": "string", "minLength": 1 },
-        "client": { "type": "string", "minLength": 1 },
-        "clientDescription": { "type": "string", "minLength": 1 },
+        "clientId": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": {
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]

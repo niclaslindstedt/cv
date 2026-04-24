@@ -91,11 +91,58 @@
       "repo": "https://github.com/niclaslindstedt/oss-spec"
     }
   ],
+  "companies": [
+    {
+      "id": "bookbeat",
+      "name": "BookBeat AB",
+      "description": "Audiobook streaming service with over 1 million users.",
+      "url": "https://www.bookbeat.com"
+    },
+    {
+      "id": "ibnq",
+      "name": "IBNQ AB",
+      "description": "Digitalizing family offices.",
+      "terminated": true
+    },
+    {
+      "id": "etimo",
+      "name": "Etimo AB",
+      "description": "IT consultancy specialized in .NET and JavaScript web applications."
+    },
+    {
+      "id": "seb",
+      "name": "SEB",
+      "description": "Major Swedish bank; worked in the private loans team.",
+      "url": "https://www.seb.se"
+    },
+    {
+      "id": "mitt-skolval",
+      "name": "Mitt Skolval",
+      "description": "Edutech startup digitalizing school selection for Swedish municipalities.",
+      "url": "https://www.swedutech.se"
+    },
+    {
+      "id": "symptoms",
+      "name": "Symptoms Europe AB",
+      "description": "eHealth startup focused on patient-doctor communication.",
+      "url": "https://www.symptoms.se"
+    },
+    {
+      "id": "indicio",
+      "name": "Indicio Technologies AB",
+      "description": "FinTech startup building a forecasting platform.",
+      "url": "https://www.indicio.com"
+    },
+    {
+      "id": "agilator",
+      "name": "Agilator AB",
+      "description": "Solo consulting firm for startup engagements."
+    }
+  ],
   "experience": [
     {
       "role": "IT Architect",
-      "company": "BookBeat AB",
-      "companyDescription": "Audiobook streaming service with over 1 million users.",
+      "companyId": "bookbeat",
       "startDate": "2024-04",
       "endDate": null,
       "stack": [
@@ -118,8 +165,7 @@
     },
     {
       "role": "CTO",
-      "company": "IBNQ AB",
-      "companyDescription": "Digitalizing family offices.",
+      "companyId": "ibnq",
       "startDate": "2023-09",
       "endDate": "2024-04",
       "stack": [
@@ -145,16 +191,14 @@
     },
     {
       "role": "Senior Manager",
-      "company": "Etimo AB",
-      "companyDescription": "IT consultancy specialized in .NET and JavaScript web applications.",
+      "companyId": "etimo",
       "startDate": "2020-01",
       "endDate": "2023-09",
       "skills": ["Mentoring"],
       "assignments": [
         {
           "role": "Senior Developer",
-          "client": "SEB",
-          "clientDescription": "Major Swedish bank; worked in the private loans team.",
+          "clientId": "seb",
           "startDate": "2020-02",
           "endDate": "2020-12",
           "stack": ["C#/.NET", "Azure", "React", "TypeScript", "Miniservices"],
@@ -169,8 +213,7 @@
         },
         {
           "role": "Senior Developer",
-          "client": "Mitt Skolval",
-          "clientDescription": "Edutech startup digitalizing school selection for Swedish municipalities.",
+          "clientId": "mitt-skolval",
           "startDate": "2021-01",
           "endDate": "2021-05",
           "stack": [
@@ -191,8 +234,7 @@
         },
         {
           "role": "CTO",
-          "client": "Mitt Skolval",
-          "clientDescription": "Edutech startup digitalizing school selection for Swedish municipalities.",
+          "clientId": "mitt-skolval",
           "startDate": "2021-06",
           "endDate": "2023-09",
           "stack": [
@@ -221,8 +263,7 @@
     },
     {
       "role": "CTO & Co-Founder",
-      "company": "Symptoms Europe AB",
-      "companyDescription": "eHealth startup focused on patient-doctor communication.",
+      "companyId": "symptoms",
       "startDate": "2015-11",
       "endDate": "2020-01",
       "engagement": "half-time",
@@ -253,8 +294,7 @@
     },
     {
       "role": "Senior Software Engineer",
-      "company": "Indicio Technologies AB",
-      "companyDescription": "FinTech startup building a forecasting platform.",
+      "companyId": "indicio",
       "startDate": "2015-09",
       "endDate": "2020-01",
       "engagement": "half-time",
@@ -269,8 +309,7 @@
     },
     {
       "role": "Founder",
-      "company": "Agilator AB",
-      "companyDescription": "Solo consulting firm for startup engagements.",
+      "companyId": "agilator",
       "startDate": "2016-02",
       "endDate": null,
       "engagement": "part-time"

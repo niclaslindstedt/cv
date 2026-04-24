@@ -36,10 +36,17 @@ export type Project = {
   repo: string;
 };
 
+export type Company = {
+  id: string;
+  name: string;
+  description: string;
+  url?: string;
+  terminated?: boolean;
+};
+
 export type Assignment = {
   role: string;
-  client: string;
-  clientDescription: string;
+  clientId: string;
   startDate: string;
   endDate: string | null;
   stack?: string[];
@@ -48,8 +55,7 @@ export type Assignment = {
 
 export type Experience = {
   role: string;
-  company: string;
-  companyDescription: string;
+  companyId: string;
   startDate: string;
   endDate: string | null;
   engagement?: string;
@@ -85,6 +91,7 @@ export type CV = {
   sections: Sections;
   focus: FocusArea[];
   projects: Project[];
+  companies: Company[];
   experience: Experience[];
   education: Education[];
   skills: SkillGroup[];

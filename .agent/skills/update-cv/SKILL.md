@@ -90,15 +90,39 @@ true` renders the link as a pill (used for the blog link). The
 - **Remove** — delete by `name`. Also check `focus[]` and the `ai`
   skill group for stale references to the project's domain.
 
+### `companies[]`
+
+- Top-level ordered list of companies (employers and clients).
+  Every `experience[].companyId` and `assignments[].clientId` must
+  reference an `id` in this list — `make validate` enforces it.
+- Shape: `{ id, name, description, url?, terminated? }`. `id` is a
+  stable slug (lowercase, hyphens). `url` renders the company name
+  as a link. `terminated: true` renders a small tombstone icon
+  next to the name and is the right signal for companies that have
+  shut down (e.g. IBNQ).
+- **Add** — append a new entry; then point one or more
+  `experience[]`/`assignments[]` entries at it via its `id`.
+- **Update** — find by `id`. Most common edits: flipping
+  `terminated` when a company dissolves, or setting `url` when a
+  homepage becomes available.
+- **Remove** — only safe if nothing references the `id`. Validate
+  with `make validate` after removal.
+
 ### `experience[]`
 
-- **Add** — insert a new role, then re-sort by `startDate`
-  descending. `endDate: null` means "present".
-- **Update** — find by `company` + `startDate`. Most common edit is
-  closing a current role (`endDate: null` → a `YYYY-MM` string).
-- **Remove** — delete by `company` + `startDate`. If removing the
-  most recent role, remind the user to update `title` too.
+- **Add** — insert a new role with `companyId` pointing at an
+  entry in `companies[]` (add the company first if new), then
+  re-sort by `startDate` descending. `endDate: null` means
+  "present".
+- **Update** — find by `companyId` + `startDate`. Most common edit
+  is closing a current role (`endDate: null` → a `YYYY-MM` string).
+- **Remove** — delete by `companyId` + `startDate`. If removing the
+  most recent role, remind the user to update `title` too. If the
+  company is no longer referenced anywhere, consider also pruning
+  the `companies[]` entry.
 - `engagement` is optional; omit it for a full-time role.
+- Assignments live on `experience[].assignments[]` and reference
+  their own `clientId` in the shared `companies[]` list.
 
 ### `education[]`
 
