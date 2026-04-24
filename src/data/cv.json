@@ -87,12 +87,7 @@
       "name": "oss-spec",
       "tagline": "Keeps open source projects aligned with a shared spec.",
       "description": "Bootstraps new open source repos against a shared spec, then keeps them aligned over time. A freeform prompt is interpreted into a structured manifest that writes a complete repo to disk — license, docs, CI, release pipelines, and agent conventions — and creates the GitHub remote. Validating an existing repo reports and auto-fixes conformance gaps, or files one GitHub issue per violation.",
-      "skills": [
-        "Rust",
-        "Spec-driven development",
-        "AI-driven project bootstrapping",
-        "Spec-compliance validation"
-      ],
+      "skills": ["Rust", "Spec-driven development"],
       "repo": "https://github.com/niclaslindstedt/oss-spec"
     }
   ],
@@ -103,18 +98,25 @@
       "companyDescription": "Audiobook streaming service with over 1 million users.",
       "startDate": "2024-04",
       "endDate": null,
+      "stack": [
+        "TypeScript",
+        "React",
+        "C#",
+        "Microservices",
+        "Azure",
+        "Kubernetes"
+      ],
       "skills": [
         "Agentic Workflows",
         "AI Agents",
         "RAG",
         "Chatbots",
-        "AI",
         "Cybersecurity",
         "Software Architecture",
         ".NET",
         "Kubernetes",
-        "APIs",
-        "Azure"
+        "Azure",
+        "Mentoring"
       ]
     },
     {
@@ -123,6 +125,14 @@
       "companyDescription": "Digitalizing family offices.",
       "startDate": "2023-09",
       "endDate": "2024-04",
+      "stack": [
+        "C#",
+        "PostgreSQL",
+        "Azure",
+        "React",
+        "React Native",
+        "TypeScript"
+      ],
       "skills": [
         "Software Architecture",
         "IT Strategy",
@@ -130,9 +140,14 @@
         "Team Management",
         ".NET",
         "Azure",
-        "DevOps",
         "React",
-        "Cybersecurity"
+        "Cybersecurity",
+        "GDPR",
+        "Regulatory Compliance",
+        "Risk Management",
+        "Technology Roadmapping",
+        "Mentoring",
+        "Project Management"
       ]
     },
     {
@@ -141,6 +156,7 @@
       "companyDescription": "IT consultancy specialized in .NET and JavaScript web applications.",
       "startDate": "2020-01",
       "endDate": "2023-09",
+      "skills": ["Mentoring"],
       "assignments": [
         {
           "role": "Senior Developer",
@@ -148,19 +164,17 @@
           "clientDescription": "Major Swedish bank; worked in the private loans team.",
           "startDate": "2020-02",
           "endDate": "2020-12",
+          "stack": ["C#", "Azure", "React", "TypeScript", "Miniservices"],
           "skills": [
             "Scrum",
-            "DevOps",
             "TypeScript",
             "SQL",
             "CI/CD",
             "React",
-            "Problem Solving",
-            "Documentation",
             "Software Architecture",
             "C#",
             "Agile Methodologies",
-            "Communication"
+            "Azure DevOps"
           ]
         },
         {
@@ -169,19 +183,23 @@
           "clientDescription": "Edutech startup digitalizing school selection for Swedish municipalities.",
           "startDate": "2021-01",
           "endDate": "2021-05",
+          "stack": [
+            "React",
+            "Node.js",
+            "TypeScript",
+            "AWS",
+            "Kubernetes",
+            "MySQL"
+          ],
           "skills": [
-            "DevOps",
             "TypeScript",
             "SQL",
             "CI/CD",
             "Cybersecurity",
             "React",
-            "Problem Solving",
-            "Documentation",
             "Software Architecture",
             "IT Strategy",
-            "Agile Methodologies",
-            "Communication"
+            "Agile Methodologies"
           ]
         },
         {
@@ -190,23 +208,30 @@
           "clientDescription": "Edutech startup digitalizing school selection for Swedish municipalities.",
           "startDate": "2021-06",
           "endDate": "2023-09",
+          "stack": [
+            "React",
+            "Node.js",
+            "TypeScript",
+            "AWS",
+            "Kubernetes",
+            "MySQL"
+          ],
           "skills": [
-            "DevOps",
             "TypeScript",
             "SQL",
             "Technical Direction",
             "CI/CD",
             "Cybersecurity",
             "React",
-            "Problem Solving",
-            "Documentation",
             "Software Architecture",
             "Leadership",
             "IT Strategy",
             "Engineering Management",
             "Agile Methodologies",
             "Team Management",
-            "Communication"
+            "GDPR",
+            "Regulatory Compliance",
+            "Technology Roadmapping"
           ]
         }
       ]
@@ -218,13 +243,19 @@
       "startDate": "2015-11",
       "endDate": "2020-01",
       "engagement": "half-time",
+      "stack": [
+        "TypeScript",
+        "Vue",
+        "C#",
+        "Azure",
+        "Microsoft SQL Server",
+        "Docker"
+      ],
       "skills": [
-        "DevOps",
         "SQL",
         "Technical Direction",
         "CI/CD",
         "Cybersecurity",
-        "Problem Solving",
         "Software Architecture",
         "Leadership",
         "IT Strategy",
@@ -232,8 +263,12 @@
         "C#",
         "Agile Methodologies",
         "Team Management",
-        "New Business Development",
-        "Communication"
+        "GDPR",
+        "CE marking",
+        "Regulatory Compliance",
+        "Risk Management",
+        "Technology Roadmapping",
+        "Project Management"
       ]
     },
     {
@@ -243,16 +278,20 @@
       "startDate": "2015-09",
       "endDate": "2020-01",
       "engagement": "half-time",
+      "stack": [
+        "TypeScript",
+        "Angular",
+        "C#",
+        "Python",
+        "Microsoft SQL Server"
+      ],
       "skills": [
-        "DevOps",
         "TypeScript",
         "SQL",
         "CI/CD",
         "Cybersecurity",
-        "Problem Solving",
         "Software Architecture",
-        "C#",
-        "Communication"
+        "C#"
       ]
     },
     {
@@ -288,12 +327,9 @@
       "label": "AI",
       "items": [
         "Spec-driven development",
-        "AI-driven project bootstrapping",
-        "Spec-compliance validation",
         "Multi-agent orchestration",
         "Agentic Workflows",
         "AI Agents",
-        "AI",
         "Multi-provider LLM integration",
         "Agent sandboxing & isolation",
         "Agent permissions & security",
@@ -325,12 +361,12 @@
     {
       "key": "frameworks",
       "label": "Frameworks",
-      "items": [".NET", "React", "React Native", "Vue"]
+      "items": [".NET", "React", "React Native", "Vue", "Angular", "Node.js"]
     },
     {
       "key": "cloud",
       "label": "Cloud",
-      "items": ["Azure", "AWS"]
+      "items": ["Azure", "AWS", "Azure DevOps"]
     },
     {
       "key": "databases",
@@ -338,6 +374,7 @@
       "items": [
         "PostgreSQL",
         "Microsoft SQL Server",
+        "MySQL",
         "MongoDB",
         "Redis",
         "CosmosDB"
@@ -346,32 +383,42 @@
     {
       "key": "devops",
       "label": "DevOps",
-      "items": [
-        "DevOps",
-        "Docker",
-        "Kubernetes",
-        "CI/CD",
-        "APIs",
-        "Infrastructure as Code"
-      ]
+      "items": ["Docker", "Kubernetes", "CI/CD", "Infrastructure as Code"]
     },
     {
       "key": "practices",
       "label": "Practices",
       "items": [
         "Software Architecture",
-        "IT Strategy",
-        "Technical Direction",
+        "Microservices",
+        "Miniservices",
+        "Agile Methodologies",
+        "Scrum"
+      ]
+    },
+    {
+      "key": "leadership",
+      "label": "Leadership",
+      "items": [
         "Engineering Management",
         "Team Management",
         "Leadership",
+        "Mentoring",
+        "IT Strategy",
+        "Technical Direction",
+        "Technology Roadmapping",
+        "Project Management"
+      ]
+    },
+    {
+      "key": "compliance",
+      "label": "Compliance",
+      "items": [
         "Cybersecurity",
-        "Agile Methodologies",
-        "Scrum",
-        "Problem Solving",
-        "Documentation",
-        "Communication",
-        "New Business Development"
+        "Regulatory Compliance",
+        "Risk Management",
+        "GDPR",
+        "CE marking"
       ]
     }
   ]
