@@ -45,6 +45,7 @@ src/
 │                         plus a generic <Section /> wrapper
 ├── data/cv.json        # CV content (validated by schemas/cv.schema.json)
 ├── data/cv.types.ts    # TypeScript types mirroring the schema
+├── data/timeline.types.ts # types for generated timeline.json
 └── utils/date.ts       # date helpers used by Experience / Education
 ```
 
@@ -61,6 +62,8 @@ consume `data/cv.types.ts` and `utils/date.ts`. Nothing in `data/` or
 | Content-only edits (roles, projects, skills) | `src/data/cv.json` — prefer the `update-cv` skill                              |
 | Date formatting / parsing                    | `src/utils/date.ts`                                                            |
 | Global styles, layout, typography            | `src/styles.css`                                                               |
+| Timeline tracks, layout, zoom behaviour      | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                |
+| GitHub commit activity fetch                 | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time) |
 
 ## Conventions
 
@@ -84,14 +87,15 @@ consume `data/cv.types.ts` and `utils/date.ts`. Nothing in `data/` or
 
 When you change X, update Y:
 
-| If you change …          | Also update …                                                        |
-| ------------------------ | -------------------------------------------------------------------- |
-| `package.json` scripts   | `Makefile`, `README.md` Scripts section                              |
-| `Makefile` targets       | `README.md` Scripts section, `.github/workflows/ci.yml`              |
-| `src/` top-level layout  | `README.md` Structure section                                        |
-| `schemas/cv.schema.json` | `src/data/cv.types.ts` + any component consuming the changed field   |
-| `src/data/cv.types.ts`   | `schemas/cv.schema.json` + any component consuming the changed field |
-| Node version in CI       | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)               |
+| If you change …                | Also update …                                                        |
+| ------------------------------ | -------------------------------------------------------------------- |
+| `package.json` scripts         | `Makefile`, `README.md` Scripts section                              |
+| `Makefile` targets             | `README.md` Scripts section, `.github/workflows/ci.yml`              |
+| `src/` top-level layout        | `README.md` Structure section                                        |
+| `schemas/cv.schema.json`       | `src/data/cv.types.ts` + any component consuming the changed field   |
+| `src/data/cv.types.ts`         | `schemas/cv.schema.json` + any component consuming the changed field |
+| `schemas/timeline.schema.json` | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`       |
+| Node version in CI             | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)               |
 
 ## Test conventions
 

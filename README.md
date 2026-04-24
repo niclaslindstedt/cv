@@ -56,9 +56,12 @@ All developer entry points are exposed via `make`:
 | `make release`   | Cut a new release (CI-managed)                               |
 | `make clean`     | Remove `dist/` and Vite cache                                |
 
-`src/data/timeline.json` is a generated artifact (gitignored). It is rebuilt
-automatically on `npm ci`, `npm run build`, `npm run dev`, `npm run lint`,
-and `npm run typecheck`, or on demand via `make generate`.
+`src/data/timeline.json` and `src/data/github-activity.json` are generated
+artifacts (gitignored). They are rebuilt automatically on `npm ci`, `npm run
+build`, `npm run dev`, `npm run lint`, and `npm run typecheck`, or on demand
+via `make generate`. The GitHub activity fetch requires a `GITHUB_TOKEN`
+env var with `read:user` scope; without one, the timeline's GitHub track is
+omitted but the build still succeeds.
 
 ## Structure
 

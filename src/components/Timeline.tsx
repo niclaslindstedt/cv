@@ -25,6 +25,9 @@ const LANE_GAP = 4;
 const TRACK_HEADER = 8;
 const TRACK_GAP = 24;
 const AXIS_SIZE = 40;
+const GH_DAILY_THRESHOLD = 30;
+const GH_WEEKLY_THRESHOLD = 10;
+const GH_DAYS_PER_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const MONTH_NAMES = [
   "Jan",
   "Feb",
@@ -54,6 +57,81 @@ function monthIndex(iso: string): number {
 function nowMonthIndex(): number {
   const now = new Date();
   return now.getFullYear() * 12 + now.getMonth();
+}
+
+function isLeapYear(year: number): boolean {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+function daysInMonth(year: number, month: number): number {
+  if (month === 1 && isLeapYear(year)) return 29;
+  return GH_DAYS_PER_MONTH[month];
+}
+
+type GhCell = { offset: number; span: number; count: number };
+
+function computeGhCells(
+  year: number,
+  daily: number[],
+  monthPx: number,
+): { cells: GhCell[]; totalDays: number } {
+  const totalDays = daily.length;
+  const dayFraction = 12 / totalDays;
+  if (monthPx >= GH_DAILY_THRESHOLD) {
+    const cells: GhCell[] = [];
+    for (let d = 0; d < totalDays; d++) {
+      cells.push({
+        offset: d * dayFraction,
+        span: dayFraction,
+        count: daily[d],
+      });
+    }
+    return { cells, totalDays };
+  }
+  if (monthPx >= GH_WEEKLY_THRESHOLD) {
+    const cells: GhCell[] = [];
+    for (let start = 0; start < totalDays; start += 7) {
+      const end = Math.min(start + 7, totalDays);
+      let count = 0;
+      for (let d = start; d < end; d++) count += daily[d];
+      cells.push({
+        offset: start * dayFraction,
+        span: (end - start) * dayFraction,
+        count,
+      });
+    }
+    return { cells, totalDays };
+  }
+  const cells: GhCell[] = [];
+  let dayCursor = 0;
+  for (let m = 0; m < 12; m++) {
+    const days = daysInMonth(year, m);
+    let count = 0;
+    for (let d = 0; d < days && dayCursor + d < totalDays; d++) {
+      count += daily[dayCursor + d];
+    }
+    cells.push({ offset: m, span: 1, count });
+    dayCursor += days;
+  }
+  return { cells, totalDays };
+}
+
+function ghOpacity(
+  count: number,
+  maxDailyCommits: number,
+  mode: "day" | "week" | "month",
+): number {
+  if (count <= 0) return 0;
+  const refMax = Math.max(
+    1,
+    mode === "day"
+      ? maxDailyCommits
+      : mode === "week"
+        ? maxDailyCommits * 5
+        : maxDailyCommits * 15,
+  );
+  const norm = Math.log1p(count) / Math.log1p(refMax);
+  return Math.min(1, 0.12 + norm * 0.88);
 }
 
 export function Timeline({ open, onClose }: Props) {
@@ -240,11 +318,6 @@ export function Timeline({ open, onClose }: Props) {
       .filter(Boolean)
       .join(" ");
 
-    const title = `${bar.title} · ${bar.subtitle}\n${formatRange(
-      bar.startDate,
-      bar.endDate,
-    )}`;
-
     const lane = bar.segments[0].activeLane;
     const startMonth = bar.segments[0].startMonth;
     const lastSeg = bar.segments[bar.segments.length - 1];
@@ -257,6 +330,56 @@ export function Timeline({ open, onClose }: Props) {
     const top = trackTop[trackIdx] + TRACK_HEADER + lane * LANE_SIZE;
     const height = LANE_SIZE - LANE_GAP;
     const style: CSSProperties = { left, width, top, height };
+
+    if (bar.kind === "github" && bar.github) {
+      const year = Number(bar.title);
+      const mode: "day" | "week" | "month" =
+        monthPx >= GH_DAILY_THRESHOLD
+          ? "day"
+          : monthPx >= GH_WEEKLY_THRESHOLD
+            ? "week"
+            : "month";
+      const { cells } = computeGhCells(year, bar.github.dailyCommits, monthPx);
+      const ghTitle = `${bar.github.totalCommits} commits in ${year}`;
+      return (
+        <button
+          key={bar.id}
+          type="button"
+          className={classes}
+          style={style}
+          data-bar-id={bar.id}
+          onClick={() => setSelectedId(bar.id)}
+          title={ghTitle}
+          aria-label={ghTitle}
+        >
+          {cells.map((cell, i) => {
+            const opacity = ghOpacity(
+              cell.count,
+              bar.github!.maxDailyCommits,
+              mode,
+            );
+            if (opacity <= 0) return null;
+            const cellStyle: CSSProperties = {
+              left: `${(cell.offset / 12) * 100}%`,
+              width: `${(cell.span / 12) * 100}%`,
+              background: `rgba(34, 197, 94, ${opacity})`,
+            };
+            return (
+              <span
+                key={i}
+                className="timeline-vis-gh-cell"
+                style={cellStyle}
+              />
+            );
+          })}
+        </button>
+      );
+    }
+
+    const title = `${bar.title} · ${bar.subtitle}\n${formatRange(
+      bar.startDate,
+      bar.endDate,
+    )}`;
 
     return (
       <button
@@ -436,7 +559,48 @@ export function Timeline({ open, onClose }: Props) {
         </div>
       </div>
 
-      {selectedItem && (
+      {selectedItem &&
+        selectedItem.kind === "github" &&
+        selectedItem.github && (
+          <aside className="timeline-vis-details">
+            <div className="timeline-vis-details-head">
+              <span className="timeline-vis-pill timeline-vis-github">
+                GitHub
+              </span>
+              <button
+                type="button"
+                className="timeline-vis-btn"
+                onClick={() => setSelectedId(null)}
+                aria-label="Close details"
+              >
+                ✕
+              </button>
+            </div>
+            <h3 className="timeline-vis-details-title">{selectedItem.title}</h3>
+            <p className="timeline-vis-details-sub">{selectedItem.subtitle}</p>
+            <p className="timeline-vis-details-dates">
+              Jan {selectedItem.title} – Dec {selectedItem.title}
+            </p>
+            <p className="timeline-vis-details-desc">
+              Busiest month: {MONTH_NAMES[selectedItem.github.busiestMonth - 1]}{" "}
+              {selectedItem.title}
+              <br />
+              Busiest week: {formatMonth(selectedItem.github.busiestWeekStart)}
+            </p>
+            <a
+              className="timeline-vis-details-link"
+              href={`${selectedItem.github.profileUrl}?tab=overview&from=${selectedItem.title}-01-01&to=${selectedItem.title}-12-31`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on GitHub →
+            </a>
+            <p className="timeline-vis-details-when">
+              @{selectedItem.github.username}
+            </p>
+          </aside>
+        )}
+      {selectedItem && selectedItem.kind !== "github" && (
         <aside className="timeline-vis-details">
           <div className="timeline-vis-details-head">
             <span
