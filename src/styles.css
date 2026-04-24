@@ -1188,8 +1188,21 @@ button.skill-pill-btn:focus-visible {
 }
 
 .skill-modal-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   color: var(--fg);
   word-break: break-word;
+  min-width: 0;
+}
+
+.skill-modal-role {
+  color: var(--fg);
+}
+
+.skill-modal-sublabel {
+  color: var(--fg-muted);
+  font-size: 0.8rem;
 }
 
 .skill-modal-range {

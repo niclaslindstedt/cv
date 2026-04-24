@@ -97,7 +97,16 @@ export function SkillModal({ skill, usages, onClose }: Props) {
                 className="skill-modal-item"
               >
                 <span className="skill-modal-kind">{KIND_LABELS[u.kind]}</span>
-                <span className="skill-modal-label">{u.label}</span>
+                <div className="skill-modal-label">
+                  {u.role ? (
+                    <>
+                      <span className="skill-modal-role">{u.role}</span>
+                      <span className="skill-modal-sublabel">{u.label}</span>
+                    </>
+                  ) : (
+                    <span className="skill-modal-role">{u.label}</span>
+                  )}
+                </div>
                 {u.startDate && (
                   <span className="skill-modal-range">
                     {formatRange(u.startDate, u.endDate ?? null)}

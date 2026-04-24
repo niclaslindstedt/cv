@@ -3,6 +3,7 @@ import type { CV } from "../data/cv.types";
 export type SkillUsage = {
   kind: "project" | "experience" | "assignment" | "education";
   label: string;
+  role?: string;
   startDate?: string;
   endDate?: string | null;
 };
@@ -27,6 +28,7 @@ export function buildSkillUsageMap(cv: CV): Map<string, SkillUsage[]> {
       push(skill, {
         kind: "experience",
         label: role.company,
+        role: role.role,
         startDate: role.startDate,
         endDate: role.endDate,
       });
@@ -36,6 +38,7 @@ export function buildSkillUsageMap(cv: CV): Map<string, SkillUsage[]> {
         push(skill, {
           kind: "assignment",
           label: `${assignment.client} (${role.company})`,
+          role: assignment.role,
           startDate: assignment.startDate,
           endDate: assignment.endDate,
         });
