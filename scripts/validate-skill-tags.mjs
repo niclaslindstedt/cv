@@ -7,7 +7,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const cvPath = resolve(here, "..", "src", "data", "cv.json");
 const cv = JSON.parse(readFileSync(cvPath, "utf8"));
 
-const known = new Set(Object.values(cv.skills).flat());
+const known = new Set(cv.skills.flatMap((group) => group.items));
 const errors = [];
 
 function check(path, tags) {

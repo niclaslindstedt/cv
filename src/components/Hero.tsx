@@ -17,26 +17,23 @@ export function Hero({ cv, theme, onToggleTheme, onOpenTimeline }: Props) {
       <p className="hero-summary">{cv.summary}</p>
       <div className="hero-meta">
         <span>{cv.location}</span>
-        <a
-          className="hero-blog"
-          href={cv.links.blog}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Blog ↗
-        </a>
-        <a href={cv.links.github} target="_blank" rel="noreferrer">
-          GitHub
-        </a>
-        <a href={cv.links.linkedin} target="_blank" rel="noreferrer">
-          LinkedIn
-        </a>
+        {cv.links.map((link) => (
+          <a
+            key={link.url}
+            className={link.featured ? "hero-blog" : undefined}
+            href={link.url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {link.label}
+          </a>
+        ))}
         <button
           type="button"
           className="hero-timeline-btn"
           onClick={onOpenTimeline}
         >
-          Timeline view
+          {cv.actions.timeline}
         </button>
         <button
           type="button"
@@ -44,7 +41,7 @@ export function Hero({ cv, theme, onToggleTheme, onOpenTimeline }: Props) {
           onClick={() => window.print()}
           aria-label="Download CV as PDF (opens print dialog)"
         >
-          Download PDF ↓
+          {cv.actions.downloadPdf}
         </button>
         <button
           type="button"

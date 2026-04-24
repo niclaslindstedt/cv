@@ -2,11 +2,11 @@ import type { FocusArea } from "../data/cv.types";
 import { formatMonth } from "../utils/date";
 import { Section } from "./Section";
 
-type Props = { focus: FocusArea[] };
+type Props = { title: string; focus: FocusArea[] };
 
-export function Focus({ focus }: Props) {
+export function Focus({ title, focus }: Props) {
   return (
-    <Section id="focus" title="Current focus">
+    <Section id="focus" title={title}>
       <ul className="focus-list">
         {focus.map((item) => (
           <li key={item.area}>

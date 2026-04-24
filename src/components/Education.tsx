@@ -3,13 +3,14 @@ import { formatRange } from "../utils/date";
 import { Section } from "./Section";
 
 type Props = {
+  title: string;
   education: EducationItem[];
   onSkillClick: (skill: string) => void;
 };
 
-export function Education({ education, onSkillClick }: Props) {
+export function Education({ title, education, onSkillClick }: Props) {
   return (
-    <Section id="education" title="Education">
+    <Section id="education" title={title}>
       <ul className="education-list">
         {education.map((item) => (
           <li key={`${item.institution}-${item.startDate}`}>
