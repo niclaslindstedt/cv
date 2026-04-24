@@ -328,9 +328,17 @@
       "field": "Medicine",
       "institution": "Uppsala University",
       "level": "Master's program",
-      "credits": "202 ECTS",
-      "startDate": "2010-01",
+      "credits": "142 ECTS",
+      "startDate": "2011-08",
       "endDate": "2014-04"
+    },
+    {
+      "field": "Medicine",
+      "institution": "Umeå University",
+      "level": "Master's program",
+      "credits": "60 ECTS",
+      "startDate": "2010-01",
+      "endDate": "2010-12"
     }
   ],
   "skills": [
