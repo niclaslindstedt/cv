@@ -873,6 +873,7 @@ button.skill-pill-btn:focus-visible {
 
 .timeline-vis-band {
   position: absolute;
+  overflow: hidden;
 }
 
 .timeline-vis-band-label {

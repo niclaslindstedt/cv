@@ -27,7 +27,7 @@ const BASE_MONTH_PX = 14;
 const LANE_SIZE = 28;
 const LANE_GAP = 2;
 const TRACK_HEADER = 20;
-const TRACK_GAP = 20;
+const TRACK_GAP = 32;
 const AXIS_SIZE = 40;
 const MONTH_NAMES = [
   "Jan",
@@ -419,28 +419,12 @@ export function Timeline({ open, onClose }: Props) {
                     key={`band-${i}-${t}`}
                     className={`timeline-vis-band timeline-vis-band-${track.key}`}
                     style={style}
-                  />
+                  >
+                    <div className="timeline-vis-band-label">{track.label}</div>
+                  </div>
                 );
               }),
             )}
-
-            {tracks.map((track, t) => {
-              const top = trackTop[0][t];
-              const headerStyle: CSSProperties = {
-                left: axisPos(minMonth) + 8,
-                top,
-                height: TRACK_HEADER,
-              };
-              return (
-                <div
-                  key={`label-${track.key}`}
-                  className="timeline-vis-band-label"
-                  style={headerStyle}
-                >
-                  {track.label}
-                </div>
-              );
-            })}
 
             {tracks.map((track, t) =>
               track.bars.map((bar) => {
