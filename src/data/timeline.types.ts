@@ -1,9 +1,19 @@
-export type TimelineKind = "experience" | "assignment" | "education";
+export type TimelineKind = "experience" | "assignment" | "education" | "github";
 
 export type TimelineSegment = {
   startMonth: number;
   endMonth: number;
   activeLane: number;
+};
+
+export type GitHubPayload = {
+  totalCommits: number;
+  dailyCommits: number[];
+  busiestMonth: number;
+  busiestWeekStart: string;
+  profileUrl: string;
+  username: string;
+  maxDailyCommits: number;
 };
 
 export type TimelineBar = {
@@ -18,6 +28,7 @@ export type TimelineBar = {
   isOngoing: boolean;
   endMonthAtBuild: number;
   segments: TimelineSegment[];
+  github?: GitHubPayload;
 };
 
 export type TimelineTrack = {

@@ -16,11 +16,13 @@
     "validate:skill-tags": "node scripts/validate-skill-tags.mjs",
     "validate:timeline-json": "node scripts/validate-timeline-json.mjs",
     "generate:timeline": "node scripts/generate-timeline.mjs",
-    "postinstall": "node scripts/generate-timeline.mjs",
-    "prebuild": "node scripts/generate-timeline.mjs",
-    "predev": "node scripts/generate-timeline.mjs",
-    "pretypecheck": "node scripts/generate-timeline.mjs",
-    "prelint": "node scripts/generate-timeline.mjs"
+    "generate:github-activity": "node scripts/generate-github-activity.mjs",
+    "generate:data": "node scripts/generate-github-activity.mjs && node scripts/generate-timeline.mjs",
+    "postinstall": "npm run generate:data",
+    "prebuild": "npm run generate:data",
+    "predev": "npm run generate:data",
+    "pretypecheck": "npm run generate:data",
+    "prelint": "npm run generate:data"
   },
   "dependencies": {
     "react": "^18.3.1",

@@ -28,7 +28,7 @@ validate:
 	npm run validate:timeline-json
 
 generate:
-	npm run generate:timeline
+	npm run generate:data
 
 dev:
 	npm run dev

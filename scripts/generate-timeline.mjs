@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const cvPath = resolve(here, "..", "src", "data", "cv.json");
+const githubPath = resolve(here, "..", "src", "data", "github-activity.json");
 const defaultOut = resolve(here, "..", "src", "data", "timeline.json");
 
 const args = process.argv.slice(2);
@@ -125,15 +126,48 @@ function buildItems(cv) {
   return items;
 }
 
-function buildLayout(cv) {
+function buildGithubItems(activity) {
+  if (!activity?.enabled || !Array.isArray(activity.years)) return [];
+  const items = [];
+  for (const year of activity.years) {
+    if (!year || typeof year.year !== "number") continue;
+    items.push({
+      id: `gh-${year.year}`,
+      kind: "github",
+      title: String(year.year),
+      subtitle: `${year.totalCommits} commits`,
+      description: "",
+      startDate: `${year.year}-01`,
+      endDate: `${year.year}-12`,
+      skills: [],
+      github: {
+        totalCommits: year.totalCommits,
+        dailyCommits: year.dailyCommits,
+        busiestMonth: year.busiestMonth,
+        busiestWeekStart: year.busiestWeekStart,
+        profileUrl: activity.profileUrl,
+        username: activity.username,
+        maxDailyCommits: activity.maxDailyCommits ?? 0,
+      },
+    });
+  }
+  return items;
+}
+
+function buildLayout(cv, activity) {
   const nowMonth = nowMonthIndex();
   const items = buildItems(cv);
+  const githubItems = buildGithubItems(activity);
+  items.push(...githubItems);
 
   const trackDefs = [
     { key: "experience", label: "Jobs" },
     { key: "assignment", label: "Assignments" },
     { key: "education", label: "Education" },
   ];
+  if (githubItems.length > 0) {
+    trackDefs.push({ key: "github", label: "GitHub" });
+  }
 
   const prepared = items.map((item) => {
     const barStart = monthIndex(item.startDate);
@@ -211,19 +245,23 @@ function buildLayout(cv) {
   const tracks = trackDefs.map((def, t) => ({
     key: def.key,
     label: def.label,
-    bars: byTrack[t].map((p) => ({
-      id: p.id,
-      kind: p.kind,
-      title: p.title,
-      subtitle: p.subtitle,
-      description: p.description,
-      skills: p.skills,
-      startDate: p.startDate,
-      endDate: p.endDate,
-      isOngoing: p.endDate === null,
-      endMonthAtBuild: p.endMonthAtBuild,
-      segments: p.segments,
-    })),
+    bars: byTrack[t].map((p) => {
+      const bar = {
+        id: p.id,
+        kind: p.kind,
+        title: p.title,
+        subtitle: p.subtitle,
+        description: p.description,
+        skills: p.skills,
+        startDate: p.startDate,
+        endDate: p.endDate,
+        isOngoing: p.endDate === null,
+        endMonthAtBuild: p.endMonthAtBuild,
+        segments: p.segments,
+      };
+      if (p.github) bar.github = p.github;
+      return bar;
+    }),
   }));
 
   for (const interval of intervals) {
@@ -252,7 +290,15 @@ function buildLayout(cv) {
 }
 
 const cv = JSON.parse(readFileSync(cvPath, "utf8"));
-const data = buildLayout(cv);
+let activity = { enabled: false, years: [] };
+if (existsSync(githubPath)) {
+  try {
+    activity = JSON.parse(readFileSync(githubPath, "utf8"));
+  } catch (err) {
+    console.warn(`Could not parse github-activity.json (${err.message}).`);
+  }
+}
+const data = buildLayout(cv, activity);
 const serialized = JSON.stringify(data, null, 2) + "\n";
 
 if (toStdout) {
