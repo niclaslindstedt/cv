@@ -4,6 +4,7 @@ import type {
   Experience as ExperienceItem,
 } from "../data/cv.types";
 import { formatRange } from "../utils/date";
+import { useLang } from "../utils/i18n";
 import { Section } from "./Section";
 
 type Props = {
@@ -112,16 +113,28 @@ export function Experience({
       <ol className="timeline">
         {groups.map((group) =>
           group.length === 1 ? (
-            renderItem(group[0], false, companies, onSkillClick)
+            <ExperienceItemView
+              key={`${group[0].companyId}-${group[0].startDate}`}
+              item={group[0]}
+              isPromotion={false}
+              companies={companies}
+              onSkillClick={onSkillClick}
+            />
           ) : (
             <li
               key={`group-${group[0].companyId}-${group[0].startDate}`}
               className="timeline-group"
             >
               <ol className="timeline-group-items">
-                {group.map((item, idx) =>
-                  renderItem(item, idx > 0, companies, onSkillClick),
-                )}
+                {group.map((item, idx) => (
+                  <ExperienceItemView
+                    key={`${item.companyId}-${item.startDate}`}
+                    item={item}
+                    isPromotion={idx > 0}
+                    companies={companies}
+                    onSkillClick={onSkillClick}
+                  />
+                ))}
               </ol>
             </li>
           ),
@@ -131,30 +144,35 @@ export function Experience({
   );
 }
 
-function renderItem(
-  item: ExperienceItem,
-  isPromotion: boolean,
-  companies: Map<string, Company>,
-  onSkillClick: (skill: string) => void,
-) {
+function ExperienceItemView({
+  item,
+  isPromotion,
+  companies,
+  onSkillClick,
+}: {
+  item: ExperienceItem;
+  isPromotion: boolean;
+  companies: Map<string, Company>;
+  onSkillClick: (skill: string) => void;
+}) {
+  const { lang, t, ui } = useLang();
   const company = resolveCompany(companies, item.companyId);
   const stack = item.stack ?? company.stack;
   return (
     <li
-      key={`${item.companyId}-${item.startDate}`}
       className={
         isPromotion ? "timeline-item timeline-promotion" : "timeline-item"
       }
     >
       <div className="timeline-meta">
-        <span>{formatRange(item.startDate, item.endDate)}</span>
+        <span>{formatRange(item.startDate, item.endDate, lang)}</span>
         {item.engagement && (
-          <span className="timeline-engagement">{item.engagement}</span>
+          <span className="timeline-engagement">{t(item.engagement)}</span>
         )}
       </div>
       <div className="timeline-body">
         <h3>
-          <span className="role">{item.role}</span>
+          <span className="role">{t(item.role)}</span>
           {isPromotion && <PromotionArrow />}
           {!isPromotion && (
             <>
@@ -163,7 +181,7 @@ function renderItem(
             </>
           )}
         </h3>
-        {!isPromotion && <p>{company.description}</p>}
+        {!isPromotion && <p>{t(company.description)}</p>}
         {stack && stack.length > 0 && (
           <ul className="entry-stack">
             {stack.map((tech) => (
@@ -197,8 +215,7 @@ function renderItem(
         {item.assignments && item.assignments.length > 0 && (
           <details className="assignments">
             <summary>
-              {item.assignments.length} assignment
-              {item.assignments.length === 1 ? "" : "s"}
+              {ui.experience.assignmentsSummary(item.assignments.length)}
             </summary>
             <AssignmentList
               assignments={item.assignments}
@@ -226,16 +243,28 @@ function AssignmentList({
     <ol className="assignments-list">
       {groups.map((group) =>
         group.length === 1 ? (
-          renderAssignment(group[0], false, companies, onSkillClick)
+          <AssignmentItemView
+            key={`${group[0].clientId}-${group[0].startDate}`}
+            assignment={group[0]}
+            isPromotion={false}
+            companies={companies}
+            onSkillClick={onSkillClick}
+          />
         ) : (
           <li
             key={`agroup-${group[0].clientId}-${group[0].startDate}`}
             className="assignment-group"
           >
             <ol className="assignment-group-items">
-              {group.map((a, idx) =>
-                renderAssignment(a, idx > 0, companies, onSkillClick),
-              )}
+              {group.map((a, idx) => (
+                <AssignmentItemView
+                  key={`${a.clientId}-${a.startDate}`}
+                  assignment={a}
+                  isPromotion={idx > 0}
+                  companies={companies}
+                  onSkillClick={onSkillClick}
+                />
+              ))}
             </ol>
           </li>
         ),
@@ -244,26 +273,31 @@ function AssignmentList({
   );
 }
 
-function renderAssignment(
-  a: Assignment,
-  isPromotion: boolean,
-  companies: Map<string, Company>,
-  onSkillClick: (skill: string) => void,
-) {
+function AssignmentItemView({
+  assignment: a,
+  isPromotion,
+  companies,
+  onSkillClick,
+}: {
+  assignment: Assignment;
+  isPromotion: boolean;
+  companies: Map<string, Company>;
+  onSkillClick: (skill: string) => void;
+}) {
+  const { lang, t } = useLang();
   const client = resolveCompany(companies, a.clientId);
   return (
     <li
-      key={`${a.clientId}-${a.startDate}`}
       className={
         isPromotion ? "assignment-item assignment-promotion" : "assignment-item"
       }
     >
       <div className="assignment-meta">
-        <span>{formatRange(a.startDate, a.endDate)}</span>
+        <span>{formatRange(a.startDate, a.endDate, lang)}</span>
       </div>
       <div className="assignment-body">
         <h4>
-          <span className="role">{a.role}</span>
+          <span className="role">{t(a.role)}</span>
           {isPromotion && <PromotionArrow />}
           {!isPromotion && (
             <>
@@ -272,7 +306,7 @@ function renderAssignment(
             </>
           )}
         </h4>
-        {!isPromotion && <p>{client.description}</p>}
+        {!isPromotion && <p>{t(client.description)}</p>}
         {a.stack && a.stack.length > 0 && (
           <ul className="entry-stack">
             {a.stack.map((tech) => (

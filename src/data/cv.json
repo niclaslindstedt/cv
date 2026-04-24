@@ -1,48 +1,93 @@
 {
   "$schema": "../../schemas/cv.schema.json",
   "meta": {
-    "documentTitle": "Niclas Lindstedt — IT Architect",
-    "description": "Niclas Lindstedt — IT Architect building open-source tools for agentic coding."
+    "documentTitle": {
+      "en": "Niclas Lindstedt — IT Architect",
+      "sv": "Niclas Lindstedt — IT-arkitekt"
+    },
+    "description": {
+      "en": "Niclas Lindstedt — IT Architect building open-source tools for agentic coding.",
+      "sv": "Niclas Lindstedt — IT-arkitekt som bygger open source-verktyg för agentisk kodning."
+    }
   },
   "name": "Niclas Lindstedt",
-  "title": "IT Architect",
-  "location": "Sweden",
-  "summary": "IT architect, deep into agentic coding. I build open-source tools that make AI coding agents easier to orchestrate, sandbox, test, and connect to the rest of the world.",
+  "title": {
+    "en": "IT Architect",
+    "sv": "IT-arkitekt"
+  },
+  "location": {
+    "en": "Sweden",
+    "sv": "Sverige"
+  },
+  "summary": {
+    "en": "IT architect, deep into agentic coding. I build open-source tools that make AI coding agents easier to orchestrate, sandbox, test, and connect to the rest of the world.",
+    "sv": "IT-arkitekt med fokus på agentisk kodning. Jag bygger open source-verktyg som gör det enklare att orkestrera, sandboxa, testa och koppla AI-kodningsagenter till omvärlden."
+  },
   "links": [
     {
-      "label": "Blog ↗",
+      "label": { "en": "Blog ↗", "sv": "Blogg ↗" },
       "url": "https://blog.niclaslindstedt.se",
       "featured": true
     },
-    { "label": "GitHub", "url": "https://www.github.com/niclaslindstedt" },
     {
-      "label": "LinkedIn",
+      "label": { "en": "GitHub", "sv": "GitHub" },
+      "url": "https://www.github.com/niclaslindstedt"
+    },
+    {
+      "label": { "en": "LinkedIn", "sv": "LinkedIn" },
       "url": "https://www.linkedin.com/in/niclaslindstedt"
     }
   ],
   "actions": {
-    "timeline": "Timeline view",
-    "downloadPdf": "Download PDF ↓"
+    "timeline": { "en": "Timeline view", "sv": "Tidslinje" },
+    "downloadPdf": { "en": "Download PDF ↓", "sv": "Ladda ner PDF ↓" }
   },
   "sections": {
-    "focus": "Current focus",
-    "projects": "Open-source projects",
-    "experience": "Experience",
-    "education": "Education",
-    "courses": "Courses",
-    "skills": "Skills"
+    "focus": { "en": "Current focus", "sv": "Nuvarande fokus" },
+    "projects": { "en": "Open-source projects", "sv": "Open source-projekt" },
+    "experience": { "en": "Experience", "sv": "Erfarenhet" },
+    "education": { "en": "Education", "sv": "Utbildning" },
+    "courses": { "en": "Courses", "sv": "Kurser" },
+    "skills": { "en": "Skills", "sv": "Kompetenser" }
   },
   "focus": [
-    { "area": "Agentic coding", "since": "2025-05" },
-    { "area": "Spec-driven agentic coding", "since": "2025-07" },
-    { "area": "Agentic orchestration", "since": "2025-10" },
-    { "area": "Agentic CLI tooling", "since": "2025-11" }
+    {
+      "area": { "en": "Agentic coding", "sv": "Agentisk kodning" },
+      "since": "2025-05"
+    },
+    {
+      "area": {
+        "en": "Spec-driven agentic coding",
+        "sv": "Spec-driven agentisk kodning"
+      },
+      "since": "2025-07"
+    },
+    {
+      "area": {
+        "en": "Agentic orchestration",
+        "sv": "Agentisk orkestrering"
+      },
+      "since": "2025-10"
+    },
+    {
+      "area": {
+        "en": "Agentic CLI tooling",
+        "sv": "Agentiska CLI-verktyg"
+      },
+      "since": "2025-11"
+    }
   ],
   "projects": [
     {
       "name": "zag",
-      "tagline": "One CLI for all your AI coding agents.",
-      "description": "Wraps Claude, Codex, Gemini, Copilot, and Ollama behind a single command so you can switch between them without learning five different CLIs. Adds cross-provider features on top: model size aliases, automatic provider/model selection, git worktree isolation, Docker sandboxing, structured JSON output with schema validation, and unified session logs. Ships as a CLI, a Rust library crate, and SDKs for TypeScript, Python, C#, Swift, Java, and Kotlin.",
+      "tagline": {
+        "en": "One CLI for all your AI coding agents.",
+        "sv": "Ett CLI för alla dina AI-kodningsagenter."
+      },
+      "description": {
+        "en": "Wraps Claude, Codex, Gemini, Copilot, and Ollama behind a single command so you can switch between them without learning five different CLIs. Adds cross-provider features on top: model size aliases, automatic provider/model selection, git worktree isolation, Docker sandboxing, structured JSON output with schema validation, and unified session logs. Ships as a CLI, a Rust library crate, and SDKs for TypeScript, Python, C#, Swift, Java, and Kotlin.",
+        "sv": "Kapslar in Claude, Codex, Gemini, Copilot och Ollama bakom ett enda kommando så att du kan växla mellan dem utan att lära dig fem olika CLI:er. Lägger till funktioner på tvären: alias för modellstorlek, automatiskt val av leverantör/modell, isolering via git worktree, Docker-sandboxing, strukturerad JSON-utdata med schemavalidering och enhetliga sessionsloggar. Levereras som CLI, ett Rust-bibliotek och SDK:er för TypeScript, Python, C#, Swift, Java och Kotlin."
+      },
       "skills": [
         "Rust",
         "Multi-provider LLM integration",
@@ -58,8 +103,14 @@
     },
     {
       "name": "zig",
-      "tagline": "Describe workflows. Share them. Run them.",
-      "description": "Orchestration CLI for AI coding agents. Describe a workflow in natural language, capture it as a shareable .zwf file, and replay it anywhere with a single command. Embeds zag for the underlying orchestration primitives. Ships with an HTTP API and an embedded React chat UI for designing workflows interactively.",
+      "tagline": {
+        "en": "Describe workflows. Share them. Run them.",
+        "sv": "Beskriv arbetsflöden. Dela dem. Kör dem."
+      },
+      "description": {
+        "en": "Orchestration CLI for AI coding agents. Describe a workflow in natural language, capture it as a shareable .zwf file, and replay it anywhere with a single command. Embeds zag for the underlying orchestration primitives. Ships with an HTTP API and an embedded React chat UI for designing workflows interactively.",
+        "sv": "Orkestrerings-CLI för AI-kodningsagenter. Beskriv ett arbetsflöde med naturligt språk, fånga det i en delbar .zwf-fil och spela upp det var som helst med ett enda kommando. Bygger in zag för den underliggande orkestreringen. Levereras med ett HTTP-API och en inbäddad React-chatt för interaktiv arbetsflödesdesign."
+      },
       "skills": [
         "Rust",
         "Multi-agent orchestration",
@@ -71,22 +122,40 @@
     },
     {
       "name": "zad",
-      "tagline": "Agent adapter system.",
-      "description": "Connects AI agents to external services (Discord, GitHub, Slack, and more) through scoped service configurations instead of MCP servers. Fine-grained permission files go beyond what upstream APIs offer, with Ed25519-signed policies stored in the OS keychain so an agent with filesystem access can't silently widen its own scope. New providers are a single Rust trait implementation.",
+      "tagline": {
+        "en": "Agent adapter system.",
+        "sv": "Adaptersystem för agenter."
+      },
+      "description": {
+        "en": "Connects AI agents to external services (Discord, GitHub, Slack, and more) through scoped service configurations instead of MCP servers. Fine-grained permission files go beyond what upstream APIs offer, with Ed25519-signed policies stored in the OS keychain so an agent with filesystem access can't silently widen its own scope. New providers are a single Rust trait implementation.",
+        "sv": "Kopplar AI-agenter till externa tjänster (Discord, GitHub, Slack med flera) via avgränsade tjänstkonfigurationer istället för MCP-servrar. Finkornig behörighetsstyrning går längre än det leverantörernas API:er själva erbjuder, med Ed25519-signerade policyer lagrade i operativsystemets nyckelring så att en agent med filsystemsåtkomst inte i tysthet kan utöka sin egen omfattning. Nya leverantörer är en enda Rust trait-implementation."
+      },
       "skills": ["Rust", "Agent permissions & security"],
       "repo": "https://github.com/niclaslindstedt/zad"
     },
     {
       "name": "ztf",
-      "tagline": "Complex E2E testing using zag verification.",
-      "description": "Agent-assisted end-to-end testing with TOML scenario files. Uses an explicit arrange/act/assert structure with programmatic checks, then optionally delegates nuanced verdicts to an AI reviewer for the cases regex assertions can't cleanly handle. Machine-readable output makes it easy to plug into other tools.",
+      "tagline": {
+        "en": "Complex E2E testing using zag verification.",
+        "sv": "Komplex E2E-testning med zag-verifiering."
+      },
+      "description": {
+        "en": "Agent-assisted end-to-end testing with TOML scenario files. Uses an explicit arrange/act/assert structure with programmatic checks, then optionally delegates nuanced verdicts to an AI reviewer for the cases regex assertions can't cleanly handle. Machine-readable output makes it easy to plug into other tools.",
+        "sv": "Agentassisterad end-to-end-testning med TOML-scenariofiler. Använder en explicit arrange/act/assert-struktur med programmatiska kontroller och kan vid behov delegera nyanserade bedömningar till en AI-granskare när regex-påståenden inte räcker till. Maskinläsbar utdata gör det enkelt att koppla in mot andra verktyg."
+      },
       "skills": ["Rust", "Agent-in-the-loop testing", "AI evaluations"],
       "repo": "https://github.com/niclaslindstedt/ztf"
     },
     {
       "name": "oss-spec",
-      "tagline": "Keeps open source projects aligned with a shared spec.",
-      "description": "Bootstraps new open source repos against a shared spec, then keeps them aligned over time. A freeform prompt is interpreted into a structured manifest that writes a complete repo to disk — license, docs, CI, release pipelines, and agent conventions — and creates the GitHub remote. Validating an existing repo reports and auto-fixes conformance gaps, or files one GitHub issue per violation.",
+      "tagline": {
+        "en": "Keeps open source projects aligned with a shared spec.",
+        "sv": "Håller open source-projekt i linje med en gemensam specifikation."
+      },
+      "description": {
+        "en": "Bootstraps new open source repos against a shared spec, then keeps them aligned over time. A freeform prompt is interpreted into a structured manifest that writes a complete repo to disk — license, docs, CI, release pipelines, and agent conventions — and creates the GitHub remote. Validating an existing repo reports and auto-fixes conformance gaps, or files one GitHub issue per violation.",
+        "sv": "Initierar nya open source-repon mot en gemensam specifikation och håller dem sedan i linje över tid. En friform-prompt tolkas till ett strukturerat manifest som skriver ett komplett repo till disk — licens, dokumentation, CI, release-pipelines och agentkonventioner — och skapar GitHub-remoten. Validering av ett befintligt repo rapporterar och åtgärdar avvikelser automatiskt, eller skapar ett GitHub-issue per överträdelse."
+      },
       "skills": ["Rust", "Spec-driven development"],
       "repo": "https://github.com/niclaslindstedt/oss-spec"
     }
@@ -95,54 +164,78 @@
     {
       "id": "bookbeat",
       "name": "BookBeat AB",
-      "description": "Audiobook streaming service with over 1 million users.",
+      "description": {
+        "en": "Audiobook streaming service with over 1 million users.",
+        "sv": "Strömningstjänst för ljudböcker med över 1 miljon användare."
+      },
       "url": "https://www.bookbeat.com"
     },
     {
       "id": "ibnq",
       "name": "IBNQ AB",
-      "description": "Digitalizing family offices.",
+      "description": {
+        "en": "Digitalizing family offices.",
+        "sv": "Digitaliserar family offices."
+      },
       "terminated": true
     },
     {
       "id": "etimo",
       "name": "Etimo AB",
-      "description": "IT consultancy specialized in .NET and JavaScript web applications.",
+      "description": {
+        "en": "IT consultancy specialized in .NET and JavaScript web applications.",
+        "sv": "IT-konsultbolag specialiserat på .NET- och JavaScript-webbapplikationer."
+      },
       "url": "https://www.etimo.se"
     },
     {
       "id": "seb",
       "name": "SEB",
-      "description": "Major Swedish bank; worked in the private loans team.",
+      "description": {
+        "en": "Major Swedish bank; worked in the private loans team.",
+        "sv": "Stor svensk bank; arbetade i teamet för privatlån."
+      },
       "url": "https://www.seb.se"
     },
     {
       "id": "mitt-skolval",
       "name": "Mitt Skolval",
-      "description": "Edutech startup digitalizing school selection for Swedish municipalities.",
+      "description": {
+        "en": "Edutech startup digitalizing school selection for Swedish municipalities.",
+        "sv": "Edtech-startup som digitaliserar skolval för svenska kommuner."
+      },
       "url": "https://www.swedutech.se"
     },
     {
       "id": "symptoms",
       "name": "Symptoms Europe AB",
-      "description": "eHealth startup focused on patient-doctor communication.",
+      "description": {
+        "en": "eHealth startup focused on patient-doctor communication.",
+        "sv": "eHälsa-startup med fokus på patient–läkarkommunikation."
+      },
       "url": "https://www.symptoms.se"
     },
     {
       "id": "indicio",
       "name": "Indicio Technologies AB",
-      "description": "FinTech startup building a forecasting platform.",
+      "description": {
+        "en": "FinTech startup building a forecasting platform.",
+        "sv": "FinTech-startup som bygger en prognosplattform."
+      },
       "url": "https://www.indicio.com"
     },
     {
       "id": "agilator",
       "name": "Agilator AB",
-      "description": "Solo consulting firm for startup engagements."
+      "description": {
+        "en": "Solo consulting firm for startup engagements.",
+        "sv": "Solokonsultbolag för startup-uppdrag."
+      }
     }
   ],
   "experience": [
     {
-      "role": "IT Architect",
+      "role": { "en": "IT Architect", "sv": "IT-arkitekt" },
       "companyId": "bookbeat",
       "startDate": "2024-04",
       "endDate": null,
@@ -165,7 +258,7 @@
       ]
     },
     {
-      "role": "CTO",
+      "role": { "en": "CTO", "sv": "CTO" },
       "companyId": "ibnq",
       "startDate": "2023-09",
       "endDate": "2024-04",
@@ -191,14 +284,14 @@
       ]
     },
     {
-      "role": "Senior Manager",
+      "role": { "en": "Senior Manager", "sv": "Senior Manager" },
       "companyId": "etimo",
       "startDate": "2020-01",
       "endDate": "2023-09",
       "skills": ["Mentoring"],
       "assignments": [
         {
-          "role": "Senior Developer",
+          "role": { "en": "Senior Developer", "sv": "Seniorutvecklare" },
           "clientId": "seb",
           "startDate": "2020-02",
           "endDate": "2020-12",
@@ -213,7 +306,7 @@
           ]
         },
         {
-          "role": "Senior Developer",
+          "role": { "en": "Senior Developer", "sv": "Seniorutvecklare" },
           "clientId": "mitt-skolval",
           "startDate": "2021-01",
           "endDate": "2021-05",
@@ -234,7 +327,7 @@
           ]
         },
         {
-          "role": "CTO",
+          "role": { "en": "CTO", "sv": "CTO" },
           "clientId": "mitt-skolval",
           "startDate": "2021-06",
           "endDate": "2023-09",
@@ -263,11 +356,11 @@
       ]
     },
     {
-      "role": "CTO & Co-Founder",
+      "role": { "en": "CTO & Co-Founder", "sv": "CTO & medgrundare" },
       "companyId": "symptoms",
       "startDate": "2015-11",
       "endDate": "2020-01",
-      "engagement": "half-time",
+      "engagement": { "en": "half-time", "sv": "halvtid" },
       "stack": [
         "TypeScript",
         "Vue",
@@ -294,11 +387,11 @@
       ]
     },
     {
-      "role": "Backend Developer",
+      "role": { "en": "Backend Developer", "sv": "Backend-utvecklare" },
       "companyId": "indicio",
       "startDate": "2015-09",
       "endDate": "2020-01",
-      "engagement": "half-time",
+      "engagement": { "en": "half-time", "sv": "halvtid" },
       "stack": [
         "TypeScript",
         "Angular",
@@ -309,34 +402,43 @@
       "skills": ["CI/CD", "Cybersecurity", "Software Architecture"]
     },
     {
-      "role": "Founder",
+      "role": { "en": "Founder", "sv": "Grundare" },
       "companyId": "agilator",
       "startDate": "2016-02",
       "endDate": null,
-      "engagement": "part-time"
+      "engagement": { "en": "part-time", "sv": "deltid" }
     }
   ],
   "education": [
     {
-      "field": "Information Systems",
-      "institution": "Uppsala University",
-      "level": "Bachelor's program",
+      "field": {
+        "en": "Information Systems",
+        "sv": "Informationssystem"
+      },
+      "institution": {
+        "en": "Uppsala University",
+        "sv": "Uppsala universitet"
+      },
+      "level": { "en": "Bachelor's program", "sv": "Kandidatprogram" },
       "credits": "135 ECTS",
       "startDate": "2014-08",
       "endDate": "2017-06"
     },
     {
-      "field": "Medicine",
-      "institution": "Uppsala University",
-      "level": "Master's program",
+      "field": { "en": "Medicine", "sv": "Medicin" },
+      "institution": {
+        "en": "Uppsala University",
+        "sv": "Uppsala universitet"
+      },
+      "level": { "en": "Master's program", "sv": "Masterprogram" },
       "credits": "142 ECTS",
       "startDate": "2011-08",
       "endDate": "2014-04"
     },
     {
-      "field": "Medicine",
-      "institution": "Umeå University",
-      "level": "Master's program",
+      "field": { "en": "Medicine", "sv": "Medicin" },
+      "institution": { "en": "Umeå University", "sv": "Umeå universitet" },
+      "level": { "en": "Master's program", "sv": "Masterprogram" },
       "credits": "60 ECTS",
       "startDate": "2010-01",
       "endDate": "2010-12"
@@ -344,23 +446,38 @@
   ],
   "courses": [
     {
-      "name": "Game Programming in Windows – Introduction",
+      "name": {
+        "en": "Game Programming in Windows – Introduction",
+        "sv": "Spelprogrammering i Windows – introduktion"
+      },
       "code": "DT108G",
-      "institution": "Mid Sweden University",
+      "institution": {
+        "en": "Mid Sweden University",
+        "sv": "Mittuniversitetet"
+      },
       "credits": "12 ECTS",
       "completedDate": "2015-08"
     },
     {
-      "name": "Game Design",
+      "name": { "en": "Game Design", "sv": "Speldesign" },
       "code": "2AD148",
-      "institution": "Uppsala University",
+      "institution": {
+        "en": "Uppsala University",
+        "sv": "Uppsala universitet"
+      },
       "credits": "7.5 ECTS",
       "completedDate": "2015-07"
     },
     {
-      "name": "Online Introduction to Law",
+      "name": {
+        "en": "Online Introduction to Law",
+        "sv": "Nätbaserad introduktion till juridik"
+      },
       "code": "2JF068",
-      "institution": "Uppsala University",
+      "institution": {
+        "en": "Uppsala University",
+        "sv": "Uppsala universitet"
+      },
       "credits": "15 ECTS",
       "completedDate": "2015-06"
     }
@@ -368,7 +485,7 @@
   "skills": [
     {
       "key": "ai",
-      "label": "AI",
+      "label": { "en": "AI", "sv": "AI" },
       "items": [
         "Spec-driven development",
         "Multi-agent orchestration",
@@ -391,7 +508,7 @@
     },
     {
       "key": "languages",
-      "label": "Languages",
+      "label": { "en": "Languages", "sv": "Språk" },
       "items": [
         "Rust",
         "C#/.NET",
@@ -404,17 +521,17 @@
     },
     {
       "key": "frameworks",
-      "label": "Frameworks",
+      "label": { "en": "Frameworks", "sv": "Ramverk" },
       "items": ["React", "React Native", "Vue", "Angular", "Node.js"]
     },
     {
       "key": "cloud",
-      "label": "Cloud",
+      "label": { "en": "Cloud", "sv": "Moln" },
       "items": ["Azure", "AWS", "Azure DevOps"]
     },
     {
       "key": "databases",
-      "label": "Databases",
+      "label": { "en": "Databases", "sv": "Databaser" },
       "items": [
         "PostgreSQL",
         "Microsoft SQL Server",
@@ -426,12 +543,12 @@
     },
     {
       "key": "devops",
-      "label": "DevOps",
+      "label": { "en": "DevOps", "sv": "DevOps" },
       "items": ["Docker", "Kubernetes", "CI/CD", "Infrastructure as Code"]
     },
     {
       "key": "practices",
-      "label": "Practices",
+      "label": { "en": "Practices", "sv": "Arbetssätt" },
       "items": [
         "Software Architecture",
         "Microservices",
@@ -442,7 +559,7 @@
     },
     {
       "key": "leadership",
-      "label": "Leadership",
+      "label": { "en": "Leadership", "sv": "Ledarskap" },
       "items": [
         "Engineering Management",
         "Team Management",
@@ -455,7 +572,7 @@
     },
     {
       "key": "compliance",
-      "label": "Compliance",
+      "label": { "en": "Compliance", "sv": "Regelefterlevnad" },
       "items": [
         "Cybersecurity",
         "Regulatory Compliance",

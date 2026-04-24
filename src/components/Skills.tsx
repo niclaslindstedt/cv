@@ -1,4 +1,5 @@
 import type { SkillGroup } from "../data/cv.types";
+import { useLang } from "../utils/i18n";
 import { jobAssignmentCount, type SkillUsage } from "../utils/skills";
 import { Section } from "./Section";
 
@@ -27,12 +28,13 @@ function sortSkills(
 }
 
 export function Skills({ title, skills, usages, onSkillClick }: Props) {
+  const { t } = useLang();
   return (
     <Section id="skills" title={title}>
       <div className="skills">
         {skills.map((group) => (
           <div key={group.key} className="skills-group">
-            <h3>{group.label}</h3>
+            <h3>{t(group.label)}</h3>
             <ul>
               {sortSkills(group.items, usages).map((skill) => {
                 const used = usages.get(skill) ?? [];

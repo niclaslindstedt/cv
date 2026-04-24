@@ -11,6 +11,7 @@ import { Skills } from "./components/Skills";
 import { Timeline } from "./components/Timeline";
 import cv from "./data/cv.json";
 import type { Company } from "./data/cv.types";
+import { useLang } from "./utils/i18n";
 import { buildSkillUsageMap } from "./utils/skills";
 import { useTheme } from "./utils/theme";
 
@@ -26,9 +27,10 @@ export function App() {
   const [timelineOpen, setTimelineOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
+  const { t } = useLang();
 
   useEffect(() => {
-    document.title = cv.meta.documentTitle;
+    document.title = t(cv.meta.documentTitle);
     let meta = document.querySelector<HTMLMetaElement>(
       'meta[name="description"]',
     );
@@ -37,8 +39,8 @@ export function App() {
       meta.setAttribute("name", "description");
       document.head.appendChild(meta);
     }
-    meta.setAttribute("content", cv.meta.description);
-  }, []);
+    meta.setAttribute("content", t(cv.meta.description));
+  }, [t]);
 
   return (
     <div className="page">
@@ -49,30 +51,30 @@ export function App() {
           onToggleTheme={toggleTheme}
           onOpenTimeline={() => setTimelineOpen(true)}
         />
-        <Focus title={cv.sections.focus} focus={cv.focus} />
+        <Focus title={t(cv.sections.focus)} focus={cv.focus} />
         <Projects
-          title={cv.sections.projects}
+          title={t(cv.sections.projects)}
           projects={cv.projects}
           onSkillClick={setSelectedSkill}
         />
         <Experience
-          title={cv.sections.experience}
+          title={t(cv.sections.experience)}
           experience={cv.experience}
           companies={companies}
           onSkillClick={setSelectedSkill}
         />
         <Education
-          title={cv.sections.education}
+          title={t(cv.sections.education)}
           education={cv.education}
           onSkillClick={setSelectedSkill}
         />
         <Courses
-          title={cv.sections.courses}
+          title={t(cv.sections.courses)}
           courses={cv.courses}
           onSkillClick={setSelectedSkill}
         />
         <Skills
-          title={cv.sections.skills}
+          title={t(cv.sections.skills)}
           skills={cv.skills}
           usages={skillUsages}
           onSkillClick={setSelectedSkill}

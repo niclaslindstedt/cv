@@ -42,7 +42,7 @@ cv.experience.forEach((e, i) => {
   });
 });
 (cv.education ?? []).forEach((ed, i) =>
-  check(`education[${i}] (${ed.institution})`, ed.skills),
+  check(`education[${i}] (${ed.institution.en})`, ed.skills),
 );
 
 if (errors.length) {

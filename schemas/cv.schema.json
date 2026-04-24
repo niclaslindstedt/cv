@@ -26,9 +26,9 @@
     "$schema": { "type": "string" },
     "meta": { "$ref": "#/$defs/meta" },
     "name": { "type": "string", "minLength": 1 },
-    "title": { "type": "string", "minLength": 1 },
-    "location": { "type": "string", "minLength": 1 },
-    "summary": { "type": "string", "minLength": 1 },
+    "title": { "$ref": "#/$defs/localizedString" },
+    "location": { "$ref": "#/$defs/localizedString" },
+    "summary": { "$ref": "#/$defs/localizedString" },
     "links": {
       "type": "array",
       "minItems": 1,
@@ -75,13 +75,23 @@
       "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
       "description": "Year and month in YYYY-MM format."
     },
+    "localizedString": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "sv"],
+      "properties": {
+        "en": { "type": "string", "minLength": 1 },
+        "sv": { "type": "string", "minLength": 1 }
+      },
+      "description": "Translatable string. Must supply both English and Swedish copy."
+    },
     "meta": {
       "type": "object",
       "additionalProperties": false,
       "required": ["documentTitle", "description"],
       "properties": {
-        "documentTitle": { "type": "string", "minLength": 1 },
-        "description": { "type": "string", "minLength": 1 }
+        "documentTitle": { "$ref": "#/$defs/localizedString" },
+        "description": { "$ref": "#/$defs/localizedString" }
       }
     },
     "link": {
@@ -89,7 +99,7 @@
       "additionalProperties": false,
       "required": ["label", "url"],
       "properties": {
-        "label": { "type": "string", "minLength": 1 },
+        "label": { "$ref": "#/$defs/localizedString" },
         "url": { "type": "string", "format": "uri" },
         "featured": { "type": "boolean" }
       }
@@ -99,8 +109,8 @@
       "additionalProperties": false,
       "required": ["timeline", "downloadPdf"],
       "properties": {
-        "timeline": { "type": "string", "minLength": 1 },
-        "downloadPdf": { "type": "string", "minLength": 1 }
+        "timeline": { "$ref": "#/$defs/localizedString" },
+        "downloadPdf": { "$ref": "#/$defs/localizedString" }
       }
     },
     "sections": {
@@ -115,12 +125,12 @@
         "skills"
       ],
       "properties": {
-        "focus": { "type": "string", "minLength": 1 },
-        "projects": { "type": "string", "minLength": 1 },
-        "experience": { "type": "string", "minLength": 1 },
-        "education": { "type": "string", "minLength": 1 },
-        "courses": { "type": "string", "minLength": 1 },
-        "skills": { "type": "string", "minLength": 1 }
+        "focus": { "$ref": "#/$defs/localizedString" },
+        "projects": { "$ref": "#/$defs/localizedString" },
+        "experience": { "$ref": "#/$defs/localizedString" },
+        "education": { "$ref": "#/$defs/localizedString" },
+        "courses": { "$ref": "#/$defs/localizedString" },
+        "skills": { "$ref": "#/$defs/localizedString" }
       }
     },
     "focusArea": {
@@ -128,7 +138,7 @@
       "additionalProperties": false,
       "required": ["area", "since"],
       "properties": {
-        "area": { "type": "string", "minLength": 1 },
+        "area": { "$ref": "#/$defs/localizedString" },
         "since": { "$ref": "#/$defs/yearMonth" }
       }
     },
@@ -138,8 +148,8 @@
       "required": ["name", "tagline", "description", "skills", "repo"],
       "properties": {
         "name": { "type": "string", "minLength": 1 },
-        "tagline": { "type": "string", "minLength": 1 },
-        "description": { "type": "string", "minLength": 1 },
+        "tagline": { "$ref": "#/$defs/localizedString" },
+        "description": { "$ref": "#/$defs/localizedString" },
         "stack": { "$ref": "#/$defs/stringList" },
         "skills": {
           "type": "array",
@@ -160,7 +170,7 @@
           "description": "Stable slug used to reference this company from experience/assignment entries."
         },
         "name": { "type": "string", "minLength": 1 },
-        "description": { "type": "string", "minLength": 1 },
+        "description": { "$ref": "#/$defs/localizedString" },
         "url": { "type": "string", "format": "uri" },
         "terminated": { "type": "boolean" },
         "stack": { "$ref": "#/$defs/stringList" }
@@ -171,13 +181,13 @@
       "additionalProperties": false,
       "required": ["role", "companyId", "startDate", "endDate"],
       "properties": {
-        "role": { "type": "string", "minLength": 1 },
+        "role": { "$ref": "#/$defs/localizedString" },
         "companyId": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": {
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
-        "engagement": { "type": "string", "minLength": 1 },
+        "engagement": { "$ref": "#/$defs/localizedString" },
         "stack": { "$ref": "#/$defs/stringList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "assignments": {
@@ -192,7 +202,7 @@
       "additionalProperties": false,
       "required": ["role", "clientId", "startDate", "endDate"],
       "properties": {
-        "role": { "type": "string", "minLength": 1 },
+        "role": { "$ref": "#/$defs/localizedString" },
         "clientId": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": {
@@ -214,9 +224,9 @@
         "endDate"
       ],
       "properties": {
-        "field": { "type": "string", "minLength": 1 },
-        "institution": { "type": "string", "minLength": 1 },
-        "level": { "type": "string", "minLength": 1 },
+        "field": { "$ref": "#/$defs/localizedString" },
+        "institution": { "$ref": "#/$defs/localizedString" },
+        "level": { "$ref": "#/$defs/localizedString" },
         "credits": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": { "$ref": "#/$defs/yearMonth" },
@@ -228,9 +238,9 @@
       "additionalProperties": false,
       "required": ["name", "code", "institution", "credits", "completedDate"],
       "properties": {
-        "name": { "type": "string", "minLength": 1 },
+        "name": { "$ref": "#/$defs/localizedString" },
         "code": { "type": "string", "minLength": 1 },
-        "institution": { "type": "string", "minLength": 1 },
+        "institution": { "$ref": "#/$defs/localizedString" },
         "credits": { "type": "string", "minLength": 1 },
         "completedDate": { "$ref": "#/$defs/yearMonth" },
         "skills": { "$ref": "#/$defs/stringList" }
@@ -242,7 +252,7 @@
       "required": ["key", "label", "items"],
       "properties": {
         "key": { "type": "string", "minLength": 1 },
-        "label": { "type": "string", "minLength": 1 },
+        "label": { "$ref": "#/$defs/localizedString" },
         "items": { "$ref": "#/$defs/stringList" }
       }
     },

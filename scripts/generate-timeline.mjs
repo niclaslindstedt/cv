@@ -24,6 +24,24 @@ for (let i = 0; i < args.length; i++) {
   }
 }
 
+const LANGUAGES = ["en", "sv"];
+
+function localize(value) {
+  if (value && typeof value === "object" && "en" in value && "sv" in value) {
+    return { en: value.en, sv: value.sv };
+  }
+  const str = value ?? "";
+  return { en: str, sv: str };
+}
+
+function localizedJoin(pieces, separator) {
+  const out = {};
+  for (const lang of LANGUAGES) {
+    out[lang] = pieces.map((p) => localize(p)[lang]).join(separator);
+  }
+  return out;
+}
+
 function monthIndex(iso) {
   const [y, m] = iso.split("-").map(Number);
   return y * 12 + (m - 1);
@@ -62,9 +80,9 @@ function buildItems(cv) {
     items.push({
       id: `exp-${i}`,
       kind: "experience",
-      title: exp.role,
-      subtitle: company.name,
-      description: company.description,
+      title: localize(exp.role),
+      subtitle: localize(company.name),
+      description: localize(company.description),
       startDate: exp.startDate,
       endDate: exp.endDate,
       skills: mergeTags(exp.stack, exp.skills),
@@ -98,13 +116,20 @@ function buildItems(cv) {
       const sortedRoles = [...group.roles].sort((a, b) =>
         a.startDate.localeCompare(b.startDate),
       );
-      const title = sortedRoles.map((r) => r.role).join(" → ");
+      const title = localizedJoin(
+        sortedRoles.map((r) => r.role),
+        " → ",
+      );
+      const subtitle = localizedJoin(
+        [group.client.name, ` · via ${company.name}`],
+        "",
+      );
       items.push({
         id: `exp-${i}-asg-${group.firstIndex}`,
         kind: "assignment",
         title,
-        subtitle: `${group.client.name} · via ${company.name}`,
-        description: group.client.description,
+        subtitle,
+        description: localize(group.client.description),
         startDate: group.startDate,
         endDate: group.endDate,
         skills: group.skills,
@@ -112,12 +137,18 @@ function buildItems(cv) {
     }
   });
   (cv.education ?? []).forEach((ed, i) => {
+    const institution = localize(ed.institution);
+    const level = localize(ed.level);
+    const subtitle = {};
+    for (const lang of LANGUAGES) {
+      subtitle[lang] = `${institution[lang]} · ${level[lang]}`;
+    }
     items.push({
       id: `edu-${i}`,
       kind: "education",
-      title: ed.field,
-      subtitle: `${ed.institution} · ${ed.level}`,
-      description: `${ed.credits}`,
+      title: localize(ed.field),
+      subtitle,
+      description: localize(ed.credits),
       startDate: ed.startDate,
       endDate: ed.endDate,
       skills: ed.skills ?? [],
@@ -134,9 +165,9 @@ function buildGithubItems(activity) {
     items.push({
       id: `gh-${year.year}`,
       kind: "github",
-      title: String(year.year),
-      subtitle: `${year.totalCommits} commits`,
-      description: "",
+      title: localize(String(year.year)),
+      subtitle: localize(`${year.totalCommits} commits`),
+      description: localize(""),
       startDate: `${year.year}-01`,
       endDate: `${year.year}-12`,
       skills: [],
@@ -165,12 +196,12 @@ function buildLayout(cv, activity) {
   items.push(...githubItems);
 
   const trackDefs = [
-    { key: "experience", label: "Jobs" },
-    { key: "assignment", label: "Assignments" },
-    { key: "education", label: "Education" },
+    { key: "experience", label: { en: "Jobs", sv: "Anställningar" } },
+    { key: "assignment", label: { en: "Assignments", sv: "Uppdrag" } },
+    { key: "education", label: { en: "Education", sv: "Utbildning" } },
   ];
   if (githubItems.length > 0) {
-    trackDefs.push({ key: "github", label: "GitHub" });
+    trackDefs.push({ key: "github", label: { en: "GitHub", sv: "GitHub" } });
   }
 
   const prepared = items.map((item) => {

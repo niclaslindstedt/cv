@@ -1,5 +1,6 @@
 import type { Course } from "../data/cv.types";
 import { formatMonth } from "../utils/date";
+import { useLang } from "../utils/i18n";
 import { Section } from "./Section";
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export function Courses({ title, courses, onSkillClick }: Props) {
+  const { lang, t } = useLang();
   if (courses.length === 0) return null;
   return (
     <Section id="courses" title={title}>
@@ -16,11 +18,11 @@ export function Courses({ title, courses, onSkillClick }: Props) {
         {courses.map((item) => (
           <li key={`${item.code}-${item.completedDate}`}>
             <div className="education-head">
-              <h3>{item.name}</h3>
-              <span>{formatMonth(item.completedDate)}</span>
+              <h3>{t(item.name)}</h3>
+              <span>{formatMonth(item.completedDate, lang)}</span>
             </div>
             <p>
-              {item.institution} ·{" "}
+              {t(item.institution)} ·{" "}
               <span className="education-credits">{item.code}</span> ·{" "}
               <span className="education-credits">{item.credits}</span>
             </p>

@@ -1,37 +1,41 @@
+export type Language = "en" | "sv";
+
+export type LocalizedString = { en: string; sv: string };
+
 export type Meta = {
-  documentTitle: string;
-  description: string;
+  documentTitle: LocalizedString;
+  description: LocalizedString;
 };
 
 export type Link = {
-  label: string;
+  label: LocalizedString;
   url: string;
   featured?: boolean;
 };
 
 export type Actions = {
-  timeline: string;
-  downloadPdf: string;
+  timeline: LocalizedString;
+  downloadPdf: LocalizedString;
 };
 
 export type Sections = {
-  focus: string;
-  projects: string;
-  experience: string;
-  education: string;
-  courses: string;
-  skills: string;
+  focus: LocalizedString;
+  projects: LocalizedString;
+  experience: LocalizedString;
+  education: LocalizedString;
+  courses: LocalizedString;
+  skills: LocalizedString;
 };
 
 export type FocusArea = {
-  area: string;
+  area: LocalizedString;
   since: string;
 };
 
 export type Project = {
   name: string;
-  tagline: string;
-  description: string;
+  tagline: LocalizedString;
+  description: LocalizedString;
   stack?: string[];
   skills: string[];
   repo: string;
@@ -40,14 +44,14 @@ export type Project = {
 export type Company = {
   id: string;
   name: string;
-  description: string;
+  description: LocalizedString;
   url?: string;
   terminated?: boolean;
   stack?: string[];
 };
 
 export type Assignment = {
-  role: string;
+  role: LocalizedString;
   clientId: string;
   startDate: string;
   endDate: string | null;
@@ -56,20 +60,20 @@ export type Assignment = {
 };
 
 export type Experience = {
-  role: string;
+  role: LocalizedString;
   companyId: string;
   startDate: string;
   endDate: string | null;
-  engagement?: string;
+  engagement?: LocalizedString;
   stack?: string[];
   skills?: string[];
   assignments?: Assignment[];
 };
 
 export type Education = {
-  field: string;
-  institution: string;
-  level: string;
+  field: LocalizedString;
+  institution: LocalizedString;
+  level: LocalizedString;
   credits: string;
   startDate: string;
   endDate: string;
@@ -77,9 +81,9 @@ export type Education = {
 };
 
 export type Course = {
-  name: string;
+  name: LocalizedString;
   code: string;
-  institution: string;
+  institution: LocalizedString;
   credits: string;
   completedDate: string;
   skills?: string[];
@@ -87,16 +91,16 @@ export type Course = {
 
 export type SkillGroup = {
   key: string;
-  label: string;
+  label: LocalizedString;
   items: string[];
 };
 
 export type CV = {
   meta: Meta;
   name: string;
-  title: string;
-  location: string;
-  summary: string;
+  title: LocalizedString;
+  location: LocalizedString;
+  summary: LocalizedString;
   links: Link[];
   actions: Actions;
   sections: Sections;
