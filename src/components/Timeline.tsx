@@ -9,11 +9,7 @@ import {
 } from "react";
 
 import timelineData from "../data/timeline.json";
-import type {
-  TimelineBar,
-  TimelineData,
-  TimelineSegment,
-} from "../data/timeline.types";
+import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
 
 type Props = {
@@ -26,8 +22,8 @@ const MAX_SCALE = 8;
 const BASE_MONTH_PX = 14;
 const LANE_SIZE = 28;
 const LANE_GAP = 2;
-const TRACK_HEADER = 20;
-const TRACK_GAP = 32;
+const TRACK_HEADER = 8;
+const TRACK_GAP = 24;
 const AXIS_SIZE = 40;
 const MONTH_NAMES = [
   "Jan",
@@ -234,12 +230,8 @@ export function Timeline({ open, onClose }: Props) {
 
   const axisPos = (m: number) => (m - minMonth) * monthPx;
 
-  const renderBarSegments = (
-    bar: TimelineBar,
-    trackIdx: number,
-    widestSeg: TimelineSegment,
-  ) => {
-    const classesBase = [
+  const renderBar = (bar: TimelineBar, trackIdx: number) => {
+    const classes = [
       "timeline-vis-item",
       `timeline-vis-${bar.kind}`,
       bar.isOngoing ? "is-ongoing" : "",
@@ -253,42 +245,35 @@ export function Timeline({ open, onClose }: Props) {
       bar.endDate,
     )}`;
 
-    const lastSegIdx = bar.segments.length - 1;
+    const lane = bar.segments[0].activeLane;
+    const startMonth = bar.segments[0].startMonth;
+    const lastSeg = bar.segments[bar.segments.length - 1];
+    const endMonth = bar.isOngoing
+      ? Math.max(lastSeg.endMonth, now + 1)
+      : lastSeg.endMonth;
 
-    return bar.segments.map((seg, segIdx) => {
-      const isLast = segIdx === lastSegIdx;
-      const segEnd =
-        isLast && bar.isOngoing
-          ? Math.max(seg.endMonth, now + 1)
-          : seg.endMonth;
-      const left = axisPos(seg.startMonth);
-      const width = Math.max(1, (segEnd - seg.startMonth) * monthPx);
-      const top =
-        trackTop[trackIdx] + TRACK_HEADER + seg.activeLane * LANE_SIZE;
-      const height = LANE_SIZE - LANE_GAP;
-      const isLabelSeg = seg === widestSeg;
-      const style: CSSProperties = { left, width, top, height };
-      return (
-        <button
-          key={`${bar.id}-${segIdx}`}
-          type="button"
-          className={
-            classesBase + (isLabelSeg ? "" : " timeline-vis-item-continuation")
-          }
-          style={style}
-          data-bar-id={bar.id}
-          onClick={() => setSelectedId(bar.id)}
-          title={title}
-        >
-          {isLabelSeg && (
-            <span className="timeline-vis-item-label">
-              <span className="timeline-vis-item-title">{bar.title}</span>
-              <span className="timeline-vis-item-sub">{bar.subtitle}</span>
-            </span>
-          )}
-        </button>
-      );
-    });
+    const left = axisPos(startMonth);
+    const width = Math.max(1, (endMonth - startMonth) * monthPx);
+    const top = trackTop[trackIdx] + TRACK_HEADER + lane * LANE_SIZE;
+    const height = LANE_SIZE - LANE_GAP;
+    const style: CSSProperties = { left, width, top, height };
+
+    return (
+      <button
+        key={bar.id}
+        type="button"
+        className={classes}
+        style={style}
+        data-bar-id={bar.id}
+        onClick={() => setSelectedId(bar.id)}
+        title={title}
+      >
+        <span className="timeline-vis-item-label">
+          <span className="timeline-vis-item-title">{bar.title}</span>
+          <span className="timeline-vis-item-sub">{bar.subtitle}</span>
+        </span>
+      </button>
+    );
   };
 
   return (
@@ -341,100 +326,112 @@ export function Timeline({ open, onClose }: Props) {
         </div>
       </div>
 
-      <div
-        ref={viewportRef}
-        className="timeline-vis-viewport"
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerEnd}
-        onPointerCancel={handlePointerEnd}
-      >
+      <div className="timeline-vis-body">
         <div
-          className="timeline-vis-content"
-          style={{ width: axisLength, height: AXIS_SIZE + contentHeight }}
+          className="timeline-vis-labels"
+          style={{ height: AXIS_SIZE + contentHeight }}
+        >
+          {tracks.map((track, t) => (
+            <div
+              key={`label-${t}`}
+              className="timeline-vis-track-label"
+              style={{
+                top: AXIS_SIZE + trackTop[t],
+                height: trackHeight[t],
+              }}
+            >
+              {track.label}
+            </div>
+          ))}
+        </div>
+        <div
+          ref={viewportRef}
+          className="timeline-vis-viewport"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerEnd}
+          onPointerCancel={handlePointerEnd}
         >
           <div
-            className="timeline-vis-axis"
-            style={{ left: 0, top: 0, width: axisLength, height: AXIS_SIZE }}
+            className="timeline-vis-content"
+            style={{ width: axisLength, height: AXIS_SIZE + contentHeight }}
           >
-            {yearTicks.map((tick) => {
-              const pos = axisPos(tick.month);
-              return (
-                <div
-                  key={`y-${tick.month}`}
-                  className="timeline-vis-tick timeline-vis-tick-year"
-                  style={{ left: pos }}
-                >
-                  <span className="timeline-vis-tick-label">{tick.label}</span>
-                </div>
-              );
-            })}
-            {monthTicks.map((tick) => {
-              const pos = axisPos(tick.month);
-              return (
-                <div
-                  key={`m-${tick.month}`}
-                  className="timeline-vis-tick timeline-vis-tick-month"
-                  style={{ left: pos }}
-                >
-                  {showMonthLabels && (
+            <div
+              className="timeline-vis-axis"
+              style={{ left: 0, top: 0, width: axisLength, height: AXIS_SIZE }}
+            >
+              {yearTicks.map((tick) => {
+                const pos = axisPos(tick.month);
+                return (
+                  <div
+                    key={`y-${tick.month}`}
+                    className="timeline-vis-tick timeline-vis-tick-year"
+                    style={{ left: pos }}
+                  >
                     <span className="timeline-vis-tick-label">
                       {tick.label}
                     </span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          <div
-            className="timeline-vis-tracks"
-            style={{
-              left: 0,
-              top: AXIS_SIZE,
-              width: axisLength,
-              height: contentHeight,
-            }}
-          >
-            {yearTicks.map((tick) => {
-              const pos = axisPos(tick.month);
-              return (
-                <div
-                  key={`g-${tick.month}`}
-                  className="timeline-vis-gridline"
-                  style={{ left: pos, top: 0, bottom: 0 }}
-                />
-              );
-            })}
-
-            {tracks.map((track, t) => {
-              const style: CSSProperties = {
-                left: 0,
-                width: axisLength,
-                top: trackTop[t],
-                height: trackHeight[t],
-              };
-              return (
-                <div
-                  key={`band-${t}`}
-                  className={`timeline-vis-band timeline-vis-band-${track.key}`}
-                  style={style}
-                >
-                  <div className="timeline-vis-band-label">{track.label}</div>
-                </div>
-              );
-            })}
-
-            {tracks.map((track, t) =>
-              track.bars.map((bar) => {
-                const widestSeg = bar.segments.reduce((max, s) =>
-                  s.endMonth - s.startMonth > max.endMonth - max.startMonth
-                    ? s
-                    : max,
+                  </div>
                 );
-                return renderBarSegments(bar, t, widestSeg);
-              }),
-            )}
+              })}
+              {monthTicks.map((tick) => {
+                const pos = axisPos(tick.month);
+                return (
+                  <div
+                    key={`m-${tick.month}`}
+                    className="timeline-vis-tick timeline-vis-tick-month"
+                    style={{ left: pos }}
+                  >
+                    {showMonthLabels && (
+                      <span className="timeline-vis-tick-label">
+                        {tick.label}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div
+              className="timeline-vis-tracks"
+              style={{
+                left: 0,
+                top: AXIS_SIZE,
+                width: axisLength,
+                height: contentHeight,
+              }}
+            >
+              {yearTicks.map((tick) => {
+                const pos = axisPos(tick.month);
+                return (
+                  <div
+                    key={`g-${tick.month}`}
+                    className="timeline-vis-gridline"
+                    style={{ left: pos, top: 0, bottom: 0 }}
+                  />
+                );
+              })}
+
+              {tracks.map((track, t) => {
+                const style: CSSProperties = {
+                  left: 0,
+                  width: axisLength,
+                  top: trackTop[t],
+                  height: trackHeight[t],
+                };
+                return (
+                  <div
+                    key={`band-${t}`}
+                    className={`timeline-vis-band timeline-vis-band-${track.key}`}
+                    style={style}
+                  />
+                );
+              })}
+
+              {tracks.map((track, t) =>
+                track.bars.map((bar) => renderBar(bar, t)),
+              )}
+            </div>
           </div>
         </div>
       </div>

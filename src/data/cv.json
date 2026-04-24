@@ -107,7 +107,8 @@
     {
       "id": "etimo",
       "name": "Etimo AB",
-      "description": "IT consultancy specialized in .NET and JavaScript web applications."
+      "description": "IT consultancy specialized in .NET and JavaScript web applications.",
+      "url": "https://www.etimo.se"
     },
     {
       "id": "seb",
