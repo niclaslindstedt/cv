@@ -1,4 +1,4 @@
-.PHONY: install build test lint typecheck fmt fmt-check validate release clean dev preview
+.PHONY: install build test lint typecheck fmt fmt-check validate release clean dev preview generate
 
 install:
 	npm ci
@@ -25,6 +25,10 @@ fmt-check:
 validate:
 	npm run validate:cv
 	npm run validate:skill-tags
+	npm run validate:timeline-json
+
+generate:
+	npm run generate:timeline
 
 dev:
 	npm run dev

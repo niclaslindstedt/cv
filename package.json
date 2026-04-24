@@ -13,7 +13,14 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "validate:cv": "ajv validate -c ajv-formats --spec=draft2020 --strict=false -s schemas/cv.schema.json -d src/data/cv.json",
-    "validate:skill-tags": "node scripts/validate-skill-tags.mjs"
+    "validate:skill-tags": "node scripts/validate-skill-tags.mjs",
+    "validate:timeline-json": "node scripts/validate-timeline-json.mjs",
+    "generate:timeline": "node scripts/generate-timeline.mjs",
+    "postinstall": "node scripts/generate-timeline.mjs",
+    "prebuild": "node scripts/generate-timeline.mjs",
+    "predev": "node scripts/generate-timeline.mjs",
+    "pretypecheck": "node scripts/generate-timeline.mjs",
+    "prelint": "node scripts/generate-timeline.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

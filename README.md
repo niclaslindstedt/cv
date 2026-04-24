@@ -51,9 +51,14 @@ All developer entry points are exposed via `make`:
 | `make fmt`       | Prettier rewrite in place                                    |
 | `make fmt-check` | Prettier check without writing                               |
 | `make validate`  | Validate `src/data/cv.json` against `schemas/cv.schema.json` |
+| `make generate`  | Regenerate `src/data/timeline.json` from `cv.json`           |
 | `make test`      | Run the test suite                                           |
 | `make release`   | Cut a new release (CI-managed)                               |
 | `make clean`     | Remove `dist/` and Vite cache                                |
+
+`src/data/timeline.json` is a generated artifact (gitignored). It is rebuilt
+automatically on `npm ci`, `npm run build`, `npm run dev`, `npm run lint`,
+and `npm run typecheck`, or on demand via `make generate`.
 
 ## Configuration
 

@@ -68,11 +68,7 @@ export function App() {
           © {new Date().getFullYear()} {cv.name}
         </span>
       </footer>
-      <Timeline
-        cv={cv}
-        open={timelineOpen}
-        onClose={() => setTimelineOpen(false)}
-      />
+      <Timeline open={timelineOpen} onClose={() => setTimelineOpen(false)} />
       <SkillModal
         skill={selectedSkill}
         usages={selectedSkill ? (skillUsages.get(selectedSkill) ?? []) : []}
