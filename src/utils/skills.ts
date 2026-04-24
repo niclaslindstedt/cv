@@ -17,15 +17,23 @@ export function buildSkillUsageMap(cv: CV): Map<string, SkillUsage[]> {
     map.set(skill, list);
   };
 
+  const uniq = (...lists: (readonly string[] | undefined)[]): string[] => {
+    const seen = new Set<string>();
+    for (const list of lists) {
+      for (const item of list ?? []) seen.add(item);
+    }
+    return [...seen];
+  };
+
   for (const project of cv.projects) {
-    for (const skill of project.skills) {
-      push(skill, { kind: "project", label: project.name });
+    for (const tag of uniq(project.stack, project.skills)) {
+      push(tag, { kind: "project", label: project.name });
     }
   }
 
   for (const role of cv.experience) {
-    for (const skill of role.skills ?? []) {
-      push(skill, {
+    for (const tag of uniq(role.stack, role.skills)) {
+      push(tag, {
         kind: "experience",
         label: role.company,
         role: role.role,
@@ -34,8 +42,8 @@ export function buildSkillUsageMap(cv: CV): Map<string, SkillUsage[]> {
       });
     }
     for (const assignment of role.assignments ?? []) {
-      for (const skill of assignment.skills ?? []) {
-        push(skill, {
+      for (const tag of uniq(assignment.stack, assignment.skills)) {
+        push(tag, {
           kind: "assignment",
           label: `${assignment.client} (${role.company})`,
           role: assignment.role,

@@ -22,12 +22,27 @@ export function Projects({ title, projects, onSkillClick }: Props) {
               <p className="project-tagline">{project.tagline}</p>
             </header>
             <p className="project-description">{project.description}</p>
-            <ul className="project-stack">
+            {project.stack && project.stack.length > 0 && (
+              <ul className="project-stack">
+                {project.stack.map((tech) => (
+                  <li key={tech}>
+                    <button
+                      type="button"
+                      className="project-stack-btn"
+                      onClick={() => onSkillClick(tech)}
+                    >
+                      {tech}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <ul className="project-skills">
               {project.skills.map((skill) => (
                 <li key={skill}>
                   <button
                     type="button"
-                    className="project-stack-btn"
+                    className="project-skill-btn"
                     onClick={() => onSkillClick(skill)}
                   >
                     {skill}

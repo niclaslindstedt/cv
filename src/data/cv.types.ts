@@ -31,6 +31,7 @@ export type Project = {
   name: string;
   tagline: string;
   description: string;
+  stack?: string[];
   skills: string[];
   repo: string;
 };
@@ -41,6 +42,7 @@ export type Assignment = {
   clientDescription: string;
   startDate: string;
   endDate: string | null;
+  stack?: string[];
   skills?: string[];
 };
 
@@ -51,6 +53,7 @@ export type Experience = {
   startDate: string;
   endDate: string | null;
   engagement?: string;
+  stack?: string[];
   skills?: string[];
   assignments?: Assignment[];
 };

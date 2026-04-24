@@ -121,6 +121,7 @@
         "name": { "type": "string", "minLength": 1 },
         "tagline": { "type": "string", "minLength": 1 },
         "description": { "type": "string", "minLength": 1 },
+        "stack": { "$ref": "#/$defs/stringList" },
         "skills": {
           "type": "array",
           "minItems": 1,
@@ -148,6 +149,7 @@
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
         "engagement": { "type": "string", "minLength": 1 },
+        "stack": { "$ref": "#/$defs/stringList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "assignments": {
           "type": "array",
@@ -174,6 +176,7 @@
         "endDate": {
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
+        "stack": { "$ref": "#/$defs/stringList" },
         "skills": { "$ref": "#/$defs/stringList" }
       }
     },

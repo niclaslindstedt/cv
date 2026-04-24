@@ -103,6 +103,14 @@
       "companyDescription": "Audiobook streaming service with over 1 million users.",
       "startDate": "2024-04",
       "endDate": null,
+      "stack": [
+        "TypeScript",
+        "React",
+        "C#",
+        "Microservices",
+        "Azure",
+        "Kubernetes"
+      ],
       "skills": [
         "Agentic Workflows",
         "AI Agents",
@@ -123,6 +131,14 @@
       "companyDescription": "Digitalizing family offices.",
       "startDate": "2023-09",
       "endDate": "2024-04",
+      "stack": [
+        "C#",
+        "PostgreSQL",
+        "Azure",
+        "React",
+        "React Native",
+        "TypeScript"
+      ],
       "skills": [
         "Software Architecture",
         "IT Strategy",
@@ -148,6 +164,7 @@
           "clientDescription": "Major Swedish bank; worked in the private loans team.",
           "startDate": "2020-02",
           "endDate": "2020-12",
+          "stack": ["C#", "Azure", "React", "TypeScript", "Miniservices"],
           "skills": [
             "Scrum",
             "DevOps",
@@ -169,6 +186,14 @@
           "clientDescription": "Edutech startup digitalizing school selection for Swedish municipalities.",
           "startDate": "2021-01",
           "endDate": "2021-05",
+          "stack": [
+            "React",
+            "Node.js",
+            "TypeScript",
+            "AWS",
+            "Kubernetes",
+            "MySQL"
+          ],
           "skills": [
             "DevOps",
             "TypeScript",
@@ -190,6 +215,14 @@
           "clientDescription": "Edutech startup digitalizing school selection for Swedish municipalities.",
           "startDate": "2021-06",
           "endDate": "2023-09",
+          "stack": [
+            "React",
+            "Node.js",
+            "TypeScript",
+            "AWS",
+            "Kubernetes",
+            "MySQL"
+          ],
           "skills": [
             "DevOps",
             "TypeScript",
@@ -218,6 +251,14 @@
       "startDate": "2015-11",
       "endDate": "2020-01",
       "engagement": "half-time",
+      "stack": [
+        "TypeScript",
+        "Vue",
+        "C#",
+        "Azure",
+        "Microsoft SQL Server",
+        "Docker"
+      ],
       "skills": [
         "DevOps",
         "SQL",
@@ -243,6 +284,13 @@
       "startDate": "2015-09",
       "endDate": "2020-01",
       "engagement": "half-time",
+      "stack": [
+        "TypeScript",
+        "Angular",
+        "C#",
+        "Python",
+        "Microsoft SQL Server"
+      ],
       "skills": [
         "DevOps",
         "TypeScript",

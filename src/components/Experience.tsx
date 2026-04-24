@@ -105,6 +105,21 @@ function renderItem(
           )}
         </h3>
         {!isPromotion && <p>{item.companyDescription}</p>}
+        {item.stack && item.stack.length > 0 && (
+          <ul className="entry-stack">
+            {item.stack.map((tech) => (
+              <li key={tech}>
+                <button
+                  type="button"
+                  className="entry-stack-btn"
+                  onClick={() => onSkillClick(tech)}
+                >
+                  {tech}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
         {item.skills && item.skills.length > 0 && (
           <ul className="entry-skills">
             {item.skills.map((skill) => (
@@ -194,6 +209,21 @@ function renderAssignment(
           )}
         </h4>
         {!isPromotion && <p>{a.clientDescription}</p>}
+        {a.stack && a.stack.length > 0 && (
+          <ul className="entry-stack">
+            {a.stack.map((tech) => (
+              <li key={tech}>
+                <button
+                  type="button"
+                  className="entry-stack-btn"
+                  onClick={() => onSkillClick(tech)}
+                >
+                  {tech}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
         {a.skills && a.skills.length > 0 && (
           <ul className="entry-skills">
             {a.skills.map((skill) => (

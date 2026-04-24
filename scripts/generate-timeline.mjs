@@ -33,6 +33,20 @@ function nowMonthIndex() {
   return d.getFullYear() * 12 + d.getMonth();
 }
 
+function mergeTags(...lists) {
+  const seen = new Set();
+  const out = [];
+  for (const list of lists) {
+    for (const item of list ?? []) {
+      if (!seen.has(item)) {
+        seen.add(item);
+        out.push(item);
+      }
+    }
+  }
+  return out;
+}
+
 function buildItems(cv) {
   const items = [];
   cv.experience.forEach((exp, i) => {
@@ -44,7 +58,7 @@ function buildItems(cv) {
       description: exp.companyDescription,
       startDate: exp.startDate,
       endDate: exp.endDate,
-      skills: exp.skills ?? [],
+      skills: mergeTags(exp.stack, exp.skills),
     });
     const grouped = new Map();
     (exp.assignments ?? []).forEach((a, j) => {
@@ -57,7 +71,7 @@ function buildItems(cv) {
           description: a.clientDescription,
           startDate: a.startDate,
           endDate: a.endDate,
-          skills: [...(a.skills ?? [])],
+          skills: mergeTags(a.stack, a.skills),
         });
       } else {
         existing.roles.push({ role: a.role, startDate: a.startDate });
@@ -66,8 +80,8 @@ function buildItems(cv) {
           if (a.endDate === null) existing.endDate = null;
           else if (a.endDate > existing.endDate) existing.endDate = a.endDate;
         }
-        for (const skill of a.skills ?? []) {
-          if (!existing.skills.includes(skill)) existing.skills.push(skill);
+        for (const tag of [...(a.stack ?? []), ...(a.skills ?? [])]) {
+          if (!existing.skills.includes(tag)) existing.skills.push(tag);
         }
       }
     });
