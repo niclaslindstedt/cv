@@ -85,36 +85,44 @@ export function jobAssignmentCount(usages: SkillUsage[]): number {
   return count;
 }
 
-function monthsBetween(
-  startIso: string,
-  endIso: string | null | undefined,
-  now: Date,
-): number {
-  const [sy, sm] = startIso.split("-").map(Number);
-  const start = new Date(sy, sm - 1, 1);
-  let end: Date;
-  if (endIso) {
-    const [ey, em] = endIso.split("-").map(Number);
-    end = new Date(ey, em - 1, 1);
-  } else {
-    end = new Date(now.getFullYear(), now.getMonth(), 1);
-  }
-  const months =
-    (end.getFullYear() - start.getFullYear()) * 12 +
-    (end.getMonth() - start.getMonth());
-  return months > 0 ? months : 0;
+function monthIndex(iso: string): number {
+  const [y, m] = iso.split("-").map(Number);
+  return y * 12 + (m - 1);
+}
+
+function nowMonthIndex(now: Date): number {
+  return now.getFullYear() * 12 + now.getMonth();
 }
 
 export function yearsOfExperience(
   usages: SkillUsage[],
   now: Date = new Date(),
 ): number {
-  let totalMonths = 0;
+  const nowIdx = nowMonthIndex(now);
+  const intervals: Array<[number, number]> = [];
   for (const u of usages) {
     if (!u.startDate) continue;
     if (u.kind !== "experience" && u.kind !== "assignment") continue;
-    totalMonths += monthsBetween(u.startDate, u.endDate, now);
+    const start = monthIndex(u.startDate);
+    const end = u.endDate ? monthIndex(u.endDate) : nowIdx;
+    if (end > start) intervals.push([start, end]);
   }
+  intervals.sort((a, b) => a[0] - b[0]);
+
+  let totalMonths = 0;
+  let curStart = -1;
+  let curEnd = -1;
+  for (const [s, e] of intervals) {
+    if (s > curEnd) {
+      if (curEnd > curStart) totalMonths += curEnd - curStart;
+      curStart = s;
+      curEnd = e;
+    } else if (e > curEnd) {
+      curEnd = e;
+    }
+  }
+  if (curEnd > curStart) totalMonths += curEnd - curStart;
+
   return totalMonths / 12;
 }
 
