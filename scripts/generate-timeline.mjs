@@ -185,6 +185,21 @@ function buildLayout(cv, activity) {
     };
   });
 
+  // Same-month handoffs on the same track (A.endDate === B.startDate) are real
+  // sequential transitions, not overlaps. Split the shared month so the lane
+  // packer can slot them on one row and they render edge-to-edge instead of
+  // stacking into parallel lanes.
+  for (const a of prepared) {
+    if (!a.endDate) continue;
+    for (const b of prepared) {
+      if (a === b || a.kind !== b.kind) continue;
+      if (b.startDate === a.endDate) {
+        a.barEndExclusive = monthIndex(a.endDate) + 0.5;
+        b.barStart = monthIndex(b.startDate) + 0.5;
+      }
+    }
+  }
+
   let dataMin = Number.POSITIVE_INFINITY;
   let dataMax = Number.NEGATIVE_INFINITY;
   for (const p of prepared) {
