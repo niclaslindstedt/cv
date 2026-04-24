@@ -781,7 +781,8 @@ button.skill-pill-btn:focus-visible {
   left: 20px;
   right: 16px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 16px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 600;
@@ -974,7 +975,7 @@ button.skill-pill-btn:focus-visible {
   position: absolute;
   display: flex;
   align-items: center;
-  padding: 4px 12px;
+  padding: 10px 12px;
   font: inherit;
   font-family: var(--font-mono);
   font-size: 0.78rem;
