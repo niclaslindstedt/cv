@@ -122,7 +122,8 @@
         ".NET",
         "Kubernetes",
         "APIs",
-        "Azure"
+        "Azure",
+        "Mentoring"
       ]
     },
     {
@@ -148,7 +149,13 @@
         "Azure",
         "DevOps",
         "React",
-        "Cybersecurity"
+        "Cybersecurity",
+        "GDPR",
+        "Regulatory Compliance",
+        "Risk Management",
+        "Technology Roadmapping",
+        "Mentoring",
+        "Project Management"
       ]
     },
     {
@@ -157,6 +164,7 @@
       "companyDescription": "IT consultancy specialized in .NET and JavaScript web applications.",
       "startDate": "2020-01",
       "endDate": "2023-09",
+      "skills": ["Mentoring"],
       "assignments": [
         {
           "role": "Senior Developer",
@@ -177,7 +185,8 @@
             "Software Architecture",
             "C#",
             "Agile Methodologies",
-            "Communication"
+            "Communication",
+            "Azure DevOps"
           ]
         },
         {
@@ -239,7 +248,10 @@
             "Engineering Management",
             "Agile Methodologies",
             "Team Management",
-            "Communication"
+            "Communication",
+            "GDPR",
+            "Regulatory Compliance",
+            "Technology Roadmapping"
           ]
         }
       ]
@@ -274,7 +286,13 @@
         "Agile Methodologies",
         "Team Management",
         "New Business Development",
-        "Communication"
+        "Communication",
+        "GDPR",
+        "CE marking",
+        "Regulatory Compliance",
+        "Risk Management",
+        "Technology Roadmapping",
+        "Project Management"
       ]
     },
     {
@@ -413,8 +431,6 @@
         "Miniservices",
         "Agile Methodologies",
         "Scrum",
-        "Kanban",
-        "Test-Driven Development",
         "Problem Solving",
         "Documentation",
         "Communication"
