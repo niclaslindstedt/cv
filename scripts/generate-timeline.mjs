@@ -103,44 +103,7 @@ function buildItems(cv) {
   return items;
 }
 
-function assignLanes(items, nowMonth) {
-  const sorted = [...items].sort((a, b) =>
-    a.startDate.localeCompare(b.startDate),
-  );
-  const lanes = [];
-  const placed = [];
-  for (const item of sorted) {
-    const start = monthIndex(item.startDate);
-    const end = item.endDate ? monthIndex(item.endDate) : nowMonth;
-    let lane = lanes.findIndex((occupiedUntil) => occupiedUntil <= start);
-    if (lane === -1) {
-      lane = lanes.length;
-      lanes.push(end);
-    } else {
-      lanes[lane] = end;
-    }
-    placed.push({ ...item, lane, endMonthAtBuild: end });
-  }
-  return placed;
-}
-
-function toBar(placed) {
-  return {
-    id: placed.id,
-    kind: placed.kind,
-    lane: placed.lane,
-    title: placed.title,
-    subtitle: placed.subtitle,
-    description: placed.description,
-    skills: placed.skills,
-    startDate: placed.startDate,
-    endDate: placed.endDate,
-    isOngoing: placed.endDate === null,
-    endMonthAtBuild: placed.endMonthAtBuild,
-  };
-}
-
-function buildTimeline(cv) {
+function buildLayout(cv) {
   const nowMonth = nowMonthIndex();
   const items = buildItems(cv);
 
@@ -150,42 +113,112 @@ function buildTimeline(cv) {
     { key: "education", label: "Education" },
   ];
 
-  const tracks = trackDefs.map((def) => {
-    const placed = assignLanes(
-      items.filter((it) => it.kind === def.key),
-      nowMonth,
-    );
-    const lanes = placed.length
-      ? Math.max(...placed.map((p) => p.lane)) + 1
-      : 1;
+  const prepared = items.map((item) => {
+    const barStart = monthIndex(item.startDate);
+    const endMonthAtBuild = item.endDate ? monthIndex(item.endDate) : nowMonth;
     return {
-      key: def.key,
-      label: def.label,
-      lanes: Math.max(1, lanes),
-      bars: placed.map(toBar),
+      ...item,
+      barStart,
+      endMonthAtBuild,
+      barEndExclusive: endMonthAtBuild + 1,
+      segments: [],
     };
   });
 
-  let min = Number.POSITIVE_INFINITY;
-  let max = Number.NEGATIVE_INFINITY;
-  for (const t of tracks) {
-    for (const bar of t.bars) {
-      min = Math.min(min, monthIndex(bar.startDate));
-      max = Math.max(max, bar.endMonthAtBuild);
+  let dataMin = Number.POSITIVE_INFINITY;
+  let dataMax = Number.NEGATIVE_INFINITY;
+  for (const p of prepared) {
+    if (p.barStart < dataMin) dataMin = p.barStart;
+    if (p.endMonthAtBuild > dataMax) dataMax = p.endMonthAtBuild;
+  }
+  if (!Number.isFinite(dataMin)) dataMin = nowMonth;
+  if (!Number.isFinite(dataMax)) dataMax = nowMonth;
+
+  const minMonth = dataMin - 6;
+  const maxMonth = Math.max(dataMax, nowMonth) + 6;
+
+  const breakSet = new Set([minMonth, maxMonth]);
+  for (const p of prepared) {
+    if (p.barStart > minMonth && p.barStart < maxMonth) {
+      breakSet.add(p.barStart);
+    }
+    if (p.barEndExclusive > minMonth && p.barEndExclusive < maxMonth) {
+      breakSet.add(p.barEndExclusive);
     }
   }
-  if (!Number.isFinite(min)) min = nowMonth;
-  if (!Number.isFinite(max)) max = nowMonth;
+  const breakpoints = [...breakSet].sort((a, b) => a - b);
 
-  return {
-    minMonth: min - 6,
-    maxMonth: Math.max(max, nowMonth) + 6,
-    tracks,
-  };
+  const byTrack = trackDefs.map((def) =>
+    prepared.filter((p) => p.kind === def.key),
+  );
+
+  const intervals = [];
+  for (let i = 0; i < breakpoints.length - 1; i++) {
+    const startMonth = breakpoints[i];
+    const endMonth = breakpoints[i + 1];
+    const trackActiveCounts = [];
+    for (let t = 0; t < trackDefs.length; t++) {
+      const active = byTrack[t]
+        .filter(
+          (p) => p.barStart <= startMonth && p.barEndExclusive >= endMonth,
+        )
+        .sort((a, b) => {
+          if (a.barStart !== b.barStart) return a.barStart - b.barStart;
+          return a.id.localeCompare(b.id);
+        });
+      active.forEach((p, idx) => {
+        p.segments.push({ startMonth, endMonth, activeLane: idx });
+      });
+      trackActiveCounts.push(active.length);
+    }
+    intervals.push({ startMonth, endMonth, trackActiveCounts });
+  }
+
+  const tracks = trackDefs.map((def, t) => ({
+    key: def.key,
+    label: def.label,
+    bars: byTrack[t].map((p) => ({
+      id: p.id,
+      kind: p.kind,
+      title: p.title,
+      subtitle: p.subtitle,
+      description: p.description,
+      skills: p.skills,
+      startDate: p.startDate,
+      endDate: p.endDate,
+      isOngoing: p.endDate === null,
+      endMonthAtBuild: p.endMonthAtBuild,
+      segments: p.segments,
+    })),
+  }));
+
+  for (const interval of intervals) {
+    if (interval.trackActiveCounts.length !== tracks.length) {
+      throw new Error(
+        `trackActiveCounts length ${interval.trackActiveCounts.length} !== tracks.length ${tracks.length}`,
+      );
+    }
+  }
+  for (const track of tracks) {
+    for (const bar of track.bars) {
+      if (bar.segments.length === 0) {
+        throw new Error(`Bar ${bar.id} produced no segments`);
+      }
+      for (let i = 1; i < bar.segments.length; i++) {
+        if (bar.segments[i].startMonth !== bar.segments[i - 1].endMonth) {
+          throw new Error(
+            `Bar ${bar.id} segments are not contiguous at index ${i}`,
+          );
+        }
+      }
+    }
+  }
+
+  return { minMonth, maxMonth, intervals, tracks };
 }
 
 const cv = JSON.parse(readFileSync(cvPath, "utf8"));
-const data = buildTimeline(cv);
+const data = buildLayout(cv);
 const serialized = JSON.stringify(data, null, 2) + "\n";
 
 if (toStdout) {
@@ -193,7 +226,11 @@ if (toStdout) {
 } else {
   writeFileSync(outPath, serialized);
   const barCount = data.tracks.reduce((n, t) => n + t.bars.length, 0);
+  const segCount = data.tracks.reduce(
+    (n, t) => n + t.bars.reduce((m, b) => m + b.segments.length, 0),
+    0,
+  );
   console.log(
-    `Timeline layout written to ${outPath} (${data.tracks.length} tracks, ${barCount} bars).`,
+    `Timeline layout written to ${outPath} (${data.tracks.length} tracks, ${barCount} bars, ${segCount} segments, ${data.intervals.length} intervals).`,
   );
 }
