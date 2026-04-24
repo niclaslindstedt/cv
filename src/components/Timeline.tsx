@@ -63,6 +63,15 @@ function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 
+function formatMonthDay(iso: string): string {
+  const [, m, d] = iso.split("-").map(Number);
+  return `${MONTH_NAMES[m - 1]} ${d}`;
+}
+
+function pluralCommits(n: number): string {
+  return `${n} commit${n === 1 ? "" : "s"}`;
+}
+
 function daysInMonth(year: number, month: number): number {
   if (month === 1 && isLeapYear(year)) return 29;
   return GH_DAYS_PER_MONTH[month];
@@ -577,15 +586,33 @@ export function Timeline({ open, onClose }: Props) {
               </button>
             </div>
             <h3 className="timeline-vis-details-title">{selectedItem.title}</h3>
-            <p className="timeline-vis-details-sub">{selectedItem.subtitle}</p>
+            <p className="timeline-vis-details-sub">
+              <span className="timeline-vis-commit-pill">
+                {pluralCommits(selectedItem.github.totalCommits)}
+              </span>
+            </p>
             <p className="timeline-vis-details-dates">
               Jan {selectedItem.title} – Dec {selectedItem.title}
             </p>
             <p className="timeline-vis-details-desc">
               Busiest month: {MONTH_NAMES[selectedItem.github.busiestMonth - 1]}{" "}
-              {selectedItem.title}
+              ·{" "}
+              <span className="timeline-vis-commit-pill">
+                {pluralCommits(selectedItem.github.busiestMonthCount)}
+              </span>
               <br />
-              Busiest week: {formatMonth(selectedItem.github.busiestWeekStart)}
+              Busiest week:{" "}
+              {formatMonthDay(selectedItem.github.busiestWeekStart)} ·{" "}
+              <span className="timeline-vis-commit-pill">
+                {pluralCommits(selectedItem.github.busiestWeekCount)}
+              </span>
+              <br />
+              Busiest day: {formatMonthDay(
+                selectedItem.github.busiestDay,
+              )} ·{" "}
+              <span className="timeline-vis-commit-pill">
+                {pluralCommits(selectedItem.github.busiestDayCount)}
+              </span>
             </p>
             <a
               className="timeline-vis-details-link"

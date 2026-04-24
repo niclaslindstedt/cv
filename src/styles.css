@@ -1021,21 +1021,22 @@ button.skill-pill-btn:focus-visible {
 }
 
 .timeline-vis-github {
-  background: rgba(34, 197, 94, 0.04);
-  border-color: rgba(34, 197, 94, 0.35);
+  background: transparent;
+  border: none;
+  border-radius: 0;
   padding: 0;
   overflow: hidden;
 }
 
 .timeline-vis-github:hover {
-  background: rgba(34, 197, 94, 0.08);
-  border-color: rgba(34, 197, 94, 0.7);
+  background: transparent;
+  border: none;
 }
 
 .timeline-vis-github.is-selected {
-  border-color: rgba(34, 197, 94, 0.9);
-  background: rgba(34, 197, 94, 0.1);
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.45);
+  background: transparent;
+  border: none;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.55);
 }
 
 .timeline-vis-gh-cell {
@@ -1135,6 +1136,18 @@ button.skill-pill-btn:focus-visible {
   border: 1px solid rgba(34, 197, 94, 0.35);
   border-radius: 999px;
   text-decoration: none;
+}
+
+.timeline-vis-commit-pill {
+  display: inline-block;
+  padding: 1px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: 999px;
 }
 
 .timeline-vis-details-link:hover {
