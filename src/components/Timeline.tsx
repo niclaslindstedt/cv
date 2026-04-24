@@ -42,10 +42,10 @@ type Props = {
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 8;
 const BASE_MONTH_PX = 14;
-const LANE_SIZE = 40;
-const LANE_GAP = 6;
-const TRACK_HEADER = 22;
-const TRACK_GAP = 10;
+const LANE_SIZE = 32;
+const LANE_GAP = 4;
+const TRACK_HEADER = 20;
+const TRACK_GAP = 8;
 const AXIS_SIZE = 40;
 const MONTH_NAMES = [
   "Jan",
@@ -443,14 +443,11 @@ export function Timeline({ cv, open, onClose }: Props) {
           </div>
           <button
             type="button"
-            className="timeline-vis-btn timeline-vis-close"
+            className="timeline-vis-close"
             onClick={handleClose}
             aria-label="Close timeline"
           >
-            <span className="timeline-vis-close-icon" aria-hidden="true">
-              ✕
-            </span>
-            <span>Close</span>
+            <span aria-hidden="true">✕</span>
           </button>
         </div>
       </div>
