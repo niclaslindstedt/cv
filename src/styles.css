@@ -1021,21 +1021,22 @@ button.skill-pill-btn:focus-visible {
 }
 
 .timeline-vis-github {
-  background: rgba(34, 197, 94, 0.04);
-  border-color: rgba(34, 197, 94, 0.35);
+  background: transparent;
+  border: none;
+  border-radius: 0;
   padding: 0;
   overflow: hidden;
 }
 
 .timeline-vis-github:hover {
-  background: rgba(34, 197, 94, 0.08);
-  border-color: rgba(34, 197, 94, 0.7);
+  background: transparent;
+  border: none;
 }
 
 .timeline-vis-github.is-selected {
-  border-color: rgba(34, 197, 94, 0.9);
-  background: rgba(34, 197, 94, 0.1);
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.45);
+  background: transparent;
+  border: none;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.55);
 }
 
 .timeline-vis-gh-cell {
