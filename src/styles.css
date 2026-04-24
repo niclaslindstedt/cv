@@ -255,7 +255,7 @@ a:hover {
 .timeline-group-items {
   list-style: none;
   margin: 0;
-  padding: 0 0 0 18px;
+  padding: 0 0 0 14px;
   display: grid;
   gap: 20px;
 }
@@ -263,36 +263,30 @@ a:hover {
 .timeline-group-items > .timeline-item::before {
   content: "";
   position: absolute;
-  left: -18px;
+  left: -14px;
   top: 14px;
-  width: 12px;
-  height: 2px;
+  width: 8px;
+  height: 1px;
   background: var(--accent);
-  border-radius: 2px;
+  opacity: 0.6;
 }
 
 .timeline-group-items > .timeline-item:not(:last-child)::after {
   content: "";
   position: absolute;
-  left: -18px;
+  left: -14px;
   top: 14px;
   bottom: -34px;
-  width: 2px;
+  width: 1px;
   background: var(--accent);
-  border-radius: 2px;
+  opacity: 0.6;
 }
 
-.promotion-badge {
-  align-self: flex-start;
-  padding: 1px 8px;
-  background: var(--accent);
-  color: var(--bg);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 999px;
-  width: fit-content;
+.promotion-arrow {
+  display: inline-block;
+  margin-left: 6px;
+  color: var(--accent);
+  vertical-align: -2px;
 }
 
 .timeline-meta {
@@ -360,12 +354,24 @@ a:hover {
 }
 
 .assignments-list {
+  position: relative;
   list-style: none;
-  padding: 0 0 0 14px;
+  padding: 0 0 0 18px;
   margin: 12px 0 4px 4px;
   display: grid;
   gap: 14px;
-  border-left: 1px solid var(--border);
+}
+
+.assignments-list::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: var(--fg-muted);
+  opacity: 0.55;
+  border-radius: 2px;
 }
 
 .assignment-item {
@@ -375,34 +381,45 @@ a:hover {
   position: relative;
 }
 
-.assignment-group-items {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0 14px;
-  display: grid;
-  gap: 14px;
-}
-
-.assignment-group-items > .assignment-item::before {
+.assignments-list .assignment-item::before {
   content: "";
   position: absolute;
-  left: -14px;
+  left: -18px;
   top: 10px;
   width: 10px;
   height: 2px;
-  background: var(--accent);
+  background: var(--fg-muted);
+  opacity: 0.7;
   border-radius: 2px;
+}
+
+.assignment-group {
+  position: relative;
+}
+
+.assignment-group-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
 }
 
 .assignment-group-items > .assignment-item:not(:last-child)::after {
   content: "";
   position: absolute;
-  left: -14px;
+  left: -18px;
   top: 10px;
   bottom: -24px;
   width: 2px;
   background: var(--accent);
+  opacity: 0.55;
   border-radius: 2px;
+}
+
+.assignment-group-items > .assignment-item::before {
+  background: var(--accent);
+  opacity: 0.75;
 }
 
 .assignment-meta {
@@ -1495,22 +1512,21 @@ button.skill-pill-btn:focus-visible {
   }
 
   .timeline-group-items,
-  .assignment-group-items {
+  .assignment-group-items,
+  .assignments-list {
     padding-left: 0;
   }
 
   .timeline-group-items > .timeline-item::before,
   .timeline-group-items > .timeline-item::after,
   .assignment-group-items > .assignment-item::before,
-  .assignment-group-items > .assignment-item::after {
+  .assignment-group-items > .assignment-item::after,
+  .assignments-list::before,
+  .assignments-list .assignment-item::before {
     display: none;
   }
 
-  .promotion-badge {
-    background: transparent;
+  .promotion-arrow {
     color: #111;
-    border: 1px solid #999;
-    padding: 0 4px;
-    font-size: 8pt;
   }
 }

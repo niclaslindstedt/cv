@@ -14,6 +14,27 @@ function sameName(a: string, b: string) {
   return a.toLowerCase() === b.toLowerCase();
 }
 
+function PromotionArrow() {
+  return (
+    <svg
+      className="promotion-arrow"
+      viewBox="0 0 24 24"
+      width="14"
+      height="14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-label="Promoted"
+      role="img"
+    >
+      <line x1="12" y1="19" x2="12" y2="5" />
+      <polyline points="6 11 12 5 18 11" />
+    </svg>
+  );
+}
+
 function groupBy<T>(items: T[], keyOf: (item: T) => string): T[][] {
   const groups: T[][] = [];
   for (const item of items) {
@@ -66,14 +87,6 @@ function renderItem(
       }
     >
       <div className="timeline-meta">
-        {isPromotion && (
-          <span
-            className="promotion-badge"
-            aria-label="Promotion at same company"
-          >
-            Promoted
-          </span>
-        )}
         <span>{formatRange(item.startDate, item.endDate)}</span>
         {item.engagement && (
           <span className="timeline-engagement">{item.engagement}</span>
@@ -82,6 +95,7 @@ function renderItem(
       <div className="timeline-body">
         <h3>
           <span className="role">{item.role}</span>
+          {isPromotion && <PromotionArrow />}
           {!isPromotion && (
             <>
               {" · "}
@@ -165,19 +179,12 @@ function renderAssignment(
       }
     >
       <div className="assignment-meta">
-        {isPromotion && (
-          <span
-            className="promotion-badge"
-            aria-label="Promotion at same client"
-          >
-            Promoted
-          </span>
-        )}
         <span>{formatRange(a.startDate, a.endDate)}</span>
       </div>
       <div className="assignment-body">
         <h4>
           <span className="role">{a.role}</span>
+          {isPromotion && <PromotionArrow />}
           {!isPromotion && (
             <>
               {" · "}
