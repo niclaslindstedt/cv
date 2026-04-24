@@ -101,7 +101,11 @@
         "totalCommits",
         "dailyCommits",
         "busiestMonth",
+        "busiestMonthCount",
         "busiestWeekStart",
+        "busiestWeekCount",
+        "busiestDay",
+        "busiestDayCount",
         "profileUrl",
         "username",
         "maxDailyCommits"
@@ -113,10 +117,17 @@
           "items": { "type": "integer", "minimum": 0 }
         },
         "busiestMonth": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "busiestMonthCount": { "type": "integer", "minimum": 0 },
         "busiestWeekStart": {
           "type": "string",
           "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
         },
+        "busiestWeekCount": { "type": "integer", "minimum": 0 },
+        "busiestDay": {
+          "type": "string",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+        },
+        "busiestDayCount": { "type": "integer", "minimum": 0 },
         "profileUrl": { "type": "string", "minLength": 1 },
         "username": { "type": "string", "minLength": 1 },
         "maxDailyCommits": { "type": "integer", "minimum": 0 }

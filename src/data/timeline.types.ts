@@ -10,7 +10,11 @@ export type GitHubPayload = {
   totalCommits: number;
   dailyCommits: number[];
   busiestMonth: number;
+  busiestMonthCount: number;
   busiestWeekStart: string;
+  busiestWeekCount: number;
+  busiestDay: string;
+  busiestDayCount: number;
   profileUrl: string;
   username: string;
   maxDailyCommits: number;

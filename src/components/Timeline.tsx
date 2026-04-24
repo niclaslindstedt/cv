@@ -63,6 +63,15 @@ function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 
+function formatMonthDay(iso: string): string {
+  const [, m, d] = iso.split("-").map(Number);
+  return `${MONTH_NAMES[m - 1]} ${d}`;
+}
+
+function pluralCommits(n: number): string {
+  return `${n} commit${n === 1 ? "" : "s"}`;
+}
+
 function daysInMonth(year: number, month: number): number {
   if (month === 1 && isLeapYear(year)) return 29;
   return GH_DAYS_PER_MONTH[month];
@@ -583,9 +592,15 @@ export function Timeline({ open, onClose }: Props) {
             </p>
             <p className="timeline-vis-details-desc">
               Busiest month: {MONTH_NAMES[selectedItem.github.busiestMonth - 1]}{" "}
-              {selectedItem.title}
+              · {pluralCommits(selectedItem.github.busiestMonthCount)}
               <br />
-              Busiest week: {formatMonth(selectedItem.github.busiestWeekStart)}
+              Busiest week:{" "}
+              {formatMonthDay(selectedItem.github.busiestWeekStart)} ·{" "}
+              {pluralCommits(selectedItem.github.busiestWeekCount)}
+              <br />
+              Busiest day: {formatMonthDay(
+                selectedItem.github.busiestDay,
+              )} · {pluralCommits(selectedItem.github.busiestDayCount)}
             </p>
             <a
               className="timeline-vis-details-link"

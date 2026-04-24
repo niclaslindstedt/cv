@@ -142,6 +142,8 @@ async function fetchYear(token, username, year) {
   let totalCommits = 0;
   const monthTotals = new Array(12).fill(0);
   const weekBuckets = new Map();
+  let busiestDay = `${year}-01-01`;
+  let busiestDayCount = -1;
 
   for (const week of cal.weeks ?? []) {
     for (const day of week.contributionDays ?? []) {
@@ -156,8 +158,13 @@ async function fetchYear(token, username, year) {
       monthTotals[Number(mStr) - 1] += count;
       const weekStart = weekStartDate(day.date);
       weekBuckets.set(weekStart, (weekBuckets.get(weekStart) ?? 0) + count);
+      if (count > busiestDayCount) {
+        busiestDayCount = count;
+        busiestDay = day.date;
+      }
     }
   }
+  if (busiestDayCount < 0) busiestDayCount = 0;
 
   let busiestMonth = 1;
   let busiestMonthCount = -1;
@@ -167,6 +174,7 @@ async function fetchYear(token, username, year) {
       busiestMonth = i + 1;
     }
   }
+  if (busiestMonthCount < 0) busiestMonthCount = 0;
 
   let busiestWeekStart = `${year}-01-01`;
   let busiestWeekCount = -1;
@@ -176,12 +184,17 @@ async function fetchYear(token, username, year) {
       busiestWeekStart = start;
     }
   }
+  if (busiestWeekCount < 0) busiestWeekCount = 0;
 
   return {
     year,
     totalCommits,
     busiestMonth,
+    busiestMonthCount,
     busiestWeekStart,
+    busiestWeekCount,
+    busiestDay,
+    busiestDayCount,
     dailyCommits,
   };
 }
