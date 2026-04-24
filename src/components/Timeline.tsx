@@ -8,33 +8,11 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 
-import type { CV } from "../data/cv.types";
+import timelineData from "../data/timeline.json";
+import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
 
-type TimelineKind = "experience" | "assignment" | "education";
-
-type TimelineItem = {
-  id: string;
-  kind: TimelineKind;
-  title: string;
-  subtitle: string;
-  description: string;
-  startDate: string;
-  endDate: string | null;
-  skills: string[];
-};
-
-type PlacedItem = TimelineItem & { lane: number };
-
-type TrackDef = {
-  key: TimelineKind;
-  label: string;
-  items: PlacedItem[];
-  lanes: number;
-};
-
 type Props = {
-  cv: CV;
   open: boolean;
   onClose: () => void;
 };
@@ -62,6 +40,8 @@ const MONTH_NAMES = [
   "Dec",
 ];
 
+const layout = timelineData as TimelineData;
+
 function clamp(n: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, n));
 }
@@ -76,112 +56,7 @@ function nowMonthIndex(): number {
   return now.getFullYear() * 12 + now.getMonth();
 }
 
-function assignLanes(items: TimelineItem[]): PlacedItem[] {
-  const sorted = [...items].sort((a, b) =>
-    a.startDate.localeCompare(b.startDate),
-  );
-  const lanes: number[] = [];
-  const placed: PlacedItem[] = [];
-  for (const item of sorted) {
-    const start = monthIndex(item.startDate);
-    const end = item.endDate ? monthIndex(item.endDate) : nowMonthIndex();
-    let lane = lanes.findIndex((occupiedUntil) => occupiedUntil <= start);
-    if (lane === -1) {
-      lane = lanes.length;
-      lanes.push(end);
-    } else {
-      lanes[lane] = end;
-    }
-    placed.push({ ...item, lane });
-  }
-  return placed;
-}
-
-function buildItems(cv: CV): TimelineItem[] {
-  const items: TimelineItem[] = [];
-
-  cv.experience.forEach((exp, i) => {
-    items.push({
-      id: `exp-${i}`,
-      kind: "experience",
-      title: exp.role,
-      subtitle: exp.company,
-      description: exp.companyDescription,
-      startDate: exp.startDate,
-      endDate: exp.endDate,
-      skills: exp.skills ?? [],
-    });
-    const grouped = new Map<
-      string,
-      {
-        firstIndex: number;
-        roles: { role: string; startDate: string }[];
-        client: string;
-        description: string;
-        startDate: string;
-        endDate: string | null;
-        skills: string[];
-      }
-    >();
-    exp.assignments?.forEach((a, j) => {
-      const existing = grouped.get(a.client);
-      if (!existing) {
-        grouped.set(a.client, {
-          firstIndex: j,
-          roles: [{ role: a.role, startDate: a.startDate }],
-          client: a.client,
-          description: a.clientDescription,
-          startDate: a.startDate,
-          endDate: a.endDate,
-          skills: [...(a.skills ?? [])],
-        });
-      } else {
-        existing.roles.push({ role: a.role, startDate: a.startDate });
-        if (a.startDate < existing.startDate) existing.startDate = a.startDate;
-        if (existing.endDate !== null) {
-          if (a.endDate === null) existing.endDate = null;
-          else if (a.endDate > existing.endDate) existing.endDate = a.endDate;
-        }
-        for (const skill of a.skills ?? []) {
-          if (!existing.skills.includes(skill)) existing.skills.push(skill);
-        }
-      }
-    });
-    for (const group of grouped.values()) {
-      const sortedRoles = [...group.roles].sort((a, b) =>
-        a.startDate.localeCompare(b.startDate),
-      );
-      const title = sortedRoles.map((r) => r.role).join(" → ");
-      items.push({
-        id: `exp-${i}-asg-${group.firstIndex}`,
-        kind: "assignment",
-        title,
-        subtitle: `${group.client} · via ${exp.company}`,
-        description: group.description,
-        startDate: group.startDate,
-        endDate: group.endDate,
-        skills: group.skills,
-      });
-    }
-  });
-
-  cv.education.forEach((ed, i) => {
-    items.push({
-      id: `edu-${i}`,
-      kind: "education",
-      title: ed.field,
-      subtitle: `${ed.institution} · ${ed.level}`,
-      description: `${ed.credits}`,
-      startDate: ed.startDate,
-      endDate: ed.endDate,
-      skills: ed.skills ?? [],
-    });
-  });
-
-  return items;
-}
-
-export function Timeline({ cv, open, onClose }: Props) {
+export function Timeline({ open, onClose }: Props) {
   const [scale, setScale] = useState(1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -189,53 +64,15 @@ export function Timeline({ cv, open, onClose }: Props) {
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
 
-  const items = useMemo(() => buildItems(cv), [cv]);
-
-  const tracks = useMemo<TrackDef[]>(() => {
-    const experience = assignLanes(
-      items.filter((i) => i.kind === "experience"),
-    );
-    const assignment = assignLanes(
-      items.filter((i) => i.kind === "assignment"),
-    );
-    const education = assignLanes(items.filter((i) => i.kind === "education"));
-    const laneCount = (list: PlacedItem[]) =>
-      list.length === 0 ? 0 : Math.max(...list.map((x) => x.lane)) + 1;
-    return [
-      {
-        key: "experience",
-        label: "Jobs",
-        items: experience,
-        lanes: Math.max(1, laneCount(experience)),
-      },
-      {
-        key: "assignment",
-        label: "Assignments",
-        items: assignment,
-        lanes: Math.max(1, laneCount(assignment)),
-      },
-      {
-        key: "education",
-        label: "Education",
-        items: education,
-        lanes: Math.max(1, laneCount(education)),
-      },
-    ];
-  }, [items]);
+  const tracks = layout.tracks;
 
   const { minMonth, maxMonth } = useMemo(() => {
-    const now = nowMonthIndex();
-    let min = Number.POSITIVE_INFINITY;
-    let max = Number.NEGATIVE_INFINITY;
-    for (const item of items) {
-      min = Math.min(min, monthIndex(item.startDate));
-      max = Math.max(max, item.endDate ? monthIndex(item.endDate) : now);
-    }
+    const runtimeNow = nowMonthIndex();
     return {
-      minMonth: min - 6,
-      maxMonth: Math.max(max, now) + 6,
+      minMonth: layout.minMonth,
+      maxMonth: Math.max(layout.maxMonth, runtimeNow + 6),
     };
-  }, [items]);
+  }, []);
 
   const totalMonths = Math.max(1, maxMonth - minMonth);
   const monthPx = BASE_MONTH_PX * scale;
@@ -251,10 +88,10 @@ export function Timeline({ cv, open, onClose }: Props) {
     return { offsets, total: cumulative };
   }, [tracks]);
 
-  const selectedItem = useMemo(() => {
+  const selectedItem = useMemo<TimelineBar | null>(() => {
     if (!selectedId) return null;
     for (const track of tracks) {
-      const found = track.items.find((i) => i.id === selectedId);
+      const found = track.bars.find((b) => b.id === selectedId);
       if (found) return found;
     }
     return null;
@@ -362,12 +199,14 @@ export function Timeline({ cv, open, onClose }: Props) {
 
   const axisPos = (m: number) => (m - minMonth) * monthPx;
 
-  const renderItem = (item: PlacedItem, trackOffset: number) => {
-    const startIdx = monthIndex(item.startDate);
-    const endIdx = item.endDate ? monthIndex(item.endDate) : now;
+  const renderBar = (bar: TimelineBar, trackOffset: number) => {
+    const startIdx = monthIndex(bar.startDate);
+    const endIdx = bar.isOngoing
+      ? Math.max(bar.endMonthAtBuild, now)
+      : monthIndex(bar.endDate ?? bar.startDate);
     const timePos = axisPos(startIdx);
     const timeLen = Math.max(monthPx * 0.5, (endIdx - startIdx) * monthPx);
-    const perpPos = trackOffset + TRACK_HEADER + item.lane * LANE_SIZE;
+    const perpPos = trackOffset + TRACK_HEADER + bar.lane * LANE_SIZE;
     const perpSize = LANE_SIZE - LANE_GAP;
     const style: CSSProperties = {
       left: timePos,
@@ -375,28 +214,27 @@ export function Timeline({ cv, open, onClose }: Props) {
       top: perpPos,
       height: perpSize,
     };
-    const ongoing = item.endDate === null;
     const classes = [
       "timeline-vis-item",
-      `timeline-vis-${item.kind}`,
-      ongoing ? "is-ongoing" : "",
-      selectedId === item.id ? "is-selected" : "",
+      `timeline-vis-${bar.kind}`,
+      bar.isOngoing ? "is-ongoing" : "",
+      selectedId === bar.id ? "is-selected" : "",
     ]
       .filter(Boolean)
       .join(" ");
 
     return (
       <button
-        key={item.id}
+        key={bar.id}
         type="button"
         className={classes}
         style={style}
-        onClick={() => setSelectedId(item.id)}
-        title={`${item.title} · ${item.subtitle}\n${formatRange(item.startDate, item.endDate)}`}
+        onClick={() => setSelectedId(bar.id)}
+        title={`${bar.title} · ${bar.subtitle}\n${formatRange(bar.startDate, bar.endDate)}`}
       >
         <span className="timeline-vis-item-label">
-          <span className="timeline-vis-item-title">{item.title}</span>
-          <span className="timeline-vis-item-sub">{item.subtitle}</span>
+          <span className="timeline-vis-item-title">{bar.title}</span>
+          <span className="timeline-vis-item-sub">{bar.subtitle}</span>
         </span>
       </button>
     );
@@ -541,7 +379,7 @@ export function Timeline({ cv, open, onClose }: Props) {
                   <div className="timeline-vis-band-label" style={headerStyle}>
                     {track.label}
                   </div>
-                  {track.items.map((item) => renderItem(item, offset))}
+                  {track.bars.map((bar) => renderBar(bar, offset))}
                 </div>
               );
             })}
@@ -578,7 +416,9 @@ export function Timeline({ cv, open, onClose }: Props) {
               {" · "}
               {formatDuration(
                 monthIndex(selectedItem.startDate),
-                selectedItem.endDate ? monthIndex(selectedItem.endDate) : now,
+                selectedItem.isOngoing
+                  ? now
+                  : monthIndex(selectedItem.endDate ?? selectedItem.startDate),
               )}
             </span>
           </p>
