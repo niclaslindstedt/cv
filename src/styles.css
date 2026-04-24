@@ -809,62 +809,30 @@ button.skill-pill-btn:focus-visible {
 }
 
 .timeline-vis-axis {
-  position: absolute;
+  position: sticky;
+  top: 0;
   border-bottom: 1px solid var(--border);
   background: var(--bg-elev);
   z-index: 2;
 }
 
-.timeline-vis-vertical .timeline-vis-axis {
-  border-bottom: none;
-  border-right: 1px solid var(--border);
-}
-
-.timeline-vis-horizontal .timeline-vis-axis {
-  position: sticky;
-  top: 0;
-}
-
-.timeline-vis-vertical .timeline-vis-axis {
-  position: sticky;
-  left: 0;
-}
-
 .timeline-vis-tick {
   position: absolute;
+  top: 0;
+  bottom: 0;
   color: var(--fg-muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   pointer-events: none;
-}
-
-.timeline-vis-horizontal .timeline-vis-tick {
-  top: 0;
-  bottom: 0;
   border-left: 1px solid var(--border);
   padding-left: 4px;
   padding-top: 8px;
 }
 
-.timeline-vis-vertical .timeline-vis-tick {
-  left: 0;
-  right: 0;
-  border-top: 1px solid var(--border);
-  padding-top: 2px;
-  padding-left: 6px;
-}
-
 .timeline-vis-tick-year {
   color: var(--fg);
   font-weight: 600;
-}
-
-.timeline-vis-horizontal .timeline-vis-tick-year {
   border-left-color: var(--fg-muted);
-}
-
-.timeline-vis-vertical .timeline-vis-tick-year {
-  border-top-color: var(--fg-muted);
 }
 
 .timeline-vis-tick-month {
@@ -885,14 +853,7 @@ button.skill-pill-btn:focus-visible {
   background: var(--border);
   pointer-events: none;
   opacity: 0.4;
-}
-
-.timeline-vis-horizontal .timeline-vis-gridline {
   width: 1px;
-}
-
-.timeline-vis-vertical .timeline-vis-gridline {
-  height: 1px;
 }
 
 .timeline-vis-band {
@@ -901,43 +862,33 @@ button.skill-pill-btn:focus-visible {
 
 .timeline-vis-band-label {
   position: absolute;
+  left: 8px;
+  top: 0;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-muted);
-  padding: 4px 10px;
+  padding: 3px 10px;
   background: var(--bg);
   border-radius: 6px;
   z-index: 1;
   pointer-events: none;
 }
 
-.timeline-vis-horizontal .timeline-vis-band-label {
-  left: 8px;
-  top: 0;
-}
-
-.timeline-vis-vertical .timeline-vis-band-label {
-  top: 8px;
-  left: 0;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-}
-
 .timeline-vis-item {
   position: absolute;
   display: flex;
   align-items: center;
-  padding: 8px 14px;
+  padding: 6px 12px;
   font: inherit;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--fg);
   background: var(--accent-soft);
   border: 1px solid rgba(122, 183, 255, 0.35);
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   overflow: hidden;
   text-align: left;
@@ -982,14 +933,9 @@ button.skill-pill-btn:focus-visible {
 .timeline-vis-item-label {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   min-width: 0;
-  line-height: 1.25;
-}
-
-.timeline-vis-item.is-v .timeline-vis-item-label {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  line-height: 1.2;
 }
 
 .timeline-vis-item-title {
