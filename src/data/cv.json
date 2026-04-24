@@ -101,7 +101,7 @@
       "stack": [
         "TypeScript",
         "React",
-        "C#",
+        "C#/.NET",
         "Microservices",
         "Azure",
         "Kubernetes"
@@ -113,9 +113,6 @@
         "Chatbots",
         "Cybersecurity",
         "Software Architecture",
-        ".NET",
-        "Kubernetes",
-        "Azure",
         "Mentoring"
       ]
     },
@@ -126,7 +123,7 @@
       "startDate": "2023-09",
       "endDate": "2024-04",
       "stack": [
-        "C#",
+        "C#/.NET",
         "PostgreSQL",
         "Azure",
         "React",
@@ -136,11 +133,7 @@
       "skills": [
         "Software Architecture",
         "IT Strategy",
-        "Technical Direction",
         "Team Management",
-        ".NET",
-        "Azure",
-        "React",
         "Cybersecurity",
         "GDPR",
         "Regulatory Compliance",
@@ -164,15 +157,12 @@
           "clientDescription": "Major Swedish bank; worked in the private loans team.",
           "startDate": "2020-02",
           "endDate": "2020-12",
-          "stack": ["C#", "Azure", "React", "TypeScript", "Miniservices"],
+          "stack": ["C#/.NET", "Azure", "React", "TypeScript", "Miniservices"],
           "skills": [
             "Scrum",
-            "TypeScript",
             "SQL",
             "CI/CD",
-            "React",
             "Software Architecture",
-            "C#",
             "Agile Methodologies",
             "Azure DevOps"
           ]
@@ -192,11 +182,8 @@
             "MySQL"
           ],
           "skills": [
-            "TypeScript",
-            "SQL",
             "CI/CD",
             "Cybersecurity",
-            "React",
             "Software Architecture",
             "IT Strategy",
             "Agile Methodologies"
@@ -217,12 +204,8 @@
             "MySQL"
           ],
           "skills": [
-            "TypeScript",
-            "SQL",
-            "Technical Direction",
             "CI/CD",
             "Cybersecurity",
-            "React",
             "Software Architecture",
             "Leadership",
             "IT Strategy",
@@ -246,21 +229,18 @@
       "stack": [
         "TypeScript",
         "Vue",
-        "C#",
+        "C#/.NET",
         "Azure",
         "Microsoft SQL Server",
         "Docker"
       ],
       "skills": [
-        "SQL",
-        "Technical Direction",
         "CI/CD",
         "Cybersecurity",
         "Software Architecture",
         "Leadership",
         "IT Strategy",
         "Engineering Management",
-        "C#",
         "Agile Methodologies",
         "Team Management",
         "GDPR",
@@ -281,18 +261,11 @@
       "stack": [
         "TypeScript",
         "Angular",
-        "C#",
+        "C#/.NET",
         "Python",
         "Microsoft SQL Server"
       ],
-      "skills": [
-        "TypeScript",
-        "SQL",
-        "CI/CD",
-        "Cybersecurity",
-        "Software Architecture",
-        "C#"
-      ]
+      "skills": ["CI/CD", "Cybersecurity", "Software Architecture"]
     },
     {
       "role": "Founder",
@@ -350,7 +323,7 @@
       "label": "Languages",
       "items": [
         "Rust",
-        "C#",
+        "C#/.NET",
         "TypeScript",
         "Python",
         "JavaScript",
@@ -361,7 +334,7 @@
     {
       "key": "frameworks",
       "label": "Frameworks",
-      "items": [".NET", "React", "React Native", "Vue", "Angular", "Node.js"]
+      "items": ["React", "React Native", "Vue", "Angular", "Node.js"]
     },
     {
       "key": "cloud",
@@ -405,7 +378,6 @@
         "Leadership",
         "Mentoring",
         "IT Strategy",
-        "Technical Direction",
         "Technology Roadmapping",
         "Project Management"
       ]
