@@ -83,26 +83,29 @@ export function Timeline({ open, onClose }: Props) {
   const monthPx = BASE_MONTH_PX * scale;
   const axisLength = totalMonths * monthPx;
 
-  const { trackTop, contentHeight, intervalIndexByStart } = useMemo(() => {
-    const trackTopArr: number[][] = [];
-    let maxTotal = 0;
+  const { trackTop, trackHeight, contentHeight } = useMemo(() => {
+    const maxLanes = new Array(tracks.length).fill(0);
     for (const interval of intervals) {
-      const tops: number[] = [];
-      let cumulative = 0;
       for (let t = 0; t < tracks.length; t++) {
-        tops.push(cumulative);
-        cumulative +=
-          TRACK_HEADER + interval.trackActiveCounts[t] * LANE_SIZE + TRACK_GAP;
+        if (interval.trackActiveCounts[t] > maxLanes[t]) {
+          maxLanes[t] = interval.trackActiveCounts[t];
+        }
       }
-      trackTopArr.push(tops);
-      if (cumulative > maxTotal) maxTotal = cumulative;
     }
-    const idxMap = new Map<number, number>();
-    intervals.forEach((iv, i) => idxMap.set(iv.startMonth, i));
+    const tops: number[] = [];
+    const heights: number[] = [];
+    let cumulative = 0;
+    for (let t = 0; t < tracks.length; t++) {
+      tops.push(cumulative);
+      const h = TRACK_HEADER + maxLanes[t] * LANE_SIZE;
+      heights.push(h);
+      cumulative += h + TRACK_GAP;
+    }
+    const total = cumulative > 0 ? cumulative - TRACK_GAP : 0;
     return {
-      trackTop: trackTopArr,
-      contentHeight: maxTotal,
-      intervalIndexByStart: idxMap,
+      trackTop: tops,
+      trackHeight: heights,
+      contentHeight: total,
     };
   }, [tracks, intervals]);
 
@@ -253,8 +256,6 @@ export function Timeline({ open, onClose }: Props) {
     const lastSegIdx = bar.segments.length - 1;
 
     return bar.segments.map((seg, segIdx) => {
-      const i = intervalIndexByStart.get(seg.startMonth);
-      if (i === undefined) return null;
       const isLast = segIdx === lastSegIdx;
       const segEnd =
         isLast && bar.isOngoing
@@ -263,7 +264,7 @@ export function Timeline({ open, onClose }: Props) {
       const left = axisPos(seg.startMonth);
       const width = Math.max(1, (segEnd - seg.startMonth) * monthPx);
       const top =
-        trackTop[i][trackIdx] + TRACK_HEADER + seg.activeLane * LANE_SIZE;
+        trackTop[trackIdx] + TRACK_HEADER + seg.activeLane * LANE_SIZE;
       const height = LANE_SIZE - LANE_GAP;
       const isLabelSeg = seg === widestSeg;
       const style: CSSProperties = { left, width, top, height };
@@ -406,25 +407,23 @@ export function Timeline({ open, onClose }: Props) {
               );
             })}
 
-            {intervals.map((iv, i) =>
-              tracks.map((track, t) => {
-                const left = axisPos(iv.startMonth);
-                const width = (iv.endMonth - iv.startMonth) * monthPx;
-                const top = trackTop[i][t];
-                const height =
-                  TRACK_HEADER + iv.trackActiveCounts[t] * LANE_SIZE;
-                const style: CSSProperties = { left, width, top, height };
-                return (
-                  <div
-                    key={`band-${i}-${t}`}
-                    className={`timeline-vis-band timeline-vis-band-${track.key}`}
-                    style={style}
-                  >
-                    <div className="timeline-vis-band-label">{track.label}</div>
-                  </div>
-                );
-              }),
-            )}
+            {tracks.map((track, t) => {
+              const style: CSSProperties = {
+                left: 0,
+                width: axisLength,
+                top: trackTop[t],
+                height: trackHeight[t],
+              };
+              return (
+                <div
+                  key={`band-${t}`}
+                  className={`timeline-vis-band timeline-vis-band-${track.key}`}
+                  style={style}
+                >
+                  <div className="timeline-vis-band-label">{track.label}</div>
+                </div>
+              );
+            })}
 
             {tracks.map((track, t) =>
               track.bars.map((bar) => {

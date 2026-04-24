@@ -339,12 +339,15 @@ a:hover {
   font-weight: 400;
 }
 
-.company-link {
-  text-decoration: none;
-  border-bottom: 1px dotted currentColor;
+.company {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+}
+
+.company-link {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
 }
 
 .company-link:hover {
@@ -352,7 +355,6 @@ a:hover {
 }
 
 .company-terminated {
-  vertical-align: -2px;
   opacity: 0.7;
 }
 
