@@ -138,6 +138,7 @@ function renderItem(
   onSkillClick: (skill: string) => void,
 ) {
   const company = resolveCompany(companies, item.companyId);
+  const stack = item.stack ?? company.stack;
   return (
     <li
       key={`${item.companyId}-${item.startDate}`}
@@ -163,9 +164,9 @@ function renderItem(
           )}
         </h3>
         {!isPromotion && <p>{company.description}</p>}
-        {item.stack && item.stack.length > 0 && (
+        {stack && stack.length > 0 && (
           <ul className="entry-stack">
-            {item.stack.map((tech) => (
+            {stack.map((tech) => (
               <li key={tech}>
                 <button
                   type="button"
