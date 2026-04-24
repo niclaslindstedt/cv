@@ -373,12 +373,12 @@
     {
       "key": "frameworks",
       "label": "Frameworks",
-      "items": [".NET", "React", "React Native", "Vue"]
+      "items": [".NET", "React", "React Native", "Vue", "Angular", "Node.js"]
     },
     {
       "key": "cloud",
       "label": "Cloud",
-      "items": ["Azure", "AWS"]
+      "items": ["Azure", "AWS", "Azure DevOps"]
     },
     {
       "key": "databases",
@@ -386,6 +386,7 @@
       "items": [
         "PostgreSQL",
         "Microsoft SQL Server",
+        "MySQL",
         "MongoDB",
         "Redis",
         "CosmosDB"
@@ -408,18 +409,41 @@
       "label": "Practices",
       "items": [
         "Software Architecture",
-        "IT Strategy",
-        "Technical Direction",
+        "Microservices",
+        "Miniservices",
+        "Agile Methodologies",
+        "Scrum",
+        "Kanban",
+        "Test-Driven Development",
+        "Problem Solving",
+        "Documentation",
+        "Communication"
+      ]
+    },
+    {
+      "key": "leadership",
+      "label": "Leadership",
+      "items": [
         "Engineering Management",
         "Team Management",
         "Leadership",
-        "Cybersecurity",
-        "Agile Methodologies",
-        "Scrum",
-        "Problem Solving",
-        "Documentation",
-        "Communication",
+        "Mentoring",
+        "IT Strategy",
+        "Technical Direction",
+        "Technology Roadmapping",
+        "Project Management",
         "New Business Development"
+      ]
+    },
+    {
+      "key": "compliance",
+      "label": "Compliance",
+      "items": [
+        "Cybersecurity",
+        "Regulatory Compliance",
+        "Risk Management",
+        "GDPR",
+        "CE marking"
       ]
     }
   ]
