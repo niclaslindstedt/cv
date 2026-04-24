@@ -57,11 +57,50 @@ export function buildSkillUsageMap(cv: CV): Map<string, SkillUsage[]> {
   return map;
 }
 
-export function firstUsedDate(usages: SkillUsage[]): string | null {
-  let earliest: string | null = null;
+export function jobAssignmentCount(usages: SkillUsage[]): number {
+  let count = 0;
+  for (const u of usages) {
+    if (u.kind === "experience" || u.kind === "assignment") count += 1;
+  }
+  return count;
+}
+
+function monthsBetween(
+  startIso: string,
+  endIso: string | null | undefined,
+  now: Date,
+): number {
+  const [sy, sm] = startIso.split("-").map(Number);
+  const start = new Date(sy, sm - 1, 1);
+  let end: Date;
+  if (endIso) {
+    const [ey, em] = endIso.split("-").map(Number);
+    end = new Date(ey, em - 1, 1);
+  } else {
+    end = new Date(now.getFullYear(), now.getMonth(), 1);
+  }
+  const months =
+    (end.getFullYear() - start.getFullYear()) * 12 +
+    (end.getMonth() - start.getMonth());
+  return months > 0 ? months : 0;
+}
+
+export function yearsOfExperience(
+  usages: SkillUsage[],
+  now: Date = new Date(),
+): number {
+  let totalMonths = 0;
   for (const u of usages) {
     if (!u.startDate) continue;
-    if (!earliest || u.startDate < earliest) earliest = u.startDate;
+    if (u.kind !== "experience" && u.kind !== "assignment") continue;
+    totalMonths += monthsBetween(u.startDate, u.endDate, now);
   }
-  return earliest;
+  return totalMonths / 12;
+}
+
+export function formatYearsOfExperience(years: number): string {
+  if (years <= 0) return "no recorded experience";
+  if (years < 1) return "< 1 year";
+  const rounded = Math.round(years);
+  return rounded === 1 ? "1 year" : `${rounded} years`;
 }

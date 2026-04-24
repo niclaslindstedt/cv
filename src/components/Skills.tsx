@@ -1,5 +1,5 @@
 import type { SkillGroup } from "../data/cv.types";
-import type { SkillUsage } from "../utils/skills";
+import { jobAssignmentCount, type SkillUsage } from "../utils/skills";
 import { Section } from "./Section";
 
 type Props = {
@@ -9,6 +9,23 @@ type Props = {
   onSkillClick: (skill: string) => void;
 };
 
+function sortSkills(
+  items: string[],
+  usages: Map<string, SkillUsage[]>,
+): string[] {
+  return [...items]
+    .map((skill, index) => ({
+      skill,
+      index,
+      count: jobAssignmentCount(usages.get(skill) ?? []),
+    }))
+    .sort((a, b) => {
+      if (a.count !== b.count) return b.count - a.count;
+      return a.index - b.index;
+    })
+    .map((entry) => entry.skill);
+}
+
 export function Skills({ title, skills, usages, onSkillClick }: Props) {
   return (
     <Section id="skills" title={title}>
@@ -17,7 +34,7 @@ export function Skills({ title, skills, usages, onSkillClick }: Props) {
           <div key={group.key} className="skills-group">
             <h3>{group.label}</h3>
             <ul>
-              {group.items.map((skill) => {
+              {sortSkills(group.items, usages).map((skill) => {
                 const used = usages.get(skill) ?? [];
                 const isEmpty = used.length === 0;
                 return (

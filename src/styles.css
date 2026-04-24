@@ -1130,7 +1130,7 @@ button.skill-pill-btn:focus-visible {
   color: var(--fg);
 }
 
-.skill-modal-since {
+.skill-modal-years {
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--accent);
