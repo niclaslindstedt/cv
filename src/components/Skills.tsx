@@ -1,32 +1,23 @@
-import type { Skills as SkillsData } from "../data/cv.types";
+import type { SkillGroup } from "../data/cv.types";
 import type { SkillUsage } from "../utils/skills";
 import { Section } from "./Section";
 
 type Props = {
-  skills: SkillsData;
+  title: string;
+  skills: SkillGroup[];
   usages: Map<string, SkillUsage[]>;
   onSkillClick: (skill: string) => void;
 };
 
-const GROUPS: { key: keyof SkillsData; label: string }[] = [
-  { key: "ai", label: "AI" },
-  { key: "languages", label: "Languages" },
-  { key: "frameworks", label: "Frameworks" },
-  { key: "cloud", label: "Cloud" },
-  { key: "databases", label: "Databases" },
-  { key: "devops", label: "DevOps" },
-  { key: "practices", label: "Practices" },
-];
-
-export function Skills({ skills, usages, onSkillClick }: Props) {
+export function Skills({ title, skills, usages, onSkillClick }: Props) {
   return (
-    <Section id="skills" title="Skills">
+    <Section id="skills" title={title}>
       <div className="skills">
-        {GROUPS.map((group) => (
+        {skills.map((group) => (
           <div key={group.key} className="skills-group">
             <h3>{group.label}</h3>
             <ul>
-              {skills[group.key].map((skill) => {
+              {group.items.map((skill) => {
                 const used = usages.get(skill) ?? [];
                 const isEmpty = used.length === 0;
                 return (

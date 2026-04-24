@@ -766,7 +766,28 @@ button.skill-pill-btn:focus-visible {
 }
 
 .timeline-vis-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
   font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--bg);
+  background: var(--fg);
+  border-color: var(--fg);
+}
+
+.timeline-vis-close:hover {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.timeline-vis-close-icon {
+  display: inline-block;
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .timeline-vis-viewport {

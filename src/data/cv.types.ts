@@ -1,3 +1,27 @@
+export type Meta = {
+  documentTitle: string;
+  description: string;
+};
+
+export type Link = {
+  label: string;
+  url: string;
+  featured?: boolean;
+};
+
+export type Actions = {
+  timeline: string;
+  downloadPdf: string;
+};
+
+export type Sections = {
+  focus: string;
+  projects: string;
+  experience: string;
+  education: string;
+  skills: string;
+};
+
 export type FocusArea = {
   area: string;
   since: string;
@@ -41,25 +65,24 @@ export type Education = {
   skills?: string[];
 };
 
-export type Skills = {
-  languages: string[];
-  frameworks: string[];
-  cloud: string[];
-  databases: string[];
-  ai: string[];
-  devops: string[];
-  practices: string[];
+export type SkillGroup = {
+  key: string;
+  label: string;
+  items: string[];
 };
 
 export type CV = {
+  meta: Meta;
   name: string;
   title: string;
   location: string;
-  links: { linkedin: string; github: string; blog: string };
   summary: string;
+  links: Link[];
+  actions: Actions;
+  sections: Sections;
   focus: FocusArea[];
   projects: Project[];
   experience: Experience[];
   education: Education[];
-  skills: Skills;
+  skills: SkillGroup[];
 };

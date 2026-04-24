@@ -476,7 +476,10 @@ export function Timeline({ cv, open, onClose }: Props) {
             onClick={handleClose}
             aria-label="Close timeline"
           >
-            ✕
+            <span className="timeline-vis-close-icon" aria-hidden="true">
+              ✕
+            </span>
+            <span>Close</span>
           </button>
         </div>
       </div>

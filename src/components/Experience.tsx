@@ -6,6 +6,7 @@ import { formatRange } from "../utils/date";
 import { Section } from "./Section";
 
 type Props = {
+  title: string;
   experience: ExperienceItem[];
   onSkillClick: (skill: string) => void;
 };
@@ -48,10 +49,10 @@ function groupBy<T>(items: T[], keyOf: (item: T) => string): T[][] {
   return groups;
 }
 
-export function Experience({ experience, onSkillClick }: Props) {
+export function Experience({ title, experience, onSkillClick }: Props) {
   const groups = groupBy(experience, (e) => e.company);
   return (
-    <Section id="experience" title="Experience">
+    <Section id="experience" title={title}>
       <ol className="timeline">
         {groups.map((group) =>
           group.length === 1 ? (

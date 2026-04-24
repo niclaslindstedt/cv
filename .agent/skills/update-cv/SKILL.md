@@ -42,24 +42,33 @@ Shared conventions:
 
 - **Dates** are `YYYY-MM` strings. Use `null` for "present" on
   `experience[].endDate` (only field that accepts null).
-- **URLs** (`links.linkedin`, `links.github`, `projects[].repo`)
-  must pass the JSON Schema `format: "uri"` check.
+- **URLs** (`links[].url`, `projects[].repo`) must pass the JSON
+  Schema `format: "uri"` check.
 - **Ordering**:
   - `experience[]` — newest `startDate` first (descending).
   - `projects[]` — priority order; the first project is the one the
     user most wants surfaced.
   - `focus[]` — priority order; first item is primary focus.
   - `education[]` — newest `startDate` first.
-  - `skills.*` — priority order inside each group; first item is
-    most fluent / most recently used.
+  - `skills[].items` — priority order inside each group; first
+    item is most fluent / most recently used.
 - **Do not** add fields the schema doesn't allow. If the user asks
   for one, follow "Schema changes" below.
 
-### Top-level fields (`name`, `title`, `location`, `summary`, `links`)
+### Top-level fields (`name`, `title`, `location`, `summary`, `links`, `meta`, `actions`, `sections`)
 
 - Path: root of the JSON object.
 - `summary` — keep to ~2 sentences. If the user rewrites, preserve
   tone but push the newest focus areas to the front.
+- `links` — ordered array of `{ label, url, featured? }`. `featured:
+true` renders the link as a pill (used for the blog link). The
+  label is rendered verbatim, so include glyphs like "↗" if desired.
+- `meta.documentTitle` / `meta.description` — drive the browser tab
+  title and the `<meta name="description">` tag (both injected into
+  `index.html` at build time via `vite.config.ts`).
+- `actions.timeline` / `actions.downloadPdf` — hero button labels.
+- `sections.*` — section headings (Focus, Projects, Experience,
+  Education, Skills). Changing a value just renames the heading.
 
 ### `focus[]`
 
@@ -78,8 +87,8 @@ Shared conventions:
   `repo` must be a full `https://` URL.
 - **Update** — find by `name`. Typical edits: tagline, description,
   stack additions.
-- **Remove** — delete by `name`. Also check `focus[]` and `skills.ai`
-  for stale references to the project's domain.
+- **Remove** — delete by `name`. Also check `focus[]` and the `ai`
+  skill group for stale references to the project's domain.
 
 ### `experience[]`
 
@@ -97,17 +106,22 @@ Shared conventions:
   required (no "present" support — if in progress today, say so in
   a top-level `summary` addition instead).
 
-### `skills.*`
+### `skills[]`
 
-- Six buckets: `languages`, `frameworks`, `cloud`, `databases`,
-  `ai`, `devops`.
-- **Add** — insert the new string at the priority-correct position
-  (near the top if the user says it is now a core skill).
-- **Remove** — delete the string. Warn if removing something that
-  appears in a `projects[].stack` — the site will still render,
-  but the skill claim is gone.
-- **Reorder** — just reorder the array. Users often want to move
-  a skill up after a recent project.
+- `skills` is an ordered array of groups, each `{ key, label,
+items }`. Default keys: `ai`, `languages`, `frameworks`, `cloud`,
+  `databases`, `devops`, `practices`. `label` controls the heading
+  shown on the site for that group.
+- **Add an item** — insert the new string into the group's `items`
+  at the priority-correct position (near the top if the user says
+  it is now a core skill).
+- **Remove an item** — delete the string from `items`. Warn if
+  removing something that appears in a `projects[].skills` — the
+  site will still render, but the skill claim is gone.
+- **Reorder** — reorder `items` inside a group, or reorder the
+  groups themselves. The first group appears first on the page.
+- **Rename a group label** — edit the group's `label`; `key` can
+  stay as-is.
 
 ## Recommendation mode
 

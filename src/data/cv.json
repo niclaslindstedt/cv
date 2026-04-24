@@ -1,14 +1,36 @@
 {
   "$schema": "../../schemas/cv.schema.json",
+  "meta": {
+    "documentTitle": "Niclas Lindstedt — IT Architect",
+    "description": "Niclas Lindstedt — IT Architect building open-source tools for agentic coding."
+  },
   "name": "Niclas Lindstedt",
   "title": "IT Architect",
   "location": "Sweden",
-  "links": {
-    "linkedin": "https://www.linkedin.com/in/niclaslindstedt",
-    "github": "https://www.github.com/niclaslindstedt",
-    "blog": "https://blog.niclaslindstedt.se"
-  },
   "summary": "IT architect, deep into agentic coding. I build open-source tools that make AI coding agents easier to orchestrate, sandbox, test, and connect to the rest of the world.",
+  "links": [
+    {
+      "label": "Blog ↗",
+      "url": "https://blog.niclaslindstedt.se",
+      "featured": true
+    },
+    { "label": "GitHub", "url": "https://www.github.com/niclaslindstedt" },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/niclaslindstedt"
+    }
+  ],
+  "actions": {
+    "timeline": "Timeline view",
+    "downloadPdf": "Download PDF ↓"
+  },
+  "sections": {
+    "focus": "Current focus",
+    "projects": "Open-source projects",
+    "experience": "Experience",
+    "education": "Education",
+    "skills": "Skills"
+  },
   "focus": [
     { "area": "LLM development", "since": "2023-01" },
     { "area": "Agentic coding", "since": "2025-05" },
@@ -260,69 +282,97 @@
       "endDate": "2014-04"
     }
   ],
-  "skills": {
-    "languages": [
-      "Rust",
-      "C#",
-      "TypeScript",
-      "Python",
-      "JavaScript",
-      "SQL",
-      "C++"
-    ],
-    "frameworks": [".NET", "React", "React Native", "Vue"],
-    "cloud": ["Azure", "AWS"],
-    "databases": [
-      "PostgreSQL",
-      "Microsoft SQL Server",
-      "MongoDB",
-      "Redis",
-      "CosmosDB"
-    ],
-    "ai": [
-      "Spec-driven development",
-      "AI-driven project bootstrapping",
-      "Spec-compliance validation",
-      "Multi-agent orchestration",
-      "Agentic Workflows",
-      "AI Agents",
-      "AI",
-      "Multi-provider LLM integration",
-      "Agent sandboxing & isolation",
-      "Agent permissions & security",
-      "Agent-in-the-loop testing",
-      "RAG",
-      "Chatbots",
-      "Prompt engineering",
-      "AI evaluations",
-      "Claude Code",
-      "Codex CLI",
-      "Gemini CLI",
-      "GitHub Copilot",
-      "Ollama"
-    ],
-    "devops": [
-      "DevOps",
-      "Docker",
-      "Kubernetes",
-      "CI/CD",
-      "APIs",
-      "Infrastructure as Code"
-    ],
-    "practices": [
-      "Software Architecture",
-      "IT Strategy",
-      "Technical Direction",
-      "Engineering Management",
-      "Team Management",
-      "Leadership",
-      "Cybersecurity",
-      "Agile Methodologies",
-      "Scrum",
-      "Problem Solving",
-      "Documentation",
-      "Communication",
-      "New Business Development"
-    ]
-  }
+  "skills": [
+    {
+      "key": "ai",
+      "label": "AI",
+      "items": [
+        "Spec-driven development",
+        "AI-driven project bootstrapping",
+        "Spec-compliance validation",
+        "Multi-agent orchestration",
+        "Agentic Workflows",
+        "AI Agents",
+        "AI",
+        "Multi-provider LLM integration",
+        "Agent sandboxing & isolation",
+        "Agent permissions & security",
+        "Agent-in-the-loop testing",
+        "RAG",
+        "Chatbots",
+        "Prompt engineering",
+        "AI evaluations",
+        "Claude Code",
+        "Codex CLI",
+        "Gemini CLI",
+        "GitHub Copilot",
+        "Ollama"
+      ]
+    },
+    {
+      "key": "languages",
+      "label": "Languages",
+      "items": [
+        "Rust",
+        "C#",
+        "TypeScript",
+        "Python",
+        "JavaScript",
+        "SQL",
+        "C++"
+      ]
+    },
+    {
+      "key": "frameworks",
+      "label": "Frameworks",
+      "items": [".NET", "React", "React Native", "Vue"]
+    },
+    {
+      "key": "cloud",
+      "label": "Cloud",
+      "items": ["Azure", "AWS"]
+    },
+    {
+      "key": "databases",
+      "label": "Databases",
+      "items": [
+        "PostgreSQL",
+        "Microsoft SQL Server",
+        "MongoDB",
+        "Redis",
+        "CosmosDB"
+      ]
+    },
+    {
+      "key": "devops",
+      "label": "DevOps",
+      "items": [
+        "DevOps",
+        "Docker",
+        "Kubernetes",
+        "CI/CD",
+        "APIs",
+        "Infrastructure as Code"
+      ]
+    },
+    {
+      "key": "practices",
+      "label": "Practices",
+      "items": [
+        "Software Architecture",
+        "IT Strategy",
+        "Technical Direction",
+        "Engineering Management",
+        "Team Management",
+        "Leadership",
+        "Cybersecurity",
+        "Agile Methodologies",
+        "Scrum",
+        "Problem Solving",
+        "Documentation",
+        "Communication",
+        "New Business Development"
+      ]
+    }
+  ]
 }
