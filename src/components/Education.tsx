@@ -19,7 +19,8 @@ export function Education({ title, education, onSkillClick }: Props) {
               <span>{formatRange(item.startDate, item.endDate)}</span>
             </div>
             <p>
-              {item.institution} · {item.level} · {item.credits}
+              {item.institution} · {item.level} ·{" "}
+              <span className="education-credits">{item.credits}</span>
             </p>
             {item.skills && item.skills.length > 0 && (
               <ul className="entry-skills">
