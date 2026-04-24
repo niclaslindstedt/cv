@@ -19,6 +19,7 @@ export type Sections = {
   projects: string;
   experience: string;
   education: string;
+  courses: string;
   skills: string;
 };
 
@@ -75,6 +76,15 @@ export type Education = {
   skills?: string[];
 };
 
+export type Course = {
+  name: string;
+  code: string;
+  institution: string;
+  credits: string;
+  completedDate: string;
+  skills?: string[];
+};
+
 export type SkillGroup = {
   key: string;
   label: string;
@@ -95,5 +105,6 @@ export type CV = {
   companies: Company[];
   experience: Experience[];
   education: Education[];
+  courses: Course[];
   skills: SkillGroup[];
 };

@@ -19,6 +19,7 @@
     "companies",
     "experience",
     "education",
+    "courses",
     "skills"
   ],
   "properties": {
@@ -57,6 +58,10 @@
     "education": {
       "type": "array",
       "items": { "$ref": "#/$defs/education" }
+    },
+    "courses": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/course" }
     },
     "skills": {
       "type": "array",
@@ -101,12 +106,20 @@
     "sections": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["focus", "projects", "experience", "education", "skills"],
+      "required": [
+        "focus",
+        "projects",
+        "experience",
+        "education",
+        "courses",
+        "skills"
+      ],
       "properties": {
         "focus": { "type": "string", "minLength": 1 },
         "projects": { "type": "string", "minLength": 1 },
         "experience": { "type": "string", "minLength": 1 },
         "education": { "type": "string", "minLength": 1 },
+        "courses": { "type": "string", "minLength": 1 },
         "skills": { "type": "string", "minLength": 1 }
       }
     },
@@ -207,6 +220,19 @@
         "credits": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": { "$ref": "#/$defs/yearMonth" },
+        "skills": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "course": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "code", "institution", "credits", "completedDate"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "code": { "type": "string", "minLength": 1 },
+        "institution": { "type": "string", "minLength": 1 },
+        "credits": { "type": "string", "minLength": 1 },
+        "completedDate": { "$ref": "#/$defs/yearMonth" },
         "skills": { "$ref": "#/$defs/stringList" }
       }
     },

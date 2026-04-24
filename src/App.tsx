@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { Courses } from "./components/Courses";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
 import { Focus } from "./components/Focus";
@@ -63,6 +64,11 @@ export function App() {
         <Education
           title={cv.sections.education}
           education={cv.education}
+          onSkillClick={setSelectedSkill}
+        />
+        <Courses
+          title={cv.sections.courses}
+          courses={cv.courses}
           onSkillClick={setSelectedSkill}
         />
         <Skills
