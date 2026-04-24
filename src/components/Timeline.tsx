@@ -42,10 +42,10 @@ type Props = {
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 8;
 const BASE_MONTH_PX = 14;
-const LANE_SIZE = 36;
+const LANE_SIZE = 40;
 const LANE_GAP = 2;
-const TRACK_HEADER = 20;
-const TRACK_GAP = 8;
+const TRACK_HEADER = 16;
+const TRACK_GAP = 4;
 const AXIS_SIZE = 40;
 const MONTH_NAMES = [
   "Jan",
