@@ -48,27 +48,35 @@ function mergeTags(...lists) {
 }
 
 function buildItems(cv) {
+  const companies = new Map(cv.companies.map((c) => [c.id, c]));
+  const lookup = (id) => {
+    const company = companies.get(id);
+    if (!company) throw new Error(`Unknown company id: ${id}`);
+    return company;
+  };
+
   const items = [];
   cv.experience.forEach((exp, i) => {
+    const company = lookup(exp.companyId);
     items.push({
       id: `exp-${i}`,
       kind: "experience",
       title: exp.role,
-      subtitle: exp.company,
-      description: exp.companyDescription,
+      subtitle: company.name,
+      description: company.description,
       startDate: exp.startDate,
       endDate: exp.endDate,
       skills: mergeTags(exp.stack, exp.skills),
     });
     const grouped = new Map();
     (exp.assignments ?? []).forEach((a, j) => {
-      const existing = grouped.get(a.client);
+      const client = lookup(a.clientId);
+      const existing = grouped.get(a.clientId);
       if (!existing) {
-        grouped.set(a.client, {
+        grouped.set(a.clientId, {
           firstIndex: j,
           roles: [{ role: a.role, startDate: a.startDate }],
-          client: a.client,
-          description: a.clientDescription,
+          client,
           startDate: a.startDate,
           endDate: a.endDate,
           skills: mergeTags(a.stack, a.skills),
@@ -94,8 +102,8 @@ function buildItems(cv) {
         id: `exp-${i}-asg-${group.firstIndex}`,
         kind: "assignment",
         title,
-        subtitle: `${group.client} · via ${exp.company}`,
-        description: group.description,
+        subtitle: `${group.client.name} · via ${company.name}`,
+        description: group.client.description,
         startDate: group.startDate,
         endDate: group.endDate,
         skills: group.skills,

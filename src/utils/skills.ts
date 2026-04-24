@@ -1,4 +1,4 @@
-import type { CV } from "../data/cv.types";
+import type { CV, Company } from "../data/cv.types";
 
 export type SkillUsage = {
   kind: "project" | "experience" | "assignment" | "education";
@@ -8,8 +8,17 @@ export type SkillUsage = {
   endDate?: string | null;
 };
 
-export function buildSkillUsageMap(cv: CV): Map<string, SkillUsage[]> {
+export function buildSkillUsageMap(
+  cv: CV,
+  companies: Map<string, Company>,
+): Map<string, SkillUsage[]> {
   const map = new Map<string, SkillUsage[]>();
+
+  const companyName = (id: string): string => {
+    const company = companies.get(id);
+    if (!company) throw new Error(`Unknown company id: ${id}`);
+    return company.name;
+  };
 
   const push = (skill: string, usage: SkillUsage) => {
     const list = map.get(skill) ?? [];
@@ -35,7 +44,7 @@ export function buildSkillUsageMap(cv: CV): Map<string, SkillUsage[]> {
     for (const tag of uniq(role.stack, role.skills)) {
       push(tag, {
         kind: "experience",
-        label: role.company,
+        label: companyName(role.companyId),
         role: role.role,
         startDate: role.startDate,
         endDate: role.endDate,
@@ -45,7 +54,7 @@ export function buildSkillUsageMap(cv: CV): Map<string, SkillUsage[]> {
       for (const tag of uniq(assignment.stack, assignment.skills)) {
         push(tag, {
           kind: "assignment",
-          label: `${assignment.client} (${role.company})`,
+          label: `${companyName(assignment.clientId)} (${companyName(role.companyId)})`,
           role: assignment.role,
           startDate: assignment.startDate,
           endDate: assignment.endDate,

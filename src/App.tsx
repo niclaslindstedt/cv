@@ -9,11 +9,19 @@ import { SkillModal } from "./components/SkillModal";
 import { Skills } from "./components/Skills";
 import { Timeline } from "./components/Timeline";
 import cv from "./data/cv.json";
+import type { Company } from "./data/cv.types";
 import { buildSkillUsageMap } from "./utils/skills";
 import { useTheme } from "./utils/theme";
 
 export function App() {
-  const skillUsages = useMemo(() => buildSkillUsageMap(cv), []);
+  const companies = useMemo(
+    () => new Map<string, Company>(cv.companies.map((c) => [c.id, c])),
+    [],
+  );
+  const skillUsages = useMemo(
+    () => buildSkillUsageMap(cv, companies),
+    [companies],
+  );
   const [timelineOpen, setTimelineOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
@@ -49,6 +57,7 @@ export function App() {
         <Experience
           title={cv.sections.experience}
           experience={cv.experience}
+          companies={companies}
           onSkillClick={setSelectedSkill}
         />
         <Education

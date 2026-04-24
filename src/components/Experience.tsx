@@ -1,5 +1,6 @@
 import type {
   Assignment,
+  Company,
   Experience as ExperienceItem,
 } from "../data/cv.types";
 import { formatRange } from "../utils/date";
@@ -8,12 +9,9 @@ import { Section } from "./Section";
 type Props = {
   title: string;
   experience: ExperienceItem[];
+  companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
 };
-
-function sameName(a: string, b: string) {
-  return a.toLowerCase() === b.toLowerCase();
-}
 
 function PromotionArrow() {
   return (
@@ -36,11 +34,56 @@ function PromotionArrow() {
   );
 }
 
+function TerminatedIcon() {
+  return (
+    <svg
+      className="company-terminated"
+      viewBox="0 0 24 24"
+      width="14"
+      height="14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-label="Company terminated"
+      role="img"
+    >
+      <title>Company terminated</title>
+      <path d="M6 22 V11 a6 6 0 0 1 12 0 V22 Z" />
+      <line x1="12" y1="14" x2="12" y2="19" />
+      <line x1="10" y1="16" x2="14" y2="16" />
+    </svg>
+  );
+}
+
+function CompanyLabel({ company }: { company: Company }) {
+  const content = (
+    <>
+      {company.name}
+      {company.terminated && <TerminatedIcon />}
+    </>
+  );
+  if (company.url) {
+    return (
+      <a
+        className="company company-link"
+        href={company.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {content}
+      </a>
+    );
+  }
+  return <span className="company">{content}</span>;
+}
+
 function groupBy<T>(items: T[], keyOf: (item: T) => string): T[][] {
   const groups: T[][] = [];
   for (const item of items) {
     const last = groups[groups.length - 1];
-    if (last && sameName(keyOf(last[0]), keyOf(item))) {
+    if (last && keyOf(last[0]) === keyOf(item)) {
       last.push(item);
     } else {
       groups.push([item]);
@@ -49,22 +92,35 @@ function groupBy<T>(items: T[], keyOf: (item: T) => string): T[][] {
   return groups;
 }
 
-export function Experience({ title, experience, onSkillClick }: Props) {
-  const groups = groupBy(experience, (e) => e.company);
+function resolveCompany(companies: Map<string, Company>, id: string): Company {
+  const company = companies.get(id);
+  if (!company) {
+    throw new Error(`Unknown company id: ${id}`);
+  }
+  return company;
+}
+
+export function Experience({
+  title,
+  experience,
+  companies,
+  onSkillClick,
+}: Props) {
+  const groups = groupBy(experience, (e) => e.companyId);
   return (
     <Section id="experience" title={title}>
       <ol className="timeline">
         {groups.map((group) =>
           group.length === 1 ? (
-            renderItem(group[0], false, onSkillClick)
+            renderItem(group[0], false, companies, onSkillClick)
           ) : (
             <li
-              key={`group-${group[0].company}-${group[0].startDate}`}
+              key={`group-${group[0].companyId}-${group[0].startDate}`}
               className="timeline-group"
             >
               <ol className="timeline-group-items">
                 {group.map((item, idx) =>
-                  renderItem(item, idx > 0, onSkillClick),
+                  renderItem(item, idx > 0, companies, onSkillClick),
                 )}
               </ol>
             </li>
@@ -78,11 +134,13 @@ export function Experience({ title, experience, onSkillClick }: Props) {
 function renderItem(
   item: ExperienceItem,
   isPromotion: boolean,
+  companies: Map<string, Company>,
   onSkillClick: (skill: string) => void,
 ) {
+  const company = resolveCompany(companies, item.companyId);
   return (
     <li
-      key={`${item.company}-${item.startDate}`}
+      key={`${item.companyId}-${item.startDate}`}
       className={
         isPromotion ? "timeline-item timeline-promotion" : "timeline-item"
       }
@@ -100,11 +158,11 @@ function renderItem(
           {!isPromotion && (
             <>
               {" · "}
-              <span className="company">{item.company}</span>
+              <CompanyLabel company={company} />
             </>
           )}
         </h3>
-        {!isPromotion && <p>{item.companyDescription}</p>}
+        {!isPromotion && <p>{company.description}</p>}
         {item.stack && item.stack.length > 0 && (
           <ul className="entry-stack">
             {item.stack.map((tech) => (
@@ -143,6 +201,7 @@ function renderItem(
             </summary>
             <AssignmentList
               assignments={item.assignments}
+              companies={companies}
               onSkillClick={onSkillClick}
             />
           </details>
@@ -154,25 +213,27 @@ function renderItem(
 
 function AssignmentList({
   assignments,
+  companies,
   onSkillClick,
 }: {
   assignments: Assignment[];
+  companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
 }) {
-  const groups = groupBy(assignments, (a) => a.client);
+  const groups = groupBy(assignments, (a) => a.clientId);
   return (
     <ol className="assignments-list">
       {groups.map((group) =>
         group.length === 1 ? (
-          renderAssignment(group[0], false, onSkillClick)
+          renderAssignment(group[0], false, companies, onSkillClick)
         ) : (
           <li
-            key={`agroup-${group[0].client}-${group[0].startDate}`}
+            key={`agroup-${group[0].clientId}-${group[0].startDate}`}
             className="assignment-group"
           >
             <ol className="assignment-group-items">
               {group.map((a, idx) =>
-                renderAssignment(a, idx > 0, onSkillClick),
+                renderAssignment(a, idx > 0, companies, onSkillClick),
               )}
             </ol>
           </li>
@@ -185,11 +246,13 @@ function AssignmentList({
 function renderAssignment(
   a: Assignment,
   isPromotion: boolean,
+  companies: Map<string, Company>,
   onSkillClick: (skill: string) => void,
 ) {
+  const client = resolveCompany(companies, a.clientId);
   return (
     <li
-      key={`${a.client}-${a.startDate}`}
+      key={`${a.clientId}-${a.startDate}`}
       className={
         isPromotion ? "assignment-item assignment-promotion" : "assignment-item"
       }
@@ -204,11 +267,11 @@ function renderAssignment(
           {!isPromotion && (
             <>
               {" · "}
-              <span className="company">{a.client}</span>
+              <CompanyLabel company={client} />
             </>
           )}
         </h4>
-        {!isPromotion && <p>{a.clientDescription}</p>}
+        {!isPromotion && <p>{client.description}</p>}
         {a.stack && a.stack.length > 0 && (
           <ul className="entry-stack">
             {a.stack.map((tech) => (
