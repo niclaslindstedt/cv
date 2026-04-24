@@ -32,7 +32,6 @@
     "skills": "Skills"
   },
   "focus": [
-    { "area": "LLM development", "since": "2023-01" },
     { "area": "Agentic coding", "since": "2025-05" },
     { "area": "Spec-driven agentic coding", "since": "2025-07" },
     { "area": "Agentic orchestration", "since": "2025-10" },
@@ -294,7 +293,7 @@
       ]
     },
     {
-      "role": "Senior Software Engineer",
+      "role": "Backend Developer",
       "companyId": "indicio",
       "startDate": "2015-09",
       "endDate": "2020-01",
