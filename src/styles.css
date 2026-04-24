@@ -1263,7 +1263,7 @@ button.skill-pill-btn:focus-visible {
 @media (max-width: 640px) {
   .timeline-vis-toolbar {
     padding: 10px 12px;
-    padding-right: 96px;
+    padding-right: 56px;
     position: relative;
   }
 
