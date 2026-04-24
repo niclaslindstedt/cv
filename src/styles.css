@@ -766,7 +766,28 @@ button.skill-pill-btn:focus-visible {
 }
 
 .timeline-vis-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
   font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--bg);
+  background: var(--fg);
+  border-color: var(--fg);
+}
+
+.timeline-vis-close:hover {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.timeline-vis-close-icon {
+  display: inline-block;
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .timeline-vis-viewport {
@@ -812,6 +833,7 @@ button.skill-pill-btn:focus-visible {
 .timeline-vis-tick {
   position: absolute;
   color: var(--fg-muted);
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   pointer-events: none;
 }
@@ -879,12 +901,13 @@ button.skill-pill-btn:focus-visible {
 
 .timeline-vis-band-label {
   position: absolute;
-  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-muted);
-  padding: 4px 8px;
+  padding: 4px 10px;
   background: var(--bg);
   border-radius: 6px;
   z-index: 1;
@@ -907,13 +930,14 @@ button.skill-pill-btn:focus-visible {
   position: absolute;
   display: flex;
   align-items: center;
-  padding: 4px 8px;
+  padding: 8px 14px;
   font: inherit;
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
   color: var(--fg);
   background: var(--accent-soft);
   border: 1px solid rgba(122, 183, 255, 0.35);
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
   text-align: left;
@@ -958,9 +982,9 @@ button.skill-pill-btn:focus-visible {
 .timeline-vis-item-label {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 3px;
   min-width: 0;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .timeline-vis-item.is-v .timeline-vis-item-label {
@@ -977,7 +1001,7 @@ button.skill-pill-btn:focus-visible {
 
 .timeline-vis-item-sub {
   color: var(--fg-muted);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1042,6 +1066,7 @@ button.skill-pill-btn:focus-visible {
 
 .timeline-vis-details-dates {
   margin: 0 0 10px;
+  font-family: var(--font-mono);
   color: var(--fg-muted);
   font-size: 0.85rem;
 }
@@ -1238,6 +1263,15 @@ button.skill-pill-btn:focus-visible {
 @media (max-width: 640px) {
   .timeline-vis-toolbar {
     padding: 10px 12px;
+    padding-right: 96px;
+    position: relative;
+  }
+
+  .timeline-vis-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    z-index: 1;
   }
 
   .timeline-vis-details {

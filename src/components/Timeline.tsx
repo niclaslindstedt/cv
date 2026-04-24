@@ -44,10 +44,11 @@ type Props = {
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 8;
 const BASE_MONTH_PX = 14;
-const LANE_SIZE = 34;
-const TRACK_HEADER = 22;
-const TRACK_GAP = 14;
-const AXIS_SIZE = 36;
+const LANE_SIZE = 48;
+const LANE_GAP = 8;
+const TRACK_HEADER = 26;
+const TRACK_GAP = 18;
+const AXIS_SIZE = 40;
 const MONTH_NAMES = [
   "Jan",
   "Feb",
@@ -112,18 +113,58 @@ function buildItems(cv: CV): TimelineItem[] {
       endDate: exp.endDate,
       skills: exp.skills ?? [],
     });
+    const grouped = new Map<
+      string,
+      {
+        firstIndex: number;
+        roles: { role: string; startDate: string }[];
+        client: string;
+        description: string;
+        startDate: string;
+        endDate: string | null;
+        skills: string[];
+      }
+    >();
     exp.assignments?.forEach((a, j) => {
-      items.push({
-        id: `exp-${i}-asg-${j}`,
-        kind: "assignment",
-        title: a.role,
-        subtitle: `${a.client} · via ${exp.company}`,
-        description: a.clientDescription,
-        startDate: a.startDate,
-        endDate: a.endDate,
-        skills: a.skills ?? [],
-      });
+      const existing = grouped.get(a.client);
+      if (!existing) {
+        grouped.set(a.client, {
+          firstIndex: j,
+          roles: [{ role: a.role, startDate: a.startDate }],
+          client: a.client,
+          description: a.clientDescription,
+          startDate: a.startDate,
+          endDate: a.endDate,
+          skills: [...(a.skills ?? [])],
+        });
+      } else {
+        existing.roles.push({ role: a.role, startDate: a.startDate });
+        if (a.startDate < existing.startDate) existing.startDate = a.startDate;
+        if (existing.endDate !== null) {
+          if (a.endDate === null) existing.endDate = null;
+          else if (a.endDate > existing.endDate) existing.endDate = a.endDate;
+        }
+        for (const skill of a.skills ?? []) {
+          if (!existing.skills.includes(skill)) existing.skills.push(skill);
+        }
+      }
     });
+    for (const group of grouped.values()) {
+      const sortedRoles = [...group.roles].sort((a, b) =>
+        a.startDate.localeCompare(b.startDate),
+      );
+      const title = sortedRoles.map((r) => r.role).join(" → ");
+      items.push({
+        id: `exp-${i}-asg-${group.firstIndex}`,
+        kind: "assignment",
+        title,
+        subtitle: `${group.client} · via ${exp.company}`,
+        description: group.description,
+        startDate: group.startDate,
+        endDate: group.endDate,
+        skills: group.skills,
+      });
+    }
   });
 
   cv.education.forEach((ed, i) => {
@@ -335,7 +376,7 @@ export function Timeline({ cv, open, onClose }: Props) {
     const timePos = axisPos(startIdx);
     const timeLen = Math.max(monthPx * 0.5, (endIdx - startIdx) * monthPx);
     const perpPos = trackOffset + TRACK_HEADER + item.lane * LANE_SIZE;
-    const perpSize = LANE_SIZE - 6;
+    const perpSize = LANE_SIZE - LANE_GAP;
     const style: CSSProperties = isHorizontal
       ? {
           left: timePos,
@@ -435,7 +476,10 @@ export function Timeline({ cv, open, onClose }: Props) {
             onClick={handleClose}
             aria-label="Close timeline"
           >
-            ✕
+            <span className="timeline-vis-close-icon" aria-hidden="true">
+              ✕
+            </span>
+            <span>Close</span>
           </button>
         </div>
       </div>
