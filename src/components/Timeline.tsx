@@ -142,6 +142,23 @@ export function Timeline({ open, onClose }: Props) {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    window.history.pushState({ cvTimelineOpen: true }, "");
+    const onPopState = () => {
+      setSelectedId(null);
+      setScale(1);
+      onClose();
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+      if (window.history.state?.cvTimelineOpen) {
+        window.history.back();
+      }
+    };
+  }, [open, onClose]);
+
   const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "touch") return;
     pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
