@@ -1,4 +1,19 @@
-import type { CV, Company, LocalizedString } from "../data/cv.types";
+import type {
+  CV,
+  Company,
+  LocalizedString,
+  RoleTenure,
+} from "../data/cv.types";
+
+function joinRoleTitles(roles: RoleTenure[]): LocalizedString {
+  const sorted = [...roles].sort((a, b) =>
+    a.startDate.localeCompare(b.startDate),
+  );
+  return {
+    en: sorted.map((r) => r.title.en).join(" → "),
+    sv: sorted.map((r) => r.title.sv).join(" → "),
+  };
+}
 
 export type SkillUsage = {
   kind: "project" | "experience" | "assignment" | "education";
@@ -40,22 +55,22 @@ export function buildSkillUsageMap(
     }
   }
 
-  for (const role of cv.experience) {
-    for (const tag of uniq(role.stack, role.skills)) {
+  for (const exp of cv.experience) {
+    for (const tag of uniq(exp.stack, exp.skills)) {
       push(tag, {
         kind: "experience",
-        label: companyName(role.companyId),
-        role: role.role,
-        startDate: role.startDate,
-        endDate: role.endDate,
+        label: companyName(exp.companyId),
+        role: joinRoleTitles(exp.roles),
+        startDate: exp.startDate,
+        endDate: exp.endDate,
       });
     }
-    for (const assignment of role.assignments ?? []) {
+    for (const assignment of exp.assignments ?? []) {
       for (const tag of uniq(assignment.stack, assignment.skills)) {
         push(tag, {
           kind: "assignment",
-          label: `${companyName(assignment.clientId)} (${companyName(role.companyId)})`,
-          role: assignment.role,
+          label: `${companyName(assignment.clientId)} (${companyName(exp.companyId)})`,
+          role: joinRoleTitles(assignment.roles),
           startDate: assignment.startDate,
           endDate: assignment.endDate,
         });
@@ -94,10 +109,10 @@ export function buildCompanyStackMap(cv: CV): Map<string, string[]> {
     add(company.id, company.stack);
   }
 
-  for (const role of cv.experience) {
-    add(role.companyId, role.stack);
-    for (const assignment of role.assignments ?? []) {
-      add(role.companyId, assignment.stack);
+  for (const exp of cv.experience) {
+    add(exp.companyId, exp.stack);
+    for (const assignment of exp.assignments ?? []) {
+      add(exp.companyId, assignment.stack);
       add(assignment.clientId, assignment.stack);
     }
   }

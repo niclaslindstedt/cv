@@ -723,48 +723,56 @@ a:hover {
   box-shadow: 0 0 0 1px rgba(0, 98, 204, 0.18);
 }
 
-.timeline-group-items {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0 14px;
-  display: grid;
-  gap: 20px;
-}
-
-.timeline-group-items > .timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -14px;
-  top: 28px;
-  width: 15px;
-  height: 1px;
-  background: var(--accent);
-  opacity: 0.6;
-}
-
-.timeline-group-items > .timeline-item::after {
-  content: "";
-  position: absolute;
-  left: -14px;
-  top: 0;
-  bottom: -20px;
-  width: 1px;
-  background: var(--accent);
-  opacity: 0.6;
-}
-
-.timeline-group-items > .timeline-item:first-child::after {
-  top: 28px;
-}
-
-.timeline-group-items > .timeline-item:last-child::after {
-  bottom: calc(100% - 28px);
-}
-
 .promotion-arrow {
   display: inline-block;
   margin-left: 6px;
   color: var(--accent);
+  vertical-align: -2px;
+}
+
+.role-chain {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 6px 0 6px 14px;
+  border-left: 1px solid var(--accent);
+  border-left-color: rgba(122, 183, 255, 0.45);
+  display: grid;
+  gap: 4px;
+}
+
+:root[data-theme="light"] .role-chain {
+  border-left-color: rgba(0, 98, 204, 0.35);
+}
+
+.role-chain-item {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+}
+
+.role-chain-item .role {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.role-chain-item .role-chain-meta {
+  color: var(--fg-muted);
+  font-size: 0.85rem;
+}
+
+.role-chain-item .promotion-arrow {
+  margin-left: 0;
+  vertical-align: -1px;
+}
+
+.promotion-arrow-spacer {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
   vertical-align: -2px;
 }
 
@@ -940,35 +948,6 @@ a:hover {
   background: var(--fg-muted);
   opacity: 0.55;
   border-radius: 2px;
-}
-
-.assignment-group {
-  position: relative;
-}
-
-.assignment-group-items {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 14px;
-}
-
-.assignment-group-items > .assignment-item:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: -18px;
-  top: 10px;
-  bottom: -24px;
-  width: 2px;
-  background: var(--accent);
-  opacity: 0.55;
-  border-radius: 2px;
-}
-
-.assignment-group-items > .assignment-item::before {
-  background: var(--accent);
-  opacity: 0.75;
 }
 
 .assignment-meta {
@@ -2724,19 +2703,17 @@ button.skill-pill-btn:focus-visible {
     margin-top: 16px;
   }
 
-  .timeline-group-items,
-  .assignment-group-items,
   .assignments-list {
     padding-left: 0;
   }
 
-  .timeline-group-items > .timeline-item::before,
-  .timeline-group-items > .timeline-item::after,
-  .assignment-group-items > .assignment-item::before,
-  .assignment-group-items > .assignment-item::after,
   .assignments-list .assignment-item::before,
   .assignments-list .assignment-item::after {
     display: none;
+  }
+
+  .role-chain {
+    border-left-color: #888;
   }
 
   .promotion-arrow {

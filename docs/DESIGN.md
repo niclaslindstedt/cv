@@ -234,20 +234,39 @@ Wrap each _segment that includes its own preceding separator_ in a
 `<span>` with `white-space: nowrap`. See
 `.education-meta-trail` in `src/styles.css` for the pattern.
 
-### 5.2 Promotion arrow (`↑`)
+### 5.2 Promotion arrow (`↑`) and role chain
 
-When a person is promoted within the same employer, the promoted role
-gets an inline `↑` arrow next to the title. The arrow is a 14×14 SVG
-in `--accent`, `vertical-align: -2px`.
+A job (top-level Experience entry) and an assignment (consultancy
+client engagement) each represent **one continuous tenure**. Internal
+promotions or title changes do not break that continuity — they live
+inside a single card as a `roles[]` array on the parent.
 
-Roles within a multi-role group are listed reverse-chronologically
-(newest at the top, like the rest of the timeline). The first item
-(newest) is the **anchor** and shows the company name; later items
-omit the company name. The arrow appears on every role except the
-**original starting role at the bottom**, since every other role in
-the group was reached by a promotion. The anchor row therefore
-displays both the company name and the arrow when it is itself a
-promotion target.
+The arrow is a 14×14 SVG in `--accent`, `vertical-align: -2px`. It
+appears on the card heading whenever the parent has more than one
+role (i.e. the most recent title was reached via promotion), and
+again on every role row in the chain except the original starting
+role at the bottom.
+
+**Role chain.** When `roles.length > 1`, the card renders a
+`<ol class="role-chain">` directly after the date row. Rows are
+listed reverse-chronologically (newest at the top). Each row is one
+line:
+
+```
+[↑] {title} · {start — end}
+```
+
+The bottom row (the original starting title) shows a 14×14 spacer
+where the arrow would go, so all titles align vertically. The chain
+sits inside a 1px accent left border that visually anchors the
+progression. Type scale matches the timeline metadata
+(`0.9rem`/`0.85rem`); titles in the chain use `--font-mono` like the
+heading role.
+
+The card's outer heading (`h3` on Experience, `h4` on Assignment) is
+the **anchor**: it always displays the most recent title plus the
+company/client name, and carries the arrow when the parent has more
+than one role.
 
 ### 5.3 Active employer / project glow
 

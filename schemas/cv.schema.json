@@ -279,12 +279,30 @@
         "description": { "type": "string", "minLength": 1 }
       }
     },
+    "roleTenure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "startDate", "endDate"],
+      "description": "A title held within a single tenure (job or assignment). Multiple entries in a parent's roles[] represent internal promotions or title changes that do not break the continuity of the parent.",
+      "properties": {
+        "title": { "$ref": "#/$defs/localizedString" },
+        "startDate": { "$ref": "#/$defs/yearMonth" },
+        "endDate": {
+          "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
+        }
+      }
+    },
     "experience": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["role", "companyId", "startDate", "endDate"],
+      "required": ["roles", "companyId", "startDate", "endDate"],
       "properties": {
-        "role": { "$ref": "#/$defs/localizedString" },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/roleTenure" },
+          "description": "One entry per title held during this employment, ordered by startDate ascending. Multiple entries represent promotions; the parent's startDate/endDate must equal the first/last role's startDate/endDate."
+        },
         "companyId": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": {
@@ -304,9 +322,14 @@
     "assignment": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["role", "clientId", "startDate", "endDate"],
+      "required": ["roles", "clientId", "startDate", "endDate"],
       "properties": {
-        "role": { "$ref": "#/$defs/localizedString" },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/roleTenure" },
+          "description": "One entry per title held during this client engagement, ordered by startDate ascending. Multiple entries represent promotions within the same continuous assignment."
+        },
         "clientId": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": {
