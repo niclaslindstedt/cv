@@ -7,6 +7,29 @@ import type {
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 
+function NoteIcon() {
+  return (
+    <svg
+      className="program-modal-notes-icon"
+      viewBox="0 0 24 24"
+      width="14"
+      height="14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      role="img"
+    >
+      <path d="M14 3 H6 a2 2 0 0 0 -2 2 v14 a2 2 0 0 0 2 2 h12 a2 2 0 0 0 2 -2 V9 Z" />
+      <polyline points="14 3 14 9 20 9" />
+      <line x1="8" y1="13" x2="16" y2="13" />
+      <line x1="8" y1="17" x2="13" y2="17" />
+    </svg>
+  );
+}
+
 function sumCredits(moments: CourseMoment[], reference: string): string | null {
   if (moments.length === 0) return null;
   let total = 0;
@@ -85,7 +108,10 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
               <span className="education-credits">{program.credits}</span>
             </p>
             {program.notes && (
-              <p className="program-modal-notes">{t(program.notes)}</p>
+              <p className="program-modal-notes">
+                <NoteIcon />
+                <span>{t(program.notes)}</span>
+              </p>
             )}
             {courses.length > 0 && (
               <p className="program-modal-count">

@@ -2058,6 +2058,9 @@ button.skill-pill-btn:focus-visible {
 }
 
 .program-modal-notes {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   margin: 4px 0 0;
   padding: 10px 12px;
   border-left: 2px solid var(--accent-soft);
@@ -2067,6 +2070,12 @@ button.skill-pill-btn:focus-visible {
   font-size: 0.9rem;
   line-height: 1.5;
   white-space: pre-line;
+}
+
+.program-modal-notes-icon {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--accent);
 }
 
 .program-courses-list {
