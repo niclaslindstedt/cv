@@ -547,10 +547,12 @@ a:hover {
   border-color: var(--border);
 }
 
-.project-stack-btn:hover,
-.project-skill-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+@media (hover: hover) {
+  .project-stack-btn:hover,
+  .project-skill-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 }
 
 .project-stack-btn:focus-visible,
@@ -927,10 +929,12 @@ button.skill-pill-btn {
     background 120ms ease;
 }
 
-button.skill-pill-btn:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: var(--accent-soft);
+@media (hover: hover) {
+  button.skill-pill-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
 }
 
 button.skill-pill-btn:focus-visible {
@@ -995,10 +999,12 @@ button.skill-pill-btn:focus-visible {
   border-color: var(--border);
 }
 
-.entry-stack-btn:hover,
-.entry-skill-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+@media (hover: hover) {
+  .entry-stack-btn:hover,
+  .entry-skill-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 }
 
 .entry-stack-btn:focus-visible,
