@@ -24,7 +24,7 @@ import type {
 } from "./data/cv.types";
 import { useGlassReflections } from "./utils/glassReflections";
 import { useLang } from "./utils/i18n";
-import { buildSkillUsageMap } from "./utils/skills";
+import { buildCompanyStackMap, buildSkillUsageMap } from "./utils/skills";
 import { useTheme } from "./utils/theme";
 
 export function App() {
@@ -36,6 +36,7 @@ export function App() {
     () => buildSkillUsageMap(cv, companies),
     [companies],
   );
+  const companyStacks = useMemo(() => buildCompanyStackMap(cv), []);
   const [timelineOpen, setTimelineOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [selectedFocus, setSelectedFocus] = useState<FocusArea | null>(null);
@@ -147,6 +148,9 @@ export function App() {
       />
       <CompanyModal
         company={selectedCompany}
+        stack={
+          selectedCompany ? (companyStacks.get(selectedCompany.id) ?? []) : []
+        }
         onClose={() => setSelectedCompany(null)}
         onSkillClick={(skill) => {
           setSelectedCompany(null);

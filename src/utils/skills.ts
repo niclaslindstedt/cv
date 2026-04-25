@@ -77,6 +77,34 @@ export function buildSkillUsageMap(
   return map;
 }
 
+export function buildCompanyStackMap(cv: CV): Map<string, string[]> {
+  const sets = new Map<string, Set<string>>();
+
+  const add = (companyId: string, items?: readonly string[]) => {
+    if (!items?.length) return;
+    let set = sets.get(companyId);
+    if (!set) {
+      set = new Set<string>();
+      sets.set(companyId, set);
+    }
+    for (const item of items) set.add(item);
+  };
+
+  for (const company of cv.companies) {
+    add(company.id, company.stack);
+  }
+
+  for (const role of cv.experience) {
+    add(role.companyId, role.stack);
+    for (const assignment of role.assignments ?? []) {
+      add(role.companyId, assignment.stack);
+      add(assignment.clientId, assignment.stack);
+    }
+  }
+
+  return new Map([...sets.entries()].map(([id, set]) => [id, [...set]]));
+}
+
 export function jobAssignmentCount(usages: SkillUsage[]): number {
   let count = 0;
   for (const u of usages) {

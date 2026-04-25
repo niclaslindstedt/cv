@@ -5,11 +5,12 @@ import { useLang } from "../utils/i18n";
 
 type Props = {
   company: Company | null;
+  stack: string[];
   onClose: () => void;
   onSkillClick: (skill: string) => void;
 };
 
-export function CompanyModal({ company, onClose, onSkillClick }: Props) {
+export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
   const { t, ui } = useLang();
 
   useEffect(() => {
@@ -72,13 +73,13 @@ export function CompanyModal({ company, onClose, onSkillClick }: Props) {
                 {ui.companyModal.visitWebsite}
               </a>
             )}
-            {company.stack && company.stack.length > 0 && (
+            {stack.length > 0 && (
               <div className="company-modal-stack">
                 <h3 className="company-modal-stack-title">
                   {ui.companyModal.stack}
                 </h3>
                 <ul className="entry-stack">
-                  {company.stack.map((tech) => (
+                  {stack.map((tech) => (
                     <li key={tech}>
                       <button
                         type="button"
