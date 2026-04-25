@@ -474,7 +474,8 @@
       "credits": "12 ECTS",
       "startDate": "2015-06",
       "completedDate": "2015-08",
-      "engagement": 0.5
+      "engagement": 0.5,
+      "remote": true
     },
     {
       "name": { "en": "Game Design", "sv": "Speldesign" },

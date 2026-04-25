@@ -37,6 +37,14 @@ export function Courses({ title, courses, onSkillClick }: Props) {
                   </span>
                 </>
               )}
+              {item.remote && (
+                <>
+                  {" · "}
+                  <span className="education-credits">
+                    {t({ en: "Remote", sv: "Distans" })}
+                  </span>
+                </>
+              )}
             </p>
             {item.skills && item.skills.length > 0 && (
               <ul className="entry-skills">

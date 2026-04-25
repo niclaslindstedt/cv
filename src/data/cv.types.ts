@@ -96,6 +96,7 @@ export type Course = {
   startDate?: string;
   completedDate: string;
   engagement?: number;
+  remote?: boolean;
   skills?: string[];
 };
 
