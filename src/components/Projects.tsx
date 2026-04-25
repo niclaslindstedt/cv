@@ -55,18 +55,14 @@ export function Projects({
             <article key={project.name} className="project">
               <header className="project-head">
                 <h3>
-                  {project.openSource ? (
-                    <button
-                      type="button"
-                      className="project-name-btn"
-                      onClick={() => onProjectClick(project)}
-                      aria-label={ui.projectModal.detailAria(project.name)}
-                    >
-                      {project.name}
-                    </button>
-                  ) : (
-                    <span>{project.name}</span>
-                  )}
+                  <button
+                    type="button"
+                    className="project-name-btn"
+                    onClick={() => onProjectClick(project)}
+                    aria-label={ui.projectModal.detailAria(project.name)}
+                  >
+                    {project.name}
+                  </button>
                   {project.openSource && (
                     <span className="project-pill project-pill-oss">
                       open source
@@ -94,9 +90,6 @@ export function Projects({
                     </div>
                   )}
                 </dl>
-              )}
-              {!project.openSource && (
-                <p className="project-description">{t(project.description)}</p>
               )}
               {project.stack && project.stack.length > 0 && (
                 <ul className="project-stack">
