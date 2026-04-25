@@ -238,8 +238,16 @@ Wrap each _segment that includes its own preceding separator_ in a
 
 When a person is promoted within the same employer, the promoted role
 gets an inline `↑` arrow next to the title. The arrow is a 14×14 SVG
-in `--accent`, `vertical-align: -2px`. It appears only on roles where
-`isPromotion === true` (i.e., `idx > 0` within an assignment group).
+in `--accent`, `vertical-align: -2px`.
+
+Roles within a multi-role group are listed reverse-chronologically
+(newest at the top, like the rest of the timeline). The first item
+(newest) is the **anchor** and shows the company name; later items
+omit the company name. The arrow appears on every role except the
+**original starting role at the bottom**, since every other role in
+the group was reached by a promotion. The anchor row therefore
+displays both the company name and the arrow when it is itself a
+promotion target.
 
 ### 5.3 Active employer / project glow
 

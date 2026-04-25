@@ -79,7 +79,10 @@ function CompanyButton({
   );
 }
 
-function groupBy<T>(items: T[], keyOf: (item: T) => string): T[][] {
+function groupBy<T extends { startDate: string }>(
+  items: T[],
+  keyOf: (item: T) => string,
+): T[][] {
   const groups: T[][] = [];
   for (const item of items) {
     const last = groups[groups.length - 1];
@@ -89,7 +92,9 @@ function groupBy<T>(items: T[], keyOf: (item: T) => string): T[][] {
       groups.push([item]);
     }
   }
-  return groups;
+  return groups.map((group) =>
+    [...group].sort((a, b) => b.startDate.localeCompare(a.startDate)),
+  );
 }
 
 function resolveCompany(companies: Map<string, Company>, id: string): Company {
@@ -117,6 +122,7 @@ export function Experience({
               key={`${group[0].companyId}-${group[0].startDate}`}
               item={group[0]}
               isPromotion={false}
+              showCompany={true}
               companies={companies}
               onSkillClick={onSkillClick}
               onCompanyClick={onCompanyClick}
@@ -131,7 +137,8 @@ export function Experience({
                   <ExperienceItemView
                     key={`${item.companyId}-${item.startDate}`}
                     item={item}
-                    isPromotion={idx > 0}
+                    isPromotion={idx < group.length - 1}
+                    showCompany={idx === 0}
                     companies={companies}
                     onSkillClick={onSkillClick}
                     onCompanyClick={onCompanyClick}
@@ -149,12 +156,14 @@ export function Experience({
 function ExperienceItemView({
   item,
   isPromotion,
+  showCompany,
   companies,
   onSkillClick,
   onCompanyClick,
 }: {
   item: ExperienceItem;
   isPromotion: boolean;
+  showCompany: boolean;
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
@@ -171,13 +180,13 @@ function ExperienceItemView({
       <div className="timeline-body">
         <h3 className="timeline-title">
           <span className="role">{t(item.role)}</span>
-          {isPromotion && <PromotionArrow />}
-          {!isPromotion && (
+          {showCompany && (
             <>
               {" · "}
               <CompanyButton company={company} onClick={onCompanyClick} />
             </>
           )}
+          {isPromotion && <PromotionArrow />}
         </h3>
         <div className="timeline-meta">
           <span>{formatRange(item.startDate, item.endDate, lang)}</span>
@@ -185,7 +194,7 @@ function ExperienceItemView({
             <span className="timeline-engagement">{t(item.engagement)}</span>
           )}
         </div>
-        {!isPromotion && <p>{t(company.tagline)}</p>}
+        {showCompany && <p>{t(company.tagline)}</p>}
         {stack && stack.length > 0 && (
           <ul className="entry-stack">
             {stack.map((tech) => (
@@ -261,6 +270,7 @@ function AssignmentList({
             key={`${group[0].clientId}-${group[0].startDate}`}
             assignment={group[0]}
             isPromotion={false}
+            showClient={true}
             companies={companies}
             onSkillClick={onSkillClick}
             onCompanyClick={onCompanyClick}
@@ -275,7 +285,8 @@ function AssignmentList({
                 <AssignmentItemView
                   key={`${a.clientId}-${a.startDate}`}
                   assignment={a}
-                  isPromotion={idx > 0}
+                  isPromotion={idx < group.length - 1}
+                  showClient={idx === 0}
                   companies={companies}
                   onSkillClick={onSkillClick}
                   onCompanyClick={onCompanyClick}
@@ -292,12 +303,14 @@ function AssignmentList({
 function AssignmentItemView({
   assignment: a,
   isPromotion,
+  showClient,
   companies,
   onSkillClick,
   onCompanyClick,
 }: {
   assignment: Assignment;
   isPromotion: boolean;
+  showClient: boolean;
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
@@ -313,18 +326,18 @@ function AssignmentItemView({
       <div className="assignment-body">
         <h4 className="assignment-title">
           <span className="role">{t(a.role)}</span>
-          {isPromotion && <PromotionArrow />}
-          {!isPromotion && (
+          {showClient && (
             <>
               {" · "}
               <CompanyButton company={client} onClick={onCompanyClick} />
             </>
           )}
+          {isPromotion && <PromotionArrow />}
         </h4>
         <div className="assignment-meta">
           <span>{formatRange(a.startDate, a.endDate, lang)}</span>
         </div>
-        {!isPromotion && <p>{t(client.tagline)}</p>}
+        {showClient && <p>{t(client.tagline)}</p>}
         {a.stack && a.stack.length > 0 && (
           <ul className="entry-stack">
             {a.stack.map((tech) => (

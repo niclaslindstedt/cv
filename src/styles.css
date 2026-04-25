@@ -711,15 +711,23 @@ a:hover {
   opacity: 0.6;
 }
 
-.timeline-group-items > .timeline-item:not(:last-child)::after {
+.timeline-group-items > .timeline-item::after {
   content: "";
   position: absolute;
   left: -14px;
-  top: 28px;
-  bottom: -48px;
+  top: 0;
+  bottom: -20px;
   width: 1px;
   background: var(--accent);
   opacity: 0.6;
+}
+
+.timeline-group-items > .timeline-item:first-child::after {
+  top: 28px;
+}
+
+.timeline-group-items > .timeline-item:last-child::after {
+  bottom: calc(100% - 28px);
 }
 
 .promotion-arrow {
