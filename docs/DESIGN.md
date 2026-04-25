@@ -7,9 +7,9 @@ described here, **update this document in the same PR** that
 introduces it.
 
 The site's aesthetic is **calm, dense, and slightly celestial**: a
-night sky in dark mode, a soft daytime sky in light mode, with content
-floating on translucent glass surfaces. It should read like a CV, not
-a dashboard.
+night sky in dark mode, a bright monochrome lab in light mode, with
+content floating on translucent glass surfaces. It should read like a
+CV, not a dashboard.
 
 ---
 
@@ -21,11 +21,11 @@ a dashboard.
    button, link) has one canonical form. Variants exist only when
    semantically distinct.
 3. **The sky is the substrate.** All cards sit on glass over a
-   gradient sky + stars (dark) or clouds + sun (light). Glass means
-   `--glass-bg` + `backdrop-filter`. Anything that punches a fully
-   opaque rectangle on top of glass is a bug.
+   gradient sky + stars (dark) or clouds + chrome orb (light). Glass
+   means `--glass-bg` + `backdrop-filter`. Anything that punches a
+   fully opaque rectangle on top of glass is a bug.
 4. **Light and dark are equals.** No feature is dark-mode-only or
-   light-mode-only unless it's literally the sun or stars. Every token
+   light-mode-only unless it's literally the orb or stars. Every token
    has a light + dark pair.
 5. **Motion is feedback, not decoration.** Hover/focus uses `120ms
 ease`. Layout never animates. Reduced motion is honored.
@@ -45,25 +45,31 @@ need, add it here first.
 
 | Token               | Dark                         | Light                            | Meaning                                              |
 | ------------------- | ---------------------------- | -------------------------------- | ---------------------------------------------------- |
-| `--bg`              | `#050810`                    | `#dde9f5`                        | Page background fill behind the sky.                 |
-| `--bg-elev`         | `#0c1322`                    | `#f1f5fa`                        | Solid surface (modals, print). Avoid on glass cards. |
-| `--glass-bg`        | `rgba(14,20,32,0.42)`        | `rgba(255,255,255,0.62)`         | Translucent surface for every content card.          |
-| `--glass-border`    | `rgba(255,255,255,0.07)`     | `rgba(11,13,16,0.08)`            | Hairline border on glass.                            |
-| `--glass-highlight` | `rgba(255,255,255,0.04)`     | `rgba(255,255,255,0.6)`          | Inner pill/chip fill on glass.                       |
-| `--overlay`         | `rgba(8,10,13,0.72)`         | `rgba(244,246,249,0.72)`         | Modal backdrop.                                      |
-| `--accent`          | `#7ab7ff`                    | `#0062cc`                        | Interactive color: links, buttons, focus, key data.  |
-| `--accent-soft`     | `rgba(122,183,255,0.12)`     | `rgba(0,98,204,0.10)`            | Quiet accent fill: pill backgrounds, hover states.   |
-| `--fg`              | `#e6e9ef`                    | `#0b0d10`                        | Primary text.                                        |
-| `--fg-muted`        | `#8a93a1`                    | `#4d5663`                        | Secondary text and metadata.                         |
-| `--border`          | `#1d2533`                    | `#c8d4e2`                        | Solid borders on solid surfaces.                     |
-| `--shadow`          | `0 12px 40px rgba(0,0,0,.5)` | `0 12px 40px rgba(11,13,16,.15)` | Floating-surface shadow.                             |
+| `--bg`              | `#050810`                    | `#ebeef3`                        | Page background fill behind the sky.                 |
+| `--bg-elev`         | `#0c1322`                    | `#f6f8fb`                        | Solid surface (modals, print). Avoid on glass cards. |
+| `--glass-bg`        | `rgba(14,20,32,0.42)`        | `rgba(255,255,255,0.58)`         | Translucent surface for every content card.          |
+| `--glass-border`    | `rgba(255,255,255,0.07)`     | `rgba(20,28,40,0.07)`            | Hairline border on glass.                            |
+| `--glass-highlight` | `rgba(255,255,255,0.04)`     | `rgba(255,255,255,0.65)`         | Inner pill/chip fill on glass.                       |
+| `--overlay`         | `rgba(8,10,13,0.72)`         | `rgba(240,243,247,0.72)`         | Modal backdrop.                                      |
+| `--accent`          | `#7ab7ff`                    | `#1c2230`                        | Interactive color: links, buttons, focus, key data.  |
+| `--accent-soft`     | `rgba(122,183,255,0.12)`     | `rgba(28,34,48,0.08)`            | Quiet accent fill: pill backgrounds, hover states.   |
+| `--fg`              | `#e6e9ef`                    | `#11161e`                        | Primary text.                                        |
+| `--fg-muted`        | `#8a93a1`                    | `#4b5462`                        | Secondary text and metadata.                         |
+| `--border`          | `#1d2533`                    | `#c7cfd9`                        | Solid borders on solid surfaces.                     |
+| `--shadow`          | `0 12px 40px rgba(0,0,0,.5)` | `0 12px 40px rgba(11,13,16,.12)` | Floating-surface shadow.                             |
 
 ### 2.2 Sky and celestial
 
 `--sky-top`, `--sky-mid`, `--sky-bottom` (gradient stops),
 `--sky-glow-1`, `--sky-glow-2` (radial glow alphas), `--orb-color`,
-`--orb-color-soft` (sun/moon). These are tuned together — change one,
+`--orb-color-soft` (orb/moon). These are tuned together — change one,
 re-test both themes.
+
+The light theme uses a **cool monochrome palette**: pearl/silver glows
+on a near-white slate, deep graphite (`#1c2230`) as the accent, and a
+chrome orb in place of a sun. No warm hues (no yellow, no orange) and
+no chromatic accents — emphasis comes from value contrast and
+typographic weight.
 
 ### 2.3 Geometry
 
@@ -130,7 +136,7 @@ Three tiers, used in this order:
 
 If you can't see the sky bleed through a card on the dark theme home
 page, the alpha is too high. The reference values
-(`rgba(14,20,32,0.42)` dark, `rgba(255,255,255,0.62)` light) are
+(`rgba(14,20,32,0.42)` dark, `rgba(255,255,255,0.58)` light) are
 calibrated against the current sky-glow + 16-star starfield. If you
 change the sky brightness, re-tune `--glass-bg` to keep the same
 "barely-translucent" feel.
@@ -325,7 +331,7 @@ If you add a new color or surface, also add its print fallback in the
 | File                                                                      | What it owns                                      |
 | ------------------------------------------------------------------------- | ------------------------------------------------- |
 | `src/styles.css`                                                          | All global CSS, tokens, components.               |
-| `src/components/CelestialSky.tsx`                                         | Sky, stars, clouds, sun.                          |
+| `src/components/CelestialSky.tsx`                                         | Sky, stars, clouds, orb.                          |
 | `src/components/Hero.tsx`                                                 | Header, hero buttons, language and theme toggles. |
 | `src/components/Section.tsx`                                              | Section wrapper with eyebrow.                     |
 | `src/components/{Focus,Projects,Experience,Education,Skills,Courses}.tsx` | Content sections.                                 |

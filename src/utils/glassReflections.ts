@@ -5,7 +5,7 @@ import { getMoonPosition, getSunPosition } from "./celestial";
 const SELECTOR =
   ".focus-item-btn, .project, .timeline-item, .education-list > li";
 
-const SUN_COLOR = [255, 210, 130] as const;
+const ORB_COLOR = [220, 230, 245] as const;
 const MOON_COLOR = [180, 200, 235] as const;
 
 type CardLayout = {
@@ -50,8 +50,8 @@ export function useGlassReflections() {
       const reach = Math.hypot(vw, vh) * 0.6;
       const isDark = document.documentElement.dataset.theme !== "light";
       const pos = isDark ? getMoonPosition() : getSunPosition();
-      const color = isDark ? MOON_COLOR : SUN_COLOR;
-      const maxAlpha = isDark ? 0.18 : 0.28;
+      const color = isDark ? MOON_COLOR : ORB_COLOR;
+      const maxAlpha = isDark ? 0.18 : 0.22;
       const ox = pos.x * vw;
       const oy = pos.y * vh;
       const scrollX = window.scrollX;
