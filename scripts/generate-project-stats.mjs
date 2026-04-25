@@ -116,7 +116,12 @@ async function fetchProjectStats(token, owner, repo, username) {
       name: repo,
       cursor,
     });
-    const ref = data?.repository?.defaultBranchRef;
+    if (!data?.repository) {
+      throw new Error(
+        `Repository ${owner}/${repo} not visible to token (private repo without access?)`,
+      );
+    }
+    const ref = data.repository.defaultBranchRef;
     if (!ref) {
       throw new Error(`No default branch for ${owner}/${repo}`);
     }
@@ -188,18 +193,18 @@ async function main() {
     return;
   }
 
-  const token = process.env.GITHUB_TOKEN;
+  const token = process.env.PROJECT_STATS_TOKEN || process.env.GITHUB_TOKEN;
   if (!token) {
     if (!toStdout && existsSync(outPath)) {
       console.warn(
-        "GITHUB_TOKEN not set — keeping existing project-stats.json cache.",
+        "PROJECT_STATS_TOKEN/GITHUB_TOKEN not set — keeping existing project-stats.json cache.",
       );
       return;
     }
     emit({ enabled: false, projects: {} });
     if (!toStdout) {
       console.warn(
-        "GITHUB_TOKEN not set and no cache — wrote disabled project stats file.",
+        "PROJECT_STATS_TOKEN/GITHUB_TOKEN not set and no cache — wrote disabled project stats file.",
       );
     }
     return;

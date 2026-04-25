@@ -28,9 +28,11 @@ jobs:
       - run: npm ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
       - run: make build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

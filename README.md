@@ -60,11 +60,14 @@ All developer entry points are exposed via `make`:
 `src/data/project-stats.json` are generated artifacts (gitignored). They
 are rebuilt automatically on `npm ci`, `npm run build`, `npm run dev`,
 `npm run lint`, and `npm run typecheck`, or on demand via `make generate`.
-The GitHub activity fetch and per-project stats fetch both require a
-`GITHUB_TOKEN` env var (with `read:user` scope for activity and `repo`
-scope to read private project repositories); without one, the timeline's
-GitHub track and project commit stats are omitted but the build still
-succeeds.
+The GitHub activity fetch reads from a `GITHUB_TOKEN` env var (needs
+`read:user` scope). The per-project stats fetch reads
+`PROJECT_STATS_TOKEN` first, falling back to `GITHUB_TOKEN`; reaching
+private project repositories requires a PAT with `repo` scope, which the
+default workflow `GITHUB_TOKEN` does not have. In CI, set a
+`PROJECT_STATS_TOKEN` repository secret to a PAT scoped to the private
+project repos. Without a token, the timeline's GitHub track and project
+commit stats are omitted but the build still succeeds.
 
 ## Structure
 

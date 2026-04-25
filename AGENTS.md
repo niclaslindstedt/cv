@@ -55,16 +55,16 @@ consume `data/cv.types.ts` and `utils/date.ts`. Nothing in `data/` or
 
 ## Where new code goes
 
-| Change                                       | Location                                                                       |
-| -------------------------------------------- | ------------------------------------------------------------------------------ |
-| New CV section (e.g. Talks, Awards)          | `src/components/<Name>.tsx` + slot into `src/App.tsx`                          |
-| New field on existing section                | Extend `schemas/cv.schema.json` and `src/data/cv.types.ts`, then the component |
-| Content-only edits (roles, projects, skills) | `src/data/cv.json` — prefer the `update-cv` skill                              |
-| Date formatting / parsing                    | `src/utils/date.ts`                                                            |
-| Global styles, layout, typography            | `src/styles.css`                                                               |
-| Timeline tracks, layout, zoom behaviour      | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                |
-| GitHub commit activity fetch                 | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time) |
-| Per-project repo commit stats fetch          | `scripts/generate-project-stats.mjs` (requires `GITHUB_TOKEN` at build time)   |
+| Change                                       | Location                                                                                                                                        |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| New CV section (e.g. Talks, Awards)          | `src/components/<Name>.tsx` + slot into `src/App.tsx`                                                                                           |
+| New field on existing section                | Extend `schemas/cv.schema.json` and `src/data/cv.types.ts`, then the component                                                                  |
+| Content-only edits (roles, projects, skills) | `src/data/cv.json` — prefer the `update-cv` skill                                                                                               |
+| Date formatting / parsing                    | `src/utils/date.ts`                                                                                                                             |
+| Global styles, layout, typography            | `src/styles.css`                                                                                                                                |
+| Timeline tracks, layout, zoom behaviour      | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                                                                                 |
+| GitHub commit activity fetch                 | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time)                                                                  |
+| Per-project repo commit stats fetch          | `scripts/generate-project-stats.mjs` (uses `PROJECT_STATS_TOKEN` if set, else `GITHUB_TOKEN`; needs `repo` scope to read private project repos) |
 
 ## Conventions
 
