@@ -589,11 +589,6 @@ a:hover {
   color: var(--fg);
 }
 
-.project-description {
-  margin: 12px 0;
-  line-height: 1.6;
-}
-
 .project-stack,
 .project-skills {
   list-style: none;
@@ -2574,10 +2569,6 @@ button.skill-pill-btn:focus-visible {
     border: 0;
     border-bottom: 1px dotted #bbb;
     border-radius: 0;
-  }
-
-  #projects .project-description {
-    display: none;
   }
 
   #projects .project-stack,
