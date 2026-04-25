@@ -240,8 +240,8 @@
       "id": "bookbeat",
       "name": "BookBeat AB",
       "tagline": {
-        "en": "Audiobooks, unlimited.",
-        "sv": "Ljudböcker, obegränsat."
+        "en": "Audiobook and e-book streaming.",
+        "sv": "Strömning av ljudböcker och e-böcker."
       },
       "description": {
         "en": "Audiobook and e-book streaming service owned by Bonnier Books, with over 1 million paying users across more than 10 European markets.",
@@ -291,8 +291,8 @@
       "id": "seb",
       "name": "SEB",
       "tagline": {
-        "en": "One of the Nordics' largest banks.",
-        "sv": "En av Nordens största banker."
+        "en": "Leading Nordic financial group.",
+        "sv": "Ledande nordisk finanskoncern."
       },
       "description": {
         "en": "Nordic financial group with around 16,500 employees across more than 20 countries, founded over 160 years ago.",
@@ -311,8 +311,8 @@
       "id": "mitt-skolval",
       "name": "Mitt Skolval",
       "tagline": {
-        "en": "Digital school selection for municipalities.",
-        "sv": "Digitalt skolval för kommuner."
+        "en": "Digital school selection for Sweden.",
+        "sv": "Digitalt skolval för Sverige."
       },
       "description": {
         "en": "Edtech company founded by Swedish school choice researchers, with a platform that streamlines school selection for municipalities and independent schools.",
