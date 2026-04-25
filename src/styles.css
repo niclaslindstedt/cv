@@ -699,7 +699,7 @@ a:hover {
   position: absolute;
   left: -14px;
   top: 28px;
-  width: 14px;
+  width: 15px;
   height: 1px;
   background: var(--accent);
   opacity: 0.6;
@@ -860,18 +860,6 @@ a:hover {
   gap: 14px;
 }
 
-.assignments-list::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 10px;
-  bottom: 10px;
-  width: 2px;
-  background: var(--fg-muted);
-  opacity: 0.55;
-  border-radius: 2px;
-}
-
 .assignment-item {
   position: relative;
 }
@@ -894,6 +882,18 @@ a:hover {
   height: 2px;
   background: var(--fg-muted);
   opacity: 0.7;
+  border-radius: 2px;
+}
+
+.assignments-list .assignment-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 10px;
+  bottom: -24px;
+  width: 2px;
+  background: var(--fg-muted);
+  opacity: 0.55;
   border-radius: 2px;
 }
 
@@ -2670,8 +2670,8 @@ button.skill-pill-btn:focus-visible {
   .timeline-group-items > .timeline-item::after,
   .assignment-group-items > .assignment-item::before,
   .assignment-group-items > .assignment-item::after,
-  .assignments-list::before,
-  .assignments-list .assignment-item::before {
+  .assignments-list .assignment-item::before,
+  .assignments-list .assignment-item::after {
     display: none;
   }
 
