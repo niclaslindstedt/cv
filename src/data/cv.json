@@ -233,6 +233,27 @@
       ],
       "github": { "owner": "niclaslindstedt", "repo": "swarm-cli" },
       "openSource": false
+    },
+    {
+      "name": "dotnet-oauth2-server",
+      "tagline": {
+        "en": "OAuth 2.0 authorization server in ASP.NET Core.",
+        "sv": "OAuth 2.0-auktoriseringsserver i ASP.NET Core."
+      },
+      "description": {
+        "en": "ASP.NET Core implementation of the OAuth 2.0 authorization server (RFC 6749) — authorization code, client credentials, password, and refresh-token grants — with JWT bearer tokens, scopes, roles, audit logging, and Postgres-backed persistence via Entity Framework Core. Ships with a Blazor WebAssembly admin UI for managing applications, users, and scopes, and Docker images for both the API and the SPA. Covered by xUnit/Moq/Shouldly tests with codecov reporting and GitHub Actions CI. OpenID Connect was on the roadmap.",
+        "sv": "ASP.NET Core-implementation av en OAuth 2.0-auktoriseringsserver (RFC 6749) — authorization code, client credentials, password och refresh-token — med JWT-bearer-tokens, scopes, roller, audit-loggning och Postgres-persistens via Entity Framework Core. Levereras med ett Blazor WebAssembly-administrationsgränssnitt för att hantera applikationer, användare och scopes, och med Docker-avbildningar för både API:et och SPA:n. Testas med xUnit/Moq/Shouldly med codecov-rapportering och CI via GitHub Actions. OpenID Connect fanns på roadmappen."
+      },
+      "skills": [
+        "C#/.NET",
+        "PostgreSQL",
+        "Docker",
+        "CI/CD",
+        "Software Architecture",
+        "Cybersecurity"
+      ],
+      "github": { "owner": "niclaslindstedt", "repo": "dotnet-oauth2-server" },
+      "openSource": true
     }
   ],
   "companies": [
@@ -480,7 +501,8 @@
             "Team Management",
             "GDPR",
             "Regulatory Compliance",
-            "Technology Roadmapping"
+            "Technology Roadmapping",
+            "Mentoring"
           ]
         }
       ]
