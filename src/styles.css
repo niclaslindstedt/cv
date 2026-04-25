@@ -1526,6 +1526,11 @@ button.skill-pill-btn:focus-visible {
   border-color: rgba(214, 168, 255, 0.45);
 }
 
+.timeline-vis-sideProject {
+  background: rgba(244, 114, 182, 0.18);
+  border-color: rgba(244, 114, 182, 0.45);
+}
+
 .timeline-vis-github {
   background: transparent;
   border: none;
@@ -1631,6 +1636,12 @@ button.skill-pill-btn:focus-visible {
   color: #d6a8ff;
   background: rgba(214, 168, 255, 0.12);
   border-color: rgba(214, 168, 255, 0.35);
+}
+
+.timeline-vis-pill.timeline-vis-sideProject {
+  color: #f472b6;
+  background: rgba(244, 114, 182, 0.12);
+  border-color: rgba(244, 114, 182, 0.35);
 }
 
 .timeline-vis-pill.timeline-vis-github {

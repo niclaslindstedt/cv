@@ -22,7 +22,14 @@
   "$defs": {
     "kind": {
       "type": "string",
-      "enum": ["experience", "assignment", "education", "course", "github"]
+      "enum": [
+        "experience",
+        "assignment",
+        "education",
+        "course",
+        "sideProject",
+        "github"
+      ]
     },
     "localizedString": {
       "type": "object",
@@ -101,7 +108,18 @@
           "minItems": 1,
           "items": { "$ref": "#/$defs/segment" }
         },
-        "github": { "$ref": "#/$defs/github" }
+        "github": { "$ref": "#/$defs/github" },
+        "sideProject": { "$ref": "#/$defs/sideProject" }
+      }
+    },
+    "sideProject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["totalCommits", "openSource", "repoUrl"],
+      "properties": {
+        "totalCommits": { "type": "integer", "minimum": 0 },
+        "openSource": { "type": "boolean" },
+        "repoUrl": { "type": "string", "minLength": 1 }
       }
     },
     "github": {

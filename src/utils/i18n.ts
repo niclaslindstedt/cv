@@ -28,10 +28,12 @@ type UiStrings = {
     close: string;
     closeDetails: string;
     viewOnGitHub: string;
+    viewRepository: string;
     job: string;
     assignment: string;
     education: string;
     course: string;
+    sideProject: string;
     skillsUsed: string;
     noSkills: string;
     starts: string;
@@ -130,10 +132,12 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       close: "Close timeline",
       closeDetails: "Close details",
       viewOnGitHub: "View on GitHub →",
+      viewRepository: "View repository →",
       job: "Job",
       assignment: "Assignment",
       education: "Education",
       course: "Course",
+      sideProject: "Side project",
       skillsUsed: "Skills used",
       noSkills: "No skills tagged on this entry.",
       starts: "Starts",
@@ -235,10 +239,12 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       close: "Stäng tidslinje",
       closeDetails: "Stäng detaljer",
       viewOnGitHub: "Visa på GitHub →",
+      viewRepository: "Visa repo →",
       job: "Anställning",
       assignment: "Uppdrag",
       education: "Utbildning",
       course: "Kurs",
+      sideProject: "Sidoprojekt",
       skillsUsed: "Använda kompetenser",
       noSkills: "Inga kompetenser kopplade till denna post.",
       starts: "Startar",

@@ -5,6 +5,7 @@ export type TimelineKind =
   | "assignment"
   | "education"
   | "course"
+  | "sideProject"
   | "github";
 
 export type TimelineSegment = {
@@ -27,6 +28,12 @@ export type GitHubPayload = {
   maxDailyCommits: number;
 };
 
+export type SideProjectPayload = {
+  totalCommits: number;
+  openSource: boolean;
+  repoUrl: string;
+};
+
 export type TimelineBar = {
   id: string;
   kind: TimelineKind;
@@ -41,6 +48,7 @@ export type TimelineBar = {
   notes?: LocalizedString;
   segments: TimelineSegment[];
   github?: GitHubPayload;
+  sideProject?: SideProjectPayload;
 };
 
 export type TimelineTrack = {
