@@ -201,7 +201,7 @@ body::before {
   position: absolute;
   left: -10%;
   right: -10%;
-  bottom: calc(-22vh - var(--scroll-progress, 0) * 70vh);
+  bottom: -22vh;
   height: 70vh;
   pointer-events: none;
   background:
@@ -219,7 +219,8 @@ body::before {
       transparent 75%
     );
   filter: blur(28px);
-  opacity: calc(1 - var(--scroll-progress, 0) * 0.55);
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * 32vh), 0);
+  will-change: transform;
 }
 
 .starfield {
@@ -231,7 +232,6 @@ body::before {
 .star {
   position: absolute;
   background: hsl(var(--star-hue), 70%, 92%);
-  filter: drop-shadow(0 0 2px hsla(var(--star-hue), 80%, 90%, 0.7));
   clip-path: polygon(
     50% 0%,
     55% 42%,
@@ -246,17 +246,15 @@ body::before {
   animation: star-twinkle var(--star-duration) ease-in-out infinite alternate;
   animation-delay: var(--star-delay);
   transform: translate(-50%, -50%);
-  will-change: opacity, transform;
+  will-change: opacity;
 }
 
 @keyframes star-twinkle {
   0% {
-    opacity: calc(var(--star-alpha) * 0.35);
-    transform: translate(-50%, -50%) scale(0.7) rotate(0deg);
+    opacity: calc(var(--star-alpha) * 0.4);
   }
   100% {
     opacity: var(--star-alpha);
-    transform: translate(-50%, -50%) scale(1.15) rotate(45deg);
   }
 }
 
@@ -308,22 +306,11 @@ body::before {
   border-radius: inherit;
   pointer-events: none;
   padding: 1.5px;
-  background:
-    radial-gradient(
-      320px circle at var(--reflect-1-x, 50%) var(--reflect-1-y, 50%),
-      var(--reflect-1-color, transparent) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      320px circle at var(--reflect-2-x, 50%) var(--reflect-2-y, 50%),
-      var(--reflect-2-color, transparent) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      320px circle at var(--reflect-3-x, 50%) var(--reflect-3-y, 50%),
-      var(--reflect-3-color, transparent) 0%,
-      transparent 70%
-    );
+  background: radial-gradient(
+    320px circle at var(--reflect-1-x, 50%) var(--reflect-1-y, 50%),
+    var(--reflect-1-color, transparent) 0%,
+    transparent 70%
+  );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);

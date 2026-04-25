@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { getSunPosition, type CelestialPosition } from "../utils/celestial";
 import type { Theme } from "../utils/theme";
@@ -47,6 +47,8 @@ function makeStars(count: number, seed = 1337): Star[] {
   }
   return stars;
 }
+
+const STARS = makeStars(8);
 
 export function CelestialSky({ theme }: Props) {
   const [pos, setPos] = useState<CelestialPosition>(() => getSunPosition());
@@ -97,15 +99,13 @@ export function CelestialSky({ theme }: Props) {
     };
   }, [theme]);
 
-  const stars = useMemo(() => makeStars(96), []);
-
   return (
     <div className="celestial-sky" aria-hidden="true">
       {theme === "dark" ? (
         <>
           <div className="atmosphere" />
           <div className="starfield">
-            {stars.map((star, i) => (
+            {STARS.map((star, i) => (
               <span
                 key={i}
                 className="star"
