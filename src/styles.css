@@ -39,25 +39,25 @@
 }
 
 :root[data-theme="light"] {
-  --bg: #dde9f5;
-  --bg-elev: #f1f5fa;
-  --glass-bg: rgba(255, 255, 255, 0.62);
-  --glass-border: rgba(11, 13, 16, 0.08);
-  --glass-highlight: rgba(255, 255, 255, 0.6);
-  --sky-top: #b8d3ee;
-  --sky-mid: #d6e4f3;
-  --sky-bottom: #f3e3cd;
-  --sky-glow-1: rgba(255, 200, 140, 0.45);
-  --sky-glow-2: rgba(170, 210, 245, 0.5);
-  --orb-color: rgba(255, 200, 110, 1);
-  --orb-color-soft: rgba(255, 190, 90, 0.18);
-  --border: #c8d4e2;
-  --fg: #0b0d10;
-  --fg-muted: #4d5663;
-  --accent: #0062cc;
-  --accent-soft: rgba(0, 98, 204, 0.1);
-  --overlay: rgba(244, 246, 249, 0.72);
-  --shadow: 0 12px 40px rgba(11, 13, 16, 0.15);
+  --bg: #ebeef3;
+  --bg-elev: #f6f8fb;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(20, 28, 40, 0.07);
+  --glass-highlight: rgba(255, 255, 255, 0.65);
+  --sky-top: #d2d8e1;
+  --sky-mid: #e0e5ec;
+  --sky-bottom: #eef2f6;
+  --sky-glow-1: rgba(180, 195, 215, 0.5);
+  --sky-glow-2: rgba(225, 220, 230, 0.45);
+  --orb-color: rgba(232, 240, 250, 1);
+  --orb-color-soft: rgba(180, 200, 225, 0.16);
+  --border: #c7cfd9;
+  --fg: #11161e;
+  --fg-muted: #4b5462;
+  --accent: #1c2230;
+  --accent-soft: rgba(28, 34, 48, 0.08);
+  --overlay: rgba(240, 243, 247, 0.72);
+  --shadow: 0 12px 40px rgba(11, 13, 16, 0.12);
   color-scheme: light;
 }
 
@@ -134,54 +134,64 @@ body::before {
     top 1.2s ease;
 }
 
-.celestial.sun {
+.celestial.orb {
   width: 14vmin;
   height: 14vmin;
 }
 
-.sun-glow {
+.orb-halo {
   position: absolute;
-  inset: -220%;
+  inset: -240%;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(255, 240, 200, 0.28) 0%,
-    rgba(255, 220, 160, 0.16) 22%,
-    rgba(255, 200, 130, 0.07) 45%,
+    rgba(220, 230, 245, 0.32) 0%,
+    rgba(190, 205, 225, 0.18) 22%,
+    rgba(160, 180, 205, 0.07) 48%,
     transparent 75%
   );
-  filter: blur(18px);
-  animation: sun-pulse 9s ease-in-out infinite alternate;
+  filter: blur(20px);
+  animation: orb-pulse 11s ease-in-out infinite alternate;
 }
 
-.sun-body {
+.orb-body {
   position: absolute;
   inset: 0;
   border-radius: 50%;
   background: radial-gradient(
-    circle at 50% 50%,
+    circle at 32% 28%,
     rgba(255, 255, 255, 1) 0%,
-    rgba(255, 250, 225, 0.92) 16%,
-    rgba(255, 230, 175, 0.62) 38%,
-    rgba(255, 205, 135, 0.3) 62%,
-    rgba(255, 185, 110, 0.12) 82%,
+    rgba(245, 248, 252, 0.9) 14%,
+    rgba(215, 224, 236, 0.7) 36%,
+    rgba(170, 185, 205, 0.42) 62%,
+    rgba(120, 140, 165, 0.18) 86%,
     transparent 100%
   );
-  filter: blur(2px);
+  filter: blur(1.5px);
   box-shadow:
-    0 0 36px rgba(255, 230, 175, 0.45),
-    0 0 90px rgba(255, 210, 145, 0.28);
-  animation: sun-pulse 11s ease-in-out infinite alternate-reverse;
+    inset 0 0 24px rgba(255, 255, 255, 0.55),
+    0 0 36px rgba(220, 230, 245, 0.5),
+    0 0 90px rgba(190, 205, 225, 0.28);
+  animation: orb-pulse 13s ease-in-out infinite alternate-reverse;
 }
 
-@keyframes sun-pulse {
+.orb-ring {
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  border: 1px solid rgba(120, 140, 170, 0.18);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+@keyframes orb-pulse {
   0% {
-    opacity: 0.9;
+    opacity: 0.88;
     transform: scale(1);
   }
   100% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 }
 
@@ -289,8 +299,8 @@ body::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sun-glow,
-  .sun-body,
+  .orb-halo,
+  .orb-body,
   .star,
   .cloud {
     animation: none !important;
