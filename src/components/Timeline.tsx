@@ -492,6 +492,12 @@ export function Timeline({ open, onClose }: Props) {
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerEnd}
           onPointerCancel={handlePointerEnd}
+          onClick={(e) => {
+            const target = e.target as HTMLElement;
+            if (!target.closest(".timeline-vis-item")) {
+              setSelectedId(null);
+            }
+          }}
         >
           <div
             className="timeline-vis-content"
