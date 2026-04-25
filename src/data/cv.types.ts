@@ -80,6 +80,7 @@ export type SourceUrl = {
 export type Company = {
   id: string;
   name: string;
+  tagline: LocalizedString;
   description: LocalizedString;
   url?: string;
   terminated?: boolean;
