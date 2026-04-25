@@ -52,13 +52,29 @@ export function Projects({
               : null;
           const hasCommits = !!stats && stats.totalCommits > 0;
           return (
-            <article key={project.name} className="project">
+            <article
+              key={project.name}
+              className="project"
+              role="button"
+              tabIndex={0}
+              aria-label={ui.projectModal.detailAria(project.name)}
+              onClick={() => onProjectClick(project)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onProjectClick(project);
+                }
+              }}
+            >
               <header className="project-head">
                 <h3>
                   <button
                     type="button"
                     className="project-name-btn"
-                    onClick={() => onProjectClick(project)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onProjectClick(project);
+                    }}
                     aria-label={ui.projectModal.detailAria(project.name)}
                   >
                     {project.name}
@@ -98,7 +114,10 @@ export function Projects({
                       <button
                         type="button"
                         className="project-stack-btn"
-                        onClick={() => onSkillClick(tech)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onSkillClick(tech);
+                        }}
                       >
                         {tech}
                       </button>
@@ -112,7 +131,10 @@ export function Projects({
                     <button
                       type="button"
                       className="project-skill-btn"
-                      onClick={() => onSkillClick(skill)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSkillClick(skill);
+                      }}
                     >
                       {skill}
                     </button>
