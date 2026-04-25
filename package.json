@@ -28,14 +28,14 @@
     "prelint": "npm run generate:data"
   },
   "dependencies": {
-    "react": "^18.3.1",
+    "react": "^19.2.5",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@fontsource/inter": "^5.2.8",
     "@resvg/resvg-js": "^2.6.2",
-    "@types/react": "^18.3.12",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
     "ajv": "^8.18.0",
