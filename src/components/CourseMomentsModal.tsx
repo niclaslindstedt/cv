@@ -97,82 +97,66 @@ export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
           <section className="program-modal-summary">
             <p className="skill-modal-description">
               {t(course.institution)} ·{" "}
-              <span className="education-credits">{course.code}</span> ·{" "}
               <span className="education-credits">{course.credits}</span>
-              {incomplete && (
-                <>
-                  {" · "}
-                  <span className="course-incomplete-pill">
-                    {ui.programModal.incomplete}
-                  </span>
-                </>
-              )}
-              {partial && earned && (
-                <>
-                  {" · "}
-                  <span className="education-credits">
-                    {ui.programModal.courseProgress(earned, course.credits)}
-                  </span>
-                </>
-              )}
+            </p>
+            <div className="program-course-meta">
+              <span className="program-course-code">{course.code}</span>
               {course.engagement !== undefined && (
-                <>
-                  {" · "}
-                  <span className="education-credits">
-                    {Math.round(course.engagement * 100)}%
-                  </span>
-                </>
+                <span className="education-credits">
+                  {Math.round(course.engagement * 100)}%
+                </span>
               )}
               {course.remote && (
-                <>
-                  {" · "}
-                  <span className="education-credits">
-                    {t({ en: "Remote", sv: "Distans" })}
-                  </span>
-                </>
+                <span className="education-credits">
+                  {t({ en: "Remote", sv: "Distans" })}
+                </span>
               )}
-            </p>
+              {incomplete && (
+                <span className="course-incomplete-pill">
+                  {ui.programModal.incomplete}
+                </span>
+              )}
+              {partial && earned && (
+                <span className="program-course-progress">
+                  {ui.programModal.courseProgress(earned, course.credits)}
+                </span>
+              )}
+            </div>
+            {moments.length > 0 && (
+              <p className="program-modal-count">
+                {ui.courses.momentsCount(moments.length)}
+              </p>
+            )}
           </section>
           {moments.length > 0 && (
-            <div className="program-course-moments">
-              <p className="program-course-moments-label">
-                {ui.programModal.moments}
-              </p>
-              <ul className="program-moment-list">
-                {moments.map((moment, index) => (
-                  <li
-                    key={moment.code ?? `${course.code}-${index}`}
-                    className={
-                      moment.completedDate
-                        ? "program-moment-item"
-                        : "program-moment-item program-moment-item--pending"
-                    }
-                  >
-                    <span className="program-moment-name">
-                      {t(moment.name)}
+            <ul className="program-moment-list course-modal-moments">
+              {moments.map((moment, index) => (
+                <li
+                  key={moment.code ?? `${course.code}-${index}`}
+                  className={
+                    moment.completedDate
+                      ? "program-moment-item"
+                      : "program-moment-item program-moment-item--pending"
+                  }
+                >
+                  <span className="program-moment-name">{t(moment.name)}</span>
+                  <span className="program-moment-meta">
+                    {moment.code && (
+                      <span className="program-moment-code">{moment.code}</span>
+                    )}
+                    <span className="education-credits">{moment.credits}</span>
+                    <span className="program-moment-date">
+                      {moment.completedDate
+                        ? formatMonth(moment.completedDate, lang)
+                        : ui.programModal.momentNotCompleted}
                     </span>
-                    <span className="program-moment-meta">
-                      {moment.code && (
-                        <span className="program-moment-code">
-                          {moment.code}
-                        </span>
-                      )}
-                      <span className="education-credits">
-                        {moment.credits}
-                      </span>
-                      <span className="program-moment-date">
-                        {moment.completedDate
-                          ? formatMonth(moment.completedDate, lang)
-                          : ui.programModal.momentNotCompleted}
-                      </span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                  </span>
+                </li>
+              ))}
+            </ul>
           )}
           {course.skills && course.skills.length > 0 && (
-            <ul className="entry-skills">
+            <ul className="entry-skills course-modal-skills">
               {course.skills.map((skill) => (
                 <li key={skill}>
                   <button
