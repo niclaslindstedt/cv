@@ -334,9 +334,12 @@ function buildLayout(cv, activity, projectStats) {
   // Same-month handoffs on the same track (A.endDate === B.startDate) are real
   // sequential transitions, not overlaps. Split the shared month so the lane
   // packer can slot them on one row and they render edge-to-edge instead of
-  // stacking into parallel lanes.
+  // stacking into parallel lanes. Side projects are parallel work, not
+  // sequential, so skip them — splitting both ends of a single-month project
+  // bar would collapse it to zero width.
   for (const a of prepared) {
     if (!a.endDate) continue;
+    if (a.kind === "sideProject") continue;
     for (const b of prepared) {
       if (a === b || a.kind !== b.kind) continue;
       if (b.startDate === a.endDate) {
