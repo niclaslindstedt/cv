@@ -1564,8 +1564,8 @@
   "skillDetails": {
     "Spec-driven development": {
       "description": {
-        "en": "Working from a written specification that captures intent, constraints, and acceptance criteria before code is written. The spec stays the source of truth so changes are negotiated against the document rather than re-discovered in the diff.",
-        "sv": "Att arbeta utifrån en skriven specifikation som fångar intention, begränsningar och acceptanskriterier innan kod skrivs. Specifikationen förblir sanning så att ändringar förhandlas mot dokumentet istället för att upptäckas i diff:en."
+        "en": "Working from a written specification that captures intent, constraints, and acceptance criteria before code is written.",
+        "sv": "Att arbeta utifrån en skriven specifikation som fångar intention, begränsningar och acceptanskriterier innan kod skrivs."
       },
       "benefits": {
         "en": "Reviewers and agents converge on the same target; drift becomes detectable and fixable.",
@@ -1732,8 +1732,8 @@
     },
     "Claude Code": {
       "description": {
-        "en": "Anthropic's terminal-native coding agent based on Claude. Reads, edits, and executes against the local repo, with hooks, skills, and MCP for extension.",
-        "sv": "Anthropics terminalbaserade kodningsagent byggd på Claude. Läser, ändrar och kör mot det lokala repot, med hooks, skills och MCP för utökning."
+        "en": "Anthropic's terminal-native coding agent based on Claude — reads, edits, and executes against the local repo, with hooks, skills, and MCP for extension.",
+        "sv": "Anthropics terminalbaserade kodningsagent byggd på Claude — läser, ändrar och kör mot det lokala repot, med hooks, skills och MCP för utökning."
       },
       "benefits": {
         "en": "Strong reasoning on large codebases; the CLI surface composes well with shell, git, and CI.",
@@ -1747,8 +1747,8 @@
     },
     "Codex CLI": {
       "description": {
-        "en": "OpenAI's terminal coding agent. Sandbox-first design, runs in a container by default, and exposes a JSON protocol for embedding in larger systems.",
-        "sv": "OpenAI:s terminala kodningsagent. Sandlåda först, kör i container som standard, och exponerar ett JSON-protokoll för inbäddning i större system."
+        "en": "OpenAI's terminal coding agent — sandbox-first, runs in a container by default, with a JSON protocol for embedding in larger systems.",
+        "sv": "OpenAI:s terminala kodningsagent — sandlåda först, kör i container som standard, med ett JSON-protokoll för inbäddning i större system."
       },
       "benefits": {
         "en": "Open-source CLI, strong default isolation, easy to script.",
@@ -1792,8 +1792,8 @@
     },
     "Ollama": {
       "description": {
-        "en": "Local LLM runner that exposes open-weight models behind an OpenAI-compatible API. Useful for offline work, privacy-sensitive prototypes, and zero-cost iteration.",
-        "sv": "Lokal LLM-runner som exponerar modeller med öppna vikter bakom ett OpenAI-kompatibelt API. Användbar för offline-arbete, integritetskänsliga prototyper och gratis iteration."
+        "en": "Local LLM runner that exposes open-weight models behind an OpenAI-compatible API.",
+        "sv": "Lokal LLM-runner som exponerar modeller med öppna vikter bakom ett OpenAI-kompatibelt API."
       },
       "benefits": {
         "en": "No data leaves the machine; predictable cost; great for CI fixtures.",
@@ -1807,8 +1807,8 @@
     },
     "Rust": {
       "description": {
-        "en": "Systems language with an ownership model that prevents most memory and concurrency bugs at compile time. Increasingly the default for performance-sensitive infrastructure and CLI tooling.",
-        "sv": "Systemspråk med en ägarskapsmodell som förhindrar de flesta minnes- och samtidighetsbuggar vid kompilering. Allt oftare standardvalet för prestandakritisk infrastruktur och CLI-verktyg."
+        "en": "Systems language with an ownership model that prevents most memory and concurrency bugs at compile time.",
+        "sv": "Systemspråk med en ägarskapsmodell som förhindrar de flesta minnes- och samtidighetsbuggar vid kompilering."
       },
       "benefits": {
         "en": "Memory safety without GC, fearless concurrency, single static binary deploys.",
@@ -1822,8 +1822,8 @@
     },
     "C#/.NET": {
       "description": {
-        "en": "Microsoft's flagship managed language and runtime. Modern .NET is cross-platform, fast, and ships a strong standard library for web, services, and tooling.",
-        "sv": "Microsofts flaggskeppsspråk och körmiljö. Modernt .NET är plattformsoberoende, snabbt och har ett starkt standardbibliotek för webb, tjänster och verktyg."
+        "en": "Microsoft's cross-platform managed language and runtime, with a strong standard library for web, services, and tooling.",
+        "sv": "Microsofts plattformsoberoende språk och körmiljö, med ett starkt standardbibliotek för webb, tjänster och verktyg."
       },
       "benefits": {
         "en": "Excellent tooling, mature ecosystem, strong typing, predictable performance.",
@@ -1837,8 +1837,8 @@
     },
     "TypeScript": {
       "description": {
-        "en": "JavaScript with a structural type system bolted on. The de facto choice for non-trivial frontend and Node.js codebases.",
-        "sv": "JavaScript med ett strukturellt typsystem ovanpå. Det de facto-valet för icke-triviala frontend- och Node.js-kodbaser."
+        "en": "JavaScript with a structural type system bolted on top.",
+        "sv": "JavaScript med ett strukturellt typsystem ovanpå."
       },
       "benefits": {
         "en": "Catches whole classes of bugs at the editor; refactors that would be terrifying in JS become routine.",
@@ -1852,8 +1852,8 @@
     },
     "Python": {
       "description": {
-        "en": "General-purpose dynamic language. The default for data, ML, scripting, and a lot of web backends.",
-        "sv": "Allmänt dynamiskt språk. Standardvalet för data, ML, skript och mycket webbackend."
+        "en": "General-purpose dynamic language widely used for data, ML, scripting, and web backends.",
+        "sv": "Allmänt dynamiskt språk som ofta används inom data, ML, skript och webbackend."
       },
       "benefits": {
         "en": "Vast library ecosystem, fast iteration, easy to read; the lingua franca of ML.",
@@ -1873,34 +1873,34 @@
     },
     "SQL": {
       "description": {
-        "en": "The declarative query language for relational databases. Still the most leverage you can get out of any single technology in a data-heavy system.",
-        "sv": "Det deklarativa frågespråket för relationsdatabaser. Fortfarande det enskilda tekniska val som ger mest hävstång i ett dataintensivt system."
+        "en": "The declarative query language for relational databases.",
+        "sv": "Det deklarativa frågespråket för relationsdatabaser."
       }
     },
     "C++": {
       "description": {
-        "en": "Long-standing systems language for software where you need control over memory, layout, and performance. Modern alternatives like Rust now cover much of the same territory with safer defaults.",
-        "sv": "Långlivat systemspråk för mjukvara där man behöver kontroll över minne, layout och prestanda. Moderna alternativ som Rust täcker idag mycket av samma område med säkrare standardval."
+        "en": "Long-standing systems language for software where you need control over memory, layout, and performance.",
+        "sv": "Långlivat systemspråk för mjukvara där man behöver kontroll över minne, layout och prestanda."
       },
       "url": "https://isocpp.org"
     },
     "Bash/Shell": {
       "description": {
-        "en": "Bash and POSIX shell — the lingua franca for stitching together commands, files, and processes on a Unix-like system. The default scripting environment for CI, container entrypoints, and developer ergonomics.",
-        "sv": "Bash och POSIX-shell — lingua franca för att knyta ihop kommandon, filer och processer på Unix-liknande system. Standardskriptmiljön för CI, container-entrypoints och utvecklarergonomi."
+        "en": "Bash and POSIX shell — the lingua franca for stitching together commands, files, and processes on a Unix-like system.",
+        "sv": "Bash och POSIX-shell — lingua franca för att knyta ihop kommandon, filer och processer på Unix-liknande system."
       }
     },
     "PowerShell": {
       "description": {
-        "en": "Microsoft's object-oriented shell and scripting language. The default automation tool in Windows and .NET shops, where commands return structured objects instead of text streams.",
-        "sv": "Microsofts objektorienterade shell och skriptspråk. Standardverktyget för automatisering i Windows- och .NET-miljöer, där kommandon returnerar strukturerade objekt i stället för textströmmar."
+        "en": "Microsoft's object-oriented shell and scripting language; commands return structured objects rather than text streams.",
+        "sv": "Microsofts objektorienterade shell och skriptspråk; kommandon returnerar strukturerade objekt i stället för textströmmar."
       },
       "url": "https://learn.microsoft.com/powershell"
     },
     "React": {
       "description": {
-        "en": "Component-driven UI library for the web. The default choice for interactive frontends and the foundation for entire frameworks built on top of it.",
-        "sv": "Komponentdriven UI-bibliotek för webben. Standardvalet för interaktiva frontends och fundamentet för hela ramverk som byggs ovanpå."
+        "en": "Component-driven UI library for the web.",
+        "sv": "Komponentdrivet UI-bibliotek för webben."
       },
       "benefits": {
         "en": "Huge ecosystem, strong hiring pool, predictable mental model around components and state.",
@@ -1914,8 +1914,8 @@
     },
     "React Native": {
       "description": {
-        "en": "Build native iOS/Android apps with React. Bridges JS components to native UI primitives so most code is shared across platforms.",
-        "sv": "Bygg native iOS-/Android-appar med React. Brygger JS-komponenter till nativa UI-primitiver så att det mesta av koden delas mellan plattformarna."
+        "en": "Build native iOS/Android apps with React, bridging JS components to native UI primitives so most code is shared across platforms.",
+        "sv": "Bygg native iOS-/Android-appar med React, där JS-komponenter brygger till nativa UI-primitiver så att det mesta av koden delas mellan plattformarna."
       },
       "benefits": {
         "en": "One team, one language, two stores; near-native performance for typical app workloads.",
@@ -1936,15 +1936,15 @@
     },
     "Angular": {
       "description": {
-        "en": "Google's batteries-included frontend framework. Opinionated about structure, DI, RxJS, and the build pipeline; gives a predictable shape to large codebases.",
-        "sv": "Googles ramverk med batterier inkluderade. Tydliga åsikter om struktur, DI, RxJS och byggpipelinen; ger en förutsägbar struktur i stora kodbaser."
+        "en": "Google's batteries-included frontend framework — opinionated about structure, DI, RxJS, and the build pipeline.",
+        "sv": "Googles ramverk med batterier inkluderade — tydliga åsikter om struktur, DI, RxJS och byggpipelinen."
       },
       "url": "https://angular.dev"
     },
     "Node.js": {
       "description": {
-        "en": "Server-side JavaScript runtime built on V8. The standard tool for JS-backed APIs, build tooling, and CLIs.",
-        "sv": "Serverbaserad JavaScript-körmiljö byggd på V8. Standardverktyget för JS-byggda API:er, byggverktyg och CLI:er."
+        "en": "Server-side JavaScript runtime built on V8.",
+        "sv": "Serverbaserad JavaScript-körmiljö byggd på V8."
       },
       "benefits": {
         "en": "Same language across stack, huge package ecosystem, fast for I/O-bound workloads.",
@@ -1958,8 +1958,8 @@
     },
     "Azure": {
       "description": {
-        "en": "Microsoft's cloud. Deep integration with the Microsoft stack (Entra ID, .NET, Office) and a strong fit for regulated enterprise workloads.",
-        "sv": "Microsofts moln. Djup integration med Microsoft-stacken (Entra ID, .NET, Office) och passar väl för reglerade företagsbelastningar."
+        "en": "Microsoft's cloud, with deep integration into the wider Microsoft stack (Entra ID, .NET, Office).",
+        "sv": "Microsofts moln, med djup integration i den övriga Microsoft-stacken (Entra ID, .NET, Office)."
       },
       "benefits": {
         "en": "First-class for .NET shops; broad regulated/regional coverage in Europe.",
@@ -1973,8 +1973,8 @@
     },
     "AWS": {
       "description": {
-        "en": "The widest, deepest public cloud. If a primitive exists in the cloud, AWS probably ships it — sometimes twice.",
-        "sv": "Det bredaste och djupaste publika molnet. Om en primitiv finns i molnet så finns den nog hos AWS — ibland i två varianter."
+        "en": "The widest, deepest public cloud — if a primitive exists in the cloud, AWS probably ships it.",
+        "sv": "Det bredaste och djupaste publika molnet — finns en primitiv i molnet så finns den troligen hos AWS."
       },
       "benefits": {
         "en": "Unmatched service breadth; mature region/availability story; vast hiring pool.",
@@ -1988,8 +1988,8 @@
     },
     "Azure DevOps": {
       "description": {
-        "en": "Microsoft's CI/CD, repo, and work-tracking suite. Pipelines (YAML) and Boards are the most-used pieces, with an integrated end-to-end story from work item to deployment.",
-        "sv": "Microsofts svit för CI/CD, repo och ärendehantering. Pipelines (YAML) och Boards är de mest använda delarna, med en integrerad end-to-end-story från ärende till driftsättning."
+        "en": "Microsoft's CI/CD, repo, and work-tracking suite, with Pipelines (YAML) and Boards as the most-used pieces.",
+        "sv": "Microsofts svit för CI/CD, repo och ärendehantering, där Pipelines (YAML) och Boards är de mest använda delarna."
       },
       "url": "https://azure.microsoft.com/products/devops"
     },
@@ -2010,15 +2010,15 @@
     },
     "Microsoft SQL Server": {
       "description": {
-        "en": "Microsoft's enterprise relational database. Strong in regulated and Microsoft-centric environments, with first-class tooling (SSMS, Profiler) and powerful T-SQL.",
-        "sv": "Microsofts relationsdatabas för företag. Stark i reglerade och Microsoft-centrerade miljöer, med förstklassiga verktyg (SSMS, Profiler) och kraftfullt T-SQL."
+        "en": "Microsoft's enterprise relational database, with first-class tooling (SSMS, Profiler) and powerful T-SQL.",
+        "sv": "Microsofts relationsdatabas för företag, med förstklassiga verktyg (SSMS, Profiler) och kraftfullt T-SQL."
       },
       "url": "https://www.microsoft.com/sql-server"
     },
     "MySQL": {
       "description": {
-        "en": "Widely deployed open-source relational database. Powers a huge portion of the web's small and medium databases.",
-        "sv": "Brett utbyggd open source-relationsdatabas. Driver en stor del av webbens små och medelstora databaser."
+        "en": "Widely deployed open-source relational database.",
+        "sv": "Brett utbyggd open source-relationsdatabas."
       },
       "benefits": {
         "en": "Easy to operate, well-understood scaling patterns, abundant managed offerings.",
@@ -2032,29 +2032,29 @@
     },
     "MongoDB": {
       "description": {
-        "en": "Document-oriented database that stores BSON documents. Good fit for prototypes and workloads where the schema is genuinely fluid; relational stores remain the safer default in production.",
-        "sv": "Dokumentorienterad databas som lagrar BSON-dokument. Passar prototyper och arbetslaster där schemat verkligen är formbart; relationsdatabaser är fortfarande säkrare standardval i produktion."
+        "en": "Document-oriented database that stores BSON documents; suited to prototypes and workloads where the schema is genuinely fluid.",
+        "sv": "Dokumentorienterad databas som lagrar BSON-dokument; passar prototyper och arbetslaster där schemat verkligen är formbart."
       },
       "url": "https://www.mongodb.com"
     },
     "Redis": {
       "description": {
-        "en": "In-memory key-value store used as cache, message broker, rate limiter, and a hundred other things. The standard answer when a workload outgrows in-process memory but doesn't need a full database.",
-        "sv": "Nyckel-värde-lager i minnet som används som cache, meddelandekö, rate limiter och hundra andra saker. Standardvalet när en arbetslast vuxit ur in-process-minne men inte behöver en fullskalig databas."
+        "en": "In-memory key-value store used as cache, message broker, rate limiter, and a hundred other things.",
+        "sv": "Nyckel-värde-lager i minnet som används som cache, meddelandekö, rate limiter och hundra andra saker."
       },
       "url": "https://redis.io"
     },
     "CosmosDB": {
       "description": {
-        "en": "Azure's globally distributed, multi-model database, with SQL, MongoDB, Cassandra, and table APIs over the same engine. Useful when an Azure workload genuinely needs global distribution and tunable consistency.",
-        "sv": "Azures globalt distribuerade flermodelldatabas med SQL-, MongoDB-, Cassandra- och table-API:er över samma motor. Användbar när en Azure-baserad arbetslast verkligen behöver global distribution och justerbar konsistens."
+        "en": "Azure's globally distributed, multi-model database — SQL, MongoDB, Cassandra, and table APIs over the same engine.",
+        "sv": "Azures globalt distribuerade flermodelldatabas — SQL-, MongoDB-, Cassandra- och table-API:er över samma motor."
       },
       "url": "https://azure.microsoft.com/products/cosmos-db"
     },
     "Vector Databases": {
       "description": {
-        "en": "Specialised stores for high-dimensional embeddings. Power semantic search, retrieval-augmented generation, and similarity-driven recommendation by indexing vectors with approximate-nearest-neighbour algorithms (HNSW, IVF).",
-        "sv": "Specialiserade lager för högdimensionella embeddings. Driver semantisk sökning, retrieval-augmented generation och rekommendationer via approximate-nearest-neighbour-algoritmer (HNSW, IVF)."
+        "en": "Specialised stores for high-dimensional embeddings, indexed with approximate-nearest-neighbour algorithms (HNSW, IVF) to power semantic search, retrieval-augmented generation, and similarity-driven recommendation.",
+        "sv": "Specialiserade lager för högdimensionella embeddings, indexerade med approximate-nearest-neighbour-algoritmer (HNSW, IVF) för semantisk sökning, retrieval-augmented generation och rekommendationer."
       },
       "benefits": {
         "en": "Sub-second similarity search at millions of items; the missing piece for RAG and recommendation in modern apps.",
@@ -2067,21 +2067,21 @@
     },
     "Linux": {
       "description": {
-        "en": "Open-source Unix-like operating system that runs almost every server, container, and cloud workload in production today. Equally common as a developer workstation for shell-driven workflows.",
-        "sv": "Öppen källkods-Unix-liknande operativsystem som idag driver i princip varje server, container och molnbelastning i produktion. Lika vanligt som utvecklarmiljö för skaldrivna arbetsflöden."
+        "en": "Open-source Unix-like operating system that runs almost every server, container, and cloud workload in production today.",
+        "sv": "Öppen källkods-Unix-liknande operativsystem som idag driver i princip varje server, container och molnbelastning i produktion."
       },
       "url": "https://kernel.org"
     },
     "Networking": {
       "description": {
-        "en": "TCP/IP, DNS, TLS, HTTP, and the layers below — how packets find their way between machines and how to debug it when they don't. The substrate every distributed system stands on.",
-        "sv": "TCP/IP, DNS, TLS, HTTP och lagren under — hur paket hittar mellan maskiner och hur man felsöker när de inte gör det. Underlaget som varje distribuerat system står på."
+        "en": "TCP/IP, DNS, TLS, HTTP, and the layers below — how packets find their way between machines and how to debug it when they don't.",
+        "sv": "TCP/IP, DNS, TLS, HTTP och lagren under — hur paket hittar mellan maskiner och hur man felsöker när de inte gör det."
       }
     },
     "Terraform": {
       "description": {
-        "en": "HashiCorp's declarative infrastructure-as-code tool. Describes cloud and on-prem resources in HCL, plans diffs against live state, and applies changes idempotently.",
-        "sv": "HashiCorps deklarativa infrastructure-as-code-verktyg. Beskriver moln- och on-prem-resurser i HCL, planerar diffar mot live-tillståndet och applicerar ändringar idempotent."
+        "en": "HashiCorp's declarative infrastructure-as-code tool — resources defined in HCL, plans diffed against live state, changes applied idempotently.",
+        "sv": "HashiCorps deklarativa infrastructure-as-code-verktyg — resurser definieras i HCL, planer diffas mot live-tillståndet, ändringar appliceras idempotent."
       },
       "benefits": {
         "en": "Reproducible infrastructure across environments and providers; plan/apply gives a clear preview before changes hit production.",
@@ -2095,8 +2095,8 @@
     },
     "Observability": {
       "description": {
-        "en": "Logs, metrics, and traces wired together so you can ask new questions about a running system without redeploying it. The thing that decides whether oncall is a five-minute lookup or a three-hour archaeology dig.",
-        "sv": "Loggar, mätvärden och spår kopplade så att man kan ställa nya frågor om ett körande system utan att deploya om det. Det som avgör om oncall blir en femminuters sökning eller en tretimmars arkeologisk utgrävning."
+        "en": "Logs, metrics, and traces wired together so you can ask new questions about a running system without redeploying it.",
+        "sv": "Loggar, mätvärden och spår kopplade så att man kan ställa nya frågor om ett körande system utan att deploya om det."
       },
       "benefits": {
         "en": "Faster incident resolution; data-driven capacity and reliability decisions instead of guessing.",
@@ -2109,8 +2109,8 @@
     },
     "Docker": {
       "description": {
-        "en": "Containers — package an application with its dependencies into a portable, reproducible image. The default unit of deploy in modern infra.",
-        "sv": "Containrar — paketera en applikation med sina beroenden i en portabel och reproducerbar avbildning. Standardenheten för driftsättning i modern infrastruktur."
+        "en": "Containers — package an application with its dependencies into a portable, reproducible image.",
+        "sv": "Containrar — paketera en applikation med sina beroenden i en portabel och reproducerbar avbildning."
       },
       "benefits": {
         "en": "Reproducible across machines; isolates the runtime; the lingua franca of CI and orchestration tools.",
@@ -2124,8 +2124,8 @@
     },
     "Kubernetes": {
       "description": {
-        "en": "Container orchestrator that schedules, scales, and heals workloads across a cluster. The backbone of most large container deployments.",
-        "sv": "Containerorkestrator som schemalägger, skalar och självreparerar arbetslaster över ett kluster. Ryggraden i de flesta stora containerdriftsättningar."
+        "en": "Container orchestrator that schedules, scales, and heals workloads across a cluster.",
+        "sv": "Containerorkestrator som schemalägger, skalar och självreparerar arbetslaster över ett kluster."
       },
       "benefits": {
         "en": "Portable across clouds; rich ecosystem; declarative model that pairs well with GitOps.",
@@ -2159,8 +2159,8 @@
     },
     "Software Architecture": {
       "description": {
-        "en": "Deciding the structure, boundaries, and trade-offs of a system so that today's features can ship and tomorrow's are still possible. Mostly about choosing what not to build.",
-        "sv": "Att bestämma struktur, gränser och avvägningar i ett system så att dagens funktioner kan levereras och morgondagens fortfarande är möjliga. Mest handlar det om att välja vad man inte ska bygga."
+        "en": "Deciding the structure, boundaries, and trade-offs of a system so today's features can ship and tomorrow's are still possible.",
+        "sv": "Att bestämma struktur, gränser och avvägningar i ett system så att dagens funktioner kan levereras och morgondagens fortfarande är möjliga."
       }
     },
     "Microservices": {
@@ -2193,8 +2193,8 @@
     },
     "gRPC/Protobuf": {
       "description": {
-        "en": "Schema-first RPC over HTTP/2 with Protocol Buffers as the wire format. The default for typed, low-overhead service-to-service calls inside a backend mesh.",
-        "sv": "Schema-först-RPC över HTTP/2 med Protocol Buffers som wire-format. Standardvalet för typade, lågoverhead-anrop mellan tjänster i en backend-mesh."
+        "en": "Schema-first RPC over HTTP/2 with Protocol Buffers as the wire format.",
+        "sv": "Schema-först-RPC över HTTP/2 med Protocol Buffers som wire-format."
       },
       "benefits": {
         "en": "Generated clients in every language; binary payloads and HTTP/2 streams shrink latency vs. JSON over HTTP/1.1.",
@@ -2208,8 +2208,8 @@
     },
     "RFC Implementation": {
       "description": {
-        "en": "Reading an IETF RFC end-to-end and producing a conforming implementation: parsing the normative MUST/SHOULD/MAY language, modelling state machines, and writing test vectors that prove the spec is met. Slow, careful work where the prize is interoperability.",
-        "sv": "Att läsa en IETF-RFC från pärm till pärm och skriva en regelrätt implementation: tolka de normativa MUST/SHOULD/MAY-formuleringarna, modellera tillståndsmaskiner och skriva testvektorer som bevisar att specifikationen följs. Långsamt och noggrant arbete där priset är interoperabilitet."
+        "en": "Reading an IETF RFC end-to-end and producing a conforming implementation: parsing the normative MUST/SHOULD/MAY language, modelling state machines, and writing test vectors that prove the spec is met.",
+        "sv": "Att läsa en IETF-RFC från pärm till pärm och skriva en regelrätt implementation: tolka de normativa MUST/SHOULD/MAY-formuleringarna, modellera tillståndsmaskiner och skriva testvektorer som bevisar att specifikationen följs."
       }
     },
     "Agile Methodologies": {
@@ -2247,8 +2247,8 @@
     },
     "Leadership": {
       "description": {
-        "en": "Setting direction, building trust, and getting people moving towards a shared goal — even when the goal is unclear and the path uncertain.",
-        "sv": "Att sätta riktning, bygga tillit och få människor att röra sig mot ett gemensamt mål — även när målet är otydligt och vägen osäker."
+        "en": "Setting direction, building trust, and getting people moving towards a shared goal.",
+        "sv": "Att sätta riktning, bygga tillit och få människor att röra sig mot ett gemensamt mål."
       }
     },
     "Mentoring": {
@@ -2271,14 +2271,14 @@
     },
     "Project Management": {
       "description": {
-        "en": "Driving a defined piece of work to completion within scope, time, and cost — risk tracking, dependencies, stakeholders, and the reporting that lets a sponsor sleep.",
-        "sv": "Att driva ett avgränsat arbete i mål inom omfattning, tid och kostnad — riskhantering, beroenden, intressenter och den rapportering som gör att en sponsor kan sova."
+        "en": "Driving a defined piece of work to completion within scope, time, and cost — risk tracking, dependencies, stakeholders, and reporting.",
+        "sv": "Att driva ett avgränsat arbete i mål inom omfattning, tid och kostnad — riskhantering, beroenden, intressenter och rapportering."
       }
     },
     "Cybersecurity": {
       "description": {
-        "en": "Protecting systems and data through threat modelling, secure design, identity, monitoring, and incident response. Mostly about reducing blast radius rather than preventing every attack.",
-        "sv": "Att skydda system och data genom hotmodellering, säker design, identitet, övervakning och incidenthantering. Mest handlar det om att minska skadeområdet snarare än att förhindra varje attack."
+        "en": "Protecting systems and data through threat modelling, secure design, identity, monitoring, and incident response.",
+        "sv": "Att skydda system och data genom hotmodellering, säker design, identitet, övervakning och incidenthantering."
       },
       "benefits": {
         "en": "Reduces probability and impact of breaches; an audited posture is a sales asset in regulated markets.",
@@ -2291,20 +2291,20 @@
     },
     "Regulatory Compliance": {
       "description": {
-        "en": "Mapping legal and industry requirements (GDPR, MDR, PCI, ISO) into concrete controls, evidence, and process — proven on demand.",
-        "sv": "Att översätta juridiska och branschspecifika krav (GDPR, MDR, PCI, ISO) till konkreta kontroller, bevis och processer — bevisbara på begäran."
+        "en": "Mapping legal and industry requirements (GDPR, MDR, PCI, ISO) into concrete controls, evidence, and process.",
+        "sv": "Att översätta juridiska och branschspecifika krav (GDPR, MDR, PCI, ISO) till konkreta kontroller, bevis och processer."
       }
     },
     "Risk Management": {
       "description": {
-        "en": "Identifying, ranking, and treating risks across product, security, and operations — owning the trade-off between cost of mitigation and cost of being wrong.",
-        "sv": "Att identifiera, rangordna och hantera risker över produkt, säkerhet och drift — och äga avvägningen mellan kostnaden för åtgärd och kostnaden för att ha fel."
+        "en": "Identifying, ranking, and treating risks across product, security, and operations.",
+        "sv": "Att identifiera, rangordna och hantera risker över produkt, säkerhet och drift."
       }
     },
     "GDPR": {
       "description": {
-        "en": "EU regulation governing how personal data is collected, processed, stored, and shared. Touches every system that handles users in Europe.",
-        "sv": "EU-förordning som reglerar hur personuppgifter samlas in, behandlas, lagras och delas. Berör varje system som hanterar användare i Europa."
+        "en": "EU regulation governing how personal data is collected, processed, stored, and shared.",
+        "sv": "EU-förordning som reglerar hur personuppgifter samlas in, behandlas, lagras och delas."
       },
       "benefits": {
         "en": "Forcing function for data hygiene that pays back beyond compliance.",
@@ -2318,8 +2318,8 @@
     },
     "CE marking": {
       "description": {
-        "en": "EU conformity marking for products — including software medical devices — declaring they meet the relevant directives. Required to put a regulated product on the European market.",
-        "sv": "EU:s överensstämmelsemärkning för produkter — inklusive medicintekniska programvaror — som intygar att de uppfyller relevanta direktiv. Krävs för att sätta en reglerad produkt på den europeiska marknaden."
+        "en": "EU conformity marking for products — including software medical devices — declaring they meet the relevant directives.",
+        "sv": "EU:s överensstämmelsemärkning för produkter — inklusive medicintekniska programvaror — som intygar att de uppfyller relevanta direktiv."
       }
     }
   },
