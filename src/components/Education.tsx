@@ -10,6 +10,13 @@ type Props = {
   onProgramClick: (program: EducationItem) => void;
 };
 
+function roundCredits(credits: string): string {
+  return credits.replace(/[\d.]+/, (match) => {
+    const n = Number(match);
+    return n - Math.floor(n) === 0.5 ? match : String(Math.round(n));
+  });
+}
+
 export function Education({
   title,
   education,
@@ -42,10 +49,9 @@ export function Education({
                     </span>
                   </div>
                   <p>
-                    {t(item.institution)} · {t(item.level)}{" "}
-                    <span className="education-meta-trail">
-                      ·{" "}
-                      <span className="education-credits">{item.credits}</span>
+                    {t(item.institution)} · {t(item.level)} ·{" "}
+                    <span className="education-credits">
+                      {roundCredits(item.credits)}
                     </span>
                     {hasCourses && (
                       <span className="education-courses-count">
@@ -63,10 +69,9 @@ export function Education({
                     </span>
                   </div>
                   <p>
-                    {t(item.institution)} · {t(item.level)}{" "}
-                    <span className="education-meta-trail">
-                      ·{" "}
-                      <span className="education-credits">{item.credits}</span>
+                    {t(item.institution)} · {t(item.level)} ·{" "}
+                    <span className="education-credits">
+                      {roundCredits(item.credits)}
                     </span>
                   </p>
                 </>

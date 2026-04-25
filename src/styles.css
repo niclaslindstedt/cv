@@ -2139,10 +2139,6 @@ button.skill-pill-btn:focus-visible {
   color: var(--accent);
 }
 
-.education-meta-trail {
-  white-space: nowrap;
-}
-
 .program-modal-summary {
   display: flex;
   flex-direction: column;
