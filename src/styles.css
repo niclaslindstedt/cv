@@ -1793,6 +1793,10 @@ button.skill-pill-btn:focus-visible {
   padding: 14px 20px 4px;
 }
 
+.skill-modal-detail:last-child {
+  padding-bottom: 16px;
+}
+
 .skill-modal-description {
   margin: 0;
   font-size: 0.95rem;
