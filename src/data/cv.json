@@ -466,7 +466,24 @@
           },
           "code": "3MC100",
           "credits": "10 ECTS",
-          "completedDate": "2011-11"
+          "completedDate": "2011-11",
+          "moments": [
+            {
+              "name": { "en": "Exam", "sv": "Tentamen" },
+              "code": "1000",
+              "credits": "7.5 ECTS",
+              "completedDate": "2011-10"
+            },
+            {
+              "name": {
+                "en": "Mandatory Components",
+                "sv": "Obligatoriska moment"
+              },
+              "code": "2000",
+              "credits": "2.5 ECTS",
+              "completedDate": "2011-11"
+            }
+          ]
         },
         {
           "name": {
@@ -475,7 +492,42 @@
           },
           "code": "3AN200",
           "credits": "8 ECTS",
-          "completedDate": "2011-11"
+          "completedDate": "2011-11",
+          "moments": [
+            {
+              "name": {
+                "en": "Practical Exam – Dissection",
+                "sv": "Praktisk examination dissektion"
+              },
+              "code": "DISS",
+              "credits": "1.5 ECTS",
+              "completedDate": "2011-09"
+            },
+            {
+              "name": {
+                "en": "Practical Exam – Radiological Anatomy",
+                "sv": "Praktisk examination radiologisk anatomi"
+              },
+              "code": "RADA",
+              "credits": "1 ECTS",
+              "completedDate": "2011-11"
+            },
+            {
+              "name": {
+                "en": "Practical Exam – Locomotion",
+                "sv": "Praktisk examination rörelselära"
+              },
+              "code": "RÖRL",
+              "credits": "1 ECTS",
+              "completedDate": "2011-09"
+            },
+            {
+              "name": { "en": "Exam", "sv": "Tentamen" },
+              "code": "TENT",
+              "credits": "4.5 ECTS",
+              "completedDate": "2011-10"
+            }
+          ]
         },
         {
           "name": {
@@ -484,7 +536,15 @@
           },
           "code": "3AM012",
           "credits": "2.5 ECTS",
-          "completedDate": "2011-12"
+          "completedDate": "2011-12",
+          "moments": [
+            {
+              "name": { "en": "Exam", "sv": "Tentamen" },
+              "code": "1000",
+              "credits": "2.5 ECTS",
+              "completedDate": "2011-12"
+            }
+          ]
         },
         {
           "name": {
@@ -493,7 +553,15 @@
           },
           "code": "3AM008",
           "credits": "2.5 ECTS",
-          "completedDate": "2012-01"
+          "completedDate": "2012-01",
+          "moments": [
+            {
+              "name": { "en": "Exam", "sv": "Tentamen" },
+              "code": "1000",
+              "credits": "2.5 ECTS",
+              "completedDate": "2012-01"
+            }
+          ]
         },
         {
           "name": {
@@ -502,7 +570,39 @@
           },
           "code": "3NR137",
           "credits": "19.5 ECTS",
-          "completedDate": "2012-01"
+          "completedDate": "2012-01",
+          "moments": [
+            {
+              "name": { "en": "Cases", "sv": "Fall" },
+              "code": "1000",
+              "credits": "6 ECTS",
+              "completedDate": "2012-01"
+            },
+            {
+              "name": { "en": "Lab Sessions", "sv": "Laborationer" },
+              "code": "2001",
+              "credits": "4 ECTS",
+              "completedDate": "2012-01"
+            },
+            {
+              "name": { "en": "Seminar", "sv": "Seminarium" },
+              "code": "3000",
+              "credits": "1 ECTS",
+              "completedDate": "2012-01"
+            },
+            {
+              "name": { "en": "Exam", "sv": "Tentamen" },
+              "code": "4001",
+              "credits": "6.5 ECTS",
+              "completedDate": "2012-01"
+            },
+            {
+              "name": { "en": "Neuroanatomy", "sv": "Neuroanatomi" },
+              "code": "5000",
+              "credits": "2 ECTS",
+              "completedDate": "2012-01"
+            }
+          ]
         },
         {
           "name": {
@@ -511,7 +611,15 @@
           },
           "code": "3AM010",
           "credits": "2.5 ECTS",
-          "completedDate": "2012-05"
+          "completedDate": "2012-05",
+          "moments": [
+            {
+              "name": { "en": "Exam", "sv": "Tentamen" },
+              "code": "1000",
+              "credits": "2.5 ECTS",
+              "completedDate": "2012-05"
+            }
+          ]
         },
         {
           "name": {
@@ -529,7 +637,24 @@
           },
           "code": "3PA014",
           "credits": "20 ECTS",
-          "completedDate": "2012-08"
+          "completedDate": "2012-08",
+          "moments": [
+            {
+              "name": {
+                "en": "Approved Mandatory Components (GOMO)",
+                "sv": "Godkända obligatoriska moment (GOMO)"
+              },
+              "code": "GOM0",
+              "credits": "12 ECTS",
+              "completedDate": "2012-05"
+            },
+            {
+              "name": { "en": "Final Exam (\"STEN\")", "sv": "Sluttentamen (\"STEN\")" },
+              "code": "STEN",
+              "credits": "8 ECTS",
+              "completedDate": "2012-08"
+            }
+          ]
         },
         {
           "name": {
@@ -538,7 +663,72 @@
           },
           "code": "3KR093",
           "credits": "30 ECTS",
-          "completedDate": "2013-11"
+          "completedDate": "2013-11",
+          "moments": [
+            {
+              "name": { "en": "Integration II", "sv": "Integrering II" },
+              "code": "0100",
+              "credits": "6 ECTS",
+              "completedDate": "2013-03"
+            },
+            {
+              "name": {
+                "en": "Cardiovascular II",
+                "sv": "Hjärta/kärl II"
+              },
+              "code": "0200",
+              "credits": "5 ECTS",
+              "completedDate": "2013-06"
+            },
+            {
+              "name": {
+                "en": "Gastrointestinal",
+                "sv": "Magtarm"
+              },
+              "code": "0300",
+              "credits": "5 ECTS",
+              "completedDate": "2013-06"
+            },
+            {
+              "name": { "en": "Integration III", "sv": "Integrering III" },
+              "code": "0500",
+              "credits": "1.5 ECTS",
+              "completedDate": "2013-06"
+            },
+            {
+              "name": { "en": "Practical Exam", "sv": "Praktiskt prov" },
+              "code": "0600",
+              "credits": "3 ECTS",
+              "completedDate": "2013-11"
+            },
+            {
+              "name": { "en": "Exam", "sv": "Tentamen" },
+              "code": "0700",
+              "credits": "4.5 ECTS",
+              "completedDate": "2013-06"
+            },
+            {
+              "name": { "en": "Anaesthesiology", "sv": "Anestesiologi" },
+              "code": "0800",
+              "credits": "3 ECTS",
+              "completedDate": "2013-06"
+            },
+            {
+              "name": {
+                "en": "Clinical Physiology",
+                "sv": "Klinisk fysiologi"
+              },
+              "code": "0900",
+              "credits": "1 ECTS",
+              "completedDate": "2013-03"
+            },
+            {
+              "name": { "en": "Pathology", "sv": "Patologi" },
+              "code": "1000",
+              "credits": "1 ECTS",
+              "completedDate": "2013-02"
+            }
+          ]
         },
         {
           "name": {
@@ -556,6 +746,7 @@
           },
           "code": "3ME033",
           "credits": "30 ECTS",
+          "completed": false,
           "moments": [
             {
               "name": {
@@ -613,7 +804,18 @@
           },
           "code": "3ME040",
           "credits": "0.8 ECTS",
-          "completedDate": "2010-02"
+          "completedDate": "2010-02",
+          "moments": [
+            {
+              "name": {
+                "en": "Being a Patient or a Doctor",
+                "sv": "Att vara patient eller läkare"
+              },
+              "code": "ENDA",
+              "credits": "0.8 ECTS",
+              "completedDate": "2010-02"
+            }
+          ]
         },
         {
           "name": {
@@ -631,6 +833,7 @@
           },
           "code": "3BM013",
           "credits": "45 ECTS",
+          "completed": false,
           "moments": [
             {
               "name": {
@@ -658,7 +861,18 @@
           },
           "code": "3ME041",
           "credits": "1.5 ECTS",
-          "completedDate": "2010-11"
+          "completedDate": "2010-11",
+          "moments": [
+            {
+              "name": {
+                "en": "Professional Development – Being a Patient or a Doctor",
+                "sv": "Professionell utveckling – att vara patient eller läkare"
+              },
+              "code": "ENDA",
+              "credits": "1.5 ECTS",
+              "completedDate": "2010-11"
+            }
+          ]
         },
         {
           "name": {
@@ -667,7 +881,18 @@
           },
           "code": "3ME042",
           "credits": "0.8 ECTS",
-          "completedDate": "2011-04"
+          "completedDate": "2011-04",
+          "moments": [
+            {
+              "name": {
+                "en": "Professional Development – Being a Patient or a Doctor",
+                "sv": "Professionell utveckling – Att vara patient eller läkare"
+              },
+              "code": "ENDA",
+              "credits": "0.8 ECTS",
+              "completedDate": "2011-04"
+            }
+          ]
         }
       ]
     }
@@ -687,7 +912,39 @@
       "startDate": "2015-06",
       "completedDate": "2015-08",
       "engagement": 0.5,
-      "remote": true
+      "remote": true,
+      "moments": [
+        {
+          "name": {
+            "en": "Submission Assignments 1",
+            "sv": "Inlämningsuppgifter 1"
+          },
+          "code": "I101",
+          "credits": "3 ECTS",
+          "completedDate": "2015-08"
+        },
+        {
+          "name": {
+            "en": "Submission Assignments 2",
+            "sv": "Inlämningsuppgifter 2"
+          },
+          "code": "I201",
+          "credits": "3 ECTS",
+          "completedDate": "2015-08"
+        },
+        {
+          "name": { "en": "Project", "sv": "Projekt" },
+          "code": "P101",
+          "credits": "3 ECTS",
+          "completedDate": "2015-08"
+        },
+        {
+          "name": { "en": "Exam", "sv": "Tentamen" },
+          "code": "T101",
+          "credits": "3 ECTS",
+          "completedDate": "2015-08"
+        }
+      ]
     },
     {
       "name": { "en": "Game Design", "sv": "Speldesign" },

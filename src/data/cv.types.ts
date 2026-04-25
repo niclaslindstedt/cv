@@ -93,6 +93,7 @@ export type ProgramCourse = {
   credits: string;
   completedDate?: string;
   grade?: string;
+  completed?: boolean;
   moments?: CourseMoment[];
   skills?: string[];
 };
@@ -115,9 +116,11 @@ export type Course = {
   institution: LocalizedString;
   credits: string;
   startDate?: string;
-  completedDate: string;
+  completedDate?: string;
   engagement?: number;
   remote?: boolean;
+  completed?: boolean;
+  moments?: CourseMoment[];
   skills?: string[];
 };
 

@@ -62,6 +62,19 @@ function parseCredits(credits) {
   return match ? Number(match[0]) : NaN;
 }
 
+function deriveCourseEnd(course) {
+  if (course.completedDate) return course.completedDate;
+  const momentDates = (course.moments ?? [])
+    .map((m) => m.completedDate)
+    .filter(Boolean);
+  if (momentDates.length === 0) {
+    throw new Error(
+      `Course ${course.code}: cannot derive end date — needs completedDate or at least one moment with completedDate.`,
+    );
+  }
+  return momentDates.reduce((latest, d) => (d > latest ? d : latest));
+}
+
 function deriveCourseStart(course) {
   if (course.startDate) return course.startDate;
   const ects = parseCredits(course.credits);
@@ -75,7 +88,7 @@ function deriveCourseStart(course) {
     1,
     Math.ceil(ects / (ECTS_PER_MONTH_FULL_TIME * engagement)),
   );
-  return isoFromMonthIndex(monthIndex(course.completedDate) - (months - 1));
+  return isoFromMonthIndex(monthIndex(deriveCourseEnd(course)) - (months - 1));
 }
 
 function nowMonthIndex() {
@@ -206,7 +219,7 @@ function buildItems(cv) {
       subtitle,
       description: localize(course.credits),
       startDate: deriveCourseStart(course),
-      endDate: course.completedDate,
+      endDate: deriveCourseEnd(course),
       skills: course.skills ?? [],
     });
   });

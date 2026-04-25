@@ -98,10 +98,12 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
               {courses.map((course) => {
                 const moments = course.moments ?? [];
                 const hasMoments = moments.length > 0;
+                const incomplete = course.completed === false;
                 const partial =
-                  hasMoments &&
-                  !course.completedDate &&
-                  moments.some((m) => !m.completedDate);
+                  incomplete ||
+                  (hasMoments &&
+                    !course.completedDate &&
+                    moments.some((m) => !m.completedDate));
                 const earned = hasMoments
                   ? sumCredits(
                       moments.filter((m) => m.completedDate),
@@ -125,6 +127,11 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
                       <span className="education-credits">
                         {course.credits}
                       </span>
+                      {incomplete && (
+                        <span className="course-incomplete-pill">
+                          {ui.programModal.incomplete}
+                        </span>
+                      )}
                       {partial && earned && (
                         <span className="program-course-progress">
                           {ui.programModal.courseProgress(

@@ -1838,6 +1838,20 @@ button.skill-pill-btn:focus-visible {
   color: var(--fg-muted);
 }
 
+.course-incomplete-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid #c62828;
+  border-radius: 999px;
+  color: #fff;
+  background: #c62828;
+}
+
 .program-course-moments {
   display: flex;
   flex-direction: column;

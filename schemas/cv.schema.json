@@ -269,6 +269,10 @@
         "credits": { "type": "string", "minLength": 1 },
         "completedDate": { "$ref": "#/$defs/yearMonth" },
         "grade": { "type": "string", "minLength": 1 },
+        "completed": {
+          "type": "boolean",
+          "description": "Whether the course was fully completed. Defaults to true. Set to false to render an 'Incomplete' pill."
+        },
         "moments": {
           "type": "array",
           "minItems": 1,
@@ -295,14 +299,17 @@
     "course": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "code", "institution", "credits", "completedDate"],
+      "required": ["name", "code", "institution", "credits"],
       "properties": {
         "name": { "$ref": "#/$defs/localizedString" },
         "code": { "type": "string", "minLength": 1 },
         "institution": { "$ref": "#/$defs/localizedString" },
         "credits": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
-        "completedDate": { "$ref": "#/$defs/yearMonth" },
+        "completedDate": {
+          "$ref": "#/$defs/yearMonth",
+          "description": "Date the course was passed. Omit when the course was only partially completed; the latest `moments[].completedDate` is used in its place for layout/timeline purposes."
+        },
         "engagement": {
           "type": "number",
           "exclusiveMinimum": 0,
@@ -312,6 +319,16 @@
         "remote": {
           "type": "boolean",
           "description": "Whether the course was delivered remotely (online/distance)."
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "Whether the course was fully completed. Defaults to true. Set to false to render an 'Incomplete' pill."
+        },
+        "moments": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Sub-parts (Swedish: \"moment\") that make up the course. Use to break down vague course names or to record courses that were only partially completed.",
+          "items": { "$ref": "#/$defs/courseMoment" }
         },
         "skills": { "$ref": "#/$defs/stringList" }
       }
