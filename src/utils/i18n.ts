@@ -52,12 +52,16 @@ type UiStrings = {
     close: string;
     empty: string;
     yearsLabel: (years: number) => string;
+    benefits: string;
+    drawbacks: string;
+    learnMore: string;
   };
   experience: {
     assignmentsSummary: (count: number) => string;
   };
   focus: {
     since: string;
+    detailAria: (area: string) => string;
   };
 };
 
@@ -126,12 +130,16 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         const rounded = Math.round(years);
         return rounded === 1 ? "1 year" : `${rounded} years`;
       },
+      benefits: "Strengths",
+      drawbacks: "Trade-offs",
+      learnMore: "Learn more ↗",
     },
     experience: {
       assignmentsSummary: (n) => `${n} assignment${n === 1 ? "" : "s"}`,
     },
     focus: {
       since: "since",
+      detailAria: (area) => `${area} details`,
     },
   },
   sv: {
@@ -200,12 +208,16 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         const rounded = Math.round(years);
         return rounded === 1 ? "1 år" : `${rounded} år`;
       },
+      benefits: "Styrkor",
+      drawbacks: "Avvägningar",
+      learnMore: "Läs mer ↗",
     },
     experience: {
       assignmentsSummary: (n) => `${n} uppdrag`,
     },
     focus: {
       since: "sedan",
+      detailAria: (area) => `Detaljer för ${area}`,
     },
   },
 };

@@ -45,6 +45,18 @@ cv.experience.forEach((e, i) => {
   check(`education[${i}] (${ed.institution.en})`, ed.skills),
 );
 
+const detailKeys = Object.keys(cv.skillDetails ?? {});
+for (const key of detailKeys) {
+  if (!known.has(key)) {
+    errors.push(`skillDetails: unknown skill "${key}"`);
+  }
+}
+for (const skill of known) {
+  if (!cv.skillDetails?.[skill]) {
+    errors.push(`skillDetails: missing description for "${skill}"`);
+  }
+}
+
 if (errors.length) {
   console.error("CV validation failed:");
   for (const e of errors) console.error(`  - ${e}`);

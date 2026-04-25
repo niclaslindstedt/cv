@@ -20,7 +20,8 @@
     "experience",
     "education",
     "courses",
-    "skills"
+    "skills",
+    "skillDetails"
   ],
   "properties": {
     "$schema": { "type": "string" },
@@ -67,6 +68,11 @@
       "type": "array",
       "minItems": 1,
       "items": { "$ref": "#/$defs/skillGroup" }
+    },
+    "skillDetails": {
+      "type": "object",
+      "description": "Per-skill metadata keyed by skill name (must match strings used in skills/items, projects, experience, etc.).",
+      "additionalProperties": { "$ref": "#/$defs/skillDetail" }
     }
   },
   "$defs": {
@@ -136,10 +142,22 @@
     "focusArea": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["area", "since"],
+      "required": ["area", "since", "description"],
       "properties": {
         "area": { "$ref": "#/$defs/localizedString" },
-        "since": { "$ref": "#/$defs/yearMonth" }
+        "since": { "$ref": "#/$defs/yearMonth" },
+        "description": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "skillDetail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description"],
+      "properties": {
+        "description": { "$ref": "#/$defs/localizedString" },
+        "benefits": { "$ref": "#/$defs/localizedString" },
+        "drawbacks": { "$ref": "#/$defs/localizedString" },
+        "url": { "type": "string", "format": "uri" }
       }
     },
     "project": {

@@ -4,13 +4,14 @@ import { Courses } from "./components/Courses";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
 import { Focus } from "./components/Focus";
+import { FocusModal } from "./components/FocusModal";
 import { Hero } from "./components/Hero";
 import { Projects } from "./components/Projects";
 import { SkillModal } from "./components/SkillModal";
 import { Skills } from "./components/Skills";
 import { Timeline } from "./components/Timeline";
 import cv from "./data/cv.json";
-import type { Company } from "./data/cv.types";
+import type { Company, FocusArea, SkillDetail } from "./data/cv.types";
 import { useLang } from "./utils/i18n";
 import { buildSkillUsageMap } from "./utils/skills";
 import { useTheme } from "./utils/theme";
@@ -26,6 +27,7 @@ export function App() {
   );
   const [timelineOpen, setTimelineOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+  const [selectedFocus, setSelectedFocus] = useState<FocusArea | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
   const { t } = useLang();
 
@@ -51,7 +53,11 @@ export function App() {
           onToggleTheme={toggleTheme}
           onOpenTimeline={() => setTimelineOpen(true)}
         />
-        <Focus title={t(cv.sections.focus)} focus={cv.focus} />
+        <Focus
+          title={t(cv.sections.focus)}
+          focus={cv.focus}
+          onFocusClick={setSelectedFocus}
+        />
         <Projects
           title={t(cv.sections.projects)}
           projects={cv.projects}
@@ -89,7 +95,16 @@ export function App() {
       <SkillModal
         skill={selectedSkill}
         usages={selectedSkill ? (skillUsages.get(selectedSkill) ?? []) : []}
+        detail={
+          selectedSkill
+            ? (cv.skillDetails as Record<string, SkillDetail>)[selectedSkill]
+            : undefined
+        }
         onClose={() => setSelectedSkill(null)}
+      />
+      <FocusModal
+        focus={selectedFocus}
+        onClose={() => setSelectedFocus(null)}
       />
     </div>
   );

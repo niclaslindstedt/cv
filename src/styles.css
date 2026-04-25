@@ -203,15 +203,39 @@ a:hover {
 
 .focus-list li {
   display: flex;
+}
+
+.focus-item-btn {
+  appearance: none;
+  width: 100%;
+  display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 12px;
   padding: 10px 14px;
+  font: inherit;
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   background: var(--glass-bg);
   backdrop-filter: blur(14px) saturate(150%);
   -webkit-backdrop-filter: blur(14px) saturate(150%);
+  transition:
+    border-color 120ms ease,
+    background 120ms ease,
+    transform 120ms ease;
+}
+
+.focus-item-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.focus-item-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .focus-area {
@@ -1351,9 +1375,9 @@ button.skill-pill-btn:focus-visible {
 .skill-modal {
   width: 100%;
   max-width: 560px;
-  max-height: min(640px, calc(100dvh - 48px));
-  display: grid;
-  grid-template-rows: auto 1fr;
+  max-height: min(720px, calc(100dvh - 48px));
+  display: flex;
+  flex-direction: column;
   background: var(--glass-bg);
   backdrop-filter: blur(20px) saturate(170%);
   -webkit-backdrop-filter: blur(20px) saturate(170%);
@@ -1362,6 +1386,91 @@ button.skill-pill-btn:focus-visible {
   box-shadow: var(--shadow);
   overflow: hidden;
   color: var(--fg);
+}
+
+.skill-modal-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: auto;
+}
+
+.skill-modal-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 20px 4px;
+}
+
+.skill-modal-description {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--fg);
+}
+
+.skill-modal-pros-cons {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.skill-modal-pros,
+.skill-modal-cons {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  padding: 8px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.skill-modal-pros dt,
+.skill-modal-cons dt {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.skill-modal-pros dt {
+  color: var(--accent);
+}
+
+.skill-modal-pros dd,
+.skill-modal-cons dd {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.skill-modal-link {
+  align-self: flex-start;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.skill-modal-link:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+@media (max-width: 520px) {
+  .skill-modal-pros,
+  .skill-modal-cons {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
 }
 
 .skill-modal-head {
@@ -1676,10 +1785,12 @@ button.skill-pill-btn:focus-visible {
   }
 
   .focus-list li,
+  .focus-item-btn,
   .project,
   .skill-pill {
     background: transparent !important;
     border-color: #bbb !important;
+    color: #111 !important;
   }
 
   button.skill-pill-btn {
