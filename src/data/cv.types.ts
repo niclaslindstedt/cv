@@ -55,23 +55,18 @@ export type Project = {
   openSource: boolean;
 };
 
-export type ProjectAuthorStats = {
-  login: string | null;
-  name: string;
-  commits: number;
-};
-
 export type ProjectStats = {
   owner: string;
   repo: string;
-  firstCommitDate: string;
-  lastCommitDate: string;
+  username: string;
+  firstCommitDate: string | null;
+  lastCommitDate: string | null;
   totalCommits: number;
-  authors: ProjectAuthorStats[];
 };
 
 export type ProjectStatsFile = {
   enabled: boolean;
+  username?: string;
   fetchedAt?: string;
   projects: Record<string, ProjectStats>;
 };

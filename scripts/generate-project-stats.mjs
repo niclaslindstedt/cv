@@ -32,6 +32,16 @@ function emit(data) {
   }
 }
 
+function extractUsername(cv) {
+  const links = Array.isArray(cv.links) ? cv.links : [];
+  for (const link of links) {
+    const url = typeof link?.url === "string" ? link.url : "";
+    const match = url.match(/github\.com\/([^/?#]+)/i);
+    if (match && match[1]) return match[1];
+  }
+  return null;
+}
+
 async function fetchGraphQL(token, query, variables) {
   const maxAttempts = 4;
   let delay = 2000;
@@ -80,15 +90,10 @@ const COMMIT_HISTORY_QUERY = `
         target {
           ... on Commit {
             history(first: 100, after: $cursor) {
-              totalCount
               pageInfo { hasNextPage endCursor }
               nodes {
                 committedDate
-                author {
-                  name
-                  email
-                  user { login }
-                }
+                author { user { login } }
               }
             }
           }
@@ -98,21 +103,12 @@ const COMMIT_HISTORY_QUERY = `
   }
 `;
 
-function authorKey(node) {
-  const login = node.author?.user?.login ?? null;
-  if (login) return `login:${login.toLowerCase()}`;
-  const email = node.author?.email ?? "";
-  if (email) return `email:${email.toLowerCase()}`;
-  const name = node.author?.name ?? "Unknown";
-  return `name:${name.toLowerCase()}`;
-}
-
-async function fetchProjectStats(token, owner, repo) {
+async function fetchProjectStats(token, owner, repo, username) {
+  const lowerUser = username.toLowerCase();
   let cursor = null;
   let totalCommits = 0;
   let firstCommitDate = null;
   let lastCommitDate = null;
-  const authors = new Map();
 
   while (true) {
     const data = await fetchGraphQL(token, COMMIT_HISTORY_QUERY, {
@@ -128,40 +124,27 @@ async function fetchProjectStats(token, owner, repo) {
     if (!history) {
       throw new Error(`No commit history for ${owner}/${repo}`);
     }
-    totalCommits = history.totalCount;
     for (const node of history.nodes ?? []) {
+      const login = node.author?.user?.login?.toLowerCase() ?? null;
+      if (login !== lowerUser) continue;
+      totalCommits += 1;
       const date = node.committedDate;
       if (date) {
         if (!lastCommitDate || date > lastCommitDate) lastCommitDate = date;
         if (!firstCommitDate || date < firstCommitDate) firstCommitDate = date;
-      }
-      const key = authorKey(node);
-      const existing = authors.get(key);
-      if (existing) {
-        existing.commits += 1;
-      } else {
-        authors.set(key, {
-          login: node.author?.user?.login ?? null,
-          name: node.author?.name ?? node.author?.user?.login ?? "Unknown",
-          commits: 1,
-        });
       }
     }
     if (!history.pageInfo?.hasNextPage) break;
     cursor = history.pageInfo.endCursor;
   }
 
-  const authorList = [...authors.values()].sort(
-    (a, b) => b.commits - a.commits || a.name.localeCompare(b.name),
-  );
-
   return {
     owner,
     repo,
+    username,
     firstCommitDate: firstCommitDate ? firstCommitDate.slice(0, 10) : null,
     lastCommitDate: lastCommitDate ? lastCommitDate.slice(0, 10) : null,
     totalCommits,
-    authors: authorList,
   };
 }
 
@@ -194,6 +177,17 @@ async function main() {
     return;
   }
 
+  const username = extractUsername(cv);
+  if (!username) {
+    emit({ enabled: false, projects: {} });
+    if (!toStdout) {
+      console.warn(
+        "No GitHub profile in cv.json — wrote disabled project stats file.",
+      );
+    }
+    return;
+  }
+
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
     if (!toStdout && existsSync(outPath)) {
@@ -215,7 +209,12 @@ async function main() {
   const failed = [];
   for (const ref of refs) {
     try {
-      const stats = await fetchProjectStats(token, ref.owner, ref.repo);
+      const stats = await fetchProjectStats(
+        token,
+        ref.owner,
+        ref.repo,
+        username,
+      );
       projects[projectKey(ref.owner, ref.repo)] = stats;
     } catch (err) {
       failed.push({ ref, message: err.message });
@@ -254,6 +253,7 @@ async function main() {
 
   emit({
     enabled: true,
+    username,
     fetchedAt: new Date().toISOString(),
     projects,
   });

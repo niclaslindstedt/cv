@@ -564,39 +564,6 @@ a:hover {
   color: var(--fg);
 }
 
-.project-authors {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.project-author {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 4px;
-  padding: 1px 8px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--fg-muted);
-}
-
-.project-author-name {
-  color: var(--fg);
-}
-
-.project-author-count {
-  color: var(--fg-muted);
-}
-
-.project-author-rest {
-  color: var(--fg-muted);
-}
-
 .project-description {
   margin: 12px 0;
   line-height: 1.6;

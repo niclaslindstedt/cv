@@ -45,10 +45,7 @@ export function Projects({ title, projects, onSkillClick }: Props) {
                   lang,
                 )}`
               : null;
-          const topAuthors = stats ? stats.authors.slice(0, 3) : [];
-          const remainingAuthors = stats
-            ? Math.max(0, stats.authors.length - topAuthors.length)
-            : 0;
+          const hasCommits = !!stats && stats.totalCommits > 0;
           return (
             <article key={project.name} className="project">
               <header className="project-head">
@@ -68,7 +65,7 @@ export function Projects({ title, projects, onSkillClick }: Props) {
                 </h3>
                 <p className="project-tagline">{t(project.tagline)}</p>
               </header>
-              {(dateRange || stats) && (
+              {(dateRange || hasCommits) && (
                 <dl className="project-meta">
                   {dateRange && (
                     <div className="project-meta-row">
@@ -76,37 +73,13 @@ export function Projects({ title, projects, onSkillClick }: Props) {
                       <dd>{dateRange}</dd>
                     </div>
                   )}
-                  {stats && stats.totalCommits > 0 && (
+                  {hasCommits && (
                     <div className="project-meta-row">
-                      <dt>{lang === "sv" ? "Commits" : "Commits"}</dt>
+                      <dt>Commits</dt>
                       <dd>
                         <span className="project-commit-total">
-                          {stats.totalCommits}
+                          {stats!.totalCommits}
                         </span>
-                        {topAuthors.length > 0 && (
-                          <ul className="project-authors">
-                            {topAuthors.map((author) => (
-                              <li
-                                key={author.login ?? author.name}
-                                className="project-author"
-                              >
-                                <span className="project-author-name">
-                                  {author.login ?? author.name}
-                                </span>
-                                <span className="project-author-count">
-                                  {author.commits}
-                                </span>
-                              </li>
-                            ))}
-                            {remainingAuthors > 0 && (
-                              <li className="project-author project-author-rest">
-                                {lang === "sv"
-                                  ? `+${remainingAuthors} till`
-                                  : `+${remainingAuthors} more`}
-                              </li>
-                            )}
-                          </ul>
-                        )}
                       </dd>
                     </div>
                   )}
