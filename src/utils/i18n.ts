@@ -93,6 +93,9 @@ type UiStrings = {
     viewCoursesAria: (program: string) => string;
     coursesCount: (count: number) => string;
   };
+  skills: {
+    emptyTooltip: string;
+  };
   courses: {
     viewMomentsAria: (course: string) => string;
     momentsAria: (course: string) => string;
@@ -206,6 +209,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewCoursesAria: (program) => `View courses for ${program}`,
       coursesCount: (n) => `${n} course${n === 1 ? "" : "s"}`,
     },
+    skills: {
+      emptyTooltip: "No entries yet",
+    },
     courses: {
       viewMomentsAria: (course) => `View components for ${course}`,
       momentsAria: (course) => `${course} components`,
@@ -318,6 +324,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     education: {
       viewCoursesAria: (program) => `Visa kurser för ${program}`,
       coursesCount: (n) => (n === 1 ? "1 kurs" : `${n} kurser`),
+    },
+    skills: {
+      emptyTooltip: "Inga poster ännu",
     },
     courses: {
       viewMomentsAria: (course) => `Visa moment för ${course}`,

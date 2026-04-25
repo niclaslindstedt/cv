@@ -83,20 +83,28 @@ consume `data/cv.types.ts` and `utils/date.ts`. Nothing in `data/` or
   because the title becomes the squash-merge commit on `main`. Individual
   in-branch commits are not changelog-relevant. Squash-merge is the only
   permitted merge strategy.
+- **Visual changes** (anything affecting CSS, layout, color, type,
+  spacing, motion, or component shape) must conform to
+  [`docs/DESIGN.md`](docs/DESIGN.md). Read the relevant section
+  before changing styles. If the change introduces a pattern not yet
+  described there, **update `docs/DESIGN.md` first in the same PR**.
+  PR descriptions for visual changes should reference the section(s)
+  they conform to.
 
 ## Documentation sync points
 
 When you change X, update Y:
 
-| If you change …                | Also update …                                                        |
-| ------------------------------ | -------------------------------------------------------------------- |
-| `package.json` scripts         | `Makefile`, `README.md` Scripts section                              |
-| `Makefile` targets             | `README.md` Scripts section, `.github/workflows/ci.yml`              |
-| `src/` top-level layout        | `README.md` Structure section                                        |
-| `schemas/cv.schema.json`       | `src/data/cv.types.ts` + any component consuming the changed field   |
-| `src/data/cv.types.ts`         | `schemas/cv.schema.json` + any component consuming the changed field |
-| `schemas/timeline.schema.json` | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`       |
-| Node version in CI             | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)               |
+| If you change …                                   | Also update …                                                        |
+| ------------------------------------------------- | -------------------------------------------------------------------- |
+| `package.json` scripts                            | `Makefile`, `README.md` Scripts section                              |
+| `Makefile` targets                                | `README.md` Scripts section, `.github/workflows/ci.yml`              |
+| `src/` top-level layout                           | `README.md` Structure section                                        |
+| `schemas/cv.schema.json`                          | `src/data/cv.types.ts` + any component consuming the changed field   |
+| `src/data/cv.types.ts`                            | `schemas/cv.schema.json` + any component consuming the changed field |
+| `schemas/timeline.schema.json`                    | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`       |
+| Node version in CI                                | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)               |
+| `src/styles.css` tokens or any new visual pattern | `docs/DESIGN.md` (in the **same** PR)                                |
 
 ## Test conventions
 

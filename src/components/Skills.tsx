@@ -28,7 +28,7 @@ function sortSkills(
 }
 
 export function Skills({ title, skills, usages, onSkillClick }: Props) {
-  const { t } = useLang();
+  const { t, ui } = useLang();
   return (
     <Section id="skills" title={title}>
       <div className="skills">
@@ -49,6 +49,12 @@ export function Skills({ title, skills, usages, onSkillClick }: Props) {
                           : "skill-pill skill-pill-btn"
                       }
                       onClick={() => onSkillClick(skill)}
+                      title={isEmpty ? ui.skills.emptyTooltip : undefined}
+                      aria-label={
+                        isEmpty
+                          ? `${skill} — ${ui.skills.emptyTooltip}`
+                          : undefined
+                      }
                     >
                       <span>{skill}</span>
                       {!isEmpty && (
