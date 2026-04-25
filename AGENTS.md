@@ -114,11 +114,12 @@ The repo has **no tests yet**. When tests are added:
 The repo ships Claude skills under `.agent/skills/` (with
 `.claude/skills` symlinked to it — `OSS_SPEC.md` §21.2):
 
-| Skill           | Purpose                                                                    |
-| --------------- | -------------------------------------------------------------------------- |
-| `update-cv`     | Add/update/remove entries in `src/data/cv.json`; recommends what to change |
-| `update-readme` | Resync `README.md` with the code it describes                              |
-| `maintenance`   | Umbrella skill — routes to every `update-*`                                |
+| Skill                         | Purpose                                                                              |
+| ----------------------------- | ------------------------------------------------------------------------------------ |
+| `update-cv`                   | Add/update/remove entries in `src/data/cv.json`; recommends what to change           |
+| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field) |
+| `update-readme`               | Resync `README.md` with the code it describes                                        |
+| `maintenance`                 | Umbrella skill — routes to every `update-*`                                          |
 
 Invoke `maintenance` when you've landed a batch of changes and want a
 single pass that brings drift-prone artifacts back in sync. Invoke a

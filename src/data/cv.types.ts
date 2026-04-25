@@ -71,6 +71,12 @@ export type ProjectStatsFile = {
   projects: Record<string, ProjectStats>;
 };
 
+export type SourceUrl = {
+  title: string;
+  url: string;
+  description: string;
+};
+
 export type Company = {
   id: string;
   name: string;
@@ -78,6 +84,7 @@ export type Company = {
   url?: string;
   terminated?: boolean;
   stack?: string[];
+  sourceUrls?: SourceUrl[];
 };
 
 export type Assignment = {
