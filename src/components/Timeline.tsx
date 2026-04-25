@@ -623,6 +623,25 @@ export function Timeline({ open, onClose }: Props) {
               <span className="timeline-vis-commit-pill">
                 {ui.timeline.commits(selectedItem.github.busiestDayCount)}
               </span>
+              {selectedItem.github.busiestRepo && (
+                <>
+                  <br />
+                  {ui.timeline.busiestRepo}:{" "}
+                  <a
+                    href={selectedItem.github.busiestRepo.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {selectedItem.github.busiestRepo.name}
+                  </a>{" "}
+                  ·{" "}
+                  <span className="timeline-vis-commit-pill">
+                    {ui.timeline.commits(
+                      selectedItem.github.busiestRepo.commits,
+                    )}
+                  </span>
+                </>
+              )}
             </p>
             <a
               className="timeline-vis-details-link"

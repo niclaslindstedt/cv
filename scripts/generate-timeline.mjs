@@ -263,11 +263,49 @@ function buildSideProjectItems(cv, projectStats) {
   return items;
 }
 
-function buildGithubItems(activity) {
+function findBusiestRepoForYear(year, cv, projectStats) {
+  if (!projectStats?.enabled) return null;
+  const yearKey = String(year);
+  let winner = null;
+  for (const project of cv.projects ?? []) {
+    const gh = project.github;
+    if (!gh?.owner || !gh?.repo) continue;
+    const stats = projectStats.projects?.[`${gh.owner}/${gh.repo}`];
+    const commits = stats?.commitsByYear?.[yearKey] ?? 0;
+    if (commits <= 0) continue;
+    if (!winner || commits > winner.commits) {
+      winner = {
+        owner: gh.owner,
+        repo: gh.repo,
+        name: project.name,
+        commits,
+        repoUrl: `https://github.com/${gh.owner}/${gh.repo}`,
+      };
+    }
+  }
+  return winner;
+}
+
+function buildGithubItems(activity, cv, projectStats) {
   if (!activity?.enabled || !Array.isArray(activity.years)) return [];
   const items = [];
   for (const year of activity.years) {
     if (!year || typeof year.year !== "number") continue;
+    const github = {
+      totalCommits: year.totalCommits,
+      dailyCommits: year.dailyCommits,
+      busiestMonth: year.busiestMonth,
+      busiestMonthCount: year.busiestMonthCount ?? 0,
+      busiestWeekStart: year.busiestWeekStart,
+      busiestWeekCount: year.busiestWeekCount ?? 0,
+      busiestDay: year.busiestDay ?? `${year.year}-01-01`,
+      busiestDayCount: year.busiestDayCount ?? 0,
+      profileUrl: activity.profileUrl,
+      username: activity.username,
+      maxDailyCommits: activity.maxDailyCommits ?? 0,
+    };
+    const busiestRepo = findBusiestRepoForYear(year.year, cv, projectStats);
+    if (busiestRepo) github.busiestRepo = busiestRepo;
     items.push({
       id: `gh-${year.year}`,
       kind: "github",
@@ -277,19 +315,7 @@ function buildGithubItems(activity) {
       startDate: `${year.year}-01`,
       endDate: `${year.year}-12`,
       skills: [],
-      github: {
-        totalCommits: year.totalCommits,
-        dailyCommits: year.dailyCommits,
-        busiestMonth: year.busiestMonth,
-        busiestMonthCount: year.busiestMonthCount ?? 0,
-        busiestWeekStart: year.busiestWeekStart,
-        busiestWeekCount: year.busiestWeekCount ?? 0,
-        busiestDay: year.busiestDay ?? `${year.year}-01-01`,
-        busiestDayCount: year.busiestDayCount ?? 0,
-        profileUrl: activity.profileUrl,
-        username: activity.username,
-        maxDailyCommits: activity.maxDailyCommits ?? 0,
-      },
+      github,
     });
   }
   return items;
@@ -300,7 +326,7 @@ function buildLayout(cv, activity, projectStats) {
   const items = buildItems(cv);
   const sideProjectItems = buildSideProjectItems(cv, projectStats);
   items.push(...sideProjectItems);
-  const githubItems = buildGithubItems(activity);
+  const githubItems = buildGithubItems(activity, cv, projectStats);
   items.push(...githubItems);
 
   const trackDefs = [

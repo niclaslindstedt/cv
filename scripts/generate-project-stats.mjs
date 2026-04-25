@@ -109,6 +109,7 @@ async function fetchProjectStats(token, owner, repo, username) {
   let totalCommits = 0;
   let firstCommitDate = null;
   let lastCommitDate = null;
+  const commitsByYear = {};
 
   while (true) {
     const data = await fetchGraphQL(token, COMMIT_HISTORY_QUERY, {
@@ -137,6 +138,8 @@ async function fetchProjectStats(token, owner, repo, username) {
       if (date) {
         if (!lastCommitDate || date > lastCommitDate) lastCommitDate = date;
         if (!firstCommitDate || date < firstCommitDate) firstCommitDate = date;
+        const year = date.slice(0, 4);
+        commitsByYear[year] = (commitsByYear[year] ?? 0) + 1;
       }
     }
     if (!history.pageInfo?.hasNextPage) break;
@@ -150,6 +153,7 @@ async function fetchProjectStats(token, owner, repo, username) {
     firstCommitDate: firstCommitDate ? firstCommitDate.slice(0, 10) : null,
     lastCommitDate: lastCommitDate ? lastCommitDate.slice(0, 10) : null,
     totalCommits,
+    commitsByYear,
   };
 }
 

@@ -44,6 +44,7 @@ type UiStrings = {
     busiestMonth: string;
     busiestWeek: string;
     busiestDay: string;
+    busiestRepo: string;
     yearRange: (year: string) => string;
   };
   skillModal: {
@@ -157,6 +158,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       busiestMonth: "Busiest month",
       busiestWeek: "Busiest week",
       busiestDay: "Busiest day",
+      busiestRepo: "Busiest repo",
       yearRange: (year) => `Jan ${year} – Dec ${year}`,
     },
     skillModal: {
@@ -275,6 +277,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       busiestMonth: "Mest aktiv månad",
       busiestWeek: "Mest aktiv vecka",
       busiestDay: "Mest aktiv dag",
+      busiestRepo: "Mest aktiva repo",
       yearRange: (year) => `Jan ${year} – Dec ${year}`,
     },
     skillModal: {
