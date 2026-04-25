@@ -220,7 +220,19 @@
         "en": "Audiobook streaming service with over 1 million users.",
         "sv": "Strömningstjänst för ljudböcker med över 1 miljon användare."
       },
-      "url": "https://www.bookbeat.com"
+      "url": "https://www.bookbeat.com",
+      "sourceUrls": [
+        {
+          "title": "Official about page",
+          "url": "https://www.bookbeat.com/se/about",
+          "description": "BookBeat's own about page describing the company, product, and mission."
+        },
+        {
+          "title": "Wikipedia (Swedish)",
+          "url": "https://sv.wikipedia.org/wiki/Bookbeat",
+          "description": "Swedish Wikipedia article covering Bookbeat's history, ownership, and reach."
+        }
+      ]
     },
     {
       "id": "ibnq",
@@ -247,7 +259,14 @@
         "en": "Major Swedish bank; worked in the private loans team.",
         "sv": "Stor svensk bank; arbetade i teamet för privatlån."
       },
-      "url": "https://www.seb.se"
+      "url": "https://www.seb.se",
+      "sourceUrls": [
+        {
+          "title": "Official about page",
+          "url": "https://seb.se/om-seb",
+          "description": "SEB's own Swedish-language about page describing the bank's business, scale, and history."
+        }
+      ]
     },
     {
       "id": "mitt-skolval",
@@ -256,7 +275,14 @@
         "en": "Edutech startup digitalizing school selection for Swedish municipalities.",
         "sv": "Edtech-startup som digitaliserar skolval för svenska kommuner."
       },
-      "url": "https://www.swedutech.se"
+      "url": "https://www.swedutech.se",
+      "sourceUrls": [
+        {
+          "title": "Swedutech about page",
+          "url": "https://swedutech.se/about",
+          "description": "About page of Swedutech, the parent company behind the Mitt Skolval product."
+        }
+      ]
     },
     {
       "id": "symptoms",
@@ -265,7 +291,14 @@
         "en": "eHealth startup focused on patient-doctor communication.",
         "sv": "eHälsa-startup med fokus på patient–läkarkommunikation."
       },
-      "url": "https://www.symptoms.se"
+      "url": "https://www.symptoms.se",
+      "sourceUrls": [
+        {
+          "title": "Official about page",
+          "url": "https://www.symptoms.se/om-symptoms",
+          "description": "Symptoms' own Swedish-language about page covering the platform and its purpose."
+        }
+      ]
     },
     {
       "id": "indicio",
@@ -274,7 +307,14 @@
         "en": "FinTech startup building a forecasting platform.",
         "sv": "FinTech-startup som bygger en prognosplattform."
       },
-      "url": "https://www.indicio.com"
+      "url": "https://www.indicio.com",
+      "sourceUrls": [
+        {
+          "title": "Official about page",
+          "url": "https://www.indicio.com/about",
+          "description": "Indicio's own about page describing the company and its forecasting platform."
+        }
+      ]
     },
     {
       "id": "agilator",

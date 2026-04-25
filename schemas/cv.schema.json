@@ -191,7 +191,23 @@
         "description": { "$ref": "#/$defs/localizedString" },
         "url": { "type": "string", "format": "uri" },
         "terminated": { "type": "boolean" },
-        "stack": { "$ref": "#/$defs/stringList" }
+        "stack": { "$ref": "#/$defs/stringList" },
+        "sourceUrls": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Reference URLs the `update-company-descriptions` skill consults when rewriting `description`. Not rendered on the site.",
+          "items": { "$ref": "#/$defs/sourceUrl" }
+        }
+      }
+    },
+    "sourceUrl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "url", "description"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "description": { "type": "string", "minLength": 1 }
       }
     },
     "experience": {
