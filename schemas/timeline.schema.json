@@ -158,7 +158,20 @@
         "busiestDayCount": { "type": "integer", "minimum": 0 },
         "profileUrl": { "type": "string", "minLength": 1 },
         "username": { "type": "string", "minLength": 1 },
-        "maxDailyCommits": { "type": "integer", "minimum": 0 }
+        "maxDailyCommits": { "type": "integer", "minimum": 0 },
+        "busiestRepo": { "$ref": "#/$defs/busiestRepo" }
+      }
+    },
+    "busiestRepo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "repo", "name", "commits", "repoUrl"],
+      "properties": {
+        "owner": { "type": "string", "minLength": 1 },
+        "repo": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "commits": { "type": "integer", "minimum": 1 },
+        "repoUrl": { "type": "string", "minLength": 1 }
       }
     },
     "segment": {

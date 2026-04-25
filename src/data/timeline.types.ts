@@ -14,6 +14,14 @@ export type TimelineSegment = {
   activeLane: number;
 };
 
+export type BusiestRepo = {
+  owner: string;
+  repo: string;
+  name: string;
+  commits: number;
+  repoUrl: string;
+};
+
 export type GitHubPayload = {
   totalCommits: number;
   dailyCommits: number[];
@@ -26,6 +34,7 @@ export type GitHubPayload = {
   profileUrl: string;
   username: string;
   maxDailyCommits: number;
+  busiestRepo?: BusiestRepo;
 };
 
 export type SideProjectPayload = {
