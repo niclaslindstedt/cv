@@ -25,34 +25,70 @@
   },
   "links": [
     {
-      "label": { "en": "Blog ↗", "sv": "Blogg ↗" },
+      "label": {
+        "en": "Blog ↗",
+        "sv": "Blogg ↗"
+      },
       "url": "https://blog.niclaslindstedt.se",
       "featured": true
     },
     {
-      "label": { "en": "GitHub", "sv": "GitHub" },
+      "label": {
+        "en": "GitHub",
+        "sv": "GitHub"
+      },
       "url": "https://www.github.com/niclaslindstedt"
     },
     {
-      "label": { "en": "LinkedIn", "sv": "LinkedIn" },
+      "label": {
+        "en": "LinkedIn",
+        "sv": "LinkedIn"
+      },
       "url": "https://www.linkedin.com/in/niclaslindstedt"
     }
   ],
   "actions": {
-    "timeline": { "en": "Timeline view", "sv": "Tidslinje" },
-    "downloadPdf": { "en": "Download PDF ↓", "sv": "Ladda ner PDF ↓" }
+    "timeline": {
+      "en": "Timeline view",
+      "sv": "Tidslinje"
+    },
+    "downloadPdf": {
+      "en": "Download PDF ↓",
+      "sv": "Ladda ner PDF ↓"
+    }
   },
   "sections": {
-    "focus": { "en": "Current focus", "sv": "Nuvarande fokus" },
-    "projects": { "en": "Open-source projects", "sv": "Open source-projekt" },
-    "experience": { "en": "Experience", "sv": "Erfarenhet" },
-    "education": { "en": "Education", "sv": "Utbildning" },
-    "courses": { "en": "Courses", "sv": "Kurser" },
-    "skills": { "en": "Skills", "sv": "Kompetenser" }
+    "focus": {
+      "en": "Current focus",
+      "sv": "Nuvarande fokus"
+    },
+    "projects": {
+      "en": "Open-source projects",
+      "sv": "Open source-projekt"
+    },
+    "experience": {
+      "en": "Experience",
+      "sv": "Erfarenhet"
+    },
+    "education": {
+      "en": "Education",
+      "sv": "Utbildning"
+    },
+    "courses": {
+      "en": "Courses",
+      "sv": "Kurser"
+    },
+    "skills": {
+      "en": "Skills",
+      "sv": "Kompetenser"
+    }
   },
   "focus": [
     {
-      "area": { "en": "Agentic coding", "sv": "Agentisk kodning" },
+      "area": {
+        "en": "Agentic coding",
+        "sv": "Agentisk kodning"
+      },
       "since": "2025-05",
       "description": {
         "en": "Treating AI coding agents as primary collaborators: the developer steers, reviews, and shapes the system while the agent does the typing. Most of the craft is in setting up the loop — context, guardrails, and feedback — so the agent stays useful as the codebase grows.",
@@ -251,7 +287,10 @@
   ],
   "experience": [
     {
-      "role": { "en": "IT Architect", "sv": "IT-arkitekt" },
+      "role": {
+        "en": "IT Architect",
+        "sv": "IT-arkitekt"
+      },
       "companyId": "bookbeat",
       "startDate": "2024-04",
       "endDate": null,
@@ -274,7 +313,10 @@
       ]
     },
     {
-      "role": { "en": "CTO", "sv": "CTO" },
+      "role": {
+        "en": "CTO",
+        "sv": "CTO"
+      },
       "companyId": "ibnq",
       "startDate": "2023-09",
       "endDate": "2024-04",
@@ -300,14 +342,20 @@
       ]
     },
     {
-      "role": { "en": "Senior Manager", "sv": "Senior Manager" },
+      "role": {
+        "en": "Senior Manager",
+        "sv": "Senior Manager"
+      },
       "companyId": "etimo",
       "startDate": "2020-01",
       "endDate": "2023-09",
       "skills": ["Mentoring"],
       "assignments": [
         {
-          "role": { "en": "Senior Developer", "sv": "Seniorutvecklare" },
+          "role": {
+            "en": "Senior Developer",
+            "sv": "Seniorutvecklare"
+          },
           "clientId": "seb",
           "startDate": "2020-02",
           "endDate": "2020-12",
@@ -322,7 +370,10 @@
           ]
         },
         {
-          "role": { "en": "Senior Developer", "sv": "Seniorutvecklare" },
+          "role": {
+            "en": "Senior Developer",
+            "sv": "Seniorutvecklare"
+          },
           "clientId": "mitt-skolval",
           "startDate": "2021-01",
           "endDate": "2021-05",
@@ -343,7 +394,10 @@
           ]
         },
         {
-          "role": { "en": "CTO", "sv": "CTO" },
+          "role": {
+            "en": "CTO",
+            "sv": "CTO"
+          },
           "clientId": "mitt-skolval",
           "startDate": "2021-06",
           "endDate": "2023-09",
@@ -372,11 +426,17 @@
       ]
     },
     {
-      "role": { "en": "CTO & Co-Founder", "sv": "CTO & medgrundare" },
+      "role": {
+        "en": "CTO & Co-Founder",
+        "sv": "CTO & medgrundare"
+      },
       "companyId": "symptoms",
       "startDate": "2015-11",
       "endDate": "2020-01",
-      "engagement": { "en": "half-time", "sv": "halvtid" },
+      "engagement": {
+        "en": "half-time",
+        "sv": "halvtid"
+      },
       "stack": [
         "TypeScript",
         "Vue",
@@ -403,11 +463,17 @@
       ]
     },
     {
-      "role": { "en": "Backend Developer", "sv": "Backend-utvecklare" },
+      "role": {
+        "en": "Backend Developer",
+        "sv": "Backend-utvecklare"
+      },
       "companyId": "indicio",
       "startDate": "2015-09",
       "endDate": "2020-01",
-      "engagement": { "en": "half-time", "sv": "halvtid" },
+      "engagement": {
+        "en": "half-time",
+        "sv": "halvtid"
+      },
       "stack": [
         "TypeScript",
         "Angular",
@@ -418,11 +484,17 @@
       "skills": ["CI/CD", "Cybersecurity", "Software Architecture"]
     },
     {
-      "role": { "en": "Founder", "sv": "Grundare" },
+      "role": {
+        "en": "Founder",
+        "sv": "Grundare"
+      },
       "companyId": "agilator",
       "startDate": "2016-02",
       "endDate": null,
-      "engagement": { "en": "part-time", "sv": "deltid" }
+      "engagement": {
+        "en": "part-time",
+        "sv": "deltid"
+      }
     }
   ],
   "education": [
@@ -435,7 +507,10 @@
         "en": "Uppsala University",
         "sv": "Uppsala universitet"
       },
-      "level": { "en": "Bachelor's program", "sv": "Kandidatprogram" },
+      "level": {
+        "en": "Bachelor's program",
+        "sv": "Kandidatprogram"
+      },
       "credits": "127.5 ECTS",
       "startDate": "2014-08",
       "endDate": "2017-06",
@@ -451,33 +526,7 @@
           },
           "code": "2IS044",
           "credits": "15 ECTS",
-          "completedDate": "2014-12",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "5000",
-              "credits": "4 ECTS",
-              "completedDate": "2014-10"
-            },
-            {
-              "name": { "en": "Memo", "sv": "PM" },
-              "code": "6000",
-              "credits": "3 ECTS",
-              "completedDate": "2014-12"
-            },
-            {
-              "name": { "en": "Lab Session", "sv": "Laboration" },
-              "code": "7000",
-              "credits": "4 ECTS",
-              "completedDate": "2014-10"
-            },
-            {
-              "name": { "en": "Seminar", "sv": "Seminarium" },
-              "code": "8000",
-              "credits": "4 ECTS",
-              "completedDate": "2014-10"
-            }
-          ]
+          "completedDate": "2014-12"
         },
         {
           "name": {
@@ -486,24 +535,7 @@
           },
           "code": "2IS006",
           "credits": "7.5 ECTS",
-          "completedDate": "2014-12",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "4.5 ECTS",
-              "completedDate": "2014-12"
-            },
-            {
-              "name": {
-                "en": "Submission Assignment",
-                "sv": "Inlämningsuppgift"
-              },
-              "code": "2000",
-              "credits": "3 ECTS",
-              "completedDate": "2014-12"
-            }
-          ]
+          "completedDate": "2014-12"
         },
         {
           "name": {
@@ -512,38 +544,16 @@
           },
           "code": "2IS007",
           "credits": "7.5 ECTS",
-          "completedDate": "2015-02",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "5 ECTS",
-              "completedDate": "2015-01"
-            },
-            {
-              "name": {
-                "en": "Submission Assignment",
-                "sv": "Inlämningsuppgift"
-              },
-              "code": "2000",
-              "credits": "2.5 ECTS",
-              "completedDate": "2015-02"
-            }
-          ]
+          "completedDate": "2015-02"
         },
         {
-          "name": { "en": "Algorithmics", "sv": "Algoritmik" },
+          "name": {
+            "en": "Algorithmics",
+            "sv": "Algoritmik"
+          },
           "code": "1MA098",
           "credits": "7.5 ECTS",
-          "completedDate": "2015-03",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Prov" },
-              "code": "1000",
-              "credits": "7.5 ECTS",
-              "completedDate": "2015-03"
-            }
-          ]
+          "completedDate": "2015-03"
         },
         {
           "name": {
@@ -552,24 +562,7 @@
           },
           "code": "2IV061",
           "credits": "7.5 ECTS",
-          "completedDate": "2015-03",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "6 ECTS",
-              "completedDate": "2015-03"
-            },
-            {
-              "name": {
-                "en": "Submission Assignment",
-                "sv": "Inlämningsuppgift"
-              },
-              "code": "2000",
-              "credits": "1.5 ECTS",
-              "completedDate": "2015-03"
-            }
-          ]
+          "completedDate": "2015-03"
         },
         {
           "name": {
@@ -578,24 +571,7 @@
           },
           "code": "2IS012",
           "credits": "7.5 ECTS",
-          "completedDate": "2015-05",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "4.5 ECTS",
-              "completedDate": "2015-04"
-            },
-            {
-              "name": {
-                "en": "Submission Assignments",
-                "sv": "Inlämningsuppgifter"
-              },
-              "code": "2000",
-              "credits": "3 ECTS",
-              "completedDate": "2015-05"
-            }
-          ]
+          "completedDate": "2015-05"
         },
         {
           "name": {
@@ -604,50 +580,16 @@
           },
           "code": "2IS014",
           "credits": "7.5 ECTS",
-          "completedDate": "2015-06",
-          "moments": [
-            {
-              "name": { "en": "Project", "sv": "Projekt" },
-              "code": "7000",
-              "credits": "4.5 ECTS",
-              "completedDate": "2015-06"
-            },
-            {
-              "name": { "en": "Lab Sessions", "sv": "Laborationer" },
-              "code": "8000",
-              "credits": "3 ECTS",
-              "completedDate": "2015-06"
-            }
-          ]
+          "completedDate": "2015-06"
         },
         {
-          "name": { "en": "Multimedia", "sv": "Multimedia" },
+          "name": {
+            "en": "Multimedia",
+            "sv": "Multimedia"
+          },
           "code": "2AD327",
           "credits": "7.5 ECTS",
-          "completedDate": "2016-02",
-          "moments": [
-            {
-              "name": { "en": "Project", "sv": "Projekt" },
-              "code": "6000",
-              "credits": "1.5 ECTS",
-              "completedDate": "2016-02"
-            },
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "7000",
-              "credits": "4 ECTS",
-              "completedDate": "2016-02"
-            },
-            {
-              "name": {
-                "en": "Submission Assignment",
-                "sv": "Inlämningsuppgift"
-              },
-              "code": "8000",
-              "credits": "2 ECTS",
-              "completedDate": "2016-02"
-            }
-          ]
+          "completedDate": "2016-02"
         },
         {
           "name": {
@@ -656,30 +598,7 @@
           },
           "code": "2AD161",
           "credits": "7.5 ECTS",
-          "completedDate": "2016-04",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "6000",
-              "credits": "4 ECTS",
-              "completedDate": "2016-03"
-            },
-            {
-              "name": { "en": "Essay", "sv": "Uppsats" },
-              "code": "7000",
-              "credits": "2.5 ECTS",
-              "completedDate": "2016-04"
-            },
-            {
-              "name": {
-                "en": "Submission Assignment",
-                "sv": "Inlämningsuppgift"
-              },
-              "code": "8000",
-              "credits": "1 ECTS",
-              "completedDate": "2016-04"
-            }
-          ]
+          "completedDate": "2016-04"
         },
         {
           "name": {
@@ -688,15 +607,7 @@
           },
           "code": "2IS013",
           "credits": "7.5 ECTS",
-          "completedDate": "2016-06",
-          "moments": [
-            {
-              "name": { "en": "Logic", "sv": "Logik" },
-              "code": "1000",
-              "credits": "7.5 ECTS",
-              "completedDate": "2016-06"
-            }
-          ]
+          "completedDate": "2016-06"
         },
         {
           "name": {
@@ -705,21 +616,7 @@
           },
           "code": "2IS022",
           "credits": "7.5 ECTS",
-          "completedDate": "2016-11",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "5 ECTS",
-              "completedDate": "2016-11"
-            },
-            {
-              "name": { "en": "Project", "sv": "Projekt" },
-              "code": "2000",
-              "credits": "2.5 ECTS",
-              "completedDate": "2016-09"
-            }
-          ]
+          "completedDate": "2016-11"
         },
         {
           "name": {
@@ -728,21 +625,7 @@
           },
           "code": "2IS023",
           "credits": "7.5 ECTS",
-          "completedDate": "2016-11",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "5 ECTS",
-              "completedDate": "2016-10"
-            },
-            {
-              "name": { "en": "Project Work", "sv": "Projektarbete" },
-              "code": "2000",
-              "credits": "2.5 ECTS",
-              "completedDate": "2016-11"
-            }
-          ]
+          "completedDate": "2016-11"
         },
         {
           "name": {
@@ -751,27 +634,7 @@
           },
           "code": "2AD332",
           "credits": "7.5 ECTS",
-          "completedDate": "2016-12",
-          "moments": [
-            {
-              "name": { "en": "Lab Session", "sv": "Laboration" },
-              "code": "3000",
-              "credits": "1.5 ECTS",
-              "completedDate": "2016-11"
-            },
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "5000",
-              "credits": "4 ECTS",
-              "completedDate": "2016-11"
-            },
-            {
-              "name": { "en": "Project", "sv": "Projekt" },
-              "code": "6000",
-              "credits": "2 ECTS",
-              "completedDate": "2016-12"
-            }
-          ]
+          "completedDate": "2016-12"
         },
         {
           "name": {
@@ -780,21 +643,7 @@
           },
           "code": "2AD329",
           "credits": "7.5 ECTS",
-          "completedDate": "2017-01",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "4.5 ECTS",
-              "completedDate": "2017-01"
-            },
-            {
-              "name": { "en": "Lab Sessions", "sv": "Laborationer" },
-              "code": "2000",
-              "credits": "3 ECTS",
-              "completedDate": "2017-01"
-            }
-          ]
+          "completedDate": "2017-01"
         },
         {
           "name": {
@@ -803,30 +652,7 @@
           },
           "code": "2IS010",
           "credits": "7.5 ECTS",
-          "completedDate": "2017-03",
-          "moments": [
-            {
-              "name": { "en": "Lab Session", "sv": "Laboration" },
-              "code": "4000",
-              "credits": "1 ECTS",
-              "completedDate": "2017-02"
-            },
-            {
-              "name": {
-                "en": "Lecture (Mandatory Attendance)",
-                "sv": "Föreläsning obligatorisk närvaro"
-              },
-              "code": "5000",
-              "credits": "0.5 ECTS",
-              "completedDate": "2017-02"
-            },
-            {
-              "name": { "en": "Project Work", "sv": "Projektarbete" },
-              "code": "6000",
-              "credits": "6 ECTS",
-              "completedDate": "2017-03"
-            }
-          ]
+          "completedDate": "2017-03"
         },
         {
           "name": {
@@ -835,39 +661,13 @@
           },
           "code": "2IS033",
           "credits": "7.5 ECTS",
-          "completedDate": "2017-03",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "4 ECTS",
-              "completedDate": "2017-03"
-            },
-            {
-              "name": { "en": "Project Assignment", "sv": "Projektuppgift" },
-              "code": "3000",
-              "credits": "2 ECTS",
-              "completedDate": "2017-03"
-            },
-            {
-              "name": {
-                "en": "Submission Assignment",
-                "sv": "Inlämningsuppgift"
-              },
-              "code": "5000",
-              "credits": "1 ECTS",
-              "completedDate": "2017-03"
-            },
-            {
-              "name": { "en": "Seminar", "sv": "Seminarium" },
-              "code": "6000",
-              "credits": "0.5 ECTS",
-              "completedDate": "2017-03"
-            }
-          ]
+          "completedDate": "2017-03"
         },
         {
-          "name": { "en": "IT Law", "sv": "IT-rätt" },
+          "name": {
+            "en": "IT Law",
+            "sv": "IT-rätt"
+          },
           "code": "2HR118",
           "credits": "7.5 ECTS",
           "completed": false
@@ -875,12 +675,18 @@
       ]
     },
     {
-      "field": { "en": "Medicine", "sv": "Medicin" },
+      "field": {
+        "en": "Medicine",
+        "sv": "Medicin"
+      },
       "institution": {
         "en": "Uppsala University",
         "sv": "Uppsala universitet"
       },
-      "level": { "en": "Master's program", "sv": "Masterprogram" },
+      "level": {
+        "en": "Master's program",
+        "sv": "Masterprogram"
+      },
       "credits": "144 ECTS",
       "startDate": "2011-08",
       "endDate": "2014-04",
@@ -896,24 +702,7 @@
           },
           "code": "3MC100",
           "credits": "10 ECTS",
-          "completedDate": "2011-11",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "7.5 ECTS",
-              "completedDate": "2011-10"
-            },
-            {
-              "name": {
-                "en": "Mandatory Components",
-                "sv": "Obligatoriska moment"
-              },
-              "code": "2000",
-              "credits": "2.5 ECTS",
-              "completedDate": "2011-11"
-            }
-          ]
+          "completedDate": "2011-11"
         },
         {
           "name": {
@@ -950,12 +739,6 @@
               "code": "RÖRL",
               "credits": "1 ECTS",
               "completedDate": "2011-09"
-            },
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "TENT",
-              "credits": "4.5 ECTS",
-              "completedDate": "2011-10"
             }
           ]
         },
@@ -966,15 +749,7 @@
           },
           "code": "3AM012",
           "credits": "2.5 ECTS",
-          "completedDate": "2011-12",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "2.5 ECTS",
-              "completedDate": "2011-12"
-            }
-          ]
+          "completedDate": "2011-12"
         },
         {
           "name": {
@@ -983,15 +758,7 @@
           },
           "code": "3AM008",
           "credits": "2.5 ECTS",
-          "completedDate": "2012-01",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "2.5 ECTS",
-              "completedDate": "2012-01"
-            }
-          ]
+          "completedDate": "2012-01"
         },
         {
           "name": {
@@ -1003,31 +770,10 @@
           "completedDate": "2012-01",
           "moments": [
             {
-              "name": { "en": "Cases", "sv": "Fall" },
-              "code": "1000",
-              "credits": "6 ECTS",
-              "completedDate": "2012-01"
-            },
-            {
-              "name": { "en": "Lab Sessions", "sv": "Laborationer" },
-              "code": "2001",
-              "credits": "4 ECTS",
-              "completedDate": "2012-01"
-            },
-            {
-              "name": { "en": "Seminar", "sv": "Seminarium" },
-              "code": "3000",
-              "credits": "1 ECTS",
-              "completedDate": "2012-01"
-            },
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "4001",
-              "credits": "6.5 ECTS",
-              "completedDate": "2012-01"
-            },
-            {
-              "name": { "en": "Neuroanatomy", "sv": "Neuroanatomi" },
+              "name": {
+                "en": "Neuroanatomy",
+                "sv": "Neuroanatomi"
+              },
               "code": "5000",
               "credits": "2 ECTS",
               "completedDate": "2012-01"
@@ -1041,15 +787,7 @@
           },
           "code": "3AM010",
           "credits": "2.5 ECTS",
-          "completedDate": "2012-05",
-          "moments": [
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "1000",
-              "credits": "2.5 ECTS",
-              "completedDate": "2012-05"
-            }
-          ]
+          "completedDate": "2012-05"
         },
         {
           "name": {
@@ -1067,27 +805,7 @@
           },
           "code": "3PA014",
           "credits": "20 ECTS",
-          "completedDate": "2012-08",
-          "moments": [
-            {
-              "name": {
-                "en": "Approved Mandatory Components (GOMO)",
-                "sv": "Godkända obligatoriska moment (GOMO)"
-              },
-              "code": "GOM0",
-              "credits": "12 ECTS",
-              "completedDate": "2012-05"
-            },
-            {
-              "name": {
-                "en": "Final Exam (\"STEN\")",
-                "sv": "Sluttentamen (\"STEN\")"
-              },
-              "code": "STEN",
-              "credits": "8 ECTS",
-              "completedDate": "2012-08"
-            }
-          ]
+          "completedDate": "2012-08"
         },
         {
           "name": {
@@ -1099,7 +817,10 @@
           "completedDate": "2013-11",
           "moments": [
             {
-              "name": { "en": "Integration II", "sv": "Integrering II" },
+              "name": {
+                "en": "Integration II",
+                "sv": "Integrering II"
+              },
               "code": "0100",
               "credits": "6 ECTS",
               "completedDate": "2013-03"
@@ -1123,25 +844,19 @@
               "completedDate": "2013-06"
             },
             {
-              "name": { "en": "Integration III", "sv": "Integrering III" },
+              "name": {
+                "en": "Integration III",
+                "sv": "Integrering III"
+              },
               "code": "0500",
               "credits": "1.5 ECTS",
               "completedDate": "2013-06"
             },
             {
-              "name": { "en": "Practical Exam", "sv": "Praktiskt prov" },
-              "code": "0600",
-              "credits": "3 ECTS",
-              "completedDate": "2013-11"
-            },
-            {
-              "name": { "en": "Exam", "sv": "Tentamen" },
-              "code": "0700",
-              "credits": "4.5 ECTS",
-              "completedDate": "2013-06"
-            },
-            {
-              "name": { "en": "Anaesthesiology", "sv": "Anestesiologi" },
+              "name": {
+                "en": "Anaesthesiology",
+                "sv": "Anestesiologi"
+              },
               "code": "0800",
               "credits": "3 ECTS",
               "completedDate": "2013-06"
@@ -1156,7 +871,10 @@
               "completedDate": "2013-03"
             },
             {
-              "name": { "en": "Pathology", "sv": "Patologi" },
+              "name": {
+                "en": "Pathology",
+                "sv": "Patologi"
+              },
               "code": "1000",
               "credits": "1 ECTS",
               "completedDate": "2013-02"
@@ -1209,7 +927,10 @@
               "completedDate": "2012-09"
             },
             {
-              "name": { "en": "Propaedeutics", "sv": "Propedeutik" },
+              "name": {
+                "en": "Propaedeutics",
+                "sv": "Propedeutik"
+              },
               "code": "2000",
               "credits": "1.5 ECTS",
               "completedDate": "2012-10"
@@ -1248,15 +969,6 @@
               },
               "code": "3300",
               "credits": "5.5 ECTS",
-              "completedDate": "2013-01"
-            },
-            {
-              "name": {
-                "en": "Clinical Medicine I Exam",
-                "sv": "Tentamen Klinmed I"
-              },
-              "code": "4000",
-              "credits": "4 ECTS",
               "completedDate": "2013-01"
             },
             {
@@ -1309,7 +1021,10 @@
               "completedDate": "2014-02"
             },
             {
-              "name": { "en": "Endocrinology", "sv": "Endokrinologi" },
+              "name": {
+                "en": "Endocrinology",
+                "sv": "Endokrinologi"
+              },
               "code": "0040",
               "credits": "5 ECTS",
               "completedDate": "2014-04"
@@ -1328,9 +1043,18 @@
       ]
     },
     {
-      "field": { "en": "Medicine", "sv": "Medicin" },
-      "institution": { "en": "Umeå University", "sv": "Umeå universitet" },
-      "level": { "en": "Master's program", "sv": "Masterprogram" },
+      "field": {
+        "en": "Medicine",
+        "sv": "Medicin"
+      },
+      "institution": {
+        "en": "Umeå University",
+        "sv": "Umeå universitet"
+      },
+      "level": {
+        "en": "Master's program",
+        "sv": "Masterprogram"
+      },
       "credits": "60.8 ECTS",
       "startDate": "2010-01",
       "endDate": "2011-04",
@@ -1463,42 +1187,13 @@
       "startDate": "2015-06",
       "completedDate": "2015-08",
       "engagement": 0.5,
-      "remote": true,
-      "moments": [
-        {
-          "name": {
-            "en": "Submission Assignments 1",
-            "sv": "Inlämningsuppgifter 1"
-          },
-          "code": "I101",
-          "credits": "3 ECTS",
-          "completedDate": "2015-08"
-        },
-        {
-          "name": {
-            "en": "Submission Assignments 2",
-            "sv": "Inlämningsuppgifter 2"
-          },
-          "code": "I201",
-          "credits": "3 ECTS",
-          "completedDate": "2015-08"
-        },
-        {
-          "name": { "en": "Project", "sv": "Projekt" },
-          "code": "P101",
-          "credits": "3 ECTS",
-          "completedDate": "2015-08"
-        },
-        {
-          "name": { "en": "Exam", "sv": "Tentamen" },
-          "code": "T101",
-          "credits": "3 ECTS",
-          "completedDate": "2015-08"
-        }
-      ]
+      "remote": true
     },
     {
-      "name": { "en": "Game Design", "sv": "Speldesign" },
+      "name": {
+        "en": "Game Design",
+        "sv": "Speldesign"
+      },
       "code": "2AD148",
       "institution": {
         "en": "Uppsala University",
@@ -1507,18 +1202,7 @@
       "credits": "7.5 ECTS",
       "startDate": "2015-06",
       "completedDate": "2015-07",
-      "engagement": 1,
-      "moments": [
-        {
-          "name": {
-            "en": "Lab Sessions / Seminars",
-            "sv": "Laborationer/Seminarier"
-          },
-          "code": "4000",
-          "credits": "7.5 ECTS",
-          "completedDate": "2015-07"
-        }
-      ]
+      "engagement": 1
     },
     {
       "name": {
@@ -1533,30 +1217,16 @@
       "credits": "15 ECTS",
       "startDate": "2015-01",
       "completedDate": "2015-06",
-      "engagement": 0.5,
-      "moments": [
-        {
-          "name": { "en": "Exam", "sv": "Tentamen" },
-          "code": "1000",
-          "credits": "15 ECTS",
-          "completedDate": "2015-06"
-        },
-        {
-          "name": {
-            "en": "Mandatory Components Completed",
-            "sv": "Fullgjort obligatorium"
-          },
-          "code": "FOBL",
-          "credits": "0 ECTS",
-          "completedDate": "2015-06"
-        }
-      ]
+      "engagement": 0.5
     }
   ],
   "skills": [
     {
       "key": "ai",
-      "label": { "en": "AI", "sv": "AI" },
+      "label": {
+        "en": "AI",
+        "sv": "AI"
+      },
       "items": [
         "Spec-driven development",
         "Multi-agent orchestration",
@@ -1579,7 +1249,10 @@
     },
     {
       "key": "languages",
-      "label": { "en": "Languages", "sv": "Språk" },
+      "label": {
+        "en": "Languages",
+        "sv": "Språk"
+      },
       "items": [
         "Rust",
         "C#/.NET",
@@ -1592,17 +1265,26 @@
     },
     {
       "key": "frameworks",
-      "label": { "en": "Frameworks", "sv": "Ramverk" },
+      "label": {
+        "en": "Frameworks",
+        "sv": "Ramverk"
+      },
       "items": ["React", "React Native", "Vue", "Angular", "Node.js"]
     },
     {
       "key": "cloud",
-      "label": { "en": "Cloud", "sv": "Moln" },
+      "label": {
+        "en": "Cloud",
+        "sv": "Moln"
+      },
       "items": ["Azure", "AWS", "Azure DevOps"]
     },
     {
       "key": "databases",
-      "label": { "en": "Databases", "sv": "Databaser" },
+      "label": {
+        "en": "Databases",
+        "sv": "Databaser"
+      },
       "items": [
         "PostgreSQL",
         "Microsoft SQL Server",
@@ -1614,12 +1296,18 @@
     },
     {
       "key": "devops",
-      "label": { "en": "DevOps", "sv": "DevOps" },
+      "label": {
+        "en": "DevOps",
+        "sv": "DevOps"
+      },
       "items": ["Docker", "Kubernetes", "CI/CD", "Infrastructure as Code"]
     },
     {
       "key": "practices",
-      "label": { "en": "Practices", "sv": "Arbetssätt" },
+      "label": {
+        "en": "Practices",
+        "sv": "Arbetssätt"
+      },
       "items": [
         "Software Architecture",
         "Microservices",
@@ -1630,7 +1318,10 @@
     },
     {
       "key": "leadership",
-      "label": { "en": "Leadership", "sv": "Ledarskap" },
+      "label": {
+        "en": "Leadership",
+        "sv": "Ledarskap"
+      },
       "items": [
         "Engineering Management",
         "Team Management",
@@ -1643,7 +1334,10 @@
     },
     {
       "key": "compliance",
-      "label": { "en": "Compliance", "sv": "Regelefterlevnad" },
+      "label": {
+        "en": "Compliance",
+        "sv": "Regelefterlevnad"
+      },
       "items": [
         "Cybersecurity",
         "Regulatory Compliance",
