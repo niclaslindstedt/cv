@@ -1,10 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import {
-  getMoonPosition,
-  getSunPosition,
-  type CelestialPosition,
-} from "../utils/celestial";
+import { getSunPosition, type CelestialPosition } from "../utils/celestial";
 import type { Theme } from "../utils/theme";
 
 type Props = { theme: Theme };
@@ -53,31 +49,61 @@ function makeStars(count: number, seed = 1337): Star[] {
 }
 
 export function CelestialSky({ theme }: Props) {
-  const [pos, setPos] = useState<CelestialPosition>(() =>
-    theme === "dark" ? getMoonPosition() : getSunPosition(),
-  );
+  const [pos, setPos] = useState<CelestialPosition>(() => getSunPosition());
 
   useEffect(() => {
-    const update = () =>
-      setPos(theme === "dark" ? getMoonPosition() : getSunPosition());
+    if (theme !== "light") return;
+    const update = () => setPos(getSunPosition());
     update();
     const id = window.setInterval(update, 30_000);
     return () => window.clearInterval(id);
   }, [theme]);
 
   useEffect(() => {
+    if (theme !== "light") return;
     const root = document.documentElement;
     root.style.setProperty("--celestial-x", `${(pos.x * 100).toFixed(2)}%`);
     root.style.setProperty("--celestial-y", `${(pos.y * 100).toFixed(2)}%`);
     root.style.setProperty("--celestial-altitude", pos.altitude.toFixed(3));
-  }, [pos]);
+  }, [pos, theme]);
 
-  const stars = useMemo(() => makeStars(64), []);
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme !== "dark") {
+      root.style.setProperty("--scroll-progress", "0");
+      return;
+    }
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const max = Math.max(
+        document.documentElement.scrollHeight - window.innerHeight,
+        1,
+      );
+      const progress = Math.min(Math.max(window.scrollY / max, 0), 1);
+      root.style.setProperty("--scroll-progress", progress.toFixed(4));
+    };
+    const onScroll = () => {
+      if (raf !== 0) return;
+      raf = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf !== 0) window.cancelAnimationFrame(raf);
+    };
+  }, [theme]);
+
+  const stars = useMemo(() => makeStars(96), []);
 
   return (
     <div className="celestial-sky" aria-hidden="true">
       {theme === "dark" ? (
         <>
+          <div className="atmosphere" />
           <div className="starfield">
             {stars.map((star, i) => (
               <span
@@ -98,13 +124,7 @@ export function CelestialSky({ theme }: Props) {
               />
             ))}
           </div>
-          <div className="celestial moon" aria-label="Moon">
-            <div className="moon-glow" />
-            <div className="moon-body">
-              <div className="moon-craters" />
-              <div className="moon-terminator" />
-            </div>
-          </div>
+          <div className="horizon" />
         </>
       ) : (
         <>
@@ -129,12 +149,8 @@ export function CelestialSky({ theme }: Props) {
             ))}
           </div>
           <div className="celestial sun" aria-label="Sun">
-            <div className="sun-corona" />
-            <div className="sun-rays" />
-            <div className="sun-halo" />
-            <div className="sun-body">
-              <div className="sun-surface" />
-            </div>
+            <div className="sun-glow" />
+            <div className="sun-body" />
           </div>
         </>
       )}

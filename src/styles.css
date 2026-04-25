@@ -12,6 +12,7 @@
   --celestial-x: 50%;
   --celestial-y: 12%;
   --celestial-altitude: 1;
+  --scroll-progress: 0;
   --orb-color: rgba(180, 200, 230, 1);
   --orb-color-soft: rgba(180, 200, 230, 0.12);
   --border: #1d2533;
@@ -82,7 +83,11 @@ body {
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100lvh;
   z-index: 0;
   pointer-events: none;
   background:
@@ -106,7 +111,11 @@ body::before {
 
 .celestial-sky {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100lvh;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -126,67 +135,23 @@ body::before {
 }
 
 .celestial.sun {
-  width: 13vmin;
-  height: 13vmin;
+  width: 14vmin;
+  height: 14vmin;
 }
 
-.sun-corona {
+.sun-glow {
   position: absolute;
-  inset: -260%;
+  inset: -220%;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(255, 220, 140, 0.22) 0%,
-    rgba(255, 180, 80, 0.1) 18%,
-    rgba(255, 150, 60, 0.04) 35%,
-    transparent 60%
-  );
-  filter: blur(8px);
-  animation: sun-pulse 7s ease-in-out infinite alternate;
-}
-
-.sun-rays {
-  position: absolute;
-  inset: -180%;
-  border-radius: 50%;
-  background: repeating-conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    rgba(255, 230, 160, 0.14) 0.6deg,
-    transparent 1.2deg,
-    transparent 12deg
-  );
-  -webkit-mask: radial-gradient(
-    circle,
-    transparent 18%,
-    black 24%,
-    black 55%,
+    rgba(255, 240, 200, 0.28) 0%,
+    rgba(255, 220, 160, 0.16) 22%,
+    rgba(255, 200, 130, 0.07) 45%,
     transparent 75%
   );
-  mask: radial-gradient(
-    circle,
-    transparent 18%,
-    black 24%,
-    black 55%,
-    transparent 75%
-  );
-  animation: sun-rotate 220s linear infinite;
-  filter: blur(2px);
-}
-
-.sun-halo {
-  position: absolute;
-  inset: -55%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 230, 150, 0.55) 0%,
-    rgba(255, 195, 90, 0.28) 35%,
-    rgba(255, 150, 70, 0.08) 70%,
-    transparent 100%
-  );
-  filter: blur(6px);
-  animation: sun-pulse 5s ease-in-out infinite alternate-reverse;
+  filter: blur(18px);
+  animation: sun-pulse 9s ease-in-out infinite alternate;
 }
 
 .sun-body {
@@ -194,194 +159,67 @@ body::before {
   inset: 0;
   border-radius: 50%;
   background: radial-gradient(
-    circle at 38% 32%,
-    #fffbe6 0%,
-    #ffe98a 22%,
-    #ffc14d 55%,
-    #f08838 88%,
-    #d35a1a 100%
+    circle at 50% 50%,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 250, 225, 0.92) 16%,
+    rgba(255, 230, 175, 0.62) 38%,
+    rgba(255, 205, 135, 0.3) 62%,
+    rgba(255, 185, 110, 0.12) 82%,
+    transparent 100%
   );
+  filter: blur(2px);
   box-shadow:
-    inset -6px -8px 20px rgba(160, 60, 0, 0.45),
-    inset 4px 6px 14px rgba(255, 255, 220, 0.5),
-    0 0 60px rgba(255, 180, 80, 0.55),
-    0 0 140px rgba(255, 200, 100, 0.35);
-  overflow: hidden;
-}
-
-.sun-surface {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background-image:
-    radial-gradient(
-      ellipse 30% 16% at 62% 38%,
-      rgba(220, 60, 0, 0.3) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 22% 14% at 28% 64%,
-      rgba(220, 70, 0, 0.25) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 18% 11% at 52% 22%,
-      rgba(255, 240, 160, 0.45) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 14% 8% at 70% 70%,
-      rgba(255, 80, 0, 0.22) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 12% 8% at 18% 30%,
-      rgba(255, 230, 130, 0.35) 0%,
-      transparent 70%
-    );
-  mix-blend-mode: overlay;
-  animation: sun-churn 26s ease-in-out infinite alternate;
+    0 0 36px rgba(255, 230, 175, 0.45),
+    0 0 90px rgba(255, 210, 145, 0.28);
+  animation: sun-pulse 11s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes sun-pulse {
   0% {
-    transform: scale(1);
-    opacity: 0.85;
-  }
-  100% {
-    transform: scale(1.08);
-    opacity: 1;
-  }
-}
-
-@keyframes sun-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes sun-churn {
-  0% {
-    transform: scale(1) rotate(0deg);
-    filter: hue-rotate(0deg);
-  }
-  100% {
-    transform: scale(1.04) rotate(8deg);
-    filter: hue-rotate(-6deg);
-  }
-}
-
-.celestial.moon {
-  width: 11vmin;
-  height: 11vmin;
-}
-
-.moon-glow {
-  position: absolute;
-  inset: -180%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(190, 210, 240, 0.18) 0%,
-    rgba(160, 180, 220, 0.08) 30%,
-    transparent 60%
-  );
-  filter: blur(12px);
-  animation: moon-breath 9s ease-in-out infinite alternate;
-}
-
-.moon-body {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 35% 30%,
-    #f8f9fc 0%,
-    #dde2ec 35%,
-    #aab1c1 75%,
-    #6c7488 100%
-  );
-  box-shadow:
-    inset -10px -12px 28px rgba(8, 12, 22, 0.55),
-    inset 6px 8px 16px rgba(255, 255, 255, 0.18),
-    0 0 30px rgba(190, 210, 240, 0.18);
-  overflow: hidden;
-}
-
-.moon-craters {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background-image:
-    radial-gradient(
-      circle 9% at 30% 36%,
-      rgba(60, 70, 90, 0.5) 0%,
-      rgba(60, 70, 90, 0.25) 60%,
-      transparent 80%
-    ),
-    radial-gradient(
-      circle 5% at 60% 26%,
-      rgba(60, 70, 90, 0.45) 0%,
-      transparent 75%
-    ),
-    radial-gradient(
-      circle 11% at 52% 62%,
-      rgba(50, 60, 80, 0.5) 0%,
-      transparent 75%
-    ),
-    radial-gradient(
-      circle 4% at 70% 70%,
-      rgba(50, 60, 80, 0.45) 0%,
-      transparent 75%
-    ),
-    radial-gradient(
-      circle 3% at 38% 76%,
-      rgba(50, 60, 80, 0.4) 0%,
-      transparent 75%
-    ),
-    radial-gradient(
-      circle 6% at 76% 46%,
-      rgba(60, 70, 90, 0.4) 0%,
-      transparent 75%
-    ),
-    radial-gradient(
-      circle 2.5% at 22% 58%,
-      rgba(50, 60, 80, 0.45) 0%,
-      transparent 75%
-    ),
-    radial-gradient(
-      circle 4% at 46% 18%,
-      rgba(60, 70, 90, 0.35) 0%,
-      transparent 75%
-    );
-  mix-blend-mode: multiply;
-}
-
-.moon-terminator {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: linear-gradient(
-    105deg,
-    transparent 50%,
-    rgba(2, 4, 10, 0.18) 78%,
-    rgba(2, 4, 10, 0.45) 100%
-  );
-  mix-blend-mode: multiply;
-}
-
-@keyframes moon-breath {
-  0% {
-    opacity: 0.7;
+    opacity: 0.9;
     transform: scale(1);
   }
   100% {
     opacity: 1;
     transform: scale(1.05);
   }
+}
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(2, 4, 12, calc(var(--scroll-progress, 0) * 0.55)) 0%,
+    rgba(2, 4, 12, calc(var(--scroll-progress, 0) * 0.35)) 55%,
+    transparent 100%
+  );
+}
+
+.horizon {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: calc(-22vh - var(--scroll-progress, 0) * 70vh);
+  height: 70vh;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 50% 100%,
+      rgba(140, 170, 230, 0.32) 0%,
+      rgba(90, 120, 200, 0.18) 28%,
+      rgba(50, 80, 160, 0.08) 55%,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse 90% 65% at 50% 110%,
+      rgba(70, 50, 140, 0.22) 0%,
+      rgba(40, 40, 110, 0.1) 40%,
+      transparent 75%
+    );
+  filter: blur(28px);
+  opacity: calc(1 - var(--scroll-progress, 0) * 0.55);
 }
 
 .starfield {
@@ -453,11 +291,8 @@ body::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sun-corona,
-  .sun-rays,
-  .sun-halo,
-  .sun-surface,
-  .moon-glow,
+  .sun-glow,
+  .sun-body,
   .star,
   .cloud {
     animation: none !important;
