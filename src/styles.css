@@ -839,9 +839,9 @@ a:hover {
 
 .education-head {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 4px;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
 }
 
 .education-head h3 {
@@ -859,11 +859,12 @@ a:hover {
   margin: 0;
   color: var(--fg-muted);
   font-size: 0.95rem;
+  line-height: 1.7;
 }
 
 .education-credits {
   display: inline-block;
-  padding: 1px 10px;
+  padding: 2px 10px;
   font-size: 0.75rem;
   color: var(--accent);
   background: var(--accent-soft);
@@ -2348,6 +2349,17 @@ button.skill-pill-btn:focus-visible {
     border: 0 !important;
     border-bottom: 1px dotted #bbb !important;
     border-radius: 0 !important;
+  }
+
+  .education-head {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 2px;
+  }
+
+  .education-list p {
+    line-height: 1.4;
   }
 
   button.skill-pill-btn {
