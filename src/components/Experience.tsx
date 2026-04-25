@@ -53,9 +53,9 @@ function TerminatedIcon() {
       role="img"
     >
       <title>Company terminated</title>
-      <path d="M6 22 V11 a6 6 0 0 1 12 0 V22 Z" />
-      <line x1="12" y1="14" x2="12" y2="19" />
-      <line x1="10" y1="16" x2="14" y2="16" />
+      <path d="M6 20 V9 a6 6 0 0 1 12 0 V20 Z" />
+      <line x1="12" y1="12" x2="12" y2="17" />
+      <line x1="10" y1="14" x2="14" y2="14" />
     </svg>
   );
 }
