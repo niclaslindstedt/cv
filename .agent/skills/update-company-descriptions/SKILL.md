@@ -60,27 +60,30 @@ For each in-scope company:
      report it in the final summary — do not edit its tagline or
      description.
 2. **Synthesize** a new tagline:
-   - A single short phrase — typically three to seven words, never more
-     than one sentence. The tagline is the at-a-glance label, so it
-     must be tighter than the description.
-   - Capture the company's essence: what they do, who they serve, or
-     what makes them distinctive. Prefer the company's own positioning
-     when sources express it cleanly; otherwise distill it.
-   - Strip marketing fluff ("revolutionary", "world-class", "leading"
-     unless trivially true and source-supported).
-   - Match the tone of neighbouring `companies[].tagline` entries
-     (declarative, often a noun phrase, no first person).
+   - A short, descriptive noun phrase — typically three to seven words,
+     never more than one sentence. The tagline is a CV label, not a
+     marketing pitch: say what the company **is** (a category + an
+     audience or domain), not why it's great.
+   - No selling words. Strip "leading", "revolutionary", "world-class",
+     "automated", "powerful", "best-in-class", "innovative" — even when
+     the source uses them. The tagline must read as a neutral
+     descriptor a third party could write.
+   - No verbs of aspiration ("empowering", "transforming", "driving").
+     Prefer plain noun phrases like ".NET and JavaScript consultancy."
+     or "Forecasting and scenario planning platform.".
+   - Match the tone of neighbouring `companies[].tagline` entries.
 3. **Synthesize** a new description:
-   - One or two sentences. Keep it terse; this string renders inside a
-     compact card and modal on the site.
-   - Lead with what the company does, then add the most distinctive
-     fact (scale, ownership, sector positioning).
-   - Stay factual — only state things at least one source supports.
-   - Match the tone of neighbouring `companies[].description` entries
-     (declarative, no marketing fluff, no first person).
-   - The description must add information beyond the tagline — if it
-     would just re-phrase the tagline, tighten the tagline further or
-     expand the description with a distinguishing fact.
+   - A short paragraph — typically two to four sentences. It elaborates
+     on the tagline with the distinctive facts a recruiter would want:
+     ownership, scale (users / employees / markets), founding year and
+     founders, geography, audience, what makes the offering specific.
+   - Don't repeat the tagline verbatim. The first sentence may name the
+     category again if it lets later sentences pack in facts, but
+     prefer leading with a fact the tagline doesn't carry.
+   - Stay factual and neutral — only state things at least one source
+     supports. No marketing fluff, no first person, no superlatives
+     beyond what's trivially true and source-supported.
+   - Match the tone of neighbouring `companies[].description` entries.
 4. **Translate** both fields to Swedish (`sv`) with the same length and
    emphasis as the English (`en`). Preserve proper nouns; do not
    translate company names or product names.

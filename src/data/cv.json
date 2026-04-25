@@ -240,12 +240,12 @@
       "id": "bookbeat",
       "name": "BookBeat AB",
       "tagline": {
-        "en": "Audiobook and e-book streaming.",
-        "sv": "Strömning av ljudböcker och e-böcker."
+        "en": "Audiobook and e-book streaming service.",
+        "sv": "Strömningstjänst för ljudböcker och e-böcker."
       },
       "description": {
-        "en": "Audiobook and e-book streaming service owned by Bonnier Books, with over 1 million paying users across more than 10 European markets.",
-        "sv": "Strömningstjänst för ljudböcker och e-böcker som ägs av Bonnier Books, med över 1 miljon betalande användare på fler än 10 europeiska marknader."
+        "en": "Launched in 2015 and owned by Bonnier Books, BookBeat operates an audiobook and e-book streaming app across more than 10 European markets, with primary footprints in Sweden, Finland, Germany, and Poland. The service has over 1.1 million paying users. Headquartered in Stockholm, with additional offices in Karlstad, Helsinki, Berlin, Oslo, and Warsaw.",
+        "sv": "BookBeat lanserades 2015 och ägs av Bonnier Books. Strömningstjänsten för ljudböcker och e-böcker finns på fler än 10 europeiska marknader, med Sverige, Finland, Tyskland och Polen som huvudmarknader, och har över 1,1 miljoner betalande användare. Huvudkontoret ligger i Stockholm och kompletteras av kontor i Karlstad, Helsingfors, Berlin, Oslo och Warszawa."
       },
       "url": "https://www.bookbeat.com",
       "sourceUrls": [
@@ -265,8 +265,8 @@
       "id": "ibnq",
       "name": "IBNQ AB",
       "tagline": {
-        "en": "Family offices, digitalized.",
-        "sv": "Family offices, digitaliserade."
+        "en": "Software platform for family offices.",
+        "sv": "Mjukvaruplattform för family offices."
       },
       "description": {
         "en": "Digitalizing family offices.",
@@ -291,12 +291,12 @@
       "id": "seb",
       "name": "SEB",
       "tagline": {
-        "en": "Leading Nordic financial group.",
-        "sv": "Ledande nordisk finanskoncern."
+        "en": "Nordic financial group.",
+        "sv": "Nordisk finanskoncern."
       },
       "description": {
-        "en": "Nordic financial group with around 16,500 employees across more than 20 countries, founded over 160 years ago.",
-        "sv": "Nordisk finanskoncern med omkring 16 500 anställda i över 20 länder, grundad för över 160 år sedan."
+        "en": "Skandinaviska Enskilda Banken (SEB) is a Nordic financial group headquartered in Stockholm and founded over 160 years ago, with around 16,500 employees across more than 20 countries. It provides retail banking and advisory services in Sweden and the Baltics, and corporate and investment banking across the other Nordic countries, Germany, and the United Kingdom.",
+        "sv": "Skandinaviska Enskilda Banken (SEB) är en nordisk finanskoncern med huvudkontor i Stockholm, grundad för över 160 år sedan, med omkring 16 500 anställda i fler än 20 länder. Banken erbjuder privatbankstjänster och rådgivning i Sverige och Baltikum samt företags- och investmentbank i övriga Norden, Tyskland och Storbritannien."
       },
       "url": "https://www.seb.se",
       "sourceUrls": [
@@ -311,12 +311,12 @@
       "id": "mitt-skolval",
       "name": "Mitt Skolval",
       "tagline": {
-        "en": "Digital school selection for Sweden.",
-        "sv": "Digitalt skolval för Sverige."
+        "en": "School selection platform.",
+        "sv": "Plattform för skolval."
       },
       "description": {
-        "en": "Edtech company founded by Swedish school choice researchers, with a platform that streamlines school selection for municipalities and independent schools.",
-        "sv": "Edtech-bolag grundat av svenska skolvalsforskare, med en plattform som förenklar skolval för kommuner och fristående skolor."
+        "en": "Mitt Skolval is a Swedish edtech product from Svensk Utbildningsteknologi (Swedutech), founded by leading school choice researchers and run by a small team of around ten covering economics, engineering, and customer support. The platform handles school selection and student transfers for municipalities and independent school operators, aiming to place as many students as possible at a preferred school. The team also publishes research, gives lectures, and hosts the annual Skolvalskonferensen for Swedish school choice professionals.",
+        "sv": "Mitt Skolval är en svensk edtech-produkt från Svensk Utbildningsteknologi (Swedutech), grundad av ledande skolvalsforskare och driven av ett litet team om cirka tio personer med kompetens inom ekonomi, utveckling och kundstöd. Plattformen hanterar skolval och elevbyten åt kommuner och fristående skolhuvudmän, med målet att så många elever som möjligt ska få en plats vid en önskad skola. Teamet publicerar också forskning, håller föreläsningar och arrangerar den årliga Skolvalskonferensen för svenska skolvalsproffs."
       },
       "url": "https://www.swedutech.se",
       "sourceUrls": [
@@ -331,12 +331,12 @@
       "id": "symptoms",
       "name": "Symptoms Europe AB",
       "tagline": {
-        "en": "Patient-reported outcomes for healthcare.",
-        "sv": "Patientrapporterade utfall för vården."
+        "en": "eHealth platform for patient-reported outcomes.",
+        "sv": "eHälsoplattform för patientrapporterade utfall."
       },
       "description": {
-        "en": "eHealth platform where patients report symptoms and quality of life through validated questionnaires, helping clinicians plan care and measure outcomes.",
-        "sv": "eHälsoplattform där patienter rapporterar symtom och livskvalitet via validerade frågeformulär, vilket hjälper vårdgivare att planera vård och mäta utfall."
+        "en": "Symptoms is a language-independent eHealth platform where patients track symptoms, function, and quality of life through scientifically validated questionnaires they choose themselves, rather than receiving forms prescribed by a diagnosis. The data helps clinicians plan person-centred care and measure whether interventions actually improve outcomes; researchers also use it via minforskning.se. The company is based in Uppsala and was founded in the early 2000s by Johan and Martin out of clinical research and practice.",
+        "sv": "Symptoms är en språkoberoende eHälsoplattform där patienter följer symtom, funktion och livskvalitet via vetenskapligt validerade frågeformulär som de själva väljer, i stället för formulär som styrs av diagnos. Datan hjälper vårdgivare att planera personcentrerad vård och mäta om insatser faktiskt förbättrar utfallen; forskare använder den också via minforskning.se. Företaget har sitt säte i Uppsala och grundades i början av 2000-talet av Johan och Martin med rötter i kliniskt arbete och forskning."
       },
       "url": "https://www.symptoms.se",
       "sourceUrls": [
@@ -351,12 +351,12 @@
       "id": "indicio",
       "name": "Indicio Technologies AB",
       "tagline": {
-        "en": "Automated forecasting and scenario planning.",
-        "sv": "Automatiserade prognoser och scenarioplanering."
+        "en": "Forecasting and scenario planning platform.",
+        "sv": "Plattform för prognoser och scenarioplanering."
       },
       "description": {
-        "en": "Forecasting and scenario planning platform that automates multivariate models for industries from manufacturing to retail.",
-        "sv": "Plattform för prognoser och scenarioplanering som automatiserar multivariata modeller åt branscher från tillverkning till detaljhandel."
+        "en": "Indicio builds a forecasting and scenario planning platform that automates multivariate model building, incorporates external market and economic data, supports large-scale backtesting, and integrates with existing data stacks and BI tools. Customers span manufacturing, consumer goods, banking and financial services, construction, energy, retail, and e-commerce, using it for demand, sales, and market forecasting. The company was founded around 15 years ago by Frans Andersen, David Fagersand, and Daniel Schiess, after Frans encountered commodity-price forecasting problems at Scania.",
+        "sv": "Indicio bygger en plattform för prognoser och scenarioplanering som automatiserar multivariat modellbyggande, väver in extern marknads- och makrodata, stöder storskalig backtestning och integrerar med befintliga datalager och BI-verktyg. Kunderna finns inom tillverkning, konsumentvaror, bank och finans, bygg, energi, detaljhandel och e-handel och använder plattformen för efterfråge-, försäljnings- och marknadsprognoser. Bolaget grundades för cirka 15 år sedan av Frans Andersen, David Fagersand och Daniel Schiess, efter att Frans stött på utmaningar med råvaruprisprognoser på Scania."
       },
       "url": "https://www.indicio.com",
       "sourceUrls": [
