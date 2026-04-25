@@ -1832,6 +1832,94 @@ button.skill-pill-btn:focus-visible {
   font-weight: 700;
 }
 
+.program-course-progress {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+}
+
+.course-incomplete-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid #c62828;
+  border-radius: 999px;
+  color: #fff;
+  background: #c62828;
+}
+
+.program-course-moments {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+.program-course-moments-label {
+  margin: 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.program-moment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.program-moment-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 8px;
+  border-left: 2px solid var(--accent);
+  background: var(--bg);
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.program-moment-item--pending {
+  border-left-color: var(--border);
+  color: var(--fg-muted);
+}
+
+.program-moment-name {
+  font-weight: 500;
+}
+
+.program-moment-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.program-moment-code {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.72rem;
+  padding: 0 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--fg);
+}
+
+.program-moment-date {
+  white-space: nowrap;
+}
+
 @media (max-width: 520px) {
   .program-course-head {
     flex-direction: column;

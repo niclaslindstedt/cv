@@ -72,6 +72,10 @@ type UiStrings = {
     completed: string;
     inProgress: string;
     close: string;
+    moments: string;
+    momentNotCompleted: string;
+    courseProgress: (earned: string, total: string) => string;
+    incomplete: string;
   };
   education: {
     viewCoursesAria: (program: string) => string;
@@ -164,6 +168,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       completed: "Completed",
       inProgress: "In progress",
       close: "Close",
+      moments: "Components",
+      momentNotCompleted: "Not completed",
+      courseProgress: (earned, total) => `${earned} of ${total} earned`,
+      incomplete: "Incomplete",
     },
     education: {
       viewCoursesAria: (program) => `View courses for ${program}`,
@@ -256,6 +264,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       completed: "Avklarad",
       inProgress: "Pågående",
       close: "Stäng",
+      moments: "Moment",
+      momentNotCompleted: "Ej avklarat",
+      courseProgress: (earned, total) => `${earned} av ${total} avklarat`,
+      incomplete: "Ej avklarad",
     },
     education: {
       viewCoursesAria: (program) => `Visa kurser för ${program}`,
