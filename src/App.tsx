@@ -6,12 +6,18 @@ import { Experience } from "./components/Experience";
 import { Focus } from "./components/Focus";
 import { FocusModal } from "./components/FocusModal";
 import { Hero } from "./components/Hero";
+import { ProgramCoursesModal } from "./components/ProgramCoursesModal";
 import { Projects } from "./components/Projects";
 import { SkillModal } from "./components/SkillModal";
 import { Skills } from "./components/Skills";
 import { Timeline } from "./components/Timeline";
 import cv from "./data/cv.json";
-import type { Company, FocusArea, SkillDetail } from "./data/cv.types";
+import type {
+  Company,
+  Education as EducationItem,
+  FocusArea,
+  SkillDetail,
+} from "./data/cv.types";
 import { useLang } from "./utils/i18n";
 import { buildSkillUsageMap } from "./utils/skills";
 import { useTheme } from "./utils/theme";
@@ -28,6 +34,9 @@ export function App() {
   const [timelineOpen, setTimelineOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [selectedFocus, setSelectedFocus] = useState<FocusArea | null>(null);
+  const [selectedProgram, setSelectedProgram] = useState<EducationItem | null>(
+    null,
+  );
   const { theme, toggle: toggleTheme } = useTheme();
   const { t } = useLang();
 
@@ -73,6 +82,7 @@ export function App() {
           title={t(cv.sections.education)}
           education={cv.education}
           onSkillClick={setSelectedSkill}
+          onProgramClick={setSelectedProgram}
         />
         <Courses
           title={t(cv.sections.courses)}
@@ -105,6 +115,14 @@ export function App() {
       <FocusModal
         focus={selectedFocus}
         onClose={() => setSelectedFocus(null)}
+      />
+      <ProgramCoursesModal
+        program={selectedProgram}
+        onClose={() => setSelectedProgram(null)}
+        onSkillClick={(skill) => {
+          setSelectedProgram(null);
+          setSelectedSkill(skill);
+        }}
       />
     </div>
   );
