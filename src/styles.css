@@ -467,6 +467,37 @@ a:hover {
   color: var(--fg-muted);
 }
 
+.languages-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.language-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+}
+
+.language-name {
+  font-weight: 500;
+}
+
+.language-level {
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+}
+
 .projects {
   display: grid;
   gap: 16px;
@@ -1058,6 +1089,24 @@ a:hover {
 
 .skill-pill-empty {
   color: var(--fg-muted);
+}
+
+.skill-pill-personal {
+  color: var(--fg-muted);
+}
+
+.skill-personal-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
 }
 
 button.skill-pill-btn {
@@ -2401,6 +2450,7 @@ button.skill-pill-btn:focus-visible {
   .project,
   .timeline-item,
   .education-list > li,
+  .language-item,
   .timeline-vis-details,
   .skill-modal,
   .skill-modal-overlay,
@@ -2449,6 +2499,10 @@ button.skill-pill-btn:focus-visible {
 
   #projects {
     order: 5;
+  }
+
+  #languages {
+    order: 6;
   }
 
   .section {
@@ -2513,6 +2567,7 @@ button.skill-pill-btn:focus-visible {
   .project,
   .timeline-item,
   .education-list > li,
+  .language-item,
   .skill-pill {
     background: transparent !important;
     border-color: #bbb !important;

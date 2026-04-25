@@ -38,26 +38,34 @@ export function Skills({ title, skills, usages, onSkillClick }: Props) {
             <ul>
               {sortSkills(group.items, usages).map((skill) => {
                 const used = usages.get(skill) ?? [];
-                const isEmpty = used.length === 0;
+                const isPersonal = used.length === 0;
                 return (
                   <li key={skill}>
                     <button
                       type="button"
                       className={
-                        isEmpty
-                          ? "skill-pill skill-pill-btn skill-pill-empty"
+                        isPersonal
+                          ? "skill-pill skill-pill-btn skill-pill-personal"
                           : "skill-pill skill-pill-btn"
                       }
                       onClick={() => onSkillClick(skill)}
-                      title={isEmpty ? ui.skills.emptyTooltip : undefined}
+                      title={
+                        isPersonal
+                          ? ui.skills.personalInterestTooltip
+                          : undefined
+                      }
                       aria-label={
-                        isEmpty
-                          ? `${skill} — ${ui.skills.emptyTooltip}`
+                        isPersonal
+                          ? `${skill} — ${ui.skills.personalInterest}`
                           : undefined
                       }
                     >
                       <span>{skill}</span>
-                      {!isEmpty && (
+                      {isPersonal ? (
+                        <span className="skill-personal-badge">
+                          {ui.skills.personalInterest}
+                        </span>
+                      ) : (
                         <span className="skill-usage-count">{used.length}</span>
                       )}
                     </button>

@@ -25,6 +25,7 @@ export type Sections = {
   education: LocalizedString;
   courses: LocalizedString;
   skills: LocalizedString;
+  languages: LocalizedString;
 };
 
 export type FocusArea = {
@@ -160,6 +161,11 @@ export type SkillGroup = {
   items: string[];
 };
 
+export type SpokenLanguage = {
+  name: LocalizedString;
+  level: LocalizedString;
+};
+
 export type CV = {
   meta: Meta;
   name: string;
@@ -177,4 +183,5 @@ export type CV = {
   courses: Course[];
   skills: SkillGroup[];
   skillDetails: Record<string, SkillDetail>;
+  languages: SpokenLanguage[];
 };

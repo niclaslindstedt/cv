@@ -95,6 +95,8 @@ type UiStrings = {
   };
   skills: {
     emptyTooltip: string;
+    personalInterest: string;
+    personalInterestTooltip: string;
   };
   courses: {
     viewMomentsAria: (course: string) => string;
@@ -211,6 +213,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     skills: {
       emptyTooltip: "No entries yet",
+      personalInterest: "Personal interest",
+      personalInterestTooltip:
+        "Self-directed: not yet used in a job, assignment, or project.",
     },
     courses: {
       viewMomentsAria: (course) => `View components for ${course}`,
@@ -327,6 +332,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     skills: {
       emptyTooltip: "Inga poster ännu",
+      personalInterest: "Personligt intresse",
+      personalInterestTooltip:
+        "Eget intresse: ännu inte använt i ett jobb, uppdrag eller projekt.",
     },
     courses: {
       viewMomentsAria: (course) => `Visa moment för ${course}`,

@@ -81,6 +81,10 @@
     "skills": {
       "en": "Skills",
       "sv": "Kompetenser"
+    },
+    "languages": {
+      "en": "Languages",
+      "sv": "Språk"
     }
   },
   "focus": [
@@ -241,8 +245,8 @@
         "sv": "OAuth 2.0-auktoriseringsserver i ASP.NET Core."
       },
       "description": {
-        "en": "ASP.NET Core implementation of the OAuth 2.0 authorization server (RFC 6749) — authorization code, client credentials, password, and refresh-token grants — with JWT bearer tokens, scopes, roles, audit logging, and Postgres-backed persistence via Entity Framework Core. Ships with a Blazor WebAssembly admin UI for managing applications, users, and scopes, and Docker images for both the API and the SPA. Covered by xUnit/Moq/Shouldly tests with codecov reporting and GitHub Actions CI. OpenID Connect was on the roadmap.",
-        "sv": "ASP.NET Core-implementation av en OAuth 2.0-auktoriseringsserver (RFC 6749) — authorization code, client credentials, password och refresh-token — med JWT-bearer-tokens, scopes, roller, audit-loggning och Postgres-persistens via Entity Framework Core. Levereras med ett Blazor WebAssembly-administrationsgränssnitt för att hantera applikationer, användare och scopes, och med Docker-avbildningar för både API:et och SPA:n. Testas med xUnit/Moq/Shouldly med codecov-rapportering och CI via GitHub Actions. OpenID Connect fanns på roadmappen."
+        "en": "ASP.NET Core implementation of OAuth 2.0 (RFC 6749) — authorization code, client credentials, password, and refresh-token grants — with JWT bearer tokens, scopes, roles, audit logging, and Postgres persistence via Entity Framework Core. Ships with a Blazor WebAssembly admin UI and Docker images for both the API and the SPA. OpenID Connect was on the roadmap.",
+        "sv": "ASP.NET Core-implementation av OAuth 2.0 (RFC 6749) — authorization code, client credentials, password och refresh-token — med JWT-bearer-tokens, scopes, roller, audit-loggning och Postgres-persistens via Entity Framework Core. Levereras med ett Blazor WebAssembly-administrationsgränssnitt och Docker-avbildningar för både API:et och SPA:n. OpenID Connect fanns på roadmappen."
       },
       "skills": [
         "C#/.NET",
@@ -250,7 +254,8 @@
         "Docker",
         "CI/CD",
         "Software Architecture",
-        "Cybersecurity"
+        "Cybersecurity",
+        "RFC Implementation"
       ],
       "github": { "owner": "niclaslindstedt", "repo": "dotnet-oauth2-server" },
       "openSource": true
@@ -265,8 +270,8 @@
         "sv": "Strömningstjänst för ljudböcker och e-böcker."
       },
       "description": {
-        "en": "Launched in 2015 and owned by Bonnier Books, BookBeat operates an audiobook and e-book streaming app across more than 10 European markets, with primary footprints in Sweden, Finland, Germany, and Poland. The service has over 1.1 million paying users. Headquartered in Stockholm, with additional offices in Karlstad, Helsinki, Berlin, Oslo, and Warsaw.",
-        "sv": "BookBeat lanserades 2015 och ägs av Bonnier Books. Strömningstjänsten för ljudböcker och e-böcker finns på fler än 10 europeiska marknader, med Sverige, Finland, Tyskland och Polen som huvudmarknader, och har över 1,1 miljoner betalande användare. Huvudkontoret ligger i Stockholm och kompletteras av kontor i Karlstad, Helsingfors, Berlin, Oslo och Warszawa."
+        "en": "Audiobook and e-book streaming service across more than 10 European markets, with over a million paying subscribers. Owned by Bonnier Books.",
+        "sv": "Strömningstjänst för ljudböcker och e-böcker på fler än 10 europeiska marknader, med över en miljon betalande prenumeranter. Ägs av Bonnier Books."
       },
       "url": "https://www.bookbeat.com",
       "sourceUrls": [
@@ -290,8 +295,8 @@
         "sv": "Mjukvaruplattform för family offices."
       },
       "description": {
-        "en": "IBNQ builds a wealth-management platform for family offices, private banks, and their high-net-worth clients, supporting aggregation of personal and asset information, AI-assisted decision-making, and data administration. Backed by investors including Söderberg & Partners, HMP Foundation, and DIG Investment, with a team drawn from technology, finance, and data management.",
-        "sv": "IBNQ bygger en plattform för förmögenhetsförvaltning åt family offices, privatbanker och deras förmögna klienter, med stöd för aggregering av person- och tillgångsdata, AI-stödd beslutsfattning och dataadministration. Backas av investerare som Söderberg & Partners, HMP Foundation och DIG Investment, och har ett team med bakgrund inom teknik, finans och dataförvaltning."
+        "en": "Wealth-management platform for family offices and private banks: aggregating personal and asset information, AI-assisted decision-making, and data administration for high-net-worth clients.",
+        "sv": "Plattform för förmögenhetsförvaltning åt family offices och privatbanker: aggregering av person- och tillgångsdata, AI-stödd beslutsfattning och dataadministration för förmögna klienter."
       },
       "terminated": true
     },
@@ -303,8 +308,8 @@
         "sv": ".NET- och JavaScript-konsultbolag."
       },
       "description": {
-        "en": "Stockholm-based IT consultancy of around 13 people, focused on .NET and JavaScript web development. Etimo deliberately turns down clients whose work doesn't contribute positively to society, and reinvests time and profits into pro-bono engagements for non-profits, charitable donations, and open-source contributions.",
-        "sv": "Stockholmsbaserat IT-konsultbolag på cirka 13 personer, inriktat på .NET- och JavaScript-utveckling. Etimo väljer aktivt bort kunder vars verksamhet inte bidrar positivt till samhället och investerar tid och delar av vinsten i pro bono-uppdrag åt ideella organisationer, välgörenhetsdonationer och bidrag till öppen källkod."
+        "en": "Stockholm-based .NET and JavaScript consultancy. Selectively turns down clients whose work doesn't contribute positively to society, and reinvests time and profits into pro-bono engagements and open-source contributions.",
+        "sv": "Stockholmsbaserat .NET- och JavaScript-konsultbolag. Väljer aktivt bort kunder vars verksamhet inte bidrar positivt till samhället, och investerar tid och vinst i pro bono-uppdrag och bidrag till öppen källkod."
       },
       "url": "https://www.etimo.se",
       "sourceUrls": [
@@ -323,8 +328,8 @@
         "sv": "Nordisk finanskoncern."
       },
       "description": {
-        "en": "Skandinaviska Enskilda Banken (SEB) is a Nordic financial group headquartered in Stockholm and founded over 160 years ago, with around 16,500 employees across more than 20 countries. It provides retail banking and advisory services in Sweden and the Baltics, and corporate and investment banking across the other Nordic countries, Germany, and the United Kingdom.",
-        "sv": "Skandinaviska Enskilda Banken (SEB) är en nordisk finanskoncern med huvudkontor i Stockholm, grundad för över 160 år sedan, med omkring 16 500 anställda i fler än 20 länder. Banken erbjuder privatbankstjänster och rådgivning i Sverige och Baltikum samt företags- och investmentbank i övriga Norden, Tyskland och Storbritannien."
+        "en": "Nordic financial group offering retail banking and advisory in Sweden and the Baltics, and corporate and investment banking across the wider Nordics, Germany, and the United Kingdom.",
+        "sv": "Nordisk finanskoncern med privatbank och rådgivning i Sverige och Baltikum, samt företags- och investmentbank i övriga Norden, Tyskland och Storbritannien."
       },
       "url": "https://www.seb.se",
       "sourceUrls": [
@@ -343,8 +348,8 @@
         "sv": "Plattform för skolval."
       },
       "description": {
-        "en": "Mitt Skolval is a Swedish edtech product from Svensk Utbildningsteknologi (Swedutech), founded by leading school choice researchers and run by a small team of around ten covering economics, engineering, and customer support. The platform handles school selection and student transfers for municipalities and independent school operators, aiming to place as many students as possible at a preferred school. The team also publishes research, gives lectures, and hosts the annual Skolvalskonferensen for Swedish school choice professionals.",
-        "sv": "Mitt Skolval är en svensk edtech-produkt från Svensk Utbildningsteknologi (Swedutech), grundad av ledande skolvalsforskare och driven av ett litet team om cirka tio personer med kompetens inom ekonomi, utveckling och kundstöd. Plattformen hanterar skolval och elevbyten åt kommuner och fristående skolhuvudmän, med målet att så många elever som möjligt ska få en plats vid en önskad skola. Teamet publicerar också forskning, håller föreläsningar och arrangerar den årliga Skolvalskonferensen för svenska skolvalsproffs."
+        "en": "Swedish edtech product from Svensk Utbildningsteknologi (Swedutech). Handles school selection and student transfers for municipalities and independent school operators, aiming to place as many students as possible at a preferred school.",
+        "sv": "Svensk edtech-produkt från Svensk Utbildningsteknologi (Swedutech). Hanterar skolval och elevbyten åt kommuner och fristående skolhuvudmän, med målet att så många elever som möjligt ska få en plats vid en önskad skola."
       },
       "url": "https://www.swedutech.se",
       "sourceUrls": [
@@ -363,8 +368,8 @@
         "sv": "eHälsoplattform för patientrapporterade utfall."
       },
       "description": {
-        "en": "Symptoms is a language-independent eHealth platform where patients track symptoms, function, and quality of life through scientifically validated questionnaires they choose themselves, rather than receiving forms prescribed by a diagnosis. The data helps clinicians plan person-centred care and measure whether interventions actually improve outcomes; researchers also use it via minforskning.se. The company is based in Uppsala and was founded in the early 2000s by Johan and Martin out of clinical research and practice.",
-        "sv": "Symptoms är en språkoberoende eHälsoplattform där patienter följer symtom, funktion och livskvalitet via vetenskapligt validerade frågeformulär som de själva väljer, i stället för formulär som styrs av diagnos. Datan hjälper vårdgivare att planera personcentrerad vård och mäta om insatser faktiskt förbättrar utfallen; forskare använder den också via minforskning.se. Företaget har sitt säte i Uppsala och grundades i början av 2000-talet av Johan och Martin med rötter i kliniskt arbete och forskning."
+        "en": "Language-independent eHealth platform where patients track symptoms, function, and quality of life through scientifically validated questionnaires they choose themselves, rather than forms prescribed by a diagnosis. The data helps clinicians plan person-centred care and measure whether interventions actually improve outcomes; researchers use it via minforskning.se.",
+        "sv": "Språkoberoende eHälsoplattform där patienter följer symtom, funktion och livskvalitet via vetenskapligt validerade frågeformulär som de själva väljer, i stället för formulär som styrs av diagnos. Datan hjälper vårdgivare att planera personcentrerad vård och mäta om insatser faktiskt förbättrar utfallen; forskare använder den via minforskning.se."
       },
       "url": "https://www.symptoms.se",
       "sourceUrls": [
@@ -383,8 +388,8 @@
         "sv": "Plattform för prognoser och scenarioplanering."
       },
       "description": {
-        "en": "Indicio builds a forecasting and scenario planning platform that automates multivariate model building, incorporates external market and economic data, supports large-scale backtesting, and integrates with existing data stacks and BI tools. Customers span manufacturing, consumer goods, banking and financial services, construction, energy, retail, and e-commerce, using it for demand, sales, and market forecasting. The company was founded around 15 years ago by Frans Andersen, David Fagersand, and Daniel Schiess, after Frans encountered commodity-price forecasting problems at Scania.",
-        "sv": "Indicio bygger en plattform för prognoser och scenarioplanering som automatiserar multivariat modellbyggande, väver in extern marknads- och makrodata, stöder storskalig backtestning och integrerar med befintliga datalager och BI-verktyg. Kunderna finns inom tillverkning, konsumentvaror, bank och finans, bygg, energi, detaljhandel och e-handel och använder plattformen för efterfråge-, försäljnings- och marknadsprognoser. Bolaget grundades för cirka 15 år sedan av Frans Andersen, David Fagersand och Daniel Schiess, efter att Frans stött på utmaningar med råvaruprisprognoser på Scania."
+        "en": "Forecasting and scenario planning platform that automates multivariate model building, weaves in external market and macro data, supports large-scale backtesting, and integrates with existing data stacks and BI tools. Used for demand, sales, and market forecasting across manufacturing, consumer goods, banking, construction, energy, retail, and e-commerce.",
+        "sv": "Plattform för prognoser och scenarioplanering som automatiserar multivariat modellbyggande, väver in extern marknads- och makrodata, stöder storskalig backtestning och integrerar med befintliga datalager och BI-verktyg. Används för efterfråge-, försäljnings- och marknadsprognoser inom tillverkning, konsumentvaror, bank, bygg, energi, detaljhandel och e-handel."
       },
       "url": "https://www.indicio.com",
       "sourceUrls": [
@@ -423,7 +428,10 @@
         "C#/.NET",
         "Microservices",
         "Azure",
-        "Kubernetes"
+        "Kubernetes",
+        "Terraform",
+        "gRPC/Protobuf",
+        "Vector Databases"
       ],
       "skills": [
         "Agentic Workflows",
@@ -432,6 +440,8 @@
         "Chatbots",
         "Cybersecurity",
         "Software Architecture",
+        "Observability",
+        "Bash/Shell",
         "Mentoring"
       ]
     },
@@ -460,6 +470,7 @@
         "Regulatory Compliance",
         "Risk Management",
         "Technology Roadmapping",
+        "Bash/Shell",
         "Mentoring",
         "Project Management"
       ]
@@ -499,6 +510,8 @@
             "Engineering Management",
             "Agile Methodologies",
             "Team Management",
+            "Observability",
+            "Bash/Shell",
             "GDPR",
             "Regulatory Compliance",
             "Technology Roadmapping",
@@ -538,7 +551,8 @@
             "Cybersecurity",
             "Software Architecture",
             "IT Strategy",
-            "Agile Methodologies"
+            "Agile Methodologies",
+            "Bash/Shell"
           ]
         },
         {
@@ -566,6 +580,8 @@
             "Engineering Management",
             "Agile Methodologies",
             "Team Management",
+            "Observability",
+            "Bash/Shell",
             "GDPR",
             "Regulatory Compliance",
             "Technology Roadmapping"
@@ -597,7 +613,8 @@
             "CI/CD",
             "Software Architecture",
             "Agile Methodologies",
-            "Azure DevOps"
+            "Azure DevOps",
+            "Bash/Shell"
           ]
         }
       ]
@@ -631,6 +648,7 @@
         "Engineering Management",
         "Agile Methodologies",
         "Team Management",
+        "PowerShell",
         "GDPR",
         "CE marking",
         "Regulatory Compliance",
@@ -658,7 +676,12 @@
         "Python",
         "Microsoft SQL Server"
       ],
-      "skills": ["CI/CD", "Cybersecurity", "Software Architecture"]
+      "skills": [
+        "CI/CD",
+        "Cybersecurity",
+        "Software Architecture",
+        "Bash/Shell"
+      ]
     },
     {
       "role": {
@@ -1437,7 +1460,9 @@
         "Python",
         "JavaScript",
         "SQL",
-        "C++"
+        "C++",
+        "Bash/Shell",
+        "PowerShell"
       ]
     },
     {
@@ -1468,7 +1493,8 @@
         "MySQL",
         "MongoDB",
         "Redis",
-        "CosmosDB"
+        "CosmosDB",
+        "Vector Databases"
       ]
     },
     {
@@ -1477,7 +1503,16 @@
         "en": "DevOps",
         "sv": "DevOps"
       },
-      "items": ["Docker", "Kubernetes", "CI/CD", "Infrastructure as Code"]
+      "items": [
+        "Linux",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "CI/CD",
+        "Infrastructure as Code",
+        "Observability",
+        "Networking"
+      ]
     },
     {
       "key": "practices",
@@ -1489,6 +1524,8 @@
         "Software Architecture",
         "Microservices",
         "Miniservices",
+        "gRPC/Protobuf",
+        "RFC Implementation",
         "Agile Methodologies",
         "Scrum"
       ]
@@ -1832,14 +1869,6 @@
       "description": {
         "en": "The web's runtime language — every browser runs it, and Node lets it run servers and tooling too.",
         "sv": "Webbens körspråk — varje webbläsare kör det, och Node låter det även driva servrar och verktyg."
-      },
-      "benefits": {
-        "en": "Ubiquitous; the only choice when you must run code in a browser without a build step.",
-        "sv": "Allestädes närvarande; det enda valet när kod måste köras i en webbläsare utan byggsteg."
-      },
-      "drawbacks": {
-        "en": "Loose typing, surprising coercions, and a fragmented module/build story until you reach for TypeScript.",
-        "sv": "Lös typning, oväntade konverteringar och en spretig modul- och byggstory tills du tar till TypeScript."
       }
     },
     "SQL": {
@@ -1850,18 +1879,23 @@
     },
     "C++": {
       "description": {
-        "en": "Long-standing systems language for software where you need control over memory, layout, and performance.",
-        "sv": "Långlivat systemspråk för mjukvara där du behöver kontroll över minne, layout och prestanda."
-      },
-      "benefits": {
-        "en": "Maximum performance ceiling; vast existing codebases in games, finance, and infra.",
-        "sv": "Högsta prestandatak; enorma befintliga kodbaser inom spel, finans och infrastruktur."
-      },
-      "drawbacks": {
-        "en": "Sharp edges everywhere; modern alternatives like Rust solve many of the historical pain points.",
-        "sv": "Vassa kanter överallt; moderna alternativ som Rust löser många av de historiska smärtpunkterna."
+        "en": "Long-standing systems language for software where you need control over memory, layout, and performance. Modern alternatives like Rust now cover much of the same territory with safer defaults.",
+        "sv": "Långlivat systemspråk för mjukvara där man behöver kontroll över minne, layout och prestanda. Moderna alternativ som Rust täcker idag mycket av samma område med säkrare standardval."
       },
       "url": "https://isocpp.org"
+    },
+    "Bash/Shell": {
+      "description": {
+        "en": "Bash and POSIX shell — the lingua franca for stitching together commands, files, and processes on a Unix-like system. The default scripting environment for CI, container entrypoints, and developer ergonomics.",
+        "sv": "Bash och POSIX-shell — lingua franca för att knyta ihop kommandon, filer och processer på Unix-liknande system. Standardskriptmiljön för CI, container-entrypoints och utvecklarergonomi."
+      }
+    },
+    "PowerShell": {
+      "description": {
+        "en": "Microsoft's object-oriented shell and scripting language. The default automation tool in Windows and .NET shops, where commands return structured objects instead of text streams.",
+        "sv": "Microsofts objektorienterade shell och skriptspråk. Standardverktyget för automatisering i Windows- och .NET-miljöer, där kommandon returnerar strukturerade objekt i stället för textströmmar."
+      },
+      "url": "https://learn.microsoft.com/powershell"
     },
     "React": {
       "description": {
@@ -1895,31 +1929,15 @@
     },
     "Vue": {
       "description": {
-        "en": "Approachable component framework with single-file components, a built-in reactivity system, and an opinionated default stack.",
-        "sv": "Lättillgängligt komponentramverk med single-file-komponenter, inbyggd reaktivitet och en åsiktsstyrd standardstack."
-      },
-      "benefits": {
-        "en": "Lower onboarding cost than React; the official ecosystem (Router, Pinia) feels coherent.",
-        "sv": "Lägre tröskel än React; det officiella ekosystemet (Router, Pinia) känns sammanhängande."
-      },
-      "drawbacks": {
-        "en": "Smaller hiring pool than React in many markets; large ecosystem is still mostly React-shaped.",
-        "sv": "Mindre rekryteringsbas än React på många marknader; det stora ekosystemet är fortfarande mest React-format."
+        "en": "Approachable component framework with single-file components, a built-in reactivity system, and an opinionated default stack (Router, Pinia).",
+        "sv": "Lättillgängligt komponentramverk med single-file-komponenter, inbyggd reaktivitet och en åsiktsstyrd standardstack (Router, Pinia)."
       },
       "url": "https://vuejs.org"
     },
     "Angular": {
       "description": {
-        "en": "Google's batteries-included frontend framework. Opinionated about structure, DI, RxJS, and the build pipeline.",
-        "sv": "Googles ramverk med batterier inkluderade. Tydliga åsikter om struktur, DI, RxJS och byggpipelinen."
-      },
-      "benefits": {
-        "en": "Strong conventions across teams and projects; predictable structure in large codebases.",
-        "sv": "Starka konventioner över team och projekt; förutsägbar struktur i stora kodbaser."
-      },
-      "drawbacks": {
-        "en": "Steep learning curve; iteration on small features is slower than lighter frameworks.",
-        "sv": "Brant inlärningskurva; iteration på små funktioner är långsammare än med lättare ramverk."
+        "en": "Google's batteries-included frontend framework. Opinionated about structure, DI, RxJS, and the build pipeline; gives a predictable shape to large codebases.",
+        "sv": "Googles ramverk med batterier inkluderade. Tydliga åsikter om struktur, DI, RxJS och byggpipelinen; ger en förutsägbar struktur i stora kodbaser."
       },
       "url": "https://angular.dev"
     },
@@ -1970,16 +1988,8 @@
     },
     "Azure DevOps": {
       "description": {
-        "en": "Microsoft's CI/CD, repo, and work-tracking suite. Pipelines (YAML) and Boards are the most-used pieces.",
-        "sv": "Microsofts svit för CI/CD, repo och ärendehantering. Pipelines (YAML) och Boards är de mest använda delarna."
-      },
-      "benefits": {
-        "en": "Integrated end-to-end story from work item to deployment; strong on-prem agent story.",
-        "sv": "Integrerad end-to-end från ärende till driftsättning; stark on-prem-agentstöd."
-      },
-      "drawbacks": {
-        "en": "GitHub Actions has eaten much of the open-source mindshare; some Azure DevOps features feel legacy.",
-        "sv": "GitHub Actions har tagit mycket av open source-uppmärksamheten; vissa delar i Azure DevOps känns gammaldags."
+        "en": "Microsoft's CI/CD, repo, and work-tracking suite. Pipelines (YAML) and Boards are the most-used pieces, with an integrated end-to-end story from work item to deployment.",
+        "sv": "Microsofts svit för CI/CD, repo och ärendehantering. Pipelines (YAML) och Boards är de mest använda delarna, med en integrerad end-to-end-story från ärende till driftsättning."
       },
       "url": "https://azure.microsoft.com/products/devops"
     },
@@ -2000,16 +2010,8 @@
     },
     "Microsoft SQL Server": {
       "description": {
-        "en": "Microsoft's enterprise relational database. Strong in regulated and Microsoft-centric environments.",
-        "sv": "Microsofts relationsdatabas för företag. Stark i reglerade och Microsoft-centrerade miljöer."
-      },
-      "benefits": {
-        "en": "Excellent tooling (SSMS, Profiler), powerful T-SQL, strong support story.",
-        "sv": "Utmärkta verktyg (SSMS, Profiler), kraftfullt T-SQL, stark supporthistoria."
-      },
-      "drawbacks": {
-        "en": "Licensing cost; Microsoft gravity well that makes mixed-cloud setups awkward.",
-        "sv": "Licenskostnad; Microsoft-dragningskraft som gör blandade molnmiljöer klumpiga."
+        "en": "Microsoft's enterprise relational database. Strong in regulated and Microsoft-centric environments, with first-class tooling (SSMS, Profiler) and powerful T-SQL.",
+        "sv": "Microsofts relationsdatabas för företag. Stark i reglerade och Microsoft-centrerade miljöer, med förstklassiga verktyg (SSMS, Profiler) och kraftfullt T-SQL."
       },
       "url": "https://www.microsoft.com/sql-server"
     },
@@ -2030,48 +2032,80 @@
     },
     "MongoDB": {
       "description": {
-        "en": "Document-oriented database that stores BSON documents. Good fit for flexible, schema-light models early in a product's life.",
-        "sv": "Dokumentorienterad databas som lagrar BSON-dokument. Passar bra för flexibla, schema-lätta modeller tidigt i en produkts liv."
-      },
-      "benefits": {
-        "en": "Flexible schema accelerates early iteration; horizontal scaling story is built-in.",
-        "sv": "Flexibelt schema snabbar upp tidig iteration; horisontell skalning är inbyggd."
-      },
-      "drawbacks": {
-        "en": "Schema flexibility is debt you pay later; multi-document transactions and complex joins are awkward.",
-        "sv": "Schema-flexibilitet är skuld som betalas senare; transaktioner över flera dokument och komplexa joins är klumpiga."
+        "en": "Document-oriented database that stores BSON documents. Good fit for prototypes and workloads where the schema is genuinely fluid; relational stores remain the safer default in production.",
+        "sv": "Dokumentorienterad databas som lagrar BSON-dokument. Passar prototyper och arbetslaster där schemat verkligen är formbart; relationsdatabaser är fortfarande säkrare standardval i produktion."
       },
       "url": "https://www.mongodb.com"
     },
     "Redis": {
       "description": {
-        "en": "In-memory key-value store used as cache, message broker, rate limiter, and a hundred other things.",
-        "sv": "Nyckel-värde-lager i minnet som används som cache, meddelandekö, rate limiter och hundra andra saker."
-      },
-      "benefits": {
-        "en": "Sub-millisecond latency, simple data model, a battle-tested swiss army knife.",
-        "sv": "Latens under millisekunden, enkel datamodell, en stridsprövad schweizisk armékniv."
-      },
-      "drawbacks": {
-        "en": "Memory cost grows fast; durability story is weaker than disk-backed databases.",
-        "sv": "Minneskostnaden växer snabbt; varaktighetshistoriken är svagare än disk-baserade databaser."
+        "en": "In-memory key-value store used as cache, message broker, rate limiter, and a hundred other things. The standard answer when a workload outgrows in-process memory but doesn't need a full database.",
+        "sv": "Nyckel-värde-lager i minnet som används som cache, meddelandekö, rate limiter och hundra andra saker. Standardvalet när en arbetslast vuxit ur in-process-minne men inte behöver en fullskalig databas."
       },
       "url": "https://redis.io"
     },
     "CosmosDB": {
       "description": {
-        "en": "Azure's globally distributed, multi-model database. Offers SQL, MongoDB, Cassandra, and table APIs over the same engine.",
-        "sv": "Azures globalt distribuerade flermodelldatabas. Erbjuder SQL-, MongoDB-, Cassandra- och table-API:er över samma motor."
-      },
-      "benefits": {
-        "en": "Global distribution, tunable consistency, predictable performance via RU/s billing.",
-        "sv": "Global distribution, justerbar konsistens, förutsägbar prestanda via RU/s-debitering."
-      },
-      "drawbacks": {
-        "en": "Azure-only; RU/s pricing model takes work to model correctly and can surprise you.",
-        "sv": "Endast Azure; RU/s-prismodellen kräver arbete att modellera rätt och kan överraska."
+        "en": "Azure's globally distributed, multi-model database, with SQL, MongoDB, Cassandra, and table APIs over the same engine. Useful when an Azure workload genuinely needs global distribution and tunable consistency.",
+        "sv": "Azures globalt distribuerade flermodelldatabas med SQL-, MongoDB-, Cassandra- och table-API:er över samma motor. Användbar när en Azure-baserad arbetslast verkligen behöver global distribution och justerbar konsistens."
       },
       "url": "https://azure.microsoft.com/products/cosmos-db"
+    },
+    "Vector Databases": {
+      "description": {
+        "en": "Specialised stores for high-dimensional embeddings. Power semantic search, retrieval-augmented generation, and similarity-driven recommendation by indexing vectors with approximate-nearest-neighbour algorithms (HNSW, IVF).",
+        "sv": "Specialiserade lager för högdimensionella embeddings. Driver semantisk sökning, retrieval-augmented generation och rekommendationer via approximate-nearest-neighbour-algoritmer (HNSW, IVF)."
+      },
+      "benefits": {
+        "en": "Sub-second similarity search at millions of items; the missing piece for RAG and recommendation in modern apps.",
+        "sv": "Likhetssökning under sekunden på miljontals poster; den saknade pusselbiten för RAG och rekommendationer i moderna appar."
+      },
+      "drawbacks": {
+        "en": "Index quality and embedding choice dominate results; operational tuning and re-indexing costs add up at scale.",
+        "sv": "Indexkvalitet och val av embedding dominerar resultaten; driftsetting och återindexering kostar vid skala."
+      }
+    },
+    "Linux": {
+      "description": {
+        "en": "Open-source Unix-like operating system that runs almost every server, container, and cloud workload in production today. Equally common as a developer workstation for shell-driven workflows.",
+        "sv": "Öppen källkods-Unix-liknande operativsystem som idag driver i princip varje server, container och molnbelastning i produktion. Lika vanligt som utvecklarmiljö för skaldrivna arbetsflöden."
+      },
+      "url": "https://kernel.org"
+    },
+    "Networking": {
+      "description": {
+        "en": "TCP/IP, DNS, TLS, HTTP, and the layers below — how packets find their way between machines and how to debug it when they don't. The substrate every distributed system stands on.",
+        "sv": "TCP/IP, DNS, TLS, HTTP och lagren under — hur paket hittar mellan maskiner och hur man felsöker när de inte gör det. Underlaget som varje distribuerat system står på."
+      }
+    },
+    "Terraform": {
+      "description": {
+        "en": "HashiCorp's declarative infrastructure-as-code tool. Describes cloud and on-prem resources in HCL, plans diffs against live state, and applies changes idempotently.",
+        "sv": "HashiCorps deklarativa infrastructure-as-code-verktyg. Beskriver moln- och on-prem-resurser i HCL, planerar diffar mot live-tillståndet och applicerar ändringar idempotent."
+      },
+      "benefits": {
+        "en": "Reproducible infrastructure across environments and providers; plan/apply gives a clear preview before changes hit production.",
+        "sv": "Reproducerbar infrastruktur mellan miljöer och leverantörer; plan/apply ger en tydlig förhandsvisning innan ändringar når produktion."
+      },
+      "drawbacks": {
+        "en": "State files are a sensitive operational asset; provider drift and module versioning bite teams that don't invest in conventions.",
+        "sv": "Statefiler är en känslig drifttillgång; leverantörsdrift och modulversioner biter team som inte investerar i konventioner."
+      },
+      "url": "https://www.terraform.io"
+    },
+    "Observability": {
+      "description": {
+        "en": "Logs, metrics, and traces wired together so you can ask new questions about a running system without redeploying it. The thing that decides whether oncall is a five-minute lookup or a three-hour archaeology dig.",
+        "sv": "Loggar, mätvärden och spår kopplade så att man kan ställa nya frågor om ett körande system utan att deploya om det. Det som avgör om oncall blir en femminuters sökning eller en tretimmars arkeologisk utgrävning."
+      },
+      "benefits": {
+        "en": "Faster incident resolution; data-driven capacity and reliability decisions instead of guessing.",
+        "sv": "Snabbare incidentlösning; datadrivna kapacitets- och tillförlitlighetsbeslut i stället för gissningar."
+      },
+      "drawbacks": {
+        "en": "Cardinality, retention, and ingestion costs grow fast; bad signals are worse than no signals because they invite false confidence.",
+        "sv": "Kardinalitet, retention och ingest-kostnader växer snabbt; dåliga signaler är värre än inga eftersom de inbjuder till falsk självsäkerhet."
+      }
     },
     "Docker": {
       "description": {
@@ -2155,6 +2189,27 @@
       "drawbacks": {
         "en": "Less granular scaling and ownership; service boundaries still demand discipline.",
         "sv": "Mindre granulär skalning och ägarskap; tjänstegränser kräver fortfarande disciplin."
+      }
+    },
+    "gRPC/Protobuf": {
+      "description": {
+        "en": "Schema-first RPC over HTTP/2 with Protocol Buffers as the wire format. The default for typed, low-overhead service-to-service calls inside a backend mesh.",
+        "sv": "Schema-först-RPC över HTTP/2 med Protocol Buffers som wire-format. Standardvalet för typade, lågoverhead-anrop mellan tjänster i en backend-mesh."
+      },
+      "benefits": {
+        "en": "Generated clients in every language; binary payloads and HTTP/2 streams shrink latency vs. JSON over HTTP/1.1.",
+        "sv": "Genererade klienter i alla språk; binära payloads och HTTP/2-strömmar minskar latens jämfört med JSON över HTTP/1.1."
+      },
+      "drawbacks": {
+        "en": "Browser support is awkward (gRPC-Web bridges, but isn't free); harder to debug than text protocols without the right tooling.",
+        "sv": "Webbläsarstödet är klumpigt (gRPC-Web bryggar, men är inte gratis); svårare att felsöka än textprotokoll utan rätt verktyg."
+      },
+      "url": "https://grpc.io"
+    },
+    "RFC Implementation": {
+      "description": {
+        "en": "Reading an IETF RFC end-to-end and producing a conforming implementation: parsing the normative MUST/SHOULD/MAY language, modelling state machines, and writing test vectors that prove the spec is met. Slow, careful work where the prize is interoperability.",
+        "sv": "Att läsa en IETF-RFC från pärm till pärm och skriva en regelrätt implementation: tolka de normativa MUST/SHOULD/MAY-formuleringarna, modellera tillståndsmaskiner och skriva testvektorer som bevisar att specifikationen följs. Långsamt och noggrant arbete där priset är interoperabilitet."
       }
     },
     "Agile Methodologies": {
@@ -2267,5 +2322,27 @@
         "sv": "EU:s överensstämmelsemärkning för produkter — inklusive medicintekniska programvaror — som intygar att de uppfyller relevanta direktiv. Krävs för att sätta en reglerad produkt på den europeiska marknaden."
       }
     }
-  }
+  },
+  "languages": [
+    {
+      "name": {
+        "en": "Swedish",
+        "sv": "Svenska"
+      },
+      "level": {
+        "en": "Native",
+        "sv": "Modersmål"
+      }
+    },
+    {
+      "name": {
+        "en": "English",
+        "sv": "Engelska"
+      },
+      "level": {
+        "en": "Fluent",
+        "sv": "Flytande"
+      }
+    }
+  ]
 }
