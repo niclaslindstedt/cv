@@ -4,9 +4,9 @@
   --glass-bg: rgba(18, 21, 26, 0.55);
   --glass-border: rgba(255, 255, 255, 0.07);
   --glass-highlight: rgba(255, 255, 255, 0.04);
-  --orb-1: rgba(122, 183, 255, 0.22);
-  --orb-2: rgba(180, 130, 255, 0.16);
-  --orb-3: rgba(120, 220, 200, 0.12);
+  --orb-1: rgba(122, 183, 255, 0.1);
+  --orb-2: rgba(180, 130, 255, 0.07);
+  --orb-3: rgba(120, 220, 200, 0.05);
   --border: #1f242c;
   --fg: #e6e9ef;
   --fg-muted: #8a93a1;
@@ -36,9 +36,9 @@
   --glass-bg: rgba(255, 255, 255, 0.62);
   --glass-border: rgba(11, 13, 16, 0.06);
   --glass-highlight: rgba(255, 255, 255, 0.6);
-  --orb-1: rgba(0, 98, 204, 0.14);
-  --orb-2: rgba(180, 120, 220, 0.12);
-  --orb-3: rgba(80, 180, 160, 0.1);
+  --orb-1: rgba(0, 98, 204, 0.06);
+  --orb-2: rgba(180, 120, 220, 0.05);
+  --orb-3: rgba(80, 180, 160, 0.04);
   --border: #e1e5ec;
   --fg: #0b0d10;
   --fg-muted: #5a6270;
@@ -78,8 +78,8 @@ body::before {
     radial-gradient(40vmax 40vmax at 18% 12%, var(--orb-1), transparent 60%),
     radial-gradient(38vmax 38vmax at 82% 28%, var(--orb-2), transparent 60%),
     radial-gradient(45vmax 45vmax at 58% 88%, var(--orb-3), transparent 60%);
-  filter: blur(30px) saturate(120%);
-  animation: orb-drift 42s ease-in-out infinite alternate;
+  filter: blur(40px) saturate(100%);
+  animation: orb-drift 80s ease-in-out infinite alternate;
   will-change: transform;
 }
 
@@ -88,10 +88,10 @@ body::before {
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate3d(-3%, 2%, 0) scale(1.05);
+    transform: translate3d(-1%, 0.8%, 0) scale(1.02);
   }
   100% {
-    transform: translate3d(3%, -2%, 0) scale(1.08);
+    transform: translate3d(1%, -0.8%, 0) scale(1.03);
   }
 }
 
