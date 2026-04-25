@@ -98,8 +98,14 @@ export type Company = {
   sourceUrls?: SourceUrl[];
 };
 
+export type RoleTenure = {
+  title: LocalizedString;
+  startDate: string;
+  endDate: string | null;
+};
+
 export type Assignment = {
-  role: LocalizedString;
+  roles: RoleTenure[];
   clientId: string;
   startDate: string;
   endDate: string | null;
@@ -109,7 +115,7 @@ export type Assignment = {
 };
 
 export type Experience = {
-  role: LocalizedString;
+  roles: RoleTenure[];
   companyId: string;
   startDate: string;
   endDate: string | null;

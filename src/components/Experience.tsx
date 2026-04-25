@@ -2,6 +2,7 @@ import type {
   Assignment,
   Company,
   Experience as ExperienceItem,
+  RoleTenure,
 } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
@@ -79,30 +80,43 @@ function CompanyButton({
   );
 }
 
-function groupBy<T extends { startDate: string }>(
-  items: T[],
-  keyOf: (item: T) => string,
-): T[][] {
-  const groups: T[][] = [];
-  for (const item of items) {
-    const last = groups[groups.length - 1];
-    if (last && keyOf(last[0]) === keyOf(item)) {
-      last.push(item);
-    } else {
-      groups.push([item]);
-    }
-  }
-  return groups.map((group) =>
-    [...group].sort((a, b) => b.startDate.localeCompare(a.startDate)),
-  );
-}
-
 function resolveCompany(companies: Map<string, Company>, id: string): Company {
   const company = companies.get(id);
   if (!company) {
     throw new Error(`Unknown company id: ${id}`);
   }
   return company;
+}
+
+// Sort ascending by startDate so [last] is the newest role.
+function sortRolesAsc(roles: RoleTenure[]): RoleTenure[] {
+  return [...roles].sort((a, b) => a.startDate.localeCompare(b.startDate));
+}
+
+function RoleChain({ roles }: { roles: RoleTenure[] }) {
+  const { lang, t } = useLang();
+  // Newest first; bottom item is the original starting role (no arrow).
+  const reversed = [...sortRolesAsc(roles)].reverse();
+  return (
+    <ol className="role-chain">
+      {reversed.map((r, idx) => {
+        const isOldest = idx === reversed.length - 1;
+        return (
+          <li key={`${r.startDate}-${r.title.en}`} className="role-chain-item">
+            {isOldest ? (
+              <span className="promotion-arrow-spacer" aria-hidden="true" />
+            ) : (
+              <PromotionArrow />
+            )}
+            <span className="role">{t(r.title)}</span>
+            <span className="role-chain-meta">
+              {formatRange(r.startDate, r.endDate, lang)}
+            </span>
+          </li>
+        );
+      })}
+    </ol>
+  );
 }
 
 export function Experience({
@@ -112,42 +126,18 @@ export function Experience({
   onSkillClick,
   onCompanyClick,
 }: Props) {
-  const groups = groupBy(experience, (e) => e.companyId);
   return (
     <Section id="experience" title={title}>
       <ol className="timeline">
-        {groups.map((group) =>
-          group.length === 1 ? (
-            <ExperienceItemView
-              key={`${group[0].companyId}-${group[0].startDate}`}
-              item={group[0]}
-              isPromotion={false}
-              showCompany={true}
-              companies={companies}
-              onSkillClick={onSkillClick}
-              onCompanyClick={onCompanyClick}
-            />
-          ) : (
-            <li
-              key={`group-${group[0].companyId}-${group[0].startDate}`}
-              className="timeline-group"
-            >
-              <ol className="timeline-group-items">
-                {group.map((item, idx) => (
-                  <ExperienceItemView
-                    key={`${item.companyId}-${item.startDate}`}
-                    item={item}
-                    isPromotion={idx < group.length - 1}
-                    showCompany={idx === 0}
-                    companies={companies}
-                    onSkillClick={onSkillClick}
-                    onCompanyClick={onCompanyClick}
-                  />
-                ))}
-              </ol>
-            </li>
-          ),
-        )}
+        {experience.map((item) => (
+          <ExperienceItemView
+            key={`${item.companyId}-${item.startDate}`}
+            item={item}
+            companies={companies}
+            onSkillClick={onSkillClick}
+            onCompanyClick={onCompanyClick}
+          />
+        ))}
       </ol>
     </Section>
   );
@@ -155,15 +145,11 @@ export function Experience({
 
 function ExperienceItemView({
   item,
-  isPromotion,
-  showCompany,
   companies,
   onSkillClick,
   onCompanyClick,
 }: {
   item: ExperienceItem;
-  isPromotion: boolean;
-  showCompany: boolean;
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
@@ -172,21 +158,19 @@ function ExperienceItemView({
   const company = resolveCompany(companies, item.companyId);
   const stack = item.stack ?? company.stack;
   const isActive = item.endDate === null;
+  const sortedRoles = sortRolesAsc(item.roles);
+  const newestRole = sortedRoles[sortedRoles.length - 1];
+  const hasPromotion = sortedRoles.length > 1;
   const classes = ["timeline-item"];
-  if (isPromotion) classes.push("timeline-promotion");
   if (isActive) classes.push("is-active");
   return (
     <li className={classes.join(" ")}>
       <div className="timeline-body">
         <h3 className="timeline-title">
-          <span className="role">{t(item.role)}</span>
-          {showCompany && (
-            <>
-              {" · "}
-              <CompanyButton company={company} onClick={onCompanyClick} />
-            </>
-          )}
-          {isPromotion && <PromotionArrow />}
+          <span className="role">{t(newestRole.title)}</span>
+          {" · "}
+          <CompanyButton company={company} onClick={onCompanyClick} />
+          {hasPromotion && <PromotionArrow />}
         </h3>
         <div className="timeline-meta">
           <span>{formatRange(item.startDate, item.endDate, lang)}</span>
@@ -194,7 +178,8 @@ function ExperienceItemView({
             <span className="timeline-engagement">{t(item.engagement)}</span>
           )}
         </div>
-        {showCompany && <p>{t(company.tagline)}</p>}
+        {hasPromotion && <RoleChain roles={sortedRoles} />}
+        <p>{t(company.tagline)}</p>
         {stack && stack.length > 0 && (
           <ul className="entry-stack">
             {stack.map((tech) => (
@@ -261,56 +246,28 @@ function AssignmentList({
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
 }) {
-  const groups = groupBy(assignments, (a) => a.clientId);
   return (
     <ol className="assignments-list">
-      {groups.map((group) =>
-        group.length === 1 ? (
-          <AssignmentItemView
-            key={`${group[0].clientId}-${group[0].startDate}`}
-            assignment={group[0]}
-            isPromotion={false}
-            showClient={true}
-            companies={companies}
-            onSkillClick={onSkillClick}
-            onCompanyClick={onCompanyClick}
-          />
-        ) : (
-          <li
-            key={`agroup-${group[0].clientId}-${group[0].startDate}`}
-            className="assignment-group"
-          >
-            <ol className="assignment-group-items">
-              {group.map((a, idx) => (
-                <AssignmentItemView
-                  key={`${a.clientId}-${a.startDate}`}
-                  assignment={a}
-                  isPromotion={idx < group.length - 1}
-                  showClient={idx === 0}
-                  companies={companies}
-                  onSkillClick={onSkillClick}
-                  onCompanyClick={onCompanyClick}
-                />
-              ))}
-            </ol>
-          </li>
-        ),
-      )}
+      {assignments.map((a) => (
+        <AssignmentItemView
+          key={`${a.clientId}-${a.startDate}`}
+          assignment={a}
+          companies={companies}
+          onSkillClick={onSkillClick}
+          onCompanyClick={onCompanyClick}
+        />
+      ))}
     </ol>
   );
 }
 
 function AssignmentItemView({
   assignment: a,
-  isPromotion,
-  showClient,
   companies,
   onSkillClick,
   onCompanyClick,
 }: {
   assignment: Assignment;
-  isPromotion: boolean;
-  showClient: boolean;
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
@@ -318,26 +275,25 @@ function AssignmentItemView({
   const { lang, t } = useLang();
   const client = resolveCompany(companies, a.clientId);
   const isActive = a.endDate === null;
+  const sortedRoles = sortRolesAsc(a.roles);
+  const newestRole = sortedRoles[sortedRoles.length - 1];
+  const hasPromotion = sortedRoles.length > 1;
   const classes = ["assignment-item"];
-  if (isPromotion) classes.push("assignment-promotion");
   if (isActive) classes.push("is-active");
   return (
     <li className={classes.join(" ")}>
       <div className="assignment-body">
         <h4 className="assignment-title">
-          <span className="role">{t(a.role)}</span>
-          {showClient && (
-            <>
-              {" · "}
-              <CompanyButton company={client} onClick={onCompanyClick} />
-            </>
-          )}
-          {isPromotion && <PromotionArrow />}
+          <span className="role">{t(newestRole.title)}</span>
+          {" · "}
+          <CompanyButton company={client} onClick={onCompanyClick} />
+          {hasPromotion && <PromotionArrow />}
         </h4>
         <div className="assignment-meta">
           <span>{formatRange(a.startDate, a.endDate, lang)}</span>
         </div>
-        {showClient && <p>{t(client.tagline)}</p>}
+        {hasPromotion && <RoleChain roles={sortedRoles} />}
+        <p>{t(client.tagline)}</p>
         {a.stack && a.stack.length > 0 && (
           <ul className="entry-stack">
             {a.stack.map((tech) => (

@@ -128,10 +128,16 @@ function buildItems(cv) {
   const items = [];
   cv.experience.forEach((exp, i) => {
     const company = lookup(exp.companyId);
+    const sortedExpRoles = [...exp.roles].sort((a, b) =>
+      a.startDate.localeCompare(b.startDate),
+    );
     items.push({
       id: `exp-${i}`,
       kind: "experience",
-      title: localize(exp.role),
+      title: localizedJoin(
+        sortedExpRoles.map((r) => r.title),
+        " → ",
+      ),
       subtitle: localize(company.name),
       description: localize(company.description),
       startDate: exp.startDate,
@@ -139,60 +145,31 @@ function buildItems(cv) {
       skills: mergeTags(exp.stack, exp.skills),
       notes: exp.notes ? localize(exp.notes) : undefined,
     });
-    const grouped = new Map();
     (exp.assignments ?? []).forEach((a, j) => {
       const client = lookup(a.clientId);
-      const existing = grouped.get(a.clientId);
-      if (!existing) {
-        grouped.set(a.clientId, {
-          firstIndex: j,
-          roles: [{ role: a.role, startDate: a.startDate }],
-          client,
-          startDate: a.startDate,
-          endDate: a.endDate,
-          skills: mergeTags(a.stack, a.skills),
-          notes: a.notes ? [localize(a.notes)] : [],
-        });
-      } else {
-        existing.roles.push({ role: a.role, startDate: a.startDate });
-        if (a.startDate < existing.startDate) existing.startDate = a.startDate;
-        if (existing.endDate !== null) {
-          if (a.endDate === null) existing.endDate = null;
-          else if (a.endDate > existing.endDate) existing.endDate = a.endDate;
-        }
-        for (const tag of [...(a.stack ?? []), ...(a.skills ?? [])]) {
-          if (!existing.skills.includes(tag)) existing.skills.push(tag);
-        }
-        if (a.notes) existing.notes.push(localize(a.notes));
-      }
-    });
-    for (const group of grouped.values()) {
-      const sortedRoles = [...group.roles].sort((a, b) =>
-        a.startDate.localeCompare(b.startDate),
+      const sortedRoles = [...a.roles].sort((x, y) =>
+        x.startDate.localeCompare(y.startDate),
       );
       const title = localizedJoin(
-        sortedRoles.map((r) => r.role),
+        sortedRoles.map((r) => r.title),
         " → ",
       );
       const subtitle = localizedJoin(
-        [group.client.name, ` · via ${company.name}`],
+        [client.name, ` · via ${company.name}`],
         "",
       );
       items.push({
-        id: `exp-${i}-asg-${group.firstIndex}`,
+        id: `exp-${i}-asg-${j}`,
         kind: "assignment",
         title,
         subtitle,
-        description: localize(group.client.description),
-        startDate: group.startDate,
-        endDate: group.endDate,
-        skills: group.skills,
-        notes:
-          group.notes.length > 0
-            ? localizedJoin(group.notes, "\n\n")
-            : undefined,
+        description: localize(client.description),
+        startDate: a.startDate,
+        endDate: a.endDate,
+        skills: mergeTags(a.stack, a.skills),
+        notes: a.notes ? localize(a.notes) : undefined,
       });
-    }
+    });
   });
   (cv.education ?? []).forEach((ed, i) => {
     const institution = localize(ed.institution);

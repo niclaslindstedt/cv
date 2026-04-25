@@ -433,10 +433,16 @@
   ],
   "experience": [
     {
-      "role": {
-        "en": "IT Architect",
-        "sv": "IT-arkitekt"
-      },
+      "roles": [
+        {
+          "title": {
+            "en": "IT Architect",
+            "sv": "IT-arkitekt"
+          },
+          "startDate": "2024-04",
+          "endDate": null
+        }
+      ],
       "companyId": "bookbeat",
       "startDate": "2024-04",
       "endDate": null,
@@ -464,10 +470,16 @@
       ]
     },
     {
-      "role": {
-        "en": "CTO",
-        "sv": "CTO"
-      },
+      "roles": [
+        {
+          "title": {
+            "en": "CTO",
+            "sv": "CTO"
+          },
+          "startDate": "2023-09",
+          "endDate": "2024-04"
+        }
+      ],
       "companyId": "ibnq",
       "startDate": "2023-09",
       "endDate": "2024-04",
@@ -494,22 +506,83 @@
       ]
     },
     {
-      "role": {
-        "en": "Senior Manager",
-        "sv": "Senior Manager"
-      },
+      "roles": [
+        {
+          "title": {
+            "en": "Senior Consultant",
+            "sv": "Seniorkonsult"
+          },
+          "startDate": "2020-01",
+          "endDate": "2020-12"
+        },
+        {
+          "title": {
+            "en": "Manager",
+            "sv": "Manager"
+          },
+          "startDate": "2021-01",
+          "endDate": "2021-12"
+        },
+        {
+          "title": {
+            "en": "Senior Manager",
+            "sv": "Senior Manager"
+          },
+          "startDate": "2022-01",
+          "endDate": "2023-09"
+        }
+      ],
       "companyId": "etimo",
-      "startDate": "2022-01",
+      "startDate": "2020-01",
       "endDate": "2023-09",
       "skills": ["Mentoring"],
       "assignments": [
         {
-          "role": {
-            "en": "CTO",
-            "sv": "CTO"
-          },
+          "roles": [
+            {
+              "title": {
+                "en": "Senior Developer",
+                "sv": "Seniorutvecklare"
+              },
+              "startDate": "2020-02",
+              "endDate": "2020-12"
+            }
+          ],
+          "clientId": "seb",
+          "startDate": "2020-02",
+          "endDate": "2020-12",
+          "stack": ["C#/.NET", "Azure", "React", "TypeScript", "Miniservices"],
+          "skills": [
+            "Scrum",
+            "SQL",
+            "CI/CD",
+            "Software Architecture",
+            "Agile Methodologies",
+            "Azure DevOps",
+            "Bash/Shell"
+          ]
+        },
+        {
+          "roles": [
+            {
+              "title": {
+                "en": "Senior Developer",
+                "sv": "Seniorutvecklare"
+              },
+              "startDate": "2021-01",
+              "endDate": "2021-05"
+            },
+            {
+              "title": {
+                "en": "CTO",
+                "sv": "CTO"
+              },
+              "startDate": "2021-06",
+              "endDate": "2023-09"
+            }
+          ],
           "clientId": "mitt-skolval",
-          "startDate": "2022-01",
+          "startDate": "2021-01",
           "endDate": "2023-09",
           "stack": [
             "React",
@@ -539,109 +612,16 @@
       ]
     },
     {
-      "role": {
-        "en": "Manager",
-        "sv": "Manager"
-      },
-      "companyId": "etimo",
-      "startDate": "2021-01",
-      "endDate": "2021-12",
-      "skills": ["Mentoring"],
-      "assignments": [
+      "roles": [
         {
-          "role": {
-            "en": "Senior Developer",
-            "sv": "Seniorutvecklare"
+          "title": {
+            "en": "CTO & Co-Founder",
+            "sv": "CTO & medgrundare"
           },
-          "clientId": "mitt-skolval",
-          "startDate": "2021-01",
-          "endDate": "2021-05",
-          "stack": [
-            "React",
-            "Node.js",
-            "TypeScript",
-            "AWS",
-            "Kubernetes",
-            "MySQL"
-          ],
-          "skills": [
-            "CI/CD",
-            "Cybersecurity",
-            "Software Architecture",
-            "IT Strategy",
-            "Agile Methodologies",
-            "Bash/Shell"
-          ]
-        },
-        {
-          "role": {
-            "en": "CTO",
-            "sv": "CTO"
-          },
-          "clientId": "mitt-skolval",
-          "startDate": "2021-06",
-          "endDate": "2021-12",
-          "stack": [
-            "React",
-            "Node.js",
-            "TypeScript",
-            "AWS",
-            "Kubernetes",
-            "MySQL"
-          ],
-          "skills": [
-            "CI/CD",
-            "Cybersecurity",
-            "Software Architecture",
-            "Leadership",
-            "IT Strategy",
-            "Engineering Management",
-            "Agile Methodologies",
-            "Team Management",
-            "Observability",
-            "Bash/Shell",
-            "GDPR",
-            "Regulatory Compliance",
-            "Technology Roadmapping"
-          ]
+          "startDate": "2015-11",
+          "endDate": "2020-01"
         }
-      ]
-    },
-    {
-      "role": {
-        "en": "Senior Consultant",
-        "sv": "Seniorkonsult"
-      },
-      "companyId": "etimo",
-      "startDate": "2020-01",
-      "endDate": "2020-12",
-      "assignments": [
-        {
-          "role": {
-            "en": "Senior Developer",
-            "sv": "Seniorutvecklare"
-          },
-          "clientId": "seb",
-          "startDate": "2020-02",
-          "endDate": "2020-12",
-          "stack": ["C#/.NET", "Azure", "React", "TypeScript", "Miniservices"],
-          "skills": [
-            "Scrum",
-            "SQL",
-            "CI/CD",
-            "Software Architecture",
-            "Agile Methodologies",
-            "Azure DevOps",
-            "Bash/Shell"
-          ]
-        }
-      ]
-    },
-    {
-      "role": {
-        "en": "CTO & Co-Founder",
-        "sv": "CTO & medgrundare"
-      },
+      ],
       "companyId": "symptoms",
       "startDate": "2015-11",
       "endDate": "2020-01",
@@ -676,10 +656,16 @@
       ]
     },
     {
-      "role": {
-        "en": "Backend Developer",
-        "sv": "Backend-utvecklare"
-      },
+      "roles": [
+        {
+          "title": {
+            "en": "Backend Developer",
+            "sv": "Backend-utvecklare"
+          },
+          "startDate": "2015-09",
+          "endDate": "2020-01"
+        }
+      ],
       "companyId": "indicio",
       "startDate": "2015-09",
       "endDate": "2020-01",
@@ -702,10 +688,16 @@
       ]
     },
     {
-      "role": {
-        "en": "Founder",
-        "sv": "Grundare"
-      },
+      "roles": [
+        {
+          "title": {
+            "en": "Founder",
+            "sv": "Grundare"
+          },
+          "startDate": "2016-02",
+          "endDate": null
+        }
+      ],
       "companyId": "agilator",
       "startDate": "2016-02",
       "endDate": null,
