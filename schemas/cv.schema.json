@@ -206,7 +206,7 @@
     "company": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "name", "description"],
+      "required": ["id", "name", "tagline", "description"],
       "properties": {
         "id": {
           "type": "string",
@@ -214,6 +214,7 @@
           "description": "Stable slug used to reference this company from experience/assignment entries."
         },
         "name": { "type": "string", "minLength": 1 },
+        "tagline": { "$ref": "#/$defs/localizedString" },
         "description": { "$ref": "#/$defs/localizedString" },
         "url": { "type": "string", "format": "uri" },
         "terminated": { "type": "boolean" },
@@ -221,7 +222,7 @@
         "sourceUrls": {
           "type": "array",
           "minItems": 1,
-          "description": "Reference URLs the `update-company-descriptions` skill consults when rewriting `description`. Not rendered on the site.",
+          "description": "Reference URLs the `update-company-descriptions` skill consults when rewriting `tagline` and `description`. Not rendered on the site.",
           "items": { "$ref": "#/$defs/sourceUrl" }
         }
       }

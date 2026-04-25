@@ -185,7 +185,7 @@ function ExperienceItemView({
             <span className="timeline-engagement">{t(item.engagement)}</span>
           )}
         </div>
-        {!isPromotion && <p>{t(company.description)}</p>}
+        {!isPromotion && <p>{t(company.tagline)}</p>}
         {stack && stack.length > 0 && (
           <ul className="entry-stack">
             {stack.map((tech) => (
@@ -324,7 +324,7 @@ function AssignmentItemView({
         <div className="assignment-meta">
           <span>{formatRange(a.startDate, a.endDate, lang)}</span>
         </div>
-        {!isPromotion && <p>{t(client.description)}</p>}
+        {!isPromotion && <p>{t(client.tagline)}</p>}
         {a.stack && a.stack.length > 0 && (
           <ul className="entry-stack">
             {a.stack.map((tech) => (

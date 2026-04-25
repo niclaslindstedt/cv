@@ -1,12 +1,14 @@
 ---
 name: update-company-descriptions
-description: "Use when the user wants to refresh the `description` of one or more companies in `src/data/cv.json` using their declared `sourceUrls`. Fetches each source, synthesizes a tight bilingual description, and validates the result."
+description: "Use when the user wants to refresh the `tagline` and/or `description` of one or more companies in `src/data/cv.json` using their declared `sourceUrls`. Fetches each source, synthesizes a tight bilingual tagline + description pair, and validates the result."
 ---
 
 # update-company-descriptions
 
-Rewrite `companies[].description` (English + Swedish) for entries that
-declare `sourceUrls`, using the linked sources as ground truth. This
+Rewrite `companies[].tagline` and `companies[].description` (English +
+Swedish) for entries that declare `sourceUrls`, using the linked sources
+as ground truth. The two fields are kept in sync — every run that
+touches one re-evaluates the other so they don't drift apart. This
 skill is **intent-driven** — only run when the user explicitly asks
 ("refresh the company descriptions", "update BookBeat from its
 sources", …). Never mutate `cv.json` without an explicit ask.
@@ -55,8 +57,20 @@ For each in-scope company:
    - If a fetch fails (404, timeout, blocked), record the failure and
      continue with the remaining sources for that company.
    - If **every** source for a company fails, skip the company and
-     report it in the final summary — do not edit its description.
-2. **Synthesize** a new description:
+     report it in the final summary — do not edit its tagline or
+     description.
+2. **Synthesize** a new tagline:
+   - A single short phrase — typically three to seven words, never more
+     than one sentence. The tagline is the at-a-glance label, so it
+     must be tighter than the description.
+   - Capture the company's essence: what they do, who they serve, or
+     what makes them distinctive. Prefer the company's own positioning
+     when sources express it cleanly; otherwise distill it.
+   - Strip marketing fluff ("revolutionary", "world-class", "leading"
+     unless trivially true and source-supported).
+   - Match the tone of neighbouring `companies[].tagline` entries
+     (declarative, often a noun phrase, no first person).
+3. **Synthesize** a new description:
    - One or two sentences. Keep it terse; this string renders inside a
      compact card and modal on the site.
    - Lead with what the company does, then add the most distinctive
@@ -64,28 +78,33 @@ For each in-scope company:
    - Stay factual — only state things at least one source supports.
    - Match the tone of neighbouring `companies[].description` entries
      (declarative, no marketing fluff, no first person).
-3. **Translate** to Swedish (`sv`) with the same length and emphasis as
-   the English (`en`). Preserve proper nouns; do not translate company
-   names or product names.
-4. **Write** the new `{ en, sv }` pair into `companies[].description`.
-   Leave every other field on the company untouched.
-5. **Diff-check**: if the new description is materially the same as the
-   existing one (e.g. only word-order changes or punctuation), keep the
-   existing copy. Only emit edits that add information or improve
-   accuracy.
+   - The description must add information beyond the tagline — if it
+     would just re-phrase the tagline, tighten the tagline further or
+     expand the description with a distinguishing fact.
+4. **Translate** both fields to Swedish (`sv`) with the same length and
+   emphasis as the English (`en`). Preserve proper nouns; do not
+   translate company names or product names.
+5. **Write** the new `{ en, sv }` pairs into `companies[].tagline` and
+   `companies[].description`. Leave every other field on the company
+   untouched.
+6. **Diff-check**: if a new tagline or description is materially the
+   same as the existing one (e.g. only word-order changes or
+   punctuation), keep the existing copy for that field. Only emit edits
+   that add information or improve accuracy. The two fields are
+   evaluated independently — it's fine to update only one of them.
 
 ## Conventions
 
 - Don't add fields the schema doesn't allow. `sourceUrls` already
   exists; do not invent siblings (`lastUpdated`, `verifiedAt`, …).
 - Don't edit `name`, `url`, `terminated`, `stack`, `id`, or any other
-  company field. This skill only owns `description`.
+  company field. This skill only owns `tagline` and `description`.
 - Don't touch companies whose `terminated: true` is set unless the
-  user explicitly says so — their description is intentionally
-  historical.
-- Preserve JSON key order: `id`, `name`, `description`, `url`,
-  `terminated`, `stack`, `sourceUrls`. Prettier (`make fmt`) does not
-  reorder keys, so the writer must.
+  user explicitly says so — their tagline and description are
+  intentionally historical.
+- Preserve JSON key order: `id`, `name`, `tagline`, `description`,
+  `url`, `terminated`, `stack`, `sourceUrls`. Prettier (`make fmt`)
+  does not reorder keys, so the writer must.
 
 ## Verification
 
@@ -106,9 +125,9 @@ in — re-read the schema's `sourceUrl` definition.
 End the run with a short report containing, for each in-scope company:
 
 - `id` and `name`.
-- `updated` / `unchanged` / `skipped (all sources failed)`.
-- For `updated` entries, a one-line preview of the new English
-  description.
+- Per-field status — `tagline: updated|unchanged` and
+  `description: updated|unchanged` — or `skipped (all sources failed)`.
+- For `updated` fields, a one-line preview of the new English copy.
 - For `skipped` entries, the failing URL(s).
 
 Do not commit. Leave the working tree dirty so the user can review the
@@ -116,6 +135,7 @@ diff before staging.
 
 ## Skill self-improvement
 
-If you find yourself repeatedly adjusting the same description after a
-fetch (e.g. trimming the same marketing phrase), add a guideline to the
-"Synthesize" step above so future runs avoid it from the start.
+If you find yourself repeatedly adjusting the same tagline or
+description after a fetch (e.g. trimming the same marketing phrase),
+add a guideline to the matching "Synthesize" step above so future runs
+avoid it from the start.
