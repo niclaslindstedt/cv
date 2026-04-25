@@ -78,6 +78,15 @@ export type Experience = {
   assignments?: Assignment[];
 };
 
+export type ProgramCourse = {
+  name: LocalizedString;
+  code: string;
+  credits: string;
+  completedDate?: string;
+  grade?: string;
+  skills?: string[];
+};
+
 export type Education = {
   field: LocalizedString;
   institution: LocalizedString;
@@ -86,6 +95,7 @@ export type Education = {
   startDate: string;
   endDate: string;
   skills?: string[];
+  courses?: ProgramCourse[];
 };
 
 export type Course = {

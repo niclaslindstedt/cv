@@ -248,6 +248,24 @@
         "credits": { "type": "string", "minLength": 1 },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": { "$ref": "#/$defs/yearMonth" },
+        "skills": { "$ref": "#/$defs/stringList" },
+        "courses": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/programCourse" }
+        }
+      }
+    },
+    "programCourse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "code", "credits"],
+      "properties": {
+        "name": { "$ref": "#/$defs/localizedString" },
+        "code": { "type": "string", "minLength": 1 },
+        "credits": { "type": "string", "minLength": 1 },
+        "completedDate": { "$ref": "#/$defs/yearMonth" },
+        "grade": { "type": "string", "minLength": 1 },
         "skills": { "$ref": "#/$defs/stringList" }
       }
     },

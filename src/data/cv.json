@@ -449,7 +449,59 @@
       "level": { "en": "Master's program", "sv": "Masterprogram" },
       "credits": "142 ECTS",
       "startDate": "2011-08",
-      "endDate": "2014-04"
+      "endDate": "2014-04",
+      "courses": [
+        {
+          "name": {
+            "en": "Human Biology – Cells and Molecules",
+            "sv": "Humanbiologi – celler och molekyler"
+          },
+          "code": "3LK001",
+          "credits": "22.5 ECTS",
+          "completedDate": "2011-12",
+          "grade": "Pass with distinction"
+        },
+        {
+          "name": {
+            "en": "Human Biology – Organs and Systems",
+            "sv": "Humanbiologi – organ och system"
+          },
+          "code": "3LK002",
+          "credits": "30 ECTS",
+          "completedDate": "2012-06",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Mechanisms of Disease",
+            "sv": "Sjukdomsmekanismer"
+          },
+          "code": "3LK010",
+          "credits": "30 ECTS",
+          "completedDate": "2013-01",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Clinical Medicine I",
+            "sv": "Klinisk medicin I"
+          },
+          "code": "3LK020",
+          "credits": "30 ECTS",
+          "completedDate": "2013-06",
+          "grade": "Pass with distinction"
+        },
+        {
+          "name": {
+            "en": "Clinical Medicine II",
+            "sv": "Klinisk medicin II"
+          },
+          "code": "3LK030",
+          "credits": "29.5 ECTS",
+          "completedDate": "2014-04",
+          "grade": "Pass"
+        }
+      ]
     },
     {
       "field": { "en": "Medicine", "sv": "Medicin" },
@@ -457,7 +509,39 @@
       "level": { "en": "Master's program", "sv": "Masterprogram" },
       "credits": "60 ECTS",
       "startDate": "2010-01",
-      "endDate": "2010-12"
+      "endDate": "2010-12",
+      "courses": [
+        {
+          "name": {
+            "en": "Cell and Molecular Biology",
+            "sv": "Cell- och molekylärbiologi"
+          },
+          "code": "3MO011",
+          "credits": "15 ECTS",
+          "completedDate": "2010-04",
+          "grade": "Pass with distinction"
+        },
+        {
+          "name": {
+            "en": "Genetics and Embryology",
+            "sv": "Genetik och embryologi"
+          },
+          "code": "3MO021",
+          "credits": "15 ECTS",
+          "completedDate": "2010-06",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Anatomy and Physiology",
+            "sv": "Anatomi och fysiologi"
+          },
+          "code": "3MO031",
+          "credits": "30 ECTS",
+          "completedDate": "2010-12",
+          "grade": "Pass"
+        }
+      ]
     }
   ],
   "courses": [

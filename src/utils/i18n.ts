@@ -63,6 +63,19 @@ type UiStrings = {
     since: string;
     detailAria: (area: string) => string;
   };
+  programModal: {
+    coursesHeading: string;
+    coursesAria: (program: string) => string;
+    coursesSummary: (count: number) => string;
+    grade: string;
+    completed: string;
+    inProgress: string;
+    close: string;
+  };
+  education: {
+    viewCoursesAria: (program: string) => string;
+    coursesCount: (count: number) => string;
+  };
 };
 
 export const UI_STRINGS: Record<Language, UiStrings> = {
@@ -141,6 +154,19 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       since: "since",
       detailAria: (area) => `${area} details`,
     },
+    programModal: {
+      coursesHeading: "Courses",
+      coursesAria: (program) => `${program} courses`,
+      coursesSummary: (n) => `${n} course${n === 1 ? "" : "s"}`,
+      grade: "Grade",
+      completed: "Completed",
+      inProgress: "In progress",
+      close: "Close",
+    },
+    education: {
+      viewCoursesAria: (program) => `View courses for ${program}`,
+      coursesCount: (n) => `${n} course${n === 1 ? "" : "s"}`,
+    },
   },
   sv: {
     present: "Pågående",
@@ -218,6 +244,19 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     focus: {
       since: "sedan",
       detailAria: (area) => `Detaljer för ${area}`,
+    },
+    programModal: {
+      coursesHeading: "Kurser",
+      coursesAria: (program) => `Kurser i ${program}`,
+      coursesSummary: (n) => (n === 1 ? "1 kurs" : `${n} kurser`),
+      grade: "Betyg",
+      completed: "Avklarad",
+      inProgress: "Pågående",
+      close: "Stäng",
+    },
+    education: {
+      viewCoursesAria: (program) => `Visa kurser för ${program}`,
+      coursesCount: (n) => (n === 1 ? "1 kurs" : `${n} kurser`),
     },
   },
 };
