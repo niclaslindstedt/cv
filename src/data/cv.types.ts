@@ -2,9 +2,18 @@ export type Language = "en" | "sv";
 
 export type LocalizedString = { en: string; sv: string };
 
+export type Seo = {
+  keywords: string[];
+  image: string;
+  locale: string;
+  alternateLocale: string;
+};
+
 export type Meta = {
+  siteUrl: string;
   documentTitle: LocalizedString;
   description: LocalizedString;
+  seo: Seo;
 };
 
 export type Link = {
