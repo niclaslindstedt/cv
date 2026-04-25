@@ -151,7 +151,8 @@
         "GitHub Copilot",
         "Ollama"
       ],
-      "repo": "https://github.com/niclaslindstedt/zag"
+      "github": { "owner": "niclaslindstedt", "repo": "zag" },
+      "openSource": true
     },
     {
       "name": "zig",
@@ -170,7 +171,8 @@
         "Prompt engineering",
         "React"
       ],
-      "repo": "https://github.com/niclaslindstedt/zig"
+      "github": { "owner": "niclaslindstedt", "repo": "zig" },
+      "openSource": true
     },
     {
       "name": "zad",
@@ -183,7 +185,8 @@
         "sv": "Kopplar AI-agenter till externa tjänster (Discord, GitHub, Slack med flera) via avgränsade tjänstkonfigurationer istället för MCP-servrar. Finkornig behörighetsstyrning går längre än det leverantörernas API:er själva erbjuder, med Ed25519-signerade policyer lagrade i operativsystemets nyckelring så att en agent med filsystemsåtkomst inte i tysthet kan utöka sin egen omfattning. Nya leverantörer är en enda Rust trait-implementation."
       },
       "skills": ["Rust", "Agent permissions & security"],
-      "repo": "https://github.com/niclaslindstedt/zad"
+      "github": { "owner": "niclaslindstedt", "repo": "zad" },
+      "openSource": true
     },
     {
       "name": "ztf",
@@ -196,7 +199,8 @@
         "sv": "Agentassisterad end-to-end-testning med TOML-scenariofiler. Använder en explicit arrange/act/assert-struktur med programmatiska kontroller och kan vid behov delegera nyanserade bedömningar till en AI-granskare när regex-påståenden inte räcker till. Maskinläsbar utdata gör det enkelt att koppla in mot andra verktyg."
       },
       "skills": ["Rust", "Agent-in-the-loop testing", "AI evaluations"],
-      "repo": "https://github.com/niclaslindstedt/ztf"
+      "github": { "owner": "niclaslindstedt", "repo": "ztf" },
+      "openSource": true
     },
     {
       "name": "oss-spec",
@@ -209,7 +213,26 @@
         "sv": "Initierar nya open source-repon mot en gemensam specifikation och håller dem sedan i linje över tid. En friform-prompt tolkas till ett strukturerat manifest som skriver ett komplett repo till disk — licens, dokumentation, CI, release-pipelines och agentkonventioner — och skapar GitHub-remoten. Validering av ett befintligt repo rapporterar och åtgärdar avvikelser automatiskt, eller skapar ett GitHub-issue per överträdelse."
       },
       "skills": ["Rust", "Spec-driven development"],
-      "repo": "https://github.com/niclaslindstedt/oss-spec"
+      "github": { "owner": "niclaslindstedt", "repo": "oss-spec" },
+      "openSource": true
+    },
+    {
+      "name": "swarm",
+      "tagline": {
+        "en": "Agentic orchestration system, predecessor to zig and zag.",
+        "sv": "Agentiskt orkestreringssystem, föregångare till zig och zag."
+      },
+      "description": {
+        "en": "Multi-agent orchestration system explored as the precursor to the open-source zig/zag split. The repository remains private; the ideas were rewritten from scratch and released as zig (workflows) and zag (provider abstraction).",
+        "sv": "System för multi-agentorkestrering som utforskades som föregångare till den open source-baserade zig/zag-uppdelningen. Repositoryt är privat; idéerna skrevs om från grunden och släpptes som zig (arbetsflöden) och zag (leverantörsabstraktion)."
+      },
+      "skills": [
+        "Multi-agent orchestration",
+        "Agentic Workflows",
+        "Prompt engineering"
+      ],
+      "github": { "owner": "niclaslindstedt", "repo": "swarm-cli" },
+      "openSource": false
     }
   ],
   "companies": [

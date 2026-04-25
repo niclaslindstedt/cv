@@ -40,13 +40,40 @@ export type SkillDetail = {
   url?: string;
 };
 
+export type GithubRepoRef = {
+  owner: string;
+  repo: string;
+};
+
 export type Project = {
   name: string;
   tagline: LocalizedString;
   description: LocalizedString;
   stack?: string[];
   skills: string[];
+  github: GithubRepoRef;
+  openSource: boolean;
+};
+
+export type ProjectAuthorStats = {
+  login: string | null;
+  name: string;
+  commits: number;
+};
+
+export type ProjectStats = {
+  owner: string;
   repo: string;
+  firstCommitDate: string;
+  lastCommitDate: string;
+  totalCommits: number;
+  authors: ProjectAuthorStats[];
+};
+
+export type ProjectStatsFile = {
+  enabled: boolean;
+  fetchedAt?: string;
+  projects: Record<string, ProjectStats>;
 };
 
 export type Company = {
