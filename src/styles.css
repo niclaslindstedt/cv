@@ -624,9 +624,11 @@ a:hover {
     transform 120ms ease;
 }
 
-.focus-item-btn:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+@media (hover: hover) {
+  .focus-item-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
 }
 
 .focus-item-btn:focus-visible {
