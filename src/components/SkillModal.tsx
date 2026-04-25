@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import type { LocalizedString } from "../data/cv.types";
+import type { LocalizedString, SkillDetail } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { yearsOfExperience, type SkillUsage } from "../utils/skills";
@@ -14,6 +14,7 @@ function isLocalized(
 type Props = {
   skill: string | null;
   usages: SkillUsage[];
+  detail?: SkillDetail;
   onClose: () => void;
 };
 
@@ -35,7 +36,7 @@ function sortUsages(usages: SkillUsage[]): SkillUsage[] {
   });
 }
 
-export function SkillModal({ skill, usages, onClose }: Props) {
+export function SkillModal({ skill, usages, detail, onClose }: Props) {
   const { lang, t, ui } = useLang();
 
   const resolveLabel = (v: string | LocalizedString) =>
@@ -98,36 +99,69 @@ export function SkillModal({ skill, usages, onClose }: Props) {
             ✕
           </button>
         </header>
-        {sorted.length > 0 ? (
-          <ul className="skill-modal-list">
-            {sorted.map((u, i) => (
-              <li key={`${u.kind}-${i}`} className="skill-modal-item">
-                <span className="skill-modal-kind">{kindLabels[u.kind]}</span>
-                <div className="skill-modal-label">
-                  {u.role ? (
-                    <>
-                      <span className="skill-modal-role">{t(u.role)}</span>
-                      <span className="skill-modal-sublabel">
+        <div className="skill-modal-body">
+          {detail && (
+            <section className="skill-modal-detail">
+              <p className="skill-modal-description">{t(detail.description)}</p>
+              {(detail.benefits || detail.drawbacks) && (
+                <dl className="skill-modal-pros-cons">
+                  {detail.benefits && (
+                    <div className="skill-modal-pros">
+                      <dt>{ui.skillModal.benefits}</dt>
+                      <dd>{t(detail.benefits)}</dd>
+                    </div>
+                  )}
+                  {detail.drawbacks && (
+                    <div className="skill-modal-cons">
+                      <dt>{ui.skillModal.drawbacks}</dt>
+                      <dd>{t(detail.drawbacks)}</dd>
+                    </div>
+                  )}
+                </dl>
+              )}
+              {detail.url && (
+                <a
+                  className="skill-modal-link"
+                  href={detail.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  {ui.skillModal.learnMore}
+                </a>
+              )}
+            </section>
+          )}
+          {sorted.length > 0 ? (
+            <ul className="skill-modal-list">
+              {sorted.map((u, i) => (
+                <li key={`${u.kind}-${i}`} className="skill-modal-item">
+                  <span className="skill-modal-kind">{kindLabels[u.kind]}</span>
+                  <div className="skill-modal-label">
+                    {u.role ? (
+                      <>
+                        <span className="skill-modal-role">{t(u.role)}</span>
+                        <span className="skill-modal-sublabel">
+                          {resolveLabel(u.label)}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="skill-modal-role">
                         {resolveLabel(u.label)}
                       </span>
-                    </>
-                  ) : (
-                    <span className="skill-modal-role">
-                      {resolveLabel(u.label)}
+                    )}
+                  </div>
+                  {u.startDate && (
+                    <span className="skill-modal-range">
+                      {formatRange(u.startDate, u.endDate ?? null, lang)}
                     </span>
                   )}
-                </div>
-                {u.startDate && (
-                  <span className="skill-modal-range">
-                    {formatRange(u.startDate, u.endDate ?? null, lang)}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="skill-modal-empty">{ui.skillModal.empty}</p>
-        )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="skill-modal-empty">{ui.skillModal.empty}</p>
+          )}
+        </div>
       </div>
     </div>
   );

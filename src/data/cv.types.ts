@@ -30,6 +30,14 @@ export type Sections = {
 export type FocusArea = {
   area: LocalizedString;
   since: string;
+  description: LocalizedString;
+};
+
+export type SkillDetail = {
+  description: LocalizedString;
+  benefits?: LocalizedString;
+  drawbacks?: LocalizedString;
+  url?: string;
 };
 
 export type Project = {
@@ -111,4 +119,5 @@ export type CV = {
   education: Education[];
   courses: Course[];
   skills: SkillGroup[];
+  skillDetails: Record<string, SkillDetail>;
 };
