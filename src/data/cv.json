@@ -466,8 +466,7 @@
           },
           "code": "3MC100",
           "credits": "10 ECTS",
-          "completedDate": "2011-11",
-          "grade": "Pass"
+          "completedDate": "2011-11"
         },
         {
           "name": {
@@ -476,8 +475,7 @@
           },
           "code": "3AN200",
           "credits": "8 ECTS",
-          "completedDate": "2011-11",
-          "grade": "Pass"
+          "completedDate": "2011-11"
         },
         {
           "name": {
@@ -486,8 +484,7 @@
           },
           "code": "3AM012",
           "credits": "2.5 ECTS",
-          "completedDate": "2011-12",
-          "grade": "Pass"
+          "completedDate": "2011-12"
         },
         {
           "name": {
@@ -496,8 +493,7 @@
           },
           "code": "3AM008",
           "credits": "2.5 ECTS",
-          "completedDate": "2012-01",
-          "grade": "Pass"
+          "completedDate": "2012-01"
         },
         {
           "name": {
@@ -506,8 +502,7 @@
           },
           "code": "3NR137",
           "credits": "19.5 ECTS",
-          "completedDate": "2012-01",
-          "grade": "Pass"
+          "completedDate": "2012-01"
         },
         {
           "name": {
@@ -516,8 +511,7 @@
           },
           "code": "3AM010",
           "credits": "2.5 ECTS",
-          "completedDate": "2012-05",
-          "grade": "Pass"
+          "completedDate": "2012-05"
         },
         {
           "name": {
@@ -526,8 +520,7 @@
           },
           "code": "3SM011",
           "credits": "7.5 ECTS",
-          "completedDate": "2012-06",
-          "grade": "Pass"
+          "completedDate": "2012-06"
         },
         {
           "name": {
@@ -536,8 +529,7 @@
           },
           "code": "3PA014",
           "credits": "20 ECTS",
-          "completedDate": "2012-08",
-          "grade": "Pass"
+          "completedDate": "2012-08"
         },
         {
           "name": {
@@ -546,8 +538,7 @@
           },
           "code": "3KR093",
           "credits": "30 ECTS",
-          "completedDate": "2013-11",
-          "grade": "Pass"
+          "completedDate": "2013-11"
         },
         {
           "name": {
@@ -556,8 +547,7 @@
           },
           "code": "3ME040",
           "credits": "28.5 ECTS",
-          "completedDate": "2014-04",
-          "grade": "Pass"
+          "completedDate": "2014-04"
         }
       ]
     },
@@ -580,8 +570,7 @@
           },
           "code": "3BM000",
           "credits": "3 ECTS",
-          "completedDate": "2010-01",
-          "grade": "Pass"
+          "completedDate": "2010-01"
         },
         {
           "name": {
@@ -590,8 +579,7 @@
           },
           "code": "3ME040",
           "credits": "0.8 ECTS",
-          "completedDate": "2010-02",
-          "grade": "Pass"
+          "completedDate": "2010-02"
         },
         {
           "name": {
@@ -600,8 +588,7 @@
           },
           "code": "3BM010",
           "credits": "26.2 ECTS",
-          "completedDate": "2010-06",
-          "grade": "Pass"
+          "completedDate": "2010-06"
         },
         {
           "name": {
@@ -610,8 +597,7 @@
           },
           "code": "3BM013",
           "credits": "28.5 ECTS",
-          "completedDate": "2011-02",
-          "grade": "Pass"
+          "completedDate": "2011-02"
         },
         {
           "name": {
@@ -620,8 +606,7 @@
           },
           "code": "3ME041",
           "credits": "1.5 ECTS",
-          "completedDate": "2010-11",
-          "grade": "Pass"
+          "completedDate": "2010-11"
         },
         {
           "name": {
@@ -630,8 +615,7 @@
           },
           "code": "3ME042",
           "credits": "0.8 ECTS",
-          "completedDate": "2011-04",
-          "grade": "Pass"
+          "completedDate": "2011-04"
         }
       ]
     }
