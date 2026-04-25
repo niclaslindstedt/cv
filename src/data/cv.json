@@ -920,14 +920,6 @@
       "description": {
         "en": "The declarative query language for relational databases. Still the most leverage you can get out of any single technology in a data-heavy system.",
         "sv": "Det deklarativa frågespråket för relationsdatabaser. Fortfarande det enskilda tekniska val som ger mest hävstång i ett dataintensivt system."
-      },
-      "benefits": {
-        "en": "Mature, portable, optimised by decades of database engineering work.",
-        "sv": "Moget, portabelt, optimerat av decennier av databasutveckling."
-      },
-      "drawbacks": {
-        "en": "Each engine has its dialect quirks; complex queries can be opaque without good tooling.",
-        "sv": "Varje motor har sina dialektegenheter; komplexa frågor kan vara svårlästa utan bra verktyg."
       }
     },
     "C++": {
@@ -1189,14 +1181,6 @@
       "description": {
         "en": "Continuous integration and delivery — every change is built, tested, and deployable on every push, with humans only in the approval loop.",
         "sv": "Kontinuerlig integration och leverans — varje ändring byggs, testas och är driftsättbar vid varje push, med människor enbart i godkännandeloopen."
-      },
-      "benefits": {
-        "en": "Catches regressions early; turns deploys into a non-event; enables small, safe changes.",
-        "sv": "Fångar regressioner tidigt; gör driftsättningar till en ickehändelse; möjliggör små, säkra ändringar."
-      },
-      "drawbacks": {
-        "en": "Pipeline maintenance becomes its own product; flaky tests erode trust in the entire system.",
-        "sv": "Pipelineunderhåll blir sin egen produkt; flaky tests urholkar tilliten till hela systemet."
       }
     },
     "Infrastructure as Code": {
@@ -1217,14 +1201,6 @@
       "description": {
         "en": "Deciding the structure, boundaries, and trade-offs of a system so that today's features can ship and tomorrow's are still possible. Mostly about choosing what not to build.",
         "sv": "Att bestämma struktur, gränser och avvägningar i ett system så att dagens funktioner kan levereras och morgondagens fortfarande är möjliga. Mest handlar det om att välja vad man inte ska bygga."
-      },
-      "benefits": {
-        "en": "Aligned trade-offs early prevent expensive rewrites later.",
-        "sv": "Tydliga avvägningar tidigt förhindrar dyra omskrivningar senare."
-      },
-      "drawbacks": {
-        "en": "Over-architecting up front locks in choices before the problem is understood.",
-        "sv": "Överarkitektur tidigt låser in val innan problemet förstås."
       }
     },
     "Microservices": {
@@ -1259,14 +1235,6 @@
       "description": {
         "en": "Iterative, feedback-driven product development — small batches, frequent delivery, working software preferred over comprehensive documentation.",
         "sv": "Iterativ, återkopplingsdriven produktutveckling — små partier, frekvent leverans, fungerande mjukvara framför uttömmande dokumentation."
-      },
-      "benefits": {
-        "en": "Plans survive contact with reality because the cycle is short enough to react.",
-        "sv": "Planer överlever mötet med verkligheten eftersom cykeln är tillräckligt kort för att reagera."
-      },
-      "drawbacks": {
-        "en": "Easy to cargo-cult; agile rituals without agile mindset add overhead and reduce learning.",
-        "sv": "Lätt att cargokulta; agila ritualer utan agilt tankesätt ger overhead och färre lärdomar."
       }
     },
     "Scrum": {
