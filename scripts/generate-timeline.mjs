@@ -47,6 +47,37 @@ function monthIndex(iso) {
   return y * 12 + (m - 1);
 }
 
+function isoFromMonthIndex(idx) {
+  const y = Math.floor(idx / 12);
+  const m = (idx % 12) + 1;
+  return `${y}-${String(m).padStart(2, "0")}`;
+}
+
+// 60 ECTS at full-time engagement = 1 academic year ≈ 10 months of study, so
+// 6 ECTS/month at 100%. Scale by engagement to convert to calendar months.
+const ECTS_PER_MONTH_FULL_TIME = 6;
+
+function parseCredits(credits) {
+  const match = String(credits).match(/[-+]?\d*\.?\d+/);
+  return match ? Number(match[0]) : NaN;
+}
+
+function deriveCourseStart(course) {
+  if (course.startDate) return course.startDate;
+  const ects = parseCredits(course.credits);
+  if (!Number.isFinite(ects) || ects <= 0) {
+    throw new Error(
+      `Course ${course.code}: cannot derive start date — credits "${course.credits}" is not parseable as ECTS.`,
+    );
+  }
+  const engagement = course.engagement ?? 1;
+  const months = Math.max(
+    1,
+    Math.ceil(ects / (ECTS_PER_MONTH_FULL_TIME * engagement)),
+  );
+  return isoFromMonthIndex(monthIndex(course.completedDate) - (months - 1));
+}
+
 function nowMonthIndex() {
   const d = new Date();
   return d.getFullYear() * 12 + d.getMonth();
@@ -154,6 +185,23 @@ function buildItems(cv) {
       skills: ed.skills ?? [],
     });
   });
+  (cv.courses ?? []).forEach((course, i) => {
+    const institution = localize(course.institution);
+    const subtitle = {};
+    for (const lang of LANGUAGES) {
+      subtitle[lang] = `${institution[lang]} · ${course.code}`;
+    }
+    items.push({
+      id: `course-${i}`,
+      kind: "course",
+      title: localize(course.name),
+      subtitle,
+      description: localize(course.credits),
+      startDate: deriveCourseStart(course),
+      endDate: course.completedDate,
+      skills: course.skills ?? [],
+    });
+  });
   return items;
 }
 
@@ -199,6 +247,7 @@ function buildLayout(cv, activity) {
     { key: "experience", label: { en: "Jobs", sv: "Anställningar" } },
     { key: "assignment", label: { en: "Assignments", sv: "Uppdrag" } },
     { key: "education", label: { en: "Education", sv: "Utbildning" } },
+    { key: "course", label: { en: "Courses", sv: "Kurser" } },
   ];
   if (githubItems.length > 0) {
     trackDefs.push({ key: "github", label: { en: "GitHub", sv: "GitHub" } });

@@ -22,7 +22,7 @@
   "$defs": {
     "kind": {
       "type": "string",
-      "enum": ["experience", "assignment", "education", "github"]
+      "enum": ["experience", "assignment", "education", "course", "github"]
     },
     "localizedString": {
       "type": "object",

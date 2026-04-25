@@ -103,7 +103,10 @@ export type Course = {
   code: string;
   institution: LocalizedString;
   credits: string;
+  startDate?: string;
   completedDate: string;
+  engagement?: number;
+  remote?: boolean;
   skills?: string[];
 };
 

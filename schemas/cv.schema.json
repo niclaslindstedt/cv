@@ -278,7 +278,18 @@
         "code": { "type": "string", "minLength": 1 },
         "institution": { "$ref": "#/$defs/localizedString" },
         "credits": { "type": "string", "minLength": 1 },
+        "startDate": { "$ref": "#/$defs/yearMonth" },
         "completedDate": { "$ref": "#/$defs/yearMonth" },
+        "engagement": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "description": "Study pace as a fraction of full-time (e.g. 1 = full-time, 0.5 = half-time, 0.25 = quarter-time). Used together with credits to derive a start date when startDate is omitted."
+        },
+        "remote": {
+          "type": "boolean",
+          "description": "Whether the course was delivered remotely (online/distance)."
+        },
         "skills": { "$ref": "#/$defs/stringList" }
       }
     },
