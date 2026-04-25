@@ -451,9 +451,9 @@
         "sv": "Uppsala universitet"
       },
       "level": { "en": "Master's program", "sv": "Masterprogram" },
-      "credits": "131 ECTS",
+      "credits": "142.5 ECTS",
       "startDate": "2011-08",
-      "endDate": "2014-04",
+      "endDate": "2014-06",
       "notes": {
         "en": "Decided to pivot away from medicine after studying clinical medicine and seeing first-hand how rough the IT systems were that healthcare professionals had to use every day. That experience set me on the path toward information systems.",
         "sv": "Bestämde mig för att lämna läkarbanan efter att ha läst klinisk medicin och på nära håll sett hur usla IT-systemen var som vårdpersonalen tvingades använda dagligen. Den insikten ledde mig vidare till informationssystem."
@@ -548,6 +548,40 @@
           "code": "3ME040",
           "credits": "28.5 ECTS",
           "completedDate": "2014-04"
+        },
+        {
+          "name": {
+            "en": "Clinical Medicine III",
+            "sv": "Klinisk medicin III"
+          },
+          "code": "3ME033",
+          "credits": "30 ECTS",
+          "moments": [
+            {
+              "name": {
+                "en": "Integration IV – Pharmacology",
+                "sv": "Integrering IV Farmakologi"
+              },
+              "code": "0300",
+              "credits": "1.5 ECTS",
+              "completedDate": "2014-02"
+            },
+            {
+              "name": { "en": "Endocrinology", "sv": "Endokrinologi" },
+              "code": "0040",
+              "credits": "5 ECTS",
+              "completedDate": "2014-04"
+            },
+            {
+              "name": {
+                "en": "Locomotion / Orthopaedics",
+                "sv": "Rörelse/Ortopedi"
+              },
+              "code": "0020",
+              "credits": "5 ECTS",
+              "completedDate": "2014-06"
+            }
+          ]
         }
       ]
     },
@@ -592,12 +626,30 @@
         },
         {
           "name": {
-            "en": "Structure and Function of Organ Systems (Term 2)",
-            "sv": "Organsystemens struktur och funktion (Termin 2)"
+            "en": "Structure and Function of Organ Systems",
+            "sv": "Organsystemens struktur och funktion"
           },
           "code": "3BM013",
-          "credits": "28.5 ECTS",
-          "completedDate": "2011-02"
+          "credits": "45 ECTS",
+          "moments": [
+            {
+              "name": {
+                "en": "Term 2 – Structure and Function of Organ Systems",
+                "sv": "Termin 2 Organsystemens struktur och funktion"
+              },
+              "code": "TER2",
+              "credits": "28.5 ECTS",
+              "completedDate": "2011-02"
+            },
+            {
+              "name": {
+                "en": "Term 3 – Structure and Function of Organ Systems",
+                "sv": "Termin 3 Organsystemens struktur och funktion"
+              },
+              "code": "TER3",
+              "credits": "16.5 ECTS"
+            }
+          ]
         },
         {
           "name": {

@@ -80,12 +80,20 @@ export type Experience = {
   assignments?: Assignment[];
 };
 
+export type CourseMoment = {
+  name: LocalizedString;
+  code?: string;
+  credits: string;
+  completedDate?: string;
+};
+
 export type ProgramCourse = {
   name: LocalizedString;
   code: string;
   credits: string;
   completedDate?: string;
   grade?: string;
+  moments?: CourseMoment[];
   skills?: string[];
 };
 
