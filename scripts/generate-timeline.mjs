@@ -6,6 +6,13 @@ import { dirname, resolve } from "node:path";
 const here = dirname(fileURLToPath(import.meta.url));
 const cvPath = resolve(here, "..", "src", "data", "cv.json");
 const githubPath = resolve(here, "..", "src", "data", "github-activity.json");
+const projectStatsPath = resolve(
+  here,
+  "..",
+  "src",
+  "data",
+  "project-stats.json",
+);
 const defaultOut = resolve(here, "..", "src", "data", "timeline.json");
 
 const args = process.argv.slice(2);
@@ -226,6 +233,36 @@ function buildItems(cv) {
   return items;
 }
 
+function buildSideProjectItems(cv, projectStats) {
+  if (!projectStats?.enabled) return [];
+  const projects = projectStats.projects ?? {};
+  const items = [];
+  for (const project of cv.projects ?? []) {
+    const gh = project.github;
+    if (!gh?.owner || !gh?.repo) continue;
+    const stats = projects[`${gh.owner}/${gh.repo}`];
+    if (!stats?.firstCommitDate || !stats?.lastCommitDate) continue;
+    const startDate = stats.firstCommitDate.slice(0, 7);
+    const endDate = stats.lastCommitDate.slice(0, 7);
+    items.push({
+      id: `proj-${gh.owner}-${gh.repo}`,
+      kind: "sideProject",
+      title: localize(project.name),
+      subtitle: localize(project.tagline),
+      description: localize(project.description),
+      startDate,
+      endDate,
+      skills: mergeTags(project.stack, project.skills),
+      sideProject: {
+        totalCommits: stats.totalCommits ?? 0,
+        openSource: project.openSource === true,
+        repoUrl: `https://github.com/${gh.owner}/${gh.repo}`,
+      },
+    });
+  }
+  return items;
+}
+
 function buildGithubItems(activity) {
   if (!activity?.enabled || !Array.isArray(activity.years)) return [];
   const items = [];
@@ -258,9 +295,11 @@ function buildGithubItems(activity) {
   return items;
 }
 
-function buildLayout(cv, activity) {
+function buildLayout(cv, activity, projectStats) {
   const nowMonth = nowMonthIndex();
   const items = buildItems(cv);
+  const sideProjectItems = buildSideProjectItems(cv, projectStats);
+  items.push(...sideProjectItems);
   const githubItems = buildGithubItems(activity);
   items.push(...githubItems);
 
@@ -270,6 +309,12 @@ function buildLayout(cv, activity) {
     { key: "education", label: { en: "Education", sv: "Utbildning" } },
     { key: "course", label: { en: "Courses", sv: "Kurser" } },
   ];
+  if (sideProjectItems.length > 0) {
+    trackDefs.push({
+      key: "sideProject",
+      label: { en: "Side projects", sv: "Sidoprojekt" },
+    });
+  }
   if (githubItems.length > 0) {
     trackDefs.push({ key: "github", label: { en: "GitHub", sv: "GitHub" } });
   }
@@ -289,9 +334,12 @@ function buildLayout(cv, activity) {
   // Same-month handoffs on the same track (A.endDate === B.startDate) are real
   // sequential transitions, not overlaps. Split the shared month so the lane
   // packer can slot them on one row and they render edge-to-edge instead of
-  // stacking into parallel lanes.
+  // stacking into parallel lanes. Side projects are parallel work, not
+  // sequential, so skip them — splitting both ends of a single-month project
+  // bar would collapse it to zero width.
   for (const a of prepared) {
     if (!a.endDate) continue;
+    if (a.kind === "sideProject") continue;
     for (const b of prepared) {
       if (a === b || a.kind !== b.kind) continue;
       if (b.startDate === a.endDate) {
@@ -381,6 +429,7 @@ function buildLayout(cv, activity) {
       };
       if (p.notes) bar.notes = p.notes;
       if (p.github) bar.github = p.github;
+      if (p.sideProject) bar.sideProject = p.sideProject;
       return bar;
     }),
   }));
@@ -419,7 +468,15 @@ if (existsSync(githubPath)) {
     console.warn(`Could not parse github-activity.json (${err.message}).`);
   }
 }
-const data = buildLayout(cv, activity);
+let projectStats = { enabled: false, projects: {} };
+if (existsSync(projectStatsPath)) {
+  try {
+    projectStats = JSON.parse(readFileSync(projectStatsPath, "utf8"));
+  } catch (err) {
+    console.warn(`Could not parse project-stats.json (${err.message}).`);
+  }
+}
+const data = buildLayout(cv, activity, projectStats);
 const serialized = JSON.stringify(data, null, 2) + "\n";
 
 if (toStdout) {

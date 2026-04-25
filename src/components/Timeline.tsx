@@ -620,77 +620,154 @@ export function Timeline({ open, onClose }: Props) {
             </p>
           </aside>
         )}
-      {selectedItem && selectedItem.kind !== "github" && (
-        <aside className="timeline-vis-details">
-          <div className="timeline-vis-details-head">
-            <span
-              className={`timeline-vis-pill timeline-vis-${selectedItem.kind}`}
-            >
-              {selectedItem.kind === "experience"
-                ? ui.timeline.job
-                : selectedItem.kind === "assignment"
-                  ? ui.timeline.assignment
-                  : selectedItem.kind === "course"
-                    ? ui.timeline.course
-                    : ui.timeline.education}
-            </span>
-            <button
-              type="button"
-              className="timeline-vis-btn"
-              onClick={() => setSelectedId(null)}
-              aria-label={ui.timeline.closeDetails}
-            >
-              ✕
-            </button>
-          </div>
-          <h3 className="timeline-vis-details-title">
-            {t(selectedItem.title)}
-          </h3>
-          <p className="timeline-vis-details-sub">{t(selectedItem.subtitle)}</p>
-          <p className="timeline-vis-details-dates">
-            {formatRange(selectedItem.startDate, selectedItem.endDate, lang)}
-            <span className="timeline-vis-details-duration">
-              {" · "}
-              {formatDuration(
-                monthIndex(selectedItem.startDate),
-                selectedItem.isOngoing
-                  ? now
-                  : monthIndex(selectedItem.endDate ?? selectedItem.startDate),
-                ui.timeline.yUnit,
-                ui.timeline.mUnit,
-              )}
-            </span>
-          </p>
-          {t(selectedItem.description) && (
-            <p className="timeline-vis-details-desc">
-              {t(selectedItem.description)}
+      {selectedItem &&
+        selectedItem.kind === "sideProject" &&
+        selectedItem.sideProject && (
+          <aside className="timeline-vis-details">
+            <div className="timeline-vis-details-head">
+              <span className="timeline-vis-pill timeline-vis-sideProject">
+                {ui.timeline.sideProject}
+              </span>
+              <button
+                type="button"
+                className="timeline-vis-btn"
+                onClick={() => setSelectedId(null)}
+                aria-label={ui.timeline.closeDetails}
+              >
+                ✕
+              </button>
+            </div>
+            <h3 className="timeline-vis-details-title">
+              {t(selectedItem.title)}
+            </h3>
+            <p className="timeline-vis-details-sub">
+              {t(selectedItem.subtitle)}
             </p>
-          )}
-          {selectedItem.notes && (
-            <p className="timeline-vis-details-notes">
-              <NoteIcon />
-              <span>{t(selectedItem.notes)}</span>
+            <p className="timeline-vis-details-dates">
+              {formatRange(selectedItem.startDate, selectedItem.endDate, lang)}
+              <span className="timeline-vis-details-duration">
+                {" · "}
+                {formatDuration(
+                  monthIndex(selectedItem.startDate),
+                  monthIndex(selectedItem.endDate ?? selectedItem.startDate),
+                  ui.timeline.yUnit,
+                  ui.timeline.mUnit,
+                )}
+              </span>
             </p>
-          )}
-          {selectedItem.skills.length > 0 ? (
-            <>
-              <h4 className="timeline-vis-details-skills-title">
-                {ui.timeline.skillsUsed}
-              </h4>
-              <ul className="timeline-vis-details-skills">
-                {selectedItem.skills.map((skill) => (
-                  <li key={skill}>{skill}</li>
-                ))}
-              </ul>
-            </>
-          ) : (
-            <p className="timeline-vis-details-empty">{ui.timeline.noSkills}</p>
-          )}
-          <p className="timeline-vis-details-when">
-            {ui.timeline.starts} {formatMonth(selectedItem.startDate, lang)}
-          </p>
-        </aside>
-      )}
+            <p className="timeline-vis-details-dates">
+              <span className="timeline-vis-commit-pill">
+                {ui.timeline.commits(selectedItem.sideProject.totalCommits)}
+              </span>
+            </p>
+            {t(selectedItem.description) && (
+              <p className="timeline-vis-details-desc">
+                {t(selectedItem.description)}
+              </p>
+            )}
+            {selectedItem.sideProject.openSource && (
+              <a
+                className="timeline-vis-details-link"
+                href={selectedItem.sideProject.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {ui.timeline.viewRepository}
+              </a>
+            )}
+            {selectedItem.skills.length > 0 && (
+              <>
+                <h4 className="timeline-vis-details-skills-title">
+                  {ui.timeline.skillsUsed}
+                </h4>
+                <ul className="timeline-vis-details-skills">
+                  {selectedItem.skills.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </aside>
+        )}
+      {selectedItem &&
+        selectedItem.kind !== "github" &&
+        selectedItem.kind !== "sideProject" && (
+          <aside className="timeline-vis-details">
+            <div className="timeline-vis-details-head">
+              <span
+                className={`timeline-vis-pill timeline-vis-${selectedItem.kind}`}
+              >
+                {selectedItem.kind === "experience"
+                  ? ui.timeline.job
+                  : selectedItem.kind === "assignment"
+                    ? ui.timeline.assignment
+                    : selectedItem.kind === "course"
+                      ? ui.timeline.course
+                      : ui.timeline.education}
+              </span>
+              <button
+                type="button"
+                className="timeline-vis-btn"
+                onClick={() => setSelectedId(null)}
+                aria-label={ui.timeline.closeDetails}
+              >
+                ✕
+              </button>
+            </div>
+            <h3 className="timeline-vis-details-title">
+              {t(selectedItem.title)}
+            </h3>
+            <p className="timeline-vis-details-sub">
+              {t(selectedItem.subtitle)}
+            </p>
+            <p className="timeline-vis-details-dates">
+              {formatRange(selectedItem.startDate, selectedItem.endDate, lang)}
+              <span className="timeline-vis-details-duration">
+                {" · "}
+                {formatDuration(
+                  monthIndex(selectedItem.startDate),
+                  selectedItem.isOngoing
+                    ? now
+                    : monthIndex(
+                        selectedItem.endDate ?? selectedItem.startDate,
+                      ),
+                  ui.timeline.yUnit,
+                  ui.timeline.mUnit,
+                )}
+              </span>
+            </p>
+            {t(selectedItem.description) && (
+              <p className="timeline-vis-details-desc">
+                {t(selectedItem.description)}
+              </p>
+            )}
+            {selectedItem.notes && (
+              <p className="timeline-vis-details-notes">
+                <NoteIcon />
+                <span>{t(selectedItem.notes)}</span>
+              </p>
+            )}
+            {selectedItem.skills.length > 0 ? (
+              <>
+                <h4 className="timeline-vis-details-skills-title">
+                  {ui.timeline.skillsUsed}
+                </h4>
+                <ul className="timeline-vis-details-skills">
+                  {selectedItem.skills.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <p className="timeline-vis-details-empty">
+                {ui.timeline.noSkills}
+              </p>
+            )}
+            <p className="timeline-vis-details-when">
+              {ui.timeline.starts} {formatMonth(selectedItem.startDate, lang)}
+            </p>
+          </aside>
+        )}
     </div>
   );
 }
