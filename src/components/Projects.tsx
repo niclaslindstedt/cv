@@ -15,6 +15,7 @@ type Props = {
   title: string;
   projects: Project[];
   onSkillClick: (skill: string) => void;
+  onProjectClick: (project: Project) => void;
 };
 
 function statsKey(github: GithubRepoRef): string {
@@ -30,14 +31,18 @@ function isoToYearMonth(iso: string): string {
   return iso.slice(0, 7);
 }
 
-export function Projects({ title, projects, onSkillClick }: Props) {
-  const { t, lang } = useLang();
+export function Projects({
+  title,
+  projects,
+  onSkillClick,
+  onProjectClick,
+}: Props) {
+  const { t, lang, ui } = useLang();
   return (
     <Section id="projects" title={title}>
       <div className="projects">
         {projects.map((project) => {
           const stats = lookupStats(project.github);
-          const repoUrl = `https://github.com/${project.github.owner}/${project.github.repo}`;
           const dateRange =
             stats && stats.firstCommitDate && stats.lastCommitDate
               ? `${formatMonth(isoToYearMonth(stats.firstCommitDate), lang)} – ${formatMonth(
@@ -51,9 +56,14 @@ export function Projects({ title, projects, onSkillClick }: Props) {
               <header className="project-head">
                 <h3>
                   {project.openSource ? (
-                    <a href={repoUrl} target="_blank" rel="noreferrer">
+                    <button
+                      type="button"
+                      className="project-name-btn"
+                      onClick={() => onProjectClick(project)}
+                      aria-label={ui.projectModal.detailAria(project.name)}
+                    >
                       {project.name}
-                    </a>
+                    </button>
                   ) : (
                     <span>{project.name}</span>
                   )}
@@ -85,7 +95,9 @@ export function Projects({ title, projects, onSkillClick }: Props) {
                   )}
                 </dl>
               )}
-              <p className="project-description">{t(project.description)}</p>
+              {!project.openSource && (
+                <p className="project-description">{t(project.description)}</p>
+              )}
               {project.stack && project.stack.length > 0 && (
                 <ul className="project-stack">
                   {project.stack.map((tech) => (

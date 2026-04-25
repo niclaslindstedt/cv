@@ -72,6 +72,10 @@ type UiStrings = {
     stack: string;
     terminated: string;
   };
+  projectModal: {
+    detailAria: (project: string) => string;
+    viewOnGitHub: string;
+  };
   programModal: {
     coursesHeading: string;
     coursesAria: (program: string) => string;
@@ -181,6 +185,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       stack: "Stack",
       terminated: "Terminated",
     },
+    projectModal: {
+      detailAria: (project) => `${project} details`,
+      viewOnGitHub: "View on GitHub ↗",
+    },
     programModal: {
       coursesHeading: "Courses",
       coursesAria: (program) => `${program} courses`,
@@ -289,6 +297,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       visitWebsite: "Besök webbplats ↗",
       stack: "Stack",
       terminated: "Avvecklat",
+    },
+    projectModal: {
+      detailAria: (project) => `Detaljer för ${project}`,
+      viewOnGitHub: "Visa på GitHub ↗",
     },
     programModal: {
       coursesHeading: "Kurser",
