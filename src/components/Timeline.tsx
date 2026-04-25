@@ -128,6 +128,7 @@ export function Timeline({ open, onClose }: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const viewportRef = useRef<HTMLDivElement>(null);
+  const labelsInnerRef = useRef<HTMLDivElement>(null);
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
 
@@ -198,6 +199,19 @@ export function Timeline({ open, onClose }: Props) {
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
   }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const viewport = viewportRef.current;
+    const inner = labelsInnerRef.current;
+    if (!viewport || !inner) return;
+    const onScroll = () => {
+      inner.style.transform = `translateY(${-viewport.scrollTop}px)`;
+    };
+    onScroll();
+    viewport.addEventListener("scroll", onScroll, { passive: true });
+    return () => viewport.removeEventListener("scroll", onScroll);
+  }, [open, contentHeight]);
 
   const handleClose = useCallback(() => {
     setSelectedId(null);
@@ -451,22 +465,25 @@ export function Timeline({ open, onClose }: Props) {
       </div>
 
       <div className="timeline-vis-body">
-        <div
-          className="timeline-vis-labels"
-          style={{ height: AXIS_SIZE + contentHeight }}
-        >
-          {tracks.map((track, t) => (
-            <div
-              key={`label-${t}`}
-              className="timeline-vis-track-label"
-              style={{
-                top: AXIS_SIZE + trackTop[t],
-                height: trackHeight[t],
-              }}
-            >
-              {track.label[lang] ?? track.label.en}
-            </div>
-          ))}
+        <div className="timeline-vis-labels">
+          <div
+            ref={labelsInnerRef}
+            className="timeline-vis-labels-inner"
+            style={{ height: AXIS_SIZE + contentHeight }}
+          >
+            {tracks.map((track, t) => (
+              <div
+                key={`label-${t}`}
+                className="timeline-vis-track-label"
+                style={{
+                  top: AXIS_SIZE + trackTop[t],
+                  height: trackHeight[t],
+                }}
+              >
+                {track.label[lang] ?? track.label.en}
+              </div>
+            ))}
+          </div>
         </div>
         <div
           ref={viewportRef}

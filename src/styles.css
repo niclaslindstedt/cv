@@ -1277,6 +1277,12 @@ button.skill-pill-btn:focus-visible {
   z-index: 1;
 }
 
+.timeline-vis-labels-inner {
+  position: relative;
+  width: 100%;
+  will-change: transform;
+}
+
 .timeline-vis-track-label {
   position: absolute;
   left: 20px;
