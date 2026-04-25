@@ -4,10 +4,10 @@ const SELECTOR =
   ".focus-item-btn, .project, .timeline-item, .education-list > li";
 
 const ORBS = [
-  { x: 0.18, y: 0.12, color: "rgba(140, 200, 255, 0.55)" },
-  { x: 0.82, y: 0.28, color: "rgba(200, 150, 255, 0.5)" },
-  { x: 0.58, y: 0.88, color: "rgba(140, 230, 210, 0.45)" },
-];
+  { x: 0.18, y: 0.12, color: [140, 200, 255], maxAlpha: 0.55 },
+  { x: 0.82, y: 0.28, color: [200, 150, 255], maxAlpha: 0.5 },
+  { x: 0.58, y: 0.88, color: [140, 230, 210], maxAlpha: 0.45 },
+] as const;
 
 export function useGlassReflections() {
   useEffect(() => {
@@ -29,31 +29,26 @@ export function useGlassReflections() {
           rect.width === 0 ||
           rect.height === 0
         ) {
-          card.style.setProperty("--reflect-intensity", "0");
           return;
         }
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
-        let bestIntensity = 0;
-        let bestX = 50;
-        let bestY = 50;
-        let bestColor = "transparent";
-        for (const orb of ORBS) {
+        ORBS.forEach((orb, i) => {
           const ox = orb.x * vw;
           const oy = orb.y * vh;
           const dist = Math.hypot(ox - cx, oy - cy);
           const intensity = Math.max(0, 1 - dist / reach);
-          if (intensity > bestIntensity) {
-            bestIntensity = intensity;
-            bestX = ((ox - rect.left) / rect.width) * 100;
-            bestY = ((oy - rect.top) / rect.height) * 100;
-            bestColor = orb.color;
-          }
-        }
-        card.style.setProperty("--reflect-x", `${bestX.toFixed(1)}%`);
-        card.style.setProperty("--reflect-y", `${bestY.toFixed(1)}%`);
-        card.style.setProperty("--reflect-color", bestColor);
-        card.style.setProperty("--reflect-intensity", bestIntensity.toFixed(3));
+          const alpha = (orb.maxAlpha * intensity).toFixed(3);
+          const lx = ((ox - rect.left) / rect.width) * 100;
+          const ly = ((oy - rect.top) / rect.height) * 100;
+          const idx = i + 1;
+          card.style.setProperty(`--reflect-${idx}-x`, `${lx.toFixed(1)}%`);
+          card.style.setProperty(`--reflect-${idx}-y`, `${ly.toFixed(1)}%`);
+          card.style.setProperty(
+            `--reflect-${idx}-color`,
+            `rgba(${orb.color[0]}, ${orb.color[1]}, ${orb.color[2]}, ${alpha})`,
+          );
+        });
       });
     };
 
