@@ -48,7 +48,7 @@ function makeStars(count: number, seed = 1337): Star[] {
   return stars;
 }
 
-const STARS = makeStars(8);
+const STARS = makeStars(16);
 
 export function CelestialSky({ theme }: Props) {
   const [pos, setPos] = useState<CelestialPosition>(() => getSunPosition());

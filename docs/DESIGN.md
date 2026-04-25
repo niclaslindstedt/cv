@@ -1,0 +1,306 @@
+# Design
+
+This document is the source of truth for the visual design of
+`niclaslindstedt.se`. Every visual change — tokens, components,
+spacing, type, motion — must conform to it. If a needed pattern is not
+described here, **update this document in the same PR** that
+introduces it.
+
+The site's aesthetic is **calm, dense, and slightly celestial**: a
+night sky in dark mode, a soft daytime sky in light mode, with content
+floating on translucent glass surfaces. It should read like a CV, not
+a dashboard.
+
+---
+
+## 1. Principles
+
+1. **Information first.** The page is a CV. Visual flourishes never
+   get in the way of scanning.
+2. **One way to do one thing.** Every recurring pattern (pill, badge,
+   button, link) has one canonical form. Variants exist only when
+   semantically distinct.
+3. **The sky is the substrate.** All cards sit on glass over a
+   gradient sky + stars (dark) or clouds + sun (light). Glass means
+   `--glass-bg` + `backdrop-filter`. Anything that punches a fully
+   opaque rectangle on top of glass is a bug.
+4. **Light and dark are equals.** No feature is dark-mode-only or
+   light-mode-only unless it's literally the sun or stars. Every token
+   has a light + dark pair.
+5. **Motion is feedback, not decoration.** Hover/focus uses `120ms
+ease`. Layout never animates. Reduced motion is honored.
+6. **Nothing breaks on a 320px-wide phone.** All wrapping is
+   deliberate; no orphans, no sideways scroll, no clipped buttons.
+
+---
+
+## 2. Tokens (CSS custom properties)
+
+Defined in `src/styles.css` `:root` (dark) and
+`:root[data-theme="light"]`. Never hard-code hex outside these blocks;
+always reach for the token. If a token does not exist for what you
+need, add it here first.
+
+### 2.1 Color
+
+| Token               | Dark                         | Light                            | Meaning                                              |
+| ------------------- | ---------------------------- | -------------------------------- | ---------------------------------------------------- |
+| `--bg`              | `#050810`                    | `#dde9f5`                        | Page background fill behind the sky.                 |
+| `--bg-elev`         | `#0c1322`                    | `#f1f5fa`                        | Solid surface (modals, print). Avoid on glass cards. |
+| `--glass-bg`        | `rgba(14,20,32,0.42)`        | `rgba(255,255,255,0.62)`         | Translucent surface for every content card.          |
+| `--glass-border`    | `rgba(255,255,255,0.07)`     | `rgba(11,13,16,0.08)`            | Hairline border on glass.                            |
+| `--glass-highlight` | `rgba(255,255,255,0.04)`     | `rgba(255,255,255,0.6)`          | Inner pill/chip fill on glass.                       |
+| `--overlay`         | `rgba(8,10,13,0.72)`         | `rgba(244,246,249,0.72)`         | Modal backdrop.                                      |
+| `--accent`          | `#7ab7ff`                    | `#0062cc`                        | Interactive color: links, buttons, focus, key data.  |
+| `--accent-soft`     | `rgba(122,183,255,0.12)`     | `rgba(0,98,204,0.10)`            | Quiet accent fill: pill backgrounds, hover states.   |
+| `--fg`              | `#e6e9ef`                    | `#0b0d10`                        | Primary text.                                        |
+| `--fg-muted`        | `#8a93a1`                    | `#4d5663`                        | Secondary text and metadata.                         |
+| `--border`          | `#1d2533`                    | `#c8d4e2`                        | Solid borders on solid surfaces.                     |
+| `--shadow`          | `0 12px 40px rgba(0,0,0,.5)` | `0 12px 40px rgba(11,13,16,.15)` | Floating-surface shadow.                             |
+
+### 2.2 Sky and celestial
+
+`--sky-top`, `--sky-mid`, `--sky-bottom` (gradient stops),
+`--sky-glow-1`, `--sky-glow-2` (radial glow alphas), `--orb-color`,
+`--orb-color-soft` (sun/moon). These are tuned together — change one,
+re-test both themes.
+
+### 2.3 Geometry
+
+| Token         | Value   | Notes                                      |
+| ------------- | ------- | ------------------------------------------ |
+| `--radius`    | `10px`  | All cards, buttons, panels.                |
+| `--max-width` | `860px` | Hard upper bound for content column.       |
+| Pill radius   | `999px` | Used directly, no token (it's a constant). |
+
+### 2.4 Spacing scale
+
+Use multiples of **4**: `4 / 8 / 12 / 16 / 20 / 24 / 32 / 48`.
+Anything else is a smell — either round to scale or extract a token.
+
+### 2.5 Typography
+
+| Use                                   | Family      | Size                             | Weight |
+| ------------------------------------- | ----------- | -------------------------------- | ------ |
+| Body                                  | system sans | `1rem`                           | 400    |
+| Hero name                             | system sans | `clamp(2rem,5vw,3rem)`           | 700    |
+| Hero summary                          | system sans | `1.1rem`                         | 400    |
+| Section eyebrow (uppercase)           | system sans | `0.75–0.9rem`, `0.04em` tracking | 500    |
+| Card title (`h3`)                     | system sans | `1rem–1.15rem`                   | 600    |
+| Project name, course code, code chips | mono        | `0.8rem–1.15rem`                 | 500    |
+| Metadata, dates                       | system sans | `0.85–0.95rem`                   | 400    |
+
+The mono family is reserved for _identifiers_ (project names, course
+codes, technology tags). Never use mono for paragraph copy.
+
+### 2.6 Motion
+
+- Hover/focus transitions: `120ms ease` on `color`, `background`,
+  `border-color`, `transform`. Never on `width`, `height`, `padding`.
+- Long-form ambient motion (cloud drift, star twinkle) lives in
+  `CelestialSky`. Don't add ambient motion to content.
+- Honor `prefers-reduced-motion`: disable ambient motion, keep
+  120ms transitions (they're functional).
+
+---
+
+## 3. Surfaces
+
+Three tiers, used in this order:
+
+1. **Sky** — the page itself: `--bg` + `<CelestialSky>` (stars or
+   clouds). Nothing else.
+2. **Glass card** — every content container (Hero, Focus item,
+   Project, Experience, Education, Skills group, modal panels):
+   ```css
+   background: var(--glass-bg);
+   backdrop-filter: blur(14px) saturate(150%);
+   -webkit-backdrop-filter: blur(14px) saturate(150%);
+   border: 1px solid var(--glass-border);
+   border-radius: var(--radius);
+   ```
+   Modals use `blur(18px) saturate(160%)` for slightly stronger
+   separation from the page beneath them.
+3. **Inner chip / pill** on a glass card — use `--glass-highlight` (a
+   very thin white wash) or `--accent-soft`. **Never `--bg-elev`** on
+   a glass card; it punches an opaque rectangle and breaks the glass
+   illusion.
+
+### 3.1 Translucency rule
+
+If you can't see the sky bleed through a card on the dark theme home
+page, the alpha is too high. The reference values
+(`rgba(14,20,32,0.42)` dark, `rgba(255,255,255,0.62)` light) are
+calibrated against the current sky-glow + 16-star starfield. If you
+change the sky brightness, re-tune `--glass-bg` to keep the same
+"barely-translucent" feel.
+
+---
+
+## 4. Components
+
+### 4.1 Pill
+
+A rounded rectangle (`border-radius: 999px`) with subtle border, used
+for **quantitative metadata**: ECTS counts, course counts, commit
+counts, percentages, course codes, tech tags on cards.
+
+- Tech tag (skill on a card): `--glass-highlight` fill, `--border`
+  outline, `--font-mono`, `0.8rem`.
+- Accent pill (ECTS, course count, percentage, language toggle):
+  `--accent-soft` fill, `--accent` text.
+
+### 4.2 Badge
+
+A small filled label that conveys **state**:
+
+- `OPEN SOURCE` → accent fill (`--accent-soft` + `--accent` text),
+  uppercase, mono, `0.7rem`. Always inline at the right of the project
+  name (never wrapping below).
+- `INCOMPLETE` → red fill, white text, uppercase. Only ever appears on
+  course cards.
+- `half-time` / `part-time` → accent-soft pill on Experience cards.
+  These are **distinct words**, not stylistic variants:
+  - "half-time" / "halvtid" = exactly 50%.
+  - "part-time" / "deltid" = unspecified non-full-time fraction.
+    Don't homogenize.
+
+### 4.3 Button
+
+There is **one** button family. All site buttons are pill-shaped with
+the same border weight (`1px solid var(--accent-soft)`), accent text,
+and an `--accent-soft` fill on hover. Avoid invented "primary" /
+"secondary" weight tiers — emphasis comes from placement, not from
+making one button thicker than another.
+
+The exception is the close (`×`) button on modals: a 32px circle, same
+border treatment, no fill.
+
+### 4.4 Inline link
+
+Plain text colored with `--accent`, no underline by default,
+underlined on hover. **Used by default for inline references** (the
+hero meta row, in-card links).
+
+The hero meta row deliberately ships _one_ exception: the **Featured**
+link (currently `Blog`) renders as an `--accent-soft` pill so the
+single most relevant outbound destination is always one tap away. This
+is a designed asymmetry — exactly one featured link, no more. If
+another link becomes more relevant, swap which entry is `featured` in
+`cv.json`; do not promote a second one.
+
+### 4.5 Card
+
+All content lives in a card (see §3, glass). Cards have:
+
+- 16–20px internal padding.
+- `--glass-border` outline.
+- `--shadow` for floating panels (modals, popovers); no shadow for
+  in-flow cards.
+- The **active** state (current employer, current side project) gets
+  `border-color: rgba(122,183,255,0.55)` and a 1px accent glow. This
+  is the only "current" affordance — don't add labels like "Current"
+  or stars.
+
+### 4.6 Section
+
+Each top-level section uses `<Section>` with an uppercase tracked
+eyebrow. Eyebrow color: `--fg-muted`. Always 32–48px of vertical
+breathing room between sections.
+
+### 4.7 Modal
+
+Full-bleed `--overlay` backdrop with `backdrop-filter: blur(18px)`.
+Inner panel is a glass card with `blur(20px) saturate(170%)` and the
+standard close button top-right. Modal content scrolls; backdrop does
+not.
+
+### 4.8 Empty state
+
+When a list is empty (e.g., a skill chip with zero usages), keep the
+component visible but dimmed (`.skill-pill-empty`, `opacity ~0.55`)
+**and** add a `title` + `aria-label` explaining why ("No entries
+yet"). Never silently render a broken-looking control.
+
+---
+
+## 5. Patterns
+
+### 5.1 Wrapping
+
+Inline metadata that uses `·` separators (institution · level ·
+credits · count) must never wrap with a leading `·` on a new line.
+Wrap each _segment that includes its own preceding separator_ in a
+`<span>` with `white-space: nowrap`. See
+`.education-meta-trail` in `src/styles.css` for the pattern.
+
+### 5.2 Promotion arrow (`↑`)
+
+When a person is promoted within the same employer, the promoted role
+gets an inline `↑` arrow next to the title. The arrow is a 14×14 SVG
+in `--accent`, `vertical-align: -2px`. It appears only on roles where
+`isPromotion === true` (i.e., `idx > 0` within an assignment group).
+
+### 5.3 Active employer / project glow
+
+A card with `endDate === null` (currently active) gets the
+`is-active` class, which paints a slightly brighter
+`rgba(122,183,255,0.55)` border and a 1px outer glow. No other
+"current" badge is needed.
+
+### 5.4 Code-style display
+
+Project names, course codes, and technology tags use `--font-mono`.
+This is the visual cue for "this is an identifier, not a sentence."
+
+---
+
+## 6. Print
+
+The print stylesheet (in `src/styles.css`) flattens everything:
+
+- All translucent tokens collapse to opaque white.
+- Sky, stars, clouds, hover states are removed.
+- Cards lose `box-shadow` and gain a hairline `--border`.
+
+If you add a new color or surface, also add its print fallback in the
+`@media print` block.
+
+---
+
+## 7. Accessibility
+
+- All interactive controls have a visible `:focus-visible` outline of
+  `2px solid var(--accent)` with `2px` offset.
+- All icon-only buttons have `aria-label` and `title`.
+- Color is never the _only_ signal: state (active, incomplete, empty)
+  is also expressed in text or shape.
+- Contrast: body text vs. `--glass-bg` over the darkest sky region
+  must clear WCAG AA (4.5:1). Re-check after any token change.
+
+---
+
+## 8. Process
+
+1. **Before any visual change**, read the relevant section of this
+   doc.
+2. **If the change introduces a new pattern not described here**,
+   update this doc _first_ in the same PR.
+3. **PR description** should reference the section(s) of this doc the
+   change conforms to (e.g. _"Conforms to §4.1 Pill, §3 Surfaces."_).
+4. Re-screenshot the affected section on iPhone width in both themes
+   before merging.
+
+---
+
+## 9. File map
+
+| File                                                                      | What it owns                                      |
+| ------------------------------------------------------------------------- | ------------------------------------------------- |
+| `src/styles.css`                                                          | All global CSS, tokens, components.               |
+| `src/components/CelestialSky.tsx`                                         | Sky, stars, clouds, sun.                          |
+| `src/components/Hero.tsx`                                                 | Header, hero buttons, language and theme toggles. |
+| `src/components/Section.tsx`                                              | Section wrapper with eyebrow.                     |
+| `src/components/{Focus,Projects,Experience,Education,Skills,Courses}.tsx` | Content sections.                                 |
+| `src/components/Timeline.tsx`                                             | Career timeline modal.                            |
+| `docs/DESIGN.md`                                                          | This document.                                    |

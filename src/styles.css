@@ -1,14 +1,14 @@
 :root {
   --bg: #050810;
   --bg-elev: #0c1322;
-  --glass-bg: rgba(14, 20, 32, 0.55);
+  --glass-bg: rgba(14, 20, 32, 0.42);
   --glass-border: rgba(255, 255, 255, 0.07);
   --glass-highlight: rgba(255, 255, 255, 0.04);
   --sky-top: #02030a;
   --sky-mid: #060a18;
   --sky-bottom: #0a1428;
-  --sky-glow-1: rgba(70, 40, 120, 0.35);
-  --sky-glow-2: rgba(20, 60, 130, 0.3);
+  --sky-glow-1: rgba(70, 40, 120, 0.4);
+  --sky-glow-2: rgba(20, 60, 130, 0.34);
   --celestial-x: 50%;
   --celestial-y: 12%;
   --celestial-altitude: 1;
@@ -41,7 +41,7 @@
 :root[data-theme="light"] {
   --bg: #dde9f5;
   --bg-elev: #f1f5fa;
-  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg: rgba(255, 255, 255, 0.62);
   --glass-border: rgba(11, 13, 16, 0.08);
   --glass-highlight: rgba(255, 255, 255, 0.6);
   --sky-top: #b8d3ee;
@@ -508,13 +508,15 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  min-width: 0;
 }
 
 .project-name-btn {
   appearance: none;
   padding: 0;
   margin: 0;
+  min-width: 0;
   font: inherit;
   font-family: var(--font-mono);
   color: var(--accent);
@@ -522,6 +524,9 @@ a:hover {
   border: 0;
   cursor: pointer;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (hover: hover) {
@@ -550,6 +555,7 @@ a:hover {
 }
 
 .project-pill-oss {
+  flex: 0 0 auto;
   color: var(--accent);
   background: var(--accent-soft);
   border-color: var(--accent-soft);
@@ -1045,7 +1051,7 @@ a:hover {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--fg);
-  background: var(--bg-elev);
+  background: var(--glass-highlight);
   border: 1px solid var(--border);
   border-radius: 999px;
 }
@@ -1162,17 +1168,7 @@ button.skill-pill-btn:focus-visible {
   font-size: 0.85rem;
 }
 
-.hero-download {
-  padding: 4px 12px;
-  font: inherit;
-  font-weight: 600;
-  color: var(--accent);
-  background: transparent;
-  border: 1px solid var(--accent);
-  border-radius: 999px;
-  cursor: pointer;
-}
-
+.hero-download,
 .hero-timeline-btn {
   appearance: none;
   padding: 4px 12px;
@@ -1184,20 +1180,21 @@ button.skill-pill-btn:focus-visible {
   border: 1px solid var(--accent-soft);
   border-radius: 999px;
   cursor: pointer;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
 }
 
-.hero-download:hover {
-  background: var(--accent-soft);
-}
-
-.hero-download:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
+.hero-download:hover,
 .hero-timeline-btn:hover {
   background: var(--accent-soft);
   border-color: var(--accent);
+}
+
+.hero-download:focus-visible,
+.hero-timeline-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .theme-toggle {
@@ -2104,6 +2101,10 @@ button.skill-pill-btn:focus-visible {
   margin-left: 8px;
   font-size: 0.78rem;
   color: var(--accent);
+}
+
+.education-meta-trail {
+  white-space: nowrap;
 }
 
 .program-modal-summary {
