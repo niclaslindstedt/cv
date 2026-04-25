@@ -451,7 +451,7 @@
         "sv": "Uppsala universitet"
       },
       "level": { "en": "Master's program", "sv": "Masterprogram" },
-      "credits": "142 ECTS",
+      "credits": "131 ECTS",
       "startDate": "2011-08",
       "endDate": "2014-04",
       "notes": {
@@ -461,32 +461,92 @@
       "courses": [
         {
           "name": {
-            "en": "Human Biology – Cells and Molecules",
-            "sv": "Humanbiologi – celler och molekyler"
+            "en": "Circulation and Respiration",
+            "sv": "Cirkulation och respiration"
           },
-          "code": "3LK001",
-          "credits": "22.5 ECTS",
-          "completedDate": "2011-12",
-          "grade": "Pass with distinction"
+          "code": "3MC100",
+          "credits": "10 ECTS",
+          "completedDate": "2011-11",
+          "grade": "Pass"
         },
         {
           "name": {
-            "en": "Human Biology – Organs and Systems",
-            "sv": "Humanbiologi – organ och system"
+            "en": "Clinical Anatomy and Locomotion",
+            "sv": "Klinisk anatomi och rörelselära"
           },
-          "code": "3LK002",
-          "credits": "30 ECTS",
+          "code": "3AN200",
+          "credits": "8 ECTS",
+          "completedDate": "2011-11",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Professional Development 2",
+            "sv": "Professionell utveckling 2"
+          },
+          "code": "3AM012",
+          "credits": "2.5 ECTS",
+          "completedDate": "2011-12",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Professional Development 3",
+            "sv": "Professionell utveckling 3"
+          },
+          "code": "3AM008",
+          "credits": "2.5 ECTS",
+          "completedDate": "2012-01",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Neurobiology, Homeostasis and Intervention (NHoI)",
+            "sv": "Neurobiologi, homeostas och intervention (NHoI)"
+          },
+          "code": "3NR137",
+          "credits": "19.5 ECTS",
+          "completedDate": "2012-01",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Professional Development 4",
+            "sv": "Professionell utveckling 4"
+          },
+          "code": "3AM010",
+          "credits": "2.5 ECTS",
+          "completedDate": "2012-05",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Health Policy and Health Economics",
+            "sv": "Hälsopolitik och hälsoekonomi"
+          },
+          "code": "3SM011",
+          "credits": "7.5 ECTS",
           "completedDate": "2012-06",
           "grade": "Pass"
         },
         {
           "name": {
-            "en": "Mechanisms of Disease",
-            "sv": "Sjukdomsmekanismer"
+            "en": "Attack and Defense",
+            "sv": "Attack och försvar"
           },
-          "code": "3LK010",
+          "code": "3PA014",
+          "credits": "20 ECTS",
+          "completedDate": "2012-08",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Clinical Medicine II",
+            "sv": "Klinisk medicin II"
+          },
+          "code": "3KR093",
           "credits": "30 ECTS",
-          "completedDate": "2013-01",
+          "completedDate": "2013-11",
           "grade": "Pass"
         },
         {
@@ -494,18 +554,8 @@
             "en": "Clinical Medicine I",
             "sv": "Klinisk medicin I"
           },
-          "code": "3LK020",
-          "credits": "30 ECTS",
-          "completedDate": "2013-06",
-          "grade": "Pass with distinction"
-        },
-        {
-          "name": {
-            "en": "Clinical Medicine II",
-            "sv": "Klinisk medicin II"
-          },
-          "code": "3LK030",
-          "credits": "29.5 ECTS",
+          "code": "3ME040",
+          "credits": "28.5 ECTS",
           "completedDate": "2014-04",
           "grade": "Pass"
         }
@@ -515,9 +565,9 @@
       "field": { "en": "Medicine", "sv": "Medicin" },
       "institution": { "en": "Umeå University", "sv": "Umeå universitet" },
       "level": { "en": "Master's program", "sv": "Masterprogram" },
-      "credits": "60 ECTS",
+      "credits": "60.8 ECTS",
       "startDate": "2010-01",
-      "endDate": "2010-12",
+      "endDate": "2011-04",
       "notes": {
         "en": "Took a half sabbatical year afterwards to relocate to Uppsala and continue the program there.",
         "sv": "Tog ett halvt sabbatsår efteråt för att flytta till Uppsala och fortsätta programmet där."
@@ -525,32 +575,62 @@
       "courses": [
         {
           "name": {
-            "en": "Cell and Molecular Biology",
-            "sv": "Cell- och molekylärbiologi"
+            "en": "Introduction Course",
+            "sv": "Introduktionskurs"
           },
-          "code": "3MO011",
-          "credits": "15 ECTS",
-          "completedDate": "2010-04",
-          "grade": "Pass with distinction"
+          "code": "3BM000",
+          "credits": "3 ECTS",
+          "completedDate": "2010-01",
+          "grade": "Pass"
         },
         {
           "name": {
-            "en": "Genetics and Embryology",
-            "sv": "Genetik och embryologi"
+            "en": "Professional Development / Course 1",
+            "sv": "Professionell utveckling / Kurs 1"
           },
-          "code": "3MO021",
-          "credits": "15 ECTS",
+          "code": "3ME040",
+          "credits": "0.8 ECTS",
+          "completedDate": "2010-02",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Cell Structure and Function",
+            "sv": "Cellens struktur och funktion"
+          },
+          "code": "3BM010",
+          "credits": "26.2 ECTS",
           "completedDate": "2010-06",
           "grade": "Pass"
         },
         {
           "name": {
-            "en": "Anatomy and Physiology",
-            "sv": "Anatomi och fysiologi"
+            "en": "Structure and Function of Organ Systems (Term 2)",
+            "sv": "Organsystemens struktur och funktion (Termin 2)"
           },
-          "code": "3MO031",
-          "credits": "30 ECTS",
-          "completedDate": "2010-12",
+          "code": "3BM013",
+          "credits": "28.5 ECTS",
+          "completedDate": "2011-02",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Professional Development / Course 2",
+            "sv": "Professionell utveckling / Kurs 2"
+          },
+          "code": "3ME041",
+          "credits": "1.5 ECTS",
+          "completedDate": "2010-11",
+          "grade": "Pass"
+        },
+        {
+          "name": {
+            "en": "Professional Development / Course 3",
+            "sv": "Professionell utveckling / Kurs 3"
+          },
+          "code": "3ME042",
+          "credits": "0.8 ECTS",
+          "completedDate": "2011-04",
           "grade": "Pass"
         }
       ]
