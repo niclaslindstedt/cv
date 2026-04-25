@@ -1463,39 +1463,7 @@
       "startDate": "2015-06",
       "completedDate": "2015-08",
       "engagement": 0.5,
-      "remote": true,
-      "moments": [
-        {
-          "name": {
-            "en": "Submission Assignments 1",
-            "sv": "Inlämningsuppgifter 1"
-          },
-          "code": "I101",
-          "credits": "3 ECTS",
-          "completedDate": "2015-08"
-        },
-        {
-          "name": {
-            "en": "Submission Assignments 2",
-            "sv": "Inlämningsuppgifter 2"
-          },
-          "code": "I201",
-          "credits": "3 ECTS",
-          "completedDate": "2015-08"
-        },
-        {
-          "name": { "en": "Project", "sv": "Projekt" },
-          "code": "P101",
-          "credits": "3 ECTS",
-          "completedDate": "2015-08"
-        },
-        {
-          "name": { "en": "Exam", "sv": "Tentamen" },
-          "code": "T101",
-          "credits": "3 ECTS",
-          "completedDate": "2015-08"
-        }
-      ]
+      "remote": true
     },
     {
       "name": { "en": "Game Design", "sv": "Speldesign" },
@@ -1507,18 +1475,7 @@
       "credits": "7.5 ECTS",
       "startDate": "2015-06",
       "completedDate": "2015-07",
-      "engagement": 1,
-      "moments": [
-        {
-          "name": {
-            "en": "Lab Sessions / Seminars",
-            "sv": "Laborationer/Seminarier"
-          },
-          "code": "4000",
-          "credits": "7.5 ECTS",
-          "completedDate": "2015-07"
-        }
-      ]
+      "engagement": 1
     },
     {
       "name": {
@@ -1533,24 +1490,7 @@
       "credits": "15 ECTS",
       "startDate": "2015-01",
       "completedDate": "2015-06",
-      "engagement": 0.5,
-      "moments": [
-        {
-          "name": { "en": "Exam", "sv": "Tentamen" },
-          "code": "1000",
-          "credits": "15 ECTS",
-          "completedDate": "2015-06"
-        },
-        {
-          "name": {
-            "en": "Mandatory Components Completed",
-            "sv": "Fullgjort obligatorium"
-          },
-          "code": "FOBL",
-          "credits": "0 ECTS",
-          "completedDate": "2015-06"
-        }
-      ]
+      "engagement": 0.5
     }
   ],
   "skills": [

@@ -308,7 +308,7 @@
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "completedDate": {
           "$ref": "#/$defs/yearMonth",
-          "description": "Date the course was passed. Omit when the course was only partially completed; the latest `moments[].completedDate` is used in its place for layout/timeline purposes."
+          "description": "Date the course was passed. Omit if the course was not completed."
         },
         "engagement": {
           "type": "number",
@@ -323,12 +323,6 @@
         "completed": {
           "type": "boolean",
           "description": "Whether the course was fully completed. Defaults to true. Set to false to render an 'Incomplete' pill."
-        },
-        "moments": {
-          "type": "array",
-          "minItems": 1,
-          "description": "Sub-parts (Swedish: \"moment\") that make up the course. Use to break down vague course names or to record courses that were only partially completed.",
-          "items": { "$ref": "#/$defs/courseMoment" }
         },
         "skills": { "$ref": "#/$defs/stringList" }
       }
