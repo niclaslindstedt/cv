@@ -410,28 +410,52 @@
         "sv": "Senior Manager"
       },
       "companyId": "etimo",
-      "startDate": "2020-01",
+      "startDate": "2022-01",
       "endDate": "2023-09",
       "skills": ["Mentoring"],
       "assignments": [
         {
           "role": {
-            "en": "Senior Developer",
-            "sv": "Seniorutvecklare"
+            "en": "CTO",
+            "sv": "CTO"
           },
-          "clientId": "seb",
-          "startDate": "2020-02",
-          "endDate": "2020-12",
-          "stack": ["C#/.NET", "Azure", "React", "TypeScript", "Miniservices"],
+          "clientId": "mitt-skolval",
+          "startDate": "2022-01",
+          "endDate": "2023-09",
+          "stack": [
+            "React",
+            "Node.js",
+            "TypeScript",
+            "AWS",
+            "Kubernetes",
+            "MySQL"
+          ],
           "skills": [
-            "Scrum",
-            "SQL",
             "CI/CD",
+            "Cybersecurity",
             "Software Architecture",
+            "Leadership",
+            "IT Strategy",
+            "Engineering Management",
             "Agile Methodologies",
-            "Azure DevOps"
+            "Team Management",
+            "GDPR",
+            "Regulatory Compliance",
+            "Technology Roadmapping"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "role": {
+        "en": "Manager",
+        "sv": "Manager"
+      },
+      "companyId": "etimo",
+      "startDate": "2021-01",
+      "endDate": "2021-12",
+      "skills": ["Mentoring"],
+      "assignments": [
         {
           "role": {
             "en": "Senior Developer",
@@ -463,7 +487,7 @@
           },
           "clientId": "mitt-skolval",
           "startDate": "2021-06",
-          "endDate": "2023-09",
+          "endDate": "2021-12",
           "stack": [
             "React",
             "Node.js",
@@ -484,6 +508,35 @@
             "GDPR",
             "Regulatory Compliance",
             "Technology Roadmapping"
+          ]
+        }
+      ]
+    },
+    {
+      "role": {
+        "en": "Senior Consultant",
+        "sv": "Seniorkonsult"
+      },
+      "companyId": "etimo",
+      "startDate": "2020-01",
+      "endDate": "2020-12",
+      "assignments": [
+        {
+          "role": {
+            "en": "Senior Developer",
+            "sv": "Seniorutvecklare"
+          },
+          "clientId": "seb",
+          "startDate": "2020-02",
+          "endDate": "2020-12",
+          "stack": ["C#/.NET", "Azure", "React", "TypeScript", "Miniservices"],
+          "skills": [
+            "Scrum",
+            "SQL",
+            "CI/CD",
+            "Software Architecture",
+            "Agile Methodologies",
+            "Azure DevOps"
           ]
         }
       ]
