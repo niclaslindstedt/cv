@@ -452,7 +452,6 @@
           "code": "2IS044",
           "credits": "15 ECTS",
           "completedDate": "2014-12",
-          "grade": "Pass with distinction",
           "moments": [
             {
               "name": { "en": "Exam", "sv": "Tentamen" },
@@ -488,7 +487,6 @@
           "code": "2IS006",
           "credits": "7.5 ECTS",
           "completedDate": "2014-12",
-          "grade": "Pass with distinction",
           "moments": [
             {
               "name": { "en": "Exam", "sv": "Tentamen" },
@@ -515,7 +513,6 @@
           "code": "2IS007",
           "credits": "7.5 ECTS",
           "completedDate": "2015-02",
-          "grade": "Pass with distinction",
           "moments": [
             {
               "name": { "en": "Exam", "sv": "Tentamen" },
@@ -539,7 +536,6 @@
           "code": "1MA098",
           "credits": "7.5 ECTS",
           "completedDate": "2015-03",
-          "grade": "Pass with distinction",
           "moments": [
             {
               "name": { "en": "Exam", "sv": "Prov" },
@@ -557,7 +553,6 @@
           "code": "2IV061",
           "credits": "7.5 ECTS",
           "completedDate": "2015-03",
-          "grade": "Pass with distinction",
           "moments": [
             {
               "name": { "en": "Exam", "sv": "Tentamen" },
@@ -584,7 +579,6 @@
           "code": "2IS012",
           "credits": "7.5 ECTS",
           "completedDate": "2015-05",
-          "grade": "Pass with distinction",
           "moments": [
             {
               "name": { "en": "Exam", "sv": "Tentamen" },
@@ -611,7 +605,6 @@
           "code": "2IS014",
           "credits": "7.5 ECTS",
           "completedDate": "2015-06",
-          "grade": "Pass with distinction",
           "moments": [
             {
               "name": { "en": "Project", "sv": "Projekt" },
@@ -736,7 +729,6 @@
           "code": "2IS023",
           "credits": "7.5 ECTS",
           "completedDate": "2016-11",
-          "grade": "Pass with distinction",
           "moments": [
             {
               "name": { "en": "Exam", "sv": "Tentamen" },
