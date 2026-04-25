@@ -41,6 +41,7 @@ export function Courses({ title, courses, onSkillClick }: Props) {
                 ))}
               </ul>
             )}
+            <span className="glass-reflect" aria-hidden="true" />
           </li>
         ))}
       </ul>

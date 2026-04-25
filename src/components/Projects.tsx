@@ -52,6 +52,7 @@ export function Projects({ title, projects, onSkillClick }: Props) {
                 </li>
               ))}
             </ul>
+            <span className="glass-reflect" aria-hidden="true" />
           </article>
         ))}
       </div>

@@ -76,6 +76,7 @@ export function Education({
                   ))}
                 </ul>
               )}
+              <span className="glass-reflect" aria-hidden="true" />
             </li>
           );
         })}
