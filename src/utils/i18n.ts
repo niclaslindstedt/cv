@@ -64,6 +64,12 @@ type UiStrings = {
     since: string;
     detailAria: (area: string) => string;
   };
+  companyModal: {
+    detailAria: (company: string) => string;
+    visitWebsite: string;
+    stack: string;
+    terminated: string;
+  };
   programModal: {
     coursesHeading: string;
     coursesAria: (program: string) => string;
@@ -165,6 +171,12 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       since: "since",
       detailAria: (area) => `${area} details`,
     },
+    companyModal: {
+      detailAria: (company) => `${company} details`,
+      visitWebsite: "Visit website ↗",
+      stack: "Stack",
+      terminated: "Terminated",
+    },
     programModal: {
       coursesHeading: "Courses",
       coursesAria: (program) => `${program} courses`,
@@ -265,6 +277,12 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     focus: {
       since: "sedan",
       detailAria: (area) => `Detaljer för ${area}`,
+    },
+    companyModal: {
+      detailAria: (company) => `Detaljer för ${company}`,
+      visitWebsite: "Besök webbplats ↗",
+      stack: "Stack",
+      terminated: "Avvecklat",
     },
     programModal: {
       coursesHeading: "Kurser",
