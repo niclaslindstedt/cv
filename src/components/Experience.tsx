@@ -5,6 +5,7 @@ import type {
 } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { NoteIcon } from "./NoteIcon";
 import { Section } from "./Section";
 
 type Props = {
@@ -215,7 +216,12 @@ function ExperienceItemView({
             ))}
           </ul>
         )}
-        {item.notes && <p className="entry-notes">{t(item.notes)}</p>}
+        {item.notes && (
+          <p className="entry-notes">
+            <NoteIcon />
+            <span>{t(item.notes)}</span>
+          </p>
+        )}
         {item.assignments && item.assignments.length > 0 && (
           <details className="assignments">
             <summary>
@@ -349,7 +355,12 @@ function AssignmentItemView({
             ))}
           </ul>
         )}
-        {a.notes && <p className="entry-notes">{t(a.notes)}</p>}
+        {a.notes && (
+          <p className="entry-notes">
+            <NoteIcon />
+            <span>{t(a.notes)}</span>
+          </p>
+        )}
       </div>
     </li>
   );

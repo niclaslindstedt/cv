@@ -12,6 +12,7 @@ import timelineData from "../data/timeline.json";
 import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { NoteIcon } from "./NoteIcon";
 
 type Props = {
   open: boolean;
@@ -667,7 +668,8 @@ export function Timeline({ open, onClose }: Props) {
           )}
           {selectedItem.notes && (
             <p className="timeline-vis-details-notes">
-              {t(selectedItem.notes)}
+              <NoteIcon />
+              <span>{t(selectedItem.notes)}</span>
             </p>
           )}
           {selectedItem.skills.length > 0 ? (
