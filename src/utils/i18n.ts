@@ -31,6 +31,7 @@ type UiStrings = {
     job: string;
     assignment: string;
     education: string;
+    course: string;
     skillsUsed: string;
     noSkills: string;
     starts: string;
@@ -104,6 +105,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       job: "Job",
       assignment: "Assignment",
       education: "Education",
+      course: "Course",
       skillsUsed: "Skills used",
       noSkills: "No skills tagged on this entry.",
       starts: "Starts",
@@ -180,6 +182,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       job: "Anställning",
       assignment: "Uppdrag",
       education: "Utbildning",
+      course: "Kurs",
       skillsUsed: "Använda kompetenser",
       noSkills: "Inga kompetenser kopplade till denna post.",
       starts: "Startar",

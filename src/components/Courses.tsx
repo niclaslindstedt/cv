@@ -1,5 +1,5 @@
 import type { Course } from "../data/cv.types";
-import { formatMonth } from "../utils/date";
+import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { Section } from "./Section";
 
@@ -19,12 +19,24 @@ export function Courses({ title, courses, onSkillClick }: Props) {
           <li key={`${item.code}-${item.completedDate}`}>
             <div className="education-head">
               <h3>{t(item.name)}</h3>
-              <span>{formatMonth(item.completedDate, lang)}</span>
+              <span>
+                {item.startDate
+                  ? formatRange(item.startDate, item.completedDate, lang)
+                  : formatMonth(item.completedDate, lang)}
+              </span>
             </div>
             <p>
               {t(item.institution)} ·{" "}
               <span className="education-credits">{item.code}</span> ·{" "}
               <span className="education-credits">{item.credits}</span>
+              {item.engagement !== undefined && (
+                <>
+                  {" · "}
+                  <span className="education-credits">
+                    {Math.round(item.engagement * 100)}%
+                  </span>
+                </>
+              )}
             </p>
             {item.skills && item.skills.length > 0 && (
               <ul className="entry-skills">

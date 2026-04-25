@@ -629,7 +629,9 @@ export function Timeline({ open, onClose }: Props) {
                 ? ui.timeline.job
                 : selectedItem.kind === "assignment"
                   ? ui.timeline.assignment
-                  : ui.timeline.education}
+                  : selectedItem.kind === "course"
+                    ? ui.timeline.course
+                    : ui.timeline.education}
             </span>
             <button
               type="button"

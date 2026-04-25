@@ -1,6 +1,11 @@
 import type { LocalizedString } from "./cv.types";
 
-export type TimelineKind = "experience" | "assignment" | "education" | "github";
+export type TimelineKind =
+  | "experience"
+  | "assignment"
+  | "education"
+  | "course"
+  | "github";
 
 export type TimelineSegment = {
   startMonth: number;
