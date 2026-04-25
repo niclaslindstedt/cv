@@ -244,8 +244,8 @@
         "sv": "Ljudböcker, obegränsat."
       },
       "description": {
-        "en": "Audiobook streaming service with over 1 million users.",
-        "sv": "Strömningstjänst för ljudböcker med över 1 miljon användare."
+        "en": "Audiobook and e-book streaming service owned by Bonnier Books, with over 1 million paying users across more than 10 European markets.",
+        "sv": "Strömningstjänst för ljudböcker och e-böcker som ägs av Bonnier Books, med över 1 miljon betalande användare på fler än 10 europeiska marknader."
       },
       "url": "https://www.bookbeat.com",
       "sourceUrls": [
@@ -295,8 +295,8 @@
         "sv": "En av Nordens största banker."
       },
       "description": {
-        "en": "Major Swedish bank; worked in the private loans team.",
-        "sv": "Stor svensk bank; arbetade i teamet för privatlån."
+        "en": "Nordic financial group with around 16,500 employees across more than 20 countries, founded over 160 years ago.",
+        "sv": "Nordisk finanskoncern med omkring 16 500 anställda i över 20 länder, grundad för över 160 år sedan."
       },
       "url": "https://www.seb.se",
       "sourceUrls": [
@@ -315,8 +315,8 @@
         "sv": "Digitalt skolval för kommuner."
       },
       "description": {
-        "en": "Edutech startup digitalizing school selection for Swedish municipalities.",
-        "sv": "Edtech-startup som digitaliserar skolval för svenska kommuner."
+        "en": "Edtech company founded by Swedish school choice researchers, with a platform that streamlines school selection for municipalities and independent schools.",
+        "sv": "Edtech-bolag grundat av svenska skolvalsforskare, med en plattform som förenklar skolval för kommuner och fristående skolor."
       },
       "url": "https://www.swedutech.se",
       "sourceUrls": [
@@ -331,12 +331,12 @@
       "id": "symptoms",
       "name": "Symptoms Europe AB",
       "tagline": {
-        "en": "eHealth for patients and doctors.",
-        "sv": "eHälsa för patienter och läkare."
+        "en": "Patient-reported outcomes for healthcare.",
+        "sv": "Patientrapporterade utfall för vården."
       },
       "description": {
-        "en": "eHealth startup focused on patient-doctor communication.",
-        "sv": "eHälsa-startup med fokus på patient–läkarkommunikation."
+        "en": "eHealth platform where patients report symptoms and quality of life through validated questionnaires, helping clinicians plan care and measure outcomes.",
+        "sv": "eHälsoplattform där patienter rapporterar symtom och livskvalitet via validerade frågeformulär, vilket hjälper vårdgivare att planera vård och mäta utfall."
       },
       "url": "https://www.symptoms.se",
       "sourceUrls": [
@@ -351,12 +351,12 @@
       "id": "indicio",
       "name": "Indicio Technologies AB",
       "tagline": {
-        "en": "Forecasting platform for finance.",
-        "sv": "Prognosplattform för finans."
+        "en": "Automated forecasting and scenario planning.",
+        "sv": "Automatiserade prognoser och scenarioplanering."
       },
       "description": {
-        "en": "FinTech startup building a forecasting platform.",
-        "sv": "FinTech-startup som bygger en prognosplattform."
+        "en": "Forecasting and scenario planning platform that automates multivariate models for industries from manufacturing to retail.",
+        "sv": "Plattform för prognoser och scenarioplanering som automatiserar multivariata modeller åt branscher från tillverkning till detaljhandel."
       },
       "url": "https://www.indicio.com",
       "sourceUrls": [
