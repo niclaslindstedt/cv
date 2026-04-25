@@ -26,6 +26,7 @@ export function Focus({ title, focus, onFocusClick }: Props) {
               <span className="focus-since">
                 {ui.focus.since} {formatMonth(item.since, lang)}
               </span>
+              <span className="glass-reflect" aria-hidden="true" />
             </button>
           </li>
         ))}

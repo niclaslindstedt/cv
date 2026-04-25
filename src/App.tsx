@@ -18,6 +18,7 @@ import type {
   FocusArea,
   SkillDetail,
 } from "./data/cv.types";
+import { useGlassReflections } from "./utils/glassReflections";
 import { useLang } from "./utils/i18n";
 import { buildSkillUsageMap } from "./utils/skills";
 import { useTheme } from "./utils/theme";
@@ -39,6 +40,7 @@ export function App() {
   );
   const { theme, toggle: toggleTheme } = useTheme();
   const { t } = useLang();
+  useGlassReflections();
 
   useEffect(() => {
     document.title = t(cv.meta.documentTitle);

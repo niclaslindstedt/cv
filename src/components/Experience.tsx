@@ -225,6 +225,7 @@ function ExperienceItemView({
           </details>
         )}
       </div>
+      <span className="glass-reflect" aria-hidden="true" />
     </li>
   );
 }
