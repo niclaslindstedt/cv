@@ -482,7 +482,9 @@
         "sv": "Uppsala universitet"
       },
       "credits": "7.5 ECTS",
-      "completedDate": "2015-07"
+      "startDate": "2015-06",
+      "completedDate": "2015-07",
+      "engagement": 1
     },
     {
       "name": {
@@ -495,7 +497,9 @@
         "sv": "Uppsala universitet"
       },
       "credits": "15 ECTS",
-      "completedDate": "2015-06"
+      "startDate": "2015-01",
+      "completedDate": "2015-06",
+      "engagement": 0.5
     }
   ],
   "skills": [
