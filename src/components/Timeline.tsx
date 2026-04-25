@@ -665,6 +665,11 @@ export function Timeline({ open, onClose }: Props) {
               {t(selectedItem.description)}
             </p>
           )}
+          {selectedItem.notes && (
+            <p className="timeline-vis-details-notes">
+              {t(selectedItem.notes)}
+            </p>
+          )}
           {selectedItem.skills.length > 0 ? (
             <>
               <h4 className="timeline-vis-details-skills-title">

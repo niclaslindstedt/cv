@@ -23,10 +23,12 @@ export function Education({
         {education.map((item) => {
           const courseCount = item.courses?.length ?? 0;
           const hasCourses = courseCount > 0;
+          const hasNotes = !!item.notes;
+          const isClickable = hasCourses || hasNotes;
           const field = t(item.field);
           return (
             <li key={`${item.institution.en}-${item.startDate}`}>
-              {hasCourses ? (
+              {isClickable ? (
                 <button
                   type="button"
                   className="education-program-btn"
@@ -42,9 +44,11 @@ export function Education({
                   <p>
                     {t(item.institution)} · {t(item.level)} ·{" "}
                     <span className="education-credits">{item.credits}</span>
-                    <span className="education-courses-count">
-                      {ui.education.coursesCount(courseCount)}
-                    </span>
+                    {hasCourses && (
+                      <span className="education-courses-count">
+                        {ui.education.coursesCount(courseCount)}
+                      </span>
+                    )}
                   </p>
                 </button>
               ) : (

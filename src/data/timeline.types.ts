@@ -38,6 +38,7 @@ export type TimelineBar = {
   endDate: string | null;
   isOngoing: boolean;
   endMonthAtBuild: number;
+  notes?: LocalizedString;
   segments: TimelineSegment[];
   github?: GitHubPayload;
 };
