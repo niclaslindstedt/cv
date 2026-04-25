@@ -21,7 +21,8 @@
     "education",
     "courses",
     "skills",
-    "skillDetails"
+    "skillDetails",
+    "languages"
   ],
   "properties": {
     "$schema": { "type": "string" },
@@ -73,6 +74,11 @@
       "type": "object",
       "description": "Per-skill metadata keyed by skill name (must match strings used in skills/items, projects, experience, etc.).",
       "additionalProperties": { "$ref": "#/$defs/skillDetail" }
+    },
+    "languages": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/spokenLanguage" }
     }
   },
   "$defs": {
@@ -162,7 +168,8 @@
         "experience",
         "education",
         "courses",
-        "skills"
+        "skills",
+        "languages"
       ],
       "properties": {
         "focus": { "$ref": "#/$defs/localizedString" },
@@ -170,7 +177,8 @@
         "experience": { "$ref": "#/$defs/localizedString" },
         "education": { "$ref": "#/$defs/localizedString" },
         "courses": { "$ref": "#/$defs/localizedString" },
-        "skills": { "$ref": "#/$defs/localizedString" }
+        "skills": { "$ref": "#/$defs/localizedString" },
+        "languages": { "$ref": "#/$defs/localizedString" }
       }
     },
     "focusArea": {
@@ -340,20 +348,24 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["name", "code", "credits"],
+      "description": "A course in a program. Status semantics: (1) `completedDate` set ⇒ fully completed; (2) `completed: false` ⇒ not fully completed (renders an 'Incomplete' pill) — individual `moments[].completedDate` may still be set to record partial completion; (3) neither ⇒ in progress.",
       "properties": {
         "name": { "$ref": "#/$defs/localizedString" },
         "code": { "type": "string", "minLength": 1 },
         "credits": { "type": "string", "minLength": 1 },
-        "completedDate": { "$ref": "#/$defs/yearMonth" },
+        "completedDate": {
+          "$ref": "#/$defs/yearMonth",
+          "description": "Date the course was fully passed. Omit when the course was abandoned (`completed: false`) or is still in progress."
+        },
         "grade": { "type": "string", "minLength": 1 },
         "completed": {
           "type": "boolean",
-          "description": "Whether the course was fully completed. Defaults to true. Set to false to render an 'Incomplete' pill."
+          "description": "Whether the course was fully completed. Defaults to true. Set to false when the course was abandoned; partially-completed `moments[]` may still carry `completedDate`."
         },
         "moments": {
           "type": "array",
           "minItems": 1,
-          "description": "Sub-parts (Swedish: \"moment\") that make up the course. Use to break down vague course names or to record partially-completed courses.",
+          "description": "Sub-parts (Swedish: \"moment\") that make up the course. Use to break down vague course names or to record partial completion when `completed: false`.",
           "items": { "$ref": "#/$defs/courseMoment" }
         },
         "skills": { "$ref": "#/$defs/stringList" }
@@ -423,6 +435,15 @@
     "stringList": {
       "type": "array",
       "items": { "type": "string", "minLength": 1 }
+    },
+    "spokenLanguage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "level"],
+      "properties": {
+        "name": { "$ref": "#/$defs/localizedString" },
+        "level": { "$ref": "#/$defs/localizedString" }
+      }
     }
   }
 }

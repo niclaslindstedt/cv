@@ -9,6 +9,7 @@ import { Experience } from "./components/Experience";
 import { Focus } from "./components/Focus";
 import { FocusModal } from "./components/FocusModal";
 import { Hero } from "./components/Hero";
+import { Languages } from "./components/Languages";
 import { ProgramCoursesModal } from "./components/ProgramCoursesModal";
 import { ProjectModal } from "./components/ProjectModal";
 import { Projects } from "./components/Projects";
@@ -111,6 +112,10 @@ export function App() {
             skills={cv.skills}
             usages={skillUsages}
             onSkillClick={setSelectedSkill}
+          />
+          <Languages
+            title={t(cv.sections.languages)}
+            languages={cv.languages}
           />
         </main>
         <footer className="footer container">
