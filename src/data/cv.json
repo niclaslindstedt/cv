@@ -240,12 +240,12 @@
       "id": "bookbeat",
       "name": "BookBeat AB",
       "tagline": {
-        "en": "Audiobooks, unlimited.",
-        "sv": "Ljudböcker, obegränsat."
+        "en": "Audiobook and e-book streaming service.",
+        "sv": "Strömningstjänst för ljudböcker och e-böcker."
       },
       "description": {
-        "en": "Audiobook streaming service with over 1 million users.",
-        "sv": "Strömningstjänst för ljudböcker med över 1 miljon användare."
+        "en": "Launched in 2015 and owned by Bonnier Books, BookBeat operates an audiobook and e-book streaming app across more than 10 European markets, with primary footprints in Sweden, Finland, Germany, and Poland. The service has over 1.1 million paying users. Headquartered in Stockholm, with additional offices in Karlstad, Helsinki, Berlin, Oslo, and Warsaw.",
+        "sv": "BookBeat lanserades 2015 och ägs av Bonnier Books. Strömningstjänsten för ljudböcker och e-böcker finns på fler än 10 europeiska marknader, med Sverige, Finland, Tyskland och Polen som huvudmarknader, och har över 1,1 miljoner betalande användare. Huvudkontoret ligger i Stockholm och kompletteras av kontor i Karlstad, Helsingfors, Berlin, Oslo och Warszawa."
       },
       "url": "https://www.bookbeat.com",
       "sourceUrls": [
@@ -265,12 +265,12 @@
       "id": "ibnq",
       "name": "IBNQ AB",
       "tagline": {
-        "en": "Family offices, digitalized.",
-        "sv": "Family offices, digitaliserade."
+        "en": "Software platform for family offices.",
+        "sv": "Mjukvaruplattform för family offices."
       },
       "description": {
-        "en": "Digitalizing family offices.",
-        "sv": "Digitaliserar family offices."
+        "en": "IBNQ builds a wealth-management platform for family offices, private banks, and their high-net-worth clients, supporting aggregation of personal and asset information, AI-assisted decision-making, and data administration. Backed by investors including Söderberg & Partners, HMP Foundation, and DIG Investment, with a team drawn from technology, finance, and data management.",
+        "sv": "IBNQ bygger en plattform för förmögenhetsförvaltning åt family offices, privatbanker och deras förmögna klienter, med stöd för aggregering av person- och tillgångsdata, AI-stödd beslutsfattning och dataadministration. Backas av investerare som Söderberg & Partners, HMP Foundation och DIG Investment, och har ett team med bakgrund inom teknik, finans och dataförvaltning."
       },
       "terminated": true
     },
@@ -282,21 +282,28 @@
         "sv": ".NET- och JavaScript-konsultbolag."
       },
       "description": {
-        "en": "IT consultancy specialized in .NET and JavaScript web applications.",
-        "sv": "IT-konsultbolag specialiserat på .NET- och JavaScript-webbapplikationer."
+        "en": "Stockholm-based IT consultancy of around 13 people, focused on .NET and JavaScript web development. Etimo deliberately turns down clients whose work doesn't contribute positively to society, and reinvests time and profits into pro-bono engagements for non-profits, charitable donations, and open-source contributions.",
+        "sv": "Stockholmsbaserat IT-konsultbolag på cirka 13 personer, inriktat på .NET- och JavaScript-utveckling. Etimo väljer aktivt bort kunder vars verksamhet inte bidrar positivt till samhället och investerar tid och delar av vinsten i pro bono-uppdrag åt ideella organisationer, välgörenhetsdonationer och bidrag till öppen källkod."
       },
-      "url": "https://www.etimo.se"
+      "url": "https://www.etimo.se",
+      "sourceUrls": [
+        {
+          "title": "Official about page",
+          "url": "https://etimo.se/om-oss",
+          "description": "Etimo's own Swedish-language about page describing the team, location, and the company's social and pro-bono commitments."
+        }
+      ]
     },
     {
       "id": "seb",
       "name": "SEB",
       "tagline": {
-        "en": "One of the Nordics' largest banks.",
-        "sv": "En av Nordens största banker."
+        "en": "Nordic financial group.",
+        "sv": "Nordisk finanskoncern."
       },
       "description": {
-        "en": "Major Swedish bank; worked in the private loans team.",
-        "sv": "Stor svensk bank; arbetade i teamet för privatlån."
+        "en": "Skandinaviska Enskilda Banken (SEB) is a Nordic financial group headquartered in Stockholm and founded over 160 years ago, with around 16,500 employees across more than 20 countries. It provides retail banking and advisory services in Sweden and the Baltics, and corporate and investment banking across the other Nordic countries, Germany, and the United Kingdom.",
+        "sv": "Skandinaviska Enskilda Banken (SEB) är en nordisk finanskoncern med huvudkontor i Stockholm, grundad för över 160 år sedan, med omkring 16 500 anställda i fler än 20 länder. Banken erbjuder privatbankstjänster och rådgivning i Sverige och Baltikum samt företags- och investmentbank i övriga Norden, Tyskland och Storbritannien."
       },
       "url": "https://www.seb.se",
       "sourceUrls": [
@@ -311,12 +318,12 @@
       "id": "mitt-skolval",
       "name": "Mitt Skolval",
       "tagline": {
-        "en": "Digital school selection for municipalities.",
-        "sv": "Digitalt skolval för kommuner."
+        "en": "School selection platform.",
+        "sv": "Plattform för skolval."
       },
       "description": {
-        "en": "Edutech startup digitalizing school selection for Swedish municipalities.",
-        "sv": "Edtech-startup som digitaliserar skolval för svenska kommuner."
+        "en": "Mitt Skolval is a Swedish edtech product from Svensk Utbildningsteknologi (Swedutech), founded by leading school choice researchers and run by a small team of around ten covering economics, engineering, and customer support. The platform handles school selection and student transfers for municipalities and independent school operators, aiming to place as many students as possible at a preferred school. The team also publishes research, gives lectures, and hosts the annual Skolvalskonferensen for Swedish school choice professionals.",
+        "sv": "Mitt Skolval är en svensk edtech-produkt från Svensk Utbildningsteknologi (Swedutech), grundad av ledande skolvalsforskare och driven av ett litet team om cirka tio personer med kompetens inom ekonomi, utveckling och kundstöd. Plattformen hanterar skolval och elevbyten åt kommuner och fristående skolhuvudmän, med målet att så många elever som möjligt ska få en plats vid en önskad skola. Teamet publicerar också forskning, håller föreläsningar och arrangerar den årliga Skolvalskonferensen för svenska skolvalsproffs."
       },
       "url": "https://www.swedutech.se",
       "sourceUrls": [
@@ -331,12 +338,12 @@
       "id": "symptoms",
       "name": "Symptoms Europe AB",
       "tagline": {
-        "en": "eHealth for patients and doctors.",
-        "sv": "eHälsa för patienter och läkare."
+        "en": "eHealth platform for patient-reported outcomes.",
+        "sv": "eHälsoplattform för patientrapporterade utfall."
       },
       "description": {
-        "en": "eHealth startup focused on patient-doctor communication.",
-        "sv": "eHälsa-startup med fokus på patient–läkarkommunikation."
+        "en": "Symptoms is a language-independent eHealth platform where patients track symptoms, function, and quality of life through scientifically validated questionnaires they choose themselves, rather than receiving forms prescribed by a diagnosis. The data helps clinicians plan person-centred care and measure whether interventions actually improve outcomes; researchers also use it via minforskning.se. The company is based in Uppsala and was founded in the early 2000s by Johan and Martin out of clinical research and practice.",
+        "sv": "Symptoms är en språkoberoende eHälsoplattform där patienter följer symtom, funktion och livskvalitet via vetenskapligt validerade frågeformulär som de själva väljer, i stället för formulär som styrs av diagnos. Datan hjälper vårdgivare att planera personcentrerad vård och mäta om insatser faktiskt förbättrar utfallen; forskare använder den också via minforskning.se. Företaget har sitt säte i Uppsala och grundades i början av 2000-talet av Johan och Martin med rötter i kliniskt arbete och forskning."
       },
       "url": "https://www.symptoms.se",
       "sourceUrls": [
@@ -351,12 +358,12 @@
       "id": "indicio",
       "name": "Indicio Technologies AB",
       "tagline": {
-        "en": "Forecasting platform for finance.",
-        "sv": "Prognosplattform för finans."
+        "en": "Forecasting and scenario planning platform.",
+        "sv": "Plattform för prognoser och scenarioplanering."
       },
       "description": {
-        "en": "FinTech startup building a forecasting platform.",
-        "sv": "FinTech-startup som bygger en prognosplattform."
+        "en": "Indicio builds a forecasting and scenario planning platform that automates multivariate model building, incorporates external market and economic data, supports large-scale backtesting, and integrates with existing data stacks and BI tools. Customers span manufacturing, consumer goods, banking and financial services, construction, energy, retail, and e-commerce, using it for demand, sales, and market forecasting. The company was founded around 15 years ago by Frans Andersen, David Fagersand, and Daniel Schiess, after Frans encountered commodity-price forecasting problems at Scania.",
+        "sv": "Indicio bygger en plattform för prognoser och scenarioplanering som automatiserar multivariat modellbyggande, väver in extern marknads- och makrodata, stöder storskalig backtestning och integrerar med befintliga datalager och BI-verktyg. Kunderna finns inom tillverkning, konsumentvaror, bank och finans, bygg, energi, detaljhandel och e-handel och använder plattformen för efterfråge-, försäljnings- och marknadsprognoser. Bolaget grundades för cirka 15 år sedan av Frans Andersen, David Fagersand och Daniel Schiess, efter att Frans stött på utmaningar med råvaruprisprognoser på Scania."
       },
       "url": "https://www.indicio.com",
       "sourceUrls": [
@@ -371,12 +378,12 @@
       "id": "agilator",
       "name": "Agilator AB",
       "tagline": {
-        "en": "Solo consulting for startups.",
-        "sv": "Solokonsult för startups."
+        "en": "Solo consulting practice.",
+        "sv": "Solokonsultbolag."
       },
       "description": {
-        "en": "Solo consulting firm for startup engagements.",
-        "sv": "Solokonsultbolag för startup-uppdrag."
+        "en": "Niclas's own Swedish aktiebolag, used as the legal entity for solo consulting engagements taken on alongside his other roles.",
+        "sv": "Niclas eget aktiebolag, som används som juridisk enhet för solokonsultuppdrag vid sidan av övriga roller."
       }
     }
   ],
