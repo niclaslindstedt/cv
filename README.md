@@ -52,6 +52,8 @@ All developer entry points are exposed via `make`:
 | `make fmt-check` | Prettier check without writing                               |
 | `make validate`  | Validate `src/data/cv.json` against `schemas/cv.schema.json` |
 | `make generate`  | Regenerate `src/data/timeline.json` from `cv.json`           |
+| `make og`        | Regenerate `public/og-image.png` from `cv.json`              |
+| `make sitemap`   | Write `dist/sitemap.xml` (run after `vite build`)            |
 | `make test`      | Run the test suite                                           |
 | `make release`   | Cut a new release (CI-managed)                               |
 | `make clean`     | Remove `dist/` and Vite cache                                |
@@ -99,11 +101,40 @@ No runtime config file. All content is edited directly in `src/data/cv.json`
 `src/data/cv.types.ts`). No environment variables are required for local
 development.
 
-For CI and deployment the following GitHub secret must be set:
+For CI and deployment the following GitHub secrets are used:
 
-| Secret          | Purpose                                    |
-| --------------- | ------------------------------------------ |
-| `RELEASE_TOKEN` | PAT with write access for release pipeline |
+| Secret                      | Purpose                                                                                                                           |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `RELEASE_TOKEN`             | PAT with write access for release pipeline                                                                                        |
+| `PROJECT_STATS_TOKEN`       | PAT with `repo` scope so per-project commit stats can read private repos                                                          |
+| `VITE_GOATCOUNTER_ENDPOINT` | GoatCounter pageview endpoint (e.g. `https://niclaslindstedt.goatcounter.com/count`); when unset, no analytics snippet is emitted |
+
+## SEO & analytics
+
+The site emits a fully-populated `<head>` (Open Graph, Twitter card,
+canonical URL, keywords, `Person` + `WebSite` JSON-LD), a 1200×630 OG
+image, a `sitemap.xml`, and a `robots.txt` — all derived from
+`src/data/cv.json` at build time by `vite.config.ts` (`cvMetaHtmlPlugin`)
+and the helper scripts under `scripts/`. To preview the rendered head
+locally, run `make build && make preview` and view source.
+
+**GoatCounter (one-time setup)**
+
+1. Sign up at [goatcounter.com](https://www.goatcounter.com) and
+   register a site (e.g. `niclaslindstedt`).
+2. Copy the count endpoint —
+   `https://<site-code>.goatcounter.com/count`.
+3. Add it as the GitHub repo secret `VITE_GOATCOUNTER_ENDPOINT`.
+4. Trigger a deploy (push to `main` or re-run the Pages workflow).
+5. Visit the live site once and confirm a pageview lands in the
+   GoatCounter dashboard within ~1 minute.
+
+**Google Search Console**
+
+Verification is performed out-of-band (DNS or another mechanism) — no
+verification meta tag or HTML file is committed to the repo. Once
+verified, submit `https://niclaslindstedt.se/sitemap.xml` to the
+property to seed indexing.
 
 ## Examples
 

@@ -65,6 +65,11 @@ consume `data/cv.types.ts` and `utils/date.ts`. Nothing in `data/` or
 | Timeline tracks, layout, zoom behaviour      | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                                                                                 |
 | GitHub commit activity fetch                 | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time)                                                                  |
 | Per-project repo commit stats fetch          | `scripts/generate-project-stats.mjs` (uses `PROJECT_STATS_TOKEN` if set, else `GITHUB_TOKEN`; needs `repo` scope to read private project repos) |
+| `<head>` meta, OG, Twitter, JSON-LD          | `vite.config.ts` (`cvMetaHtmlPlugin`) — derived from `cv.meta` + `cv.links` + `cv.skills` + `cv.education`                                      |
+| Social-share OG image                        | `scripts/generate-og-image.mjs` (satori → `public/og-image.png`); runs in `prebuild`                                                            |
+| Sitemap                                      | `scripts/generate-sitemap.mjs` (writes `dist/sitemap.xml` post-build)                                                                           |
+| `robots.txt`, `404.html`                     | Static files in `public/`                                                                                                                       |
+| Analytics (GoatCounter)                      | Snippet injected by `cvMetaHtmlPlugin` only when `VITE_GOATCOUNTER_ENDPOINT` env var is set at build time                                       |
 
 ## Conventions
 
@@ -103,6 +108,7 @@ When you change X, update Y:
 | `schemas/cv.schema.json`                          | `src/data/cv.types.ts` + any component consuming the changed field   |
 | `src/data/cv.types.ts`                            | `schemas/cv.schema.json` + any component consuming the changed field |
 | `schemas/timeline.schema.json`                    | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`       |
+| `cv.meta` (siteUrl / seo)                         | `vite.config.ts` `cvMetaHtmlPlugin` reads these directly             |
 | Node version in CI                                | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)               |
 | `src/styles.css` tokens or any new visual pattern | `docs/DESIGN.md` (in the **same** PR)                                |
 

@@ -1,6 +1,7 @@
 {
   "$schema": "../../schemas/cv.schema.json",
   "meta": {
+    "siteUrl": "https://niclaslindstedt.se",
     "documentTitle": {
       "en": "Niclas Lindstedt — IT Architect",
       "sv": "Niclas Lindstedt — IT-arkitekt"
@@ -8,6 +9,23 @@
     "description": {
       "en": "Niclas Lindstedt — IT Architect building open-source tools for agentic coding.",
       "sv": "Niclas Lindstedt — IT-arkitekt som bygger open source-verktyg för agentisk kodning."
+    },
+    "seo": {
+      "keywords": [
+        "Niclas Lindstedt",
+        "IT architect",
+        "agentic coding",
+        "AI agents",
+        "Claude",
+        "open source",
+        "TypeScript",
+        "Rust",
+        "consultant",
+        "Sweden"
+      ],
+      "image": "/og-image.png",
+      "locale": "en_US",
+      "alternateLocale": "sv_SE"
     }
   },
   "name": "Niclas Lindstedt",
