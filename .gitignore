@@ -13,3 +13,5 @@ dist-ssr
 src/data/timeline.json
 # Generated artifacts (see scripts/generate-github-activity.mjs)
 src/data/github-activity.json
+# Generated artifacts (see scripts/generate-project-stats.mjs)
+src/data/project-stats.json

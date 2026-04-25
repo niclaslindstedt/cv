@@ -64,6 +64,7 @@ consume `data/cv.types.ts` and `utils/date.ts`. Nothing in `data/` or
 | Global styles, layout, typography            | `src/styles.css`                                                               |
 | Timeline tracks, layout, zoom behaviour      | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                |
 | GitHub commit activity fetch                 | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time) |
+| Per-project repo commit stats fetch          | `scripts/generate-project-stats.mjs` (requires `GITHUB_TOKEN` at build time)   |
 
 ## Conventions
 
