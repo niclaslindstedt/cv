@@ -1922,6 +1922,14 @@ button.skill-pill-btn:focus-visible {
   white-space: nowrap;
 }
 
+.course-modal-moments {
+  padding: 4px 20px 16px;
+}
+
+.course-modal-skills {
+  padding: 0 20px 16px;
+}
+
 @media (max-width: 520px) {
   .program-course-head {
     flex-direction: column;
