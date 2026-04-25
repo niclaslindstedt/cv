@@ -120,6 +120,7 @@ export type Course = {
   engagement?: number;
   remote?: boolean;
   completed?: boolean;
+  moments?: CourseMoment[];
   skills?: string[];
 };
 
