@@ -351,6 +351,12 @@ a:hover {
   grid-template-columns: 160px 1fr;
   gap: 16px;
   position: relative;
+  padding: 20px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
 }
 
 .timeline-group-items {
@@ -365,8 +371,8 @@ a:hover {
   content: "";
   position: absolute;
   left: -14px;
-  top: 14px;
-  width: 8px;
+  top: 28px;
+  width: 14px;
   height: 1px;
   background: var(--accent);
   opacity: 0.6;
@@ -376,8 +382,8 @@ a:hover {
   content: "";
   position: absolute;
   left: -14px;
-  top: 14px;
-  bottom: -34px;
+  top: 28px;
+  bottom: -48px;
   width: 1px;
   background: var(--accent);
   opacity: 0.6;
@@ -584,6 +590,15 @@ a:hover {
   margin: 0;
   display: grid;
   gap: 16px;
+}
+
+.education-list > li {
+  padding: 20px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
 }
 
 .education-head {
@@ -1677,6 +1692,8 @@ button.skill-pill-btn:focus-visible {
 
   .focus-list li,
   .project,
+  .timeline-item,
+  .education-list > li,
   .timeline-vis-details,
   .skill-modal,
   .skill-modal-overlay,
@@ -1787,10 +1804,20 @@ button.skill-pill-btn:focus-visible {
   .focus-list li,
   .focus-item-btn,
   .project,
+  .timeline-item,
+  .education-list > li,
   .skill-pill {
     background: transparent !important;
     border-color: #bbb !important;
     color: #111 !important;
+  }
+
+  .timeline-item,
+  .education-list > li {
+    padding: 4px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px dotted #bbb !important;
+    border-radius: 0 !important;
   }
 
   button.skill-pill-btn {
