@@ -117,6 +117,7 @@ function buildItems(cv) {
       startDate: exp.startDate,
       endDate: exp.endDate,
       skills: mergeTags(exp.stack, exp.skills),
+      notes: exp.notes ? localize(exp.notes) : undefined,
     });
     const grouped = new Map();
     (exp.assignments ?? []).forEach((a, j) => {
@@ -130,6 +131,7 @@ function buildItems(cv) {
           startDate: a.startDate,
           endDate: a.endDate,
           skills: mergeTags(a.stack, a.skills),
+          notes: a.notes ? [localize(a.notes)] : [],
         });
       } else {
         existing.roles.push({ role: a.role, startDate: a.startDate });
@@ -141,6 +143,7 @@ function buildItems(cv) {
         for (const tag of [...(a.stack ?? []), ...(a.skills ?? [])]) {
           if (!existing.skills.includes(tag)) existing.skills.push(tag);
         }
+        if (a.notes) existing.notes.push(localize(a.notes));
       }
     });
     for (const group of grouped.values()) {
@@ -164,6 +167,10 @@ function buildItems(cv) {
         startDate: group.startDate,
         endDate: group.endDate,
         skills: group.skills,
+        notes:
+          group.notes.length > 0
+            ? localizedJoin(group.notes, "\n\n")
+            : undefined,
       });
     }
   });
@@ -183,6 +190,7 @@ function buildItems(cv) {
       startDate: ed.startDate,
       endDate: ed.endDate,
       skills: ed.skills ?? [],
+      notes: ed.notes ? localize(ed.notes) : undefined,
     });
   });
   (cv.courses ?? []).forEach((course, i) => {
@@ -358,6 +366,7 @@ function buildLayout(cv, activity) {
         endMonthAtBuild: p.endMonthAtBuild,
         segments: p.segments,
       };
+      if (p.notes) bar.notes = p.notes;
       if (p.github) bar.github = p.github;
       return bar;
     }),

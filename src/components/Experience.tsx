@@ -212,6 +212,7 @@ function ExperienceItemView({
             ))}
           </ul>
         )}
+        {item.notes && <p className="entry-notes">{t(item.notes)}</p>}
         {item.assignments && item.assignments.length > 0 && (
           <details className="assignments">
             <summary>
@@ -338,6 +339,7 @@ function AssignmentItemView({
             ))}
           </ul>
         )}
+        {a.notes && <p className="entry-notes">{t(a.notes)}</p>}
       </div>
     </li>
   );

@@ -208,6 +208,7 @@
         "engagement": { "$ref": "#/$defs/localizedString" },
         "stack": { "$ref": "#/$defs/stringList" },
         "skills": { "$ref": "#/$defs/stringList" },
+        "notes": { "$ref": "#/$defs/localizedString" },
         "assignments": {
           "type": "array",
           "minItems": 1,
@@ -227,7 +228,8 @@
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
         "stack": { "$ref": "#/$defs/stringList" },
-        "skills": { "$ref": "#/$defs/stringList" }
+        "skills": { "$ref": "#/$defs/stringList" },
+        "notes": { "$ref": "#/$defs/localizedString" }
       }
     },
     "education": {
@@ -249,6 +251,7 @@
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": { "$ref": "#/$defs/yearMonth" },
         "skills": { "$ref": "#/$defs/stringList" },
+        "notes": { "$ref": "#/$defs/localizedString" },
         "courses": {
           "type": "array",
           "minItems": 1,

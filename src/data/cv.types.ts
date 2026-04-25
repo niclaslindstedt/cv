@@ -65,6 +65,7 @@ export type Assignment = {
   endDate: string | null;
   stack?: string[];
   skills?: string[];
+  notes?: LocalizedString;
 };
 
 export type Experience = {
@@ -75,6 +76,7 @@ export type Experience = {
   engagement?: LocalizedString;
   stack?: string[];
   skills?: string[];
+  notes?: LocalizedString;
   assignments?: Assignment[];
 };
 
@@ -95,6 +97,7 @@ export type Education = {
   startDate: string;
   endDate: string;
   skills?: string[];
+  notes?: LocalizedString;
   courses?: ProgramCourse[];
 };
 

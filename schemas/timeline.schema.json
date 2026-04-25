@@ -95,6 +95,7 @@
         },
         "isOngoing": { "type": "boolean" },
         "endMonthAtBuild": { "type": "integer" },
+        "notes": { "$ref": "#/$defs/localizedString" },
         "segments": {
           "type": "array",
           "minItems": 1,

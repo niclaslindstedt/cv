@@ -67,9 +67,14 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
               {t(program.institution)} · {t(program.level)} ·{" "}
               <span className="education-credits">{program.credits}</span>
             </p>
-            <p className="program-modal-count">
-              {ui.programModal.coursesSummary(courses.length)}
-            </p>
+            {program.notes && (
+              <p className="program-modal-notes">{t(program.notes)}</p>
+            )}
+            {courses.length > 0 && (
+              <p className="program-modal-count">
+                {ui.programModal.coursesSummary(courses.length)}
+              </p>
+            )}
           </section>
           {courses.length > 0 && (
             <ul className="program-courses-list">
