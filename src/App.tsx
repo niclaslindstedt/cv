@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { CourseMomentsModal } from "./components/CourseMomentsModal";
 import { Courses } from "./components/Courses";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
@@ -14,6 +15,7 @@ import { Timeline } from "./components/Timeline";
 import cv from "./data/cv.json";
 import type {
   Company,
+  Course,
   Education as EducationItem,
   FocusArea,
   SkillDetail,
@@ -38,6 +40,7 @@ export function App() {
   const [selectedProgram, setSelectedProgram] = useState<EducationItem | null>(
     null,
   );
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
   const { t } = useLang();
   useGlassReflections();
@@ -90,6 +93,7 @@ export function App() {
           title={t(cv.sections.courses)}
           courses={cv.courses}
           onSkillClick={setSelectedSkill}
+          onCourseClick={setSelectedCourse}
         />
         <Skills
           title={t(cv.sections.skills)}
@@ -123,6 +127,14 @@ export function App() {
         onClose={() => setSelectedProgram(null)}
         onSkillClick={(skill) => {
           setSelectedProgram(null);
+          setSelectedSkill(skill);
+        }}
+      />
+      <CourseMomentsModal
+        course={selectedCourse}
+        onClose={() => setSelectedCourse(null)}
+        onSkillClick={(skill) => {
+          setSelectedCourse(null);
           setSelectedSkill(skill);
         }}
       />

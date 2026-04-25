@@ -7,6 +7,7 @@ type Props = {
   title: string;
   courses: Course[];
   onSkillClick: (skill: string) => void;
+  onCourseClick: (course: Course) => void;
 };
 
 function parseCredits(credits: string): number | null {
@@ -30,7 +31,12 @@ function latestMomentDate(moments: CourseMoment[]): string | undefined {
   return dates.reduce((latest, d) => (d > latest ? d : latest));
 }
 
-export function Courses({ title, courses, onSkillClick }: Props) {
+export function Courses({
+  title,
+  courses,
+  onSkillClick,
+  onCourseClick,
+}: Props) {
   const { lang, t, ui } = useLang();
   if (courses.length === 0) return null;
   return (
@@ -50,10 +56,12 @@ export function Courses({ title, courses, onSkillClick }: Props) {
               earned !== null &&
               fullCredits !== null &&
               earned < fullCredits);
-          return (
-            <li key={`${item.code}-${endDate ?? item.startDate ?? "x"}`}>
+          const hasMoments = moments.length > 0;
+          const courseName = t(item.name);
+          const headBody = (
+            <>
               <div className="education-head">
-                <h3>{t(item.name)}</h3>
+                <h3>{courseName}</h3>
                 <span>
                   {item.startDate && endDate
                     ? formatRange(item.startDate, endDate, lang)
@@ -101,44 +109,27 @@ export function Courses({ title, courses, onSkillClick }: Props) {
                     </span>
                   </>
                 )}
+                {hasMoments && (
+                  <span className="education-courses-count">
+                    {ui.courses.momentsCount(moments.length)}
+                  </span>
+                )}
               </p>
-              {moments.length > 0 && (
-                <div className="program-course-moments">
-                  <p className="program-course-moments-label">
-                    {ui.programModal.moments}
-                  </p>
-                  <ul className="program-moment-list">
-                    {moments.map((moment, index) => (
-                      <li
-                        key={moment.code ?? `${item.code}-${index}`}
-                        className={
-                          moment.completedDate
-                            ? "program-moment-item"
-                            : "program-moment-item program-moment-item--pending"
-                        }
-                      >
-                        <span className="program-moment-name">
-                          {t(moment.name)}
-                        </span>
-                        <span className="program-moment-meta">
-                          {moment.code && (
-                            <span className="program-moment-code">
-                              {moment.code}
-                            </span>
-                          )}
-                          <span className="education-credits">
-                            {moment.credits}
-                          </span>
-                          <span className="program-moment-date">
-                            {moment.completedDate
-                              ? formatMonth(moment.completedDate, lang)
-                              : ui.programModal.momentNotCompleted}
-                          </span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            </>
+          );
+          return (
+            <li key={`${item.code}-${endDate ?? item.startDate ?? "x"}`}>
+              {hasMoments ? (
+                <button
+                  type="button"
+                  className="education-program-btn"
+                  onClick={() => onCourseClick(item)}
+                  aria-label={ui.courses.viewMomentsAria(courseName)}
+                >
+                  {headBody}
+                </button>
+              ) : (
+                headBody
               )}
               {item.skills && item.skills.length > 0 && (
                 <ul className="entry-skills">

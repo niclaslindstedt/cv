@@ -81,6 +81,11 @@ type UiStrings = {
     viewCoursesAria: (program: string) => string;
     coursesCount: (count: number) => string;
   };
+  courses: {
+    viewMomentsAria: (course: string) => string;
+    momentsAria: (course: string) => string;
+    momentsCount: (count: number) => string;
+  };
 };
 
 export const UI_STRINGS: Record<Language, UiStrings> = {
@@ -177,6 +182,11 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewCoursesAria: (program) => `View courses for ${program}`,
       coursesCount: (n) => `${n} course${n === 1 ? "" : "s"}`,
     },
+    courses: {
+      viewMomentsAria: (course) => `View components for ${course}`,
+      momentsAria: (course) => `${course} components`,
+      momentsCount: (n) => `${n} component${n === 1 ? "" : "s"}`,
+    },
   },
   sv: {
     present: "Pågående",
@@ -272,6 +282,11 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     education: {
       viewCoursesAria: (program) => `Visa kurser för ${program}`,
       coursesCount: (n) => (n === 1 ? "1 kurs" : `${n} kurser`),
+    },
+    courses: {
+      viewMomentsAria: (course) => `Visa moment för ${course}`,
+      momentsAria: (course) => `Moment i ${course}`,
+      momentsCount: (n) => (n === 1 ? "1 moment" : `${n} moment`),
     },
   },
 };
