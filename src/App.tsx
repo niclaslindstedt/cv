@@ -10,6 +10,7 @@ import { Focus } from "./components/Focus";
 import { FocusModal } from "./components/FocusModal";
 import { Hero } from "./components/Hero";
 import { ProgramCoursesModal } from "./components/ProgramCoursesModal";
+import { ProjectModal } from "./components/ProjectModal";
 import { Projects } from "./components/Projects";
 import { SkillModal } from "./components/SkillModal";
 import { Skills } from "./components/Skills";
@@ -20,6 +21,7 @@ import type {
   Course,
   Education as EducationItem,
   FocusArea,
+  Project,
   SkillDetail,
 } from "./data/cv.types";
 import { useGlassReflections } from "./utils/glassReflections";
@@ -45,6 +47,7 @@ export function App() {
   );
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
   const { t } = useLang();
   useGlassReflections();
@@ -82,6 +85,7 @@ export function App() {
             title={t(cv.sections.projects)}
             projects={cv.projects}
             onSkillClick={setSelectedSkill}
+            onProjectClick={setSelectedProject}
           />
           <Experience
             title={t(cv.sections.experience)}
@@ -156,6 +160,10 @@ export function App() {
           setSelectedCompany(null);
           setSelectedSkill(skill);
         }}
+      />
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
       />
     </>
   );
