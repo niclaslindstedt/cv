@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { CelestialSky } from "./components/CelestialSky";
 import { CourseMomentsModal } from "./components/CourseMomentsModal";
 import { Courses } from "./components/Courses";
 import { Education } from "./components/Education";
@@ -59,54 +60,57 @@ export function App() {
   }, [t]);
 
   return (
-    <div className="page">
-      <main className="container">
-        <Hero
-          cv={cv}
-          theme={theme}
-          onToggleTheme={toggleTheme}
-          onOpenTimeline={() => setTimelineOpen(true)}
-        />
-        <Focus
-          title={t(cv.sections.focus)}
-          focus={cv.focus}
-          onFocusClick={setSelectedFocus}
-        />
-        <Projects
-          title={t(cv.sections.projects)}
-          projects={cv.projects}
-          onSkillClick={setSelectedSkill}
-        />
-        <Experience
-          title={t(cv.sections.experience)}
-          experience={cv.experience}
-          companies={companies}
-          onSkillClick={setSelectedSkill}
-        />
-        <Education
-          title={t(cv.sections.education)}
-          education={cv.education}
-          onSkillClick={setSelectedSkill}
-          onProgramClick={setSelectedProgram}
-        />
-        <Courses
-          title={t(cv.sections.courses)}
-          courses={cv.courses}
-          onSkillClick={setSelectedSkill}
-          onCourseClick={setSelectedCourse}
-        />
-        <Skills
-          title={t(cv.sections.skills)}
-          skills={cv.skills}
-          usages={skillUsages}
-          onSkillClick={setSelectedSkill}
-        />
-      </main>
-      <footer className="footer container">
-        <span>
-          © {new Date().getFullYear()} {cv.name}
-        </span>
-      </footer>
+    <>
+      <CelestialSky theme={theme} />
+      <div className="page">
+        <main className="container">
+          <Hero
+            cv={cv}
+            theme={theme}
+            onToggleTheme={toggleTheme}
+            onOpenTimeline={() => setTimelineOpen(true)}
+          />
+          <Focus
+            title={t(cv.sections.focus)}
+            focus={cv.focus}
+            onFocusClick={setSelectedFocus}
+          />
+          <Projects
+            title={t(cv.sections.projects)}
+            projects={cv.projects}
+            onSkillClick={setSelectedSkill}
+          />
+          <Experience
+            title={t(cv.sections.experience)}
+            experience={cv.experience}
+            companies={companies}
+            onSkillClick={setSelectedSkill}
+          />
+          <Education
+            title={t(cv.sections.education)}
+            education={cv.education}
+            onSkillClick={setSelectedSkill}
+            onProgramClick={setSelectedProgram}
+          />
+          <Courses
+            title={t(cv.sections.courses)}
+            courses={cv.courses}
+            onSkillClick={setSelectedSkill}
+            onCourseClick={setSelectedCourse}
+          />
+          <Skills
+            title={t(cv.sections.skills)}
+            skills={cv.skills}
+            usages={skillUsages}
+            onSkillClick={setSelectedSkill}
+          />
+        </main>
+        <footer className="footer container">
+          <span>
+            © {new Date().getFullYear()} {cv.name}
+          </span>
+        </footer>
+      </div>
       <Timeline open={timelineOpen} onClose={() => setTimelineOpen(false)} />
       <SkillModal
         skill={selectedSkill}
@@ -138,6 +142,6 @@ export function App() {
           setSelectedSkill(skill);
         }}
       />
-    </div>
+    </>
   );
 }

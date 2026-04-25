@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 
+import { getMoonPosition, getSunPosition } from "./celestial";
+
 const SELECTOR =
   ".focus-item-btn, .project, .timeline-item, .education-list > li";
 
-const ORBS = [
-  { x: 0.18, y: 0.12, color: [140, 200, 255], maxAlpha: 0.18 },
-  { x: 0.82, y: 0.28, color: [200, 150, 255], maxAlpha: 0.16 },
-  { x: 0.58, y: 0.88, color: [140, 230, 210], maxAlpha: 0.14 },
-] as const;
+const SUN_COLOR = [255, 210, 130];
+const MOON_COLOR = [180, 200, 235];
 
 export function useGlassReflections() {
   useEffect(() => {
@@ -19,7 +18,13 @@ export function useGlassReflections() {
       scheduled = false;
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const reach = Math.hypot(vw, vh) * 0.55;
+      const reach = Math.hypot(vw, vh) * 0.6;
+      const isDark = document.documentElement.dataset.theme !== "light";
+      const pos = isDark ? getMoonPosition() : getSunPosition();
+      const color = isDark ? MOON_COLOR : SUN_COLOR;
+      const maxAlpha = isDark ? 0.18 : 0.28;
+      const ox = pos.x * vw;
+      const oy = pos.y * vh;
       const cards = document.querySelectorAll<HTMLElement>(SELECTOR);
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
@@ -33,22 +38,19 @@ export function useGlassReflections() {
         }
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
-        ORBS.forEach((orb, i) => {
-          const ox = orb.x * vw;
-          const oy = orb.y * vh;
-          const dist = Math.hypot(ox - cx, oy - cy);
-          const intensity = Math.max(0, 1 - dist / reach);
-          const alpha = (orb.maxAlpha * intensity * intensity).toFixed(3);
-          const lx = ((ox - rect.left) / rect.width) * 100;
-          const ly = ((oy - rect.top) / rect.height) * 100;
-          const idx = i + 1;
-          card.style.setProperty(`--reflect-${idx}-x`, `${lx.toFixed(1)}%`);
-          card.style.setProperty(`--reflect-${idx}-y`, `${ly.toFixed(1)}%`);
-          card.style.setProperty(
-            `--reflect-${idx}-color`,
-            `rgba(${orb.color[0]}, ${orb.color[1]}, ${orb.color[2]}, ${alpha})`,
-          );
-        });
+        const dist = Math.hypot(ox - cx, oy - cy);
+        const intensity = Math.max(0, 1 - dist / reach);
+        const alpha = (maxAlpha * intensity * intensity).toFixed(3);
+        const lx = ((ox - rect.left) / rect.width) * 100;
+        const ly = ((oy - rect.top) / rect.height) * 100;
+        card.style.setProperty("--reflect-1-x", `${lx.toFixed(1)}%`);
+        card.style.setProperty("--reflect-1-y", `${ly.toFixed(1)}%`);
+        card.style.setProperty(
+          "--reflect-1-color",
+          `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`,
+        );
+        card.style.setProperty("--reflect-2-color", "transparent");
+        card.style.setProperty("--reflect-3-color", "transparent");
       });
     };
 
@@ -64,11 +66,18 @@ export function useGlassReflections() {
 
     const observer = new MutationObserver(schedule);
     observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme", "style"],
+    });
+
+    const interval = window.setInterval(schedule, 60_000);
 
     return () => {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       observer.disconnect();
+      window.clearInterval(interval);
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
