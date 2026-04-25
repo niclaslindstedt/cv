@@ -108,9 +108,11 @@ function RoleChain({ roles }: { roles: RoleTenure[] }) {
             ) : (
               <PromotionArrow />
             )}
-            <span className="role">{t(r.title)}</span>
-            <span className="role-chain-meta">
-              {formatRange(r.startDate, r.endDate, lang)}
+            <span className="role-chain-content">
+              <span className="role">{t(r.title)}</span>
+              <span className="role-chain-meta">
+                {formatRange(r.startDate, r.endDate, lang)}
+              </span>
             </span>
           </li>
         );

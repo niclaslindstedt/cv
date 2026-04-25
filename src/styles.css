@@ -745,12 +745,20 @@ a:hover {
 }
 
 .role-chain-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 6px;
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+}
+
+.role-chain-content {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 6px 10px;
-  font-size: 0.9rem;
-  color: var(--fg-muted);
+  gap: 2px 10px;
+  min-width: 0;
 }
 
 .role-chain-item .role {
