@@ -12,6 +12,7 @@ type Props = {
   experience: ExperienceItem[];
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
+  onCompanyClick: (company: Company) => void;
 };
 
 function PromotionArrow() {
@@ -58,26 +59,23 @@ function TerminatedIcon() {
   );
 }
 
-function CompanyLabel({ company }: { company: Company }) {
-  const content = (
-    <>
+function CompanyButton({
+  company,
+  onClick,
+}: {
+  company: Company;
+  onClick: (company: Company) => void;
+}) {
+  return (
+    <button
+      type="button"
+      className="company company-btn"
+      onClick={() => onClick(company)}
+    >
       {company.name}
       {company.terminated && <TerminatedIcon />}
-    </>
+    </button>
   );
-  if (company.url) {
-    return (
-      <a
-        className="company company-link"
-        href={company.url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {content}
-      </a>
-    );
-  }
-  return <span className="company">{content}</span>;
 }
 
 function groupBy<T>(items: T[], keyOf: (item: T) => string): T[][] {
@@ -106,6 +104,7 @@ export function Experience({
   experience,
   companies,
   onSkillClick,
+  onCompanyClick,
 }: Props) {
   const groups = groupBy(experience, (e) => e.companyId);
   return (
@@ -119,6 +118,7 @@ export function Experience({
               isPromotion={false}
               companies={companies}
               onSkillClick={onSkillClick}
+              onCompanyClick={onCompanyClick}
             />
           ) : (
             <li
@@ -133,6 +133,7 @@ export function Experience({
                     isPromotion={idx > 0}
                     companies={companies}
                     onSkillClick={onSkillClick}
+                    onCompanyClick={onCompanyClick}
                   />
                 ))}
               </ol>
@@ -149,38 +150,40 @@ function ExperienceItemView({
   isPromotion,
   companies,
   onSkillClick,
+  onCompanyClick,
 }: {
   item: ExperienceItem;
   isPromotion: boolean;
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
+  onCompanyClick: (company: Company) => void;
 }) {
   const { lang, t, ui } = useLang();
   const company = resolveCompany(companies, item.companyId);
   const stack = item.stack ?? company.stack;
+  const isActive = item.endDate === null;
+  const classes = ["timeline-item"];
+  if (isPromotion) classes.push("timeline-promotion");
+  if (isActive) classes.push("is-active");
   return (
-    <li
-      className={
-        isPromotion ? "timeline-item timeline-promotion" : "timeline-item"
-      }
-    >
-      <div className="timeline-meta">
-        <span>{formatRange(item.startDate, item.endDate, lang)}</span>
-        {item.engagement && (
-          <span className="timeline-engagement">{t(item.engagement)}</span>
-        )}
-      </div>
+    <li className={classes.join(" ")}>
       <div className="timeline-body">
-        <h3>
+        <h3 className="timeline-title">
           <span className="role">{t(item.role)}</span>
           {isPromotion && <PromotionArrow />}
           {!isPromotion && (
             <>
               {" · "}
-              <CompanyLabel company={company} />
+              <CompanyButton company={company} onClick={onCompanyClick} />
             </>
           )}
         </h3>
+        <div className="timeline-meta">
+          <span>{formatRange(item.startDate, item.endDate, lang)}</span>
+          {item.engagement && (
+            <span className="timeline-engagement">{t(item.engagement)}</span>
+          )}
+        </div>
         {!isPromotion && <p>{t(company.description)}</p>}
         {stack && stack.length > 0 && (
           <ul className="entry-stack">
@@ -222,6 +225,7 @@ function ExperienceItemView({
               assignments={item.assignments}
               companies={companies}
               onSkillClick={onSkillClick}
+              onCompanyClick={onCompanyClick}
             />
           </details>
         )}
@@ -235,10 +239,12 @@ function AssignmentList({
   assignments,
   companies,
   onSkillClick,
+  onCompanyClick,
 }: {
   assignments: Assignment[];
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
+  onCompanyClick: (company: Company) => void;
 }) {
   const groups = groupBy(assignments, (a) => a.clientId);
   return (
@@ -251,6 +257,7 @@ function AssignmentList({
             isPromotion={false}
             companies={companies}
             onSkillClick={onSkillClick}
+            onCompanyClick={onCompanyClick}
           />
         ) : (
           <li
@@ -265,6 +272,7 @@ function AssignmentList({
                   isPromotion={idx > 0}
                   companies={companies}
                   onSkillClick={onSkillClick}
+                  onCompanyClick={onCompanyClick}
                 />
               ))}
             </ol>
@@ -280,34 +288,36 @@ function AssignmentItemView({
   isPromotion,
   companies,
   onSkillClick,
+  onCompanyClick,
 }: {
   assignment: Assignment;
   isPromotion: boolean;
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
+  onCompanyClick: (company: Company) => void;
 }) {
   const { lang, t } = useLang();
   const client = resolveCompany(companies, a.clientId);
+  const isActive = a.endDate === null;
+  const classes = ["assignment-item"];
+  if (isPromotion) classes.push("assignment-promotion");
+  if (isActive) classes.push("is-active");
   return (
-    <li
-      className={
-        isPromotion ? "assignment-item assignment-promotion" : "assignment-item"
-      }
-    >
-      <div className="assignment-meta">
-        <span>{formatRange(a.startDate, a.endDate, lang)}</span>
-      </div>
+    <li className={classes.join(" ")}>
       <div className="assignment-body">
-        <h4>
+        <h4 className="assignment-title">
           <span className="role">{t(a.role)}</span>
           {isPromotion && <PromotionArrow />}
           {!isPromotion && (
             <>
               {" · "}
-              <CompanyLabel company={client} />
+              <CompanyButton company={client} onClick={onCompanyClick} />
             </>
           )}
         </h4>
+        <div className="assignment-meta">
+          <span>{formatRange(a.startDate, a.endDate, lang)}</span>
+        </div>
         {!isPromotion && <p>{t(client.description)}</p>}
         {a.stack && a.stack.length > 0 && (
           <ul className="entry-stack">

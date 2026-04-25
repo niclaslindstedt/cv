@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { CelestialSky } from "./components/CelestialSky";
+import { CompanyModal } from "./components/CompanyModal";
 import { CourseMomentsModal } from "./components/CourseMomentsModal";
 import { Courses } from "./components/Courses";
 import { Education } from "./components/Education";
@@ -42,6 +43,7 @@ export function App() {
     null,
   );
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
   const { t } = useLang();
   useGlassReflections();
@@ -85,6 +87,7 @@ export function App() {
             experience={cv.experience}
             companies={companies}
             onSkillClick={setSelectedSkill}
+            onCompanyClick={setSelectedCompany}
           />
           <Education
             title={t(cv.sections.education)}
@@ -139,6 +142,14 @@ export function App() {
         onClose={() => setSelectedCourse(null)}
         onSkillClick={(skill) => {
           setSelectedCourse(null);
+          setSelectedSkill(skill);
+        }}
+      />
+      <CompanyModal
+        company={selectedCompany}
+        onClose={() => setSelectedCompany(null)}
+        onSkillClick={(skill) => {
+          setSelectedCompany(null);
           setSelectedSkill(skill);
         }}
       />
