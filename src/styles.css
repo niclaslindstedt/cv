@@ -733,7 +733,7 @@ a:hover {
 
 .promotion-arrow {
   display: inline-block;
-  margin-left: 6px;
+  margin-right: 6px;
   color: var(--accent);
   vertical-align: -2px;
 }
@@ -781,7 +781,7 @@ a:hover {
 }
 
 .role-chain-item .promotion-arrow {
-  margin-left: 0;
+  margin-right: 0;
   vertical-align: -1px;
 }
 
