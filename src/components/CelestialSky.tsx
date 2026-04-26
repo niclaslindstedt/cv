@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { getSunPosition, type CelestialPosition } from "../utils/celestial";
 import type { Theme } from "../utils/theme";
 
 type Props = { theme: Theme };
@@ -51,24 +50,6 @@ function makeStars(count: number, seed = 1337): Star[] {
 const STARS = makeStars(16);
 
 export function CelestialSky({ theme }: Props) {
-  const [pos, setPos] = useState<CelestialPosition>(() => getSunPosition());
-
-  useEffect(() => {
-    if (theme !== "light") return;
-    const update = () => setPos(getSunPosition());
-    update();
-    const id = window.setInterval(update, 30_000);
-    return () => window.clearInterval(id);
-  }, [theme]);
-
-  useEffect(() => {
-    if (theme !== "light") return;
-    const root = document.documentElement;
-    root.style.setProperty("--celestial-x", `${(pos.x * 100).toFixed(2)}%`);
-    root.style.setProperty("--celestial-y", `${(pos.y * 100).toFixed(2)}%`);
-    root.style.setProperty("--celestial-altitude", pos.altitude.toFixed(3));
-  }, [pos, theme]);
-
   useEffect(() => {
     const root = document.documentElement;
     if (theme !== "dark") {

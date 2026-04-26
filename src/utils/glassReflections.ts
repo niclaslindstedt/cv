@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 
-import { getMoonPosition, getSunPosition } from "./celestial";
-
 const SELECTOR =
   ".focus-item-btn, .project, .timeline-item, .education-list > li";
 
 const ORB_COLOR = [220, 230, 245] as const;
 const MOON_COLOR = [180, 200, 235] as const;
+const LIGHT_SOURCE = { x: 0.5, y: 0.12 } as const;
 
 type CardLayout = {
   el: HTMLElement;
@@ -49,11 +48,10 @@ export function useGlassReflections() {
       const vh = window.innerHeight;
       const reach = Math.hypot(vw, vh) * 0.6;
       const isDark = document.documentElement.dataset.theme !== "light";
-      const pos = isDark ? getMoonPosition() : getSunPosition();
       const color = isDark ? MOON_COLOR : ORB_COLOR;
       const maxAlpha = isDark ? 0.18 : 0.22;
-      const ox = pos.x * vw;
-      const oy = pos.y * vh;
+      const ox = LIGHT_SOURCE.x * vw;
+      const oy = LIGHT_SOURCE.y * vh;
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
       for (const card of cards) {
