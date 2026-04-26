@@ -379,6 +379,30 @@ The arrow's viewBox geometry is centered (visual center at viewBox
 12,12), so both rules above produce the expected optical center
 without further adjustment.
 
+### 5.7 Timeline promotion markers
+
+A merged title like `Senior Consultant → Manager → Senior Manager`
+on a single timeline bar conveys order but not _when_ each promotion
+took effect. To anchor the chain in time, each non-first role in
+`exp.roles` (and `assignment.roles`) emits a `promotions` entry on
+the bar in `timeline.json`. The renderer paints a 1px vertical line
+inside the bar at each promotion date.
+
+- The line spans the bar's interior with a 4px inset top and bottom
+  so it reads as an internal divider, not a track gridline.
+- Color matches the bar's accent (blue for jobs, green for
+  assignments) at 0.55 opacity — present but never competing with
+  the title text.
+- Markers are decorative (`aria-hidden`); the screen-reader story
+  is already covered by the merged title in the bar's accessible
+  name. The native `title` tooltip names the promoted role and
+  date for sighted hover.
+- `pointer-events: none` keeps the entire bar a single click target.
+
+A bar with one role has no `promotions` field and renders no
+markers. Other timeline kinds (education, course, side project,
+github) never have a `promotions` field.
+
 ---
 
 ## 6. Print

@@ -430,6 +430,31 @@ export function Timeline({ open, onClose }: Props) {
       lang,
     )}`;
 
+    const span = endMonth - startMonth;
+    const promotionMarkers =
+      bar.promotions && span > 0
+        ? bar.promotions
+            .map((promo) => {
+              const m = monthIndex(promo.startDate);
+              if (m <= startMonth || m >= endMonth) return null;
+              const left = `${((m - startMonth) / span) * 100}%`;
+              const promoTitle = t(promo.title);
+              return (
+                <span
+                  key={promo.startDate}
+                  className="timeline-vis-promotion-marker"
+                  style={{ left }}
+                  title={ui.timeline.promotedTo(
+                    promoTitle,
+                    formatMonth(promo.startDate, lang),
+                  )}
+                  aria-hidden="true"
+                />
+              );
+            })
+            .filter(Boolean)
+        : null;
+
     return (
       <button
         key={bar.id}
@@ -444,6 +469,7 @@ export function Timeline({ open, onClose }: Props) {
           <span className="timeline-vis-item-title">{barTitle}</span>
           <span className="timeline-vis-item-sub">{barSubtitle}</span>
         </span>
+        {promotionMarkers}
       </button>
     );
   };

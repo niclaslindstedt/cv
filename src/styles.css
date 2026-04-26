@@ -1834,6 +1834,25 @@ button.skill-pill-btn:focus-visible {
   border-style: dashed;
 }
 
+.timeline-vis-promotion-marker {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  pointer-events: none;
+  transform: translateX(-0.5px);
+}
+
+.timeline-vis-experience .timeline-vis-promotion-marker {
+  color: rgb(122, 183, 255);
+}
+
+.timeline-vis-assignment .timeline-vis-promotion-marker {
+  color: rgb(168, 230, 207);
+}
+
 .timeline-vis-item-label {
   display: flex;
   flex-direction: column;
