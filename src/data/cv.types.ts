@@ -187,6 +187,46 @@ export type SpokenLanguage = {
   level: LocalizedString;
 };
 
+export type PrintPage = {
+  size: string;
+  margin: string;
+};
+
+export type PrintSpacing = {
+  section: string;
+  entry: string;
+  subEntry: string;
+  paragraph: string;
+  headerToBody: string;
+};
+
+export type PrintHeadings = {
+  name: string;
+  title: string;
+  section: string;
+  entry: string;
+  subEntry: string;
+  subHeading: string;
+};
+
+export type PrintPageBreaks = {
+  orphans: number;
+  widows: number;
+  avoidInsideEntry: boolean;
+  avoidInsideSubEntry: boolean;
+  keepHeadingWithNext: boolean;
+};
+
+export type PrintSettings = {
+  fontFamily: string;
+  fontSize: string;
+  lineHeight: number;
+  page: PrintPage;
+  spacing: PrintSpacing;
+  headings: PrintHeadings;
+  pageBreaks: PrintPageBreaks;
+};
+
 export type CV = {
   meta: Meta;
   name: string;
@@ -205,4 +245,5 @@ export type CV = {
   skills: SkillGroup[];
   skillDetails: Record<string, SkillDetail>;
   languages: SpokenLanguage[];
+  print: PrintSettings;
 };

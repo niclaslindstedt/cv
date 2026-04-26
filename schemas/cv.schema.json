@@ -22,7 +22,8 @@
     "courses",
     "skills",
     "skillDetails",
-    "languages"
+    "languages",
+    "print"
   ],
   "properties": {
     "$schema": { "type": "string" },
@@ -85,7 +86,8 @@
       "type": "array",
       "minItems": 1,
       "items": { "$ref": "#/$defs/spokenLanguage" }
-    }
+    },
+    "print": { "$ref": "#/$defs/printSettings" }
   },
   "$defs": {
     "yearMonth": {
@@ -502,6 +504,168 @@
       "properties": {
         "name": { "$ref": "#/$defs/localizedString" },
         "level": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "cssLength": {
+      "type": "string",
+      "pattern": "^-?\\d+(\\.\\d+)?(pt|px|cm|mm|in|em|rem|%)$",
+      "description": "A single CSS length value with explicit unit (pt, px, cm, mm, in, em, rem, %)."
+    },
+    "printSettings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fontFamily",
+        "fontSize",
+        "lineHeight",
+        "page",
+        "spacing",
+        "headings",
+        "pageBreaks"
+      ],
+      "description": "Print/PDF rendering settings consumed by PrintView and the print stylesheet.",
+      "properties": {
+        "fontFamily": {
+          "type": "string",
+          "minLength": 1,
+          "description": "CSS font-family stack used for the entire print/PDF body."
+        },
+        "fontSize": {
+          "$ref": "#/$defs/cssLength",
+          "description": "Base body font size for print."
+        },
+        "lineHeight": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Unitless line-height applied to the print body."
+        },
+        "page": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["size", "margin"],
+          "description": "@page rule values for paged media.",
+          "properties": {
+            "size": {
+              "type": "string",
+              "minLength": 1,
+              "description": "@page size descriptor (e.g. \"A4\", \"Letter\", \"210mm 297mm\")."
+            },
+            "margin": {
+              "type": "string",
+              "minLength": 1,
+              "description": "@page margin shorthand (e.g. \"2cm\", \"2cm 1.8cm\", \"2cm 1.8cm 2cm 1.8cm\")."
+            }
+          }
+        },
+        "spacing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "section",
+            "entry",
+            "subEntry",
+            "paragraph",
+            "headerToBody"
+          ],
+          "description": "Vertical spacing tokens used between blocks in the print layout.",
+          "properties": {
+            "section": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Bottom margin between major sections (Experience, Education, …)."
+            },
+            "entry": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Bottom margin between top-level entries within a section (jobs, education rows)."
+            },
+            "subEntry": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Bottom margin between sub-entries (assignments, courses, role-history rows)."
+            },
+            "paragraph": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Bottom margin between paragraphs / metadata lines within an entry."
+            },
+            "headerToBody": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Margin below the hero block (name + title + summary) before the first section."
+            }
+          }
+        },
+        "headings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "title",
+            "section",
+            "entry",
+            "subEntry",
+            "subHeading"
+          ],
+          "description": "Font sizes for the heading hierarchy used throughout the print layout.",
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Hero name (h1)."
+            },
+            "title": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Hero title (role)."
+            },
+            "section": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Section titles (Experience, Education, …)."
+            },
+            "entry": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Entry titles (job role · company)."
+            },
+            "subEntry": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Sub-entry titles (assignments, education rows)."
+            },
+            "subHeading": {
+              "$ref": "#/$defs/cssLength",
+              "description": "Sub-section labels (e.g. \"Assignments\")."
+            }
+          }
+        },
+        "pageBreaks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "orphans",
+            "widows",
+            "avoidInsideEntry",
+            "avoidInsideSubEntry",
+            "keepHeadingWithNext"
+          ],
+          "description": "Page-break and orphan/widow rules for paged media.",
+          "properties": {
+            "orphans": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Minimum number of lines that must remain at the bottom of a page before a break."
+            },
+            "widows": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Minimum number of lines that must appear at the top of a page after a break."
+            },
+            "avoidInsideEntry": {
+              "type": "boolean",
+              "description": "Avoid breaking inside top-level entries (jobs, education rows). Consultancy jobs with assignments allow internal breaks regardless."
+            },
+            "avoidInsideSubEntry": {
+              "type": "boolean",
+              "description": "Avoid breaking inside sub-entries (assignments, projects, skill groups, courses)."
+            },
+            "keepHeadingWithNext": {
+              "type": "boolean",
+              "description": "Avoid breaking immediately after a section/sub-section heading so it never sits alone at the bottom of a page."
+            }
+          }
+        }
       }
     }
   }

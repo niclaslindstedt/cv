@@ -86,5 +86,6 @@
   "courses": "{...}",
   "skills": "{...}",
   "skillDetails": "{...}",
-  "languages": "{...}"
+  "languages": "{...}",
+  "print": "{...}"
 }

@@ -9,6 +9,7 @@
     "name",
     "title",
     "longSummary",
+    "settings",
     "sections",
     "experience",
     "projects",
@@ -21,6 +22,7 @@
     "name": { "type": "string", "minLength": 1 },
     "title": { "$ref": "#/$defs/localizedString" },
     "longSummary": { "$ref": "#/$defs/localizedString" },
+    "settings": { "$ref": "#/$defs/settings" },
     "sections": {
       "type": "object",
       "additionalProperties": false,
@@ -201,6 +203,93 @@
       "properties": {
         "name": { "$ref": "#/$defs/localizedString" },
         "level": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "cssLength": {
+      "type": "string",
+      "pattern": "^-?\\d+(\\.\\d+)?(pt|px|cm|mm|in|em|rem|%)$"
+    },
+    "settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fontFamily",
+        "fontSize",
+        "lineHeight",
+        "page",
+        "spacing",
+        "headings",
+        "pageBreaks"
+      ],
+      "properties": {
+        "fontFamily": { "type": "string", "minLength": 1 },
+        "fontSize": { "$ref": "#/$defs/cssLength" },
+        "lineHeight": { "type": "number", "exclusiveMinimum": 0 },
+        "page": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["size", "margin"],
+          "properties": {
+            "size": { "type": "string", "minLength": 1 },
+            "margin": { "type": "string", "minLength": 1 }
+          }
+        },
+        "spacing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "section",
+            "entry",
+            "subEntry",
+            "paragraph",
+            "headerToBody"
+          ],
+          "properties": {
+            "section": { "$ref": "#/$defs/cssLength" },
+            "entry": { "$ref": "#/$defs/cssLength" },
+            "subEntry": { "$ref": "#/$defs/cssLength" },
+            "paragraph": { "$ref": "#/$defs/cssLength" },
+            "headerToBody": { "$ref": "#/$defs/cssLength" }
+          }
+        },
+        "headings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "title",
+            "section",
+            "entry",
+            "subEntry",
+            "subHeading"
+          ],
+          "properties": {
+            "name": { "$ref": "#/$defs/cssLength" },
+            "title": { "$ref": "#/$defs/cssLength" },
+            "section": { "$ref": "#/$defs/cssLength" },
+            "entry": { "$ref": "#/$defs/cssLength" },
+            "subEntry": { "$ref": "#/$defs/cssLength" },
+            "subHeading": { "$ref": "#/$defs/cssLength" }
+          }
+        },
+        "pageBreaks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "orphans",
+            "widows",
+            "avoidInsideEntry",
+            "avoidInsideSubEntry",
+            "keepHeadingWithNext"
+          ],
+          "properties": {
+            "orphans": { "type": "integer", "minimum": 1 },
+            "widows": { "type": "integer", "minimum": 1 },
+            "avoidInsideEntry": { "type": "boolean" },
+            "avoidInsideSubEntry": { "type": "boolean" },
+            "keepHeadingWithNext": { "type": "boolean" }
+          }
+        }
       }
     }
   }

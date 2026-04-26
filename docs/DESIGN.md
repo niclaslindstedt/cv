@@ -499,6 +499,36 @@ The print stylesheet (in `src/styles/print.css`) flattens everything:
 If you add a new color or surface, also add its print fallback in the
 `@media print` block.
 
+### 6.1 Print settings
+
+Print is driven by a structured settings block at `cv.print` (sourced
+from `src/data/cv/print.json`). `PrintView` injects an inline `<style>`
+that emits the `@page` rule and binds CSS custom properties on
+`.print-view`; `src/styles/print.css` consumes those variables and
+provides fallbacks so the stylesheet stays valid in isolation.
+
+The contract:
+
+- **Font** — `fontFamily` is a CSS font-family stack used for the entire
+  print body. The default is a Garamond-first serif stack (`"EB
+Garamond", Garamond, "Adobe Garamond Pro", "Apple Garamond", Georgia,
+serif`). `fontSize` is the body size; `lineHeight` is unitless.
+- **Page** — `page.size` and `page.margin` map to the `@page` descriptor
+  (`size: A4; margin: 2cm 1.8cm;` by default).
+- **Spacing** — five tokens (`section`, `entry`, `subEntry`, `paragraph`,
+  `headerToBody`) drive vertical rhythm between blocks. Use these
+  instead of hard-coded margins for new print elements.
+- **Headings** — six tokens for the heading hierarchy (`name`, `title`,
+  `section`, `entry`, `subEntry`, `subHeading`).
+- **Page breaks** — `orphans`/`widows` set line minima; the boolean
+  toggles (`avoidInsideEntry`, `avoidInsideSubEntry`,
+  `keepHeadingWithNext`) default to true and emit `break-inside: auto !important`
+  overrides when set to false.
+
+When you add a new print block: declare its sizing/spacing in
+`print.css` using the existing `--print-*` variables, not literal `pt`
+values.
+
 ---
 
 ## 7. Accessibility

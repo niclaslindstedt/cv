@@ -8,6 +8,7 @@ import type {
   PrintLanguage,
   PrintProject,
   PrintRoleHistoryEntry,
+  PrintSettings,
   PrintSkillGroup,
 } from "../data/print.types";
 import { useLang } from "../utils/i18n";
@@ -17,6 +18,7 @@ const printData = printDataRaw as PrintData;
 export function PrintView() {
   return (
     <section className="print-view" aria-hidden="true">
+      <PrintSettingsStyle settings={printData.settings} />
       <PrintHero />
       <ExperienceSection />
       <ProjectsSection />
@@ -26,6 +28,55 @@ export function PrintView() {
       <LanguagesSection />
     </section>
   );
+}
+
+function PrintSettingsStyle({ settings }: { settings: PrintSettings }) {
+  return (
+    <style dangerouslySetInnerHTML={{ __html: buildSettingsCss(settings) }} />
+  );
+}
+
+function buildSettingsCss(s: PrintSettings): string {
+  const { page, spacing, headings, pageBreaks: pb } = s;
+  const overrides: string[] = [];
+  if (!pb.avoidInsideEntry) {
+    overrides.push(
+      ".print-job, .print-edu { break-inside: auto !important; page-break-inside: auto !important; }",
+    );
+  }
+  if (!pb.avoidInsideSubEntry) {
+    overrides.push(
+      ".print-assignment, .print-project, .print-skill-group { break-inside: auto !important; page-break-inside: auto !important; }",
+    );
+  }
+  if (!pb.keepHeadingWithNext) {
+    overrides.push(
+      ".print-section-title, .print-assignments-heading, .print-job-header { break-after: auto !important; page-break-after: auto !important; }",
+    );
+  }
+  return `
+@page { size: ${page.size}; margin: ${page.margin}; }
+@media print {
+  html, body { orphans: ${pb.orphans}; widows: ${pb.widows}; }
+  .print-view {
+    --print-font-family: ${s.fontFamily};
+    --print-font-size: ${s.fontSize};
+    --print-line-height: ${s.lineHeight};
+    --print-spacing-section: ${spacing.section};
+    --print-spacing-entry: ${spacing.entry};
+    --print-spacing-subentry: ${spacing.subEntry};
+    --print-spacing-paragraph: ${spacing.paragraph};
+    --print-spacing-header-to-body: ${spacing.headerToBody};
+    --print-heading-name: ${headings.name};
+    --print-heading-title: ${headings.title};
+    --print-heading-section: ${headings.section};
+    --print-heading-entry: ${headings.entry};
+    --print-heading-subentry: ${headings.subEntry};
+    --print-heading-subheading: ${headings.subHeading};
+  }
+  ${overrides.join("\n  ")}
+}
+`;
 }
 
 function PrintHero() {
