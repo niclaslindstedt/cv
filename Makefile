@@ -1,4 +1,4 @@
-.PHONY: install build test lint typecheck fmt fmt-check validate clean dev preview generate og sitemap
+.PHONY: install build test lint typecheck fmt fmt-check validate clean dev preview generate og pdf sitemap
 
 install:
 	npm ci
@@ -32,6 +32,9 @@ generate:
 
 og:
 	npm run generate:og
+
+pdf:
+	npm run generate:pdf
 
 sitemap:
 	npm run generate:sitemap

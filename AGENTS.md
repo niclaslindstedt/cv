@@ -77,6 +77,7 @@ imports from `components/`. Keep it that way.
 | Per-project repo commit stats fetch          | `scripts/generate-project-stats.mjs` (uses `PROJECT_STATS_TOKEN` if set, else `GITHUB_TOKEN`; needs `repo` scope to read private project repos)   |
 | `<head>` meta, OG, Twitter, JSON-LD          | `vite.config.ts` (`cvMetaHtmlPlugin`) — derived from `cv.meta` + `cv.links` + `cv.skills` + `cv.education`                                        |
 | Social-share OG image                        | `scripts/generate-og-image.mjs` (satori → `public/og-image.png`); runs in `prebuild`                                                              |
+| Downloadable PDF resume                      | `scripts/generate-pdf.mjs` (puppeteer → `dist/cv.pdf`); runs as part of `npm run build` after `vite build`                                        |
 | Sitemap                                      | `scripts/generate-sitemap.mjs` (writes `dist/sitemap.xml` post-build)                                                                             |
 | `robots.txt`, `404.html`                     | Static files in `public/`                                                                                                                         |
 | Analytics (GoatCounter)                      | Snippet injected by `cvMetaHtmlPlugin` only when `VITE_GOATCOUNTER_ENDPOINT` env var is set at build time                                         |
