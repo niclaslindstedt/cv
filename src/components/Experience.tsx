@@ -186,6 +186,7 @@ function ExperienceItemView({
   if (isActive) classes.push("is-active");
   return (
     <li className={classes.join(" ")}>
+      {isActive && <span className="active-badge">{ui.present}</span>}
       <div className="timeline-body">
         <h3 className="timeline-title">
           {hasPromotion && <PromotionArrow />}
@@ -293,7 +294,7 @@ function AssignmentItemView({
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
 }) {
-  const { lang, t } = useLang();
+  const { lang, t, ui } = useLang();
   const client = resolveCompany(companies, a.clientId);
   const isActive = a.endDate === null;
   const sortedRoles = sortRolesAsc(a.roles);
@@ -303,6 +304,7 @@ function AssignmentItemView({
   if (isActive) classes.push("is-active");
   return (
     <li className={classes.join(" ")}>
+      {isActive && <span className="active-badge">{ui.present}</span>}
       <div className="assignment-body">
         <h4 className="assignment-title">
           {hasPromotion && <PromotionArrow />}
