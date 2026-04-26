@@ -807,7 +807,7 @@ a:hover {
   left: 50%;
   transform: translate(-50%, -4px);
   padding: 4px 10px;
-  background: var(--glass-bg);
+  background: var(--bg-elev);
   color: var(--fg);
   border: 1px solid var(--glass-border);
   border-radius: calc(var(--radius) - 8px);
