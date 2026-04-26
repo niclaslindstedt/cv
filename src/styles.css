@@ -944,7 +944,7 @@ a:hover {
 .role-chain-item {
   display: grid;
   grid-template-columns: auto 1fr;
-  align-items: center;
+  align-items: start;
   column-gap: 6px;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -973,8 +973,15 @@ a:hover {
 .role-chain-item .promotion-arrow,
 .role-chain-item .role-start-icon {
   margin-right: 0;
-  vertical-align: 0;
   transform: none;
+  /* Render as block so margin-top alone controls vertical position,
+     bypassing the inline baseline offset that inline-block adds inside a
+     1.5em line-box. */
+  display: block;
+  /* Center the 14px icon with the first text line of the content
+     (line-box 1.5em). align-items: start on the row keeps the icon pinned
+     to the first line even when role + meta wrap to two lines. */
+  margin-top: calc((1.5em - 14px) / 2);
 }
 
 .role-start-icon {
