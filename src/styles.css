@@ -1580,7 +1580,7 @@ button.skill-pill-btn:focus-visible {
   position: relative;
   overflow: auto;
   touch-action: pan-x pan-y;
-  overscroll-behavior: contain;
+  overscroll-behavior: none;
   background:
     radial-gradient(
       circle at 20% 0%,
