@@ -1479,7 +1479,8 @@
       "startDate": "2015-06",
       "completedDate": "2015-08",
       "engagement": 0.5,
-      "remote": true
+      "remote": true,
+      "skills": ["C++"]
     },
     {
       "name": {
@@ -1551,7 +1552,6 @@
         "C#/.NET",
         "TypeScript",
         "Python",
-        "JavaScript",
         "SQL",
         "C++",
         "Bash/Shell",
@@ -1971,12 +1971,6 @@
         "sv": "Prestanda, paketering och typfel som bara dyker upp vid körning."
       },
       "url": "https://www.python.org"
-    },
-    "JavaScript": {
-      "description": {
-        "en": "The web's runtime language — every browser runs it, and Node lets it run servers and tooling too.",
-        "sv": "Webbens körspråk — varje webbläsare kör det, och Node låter det även driva servrar och verktyg."
-      }
     },
     "SQL": {
       "description": {
@@ -2447,8 +2441,8 @@
         "sv": "Engelska"
       },
       "level": {
-        "en": "Fluent",
-        "sv": "Flytande"
+        "en": "Professional",
+        "sv": "Professionell"
       }
     }
   ]
