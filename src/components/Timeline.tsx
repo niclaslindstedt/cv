@@ -45,6 +45,12 @@ function monthIndex(iso: string): number {
   return y * 12 + (m - 1);
 }
 
+function previousMonthIso(iso: string): string {
+  const [y, m] = iso.split("-").map(Number);
+  if (m === 1) return `${y - 1}-12`;
+  return `${y}-${String(m - 1).padStart(2, "0")}`;
+}
+
 function nowMonthIndex(): number {
   const now = new Date();
   return now.getFullYear() * 12 + now.getMonth();
@@ -862,86 +868,146 @@ export function Timeline({ open, onClose }: Props) {
         )}
       {selectedItem &&
         selectedItem.kind !== "github" &&
-        selectedItem.kind !== "sideProject" && (
-          <aside className="timeline-vis-details">
-            <div className="timeline-vis-details-head">
-              <span
-                className={`timeline-vis-pill timeline-vis-${selectedItem.kind}`}
-              >
-                {selectedItem.kind === "experience"
-                  ? ui.timeline.job
-                  : selectedItem.kind === "assignment"
-                    ? ui.timeline.assignment
-                    : selectedItem.kind === "course"
-                      ? ui.timeline.course
-                      : ui.timeline.education}
-              </span>
-              <button
-                type="button"
-                className="timeline-vis-btn"
-                onClick={() => setSelectedId(null)}
-                aria-label={ui.timeline.closeDetails}
-              >
-                ✕
-              </button>
-            </div>
-            <h3 className="timeline-vis-details-title">
-              {t(selectedItem.title)}
-            </h3>
-            <p className="timeline-vis-details-sub">
-              {t(selectedItem.subtitle)}
-            </p>
-            <p className="timeline-vis-details-dates">
-              {formatRange(selectedItem.startDate, selectedItem.endDate, lang)}
-              <span className="timeline-vis-details-duration">
-                {" · "}
-                {formatDuration(
-                  monthIndex(selectedItem.startDate),
-                  selectedItem.isOngoing
+        selectedItem.kind !== "sideProject" &&
+        (() => {
+          const hasMultipleRoles =
+            !!selectedItem.roles && selectedItem.roles.length >= 2;
+          const headingText = hasMultipleRoles
+            ? t(selectedItem.subtitle)
+            : t(selectedItem.title);
+          const showSubtitle =
+            !hasMultipleRoles && t(selectedItem.subtitle).length > 0;
+          const roleRanges = hasMultipleRoles
+            ? selectedItem.roles!.map((role, i) => {
+                const roles = selectedItem.roles!;
+                const isLast = i === roles.length - 1;
+                const startMonth = monthIndex(role.startDate);
+                const endMonth = isLast
+                  ? selectedItem.isOngoing
                     ? now
-                    : monthIndex(
-                        selectedItem.endDate ?? selectedItem.startDate,
-                      ),
-                  ui.timeline.yUnit,
-                  ui.timeline.mUnit,
-                )}
-              </span>
-            </p>
-            {selectedItem.credits && (
+                    : monthIndex(selectedItem.endDate ?? selectedItem.startDate)
+                  : monthIndex(roles[i + 1].startDate);
+                const endIso = isLast
+                  ? selectedItem.endDate
+                  : previousMonthIso(roles[i + 1].startDate);
+                return {
+                  key: role.startDate,
+                  title: role.title,
+                  startDate: role.startDate,
+                  endIso,
+                  startMonth,
+                  endMonth,
+                };
+              })
+            : [];
+          return (
+            <aside className="timeline-vis-details">
+              <div className="timeline-vis-details-head">
+                <span
+                  className={`timeline-vis-pill timeline-vis-${selectedItem.kind}`}
+                >
+                  {selectedItem.kind === "experience"
+                    ? ui.timeline.job
+                    : selectedItem.kind === "assignment"
+                      ? ui.timeline.assignment
+                      : selectedItem.kind === "course"
+                        ? ui.timeline.course
+                        : ui.timeline.education}
+                </span>
+                <button
+                  type="button"
+                  className="timeline-vis-btn"
+                  onClick={() => setSelectedId(null)}
+                  aria-label={ui.timeline.closeDetails}
+                >
+                  ✕
+                </button>
+              </div>
+              <h3 className="timeline-vis-details-title">{headingText}</h3>
+              {showSubtitle && (
+                <p className="timeline-vis-details-sub">
+                  {t(selectedItem.subtitle)}
+                </p>
+              )}
               <p className="timeline-vis-details-dates">
-                <span className="timeline-vis-credits-pill">
-                  {selectedItem.credits}
+                {formatRange(
+                  selectedItem.startDate,
+                  selectedItem.endDate,
+                  lang,
+                )}
+                <span className="timeline-vis-details-duration">
+                  {" · "}
+                  {formatDuration(
+                    monthIndex(selectedItem.startDate),
+                    selectedItem.isOngoing
+                      ? now
+                      : monthIndex(
+                          selectedItem.endDate ?? selectedItem.startDate,
+                        ),
+                    ui.timeline.yUnit,
+                    ui.timeline.mUnit,
+                  )}
                 </span>
               </p>
-            )}
-            {t(selectedItem.description) && (
-              <p className="timeline-vis-details-desc">
-                {t(selectedItem.description)}
-              </p>
-            )}
-            {selectedItem.notes && (
-              <p className="timeline-vis-details-notes">
-                <NoteIcon />
-                <span>{t(selectedItem.notes)}</span>
-              </p>
-            )}
-            {selectedItem.skills.length > 0 && (
-              <>
-                <h4 className="timeline-vis-details-skills-title">
-                  {ui.timeline.skillsUsed}
-                </h4>
-                <ul className="timeline-vis-details-skills">
-                  {selectedItem.skills.map((skill) => (
-                    <li key={skill}>{skill}</li>
+              {hasMultipleRoles && (
+                <ul className="timeline-vis-details-roles">
+                  {roleRanges.map((r) => (
+                    <li key={r.key} className="timeline-vis-details-role">
+                      <span className="timeline-vis-details-role-title">
+                        {t(r.title)}
+                      </span>
+                      <span className="timeline-vis-details-role-meta">
+                        {formatRange(r.startDate, r.endIso, lang)}
+                        <span className="timeline-vis-details-duration">
+                          {" · "}
+                          {formatDuration(
+                            r.startMonth,
+                            r.endMonth,
+                            ui.timeline.yUnit,
+                            ui.timeline.mUnit,
+                          )}
+                        </span>
+                      </span>
+                    </li>
                   ))}
                 </ul>
-              </>
-            )}
-            <p className="timeline-vis-details-when">
-              {ui.timeline.starts} {formatMonth(selectedItem.startDate, lang)}
-            </p>
-          </aside>
-        )}
+              )}
+              {selectedItem.credits && (
+                <p className="timeline-vis-details-dates">
+                  <span className="timeline-vis-credits-pill">
+                    {selectedItem.credits}
+                  </span>
+                </p>
+              )}
+              {t(selectedItem.description) && (
+                <p className="timeline-vis-details-desc">
+                  {t(selectedItem.description)}
+                </p>
+              )}
+              {selectedItem.notes && (
+                <p className="timeline-vis-details-notes">
+                  <NoteIcon />
+                  <span>{t(selectedItem.notes)}</span>
+                </p>
+              )}
+              {selectedItem.skills.length > 0 && (
+                <>
+                  <h4 className="timeline-vis-details-skills-title">
+                    {ui.timeline.skillsUsed}
+                  </h4>
+                  <ul className="timeline-vis-details-skills">
+                    {selectedItem.skills.map((skill) => (
+                      <li key={skill}>{skill}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              <p className="timeline-vis-details-when">
+                {ui.timeline.starts} {formatMonth(selectedItem.startDate, lang)}
+              </p>
+            </aside>
+          );
+        })()}
     </div>
   );
 }
