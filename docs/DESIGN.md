@@ -234,6 +234,20 @@ Each top-level section uses `<Section>` with an uppercase tracked
 eyebrow. Eyebrow color: `--fg-muted`. Always 32–48px of vertical
 breathing room between sections.
 
+Sections are **collapsible by default**. The eyebrow renders as a
+button with a 12×12 chevron (`▾`) at the right of the title. Clicking
+toggles visibility of the section body; the chevron rotates `-90°` to
+`▸` when collapsed. The chevron is `--fg-muted` at rest, `--accent` on
+hover, and animates only its own `transform` and `color` (`120ms
+ease`). The body is hidden via the native `hidden` attribute so layout
+collapses cleanly — no height animation (motion is feedback, not
+layout, per §1).
+
+Collapsed state persists per-section in `localStorage` under
+`section-collapsed:<id>`. Print styles always render every section
+expanded and hide the chevron, so the printed CV is never
+artificially truncated.
+
 ### 4.7 Modal
 
 Full-bleed `--overlay` backdrop with `backdrop-filter: blur(18px)`.
