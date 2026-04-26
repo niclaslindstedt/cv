@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import type { LocalizedString, SkillDetail } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { yearsOfExperience, type SkillUsage } from "../utils/skills";
+import { useSwipeClose } from "../utils/useSwipeClose";
 
 function isLocalized(
   value: string | LocalizedString,
@@ -38,6 +39,8 @@ function sortUsages(usages: SkillUsage[]): SkillUsage[] {
 
 export function SkillModal({ skill, usages, detail, onClose }: Props) {
   const { lang, t, ui } = useLang();
+  const modalRef = useRef<HTMLDivElement>(null);
+  useSwipeClose(modalRef, !!skill, onClose);
 
   const resolveLabel = (v: string | LocalizedString) =>
     isLocalized(v) ? t(v) : v;
@@ -80,7 +83,11 @@ export function SkillModal({ skill, usages, detail, onClose }: Props) {
       aria-label={ui.skillModal.usageAria(skill)}
       onClick={onClose}
     >
-      <div className="skill-modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        ref={modalRef}
+        className="skill-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <header className="skill-modal-head">
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{skill}</span>

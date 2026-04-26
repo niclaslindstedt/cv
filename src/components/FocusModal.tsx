@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import type { FocusArea } from "../data/cv.types";
 import { formatMonth } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { useSwipeClose } from "../utils/useSwipeClose";
 
 type Props = {
   focus: FocusArea | null;
@@ -11,6 +12,8 @@ type Props = {
 
 export function FocusModal({ focus, onClose }: Props) {
   const { lang, t, ui } = useLang();
+  const modalRef = useRef<HTMLDivElement>(null);
+  useSwipeClose(modalRef, !!focus, onClose);
 
   useEffect(() => {
     if (!focus) return;
@@ -42,7 +45,11 @@ export function FocusModal({ focus, onClose }: Props) {
       aria-label={ui.focus.detailAria(area)}
       onClick={onClose}
     >
-      <div className="skill-modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        ref={modalRef}
+        className="skill-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <header className="skill-modal-head">
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{area}</span>

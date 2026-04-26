@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import type { Course, CourseMoment } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { useSwipeClose } from "../utils/useSwipeClose";
 
 function sumCredits(moments: CourseMoment[], reference: string): string | null {
   if (moments.length === 0) return null;
@@ -32,6 +33,8 @@ type Props = {
 
 export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
   const { lang, t, ui } = useLang();
+  const modalRef = useRef<HTMLDivElement>(null);
+  useSwipeClose(modalRef, !!course, onClose);
 
   useEffect(() => {
     if (!course) return;
@@ -72,7 +75,11 @@ export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
       aria-label={ui.courses.momentsAria(name)}
       onClick={onClose}
     >
-      <div className="skill-modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        ref={modalRef}
+        className="skill-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <header className="skill-modal-head">
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{name}</span>

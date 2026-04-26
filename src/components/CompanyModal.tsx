@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import type { Company } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { useSwipeClose } from "../utils/useSwipeClose";
 
 type Props = {
   company: Company | null;
@@ -12,6 +13,8 @@ type Props = {
 
 export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
   const { t, ui } = useLang();
+  const modalRef = useRef<HTMLDivElement>(null);
+  useSwipeClose(modalRef, !!company, onClose);
 
   useEffect(() => {
     if (!company) return;
@@ -41,7 +44,11 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
       aria-label={ui.companyModal.detailAria(company.name)}
       onClick={onClose}
     >
-      <div className="skill-modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        ref={modalRef}
+        className="skill-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <header className="skill-modal-head">
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{company.name}</span>
