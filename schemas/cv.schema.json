@@ -11,6 +11,7 @@
     "title",
     "location",
     "summary",
+    "longSummary",
     "links",
     "actions",
     "sections",
@@ -30,7 +31,14 @@
     "name": { "type": "string", "minLength": 1 },
     "title": { "$ref": "#/$defs/localizedString" },
     "location": { "$ref": "#/$defs/localizedString" },
-    "summary": { "$ref": "#/$defs/localizedString" },
+    "summary": {
+      "$ref": "#/$defs/localizedString",
+      "description": "Short headline (~2 sentences) that says where the author is now and where they are going. Rendered as the clickable hero summary."
+    },
+    "longSummary": {
+      "$ref": "#/$defs/localizedString",
+      "description": "Longer narrative summary of the CV without boring details. Revealed when the user clicks the hero summary."
+    },
     "links": {
       "type": "array",
       "minItems": 1,

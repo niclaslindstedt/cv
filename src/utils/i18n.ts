@@ -73,6 +73,10 @@ type UiStrings = {
     stack: string;
     terminated: string;
   };
+  summaryModal: {
+    detailAria: (name: string) => string;
+    readMore: string;
+  };
   projectModal: {
     detailAria: (project: string) => string;
     viewOnGitHub: string;
@@ -191,6 +195,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       visitWebsite: "Visit website ↗",
       stack: "Stack",
       terminated: "Terminated",
+    },
+    summaryModal: {
+      detailAria: (name) => `${name} — full summary`,
+      readMore: "Read more →",
     },
     projectModal: {
       detailAria: (project) => `${project} details`,
@@ -311,6 +319,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       visitWebsite: "Besök webbplats ↗",
       stack: "Stack",
       terminated: "Avvecklat",
+    },
+    summaryModal: {
+      detailAria: (name) => `${name} — fullständig sammanfattning`,
+      readMore: "Läs mer →",
     },
     projectModal: {
       detailAria: (project) => `Detaljer för ${project}`,

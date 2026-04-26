@@ -41,6 +41,10 @@
     "en": "IT architect, deep into agentic coding. I build open-source tools that make AI coding agents easier to orchestrate, sandbox, test, and connect to the rest of the world.",
     "sv": "IT-arkitekt med fokus på agentisk kodning. Jag bygger open source-verktyg som gör det enklare att orkestrera, sandboxa, testa och koppla AI-kodningsagenter till omvärlden."
   },
+  "longSummary": {
+    "en": "Today I work full-time on a small family of Rust CLIs — zag, zig, zad, and ztf — that make AI coding agents easier to orchestrate, sandbox, test, and connect to existing engineering workflows. They grew out of years of consulting work where I kept hitting the same gaps: provider lock-in, brittle prompts, undebuggable multi-agent runs. Earlier in my career I led .NET and TypeScript engagements at SEB, BookBeat, and Etimo, building OAuth 2.0 servers, payment integrations, and product platforms; I also studied IT architecture and software engineering at Mid Sweden University and Blekinge Institute of Technology. Where I'm going: spec-driven, multi-provider agentic systems that a senior engineer can trust end-to-end — observable from the shell, replayable from a workflow file, and composable with the tools teams already use.",
+    "sv": "Just nu arbetar jag heltid med en liten familj av Rust-CLI:er — zag, zig, zad och ztf — som gör AI-kodningsagenter enklare att orkestrera, sandboxa, testa och koppla in i befintliga utvecklingsflöden. Verktygen växte fram ur år av konsultuppdrag där jag stötte på samma luckor: leverantörsinlåsning, sköra prompts, multi-agentkörningar som inte gick att felsöka. Tidigare i karriären ledde jag .NET- och TypeScript-uppdrag hos bland andra SEB, BookBeat och Etimo, byggde OAuth 2.0-servrar, betalintegrationer och produktplattformar; jag har också studerat IT-arkitektur och programvaruteknik vid Mittuniversitetet och Blekinge Tekniska Högskola. Dit jag är på väg: specdrivna, multi-leverantörs-agentsystem som en senior utvecklare kan lita på från ände till ände — observerbara från skalet, spelbara från en arbetsflödesfil och komponerbara med de verktyg team redan använder."
+  },
   "links": [
     {
       "label": {

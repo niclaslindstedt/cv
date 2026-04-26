@@ -187,6 +187,7 @@ export type CV = {
   title: LocalizedString;
   location: LocalizedString;
   summary: LocalizedString;
+  longSummary: LocalizedString;
   links: Link[];
   actions: Actions;
   sections: Sections;

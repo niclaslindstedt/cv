@@ -7,9 +7,16 @@ type Props = {
   theme: Theme;
   onToggleTheme: () => void;
   onOpenTimeline: () => void;
+  onOpenSummary: () => void;
 };
 
-export function Hero({ cv, theme, onToggleTheme, onOpenTimeline }: Props) {
+export function Hero({
+  cv,
+  theme,
+  onToggleTheme,
+  onOpenTimeline,
+  onOpenSummary,
+}: Props) {
   const { lang, setLang, t, ui } = useLang();
   const themeLabel =
     theme === "dark" ? ui.theme.switchToLight : ui.theme.switchToDark;
@@ -17,7 +24,17 @@ export function Hero({ cv, theme, onToggleTheme, onOpenTimeline }: Props) {
     <header className="hero">
       <p className="hero-eyebrow">{t(cv.title)}</p>
       <h1 className="hero-name">{cv.name}</h1>
-      <p className="hero-summary">{t(cv.summary)}</p>
+      <button
+        type="button"
+        className="hero-summary"
+        onClick={onOpenSummary}
+        aria-label={ui.summaryModal.detailAria(cv.name)}
+      >
+        <span className="hero-summary-text">{t(cv.summary)}</span>
+        <span className="hero-summary-hint" aria-hidden="true">
+          {ui.summaryModal.readMore}
+        </span>
+      </button>
       <div className="hero-meta">
         <span>{t(cv.location)}</span>
         {cv.links.map((link) => (

@@ -132,6 +132,7 @@ The repo ships Claude skills under `.agent/skills/` (with
 | ----------------------------- | ------------------------------------------------------------------------------------ |
 | `update-cv`                   | Add/update/remove entries in `src/data/cv.json`; recommends what to change           |
 | `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field) |
+| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV |
 | `update-readme`               | Resync `README.md` with the code it describes                                        |
 | `maintenance`                 | Umbrella skill — routes to every `update-*`                                          |
 
