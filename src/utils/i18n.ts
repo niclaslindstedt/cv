@@ -114,6 +114,10 @@ type UiStrings = {
     momentsAria: (course: string) => string;
     momentsCount: (count: number) => string;
   };
+  section: {
+    expand: (title: string) => string;
+    collapse: (title: string) => string;
+  };
 };
 
 export const UI_STRINGS: Record<Language, UiStrings> = {
@@ -244,6 +248,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       momentsAria: (course) => `${course} components`,
       momentsCount: (n) => `${n} component${n === 1 ? "" : "s"}`,
     },
+    section: {
+      expand: (title) => `Expand ${title} section`,
+      collapse: (title) => `Collapse ${title} section`,
+    },
   },
   sv: {
     present: "Pågående",
@@ -373,6 +381,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewMomentsAria: (course) => `Visa moment för ${course}`,
       momentsAria: (course) => `Moment i ${course}`,
       momentsCount: (n) => (n === 1 ? "1 moment" : `${n} moment`),
+    },
+    section: {
+      expand: (title) => `Expandera ${title.toLowerCase()}`,
+      collapse: (title) => `Fäll ihop ${title.toLowerCase()}`,
     },
   },
 };
