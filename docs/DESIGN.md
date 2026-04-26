@@ -267,11 +267,17 @@ client engagement) each represent **one continuous tenure**. Internal
 promotions or title changes do not break that continuity — they live
 inside a single card as a `roles[]` array on the parent.
 
-The arrow is a 14×14 SVG in `--accent`, `vertical-align: -2px`. It
-appears on the card heading whenever the parent has more than one
-role (i.e. the most recent title was reached via promotion), and
-again on every role row in the chain except the original starting
-role at the bottom.
+The arrow is a 14×14 SVG in `--accent`. It appears on the card
+heading whenever the parent has more than one role (i.e. the most
+recent title was reached via promotion), and again on every role row
+in the chain except the original starting role at the bottom.
+
+Alignment follows the icon-in-text rule (§5.6): inline in card
+headings via `vertical-align: middle` plus a 1px upward optical
+nudge; in the role chain (a grid row with possibly wrapping content)
+via `align-items: start` on the row + an explicit `margin-top` on the
+icon equal to `(line-height − icon-height) ÷ 2` so the icon centers
+with the **first** text line, not the wrapped block.
 
 **Role chain.** When `roles.length > 1`, the card renders a
 `<ol class="role-chain">` directly after the date row. Rows are
@@ -329,6 +335,35 @@ short summary still stands on its own as the headline; the modal is a
 
 Project names, course codes, and technology tags use `--font-mono`.
 This is the visual cue for "this is an identifier, not a sentence."
+
+### 5.6 Icon-in-text alignment
+
+Small inline SVG icons (the promotion arrow, role-start circle, note
+icon, terminated icon, etc.) must read as visually centered with the
+text they sit beside. Two cases:
+
+1. **Inline next to text** (a heading, a paragraph, a button label):
+   use `vertical-align: middle` on the SVG. Add `transform:
+translateY(-1px)` for an optical nudge upward — the geometric
+   centerline (baseline + half-x-height) sits slightly below the eye's
+   text-center for most fonts, and 1px corrects it. **Don't** use
+   bespoke `vertical-align: -2px` / `-3px` magic numbers; they don't
+   scale with the surrounding font-size.
+
+2. **Inside a flex/grid row whose other cell can wrap to multiple
+   lines** (e.g. the role chain): `align-items: baseline` falls back
+   to the SVG's bottom edge (SVG has no real text baseline), so the
+   icon sits high; `align-items: center` centers with the wrapped
+   block, drifting the icon below the first line. Use `align-items:
+start` and give the row an explicit `line-height`, then offset the
+   icon with `margin-top` equal to `(line-height − icon-height) / 2 +
+   1px` (the geometric centerline plus the same 1px optical nudge as
+   case 1). This keeps the icon centered with the **first line only**,
+   regardless of how the rest wraps.
+
+The arrow's viewBox geometry is centered (visual center at viewBox
+12,12), so both rules above produce the expected optical center
+without further adjustment.
 
 ---
 
