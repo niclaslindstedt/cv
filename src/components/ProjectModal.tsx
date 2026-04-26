@@ -45,7 +45,6 @@ export function ProjectModal({ project, onClose }: Props) {
         <header className="skill-modal-head">
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{project.name}</span>
-            <span className="skill-modal-years">{t(project.tagline)}</span>
           </h2>
           <button
             type="button"
