@@ -71,6 +71,14 @@ chrome orb in place of a sun. No warm hues (no yellow, no orange) and
 no chromatic accents — emphasis comes from value contrast and
 typographic weight.
 
+The light sky is layered: a single focal **chrome orb** (top centre,
+the sun replacement), a drifting cloud field, and an **ambient orb
+field** of ~9 secondary orbs at varying sizes (small to large), heavy
+blur, and very low alpha (~0.13–0.20). Ambient orbs are decorative
+atmosphere only — they should never read as objects, only as soft
+luminance variation. Don't add chromatic tint; reach for the
+silver/pearl gradient already used by `.ambient-orb`.
+
 ### 2.3 Geometry
 
 | Token         | Value   | Notes                                      |

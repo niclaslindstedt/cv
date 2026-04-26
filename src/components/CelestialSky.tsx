@@ -14,6 +14,18 @@ const CLOUDS = [
   { x: 48, y: 32, size: 28, blur: 55, alpha: 0.3, drift: 260, delay: -200 },
 ];
 
+const AMBIENT_ORBS = [
+  { x: 18, y: 30, size: 48, blur: 90, alpha: 0.16, duration: 16, delay: 0 },
+  { x: 84, y: 70, size: 58, blur: 110, alpha: 0.13, duration: 19, delay: -80 },
+  { x: 66, y: 22, size: 30, blur: 70, alpha: 0.18, duration: 14, delay: -40 },
+  { x: 30, y: 78, size: 36, blur: 80, alpha: 0.15, duration: 17, delay: -120 },
+  { x: 52, y: 52, size: 18, blur: 50, alpha: 0.2, duration: 12, delay: -60 },
+  { x: 92, y: 38, size: 14, blur: 44, alpha: 0.17, duration: 13, delay: -160 },
+  { x: 6, y: 60, size: 16, blur: 48, alpha: 0.16, duration: 15, delay: -100 },
+  { x: 38, y: 12, size: 12, blur: 38, alpha: 0.14, duration: 11, delay: -180 },
+  { x: 74, y: 90, size: 22, blur: 60, alpha: 0.13, duration: 18, delay: -220 },
+];
+
 type Star = {
   x: number;
   y: number;
@@ -124,6 +136,26 @@ export function CelestialSky({ theme }: Props) {
                     "--cloud-alpha": cloud.alpha,
                     "--cloud-drift": `${cloud.drift}s`,
                     "--cloud-delay": `${cloud.delay}s`,
+                  } as React.CSSProperties
+                }
+              />
+            ))}
+          </div>
+          <div className="orbfield">
+            {AMBIENT_ORBS.map((orb, i) => (
+              <span
+                key={i}
+                className="ambient-orb"
+                style={
+                  {
+                    left: `${orb.x}%`,
+                    top: `${orb.y}%`,
+                    width: `${orb.size}vmin`,
+                    height: `${orb.size}vmin`,
+                    filter: `blur(${orb.blur}px)`,
+                    "--orb-alpha": orb.alpha,
+                    "--orb-duration": `${orb.duration}s`,
+                    "--orb-delay": `${orb.delay}s`,
                   } as React.CSSProperties
                 }
               />
