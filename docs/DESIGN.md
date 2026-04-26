@@ -152,6 +152,12 @@ Three tiers, used in this order:
    a glass card; it punches an opaque rectangle and breaks the glass
    illusion.
 
+The mobile UA chrome (iOS Safari status bar) is treated as part of
+the sky: `index.html` sets a `theme-color` meta tag matching
+`--sky-top` (`#02030a` dark, `#d2d8e1` light), updated on theme
+toggle by `useTheme`. Keep the two values in sync with `--sky-top`
+when you re-tune the sky.
+
 ### 3.1 Translucency rule
 
 If you can't see the sky bleed through a card on the dark theme home
