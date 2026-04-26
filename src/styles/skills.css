@@ -1,0 +1,157 @@
+.skills {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.skills-group h3 {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.skills-group > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skills-group > ul > li {
+  display: inline-flex;
+}
+
+.skill-pill {
+  padding: 3px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--fg);
+  background: var(--glass-highlight);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.skill-pill-empty {
+  color: var(--fg-muted);
+}
+
+.skill-pill-personal {
+  color: var(--fg-muted);
+}
+
+.skill-personal-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+}
+
+button.skill-pill-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.3;
+  cursor: pointer;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease;
+}
+
+@media (hover: hover) {
+  button.skill-pill-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+}
+
+button.skill-pill-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.skill-usage-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  padding: 0 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+}
+
+.entry-stack,
+.entry-skills {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.entry-stack + .entry-skills {
+  margin-top: 4px;
+}
+
+.entry-stack li,
+.entry-skills li {
+  display: inline-flex;
+}
+
+.entry-stack-btn,
+.entry-skill-btn {
+  appearance: none;
+  padding: 1px 8px;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  line-height: 1.4;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease;
+}
+
+.entry-skill-btn {
+  color: var(--fg-muted);
+  background: transparent;
+  border-color: var(--border);
+}
+
+@media (hover: hover) {
+  .entry-stack-btn:hover,
+  .entry-skill-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+.entry-stack-btn:focus-visible,
+.entry-skill-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

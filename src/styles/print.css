@@ -1,0 +1,369 @@
+@media print {
+  @page {
+    size: A4;
+    margin: 1.5cm;
+  }
+
+  :root,
+  :root[data-theme="dark"],
+  :root[data-theme="light"] {
+    --bg: #ffffff;
+    --bg-elev: #ffffff;
+    --glass-bg: #ffffff;
+    --glass-border: #cccccc;
+    --glass-highlight: #ffffff;
+    --sky-top: #ffffff;
+    --sky-mid: #ffffff;
+    --sky-bottom: #ffffff;
+    --sky-glow-1: transparent;
+    --sky-glow-2: transparent;
+    --orb-color: transparent;
+    --orb-color-soft: transparent;
+    --border: #cccccc;
+    --fg: #111111;
+    --fg-muted: #444444;
+    --accent: #111111;
+    --accent-soft: transparent;
+    color-scheme: light;
+  }
+
+  html,
+  body {
+    background: #ffffff;
+    color: #111111;
+  }
+
+  body::before {
+    display: none;
+  }
+
+  .celestial-sky {
+    display: none;
+  }
+
+  .glass-reflect {
+    display: none;
+  }
+
+  .focus-list li,
+  .project,
+  .timeline-item,
+  .education-list > li,
+  .language-item,
+  .timeline-vis-details,
+  .skill-modal,
+  .skill-modal-overlay,
+  .timeline-vis-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  body {
+    font-size: 10.5pt;
+    line-height: 1.4;
+  }
+
+  .page {
+    padding: 0;
+  }
+
+  .container {
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero {
+    order: 0;
+    padding: 0 0 12px;
+    margin-bottom: 16px;
+    border-color: #999;
+  }
+
+  #experience {
+    order: 1;
+  }
+
+  #education {
+    order: 2;
+  }
+
+  #skills {
+    order: 3;
+  }
+
+  #focus {
+    order: 4;
+  }
+
+  #projects {
+    order: 5;
+  }
+
+  #languages {
+    order: 6;
+  }
+
+  .section {
+    margin-bottom: 18px;
+  }
+
+  .hero-download,
+  .hero-timeline-btn,
+  .theme-toggle,
+  .lang-toggle,
+  .timeline-vis-overlay {
+    display: none !important;
+  }
+
+  .hero-name {
+    font-size: 20pt;
+    margin-bottom: 4px;
+  }
+
+  .hero-eyebrow {
+    font-size: 9pt;
+    margin-bottom: 4px;
+    color: #444;
+  }
+
+  .hero-summary {
+    font-size: 10.5pt;
+    margin-bottom: 8px;
+    max-width: none;
+    display: block;
+    border: 0 !important;
+    color: #111 !important;
+    cursor: auto;
+  }
+
+  .hero-summary-hint {
+    display: none !important;
+  }
+
+  .hero-meta {
+    gap: 10px;
+    font-size: 9.5pt;
+    color: #444;
+  }
+
+  .hero-blog {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: #111;
+    font-weight: 600;
+  }
+
+  .hero-meta a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-weight: 400;
+    color: #555;
+  }
+
+  .section-title {
+    font-size: 10pt;
+    color: #111;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #999;
+    padding-bottom: 2px;
+  }
+
+  .section-toggle-chevron {
+    display: none !important;
+  }
+
+  .section-collapsible.is-collapsed {
+    margin-bottom: 18px;
+  }
+
+  .section-collapsible.is-collapsed .section-title {
+    margin-bottom: 8px;
+  }
+
+  .section-content[hidden] {
+    display: block !important;
+  }
+
+  .focus-list li,
+  .focus-item-btn,
+  .project,
+  .timeline-item,
+  .education-list > li,
+  .language-item,
+  .skill-pill {
+    background: transparent !important;
+    border-color: #bbb !important;
+    color: #111 !important;
+  }
+
+  .timeline-item,
+  .education-list > li {
+    padding: 4px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px dotted #bbb !important;
+    border-radius: 0 !important;
+  }
+
+  .education-head {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 2px;
+  }
+
+  .education-list p {
+    line-height: 1.4;
+  }
+
+  button.skill-pill-btn {
+    color: #333 !important;
+  }
+
+  .entry-stack li,
+  .entry-stack-btn,
+  .entry-skills li,
+  .entry-skill-btn,
+  .project-stack li,
+  .project-stack-btn,
+  .project-skills li,
+  .project-skill-btn,
+  .timeline-engagement,
+  .education-credits,
+  .skill-usage-count,
+  .assignments > summary {
+    background: transparent !important;
+    color: #333 !important;
+    border: 0 !important;
+    padding: 0 !important;
+  }
+
+  .entry-stack,
+  .entry-skills {
+    gap: 4px 10px;
+  }
+
+  .entry-stack li::after,
+  .entry-skills li::after {
+    content: " ·";
+    color: #999;
+  }
+
+  .entry-stack li:last-child::after,
+  .entry-skills li:last-child::after {
+    content: "";
+  }
+
+  #projects .project {
+    padding: 4px 0;
+    border: 0;
+    border-bottom: 1px dotted #bbb;
+    border-radius: 0;
+  }
+
+  #projects .project-stack,
+  #projects .project-skills,
+  #projects .project-meta,
+  #projects .project-pill {
+    display: none;
+  }
+
+  #projects .project-head h3 {
+    font-size: 11pt;
+    display: inline;
+  }
+
+  #projects .project-tagline {
+    display: inline;
+    color: #444;
+  }
+
+  #projects .project-tagline::before {
+    content: " — ";
+  }
+
+  details.skill-pill > summary {
+    list-style: none;
+    padding: 0;
+  }
+
+  .skill-usage-count,
+  .skill-usage-list {
+    display: none !important;
+  }
+
+  .skill-pill,
+  details.skill-pill {
+    border: 1px solid #bbb !important;
+    border-radius: 999px;
+    padding: 1px 8px;
+    font-size: 9.5pt;
+  }
+
+  details.assignments {
+    display: block;
+  }
+
+  details.assignments > summary {
+    display: none;
+  }
+
+  details.assignments > *:not(summary) {
+    display: block !important;
+  }
+
+  .timeline-item,
+  .assignment-item,
+  .education-list > li,
+  .project {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  a {
+    color: #111;
+    text-decoration: none;
+  }
+
+  .footer {
+    border-color: #bbb;
+    color: #555;
+    font-size: 9pt;
+    margin-top: 16px;
+  }
+
+  .assignments-list {
+    padding-left: 0;
+  }
+
+  .assignments-list .assignment-item::before,
+  .assignments-list .assignment-item::after {
+    display: none;
+  }
+
+  .role-chain {
+    border-left-color: #888;
+  }
+
+  .promotion-arrow,
+  .role-start-icon {
+    color: #111;
+    opacity: 1;
+  }
+
+  .active-badge {
+    display: none !important;
+  }
+
+  .timeline-item.is-active > .timeline-body > .timeline-title,
+  .assignment-item.is-active > .assignment-body > .assignment-title {
+    padding-right: 0;
+  }
+}
