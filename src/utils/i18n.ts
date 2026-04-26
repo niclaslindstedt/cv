@@ -35,7 +35,6 @@ type UiStrings = {
     course: string;
     sideProject: string;
     skillsUsed: string;
-    noSkills: string;
     starts: string;
     yUnit: string;
     mUnit: string;
@@ -155,7 +154,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       course: "Course",
       sideProject: "Side project",
       skillsUsed: "Skills used",
-      noSkills: "No skills tagged on this entry.",
       starts: "Starts",
       yUnit: "y",
       mUnit: "m",
@@ -279,7 +277,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       course: "Kurs",
       sideProject: "Sidoprojekt",
       skillsUsed: "Använda kompetenser",
-      noSkills: "Inga kompetenser kopplade till denna post.",
       starts: "Startar",
       yUnit: "år",
       mUnit: "mån",

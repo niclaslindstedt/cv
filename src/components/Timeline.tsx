@@ -798,7 +798,7 @@ export function Timeline({ open, onClose }: Props) {
                 <span>{t(selectedItem.notes)}</span>
               </p>
             )}
-            {selectedItem.skills.length > 0 ? (
+            {selectedItem.skills.length > 0 && (
               <>
                 <h4 className="timeline-vis-details-skills-title">
                   {ui.timeline.skillsUsed}
@@ -809,10 +809,6 @@ export function Timeline({ open, onClose }: Props) {
                   ))}
                 </ul>
               </>
-            ) : (
-              <p className="timeline-vis-details-empty">
-                {ui.timeline.noSkills}
-              </p>
             )}
             <p className="timeline-vis-details-when">
               {ui.timeline.starts} {formatMonth(selectedItem.startDate, lang)}

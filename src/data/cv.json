@@ -265,12 +265,12 @@
     {
       "name": "cv",
       "tagline": {
-        "en": "Personal site and CV driven by a single schema-validated JSON file.",
-        "sv": "Personlig webbplats och CV driven av en enda schemavaliderad JSON-fil."
+        "en": "The site you're on — a personal CV driven by a single schema-validated JSON file.",
+        "sv": "Sajten du befinner dig på — ett personligt CV drivet av en enda schemavaliderad JSON-fil."
       },
       "description": {
-        "en": "All CV content lives in one cv.json validated against a JSON Schema; a React + Vite frontend renders Hero, Focus, Projects, Experience, Skills, Education, and a zoomable Timeline from it. A custom Vite plugin synthesises the entire <head> — Open Graph, Twitter card, canonical URL, and JSON-LD Person + WebSite — directly from the data, while build-time scripts generate the timeline, GitHub commit activity, per-project commit stats, a 1200×630 OG image (via satori), and a sitemap. Maintenance is delegated to Claude skills (update-cv, update-summary, update-company-descriptions) that keep the JSON in sync with reality.",
-        "sv": "Allt CV-innehåll bor i en enda cv.json som valideras mot ett JSON Schema; en React + Vite-frontend renderar sektionerna Hero, Fokus, Projekt, Erfarenhet, Kompetenser, Utbildning och en zoombar tidslinje från den. Ett eget Vite-plugin bygger hela <head> — Open Graph, Twitter card, canonical URL och JSON-LD Person + WebSite — direkt från datan, medan byggtidsskript genererar tidslinjen, GitHub-aktivitet, commit-statistik per projekt, en OG-bild i 1200×630 (via satori) och en sitemap. Underhåll delegeras till Claude-skills (update-cv, update-summary, update-company-descriptions) som håller JSON-filen i synk med verkligheten."
+        "en": "This is the site you're viewing right now. The entire website — every section, every meta tag, the timeline, the OG image, the sitemap — is rendered from a single schema-validated cv.json. That JSON is maintained through Claude Code skills (update-cv, update-summary, update-company-descriptions) that read the schema, edit the data, and re-validate, so updates happen through conversation rather than by hand.",
+        "sv": "Detta är sajten du tittar på just nu. Hela webbplatsen — varje sektion, varje meta-tagg, tidslinjen, OG-bilden, sitemap:en — renderas från en enda schemavaliderad cv.json. Den JSON-filen underhålls genom Claude Code-skills (update-cv, update-summary, update-company-descriptions) som läser schemat, redigerar datan och validerar om — uppdateringar sker via samtal istället för för hand."
       },
       "skills": [
         "TypeScript",
