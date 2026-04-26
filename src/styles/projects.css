@@ -250,6 +250,10 @@
   border-color: var(--border);
 }
 
+:root[data-theme="light"] .project-skill-btn {
+  border-color: #9aa3b0;
+}
+
 @media (hover: hover) {
   .project-stack-btn:hover,
   .project-skill-btn:hover {
