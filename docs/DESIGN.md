@@ -235,6 +235,13 @@ All content lives in a card (see §3, glass). Cards have:
 - `--glass-border` outline.
 - `--shadow` for floating panels (modals, popovers); no shadow for
   in-flow cards.
+- The **hover** state (for cards that are themselves clickable, like
+  Focus, Project, Education) is a single change: `border-color:
+var(--accent)`. Never fill the card body with `--accent-soft` on
+  hover — that fill is reserved for pill/button-shaped controls (§4.1,
+  §4.3). Cards that aren't clickable as a whole (Experience, where
+  only the company title opens a modal) get no card-level hover at
+  all.
 - The **active** state (current employer, current side project) gets
   `border-color: rgba(122,183,255,0.55)` and a 1px accent glow.
   Experience and assignment cards additionally show a `PRESENT` badge
