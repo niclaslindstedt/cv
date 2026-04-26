@@ -3,8 +3,9 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
+import { loadCv } from "../src/data/load-cv.mjs";
+
 const here = dirname(fileURLToPath(import.meta.url));
-const cvPath = resolve(here, "..", "src", "data", "cv.json");
 const defaultOut = resolve(here, "..", "src", "data", "project-stats.json");
 
 const args = process.argv.slice(2);
@@ -176,7 +177,7 @@ function collectProjectRefs(cv) {
 }
 
 async function main() {
-  const cv = JSON.parse(readFileSync(cvPath, "utf8"));
+  const cv = loadCv();
   const refs = collectProjectRefs(cv);
   if (refs.length === 0) {
     emit({ enabled: false, projects: {} });

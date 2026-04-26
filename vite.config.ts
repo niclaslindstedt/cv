@@ -1,7 +1,9 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 
-import cv from "./src/data/cv.json";
+import { loadCv, loadCvWithParts } from "./src/data/load-cv.mjs";
+
+const cv = loadCv();
 
 declare const process: { env: Record<string, string | undefined> };
 
@@ -148,7 +150,26 @@ function cvMetaHtmlPlugin(): Plugin {
   };
 }
 
+// Replaces every "{...}" placeholder in src/data/cv.json with the
+// matching part file under src/data/cv/ before Vite's JSON loader sees
+// the import. Lets the rest of the app keep doing
+// `import cv from "./data/cv.json"` (via src/data/cv.ts).
+function cvAssemblyPlugin(): Plugin {
+  const CV_JSON_SUFFIX = "src/data/cv.json";
+  return {
+    name: "cv-assembly",
+    enforce: "pre",
+    load(id) {
+      const cleanId = id.split("?")[0].replace(/\\/g, "/");
+      if (!cleanId.endsWith(CV_JSON_SUFFIX)) return null;
+      const { cv: assembled, parts } = loadCvWithParts(cleanId);
+      for (const part of parts) this.addWatchFile(part);
+      return JSON.stringify(assembled);
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), cvMetaHtmlPlugin()],
+  plugins: [react(), cvAssemblyPlugin(), cvMetaHtmlPlugin()],
   base: "/",
 });

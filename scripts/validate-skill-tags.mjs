@@ -1,11 +1,7 @@
 #!/usr/bin/env node
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { loadCv } from "../src/data/load-cv.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const cvPath = resolve(here, "..", "src", "data", "cv.json");
-const cv = JSON.parse(readFileSync(cvPath, "utf8"));
+const cv = loadCv();
 
 const known = new Set(cv.skills.flatMap((group) => group.items));
 const errors = [];

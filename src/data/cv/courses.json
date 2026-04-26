@@ -1,0 +1,49 @@
+[
+  {
+    "name": {
+      "en": "Game Programming in Windows – Introduction",
+      "sv": "Spelprogrammering i Windows – introduktion"
+    },
+    "code": "DT108G",
+    "institution": {
+      "en": "Mid Sweden University",
+      "sv": "Mittuniversitetet"
+    },
+    "credits": "12 ECTS",
+    "startDate": "2015-06",
+    "completedDate": "2015-08",
+    "engagement": 0.5,
+    "remote": true,
+    "skills": ["C++"]
+  },
+  {
+    "name": {
+      "en": "Game Design",
+      "sv": "Speldesign"
+    },
+    "code": "2AD148",
+    "institution": {
+      "en": "Uppsala University",
+      "sv": "Uppsala universitet"
+    },
+    "credits": "7.5 ECTS",
+    "startDate": "2015-06",
+    "completedDate": "2015-07",
+    "engagement": 1
+  },
+  {
+    "name": {
+      "en": "Online Introduction to Law",
+      "sv": "Nätbaserad juridisk översiktskurs"
+    },
+    "code": "2JF068",
+    "institution": {
+      "en": "Uppsala University",
+      "sv": "Uppsala universitet"
+    },
+    "credits": "15 ECTS",
+    "startDate": "2015-01",
+    "completedDate": "2015-06",
+    "engagement": 0.5
+  }
+]

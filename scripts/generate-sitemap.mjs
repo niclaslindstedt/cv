@@ -6,12 +6,12 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { loadCv } from "../src/data/load-cv.mjs";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-const cv = JSON.parse(
-  fs.readFileSync(path.join(ROOT, "src/data/cv.json"), "utf8"),
-);
+const cv = loadCv();
 
 const SITE_URL = cv.meta.siteUrl.replace(/\/$/, "");
 const lastmod = new Date().toISOString();

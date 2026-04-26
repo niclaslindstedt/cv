@@ -17,19 +17,19 @@ yet, and no CLI.
 Prefer `make` targets over raw `npm run` commands so local and CI stay
 in sync:
 
-| Command          | What it does                                                           |
-| ---------------- | ---------------------------------------------------------------------- |
-| `make install`   | `npm ci`                                                               |
-| `make dev`       | Start Vite dev server                                                  |
-| `make build`     | Type-check and produce production build                                |
-| `make preview`   | Preview the production build                                           |
-| `make lint`      | ESLint + TypeScript type-check                                         |
-| `make typecheck` | `tsc -b --noEmit` only                                                 |
-| `make fmt`       | Prettier rewrite in place                                              |
-| `make fmt-check` | Prettier check without writing                                         |
-| `make validate`  | Validate `src/data/cv.json` against `schemas/cv.schema.json` (ajv-cli) |
-| `make test`      | Placeholder — no tests yet                                             |
-| `make clean`     | Remove `dist/` and Vite cache                                          |
+| Command          | What it does                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
+| `make install`   | `npm ci`                                                                                         |
+| `make dev`       | Start Vite dev server                                                                            |
+| `make build`     | Type-check and produce production build                                                          |
+| `make preview`   | Preview the production build                                                                     |
+| `make lint`      | ESLint + TypeScript type-check                                                                   |
+| `make typecheck` | `tsc -b --noEmit` only                                                                           |
+| `make fmt`       | Prettier rewrite in place                                                                        |
+| `make fmt-check` | Prettier check without writing                                                                   |
+| `make validate`  | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json` |
+| `make test`      | Placeholder — no tests yet                                                                       |
+| `make clean`     | Remove `dist/` and Vite cache                                                                    |
 
 CI (`.github/workflows/ci.yml`) runs `make fmt-check`, `make validate`,
 `make lint`, and `make build` on every push and pull request.
@@ -43,33 +43,43 @@ src/
 ├── styles.css          # global CSS
 ├── components/         # one file per section (Hero, Focus, Projects, …)
 │                         plus a generic <Section /> wrapper
-├── data/cv.json        # CV content (validated by schemas/cv.schema.json)
+├── data/cv.json        # CV skeleton — top-level "category" keys hold the
+│                         literal sentinel "{...}" and are expanded from
+│                         data/cv/<key>.json at build/validate time.
+├── data/cv/*.json      # per-category content (focus, projects, companies,
+│                         experience, education, courses, skills,
+│                         skillDetails, languages, meta).
+├── data/load-cv.mjs    # assembles cv.json + cv/*.json. Used by Vite, scripts,
+│                         and the schema validator.
+├── data/cv.ts          # typed wrapper around cv.json (post-assembly).
 ├── data/cv.types.ts    # TypeScript types mirroring the schema
 ├── data/timeline.types.ts # types for generated timeline.json
 └── utils/date.ts       # date helpers used by Experience / Education
 ```
 
-Dependency direction: `App.tsx` consumes `data/cv.json`; components
-consume `data/cv.types.ts` and `utils/date.ts`. Nothing in `data/` or
-`utils/` imports from `components/`. Keep it that way.
+Dependency direction: `App.tsx` imports the assembled CV from
+`data/cv` (which re-exports `data/cv.json` after the `cv-assembly`
+Vite plugin expands the `{...}` placeholders). Components consume
+`data/cv.types.ts` and `utils/date.ts`. Nothing in `data/` or `utils/`
+imports from `components/`. Keep it that way.
 
 ## Where new code goes
 
-| Change                                       | Location                                                                                                                                        |
-| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| New CV section (e.g. Talks, Awards)          | `src/components/<Name>.tsx` + slot into `src/App.tsx`                                                                                           |
-| New field on existing section                | Extend `schemas/cv.schema.json` and `src/data/cv.types.ts`, then the component                                                                  |
-| Content-only edits (roles, projects, skills) | `src/data/cv.json` — prefer the `update-cv` skill                                                                                               |
-| Date formatting / parsing                    | `src/utils/date.ts`                                                                                                                             |
-| Global styles, layout, typography            | `src/styles.css`                                                                                                                                |
-| Timeline tracks, layout, zoom behaviour      | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                                                                                 |
-| GitHub commit activity fetch                 | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time)                                                                  |
-| Per-project repo commit stats fetch          | `scripts/generate-project-stats.mjs` (uses `PROJECT_STATS_TOKEN` if set, else `GITHUB_TOKEN`; needs `repo` scope to read private project repos) |
-| `<head>` meta, OG, Twitter, JSON-LD          | `vite.config.ts` (`cvMetaHtmlPlugin`) — derived from `cv.meta` + `cv.links` + `cv.skills` + `cv.education`                                      |
-| Social-share OG image                        | `scripts/generate-og-image.mjs` (satori → `public/og-image.png`); runs in `prebuild`                                                            |
-| Sitemap                                      | `scripts/generate-sitemap.mjs` (writes `dist/sitemap.xml` post-build)                                                                           |
-| `robots.txt`, `404.html`                     | Static files in `public/`                                                                                                                       |
-| Analytics (GoatCounter)                      | Snippet injected by `cvMetaHtmlPlugin` only when `VITE_GOATCOUNTER_ENDPOINT` env var is set at build time                                       |
+| Change                                       | Location                                                                                                                                          |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| New CV section (e.g. Talks, Awards)          | `src/components/<Name>.tsx` + slot into `src/App.tsx`                                                                                             |
+| New field on existing section                | Extend `schemas/cv.schema.json` and `src/data/cv.types.ts`, then the component                                                                    |
+| Content-only edits (roles, projects, skills) | `src/data/cv/<category>.json` (focus, projects, companies, …) — prefer the `update-cv` skill. Top-level scalar fields stay in `src/data/cv.json`. |
+| Date formatting / parsing                    | `src/utils/date.ts`                                                                                                                               |
+| Global styles, layout, typography            | `src/styles.css`                                                                                                                                  |
+| Timeline tracks, layout, zoom behaviour      | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                                                                                   |
+| GitHub commit activity fetch                 | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time)                                                                    |
+| Per-project repo commit stats fetch          | `scripts/generate-project-stats.mjs` (uses `PROJECT_STATS_TOKEN` if set, else `GITHUB_TOKEN`; needs `repo` scope to read private project repos)   |
+| `<head>` meta, OG, Twitter, JSON-LD          | `vite.config.ts` (`cvMetaHtmlPlugin`) — derived from `cv.meta` + `cv.links` + `cv.skills` + `cv.education`                                        |
+| Social-share OG image                        | `scripts/generate-og-image.mjs` (satori → `public/og-image.png`); runs in `prebuild`                                                              |
+| Sitemap                                      | `scripts/generate-sitemap.mjs` (writes `dist/sitemap.xml` post-build)                                                                             |
+| `robots.txt`, `404.html`                     | Static files in `public/`                                                                                                                         |
+| Analytics (GoatCounter)                      | Snippet injected by `cvMetaHtmlPlugin` only when `VITE_GOATCOUNTER_ENDPOINT` env var is set at build time                                         |
 
 ## Conventions
 
@@ -128,13 +138,13 @@ The repo has **no tests yet**. When tests are added:
 The repo ships Claude skills under `.agent/skills/` (with
 `.claude/skills` symlinked to it — `OSS_SPEC.md` §21.2):
 
-| Skill                         | Purpose                                                                              |
-| ----------------------------- | ------------------------------------------------------------------------------------ |
-| `update-cv`                   | Add/update/remove entries in `src/data/cv.json`; recommends what to change           |
-| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field) |
-| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV |
-| `update-readme`               | Resync `README.md` with the code it describes                                        |
-| `maintenance`                 | Umbrella skill — routes to every `update-*`                                          |
+| Skill                         | Purpose                                                                                                                 |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `update-cv`                   | Add/update/remove entries in `src/data/cv.json` and the per-category files in `src/data/cv/`; recommends what to change |
+| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field)                                    |
+| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV                                    |
+| `update-readme`               | Resync `README.md` with the code it describes                                                                           |
+| `maintenance`                 | Umbrella skill — routes to every `update-*`                                                                             |
 
 Invoke `maintenance` when you've landed a batch of changes and want a
 single pass that brings drift-prone artifacts back in sync. Invoke a
