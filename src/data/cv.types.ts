@@ -63,6 +63,7 @@ export type Project = {
   skills: string[];
   github: GithubRepoRef;
   openSource: boolean;
+  homepage?: string;
 };
 
 export type ProjectStats = {

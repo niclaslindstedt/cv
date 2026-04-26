@@ -264,7 +264,8 @@
       "stack": ["TypeScript", "React", "Node.js"],
       "skills": ["Spec-driven development", "Claude Code", "Agent Skills"],
       "github": { "owner": "niclaslindstedt", "repo": "blog" },
-      "openSource": true
+      "openSource": true,
+      "homepage": "https://blog.niclaslindstedt.se"
     },
     {
       "name": "cv",
