@@ -403,6 +403,11 @@ to each role's `startDate`.
 - The first segment carries the bar's subtitle (company name)
   beneath the role title; subsequent segments show only the role
   title, since the company is the same across the entire bar.
+- Segment labels are top-aligned (`align-items: flex-start`) with
+  the same `10px` top padding as a single-role bar's content, so
+  the first line (the role title) sits on the same baseline across
+  every segment regardless of whether the segment also carries the
+  subtitle on a second line.
 - Markers and the arrow are decorative (`aria-hidden`); the
   screen-reader story is covered by the bar's accessible `title`
   tooltip (full title and date range). The marker's native `title`
@@ -414,6 +419,25 @@ A bar with one role has no `roles` field and renders the original
 single-label layout (centered title + subtitle). Other timeline
 kinds (education, course, side project, github) never have a
 `roles` field.
+
+**Details modal — multi-role layout.** When the selected bar has
+more than one role, the modal replaces the arrow-joined title
+(`Role A → Role B → Role C`) with a per-role interval list:
+
+- The heading becomes the company name (the bar's subtitle), and
+  the redundant subtitle line is hidden so the company is not
+  repeated.
+- The overall date range and total duration stay on the dates row.
+- A `<ul class="timeline-vis-details-roles">` follows the dates row.
+  Each role is rendered as a left-bordered card matching the
+  `--accent-soft` style of the notes block (without the icon),
+  with the role title in the body type and the role's own date
+  range plus duration on a mono meta line.
+- Each role's "end" date is the calendar month immediately before
+  the next role's `startDate`; the last role inherits the bar's
+  end date (or "Present" if the bar is ongoing). Durations are
+  computed identically to the bar-level duration so they sum to
+  the total.
 
 ### 5.8 Project date chip
 
