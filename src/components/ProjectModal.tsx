@@ -7,9 +7,9 @@ import type {
   ProjectStats,
   ProjectStatsFile,
 } from "../data/cv.types";
-import { formatMonth } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { useSwipeClose } from "../utils/useSwipeClose";
+import { ProjectDateChip } from "./ProjectDateChip";
 
 const projectStats = projectStatsData as ProjectStatsFile;
 
@@ -26,10 +26,6 @@ function statsKey(github: GithubRepoRef): string {
 function lookupStats(github: GithubRepoRef): ProjectStats | undefined {
   if (!projectStats?.enabled) return undefined;
   return projectStats.projects?.[statsKey(github)];
-}
-
-function isoToYearMonth(iso: string): string {
-  return iso.slice(0, 7);
 }
 
 export function ProjectModal({ project, onClose, onSkillClick }: Props) {
@@ -59,13 +55,11 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
 
   const repoUrl = `https://github.com/${project.github.owner}/${project.github.repo}`;
   const stats = lookupStats(project.github);
-  const dateRange =
-    stats && stats.firstCommitDate && stats.lastCommitDate
-      ? `${formatMonth(isoToYearMonth(stats.firstCommitDate), lang)} – ${formatMonth(
-          isoToYearMonth(stats.lastCommitDate),
-          lang,
-        )}`
-      : null;
+  const hasDateRange = !!(
+    stats &&
+    stats.firstCommitDate &&
+    stats.lastCommitDate
+  );
   const hasCommits = !!stats && stats.totalCommits > 0;
 
   return (
@@ -97,12 +91,24 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
         <div className="skill-modal-body">
           <section className="skill-modal-detail">
             <p className="skill-modal-description">{t(project.description)}</p>
-            {(dateRange || hasCommits) && (
+            {(hasDateRange || hasCommits) && (
               <dl className="project-meta">
-                {dateRange && (
+                {hasDateRange && (
                   <div className="project-meta-row">
                     <dt>{ui.projectModal.active}</dt>
-                    <dd>{dateRange}</dd>
+                    <dd>
+                      <ProjectDateChip
+                        iso={stats!.firstCommitDate!}
+                        lang={lang}
+                      />
+                      <span className="project-date-sep" aria-hidden="true">
+                        –
+                      </span>
+                      <ProjectDateChip
+                        iso={stats!.lastCommitDate!}
+                        lang={lang}
+                      />
+                    </dd>
                   </div>
                 )}
                 {hasCommits && (

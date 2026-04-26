@@ -403,6 +403,32 @@ A bar with one role has no `promotions` field and renders no
 markers. Other timeline kinds (education, course, side project,
 github) never have a `promotions` field.
 
+### 5.8 Project date chip
+
+Side-project commit ranges are derived automatically from GitHub
+(`firstCommitDate` / `lastCommitDate` in `project-stats.json`). The
+day-precision is meaningful — it shows when a repo was actually
+touched — but rendering "March 15, 2024 – December 28, 2025" inline
+adds clutter to the project meta row. Each end of the range therefore
+renders as a `.project-date` chip:
+
+- The chip is a `<button type="button">` so it is keyboard-focusable
+  and tap-focusable on touch devices.
+- Resting state: month + year only (`Mar 2024`), reusing the existing
+  `formatMonth` output.
+- Hover, focus, and focus-visible all reveal:
+  - a soft `--accent-soft` background and dashed `--glass-border`
+    pill outline on the chip itself, and
+  - a small mono-font tooltip below the chip showing the full
+    localized date (`March 15, 2024` / `15 mars 2024`), positioned
+    via `::after { content: attr(data-full) }`.
+- Mobile press is covered by the `:focus` rule — tapping the chip
+  focuses it and pins the tooltip until the user taps elsewhere.
+- The accessible name is the full date (`aria-label`); the tooltip
+  itself is decorative because the chip already announces it.
+- Used in two places with identical semantics: `ProjectModal`'s
+  Active row, and `Timeline`'s side-project details panel.
+
 ---
 
 ## 6. Print

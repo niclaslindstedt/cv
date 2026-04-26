@@ -16,3 +16,15 @@ export function formatRange(
   const endLabel = end ? formatMonth(end, lang) : UI_STRINGS[lang].present;
   return `${formatMonth(start, lang)} – ${endLabel}`;
 }
+
+export function formatFullDate(iso: string, lang: Language): string {
+  const [y, m, d] = iso.slice(0, 10).split("-").map(Number);
+  if (!y || !m || !d) return iso;
+  const date = new Date(y, m - 1, d);
+  const locale = lang === "sv" ? "sv-SE" : "en-US";
+  return new Intl.DateTimeFormat(locale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+}

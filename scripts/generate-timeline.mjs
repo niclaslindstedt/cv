@@ -232,8 +232,10 @@ function buildSideProjectItems(cv, projectStats) {
     if (!gh?.owner || !gh?.repo) continue;
     const stats = projects[`${gh.owner}/${gh.repo}`];
     if (!stats?.firstCommitDate || !stats?.lastCommitDate) continue;
-    const startDate = stats.firstCommitDate.slice(0, 7);
-    const endDate = stats.lastCommitDate.slice(0, 7);
+    const firstCommitDate = stats.firstCommitDate.slice(0, 10);
+    const lastCommitDate = stats.lastCommitDate.slice(0, 10);
+    const startDate = firstCommitDate.slice(0, 7);
+    const endDate = lastCommitDate.slice(0, 7);
     items.push({
       id: `proj-${gh.owner}-${gh.repo}`,
       kind: "sideProject",
@@ -247,6 +249,8 @@ function buildSideProjectItems(cv, projectStats) {
         totalCommits: stats.totalCommits ?? 0,
         openSource: project.openSource === true,
         repoUrl: `https://github.com/${gh.owner}/${gh.repo}`,
+        firstCommitDate,
+        lastCommitDate,
       },
     });
   }

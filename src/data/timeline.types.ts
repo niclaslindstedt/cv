@@ -41,6 +41,8 @@ export type SideProjectPayload = {
   totalCommits: number;
   openSource: boolean;
   repoUrl: string;
+  firstCommitDate?: string;
+  lastCommitDate?: string;
 };
 
 export type TimelinePromotion = {
