@@ -18,11 +18,9 @@ export function Hero({
   onOpenSummary,
 }: Props) {
   const { lang, setLang, t, ui } = useLang();
-  const themeLabel =
-    theme === "dark" ? ui.theme.switchToLight : ui.theme.switchToDark;
   return (
     <header className="hero">
-      <p className="hero-eyebrow">{t(cv.title)}</p>
+      <p className="hero-eyebrow">{ui.hero.eyebrow}</p>
       <h1 className="hero-name">{cv.name}</h1>
       <button
         type="button"
@@ -64,17 +62,46 @@ export function Hero({
           {t(cv.actions.downloadPdf)}
         </button>
         <LanguageToggle lang={lang} setLang={setLang} />
-        <button
-          type="button"
-          className="theme-toggle"
-          onClick={onToggleTheme}
-          aria-label={themeLabel}
-          title={themeLabel}
-        >
-          {theme === "dark" ? <SunIcon /> : <MoonIcon />}
-        </button>
+        <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
       </div>
     </header>
+  );
+}
+
+function ThemeToggle({
+  theme,
+  onToggleTheme,
+}: {
+  theme: Theme;
+  onToggleTheme: () => void;
+}) {
+  const { ui } = useLang();
+  const select = (target: Theme) => {
+    if (target !== theme) onToggleTheme();
+  };
+  return (
+    <div className="theme-toggle" role="group" aria-label="Theme">
+      <button
+        type="button"
+        className="theme-toggle-btn"
+        aria-pressed={theme === "light"}
+        aria-label={ui.theme.switchToLight}
+        title={ui.theme.light}
+        onClick={() => select("light")}
+      >
+        <SunIcon />
+      </button>
+      <button
+        type="button"
+        className="theme-toggle-btn"
+        aria-pressed={theme === "dark"}
+        aria-label={ui.theme.switchToDark}
+        title={ui.theme.dark}
+        onClick={() => select("dark")}
+      >
+        <MoonIcon />
+      </button>
+    </div>
   );
 }
 
