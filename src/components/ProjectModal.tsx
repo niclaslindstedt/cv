@@ -110,6 +110,16 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                 )}
               </dl>
             )}
+            {project.homepage && (
+              <a
+                className="skill-modal-link"
+                href={project.homepage}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                {ui.projectModal.visitSite}
+              </a>
+            )}
             {project.openSource && (
               <a
                 className="skill-modal-link"

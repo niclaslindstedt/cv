@@ -250,6 +250,11 @@
         "openSource": {
           "type": "boolean",
           "description": "Whether the repository is publicly accessible. When true, the project renders an open-source pill and a link to github.com/{owner}/{repo}; when false, only description, dates, and commit stats are shown."
+        },
+        "homepage": {
+          "type": "string",
+          "format": "uri",
+          "description": "Public homepage for the project (e.g. a deployed site or hosted documentation). When set, the project modal renders a link to it."
         }
       }
     },
