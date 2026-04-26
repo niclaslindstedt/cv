@@ -17,4 +17,3 @@
 - [ ] `make fmt`, `make lint`, and `make build` pass locally.
 - [ ] Tests added or updated (if applicable).
 - [ ] `README.md`, `AGENTS.md`, or `docs/` updated if the change affects documented behaviour.
-- [ ] `CHANGELOG.md` is **not** edited manually — the release pipeline generates it.
