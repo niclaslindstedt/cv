@@ -1593,7 +1593,7 @@ button.skill-pill-btn:focus-visible {
 }
 
 .lang-toggle-btn svg {
-  width: 22px;
+  width: auto;
   height: 11px;
   border-radius: 2px;
   display: block;
