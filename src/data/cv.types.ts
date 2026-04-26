@@ -64,6 +64,10 @@ export type Project = {
   github: GithubRepoRef;
   openSource: boolean;
   homepage?: string;
+  dockerHub?: string;
+  cratesIo?: string;
+  pypi?: string;
+  npm?: string;
 };
 
 export type ProjectStats = {

@@ -253,6 +253,26 @@
           "type": "string",
           "format": "uri",
           "description": "Public homepage for the project (e.g. a deployed site or hosted documentation). When set, the project modal renders a link to it."
+        },
+        "dockerHub": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_.-]*(/[a-z0-9][a-z0-9_.-]*)?$",
+          "description": "Docker Hub repository, either `name` (official library image) or `owner/name`. When set, the project modal renders a 'View on Docker Hub' link to https://hub.docker.com/r/{owner}/{name} (or /_/ for official images)."
+        },
+        "cratesIo": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
+          "description": "crates.io crate name. When set, the project modal renders a 'View on crates.io' link to https://crates.io/crates/{name}."
+        },
+        "pypi": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "description": "PyPI package name. When set, the project modal renders a 'View on PyPI' link to https://pypi.org/project/{name}/."
+        },
+        "npm": {
+          "type": "string",
+          "pattern": "^(@[a-z0-9][a-z0-9._-]*/)?[a-z0-9][a-z0-9._-]*$",
+          "description": "npm package name (optionally scoped, e.g. `@scope/name`). When set, the project modal renders a 'View on npm' link to https://www.npmjs.com/package/{name}."
         }
       }
     },
