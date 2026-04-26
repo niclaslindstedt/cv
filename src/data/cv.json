@@ -178,7 +178,8 @@
         "Ollama"
       ],
       "github": { "owner": "niclaslindstedt", "repo": "zag" },
-      "openSource": true
+      "openSource": true,
+      "homepage": "https://niclaslindstedt.github.io/zag"
     },
     {
       "name": "zig",
@@ -199,7 +200,8 @@
         "Agent Skills"
       ],
       "github": { "owner": "niclaslindstedt", "repo": "zig" },
-      "openSource": true
+      "openSource": true,
+      "homepage": "https://niclaslindstedt.github.io/zig"
     },
     {
       "name": "zad",
@@ -214,7 +216,8 @@
       "stack": ["Rust"],
       "skills": ["Agent permissions & security", "Claude Code", "Agent Skills"],
       "github": { "owner": "niclaslindstedt", "repo": "zad" },
-      "openSource": true
+      "openSource": true,
+      "homepage": "https://niclaslindstedt.github.io/zad"
     },
     {
       "name": "ztf",
@@ -234,7 +237,8 @@
         "Agent Skills"
       ],
       "github": { "owner": "niclaslindstedt", "repo": "ztf" },
-      "openSource": true
+      "openSource": true,
+      "homepage": "https://niclaslindstedt.github.io/ztf"
     },
     {
       "name": "oss-spec",
