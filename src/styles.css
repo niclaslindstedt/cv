@@ -1937,13 +1937,6 @@ button.skill-pill-btn:focus-visible {
   border-radius: 999px;
 }
 
-.timeline-vis-details-empty {
-  margin: 0 0 8px;
-  color: var(--fg-muted);
-  font-size: 0.85rem;
-  font-style: italic;
-}
-
 .timeline-vis-details-when {
   margin: 0;
   font-size: 0.75rem;
