@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import projectStatsData from "../data/project-stats.json";
 import type {
@@ -9,6 +9,7 @@ import type {
 } from "../data/cv.types";
 import { formatMonth } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { useSwipeClose } from "../utils/useSwipeClose";
 
 const projectStats = projectStatsData as ProjectStatsFile;
 
@@ -33,6 +34,8 @@ function isoToYearMonth(iso: string): string {
 
 export function ProjectModal({ project, onClose, onSkillClick }: Props) {
   const { t, lang, ui } = useLang();
+  const modalRef = useRef<HTMLDivElement>(null);
+  useSwipeClose(modalRef, !!project, onClose);
 
   useEffect(() => {
     if (!project) return;
@@ -73,7 +76,11 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
       aria-label={ui.projectModal.detailAria(project.name)}
       onClick={onClose}
     >
-      <div className="skill-modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        ref={modalRef}
+        className="skill-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <header className="skill-modal-head">
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{project.name}</span>
