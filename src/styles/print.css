@@ -129,6 +129,22 @@
     margin-bottom: 0;
   }
 
+  /* Consultancy jobs (with assignments) may span a page break, but only
+     between assignments — never within an assignment, and never within the
+     parent job header (title, role-history, tags, notes, "Assignments"
+     heading). The header block stays glued to the first assignment. */
+  .print-job--with-assignments {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .print-job-header {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
   .print-job-title {
     font-size: 11pt;
     font-weight: 700;
@@ -192,11 +208,28 @@
     color: #666;
   }
 
-  /* Assignments — sub-engagements under a parent role. */
+  /* Assignments — sub-engagements under a parent role. The block (heading +
+     list) sits one indent in from the parent role; the heading anchors the
+     list visually and prevents it from blending into the role-history above. */
+  .print-assignments-block {
+    margin: 8pt 0 0 12pt;
+  }
+
+  .print-assignments-heading {
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #555;
+    margin: 0 0 4pt;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
   .print-assignments {
     list-style: none;
     padding: 0;
-    margin: 6pt 0 0 12pt;
+    margin: 0;
     border-left: 1px solid #ccc;
   }
 
