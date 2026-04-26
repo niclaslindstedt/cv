@@ -83,6 +83,10 @@ type UiStrings = {
   projectModal: {
     detailAria: (project: string) => string;
     viewOnGitHub: string;
+    viewOnDockerHub: string;
+    viewOnCratesIo: string;
+    viewOnPyPI: string;
+    viewOnNpm: string;
     visitSite: string;
     active: string;
     commits: string;
@@ -217,6 +221,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     projectModal: {
       detailAria: (project) => `${project} details`,
       viewOnGitHub: "View on GitHub ↗",
+      viewOnDockerHub: "View on Docker Hub ↗",
+      viewOnCratesIo: "View on crates.io ↗",
+      viewOnPyPI: "View on PyPI ↗",
+      viewOnNpm: "View on npm ↗",
       visitSite: "Visit site ↗",
       active: "Active",
       commits: "Commits",
@@ -352,6 +360,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     projectModal: {
       detailAria: (project) => `Detaljer för ${project}`,
       viewOnGitHub: "Visa på GitHub ↗",
+      viewOnDockerHub: "Visa på Docker Hub ↗",
+      viewOnCratesIo: "Visa på crates.io ↗",
+      viewOnPyPI: "Visa på PyPI ↗",
+      viewOnNpm: "Visa på npm ↗",
       visitSite: "Besök sajten ↗",
       active: "Aktiv",
       commits: "Commits",

@@ -54,6 +54,21 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
   if (!project) return null;
 
   const repoUrl = `https://github.com/${project.github.owner}/${project.github.repo}`;
+  const dockerHubUrl = project.dockerHub
+    ? project.dockerHub.includes("/")
+      ? `https://hub.docker.com/r/${project.dockerHub}`
+      : `https://hub.docker.com/_/${project.dockerHub}`
+    : null;
+  const cratesIoUrl = project.cratesIo
+    ? `https://crates.io/crates/${project.cratesIo}`
+    : null;
+  const pypiUrl = project.pypi
+    ? `https://pypi.org/project/${project.pypi}/`
+    : null;
+  const npmUrl = project.npm
+    ? `https://www.npmjs.com/package/${project.npm}`
+    : null;
+  const hasRegistryLinks = !!(dockerHubUrl || cratesIoUrl || pypiUrl || npmUrl);
   const stats = lookupStats(project.github);
   const hasDateRange = !!(
     stats &&
@@ -123,7 +138,7 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                 )}
               </dl>
             )}
-            {(project.homepage || project.openSource) && (
+            {(project.homepage || project.openSource || hasRegistryLinks) && (
               <div className="project-modal-actions">
                 {project.homepage && (
                   <a
@@ -143,6 +158,46 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                     rel="noreferrer noopener"
                   >
                     {ui.projectModal.viewOnGitHub}
+                  </a>
+                )}
+                {dockerHubUrl && (
+                  <a
+                    className="skill-modal-link"
+                    href={dockerHubUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {ui.projectModal.viewOnDockerHub}
+                  </a>
+                )}
+                {cratesIoUrl && (
+                  <a
+                    className="skill-modal-link"
+                    href={cratesIoUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {ui.projectModal.viewOnCratesIo}
+                  </a>
+                )}
+                {pypiUrl && (
+                  <a
+                    className="skill-modal-link"
+                    href={pypiUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {ui.projectModal.viewOnPyPI}
+                  </a>
+                )}
+                {npmUrl && (
+                  <a
+                    className="skill-modal-link"
+                    href={npmUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {ui.projectModal.viewOnNpm}
                   </a>
                 )}
               </div>
