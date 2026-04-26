@@ -185,6 +185,12 @@ A small filled label that conveys **state**:
   name (never wrapping below).
 - `INCOMPLETE` → red fill, white text, uppercase. Only ever appears on
   course cards.
+- `PRESENT` → solid `--accent` fill with `--bg` text in dark mode;
+  `--fg-muted` fill with white text in light mode. Pinned to the
+  top-right of `.timeline-item` and `.assignment-item` cards while the
+  role/assignment is current. Uppercase, mono, `0.7rem`. The card's
+  blue border + glow is the secondary "current" affordance; the badge
+  is the primary one. Never use the same badge on other card families.
 - `half-time` / `part-time` → accent-soft pill on Experience cards.
   These are **distinct words**, not stylistic variants:
   - "half-time" / "halvtid" = exactly 50%.
@@ -224,9 +230,11 @@ All content lives in a card (see §3, glass). Cards have:
 - `--shadow` for floating panels (modals, popovers); no shadow for
   in-flow cards.
 - The **active** state (current employer, current side project) gets
-  `border-color: rgba(122,183,255,0.55)` and a 1px accent glow. This
-  is the only "current" affordance — don't add labels like "Current"
-  or stars.
+  `border-color: rgba(122,183,255,0.55)` and a 1px accent glow.
+  Experience and assignment cards additionally show a `PRESENT` badge
+  pinned to the top-right corner (see §4.2). Don't add other "current"
+  affordances (stars, "Active" copy in body text, etc.) — the border
+  - badge pair is the full vocabulary.
 
 ### 4.6 Section
 
