@@ -19,6 +19,10 @@ export function useTheme() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     window.localStorage.setItem(STORAGE_KEY, theme);
+    const meta = document.getElementById("theme-color-meta");
+    if (meta) {
+      meta.setAttribute("content", theme === "light" ? "#d2d8e1" : "#02030a");
+    }
   }, [theme]);
 
   useEffect(() => {
