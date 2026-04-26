@@ -169,10 +169,10 @@ function ExperienceItemView({
     <li className={classes.join(" ")}>
       <div className="timeline-body">
         <h3 className="timeline-title">
+          {hasPromotion && <PromotionArrow />}
           <span className="role">{t(newestRole.title)}</span>
           {" · "}
           <CompanyButton company={company} onClick={onCompanyClick} />
-          {hasPromotion && <PromotionArrow />}
         </h3>
         <div className="timeline-meta">
           <span>{formatRange(item.startDate, item.endDate, lang)}</span>
@@ -286,10 +286,10 @@ function AssignmentItemView({
     <li className={classes.join(" ")}>
       <div className="assignment-body">
         <h4 className="assignment-title">
+          {hasPromotion && <PromotionArrow />}
           <span className="role">{t(newestRole.title)}</span>
           {" · "}
           <CompanyButton company={client} onClick={onCompanyClick} />
-          {hasPromotion && <PromotionArrow />}
         </h4>
         <div className="assignment-meta">
           <span>{formatRange(a.startDate, a.endDate, lang)}</span>
