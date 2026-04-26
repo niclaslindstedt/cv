@@ -40,28 +40,29 @@ Edit content under `src/data/cv/` (one file per category — `focus.json`, `proj
 
 All developer entry points are exposed via `make`:
 
-| Command          | What it does                                                                                                                                            |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `make install`   | `npm ci`                                                                                                                                                |
-| `make dev`       | Start Vite dev server                                                                                                                                   |
-| `make build`     | Type-check and produce production build                                                                                                                 |
-| `make preview`   | Preview the production build                                                                                                                            |
-| `make lint`      | ESLint + TypeScript type-check                                                                                                                          |
-| `make typecheck` | `tsc -b --noEmit` only                                                                                                                                  |
-| `make fmt`       | Prettier rewrite in place                                                                                                                               |
-| `make fmt-check` | Prettier check without writing                                                                                                                          |
-| `make validate`  | Validate the assembled CV against `schemas/cv.schema.json`, the skill-tag registry, and `src/data/timeline.json` against `schemas/timeline.schema.json` |
-| `make generate`  | Regenerate `src/data/timeline.json` from `cv.json`                                                                                                      |
-| `make og`        | Regenerate `public/og-image.png` from `cv.json`                                                                                                         |
-| `make pdf`       | Render `dist/cv.pdf` via headless Chromium (run after `vite build`)                                                                                     |
-| `make sitemap`   | Write `dist/sitemap.xml` (run after `vite build`)                                                                                                       |
-| `make test`      | Run the test suite                                                                                                                                      |
-| `make clean`     | Remove `dist/` and Vite cache                                                                                                                           |
+| Command          | What it does                                                                                                                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `make install`   | `npm ci`                                                                                                                                                                                                           |
+| `make dev`       | Start Vite dev server                                                                                                                                                                                              |
+| `make build`     | Type-check and produce production build                                                                                                                                                                            |
+| `make preview`   | Preview the production build                                                                                                                                                                                       |
+| `make lint`      | ESLint + TypeScript type-check                                                                                                                                                                                     |
+| `make typecheck` | `tsc -b --noEmit` only                                                                                                                                                                                             |
+| `make fmt`       | Prettier rewrite in place                                                                                                                                                                                          |
+| `make fmt-check` | Prettier check without writing                                                                                                                                                                                     |
+| `make validate`  | Validate the assembled CV against `schemas/cv.schema.json`, the skill-tag registry, `src/data/timeline.json` against `schemas/timeline.schema.json`, and `src/data/print.json` against `schemas/print.schema.json` |
+| `make generate`  | Regenerate `src/data/timeline.json` and `src/data/print.json` from `cv.json`                                                                                                                                       |
+| `make og`        | Regenerate `public/og-image.png` from `cv.json`                                                                                                                                                                    |
+| `make pdf`       | Render `dist/cv.pdf` via headless Chromium (run after `vite build`)                                                                                                                                                |
+| `make sitemap`   | Write `dist/sitemap.xml` (run after `vite build`)                                                                                                                                                                  |
+| `make test`      | Run the test suite                                                                                                                                                                                                 |
+| `make clean`     | Remove `dist/` and Vite cache                                                                                                                                                                                      |
 
-`src/data/timeline.json`, `src/data/github-activity.json`, and
-`src/data/project-stats.json` are generated artifacts (gitignored). They
-are rebuilt automatically on `npm ci`, `npm run build`, `npm run dev`,
-`npm run lint`, and `npm run typecheck`, or on demand via `make generate`.
+`src/data/timeline.json`, `src/data/print.json`,
+`src/data/github-activity.json`, and `src/data/project-stats.json` are
+generated artifacts (gitignored). They are rebuilt automatically on
+`npm ci`, `npm run build`, `npm run dev`, `npm run lint`, and
+`npm run typecheck`, or on demand via `make generate`.
 The GitHub activity fetch reads from a `GITHUB_TOKEN` env var (needs
 `read:user` scope). The per-project stats fetch reads
 `PROJECT_STATS_TOKEN` first, falling back to `GITHUB_TOKEN`; reaching

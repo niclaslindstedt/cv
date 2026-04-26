@@ -10,6 +10,7 @@ import { Focus } from "./components/Focus";
 import { FocusModal } from "./components/FocusModal";
 import { Hero } from "./components/Hero";
 import { Languages } from "./components/Languages";
+import { PrintView } from "./components/PrintView";
 import { ProgramCoursesModal } from "./components/ProgramCoursesModal";
 import { ProjectModal } from "./components/ProjectModal";
 import { Projects } from "./components/Projects";
@@ -120,6 +121,7 @@ export function App() {
             title={t(cv.sections.languages)}
             languages={cv.languages}
           />
+          <PrintView />
         </main>
         <footer className="footer container">
           <span>

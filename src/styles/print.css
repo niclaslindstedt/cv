@@ -1,29 +1,23 @@
+/* PrintView is the only thing rendered for print. Screen components live
+   under <main class="container">; they are hidden in print and the
+   bottom-mounted <section class="print-view"> is shown in their place. */
+
+.print-view {
+  display: none;
+}
+
 @media print {
   @page {
     size: A4;
-    margin: 1.5cm;
+    margin: 2cm 1.8cm;
   }
 
   :root,
   :root[data-theme="dark"],
   :root[data-theme="light"] {
     --bg: #ffffff;
-    --bg-elev: #ffffff;
-    --glass-bg: #ffffff;
-    --glass-border: #cccccc;
-    --glass-highlight: #ffffff;
-    --sky-top: #ffffff;
-    --sky-mid: #ffffff;
-    --sky-bottom: #ffffff;
-    --sky-glow-1: transparent;
-    --sky-glow-2: transparent;
-    --orb-color: transparent;
-    --orb-color-soft: transparent;
-    --border: #cccccc;
     --fg: #111111;
     --fg-muted: #444444;
-    --accent: #111111;
-    --accent-soft: transparent;
     color-scheme: light;
   }
 
@@ -40,26 +34,19 @@
   }
 
   .celestial-sky,
-  .glass-reflect {
-    display: none;
-  }
-
-  .focus-list li,
-  .project,
-  .timeline-item,
-  .education-list > li,
-  .language-item,
-  .timeline-vis-details,
+  .glass-reflect,
+  .footer,
+  .timeline-vis-overlay,
   .skill-modal,
-  .skill-modal-overlay,
-  .timeline-vis-overlay {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+  .skill-modal-overlay {
+    display: none !important;
   }
 
-  body {
-    font-size: 10.5pt;
-    line-height: 1.4;
+  /* Hide every screen-only section. Only PrintView prints. */
+  .page > main.container > .hero,
+  .page > main.container > .section,
+  .page > footer.footer {
+    display: none !important;
   }
 
   .page {
@@ -68,404 +55,291 @@
 
   .container {
     max-width: none;
-    display: flex;
-    flex-direction: column;
   }
 
-  /* Section order — professional CV layout. */
-  .hero {
-    order: 0;
-    padding: 0 0 12px;
-    margin-bottom: 16px;
-    border-color: #999;
-  }
-
-  #experience {
-    order: 1;
-  }
-
-  #projects {
-    order: 2;
-  }
-
-  #education {
-    order: 3;
-  }
-
-  #courses {
-    order: 4;
-  }
-
-  #skills {
-    order: 5;
-  }
-
-  #languages {
-    order: 6;
-  }
-
-  /* Web-only sections: hide in print. */
-  #focus,
-  #current-focus,
-  .footer {
-    display: none !important;
-  }
-
-  .section {
-    margin-bottom: 18px;
-  }
-
-  /* Hero — controls, eyebrow, screen-only summary all suppressed.
-     Long summary replaces the short summary in print. */
-  .hero-download,
-  .hero-timeline-btn,
-  .theme-toggle,
-  .lang-toggle,
-  .timeline-vis-overlay,
-  .hero-eyebrow,
-  .hero-summary,
-  .hero-summary-hint {
-    display: none !important;
-  }
-
-  .hero-name {
-    font-size: 20pt;
-    margin: 0 0 6px;
-  }
-
-  .hero-long-summary {
+  .print-view {
     display: block;
-    margin: 0 0 12px;
+    color: #111;
     font-size: 10.5pt;
-    line-height: 1.5;
-    color: #111;
-    max-width: none;
+    line-height: 1.45;
   }
 
-  .hero-meta {
-    gap: 10px;
-    font-size: 9.5pt;
+  /* Hero --------------------------------------------------------------- */
+
+  .print-hero {
+    margin-bottom: 22pt;
+  }
+
+  .print-name {
+    font-size: 22pt;
+    font-weight: 700;
+    margin: 0 0 4pt;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .print-title {
+    margin: 0 0 10pt;
+    font-size: 11pt;
     color: #444;
+    font-weight: 500;
   }
 
-  .hero-blog {
-    padding: 0;
-    background: transparent;
-    border: 0;
+  .print-summary {
+    margin: 0;
+    font-size: 10.5pt;
+    line-height: 1.55;
     color: #111;
-    font-weight: 600;
   }
 
-  /* Section headings. */
-  .section-title {
+  /* Sections ----------------------------------------------------------- */
+
+  .print-section {
+    margin-bottom: 18pt;
+  }
+
+  .print-section-title {
     font-size: 10pt;
-    color: #111;
-    margin-bottom: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 8pt;
+    padding-bottom: 3pt;
     border-bottom: 1px solid #999;
-    padding-bottom: 2px;
-  }
-
-  .section-toggle-chevron {
-    display: none !important;
-  }
-
-  .section-collapsible.is-collapsed {
-    margin-bottom: 18px;
-  }
-
-  .section-collapsible.is-collapsed .section-title {
-    margin-bottom: 8px;
-  }
-
-  .section-content[hidden] {
-    display: block !important;
-  }
-
-  /* Strip glass / pill chrome from cards. */
-  .focus-list li,
-  .focus-item-btn,
-  .project,
-  .timeline-item,
-  .education-list > li,
-  .language-item {
-    background: transparent !important;
-    border-color: #bbb !important;
-    color: #111 !important;
-  }
-
-  /* Languages — flatten pills to a single inline line. */
-  .languages-list {
-    display: block;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .language-item {
-    display: inline;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-  }
-
-  .language-item + .language-item::before {
-    content: ", ";
-    color: #444;
-  }
-
-  .language-name {
-    font-weight: 600;
-  }
-
-  .language-level::before {
-    content: " (";
-  }
-
-  .language-level::after {
-    content: ")";
-  }
-
-  /* Roles + education entries: whitespace separation, no dotted dividers. */
-  .timeline-item,
-  .education-list > li {
-    padding: 0 !important;
-    margin-bottom: 10pt;
-    border: 0 !important;
-    border-radius: 0 !important;
-  }
-
-  .education-head {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 2px;
-  }
-
-  .education-list p {
-    line-height: 1.4;
-    margin: 0;
-  }
-
-  /* Company name: drop the dotted-underline tooltip affordance. */
-  .company,
-  .company-btn {
-    border-bottom: 0 !important;
-    color: #111 !important;
-  }
-
-  /* Promotion / role-start glyphs are screen-only chrome. Keep the
-     role chain itself so career progression survives in print. */
-  .promotion-arrow,
-  .role-start-icon {
-    display: none !important;
-  }
-
-  .role-chain {
-    list-style: none;
-    border-left: 0;
-    padding: 0;
-    margin: 2px 0 0;
-  }
-
-  .role-chain-item {
-    display: block;
-    padding: 0;
-  }
-
-  .role-chain-content {
-    display: inline;
-  }
-
-  .role-chain-content .role-chain-meta::before {
-    content: " · ";
-    color: #888;
-  }
-
-  /* Per-role stack + skills: render as inline comma-separated text. */
-  button.skill-pill-btn,
-  .entry-stack li,
-  .entry-stack-btn,
-  .entry-skills li,
-  .entry-skill-btn,
-  .project-stack li,
-  .project-stack-btn,
-  .project-skills li,
-  .project-skill-btn,
-  .timeline-engagement,
-  .education-credits,
-  .skill-usage-count,
-  .assignments > summary {
-    background: transparent !important;
-    color: #333 !important;
-    border: 0 !important;
-    padding: 0 !important;
-  }
-
-  .entry-stack,
-  .entry-skills {
-    gap: 4px 10px;
-    margin: 2px 0 0;
-  }
-
-  .entry-stack li::after,
-  .entry-skills li::after {
-    content: " ·";
-    color: #999;
-  }
-
-  .entry-stack li:last-child::after,
-  .entry-skills li:last-child::after {
-    content: "";
-  }
-
-  /* Projects — compress to single-line entries, no dividers. */
-  #projects .project {
-    padding: 2px 0;
-    margin-bottom: 0;
-    border: 0;
-    border-radius: 0;
-  }
-
-  #projects .project-stack,
-  #projects .project-skills,
-  #projects .project-meta,
-  #projects .project-pill {
-    display: none;
-  }
-
-  #projects .project-head h3 {
-    font-size: 10.5pt;
-    display: inline;
-  }
-
-  #projects .project-tagline {
-    display: inline;
-    color: #444;
-  }
-
-  #projects .project-tagline::before {
-    content: " — ";
-  }
-
-  /* Skills — grouped category lines: "Category: Skill, Skill, Skill". */
-  .skills {
-    display: block;
-  }
-
-  .skills-group {
-    display: block;
-    margin-bottom: 4pt;
-    break-inside: avoid;
-  }
-
-  .skills-group h3 {
-    display: inline;
-    font-size: 10.5pt;
-    font-weight: 600;
     color: #111;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* Experience --------------------------------------------------------- */
+
+  .print-experience {
+    list-style: none;
+    padding: 0;
     margin: 0;
   }
 
-  .skills-group h3::after {
-    content: ": ";
-    font-weight: 600;
-  }
-
-  .skills-group ul {
-    display: inline;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .skills-group ul > li {
-    display: inline;
-  }
-
-  .skills-group ul > li + li::before {
-    content: ", ";
-    color: #444;
-  }
-
-  .skill-pill,
-  details.skill-pill {
-    display: inline !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-    font-size: 10.5pt !important;
-  }
-
-  details.skill-pill > summary {
-    display: inline;
-    list-style: none;
-    padding: 0;
-  }
-
-  .skill-pill-btn {
-    font: inherit;
-    color: #333 !important;
-  }
-
-  .skill-personal-badge,
-  .skill-usage-count,
-  .skill-usage-list {
-    display: none !important;
-  }
-
-  /* Assignments (sub-engagements under a parent role) — expand inline. */
-  details.assignments {
-    display: block;
-  }
-
-  details.assignments > summary {
-    display: none;
-  }
-
-  details.assignments > *:not(summary) {
-    display: block !important;
-  }
-
-  .assignments-list {
-    padding-left: 0;
-  }
-
-  .assignments-list .assignment-item::before,
-  .assignments-list .assignment-item::after {
-    display: none;
-  }
-
-  /* Page-break behavior. */
-  .timeline-item,
-  .assignment-item,
-  .education-list > li,
-  .project,
-  .skills-group,
-  .language-item {
+  .print-job {
+    margin-bottom: 14pt;
     break-inside: avoid;
     page-break-inside: avoid;
   }
 
-  h2,
-  h3,
-  h4 {
-    break-after: avoid;
-    page-break-after: avoid;
+  .print-job:last-child {
+    margin-bottom: 0;
+  }
+
+  .print-job-title {
+    font-size: 11pt;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.3;
+    color: #111;
+  }
+
+  .print-job-role {
+    font-weight: 700;
+  }
+
+  .print-job-company {
+    font-weight: 500;
+  }
+
+  .print-job-meta {
+    font-size: 9.5pt;
+    color: #444;
+    margin: 1pt 0 4pt;
+  }
+
+  .print-job-engagement {
+    font-style: italic;
+  }
+
+  .print-job-tagline {
+    margin: 0 0 4pt;
+    color: #111;
+  }
+
+  .print-tags {
+    margin: 0 0 4pt;
+    font-size: 9.5pt;
+    color: #333;
+  }
+
+  .print-notes {
+    margin: 0 0 4pt;
+    font-size: 9.5pt;
+    color: #333;
+    font-style: italic;
+  }
+
+  /* Role-history list (older roles, shown indented under the newest). */
+  .print-role-history {
+    list-style: none;
+    padding: 0;
+    margin: 2pt 0 4pt 12pt;
+    border-left: 1px solid #ccc;
+  }
+
+  .print-role-history > li {
+    padding: 0 0 0 8pt;
+    margin: 0 0 1pt;
+    font-size: 10pt;
+    color: #333;
+  }
+
+  .print-role-history-range {
+    color: #666;
+  }
+
+  /* Assignments — sub-engagements under a parent role. */
+  .print-assignments {
+    list-style: none;
+    padding: 0;
+    margin: 6pt 0 0 12pt;
+    border-left: 1px solid #ccc;
+  }
+
+  .print-assignment {
+    padding: 0 0 0 10pt;
+    margin: 0 0 8pt;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-assignment:last-child {
+    margin-bottom: 0;
+  }
+
+  .print-assignment .print-job-title {
+    font-size: 10.5pt;
+  }
+
+  /* Projects ----------------------------------------------------------- */
+
+  .print-projects {
+    list-style: disc;
+    padding: 0 0 0 16pt;
+    margin: 0;
+  }
+
+  .print-project {
+    margin: 0 0 2pt;
+    line-height: 1.4;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-project:last-child {
+    margin-bottom: 0;
+  }
+
+  .print-project-name {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-weight: 700;
+  }
+
+  /* Education + Courses ----------------------------------------------- */
+
+  .print-education,
+  .print-courses {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .print-edu {
+    margin: 0 0 8pt;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-edu:last-child {
+    margin-bottom: 0;
+  }
+
+  .print-edu-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12pt;
+  }
+
+  .print-edu-title {
+    font-size: 10.5pt;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .print-edu-range {
+    font-size: 9.5pt;
+    color: #444;
+    white-space: nowrap;
+  }
+
+  .print-edu-meta {
+    margin: 1pt 0 0;
+    font-size: 9.5pt;
+    color: #333;
+  }
+
+  /* Keep the Courses section title attached to its first item. */
+  #courses,
+  .print-courses {
+    break-before: auto;
+  }
+
+  /* Skills ------------------------------------------------------------- */
+
+  .print-skills {
+    list-style: disc;
+    padding: 0 0 0 16pt;
+    margin: 0;
+  }
+
+  .print-skill-group {
+    margin: 0 0 2pt;
+    line-height: 1.45;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-skill-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .print-skill-label {
+    font-weight: 700;
+  }
+
+  /* Languages ---------------------------------------------------------- */
+
+  .print-languages {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .print-language {
+    display: inline;
+  }
+
+  .print-language + .print-language::before {
+    content: ", ";
+    color: #444;
+  }
+
+  /* Page-break safety: never split a section header from its first item. */
+  .print-section-title + ul > li:first-child,
+  .print-section-title + ul > li:first-child .print-job-title,
+  .print-section-title + ul > li:first-child .print-edu-head {
+    break-before: avoid;
+    page-break-before: avoid;
   }
 
   a {
     color: #111;
     text-decoration: none;
-  }
-
-  .active-badge {
-    display: none !important;
-  }
-
-  .timeline-item.is-active > .timeline-body > .timeline-title,
-  .assignment-item.is-active > .assignment-body > .assignment-title {
-    padding-right: 0;
   }
 }
