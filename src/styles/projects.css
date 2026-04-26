@@ -105,18 +105,18 @@
   border-radius: calc(var(--radius) - 4px);
   background: var(--glass-highlight);
   display: grid;
-  gap: 8px;
+  grid-template-columns: max-content auto;
+  column-gap: 12px;
+  row-gap: 8px;
+  align-items: center;
+  justify-content: start;
 }
 
 .project-meta-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0;
+  display: contents;
 }
 
 .project-meta-row dt {
-  flex: 0 0 80px;
   margin: 0;
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -126,8 +126,6 @@
 }
 
 .project-meta-row dd {
-  flex: 1 1 auto;
-  min-width: 0;
   margin: 0;
   font-size: 0.9rem;
   display: flex;
