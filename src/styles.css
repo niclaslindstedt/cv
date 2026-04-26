@@ -737,9 +737,10 @@ a:hover {
 
 .project-meta-row {
   display: grid;
-  grid-template-columns: 80px 1fr;
+  grid-template-columns: 80px auto;
   gap: 12px;
   align-items: center;
+  justify-content: start;
   margin: 0;
 }
 
