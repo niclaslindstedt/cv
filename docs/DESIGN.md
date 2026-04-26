@@ -260,12 +260,15 @@ line:
 
 ```
 [↑] {title} · {start — end}
+[○] {title} · {start — end}   ← original starting role
 ```
 
-The bottom row (the original starting title) shows a 14×14 spacer
-where the arrow would go, so all titles align vertically. The chain
-sits inside a 1px accent left border that visually anchors the
-progression. Type scale matches the timeline metadata
+The bottom row (the original starting title) shows a 14×14 hollow
+circle (`.role-start-icon`) in `--accent` at 0.7 opacity, signalling
+"start of the progression" so the column reads as a chain anchored
+at an origin rather than a series of arrows trailing into blank
+space. The chain sits inside a 1px accent left border that visually
+anchors the progression. Type scale matches the timeline metadata
 (`0.9rem`/`0.85rem`); titles in the chain use `--font-mono` like the
 heading role.
 
