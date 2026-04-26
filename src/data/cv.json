@@ -6,10 +6,6 @@
     "en": "IT Architect",
     "sv": "IT-arkitekt"
   },
-  "location": {
-    "en": "Sweden",
-    "sv": "Sverige"
-  },
   "summary": {
     "en": "IT architect at BookBeat by day, building open-source CLIs for agentic coding on the side — tools that make AI coding agents easier to orchestrate, sandbox, test, and connect to the rest of the engineering stack.",
     "sv": "IT-arkitekt på BookBeat om dagarna, bygger open source-CLI:er för agentisk kodning vid sidan av — verktyg som gör AI-kodningsagenter enklare att orkestrera, sandboxa, testa och koppla till resten av utvecklingsstacken."

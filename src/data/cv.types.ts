@@ -186,7 +186,6 @@ export type CV = {
   meta: Meta;
   name: string;
   title: LocalizedString;
-  location: LocalizedString;
   summary: LocalizedString;
   longSummary: LocalizedString;
   links: Link[];

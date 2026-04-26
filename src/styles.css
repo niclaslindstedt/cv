@@ -463,9 +463,11 @@ a:hover {
   border-radius: 999px;
 }
 
-.hero-blog:hover {
-  text-decoration: none;
-  border-color: var(--accent);
+@media (hover: hover) {
+  .hero-blog:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+  }
 }
 
 .section {

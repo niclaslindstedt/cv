@@ -34,7 +34,6 @@ export function Hero({
         </span>
       </button>
       <div className="hero-meta">
-        <span>{t(cv.location)}</span>
         {cv.links.map((link) => (
           <a
             key={link.url}

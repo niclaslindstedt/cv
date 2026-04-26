@@ -9,7 +9,6 @@
     "meta",
     "name",
     "title",
-    "location",
     "summary",
     "longSummary",
     "links",
@@ -30,7 +29,6 @@
     "meta": { "$ref": "#/$defs/meta" },
     "name": { "type": "string", "minLength": 1 },
     "title": { "$ref": "#/$defs/localizedString" },
-    "location": { "$ref": "#/$defs/localizedString" },
     "summary": {
       "$ref": "#/$defs/localizedString",
       "description": "Short headline (~2 sentences) that says where the author is now and where they are going. Rendered as the clickable hero summary."
