@@ -1,4 +1,6 @@
-import type { LocalizedString } from "./cv.types";
+import type { LocalizedString, PrintSettings } from "./cv.types";
+
+export type { PrintSettings } from "./cv.types";
 
 export type PrintRoleHistoryEntry = {
   title: LocalizedString;
@@ -72,6 +74,7 @@ export type PrintData = {
   name: string;
   title: LocalizedString;
   longSummary: LocalizedString;
+  settings: PrintSettings;
   sections: PrintSections;
   experience: PrintExperience[];
   projects: PrintProject[];

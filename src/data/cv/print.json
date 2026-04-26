@@ -1,0 +1,31 @@
+{
+  "fontFamily": "\"EB Garamond Variable\", \"EB Garamond\", Garamond, \"Adobe Garamond Pro\", \"Apple Garamond\", \"ITC Garamond\", Georgia, \"Times New Roman\", Times, serif",
+  "fontSize": "10.5pt",
+  "lineHeight": 1.4,
+  "page": {
+    "size": "A4",
+    "margin": "2cm 1.8cm"
+  },
+  "spacing": {
+    "section": "16pt",
+    "entry": "12pt",
+    "subEntry": "8pt",
+    "paragraph": "4pt",
+    "headerToBody": "20pt"
+  },
+  "headings": {
+    "name": "24pt",
+    "title": "12pt",
+    "section": "10pt",
+    "entry": "11pt",
+    "subEntry": "10.5pt",
+    "subHeading": "9pt"
+  },
+  "pageBreaks": {
+    "orphans": 3,
+    "widows": 3,
+    "avoidInsideEntry": true,
+    "avoidInsideSubEntry": true,
+    "keepHeadingWithNext": true
+  }
+}

@@ -239,6 +239,7 @@ function buildPrintData(cv) {
     name: cv.name,
     title: cv.title,
     longSummary: cv.longSummary,
+    settings: cv.print,
     sections: {
       experience: cv.sections.experience,
       projects: cv.sections.projects,
