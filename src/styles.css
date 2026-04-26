@@ -814,7 +814,8 @@ a:hover {
   display: inline-block;
   margin-right: 6px;
   color: var(--accent);
-  vertical-align: -2px;
+  vertical-align: middle;
+  transform: translateY(-1px);
 }
 
 .role-chain {
@@ -834,9 +835,10 @@ a:hover {
 .role-chain-item {
   display: grid;
   grid-template-columns: auto 1fr;
-  align-items: baseline;
+  align-items: start;
   column-gap: 6px;
   font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--fg-muted);
 }
 
@@ -862,7 +864,11 @@ a:hover {
 .role-chain-item .promotion-arrow,
 .role-chain-item .role-start-icon {
   margin-right: 0;
-  vertical-align: -1px;
+  vertical-align: 0;
+  transform: none;
+  /* Optically center 14px icon with first text line in a 1.5×0.9rem (21.6px)
+     line-box: geometric center is 4px; +1px nudge for cap-height bias. */
+  margin-top: 5px;
 }
 
 .role-start-icon {
