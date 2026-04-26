@@ -1509,7 +1509,7 @@ button.skill-pill-btn:focus-visible {
   background: var(--bg-elev);
   border-right: 1px solid var(--border);
   overflow: hidden;
-  z-index: 1;
+  z-index: 6;
 }
 
 .timeline-vis-labels-inner {
