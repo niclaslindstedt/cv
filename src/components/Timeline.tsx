@@ -13,6 +13,7 @@ import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { NoteIcon } from "./NoteIcon";
+import { TrackIcon } from "./TrackIcon";
 
 type Props = {
   open: boolean;
@@ -471,18 +472,26 @@ export function Timeline({ open, onClose }: Props) {
             className="timeline-vis-labels-inner"
             style={{ height: AXIS_SIZE + contentHeight }}
           >
-            {tracks.map((track, t) => (
-              <div
-                key={`label-${t}`}
-                className="timeline-vis-track-label"
-                style={{
-                  top: AXIS_SIZE + trackTop[t],
-                  height: trackHeight[t],
-                }}
-              >
-                {track.label[lang] ?? track.label.en}
-              </div>
-            ))}
+            {tracks.map((track, t) => {
+              const labelText = track.label[lang] ?? track.label.en;
+              return (
+                <div
+                  key={`label-${t}`}
+                  className="timeline-vis-track-label"
+                  style={{
+                    top: AXIS_SIZE + trackTop[t],
+                    height: trackHeight[t],
+                  }}
+                  aria-label={labelText}
+                  title={labelText}
+                >
+                  <TrackIcon kind={track.key} />
+                  <span className="timeline-vis-track-label-text">
+                    {labelText}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div
