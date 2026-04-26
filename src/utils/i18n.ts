@@ -146,7 +146,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     hero: {
       eyebrow: "Resume",
-      downloadAria: "Download CV as PDF (opens print dialog)",
+      downloadAria: "Download CV as PDF",
       languageEnglish: "Switch to English",
       languageSwedish: "Switch to Swedish",
     },
@@ -279,7 +279,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     hero: {
       eyebrow: "CV",
-      downloadAria: "Ladda ner CV som PDF (öppnar utskriftsdialog)",
+      downloadAria: "Ladda ner CV som PDF",
       languageEnglish: "Byt till engelska",
       languageSwedish: "Byt till svenska",
     },

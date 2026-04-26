@@ -53,6 +53,7 @@ All developer entry points are exposed via `make`:
 | `make validate`  | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json` |
 | `make generate`  | Regenerate `src/data/timeline.json` from `cv.json`                                               |
 | `make og`        | Regenerate `public/og-image.png` from `cv.json`                                                  |
+| `make pdf`       | Render `dist/cv.pdf` via headless Chromium (run after `vite build`)                              |
 | `make sitemap`   | Write `dist/sitemap.xml` (run after `vite build`)                                                |
 | `make test`      | Run the test suite                                                                               |
 | `make clean`     | Remove `dist/` and Vite cache                                                                    |

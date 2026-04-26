@@ -1440,6 +1440,7 @@ button.skill-pill-btn:focus-visible {
   border: 1px solid var(--accent-soft);
   border-radius: 999px;
   cursor: pointer;
+  text-decoration: none;
   transition:
     background 120ms ease,
     border-color 120ms ease;
@@ -1449,6 +1450,7 @@ button.skill-pill-btn:focus-visible {
 .hero-timeline-btn:hover {
   background: var(--accent-soft);
   border-color: var(--accent);
+  text-decoration: none;
 }
 
 .hero-download:focus-visible,

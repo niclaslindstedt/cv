@@ -52,14 +52,14 @@ export function Hero({
         >
           {t(cv.actions.timeline)}
         </button>
-        <button
-          type="button"
+        <a
           className="hero-download"
-          onClick={() => window.print()}
+          href="cv.pdf"
+          download="niclas-lindstedt-cv.pdf"
           aria-label={ui.hero.downloadAria}
         >
           {t(cv.actions.downloadPdf)}
-        </button>
+        </a>
         <LanguageToggle lang={lang} setLang={setLang} />
         <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
       </div>
