@@ -38,6 +38,26 @@ function PromotionArrow() {
   );
 }
 
+function RoleStartIcon() {
+  return (
+    <svg
+      className="role-start-icon"
+      viewBox="0 0 24 24"
+      width="14"
+      height="14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-label="Starting role"
+      role="img"
+    >
+      <circle cx="12" cy="12" r="4" />
+    </svg>
+  );
+}
+
 function TerminatedIcon() {
   return (
     <svg
@@ -103,11 +123,7 @@ function RoleChain({ roles }: { roles: RoleTenure[] }) {
         const isOldest = idx === reversed.length - 1;
         return (
           <li key={`${r.startDate}-${r.title.en}`} className="role-chain-item">
-            {isOldest ? (
-              <span className="promotion-arrow-spacer" aria-hidden="true" />
-            ) : (
-              <PromotionArrow />
-            )}
+            {isOldest ? <RoleStartIcon /> : <PromotionArrow />}
             <span className="role-chain-content">
               <span className="role">{t(r.title)}</span>
               <span className="role-chain-meta">
