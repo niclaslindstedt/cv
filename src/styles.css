@@ -766,6 +766,74 @@ a:hover {
   color: var(--fg);
 }
 
+.project-date {
+  appearance: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  margin: 0;
+  font: inherit;
+  color: var(--fg);
+  background: transparent;
+  border: 1px dashed transparent;
+  border-radius: 999px;
+  cursor: help;
+  transition:
+    color 120ms ease,
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.project-date > time {
+  display: inline-block;
+}
+
+.project-date:hover,
+.project-date:focus-visible,
+.project-date:focus {
+  background: var(--accent-soft);
+  border-color: var(--glass-border);
+  color: var(--fg);
+  outline: none;
+}
+
+.project-date::after {
+  content: attr(data-full);
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translate(-50%, -4px);
+  padding: 4px 10px;
+  background: var(--glass-bg);
+  color: var(--fg);
+  border: 1px solid var(--glass-border);
+  border-radius: calc(var(--radius) - 8px);
+  box-shadow: var(--shadow);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+  z-index: 5;
+}
+
+.project-date:hover::after,
+.project-date:focus-visible::after,
+.project-date:focus::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.project-date-sep {
+  color: var(--fg-muted);
+  margin: 0 2px;
+}
+
 .project-stack,
 .project-skills {
   list-style: none;

@@ -13,6 +13,7 @@ import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { NoteIcon } from "./NoteIcon";
+import { ProjectDateChip } from "./ProjectDateChip";
 import { TrackIcon } from "./TrackIcon";
 
 type Props = {
@@ -754,7 +755,24 @@ export function Timeline({ open, onClose }: Props) {
               {t(selectedItem.subtitle)}
             </p>
             <p className="timeline-vis-details-dates">
-              {formatRange(selectedItem.startDate, selectedItem.endDate, lang)}
+              {selectedItem.sideProject.firstCommitDate &&
+              selectedItem.sideProject.lastCommitDate ? (
+                <>
+                  <ProjectDateChip
+                    iso={selectedItem.sideProject.firstCommitDate}
+                    lang={lang}
+                  />
+                  <span className="project-date-sep" aria-hidden="true">
+                    –
+                  </span>
+                  <ProjectDateChip
+                    iso={selectedItem.sideProject.lastCommitDate}
+                    lang={lang}
+                  />
+                </>
+              ) : (
+                formatRange(selectedItem.startDate, selectedItem.endDate, lang)
+              )}
               <span className="timeline-vis-details-duration">
                 {" · "}
                 {formatDuration(

@@ -44,6 +44,10 @@
       "type": "string",
       "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
     },
+    "isoDate": {
+      "type": "string",
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+    },
     "interval": {
       "type": "object",
       "additionalProperties": false,
@@ -134,7 +138,9 @@
       "properties": {
         "totalCommits": { "type": "integer", "minimum": 0 },
         "openSource": { "type": "boolean" },
-        "repoUrl": { "type": "string", "minLength": 1 }
+        "repoUrl": { "type": "string", "minLength": 1 },
+        "firstCommitDate": { "$ref": "#/$defs/isoDate" },
+        "lastCommitDate": { "$ref": "#/$defs/isoDate" }
       }
     },
     "github": {
