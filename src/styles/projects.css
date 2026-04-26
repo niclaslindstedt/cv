@@ -109,15 +109,14 @@
 }
 
 .project-meta-row {
-  display: grid;
-  grid-template-columns: 80px auto;
-  gap: 12px;
+  display: flex;
   align-items: center;
-  justify-content: start;
+  gap: 12px;
   margin: 0;
 }
 
 .project-meta-row dt {
+  flex: 0 0 80px;
   margin: 0;
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -127,9 +126,12 @@
 }
 
 .project-meta-row dd {
+  flex: 1 1 auto;
+  min-width: 0;
   margin: 0;
   font-size: 0.9rem;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;

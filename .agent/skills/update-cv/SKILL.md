@@ -148,14 +148,71 @@ items }`. Default keys: `ai`, `languages`, `frameworks`, `cloud`,
   shown on the site for that group.
 - **Add an item** — insert the new string into the group's `items`
   at the priority-correct position (near the top if the user says
-  it is now a core skill).
+  it is now a core skill). Apply the **naming rules** below before
+  writing; if you need a `skillDetails` entry, key it on the same
+  exact string.
 - **Remove an item** — delete the string from `items`. Warn if
   removing something that appears in a `projects[].skills` — the
-  site will still render, but the skill claim is gone.
+  site will still render, but the skill claim is gone. Also remove
+  the matching `skillDetails` entry (the validator requires 1:1).
+- **Rename an item** — change the string in `items` AND in every
+  `projects[].skills`, `experience[].skills`,
+  `experience[].assignments[].skills`, and `education[].skills`
+  that references it; rekey the matching `skillDetails` entry.
+  `make validate` will fail loudly if any reference is missed.
 - **Reorder** — reorder `items` inside a group, or reorder the
   groups themselves. The first group appears first on the page.
 - **Rename a group label** — edit the group's `label`; `key` can
   stay as-is.
+
+#### Naming rules
+
+Apply these every time you add or rename a skill, and run them as a
+review pass whenever you touch `skills.json`. Surface any drift you
+find as Cleanup recommendations (see Recommendation mode).
+
+1. **Prefer short names.** Skills render as pills; long names wrap
+   and crowd the layout. Aim for ≤ 22 characters and ≤ 2 words.
+   Use the industry-standard short form whenever one exists:
+   - `Infrastructure as Code` → `IaC`
+   - `Microsoft SQL Server` → `MSSQL`
+   - `AI evaluations` → `AI evals`
+   - `Vector Databases` → `Vector DBs`
+   - `Agile Methodologies` → `Agile`
+   - `RFC Implementation` → `RFCs`
+   - `Engineering Management` → `Eng. management`
+   - `Technology Roadmapping` → `Tech roadmapping`
+
+   Keep the long form only when no recognized short form exists
+   (e.g. `Multi-agent orchestration` has no canonical abbreviation).
+
+2. **One casing style per group.** Pick sentence case
+   (`Multi-agent orchestration`) or Title Case
+   (`Engineering Management`) for the group and apply it to every
+   item that isn't a proper noun. Do not mix the two styles within
+   the same group. The defaults are:
+   - `ai`, `devops`, `practices`, `compliance` → sentence case
+   - `languages`, `frameworks`, `cloud`, `databases`, `leadership`
+     → Title Case (most entries are proper nouns or acronyms
+     anyway)
+3. **Proper nouns and acronyms keep their canonical form.**
+   `Claude Code`, `GitHub Copilot`, `PostgreSQL`, `RAG`, `GDPR`,
+   `gRPC/Protobuf`, `CI/CD` stay exactly as their owners write
+   them, regardless of the group's default casing.
+4. **No trailing qualifiers.** Drop redundant words like
+   "technologies", "systems", "platform", "engineering" when the
+   group label already implies them (e.g. inside the `databases`
+   group, `Vector Databases` → `Vector DBs`; inside `compliance`,
+   `Regulatory Compliance` → `Compliance` — but watch for
+   collisions with the group label itself).
+5. **Disambiguate when the short name collides.** If shortening
+   would clash with an existing skill or look ambiguous in the pill
+   (e.g. two skills both ending up as `AI`), keep enough words to
+   tell them apart.
+
+When in doubt about a rename, propose it in Recommendation mode and
+let the user pick — renames touch every reference in `experience`,
+`projects`, `education`, and `skillDetails`.
 
 ## Recommendation mode
 
@@ -180,6 +237,18 @@ Group as:
   orchestration" but `projects[0]` is a non-orchestration tool,
   suggest reordering. Also flag `summary` sentences that no longer
   lead with the current role or primary focus.
+- **Cleanup** — surface naming drift in `skills.json`. Two checks,
+  applied per group (skip proper nouns / canonical product names
+  and acronyms):
+  1. **Casing consistency** — flag any group whose items mix Title
+     Case and sentence case. Propose pulling them to one style
+     (see "Naming rules" above for the per-group default).
+  2. **Long names with a short form** — flag items > 22 characters
+     or > 2 words that have a recognized short form (`IaC`,
+     `MSSQL`, `AI evals`, …). Propose the rename, listing the
+     references that would need to update (in `projects[].skills`,
+     `experience[].skills`, `assignments[].skills`,
+     `education[].skills`, and the `skillDetails` key).
 
 Format as a numbered list. For each item, show:
 
