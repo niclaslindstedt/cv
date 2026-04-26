@@ -36,7 +36,7 @@ ease`. Layout never animates. Reduced motion is honored.
 
 ## 2. Tokens (CSS custom properties)
 
-Defined in `src/styles.css` `:root` (dark) and
+Defined in `src/styles/tokens.css` `:root` (dark) and
 `:root[data-theme="light"]`. Never hard-code hex outside these blocks;
 always reach for the token. If a token does not exist for what you
 need, add it here first.
@@ -293,7 +293,7 @@ Inline metadata that uses `·` separators (institution · level ·
 credits · count) must never wrap with a leading `·` on a new line.
 Wrap each _segment that includes its own preceding separator_ in a
 `<span>` with `white-space: nowrap`. See
-`.education-meta-trail` in `src/styles.css` for the pattern.
+`.education-meta-trail` in `src/styles/education.css` for the pattern.
 
 ### 5.2 Promotion arrow (`↑`) and role chain
 
@@ -490,7 +490,7 @@ renders as a `.project-date` chip:
 
 ## 6. Print
 
-The print stylesheet (in `src/styles.css`) flattens everything:
+The print stylesheet (in `src/styles/print.css`) flattens everything:
 
 - All translucent tokens collapse to opaque white.
 - Sky, stars, clouds, hover states are removed.
@@ -528,12 +528,13 @@ If you add a new color or surface, also add its print fallback in the
 
 ## 9. File map
 
-| File                                                                      | What it owns                                      |
-| ------------------------------------------------------------------------- | ------------------------------------------------- |
-| `src/styles.css`                                                          | All global CSS, tokens, components.               |
-| `src/components/CelestialSky.tsx`                                         | Sky, stars, clouds, orb.                          |
-| `src/components/Hero.tsx`                                                 | Header, hero buttons, language and theme toggles. |
-| `src/components/Section.tsx`                                              | Section wrapper with eyebrow.                     |
-| `src/components/{Focus,Projects,Experience,Education,Skills,Courses}.tsx` | Content sections.                                 |
-| `src/components/Timeline.tsx`                                             | Career timeline modal.                            |
-| `docs/DESIGN.md`                                                          | This document.                                    |
+| File                                                                      | What it owns                                                                                                                                                                                                                                                                    |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/styles.css`                                                          | Thin `@import` aggregator for `src/styles/*.css`.                                                                                                                                                                                                                               |
+| `src/styles/`                                                             | Per-domain partials: `tokens.css` (CSS variables), `base.css`, `sky.css`, `layout.css`, `hero.css`, `section.css`, `focus.css`, `languages.css`, `projects.css`, `experience.css`, `education.css`, `skills.css`, `toggles.css`, `timeline-vis.css`, `modals.css`, `print.css`. |
+| `src/components/CelestialSky.tsx`                                         | Sky, stars, clouds, orb.                                                                                                                                                                                                                                                        |
+| `src/components/Hero.tsx`                                                 | Header, hero buttons, language and theme toggles.                                                                                                                                                                                                                               |
+| `src/components/Section.tsx`                                              | Section wrapper with eyebrow.                                                                                                                                                                                                                                                   |
+| `src/components/{Focus,Projects,Experience,Education,Skills,Courses}.tsx` | Content sections.                                                                                                                                                                                                                                                               |
+| `src/components/Timeline.tsx`                                             | Career timeline modal.                                                                                                                                                                                                                                                          |
+| `docs/DESIGN.md`                                                          | This document.                                                                                                                                                                                                                                                                  |

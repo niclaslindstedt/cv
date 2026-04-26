@@ -78,7 +78,9 @@ src/
 ├── App.tsx              # root component — composes CV sections in order
 ├── main.tsx             # React 18 entry, mounts <App /> into #root
 ├── output.ts            # shared console output helpers
-├── styles.css           # global CSS (includes print-optimised CV styles)
+├── styles.css           # @import aggregator — see styles/ for partials
+├── styles/              # per-domain CSS partials (tokens, hero, projects,
+│                        # experience, timeline-vis, modals, print, …)
 ├── components/          # Hero, Focus, Projects, Experience, Skills,
 │                        # Education, Courses, Languages, Timeline,
 │                        # CelestialSky, Section, and modals

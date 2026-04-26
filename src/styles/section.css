@@ -1,0 +1,65 @@
+.section {
+  margin-bottom: 56px;
+}
+
+.section-title {
+  margin: 0 0 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.section-collapsible.is-collapsed {
+  margin-bottom: 24px;
+}
+
+.section-collapsible.is-collapsed .section-title {
+  margin-bottom: 0;
+}
+
+.section-toggle {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.section-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (hover: hover) {
+  .section-toggle:hover {
+    color: var(--fg);
+  }
+
+  .section-toggle:hover .section-toggle-chevron {
+    color: var(--accent);
+  }
+}
+
+.section-toggle-chevron {
+  flex: none;
+  color: var(--fg-muted);
+  transform: rotate(0deg);
+  transition:
+    transform 120ms ease,
+    color 120ms ease;
+}
+
+.section-collapsible.is-collapsed .section-toggle-chevron {
+  transform: rotate(-90deg);
+}

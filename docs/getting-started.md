@@ -59,7 +59,8 @@ hot-reload instantly in the dev server.
 src/
 ├── App.tsx          # root component — composes sections in order
 ├── main.tsx         # React 18 entry, mounts <App /> into #root
-├── styles.css       # global CSS
+├── styles.css       # @import aggregator
+├── styles/          # per-domain CSS partials (tokens, hero, projects, print, …)
 ├── output.ts        # central output/logging module
 ├── components/      # one file per CV section
 ├── data/cv.ts       # all CV content + TypeScript types

@@ -1,0 +1,517 @@
+.skill-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--overlay);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+.skill-modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: min(720px, calc(100dvh - 48px));
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  color: var(--fg);
+}
+
+.skill-modal-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: auto;
+}
+
+.skill-modal-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 20px 4px;
+}
+
+.skill-modal-detail:last-child {
+  padding-bottom: 16px;
+}
+
+.skill-modal-description {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--fg);
+}
+
+.skill-modal-pros-cons {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.skill-modal-pros,
+.skill-modal-cons {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  padding: 8px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.skill-modal-pros dt,
+.skill-modal-cons dt {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.skill-modal-pros dt {
+  color: var(--accent);
+}
+
+.skill-modal-pros dd,
+.skill-modal-cons dd {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.skill-modal-link {
+  align-self: flex-start;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.project-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.company-modal-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.company-modal-stack-title {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.company-modal-stack .entry-stack {
+  margin: 0;
+}
+
+.skill-modal-link:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+@media (max-width: 520px) {
+  .skill-modal-pros,
+  .skill-modal-cons {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+.skill-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  background: var(--glass-highlight);
+}
+
+.skill-modal-title {
+  margin: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.skill-modal-name {
+  color: var(--fg);
+}
+
+.skill-modal-years {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 2px 10px;
+  letter-spacing: 0.02em;
+}
+
+.skill-modal-close {
+  appearance: none;
+  padding: 4px 10px;
+  font: inherit;
+  font-weight: 700;
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.skill-modal-close:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.skill-modal-list {
+  list-style: none;
+  padding: 12px 20px 16px;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  overflow: auto;
+}
+
+.skill-modal-item {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 10px;
+  align-items: baseline;
+  padding: 8px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.skill-modal-kind {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.skill-modal-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--fg);
+  word-break: break-word;
+  min-width: 0;
+}
+
+.skill-modal-role {
+  color: var(--fg);
+}
+
+.skill-modal-sublabel {
+  color: var(--fg-muted);
+  font-size: 0.8rem;
+}
+
+.skill-modal-range {
+  color: var(--fg-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.skill-modal-empty {
+  margin: 0;
+  padding: 16px 20px 20px;
+  color: var(--fg-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 520px) {
+  .skill-modal-overlay {
+    padding: 12px;
+  }
+
+  .skill-modal-item {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .skill-modal-range {
+    white-space: normal;
+  }
+}
+
+.education-program-btn {
+  appearance: none;
+  width: 100%;
+  display: block;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.education-program-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.education-program-btn .education-head h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-soft);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.education-courses-count {
+  margin-left: 8px;
+  font-size: 0.78rem;
+  color: var(--accent);
+}
+
+.program-modal-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 20px 8px;
+}
+
+.program-modal-count {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.program-modal-notes {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 10px 0 6px;
+  padding: 14px 16px;
+  border-left: 2px solid var(--accent-soft);
+  border-radius: 0 6px 6px 0;
+  background: var(--accent-soft);
+  color: var(--fg);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.program-courses-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 20px 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.program-course-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.program-course-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.program-course-name {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.program-course-date {
+  color: var(--fg-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.program-course-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+}
+
+.program-course-code {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.78rem;
+  color: var(--fg);
+  padding: 1px 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.program-course-grade {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 1px 10px;
+  font-size: 0.78rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.program-course-grade-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.program-course-grade-value {
+  font-weight: 700;
+}
+
+.program-course-progress {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+}
+
+.course-incomplete-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid #c62828;
+  border-radius: 999px;
+  color: #fff;
+  background: #c62828;
+}
+
+.program-course-moments {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+.program-course-moments-label {
+  margin: 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.program-moment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.program-moment-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 8px;
+  border-left: 2px solid var(--accent);
+  background: var(--bg);
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.program-moment-item--pending {
+  border-left-color: var(--border);
+  color: var(--fg-muted);
+}
+
+.program-moment-name {
+  font-weight: 500;
+}
+
+.program-moment-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.program-moment-code {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.72rem;
+  padding: 0 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--fg);
+}
+
+.program-moment-date {
+  white-space: nowrap;
+}
+
+.course-modal-moments {
+  padding: 4px 20px 16px;
+}
+
+.course-modal-skills {
+  padding: 0 20px 16px;
+}
+
+@media (max-width: 520px) {
+  .program-course-head {
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+  }
+}

@@ -40,7 +40,9 @@ CI (`.github/workflows/ci.yml`) runs `make fmt-check`, `make validate`,
 src/
 ├── App.tsx             # root component — composes sections in order
 ├── main.tsx            # React 18 entry, mounts <App /> into #root
-├── styles.css          # global CSS
+├── styles.css          # global CSS — thin @import aggregator for ./styles/*.css
+├── styles/             # per-domain CSS partials (tokens, hero, projects,
+│                         experience, timeline-vis, modals, print, …)
 ├── components/         # one file per section (Hero, Focus, Projects, …)
 │                         plus a generic <Section /> wrapper
 ├── data/cv.json        # CV skeleton — top-level "category" keys hold the
@@ -71,7 +73,7 @@ imports from `components/`. Keep it that way.
 | New field on existing section                | Extend `schemas/cv.schema.json` and `src/data/cv.types.ts`, then the component                                                                    |
 | Content-only edits (roles, projects, skills) | `src/data/cv/<category>.json` (focus, projects, companies, …) — prefer the `update-cv` skill. Top-level scalar fields stay in `src/data/cv.json`. |
 | Date formatting / parsing                    | `src/utils/date.ts`                                                                                                                               |
-| Global styles, layout, typography            | `src/styles.css`                                                                                                                                  |
+| Global styles, layout, typography            | `src/styles/<domain>.css` (e.g. `hero.css`, `projects.css`, `print.css`); `src/styles.css` only `@import`s them                                   |
 | Timeline tracks, layout, zoom behaviour      | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                                                                                   |
 | GitHub commit activity fetch                 | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time)                                                                    |
 | Per-project repo commit stats fetch          | `scripts/generate-project-stats.mjs` (uses `PROJECT_STATS_TOKEN` if set, else `GITHUB_TOKEN`; needs `repo` scope to read private project repos)   |
@@ -121,7 +123,7 @@ When you change X, update Y:
 | `schemas/timeline.schema.json`                    | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`       |
 | `cv.meta` (siteUrl / seo)                         | `vite.config.ts` `cvMetaHtmlPlugin` reads these directly             |
 | Node version in CI                                | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)               |
-| `src/styles.css` tokens or any new visual pattern | `docs/DESIGN.md` (in the **same** PR)                                |
+| `src/styles/tokens.css` or any new visual pattern | `docs/DESIGN.md` (in the **same** PR)                                |
 
 ## Test conventions
 
