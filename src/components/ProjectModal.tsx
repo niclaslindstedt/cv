@@ -117,25 +117,29 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                 )}
               </dl>
             )}
-            {project.homepage && (
-              <a
-                className="skill-modal-link"
-                href={project.homepage}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                {ui.projectModal.visitSite}
-              </a>
-            )}
-            {project.openSource && (
-              <a
-                className="skill-modal-link"
-                href={repoUrl}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                {ui.projectModal.viewOnGitHub}
-              </a>
+            {(project.homepage || project.openSource) && (
+              <div className="project-modal-actions">
+                {project.homepage && (
+                  <a
+                    className="skill-modal-link"
+                    href={project.homepage}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {ui.projectModal.visitSite}
+                  </a>
+                )}
+                {project.openSource && (
+                  <a
+                    className="skill-modal-link"
+                    href={repoUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {ui.projectModal.viewOnGitHub}
+                  </a>
+                )}
+              </div>
             )}
             {project.stack && project.stack.length > 0 && (
               <div className="company-modal-stack">

@@ -2151,6 +2151,12 @@ button.skill-pill-btn:focus-visible {
   text-decoration: none;
 }
 
+.project-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .company-modal-stack {
   display: flex;
   flex-direction: column;
