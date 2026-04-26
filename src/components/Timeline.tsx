@@ -187,6 +187,28 @@ export function Timeline({ open, onClose }: Props) {
     setScale((s) => clamp(s * factor, MIN_SCALE, MAX_SCALE));
   }, []);
 
+  const scrollToTrackStart = useCallback(
+    (trackIdx: number) => {
+      const viewport = viewportRef.current;
+      if (!viewport) return;
+      const track = tracks[trackIdx];
+      if (!track || track.bars.length === 0) return;
+      let earliestStart = track.bars[0].segments[0].startMonth;
+      for (const bar of track.bars) {
+        const start = bar.segments[0].startMonth;
+        if (start < earliestStart) earliestStart = start;
+      }
+      const left = (earliestStart - minMonth) * monthPx;
+      const top = AXIS_SIZE + trackTop[trackIdx];
+      viewport.scrollTo({
+        left: Math.max(0, left - 24),
+        top: Math.max(0, top - 24),
+        behavior: "smooth",
+      });
+    },
+    [tracks, monthPx, minMonth, trackTop],
+  );
+
   useEffect(() => {
     if (!open) return;
     const el = viewportRef.current;
@@ -475,8 +497,9 @@ export function Timeline({ open, onClose }: Props) {
             {tracks.map((track, t) => {
               const labelText = track.label[lang] ?? track.label.en;
               return (
-                <div
+                <button
                   key={`label-${t}`}
+                  type="button"
                   className="timeline-vis-track-label"
                   style={{
                     top: AXIS_SIZE + trackTop[t],
@@ -484,12 +507,13 @@ export function Timeline({ open, onClose }: Props) {
                   }}
                   aria-label={labelText}
                   title={labelText}
+                  onClick={() => scrollToTrackStart(t)}
                 >
                   <TrackIcon kind={track.key} />
                   <span className="timeline-vis-track-label-text">
                     {labelText}
                   </span>
-                </div>
+                </button>
               );
             })}
           </div>
