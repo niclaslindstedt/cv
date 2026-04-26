@@ -72,6 +72,16 @@ export function useSwipeClose(
       if (overlay) overlay.style.opacity = String(remain);
     };
 
+    const isAtScrollTop = () => !scrollableAtStart || scrollTopAtStart <= 0;
+
+    const isAtScrollBottom = () => {
+      if (!scrollableAtStart) return true;
+      return (
+        scrollTopAtStart + scrollableAtStart.clientHeight >=
+        scrollableAtStart.scrollHeight - 1
+      );
+    };
+
     const animateOff = (offsetX: number, offsetY: number) => {
       closing = true;
       el.style.transition = `transform ${CLOSE_ANIMATION_MS}ms ease-out, opacity ${CLOSE_ANIMATION_MS}ms ease-out`;
@@ -139,17 +149,13 @@ export function useSwipeClose(
       if (axis === null) {
         if (adx < SWIPE_AXIS_LOCK_PX && ady < SWIPE_AXIS_LOCK_PX) return;
         if (adx > ady) {
-          if (dx <= 0) {
-            tracking = false;
-            return;
-          }
           axis = "x";
         } else {
-          if (dy <= 0) {
+          if (dy > 0 && !isAtScrollTop()) {
             tracking = false;
             return;
           }
-          if (scrollableAtStart && scrollTopAtStart > 0) {
+          if (dy < 0 && !isAtScrollBottom()) {
             tracking = false;
             return;
           }
@@ -160,9 +166,9 @@ export function useSwipeClose(
       if (e.cancelable) e.preventDefault();
 
       if (axis === "x") {
-        applyTransform(Math.max(0, dx), 0);
+        applyTransform(dx, 0);
       } else {
-        applyTransform(0, Math.max(0, dy));
+        applyTransform(0, dy);
       }
     };
 
@@ -177,20 +183,24 @@ export function useSwipeClose(
         snapBack();
         return;
       }
-      const dx = Math.max(0, t.clientX - startX);
-      const dy = Math.max(0, t.clientY - startY);
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
       const dt = Math.max(1, e.timeStamp - startTime);
 
       if (axis === "x") {
-        const velocity = dx / dt;
-        if (dx > SWIPE_CLOSE_THRESHOLD_PX || velocity > SWIPE_CLOSE_VELOCITY) {
-          animateOff(window.innerWidth, 0);
+        const adx = Math.abs(dx);
+        const velocity = adx / dt;
+        if (adx > SWIPE_CLOSE_THRESHOLD_PX || velocity > SWIPE_CLOSE_VELOCITY) {
+          const off = dx >= 0 ? window.innerWidth : -window.innerWidth;
+          animateOff(off, 0);
           return;
         }
       } else if (axis === "y") {
-        const velocity = dy / dt;
-        if (dy > SWIPE_CLOSE_THRESHOLD_PX || velocity > SWIPE_CLOSE_VELOCITY) {
-          animateOff(0, window.innerHeight);
+        const ady = Math.abs(dy);
+        const velocity = ady / dt;
+        if (ady > SWIPE_CLOSE_THRESHOLD_PX || velocity > SWIPE_CLOSE_VELOCITY) {
+          const off = dy >= 0 ? window.innerHeight : -window.innerHeight;
+          animateOff(0, off);
           return;
         }
       }
