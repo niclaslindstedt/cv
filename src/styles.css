@@ -143,12 +143,12 @@ body::before {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(220, 230, 245, 0.22) 0%,
-    rgba(205, 218, 235, 0.16) 14%,
-    rgba(190, 205, 225, 0.1) 30%,
-    rgba(170, 188, 210, 0.05) 52%,
-    rgba(150, 170, 195, 0.02) 72%,
-    transparent 92%
+    rgba(220, 230, 245, 0.14) 0%,
+    rgba(205, 218, 235, 0.1) 18%,
+    rgba(190, 205, 225, 0.06) 38%,
+    rgba(170, 188, 210, 0.03) 60%,
+    rgba(150, 170, 195, 0.012) 80%,
+    transparent 96%
   );
   animation: orb-pulse 11s ease-in-out infinite alternate;
 }
@@ -159,17 +159,17 @@ body::before {
   border-radius: 50%;
   background: radial-gradient(
     circle at 38% 32%,
-    rgba(255, 255, 255, 0.62) 0%,
-    rgba(245, 248, 252, 0.5) 14%,
-    rgba(220, 228, 240, 0.34) 34%,
-    rgba(190, 205, 225, 0.18) 56%,
-    rgba(160, 178, 200, 0.08) 78%,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(245, 248, 252, 0.24) 22%,
+    rgba(220, 228, 240, 0.16) 46%,
+    rgba(190, 205, 225, 0.08) 68%,
+    rgba(160, 178, 200, 0.03) 86%,
     transparent 100%
   );
   box-shadow:
-    inset 0 0 32px rgba(255, 255, 255, 0.3),
-    0 0 80px rgba(220, 230, 245, 0.22),
-    0 0 180px rgba(190, 205, 225, 0.12);
+    inset 0 0 40px rgba(255, 255, 255, 0.14),
+    0 0 100px rgba(220, 230, 245, 0.1),
+    0 0 220px rgba(190, 205, 225, 0.06);
   animation: orb-pulse 13s ease-in-out infinite alternate-reverse;
 }
 
@@ -177,8 +177,8 @@ body::before {
   position: absolute;
   inset: 12%;
   border-radius: 50%;
-  border: 1px solid rgba(140, 160, 185, 0.08);
-  box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(140, 160, 185, 0.03);
+  box-shadow: inset 0 0 22px rgba(255, 255, 255, 0.08);
   pointer-events: none;
 }
 
