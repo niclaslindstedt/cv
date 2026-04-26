@@ -33,7 +33,11 @@
       "repo": "zag"
     },
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/zag"
+    "homepage": "https://niclaslindstedt.github.io/zag",
+    "cratesIo": "zag",
+    "npm": "@nlindstedt/zag-agent",
+    "pypi": "zag-agent",
+    "nuget": "Zag"
   },
   {
     "name": "zig",
@@ -58,7 +62,9 @@
       "repo": "zig"
     },
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/zig"
+    "homepage": "https://niclaslindstedt.github.io/zig",
+    "cratesIo": "zig-cli",
+    "npm": "@nlindstedt/zig-workflow"
   },
   {
     "name": "zad",
@@ -77,7 +83,8 @@
       "repo": "zad"
     },
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/zad"
+    "homepage": "https://niclaslindstedt.github.io/zad",
+    "cratesIo": "zad"
   },
   {
     "name": "ztf",
@@ -101,7 +108,8 @@
       "repo": "ztf"
     },
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/ztf"
+    "homepage": "https://niclaslindstedt.github.io/ztf",
+    "cratesIo": "ztf"
   },
   {
     "name": "oss-spec",
@@ -119,7 +127,8 @@
       "owner": "niclaslindstedt",
       "repo": "oss-spec"
     },
-    "openSource": true
+    "openSource": true,
+    "cratesIo": "oss-spec"
   },
   {
     "name": "blog",
@@ -180,7 +189,8 @@
       "repo": "juris"
     },
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/juris/"
+    "homepage": "https://niclaslindstedt.github.io/juris/",
+    "pypi": "juris"
   },
   {
     "name": "swarm",
@@ -238,6 +248,7 @@
       "owner": "niclaslindstedt",
       "repo": "docker-backup"
     },
-    "openSource": true
+    "openSource": true,
+    "dockerHub": "niclaslindstedt/docker-backup"
   }
 ]
