@@ -1,4 +1,4 @@
-.PHONY: install build test lint typecheck fmt fmt-check validate release clean dev preview generate og sitemap
+.PHONY: install build test lint typecheck fmt fmt-check validate clean dev preview generate og sitemap
 
 install:
 	npm ci
@@ -41,10 +41,6 @@ dev:
 
 preview:
 	npm run preview
-
-release:
-	@echo "Releases are managed by CI via .github/workflows/version-bump.yml."
-	@echo "Break-glass: bash scripts/release.sh [auto|patch|minor|major]"
 
 clean:
 	rm -rf dist node_modules/.vite

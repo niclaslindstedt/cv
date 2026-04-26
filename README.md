@@ -55,7 +55,6 @@ All developer entry points are exposed via `make`:
 | `make og`        | Regenerate `public/og-image.png` from `cv.json`                                                  |
 | `make sitemap`   | Write `dist/sitemap.xml` (run after `vite build`)                                                |
 | `make test`      | Run the test suite                                                                               |
-| `make release`   | Cut a new release (CI-managed)                                                                   |
 | `make clean`     | Remove `dist/` and Vite cache                                                                    |
 
 `src/data/timeline.json`, `src/data/github-activity.json`, and
@@ -92,8 +91,8 @@ src/
 ```
 
 Top-level supporting directories: `schemas/` (JSON schemas), `scripts/`
-(timeline generator, release helpers, validators), `docs/` (contributor
-guides), and `.agent/skills/` (Claude maintenance skills, symlinked from
+(timeline generator, validators), `docs/` (contributor guides), and
+`.agent/skills/` (Claude maintenance skills, symlinked from
 `.claude/skills/`). See [AGENTS.md](AGENTS.md) for architecture rules and
 dependency direction.
 
@@ -109,7 +108,6 @@ For CI and deployment the following GitHub secrets are used:
 
 | Secret                      | Purpose                                                                                                                           |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `RELEASE_TOKEN`             | PAT with write access for release pipeline                                                                                        |
 | `PROJECT_STATS_TOKEN`       | PAT with `repo` scope so per-project commit stats can read private repos                                                          |
 | `VITE_GOATCOUNTER_ENDPOINT` | GoatCounter pageview endpoint (e.g. `https://niclaslindstedt.goatcounter.com/count`); when unset, no analytics snippet is emitted |
 
