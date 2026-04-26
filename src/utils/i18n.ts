@@ -88,6 +88,7 @@ type UiStrings = {
     viewOnCratesIo: string;
     viewOnPyPI: string;
     viewOnNpm: string;
+    viewOnNuGet: string;
     visitSite: string;
     active: string;
     commits: string;
@@ -227,6 +228,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewOnCratesIo: "View on crates.io ↗",
       viewOnPyPI: "View on PyPI ↗",
       viewOnNpm: "View on npm ↗",
+      viewOnNuGet: "View on NuGet ↗",
       visitSite: "Visit site ↗",
       active: "Active",
       commits: "Commits",
@@ -367,6 +369,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewOnCratesIo: "Visa på crates.io ↗",
       viewOnPyPI: "Visa på PyPI ↗",
       viewOnNpm: "Visa på npm ↗",
+      viewOnNuGet: "Visa på NuGet ↗",
       visitSite: "Besök sajten ↗",
       active: "Aktiv",
       commits: "Commits",

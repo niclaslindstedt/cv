@@ -68,6 +68,7 @@ export type Project = {
   cratesIo?: string;
   pypi?: string;
   npm?: string;
+  nuget?: string;
 };
 
 export type ProjectStats = {

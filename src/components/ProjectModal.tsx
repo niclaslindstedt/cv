@@ -68,7 +68,16 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
   const npmUrl = project.npm
     ? `https://www.npmjs.com/package/${project.npm}`
     : null;
-  const hasRegistryLinks = !!(dockerHubUrl || cratesIoUrl || pypiUrl || npmUrl);
+  const nugetUrl = project.nuget
+    ? `https://www.nuget.org/packages/${project.nuget}/`
+    : null;
+  const hasRegistryLinks = !!(
+    dockerHubUrl ||
+    cratesIoUrl ||
+    pypiUrl ||
+    npmUrl ||
+    nugetUrl
+  );
   const stats = lookupStats(project.github);
   const hasDateRange = !!(
     stats &&
@@ -198,6 +207,16 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                     rel="noreferrer noopener"
                   >
                     {ui.projectModal.viewOnNpm}
+                  </a>
+                )}
+                {nugetUrl && (
+                  <a
+                    className="skill-modal-link"
+                    href={nugetUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {ui.projectModal.viewOnNuGet}
                   </a>
                 )}
               </div>

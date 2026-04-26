@@ -273,6 +273,11 @@
           "type": "string",
           "pattern": "^(@[a-z0-9][a-z0-9._-]*/)?[a-z0-9][a-z0-9._-]*$",
           "description": "npm package name (optionally scoped, e.g. `@scope/name`). When set, the project modal renders a 'View on npm' link to https://www.npmjs.com/package/{name}."
+        },
+        "nuget": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]*$",
+          "description": "NuGet package id. When set, the project modal renders a 'View on NuGet' link to https://www.nuget.org/packages/{name}/."
         }
       }
     },
