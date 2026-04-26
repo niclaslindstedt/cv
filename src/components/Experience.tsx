@@ -115,8 +115,11 @@ function sortRolesAsc(roles: RoleTenure[]): RoleTenure[] {
 
 function RoleChain({ roles }: { roles: RoleTenure[] }) {
   const { lang, t } = useLang();
-  // Newest first; bottom item is the original starting role (no arrow).
-  const reversed = [...sortRolesAsc(roles)].reverse();
+  // The newest role is already shown in the title, so only render the
+  // promotion history below it: older roles, newest of those first, with the
+  // original starting role at the bottom.
+  const olderRoles = sortRolesAsc(roles).slice(0, -1);
+  const reversed = [...olderRoles].reverse();
   return (
     <ol className="role-chain">
       {reversed.map((r, idx) => {

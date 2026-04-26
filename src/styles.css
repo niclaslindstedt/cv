@@ -944,7 +944,7 @@ a:hover {
 .role-chain-item {
   display: grid;
   grid-template-columns: auto 1fr;
-  align-items: start;
+  align-items: center;
   column-gap: 6px;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -975,9 +975,6 @@ a:hover {
   margin-right: 0;
   vertical-align: 0;
   transform: none;
-  /* Optically center 14px icon with first text line in a 1.5×0.9rem (21.6px)
-     line-box: geometric center is 4px; +1px nudge for cap-height bias. */
-  margin-top: 5px;
 }
 
 .role-start-icon {
