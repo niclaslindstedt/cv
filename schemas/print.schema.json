@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://niclaslindstedt.se/schemas/print.schema.json",
+  "title": "Print-ready CV",
+  "description": "Denormalized, print-optimized CV generated from cv.json. Consumed by PrintView to render a flat, semantic, print-only DOM that does not depend on the screen component tree.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "title",
+    "longSummary",
+    "sections",
+    "experience",
+    "projects",
+    "education",
+    "courses",
+    "skills",
+    "languages"
+  ],
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "title": { "$ref": "#/$defs/localizedString" },
+    "longSummary": { "$ref": "#/$defs/localizedString" },
+    "sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experience",
+        "projects",
+        "education",
+        "courses",
+        "skills",
+        "languages"
+      ],
+      "properties": {
+        "experience": { "$ref": "#/$defs/localizedString" },
+        "projects": { "$ref": "#/$defs/localizedString" },
+        "education": { "$ref": "#/$defs/localizedString" },
+        "courses": { "$ref": "#/$defs/localizedString" },
+        "skills": { "$ref": "#/$defs/localizedString" },
+        "languages": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "experience": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/experience" }
+    },
+    "projects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/project" }
+    },
+    "education": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/education" }
+    },
+    "courses": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/course" }
+    },
+    "skills": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/skillGroup" }
+    },
+    "languages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/language" }
+    }
+  },
+  "$defs": {
+    "localizedString": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "sv"],
+      "properties": {
+        "en": { "type": "string" },
+        "sv": { "type": "string" }
+      }
+    },
+    "roleHistoryEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "range"],
+      "properties": {
+        "title": { "$ref": "#/$defs/localizedString" },
+        "range": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "experience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "company",
+        "range",
+        "tagline",
+        "tags",
+        "roleHistory",
+        "assignments"
+      ],
+      "properties": {
+        "role": { "$ref": "#/$defs/localizedString" },
+        "company": { "type": "string", "minLength": 1 },
+        "range": { "$ref": "#/$defs/localizedString" },
+        "engagement": { "$ref": "#/$defs/localizedString" },
+        "tagline": { "$ref": "#/$defs/localizedString" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "notes": { "$ref": "#/$defs/localizedString" },
+        "roleHistory": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/roleHistoryEntry" }
+        },
+        "assignments": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/assignment" }
+        }
+      }
+    },
+    "assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "client", "range", "tagline", "tags", "roleHistory"],
+      "properties": {
+        "role": { "$ref": "#/$defs/localizedString" },
+        "client": { "type": "string", "minLength": 1 },
+        "range": { "$ref": "#/$defs/localizedString" },
+        "tagline": { "$ref": "#/$defs/localizedString" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "notes": { "$ref": "#/$defs/localizedString" },
+        "roleHistory": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/roleHistoryEntry" }
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "tagline"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "tagline": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "education": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "institution", "level", "credits", "range"],
+      "properties": {
+        "field": { "$ref": "#/$defs/localizedString" },
+        "institution": { "$ref": "#/$defs/localizedString" },
+        "level": { "$ref": "#/$defs/localizedString" },
+        "credits": { "type": "string", "minLength": 1 },
+        "range": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "course": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "institution",
+        "code",
+        "credits",
+        "range",
+        "details"
+      ],
+      "properties": {
+        "name": { "$ref": "#/$defs/localizedString" },
+        "institution": { "$ref": "#/$defs/localizedString" },
+        "code": { "type": "string", "minLength": 1 },
+        "credits": { "type": "string", "minLength": 1 },
+        "range": { "$ref": "#/$defs/localizedString" },
+        "details": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/localizedString" }
+        }
+      }
+    },
+    "skillGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "items"],
+      "properties": {
+        "label": { "$ref": "#/$defs/localizedString" },
+        "items": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "language": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "level"],
+      "properties": {
+        "name": { "$ref": "#/$defs/localizedString" },
+        "level": { "$ref": "#/$defs/localizedString" }
+      }
+    }
+  }
+}

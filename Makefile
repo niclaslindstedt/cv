@@ -26,6 +26,7 @@ validate:
 	npm run validate:cv
 	npm run validate:skill-tags
 	npm run validate:timeline-json
+	npm run validate:print-json
 
 generate:
 	npm run generate:data
