@@ -111,21 +111,23 @@ Optionally also ask:
 
 ### 5. Draft the long summary
 
-- 4–7 sentences. A narrative that walks the reader from the past to
-  the future:
+- 3–5 sentences. A narrative that goes:
   1. **What I do today** — current focus areas, the products / tools
      I am building, the role title.
-  2. **How I got here** — a tight selection from `experience[]` and
-     `education[]`. Mention the named clients/employers that the CV
-     itself emphasizes; don't list every gig. Skip dates.
-  3. **Where I'm going** — the answer to the user's question, framed
+  2. **Where I'm going** — the answer to the user's question, framed
      as a direction (a kind of system, a class of problem), not as a
      job title or a specific employer.
+- **Do not recap the work history.** The reader can see
+  `experience[]` and `education[]` rendered right below the modal —
+  repeating "earlier I worked at X, Y, Z" reads as filler. Only
+  reference past employers when they're load-bearing for the
+  "where I'm going" arc (e.g. the gap that motivated the current
+  work). Otherwise let the CV sections speak for themselves.
 - Every claim must be supported by something already in `cv.json` or
   by an answer the user just gave. If a sentence is not, drop it.
 - No KPIs, no superlatives, no hedging ("perhaps", "I think").
 - Avoid bullet lists — this is prose.
-- Length: roughly 600–1200 characters. The modal body scrolls, but a
+- Length: roughly 500–900 characters. The modal body scrolls, but a
   long blob signals "read all of my CV instead", which defeats the
   purpose.
 
