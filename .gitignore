@@ -15,3 +15,6 @@ src/data/timeline.json
 src/data/github-activity.json
 # Generated artifacts (see scripts/generate-project-stats.mjs)
 src/data/project-stats.json
+
+# Claude Code worktrees
+.claude/worktrees/
