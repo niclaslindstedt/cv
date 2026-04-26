@@ -846,6 +846,13 @@ export function Timeline({ open, onClose }: Props) {
                 )}
               </span>
             </p>
+            {selectedItem.credits && (
+              <p className="timeline-vis-details-dates">
+                <span className="timeline-vis-credits-pill">
+                  {selectedItem.credits}
+                </span>
+              </p>
+            )}
             {t(selectedItem.description) && (
               <p className="timeline-vis-details-desc">
                 {t(selectedItem.description)}
