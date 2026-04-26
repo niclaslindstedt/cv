@@ -27,7 +27,7 @@
       "sv": "Lägger till koordineringskostnad, latens och en ny typ av buggar som lever mellan agenterna snarare än inuti dem."
     }
   },
-  "Agentic Workflows": {
+  "Agentic workflows": {
     "description": {
       "en": "Describing a sequence of agent steps (analyse, plan, edit, verify, ship) as a runnable, shareable artifact rather than a one-off prompt session.",
       "sv": "Att beskriva en sekvens av agentsteg (analysera, planera, ändra, verifiera, leverera) som en körbar och delbar artefakt istället för en engångsprompt."
@@ -55,21 +55,7 @@
       "sv": "Icke-determinism, kostnad och behov av skyddsräcken — en agent med bred verktygsåtkomst kan ställa till verklig skada om den är oövervakad."
     }
   },
-  "Multi-provider LLM integration": {
-    "description": {
-      "en": "Talking to several LLM providers (Anthropic, OpenAI, Google, local) behind one abstraction so the same code can switch between models without rewrites.",
-      "sv": "Att prata med flera LLM-leverantörer (Anthropic, OpenAI, Google, lokala) bakom en gemensam abstraktion så att samma kod kan växla mellan modeller utan omskrivningar."
-    },
-    "benefits": {
-      "en": "Avoids lock-in, lets you route by cost or capability, and survives a single provider's outage.",
-      "sv": "Undviker inlåsning, låter dig dirigera efter kostnad eller förmåga och överlever en enskild leverantörs avbrott."
-    },
-    "drawbacks": {
-      "en": "The lowest-common-denominator API loses provider-specific features unless you carefully expose them.",
-      "sv": "Den minsta gemensamma nämnaren tappar leverantörsspecifika funktioner om de inte exponeras avsiktligt."
-    }
-  },
-  "Agent sandboxing & isolation": {
+  "Agent sandboxing": {
     "description": {
       "en": "Running agents inside containers, worktrees, or VMs so they can edit files, run commands, and call networks without touching the host.",
       "sv": "Att köra agenter inuti containrar, worktrees eller VM:er så att de kan ändra filer, köra kommandon och anropa nätverk utan att röra värddatorn."
@@ -83,7 +69,7 @@
       "sv": "Sandlådor läcker; perfekt isolering kostar både uppsättningstid, prestanda och ergonomi."
     }
   },
-  "Agent permissions & security": {
+  "Agent security": {
     "description": {
       "en": "Designing fine-grained, signed permission models so an agent only has access to what it needs and can't silently widen its own scope.",
       "sv": "Att designa finkorniga, signerade behörighetsmodeller så att en agent bara har åtkomst till det den behöver och inte i tysthet kan utöka sin egen omfattning."
@@ -97,7 +83,7 @@
       "sv": "Mer konfiguration att underhålla och en behörighets-UX som lätt blir ett eget användarproblem."
     }
   },
-  "Agent-in-the-loop testing": {
+  "Agentic testing": {
     "description": {
       "en": "Using an LLM to evaluate test outputs that regex or schema assertions can't cleanly capture — fuzzy verdicts about whether output is correct, helpful, or in style.",
       "sv": "Att använda en LLM för att bedöma testutdata som regex- eller schemapåståenden inte fångar — luddiga bedömningar om utdata är korrekt, hjälpsamt eller i stil."
@@ -182,7 +168,7 @@
     },
     "url": "https://docs.claude.com/en/docs/claude-code/overview"
   },
-  "Agent Skills": {
+  "Agent skills": {
     "description": {
       "en": "Reusable, instruction-driven extensions that Claude Code loads on demand — packaged Markdown plus assets that specialise the agent for a domain (e.g. updating a CV, refreshing a README, reviewing a PR).",
       "sv": "Återanvändbara, instruktionsdrivna utökningar som Claude Code laddar vid behov — paketerad Markdown och tillgångar som specialiserar agenten för en domän (t.ex. uppdatera ett CV, uppdatera README eller granska en PR)."
@@ -322,6 +308,27 @@
       "sv": "Det deklarativa frågespråket för relationsdatabaser."
     }
   },
+  "Swift": {
+    "description": {
+      "en": "Apple's modern systems language for iOS, macOS, and server-side workloads — type-safe, fast, and the lingua franca of the Apple developer ecosystem.",
+      "sv": "Apples moderna systemspråk för iOS, macOS och serversidan — typsäkert, snabbt och Apple-ekosystemets lingua franca."
+    },
+    "url": "https://www.swift.org"
+  },
+  "Java": {
+    "description": {
+      "en": "Mature, statically typed JVM language with one of the largest enterprise ecosystems in the industry.",
+      "sv": "Moget, statiskt typat JVM-språk med ett av branschens största företagsekosystem."
+    },
+    "url": "https://www.java.com"
+  },
+  "Kotlin": {
+    "description": {
+      "en": "Pragmatic JVM language with first-class null safety and coroutines; the default for new Android development and a strong Java replacement on the server.",
+      "sv": "Pragmatiskt JVM-språk med förstklassig null-säkerhet och coroutines; standard för ny Android-utveckling och en stark Java-ersättare på servern."
+    },
+    "url": "https://kotlinlang.org"
+  },
   "C++": {
     "description": {
       "en": "Long-standing systems language for software where you need control over memory, layout, and performance.",
@@ -430,6 +437,21 @@
       "sv": "Prissättningen är invecklad; IAM och nätverk kan sluka veckor av arbete."
     },
     "url": "https://aws.amazon.com"
+  },
+  "GitHub workflows": {
+    "description": {
+      "en": "GitHub Actions YAML pipelines that run on every push or pull request — building, testing, validating, and deploying without leaving the repo.",
+      "sv": "GitHub Actions-pipelines i YAML som körs vid varje push eller pull request — bygger, testar, validerar och driftsätter utan att lämna repot."
+    },
+    "benefits": {
+      "en": "Lives next to the code it tests; the marketplace covers most common steps; free tier handles small projects comfortably.",
+      "sv": "Lever bredvid koden den testar; marketplace täcker de flesta vanliga stegen; gratisnivån räcker för mindre projekt."
+    },
+    "drawbacks": {
+      "en": "YAML composition is awkward at scale; minutes and matrix builds get expensive on private repos.",
+      "sv": "YAML-komposition blir klumpig vid skala; körminuter och matrix-byggen blir dyra på privata repon."
+    },
+    "url": "https://docs.github.com/actions"
   },
   "Azure DevOps": {
     "description": {

@@ -6,15 +6,23 @@
       "sv": "Ett CLI för alla dina AI-kodningsagenter."
     },
     "description": {
-      "en": "Wraps Claude, Codex, Gemini, Copilot, and Ollama behind a single command so you can switch between them without learning five different CLIs. Adds cross-provider features on top: model size aliases, automatic provider/model selection, git worktree isolation, Docker sandboxing, structured JSON output with schema validation, and unified session logs. Ships as a CLI, a Rust library crate, and SDKs for TypeScript, Python, C#, Swift, Java, and Kotlin.",
-      "sv": "Kapslar in Claude, Codex, Gemini, Copilot och Ollama bakom ett enda kommando så att du kan växla mellan dem utan att lära dig fem olika CLI:er. Lägger till funktioner på tvären: alias för modellstorlek, automatiskt val av leverantör/modell, isolering via git worktree, Docker-sandboxing, strukturerad JSON-utdata med schemavalidering och enhetliga sessionsloggar. Levereras som CLI, ett Rust-bibliotek och SDK:er för TypeScript, Python, C#, Swift, Java och Kotlin."
+      "en": "Multi-provider LLM integration that wraps Claude, Codex, Gemini, Copilot, and Ollama behind a single command so you can switch between them without learning five different CLIs. Adds cross-provider features on top: model size aliases, automatic provider/model selection, git worktree isolation, Docker sandboxing, structured JSON output with schema validation, and unified session logs. Ships as a CLI, a Rust library crate, and SDKs for TypeScript, Python, C#, Swift, Java, and Kotlin.",
+      "sv": "Multi-leverantörs-LLM-integration som kapslar in Claude, Codex, Gemini, Copilot och Ollama bakom ett enda kommando så att du kan växla mellan dem utan att lära dig fem olika CLI:er. Lägger till funktioner på tvären: alias för modellstorlek, automatiskt val av leverantör/modell, isolering via git worktree, Docker-sandboxing, strukturerad JSON-utdata med schemavalidering och enhetliga sessionsloggar. Levereras som CLI, ett Rust-bibliotek och SDK:er för TypeScript, Python, C#, Swift, Java och Kotlin."
     },
-    "stack": ["Rust", "Docker"],
+    "stack": [
+      "Rust",
+      "Docker",
+      "TypeScript",
+      "Python",
+      "C#/.NET",
+      "Swift",
+      "Java",
+      "Kotlin"
+    ],
     "skills": [
-      "Multi-provider LLM integration",
-      "Agent sandboxing & isolation",
+      "Agent sandboxing",
       "Claude Code",
-      "Agent Skills",
+      "Agent skills",
       "Codex CLI",
       "Gemini CLI",
       "GitHub Copilot",
@@ -30,8 +38,8 @@
   {
     "name": "zig",
     "tagline": {
-      "en": "Describe workflows. Share them. Run them.",
-      "sv": "Beskriv arbetsflöden. Dela dem. Kör dem."
+      "en": "Describe agent workflows in natural language, capture them as shareable files, and replay them anywhere.",
+      "sv": "Beskriv agentarbetsflöden i naturligt språk, fånga dem som delbara filer och spela upp dem var som helst."
     },
     "description": {
       "en": "Orchestration CLI for AI coding agents. Describe a workflow in natural language, capture it as a shareable .zwf file, and replay it anywhere with a single command. Embeds zag for the underlying orchestration primitives. Ships with an HTTP API and an embedded React chat UI for designing workflows interactively.",
@@ -40,10 +48,10 @@
     "stack": ["Rust", "React"],
     "skills": [
       "Multi-agent orchestration",
-      "Agentic Workflows",
+      "Agentic workflows",
       "Prompt engineering",
       "Claude Code",
-      "Agent Skills"
+      "Agent skills"
     ],
     "github": {
       "owner": "niclaslindstedt",
@@ -55,15 +63,15 @@
   {
     "name": "zad",
     "tagline": {
-      "en": "Agent adapter system.",
-      "sv": "Adaptersystem för agenter."
+      "en": "Connect AI agents to external services with signed, scoped permissions.",
+      "sv": "Koppla AI-agenter till externa tjänster med signerade, avgränsade behörigheter."
     },
     "description": {
       "en": "Connects AI agents to external services (Discord, GitHub, Slack, and more) through scoped service configurations instead of MCP servers. Fine-grained permission files go beyond what upstream APIs offer, with Ed25519-signed policies stored in the OS keychain so an agent with filesystem access can't silently widen its own scope. New providers are a single Rust trait implementation.",
       "sv": "Kopplar AI-agenter till externa tjänster (Discord, GitHub, Slack med flera) via avgränsade tjänstkonfigurationer istället för MCP-servrar. Finkornig behörighetsstyrning går längre än det leverantörernas API:er själva erbjuder, med Ed25519-signerade policyer lagrade i operativsystemets nyckelring så att en agent med filsystemsåtkomst inte i tysthet kan utöka sin egen omfattning. Nya leverantörer är en enda Rust trait-implementation."
     },
     "stack": ["Rust"],
-    "skills": ["Agent permissions & security", "Claude Code", "Agent Skills"],
+    "skills": ["Agent security", "Claude Code", "Agent skills"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "zad"
@@ -74,8 +82,8 @@
   {
     "name": "ztf",
     "tagline": {
-      "en": "Complex E2E testing using zag verification.",
-      "sv": "Komplex E2E-testning med zag-verifiering."
+      "en": "Agent-assisted end-to-end testing for scenarios that regex assertions can't cleanly verify.",
+      "sv": "Agentassisterad end-to-end-testning för scenarier som regex-påståenden inte fångar rent."
     },
     "description": {
       "en": "Agent-assisted end-to-end testing with TOML scenario files. Uses an explicit arrange/act/assert structure with programmatic checks, then optionally delegates nuanced verdicts to an AI reviewer for the cases regex assertions can't cleanly handle. Machine-readable output makes it easy to plug into other tools.",
@@ -83,10 +91,10 @@
     },
     "stack": ["Rust"],
     "skills": [
-      "Agent-in-the-loop testing",
+      "Agentic testing",
       "AI evaluations",
       "Claude Code",
-      "Agent Skills"
+      "Agent skills"
     ],
     "github": {
       "owner": "niclaslindstedt",
@@ -106,7 +114,7 @@
       "sv": "Initierar nya open source-repon mot en gemensam specifikation och håller dem sedan i linje över tid. En friform-prompt tolkas till ett strukturerat manifest som skriver ett komplett repo till disk — licens, dokumentation, CI, release-pipelines och agentkonventioner — och skapar GitHub-remoten. Validering av ett befintligt repo rapporterar och åtgärdar avvikelser automatiskt, eller skapar ett GitHub-issue per överträdelse."
     },
     "stack": ["Rust"],
-    "skills": ["Spec-driven development"],
+    "skills": ["Spec-driven development", "Claude Code", "Agent skills"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "oss-spec"
@@ -123,8 +131,8 @@
       "en": "Personal blog where each post can ship a technical and a non-technical version under one slug; readers pick their audience inside a terminal-themed React UI. Markdown lives in the repo so every revision is a commit and a diff, and posts are written, revised, and removed via Claude skills that enforce the frontmatter schema. A Vite extractor walks the post tree, validates frontmatter, and emits a single JSON the frontend reads — no CMS, no runtime server, just a static bundle deployed to GitHub Pages.",
       "sv": "Personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug; läsaren väljer målgrupp i ett terminal-tematiserat React-gränssnitt. Markdown ligger i repot så att varje revision är en commit och en diff, och inlägg skrivs, uppdateras och tas bort via Claude-skills som upprätthåller frontmatter-schemat. En Vite-extractor går igenom inläggsträdet, validerar frontmatter och genererar en enda JSON-fil som frontenden läser — ingen CMS, ingen runtime-server, bara en statisk bundle som driftas på GitHub Pages."
     },
-    "stack": ["TypeScript", "React", "Node.js"],
-    "skills": ["Spec-driven development", "Claude Code", "Agent Skills"],
+    "stack": ["TypeScript", "React", "Node.js", "GitHub workflows"],
+    "skills": ["Spec-driven development", "Claude Code", "Agent skills"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "blog"
@@ -142,12 +150,12 @@
       "en": "This is the site you're viewing right now. The entire website — every section, every meta tag, the timeline, the OG image, the sitemap — is rendered from a single schema-validated cv.json. That JSON is maintained through Claude Code skills (update-cv, update-summary, update-company-descriptions) that read the schema, edit the data, and re-validate, so updates happen through conversation rather than by hand.",
       "sv": "Detta är sajten du tittar på just nu. Hela webbplatsen — varje sektion, varje meta-tagg, tidslinjen, OG-bilden, sitemap:en — renderas från en enda schemavaliderad cv.json. Den JSON-filen underhålls genom Claude Code-skills (update-cv, update-summary, update-company-descriptions) som läser schemat, redigerar datan och validerar om — uppdateringar sker via samtal istället för för hand."
     },
-    "stack": ["TypeScript", "React", "Node.js"],
+    "stack": ["TypeScript", "React", "Node.js", "GitHub workflows"],
     "skills": [
       "Spec-driven development",
       "Software Architecture",
       "Claude Code",
-      "Agent Skills"
+      "Agent skills"
     ],
     "github": {
       "owner": "niclaslindstedt",
@@ -187,7 +195,7 @@
     "stack": ["Rust", "PostgreSQL"],
     "skills": [
       "Multi-agent orchestration",
-      "Agentic Workflows",
+      "Agentic workflows",
       "Prompt engineering"
     ],
     "github": {
