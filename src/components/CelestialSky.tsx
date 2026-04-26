@@ -5,25 +5,20 @@ import type { Theme } from "../utils/theme";
 type Props = { theme: Theme };
 
 const CLOUDS = [
-  { x: 14, y: 22, size: 36, blur: 60, alpha: 0.55, drift: 240, delay: 0 },
-  { x: 78, y: 17, size: 30, blur: 50, alpha: 0.45, drift: 180, delay: -60 },
-  { x: 62, y: 54, size: 44, blur: 80, alpha: 0.35, drift: 320, delay: -120 },
-  { x: 22, y: 71, size: 38, blur: 70, alpha: 0.4, drift: 280, delay: -40 },
-  { x: 88, y: 62, size: 26, blur: 50, alpha: 0.38, drift: 200, delay: -90 },
-  { x: 8, y: 48, size: 22, blur: 40, alpha: 0.32, drift: 220, delay: -160 },
-  { x: 48, y: 32, size: 28, blur: 55, alpha: 0.3, drift: 260, delay: -200 },
+  { x: 14, y: 22, size: 54, alpha: 0.55, drift: 240, delay: 0 },
+  { x: 78, y: 17, size: 44, alpha: 0.45, drift: 180, delay: -60 },
+  { x: 62, y: 54, size: 64, alpha: 0.35, drift: 320, delay: -120 },
+  { x: 22, y: 71, size: 56, alpha: 0.4, drift: 280, delay: -40 },
+  { x: 88, y: 62, size: 40, alpha: 0.38, drift: 200, delay: -90 },
 ];
 
 const AMBIENT_ORBS = [
-  { x: 18, y: 30, size: 48, blur: 90, alpha: 0.16, duration: 16, delay: 0 },
-  { x: 84, y: 70, size: 58, blur: 110, alpha: 0.13, duration: 19, delay: -80 },
-  { x: 66, y: 22, size: 30, blur: 70, alpha: 0.18, duration: 14, delay: -40 },
-  { x: 30, y: 78, size: 36, blur: 80, alpha: 0.15, duration: 17, delay: -120 },
-  { x: 52, y: 52, size: 18, blur: 50, alpha: 0.2, duration: 12, delay: -60 },
-  { x: 92, y: 38, size: 14, blur: 44, alpha: 0.17, duration: 13, delay: -160 },
-  { x: 6, y: 60, size: 16, blur: 48, alpha: 0.16, duration: 15, delay: -100 },
-  { x: 38, y: 12, size: 12, blur: 38, alpha: 0.14, duration: 11, delay: -180 },
-  { x: 74, y: 90, size: 22, blur: 60, alpha: 0.13, duration: 18, delay: -220 },
+  { x: 18, y: 30, size: 72, alpha: 0.16, duration: 16, delay: 0 },
+  { x: 84, y: 70, size: 86, alpha: 0.13, duration: 19, delay: -80 },
+  { x: 66, y: 22, size: 46, alpha: 0.18, duration: 14, delay: -40 },
+  { x: 30, y: 78, size: 54, alpha: 0.15, duration: 17, delay: -120 },
+  { x: 52, y: 52, size: 30, alpha: 0.2, duration: 12, delay: -60 },
+  { x: 6, y: 60, size: 26, alpha: 0.16, duration: 15, delay: -100 },
 ];
 
 type Star = {
@@ -132,7 +127,6 @@ export function CelestialSky({ theme }: Props) {
                     top: `${cloud.y}%`,
                     width: `${cloud.size}vmin`,
                     height: `${cloud.size * 0.55}vmin`,
-                    filter: `blur(${cloud.blur}px)`,
                     "--cloud-alpha": cloud.alpha,
                     "--cloud-drift": `${cloud.drift}s`,
                     "--cloud-delay": `${cloud.delay}s`,
@@ -152,7 +146,6 @@ export function CelestialSky({ theme }: Props) {
                     top: `${orb.y}%`,
                     width: `${orb.size}vmin`,
                     height: `${orb.size}vmin`,
-                    filter: `blur(${orb.blur}px)`,
                     "--orb-alpha": orb.alpha,
                     "--orb-duration": `${orb.duration}s`,
                     "--orb-delay": `${orb.delay}s`,

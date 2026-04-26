@@ -119,6 +119,8 @@ body::before {
   pointer-events: none;
   overflow: hidden;
   contain: strict;
+  isolation: isolate;
+  transform: translateZ(0);
 }
 
 .celestial {
@@ -141,13 +143,13 @@ body::before {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(220, 230, 245, 0.3) 0%,
-    rgba(195, 210, 230, 0.18) 18%,
-    rgba(170, 188, 210, 0.09) 38%,
-    rgba(150, 170, 195, 0.04) 58%,
-    transparent 80%
+    rgba(220, 230, 245, 0.22) 0%,
+    rgba(205, 218, 235, 0.16) 14%,
+    rgba(190, 205, 225, 0.1) 30%,
+    rgba(170, 188, 210, 0.05) 52%,
+    rgba(150, 170, 195, 0.02) 72%,
+    transparent 92%
   );
-  filter: blur(36px);
   animation: orb-pulse 11s ease-in-out infinite alternate;
 }
 
@@ -156,19 +158,18 @@ body::before {
   inset: -10%;
   border-radius: 50%;
   background: radial-gradient(
-    circle at 36% 30%,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(245, 248, 252, 0.78) 14%,
-    rgba(215, 224, 236, 0.5) 34%,
-    rgba(180, 195, 215, 0.26) 56%,
-    rgba(140, 160, 185, 0.1) 78%,
+    circle at 38% 32%,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(245, 248, 252, 0.5) 14%,
+    rgba(220, 228, 240, 0.34) 34%,
+    rgba(190, 205, 225, 0.18) 56%,
+    rgba(160, 178, 200, 0.08) 78%,
     transparent 100%
   );
-  filter: blur(60px);
   box-shadow:
-    inset 0 0 32px rgba(255, 255, 255, 0.35),
-    0 0 80px rgba(220, 230, 245, 0.32),
-    0 0 180px rgba(190, 205, 225, 0.18);
+    inset 0 0 32px rgba(255, 255, 255, 0.3),
+    0 0 80px rgba(220, 230, 245, 0.22),
+    0 0 180px rgba(190, 205, 225, 0.12);
   animation: orb-pulse 13s ease-in-out infinite alternate-reverse;
 }
 
@@ -178,7 +179,6 @@ body::before {
   border-radius: 50%;
   border: 1px solid rgba(140, 160, 185, 0.08);
   box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.22);
-  filter: blur(2px);
   pointer-events: none;
 }
 
@@ -276,18 +276,18 @@ body::before {
   position: absolute;
   border-radius: 50%;
   background: radial-gradient(
-    circle at 38% 32%,
-    rgba(255, 255, 255, calc(var(--orb-alpha, 0.16) * 1.4)) 0%,
-    rgba(232, 240, 250, var(--orb-alpha, 0.16)) 22%,
-    rgba(200, 215, 235, calc(var(--orb-alpha, 0.16) * 0.7)) 48%,
-    rgba(170, 188, 210, calc(var(--orb-alpha, 0.16) * 0.32)) 72%,
+    circle at 42% 36%,
+    rgba(255, 255, 255, calc(var(--orb-alpha, 0.16) * 1.1)) 0%,
+    rgba(232, 240, 250, calc(var(--orb-alpha, 0.16) * 0.85)) 18%,
+    rgba(210, 222, 238, calc(var(--orb-alpha, 0.16) * 0.55)) 40%,
+    rgba(190, 205, 225, calc(var(--orb-alpha, 0.16) * 0.28)) 62%,
+    rgba(170, 188, 210, calc(var(--orb-alpha, 0.16) * 0.1)) 82%,
     transparent 100%
   );
   transform: translate(-50%, -50%);
   animation: ambient-orb-pulse var(--orb-duration, 14s) ease-in-out infinite
     alternate;
   animation-delay: var(--orb-delay, 0s);
-  will-change: opacity;
 }
 
 @keyframes ambient-orb-pulse {
@@ -310,14 +310,15 @@ body::before {
   border-radius: 50%;
   background: radial-gradient(
     ellipse,
-    rgba(255, 255, 255, var(--cloud-alpha, 0.4)) 0%,
-    rgba(255, 255, 255, calc(var(--cloud-alpha, 0.4) * 0.55)) 40%,
-    rgba(255, 255, 255, 0) 80%
+    rgba(255, 255, 255, calc(var(--cloud-alpha, 0.4) * 0.78)) 0%,
+    rgba(255, 255, 255, calc(var(--cloud-alpha, 0.4) * 0.5)) 28%,
+    rgba(255, 255, 255, calc(var(--cloud-alpha, 0.4) * 0.22)) 58%,
+    rgba(255, 255, 255, calc(var(--cloud-alpha, 0.4) * 0.06)) 82%,
+    rgba(255, 255, 255, 0) 100%
   );
   transform: translate(-50%, -50%);
   animation: cloud-drift var(--cloud-drift, 240s) ease-in-out infinite alternate;
   animation-delay: var(--cloud-delay, 0s);
-  will-change: transform;
 }
 
 @keyframes cloud-drift {
