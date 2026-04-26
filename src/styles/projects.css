@@ -126,12 +126,13 @@
 }
 
 .project-meta-row dd {
+  justify-self: start;
   margin: 0;
   font-size: 0.9rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
+  gap: 0;
   flex-wrap: wrap;
 }
 
@@ -207,7 +208,7 @@
 
 .project-date-sep {
   color: var(--fg-muted);
-  margin: 0 2px;
+  margin: 0 4px;
 }
 
 .project-stack,
