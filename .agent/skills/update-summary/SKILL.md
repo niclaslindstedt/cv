@@ -42,9 +42,24 @@ facts that are actually true today. Hallucinating a "where I'm going"
 sentence from the rest of the CV is the easiest way to embarrass the
 author.
 
-### 1. Gather facts already in the CV
+### 1. Read the schema first
 
-Read `src/data/cv.json` and pull out, without inventing anything:
+Before opening `cv.json`, read `schemas/cv.schema.json`. The schema is
+the map of the CV: it tells you which fields exist, which are required,
+which are bilingual `localizedString` objects, how `experience[]` nests
+`assignments[]` and `roles[]`, how `companies[]` is keyed by `id` and
+referenced from `experience[].companyId` / `assignments[].clientId`,
+and which fields (e.g. `endDate: null`) signal "still active".
+
+Reading the schema first makes the next step quicker and cheaper:
+`cv.json` is large (often >25k tokens) and you'll want to navigate it
+in slices rather than reading it whole. The schema tells you which
+slices matter.
+
+### 2. Gather facts already in the CV
+
+With the schema in hand, read the relevant slices of `src/data/cv.json`
+and pull out, without inventing anything:
 
 - `name`, `title`, `location`.
 - `focus[]` — top entries are the current direction.
@@ -57,7 +72,7 @@ Read `src/data/cv.json` and pull out, without inventing anything:
 Skim `companies[]` for descriptions you can reference by name, but do
 not paste their taglines into the summary.
 
-### 2. Ask the user, before rewriting
+### 3. Ask the user, before rewriting
 
 Use `AskUserQuestion` (one tool call, multiple questions if the tool
 allows it) to confirm the two facts the CV cannot tell you:
@@ -81,7 +96,7 @@ Optionally also ask:
   freelance prospect.) Default: recruiter, the same audience as the
   rest of the CV.
 
-### 3. Draft the short summary
+### 4. Draft the short summary
 
 - 1–2 sentences. Lead with what the author **is** today (role + focus),
   then what they are **moving toward**. Match the rhythm of the
@@ -94,7 +109,7 @@ Optionally also ask:
 - Stay under ~280 characters per language so the line wraps cleanly
   on the hero card on a 320px-wide phone.
 
-### 4. Draft the long summary
+### 5. Draft the long summary
 
 - 4–7 sentences. A narrative that walks the reader from the past to
   the future:
@@ -114,7 +129,7 @@ Optionally also ask:
   long blob signals "read all of my CV instead", which defeats the
   purpose.
 
-### 5. Translate
+### 6. Translate
 
 Translate both fields to Swedish (`sv`) with the same sentence count
 and emphasis as the English (`en`). Preserve proper nouns: company
@@ -122,7 +137,7 @@ names, project names (zag, zig, zad, ztf, …), product names, course
 codes. Do not translate them. Use Swedish IT-arkitekt terminology
 where the rest of the CV already does (mirror neighboring entries).
 
-### 6. Confirm before writing
+### 7. Confirm before writing
 
 Show the user a side-by-side preview of the proposed `summary` and
 `longSummary` (both languages). Ask: **"Apply these as-is, or revise
@@ -133,7 +148,7 @@ first?"**
   and re-show. Do not silently regenerate the rest.
 - If the user rejects, stop. Leave the file untouched.
 
-### 7. Write
+### 8. Write
 
 Update both `summary` and `longSummary` in one edit. Preserve the
 existing JSON key order: `location`, `summary`, `longSummary`,
