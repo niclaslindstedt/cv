@@ -199,14 +199,23 @@ export function Timeline({ open, onClose }: Props) {
         if (start < earliestStart) earliestStart = start;
       }
       const left = (earliestStart - minMonth) * monthPx;
-      const top = AXIS_SIZE + trackTop[trackIdx];
+      const trackStart = AXIS_SIZE + trackTop[trackIdx];
+      const trackEnd = trackStart + trackHeight[trackIdx];
+      const viewTop = viewport.scrollTop + AXIS_SIZE;
+      const viewBottom = viewport.scrollTop + viewport.clientHeight;
+      let nextTop = viewport.scrollTop;
+      if (trackStart < viewTop) {
+        nextTop = Math.max(0, trackStart - AXIS_SIZE - 16);
+      } else if (trackEnd > viewBottom) {
+        nextTop = Math.max(0, trackEnd - viewport.clientHeight + 16);
+      }
       viewport.scrollTo({
         left: Math.max(0, left - 24),
-        top: Math.max(0, top - 24),
+        top: nextTop,
         behavior: "smooth",
       });
     },
-    [tracks, monthPx, minMonth, trackTop],
+    [tracks, monthPx, minMonth, trackTop, trackHeight],
   );
 
   useEffect(() => {
