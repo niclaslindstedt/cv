@@ -6,6 +6,7 @@ import {
   useState,
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
+  type ReactNode,
 } from "react";
 
 import timelineData from "../data/timeline.json";
@@ -431,44 +432,86 @@ export function Timeline({ open, onClose }: Props) {
     )}`;
 
     const span = endMonth - startMonth;
-    const promotionMarkers =
-      bar.promotions && span > 0
-        ? bar.promotions
-            .map((promo) => {
-              const m = monthIndex(promo.startDate);
-              if (m <= startMonth || m >= endMonth) return null;
-              const left = `${((m - startMonth) / span) * 100}%`;
-              const promoTitle = t(promo.title);
-              return (
-                <span
-                  key={promo.startDate}
-                  className="timeline-vis-promotion-marker"
-                  style={{ left }}
-                  title={ui.timeline.promotedTo(
-                    promoTitle,
-                    formatMonth(promo.startDate, lang),
-                  )}
-                  aria-hidden="true"
-                />
-              );
-            })
-            .filter(Boolean)
-        : null;
+    const hasRoles = !!(bar.roles && bar.roles.length >= 2 && span > 0);
+
+    let roleSegments: ReactNode = null;
+    let promotionMarkers: ReactNode = null;
+    if (hasRoles) {
+      const roles = bar.roles!;
+      const boundaries: number[] = [startMonth];
+      for (let i = 1; i < roles.length; i++) {
+        const m = monthIndex(roles[i].startDate);
+        boundaries.push(Math.min(Math.max(m, startMonth), endMonth));
+      }
+      boundaries.push(endMonth);
+
+      roleSegments = roles.map((role, i) => {
+        const segStart = boundaries[i];
+        const segEnd = boundaries[i + 1];
+        const left = `${((segStart - startMonth) / span) * 100}%`;
+        const width = `${((segEnd - segStart) / span) * 100}%`;
+        const isPromoted = i > 0;
+        return (
+          <span
+            key={`role-${role.startDate}`}
+            className={`timeline-vis-item-segment${
+              isPromoted ? " is-promoted" : ""
+            }`}
+            style={{ left, width }}
+          >
+            {isPromoted && (
+              <span className="timeline-vis-promo-arrow" aria-hidden="true">
+                →
+              </span>
+            )}
+            <span className="timeline-vis-item-segment-label">
+              <span className="timeline-vis-item-title">{t(role.title)}</span>
+              {!isPromoted && barSubtitle && (
+                <span className="timeline-vis-item-sub">{barSubtitle}</span>
+              )}
+            </span>
+          </span>
+        );
+      });
+
+      promotionMarkers = roles.slice(1).map((role) => {
+        const m = monthIndex(role.startDate);
+        if (m <= startMonth || m >= endMonth) return null;
+        const left = `${((m - startMonth) / span) * 100}%`;
+        const promoTitle = t(role.title);
+        return (
+          <span
+            key={role.startDate}
+            className="timeline-vis-promotion-marker"
+            style={{ left }}
+            title={ui.timeline.promotedTo(
+              promoTitle,
+              formatMonth(role.startDate, lang),
+            )}
+            aria-hidden="true"
+          />
+        );
+      });
+    }
 
     return (
       <button
         key={bar.id}
         type="button"
-        className={classes}
+        className={`${classes}${hasRoles ? " has-roles" : ""}`}
         style={style}
         data-bar-id={bar.id}
         onClick={() => setSelectedId(bar.id)}
         title={title}
       >
-        <span className="timeline-vis-item-label">
-          <span className="timeline-vis-item-title">{barTitle}</span>
-          <span className="timeline-vis-item-sub">{barSubtitle}</span>
-        </span>
+        {hasRoles ? (
+          roleSegments
+        ) : (
+          <span className="timeline-vis-item-label">
+            <span className="timeline-vis-item-title">{barTitle}</span>
+            <span className="timeline-vis-item-sub">{barSubtitle}</span>
+          </span>
+        )}
         {promotionMarkers}
       </button>
     );

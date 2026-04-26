@@ -104,9 +104,9 @@ function nowMonthIndex() {
   return d.getFullYear() * 12 + d.getMonth();
 }
 
-function rolePromotions(sortedRoles) {
+function roleEntries(sortedRoles) {
   if (!sortedRoles || sortedRoles.length < 2) return undefined;
-  return sortedRoles.slice(1).map((role) => ({
+  return sortedRoles.map((role) => ({
     startDate: role.startDate,
     title: localize(role.title),
   }));
@@ -153,7 +153,7 @@ function buildItems(cv) {
       endDate: exp.endDate,
       skills: mergeTags(exp.stack, exp.skills),
       notes: exp.notes ? localize(exp.notes) : undefined,
-      promotions: rolePromotions(sortedExpRoles),
+      roles: roleEntries(sortedExpRoles),
     });
     (exp.assignments ?? []).forEach((a, j) => {
       const client = lookup(a.clientId);
@@ -178,7 +178,7 @@ function buildItems(cv) {
         endDate: a.endDate,
         skills: mergeTags(a.stack, a.skills),
         notes: a.notes ? localize(a.notes) : undefined,
-        promotions: rolePromotions(sortedRoles),
+        roles: roleEntries(sortedRoles),
       });
     });
   });
@@ -447,7 +447,7 @@ function buildLayout(cv, activity, projectStats) {
       if (p.credits) bar.credits = p.credits;
       if (p.github) bar.github = p.github;
       if (p.sideProject) bar.sideProject = p.sideProject;
-      if (p.promotions) bar.promotions = p.promotions;
+      if (p.roles) bar.roles = p.roles;
       return bar;
     }),
   }));

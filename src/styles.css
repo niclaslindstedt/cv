@@ -1861,11 +1861,46 @@ button.skill-pill-btn:focus-visible {
   line-height: 1.25;
 }
 
+.timeline-vis-item.has-roles {
+  padding: 0;
+}
+
+.timeline-vis-item-segment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 12px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.timeline-vis-item-segment.is-promoted {
+  padding-left: 6px;
+}
+
+.timeline-vis-item-segment-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.timeline-vis-promo-arrow {
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+  line-height: 1;
+}
+
 .timeline-vis-item-title {
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
 }
 
 .timeline-vis-item-sub {
@@ -1873,7 +1908,7 @@ button.skill-pill-btn:focus-visible {
   font-size: 0.68rem;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
 }
 
 .timeline-vis-details {
