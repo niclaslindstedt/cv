@@ -576,7 +576,6 @@ a:hover {
 @media (hover: hover) {
   .focus-item-btn:hover {
     border-color: var(--accent);
-    background: var(--accent-soft);
   }
 }
 
@@ -1259,7 +1258,6 @@ a:hover {
 @media (hover: hover) {
   .education-list > li:has(.education-program-btn:hover) {
     border-color: var(--accent);
-    background: var(--accent-soft);
   }
 }
 
