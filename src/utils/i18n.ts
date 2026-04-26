@@ -80,6 +80,8 @@ type UiStrings = {
   projectModal: {
     detailAria: (project: string) => string;
     viewOnGitHub: string;
+    active: string;
+    commits: string;
   };
   programModal: {
     coursesHeading: string;
@@ -203,6 +205,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     projectModal: {
       detailAria: (project) => `${project} details`,
       viewOnGitHub: "View on GitHub ↗",
+      active: "Active",
+      commits: "Commits",
     },
     programModal: {
       coursesHeading: "Courses",
@@ -327,6 +331,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     projectModal: {
       detailAria: (project) => `Detaljer för ${project}`,
       viewOnGitHub: "Visa på GitHub ↗",
+      active: "Aktiv",
+      commits: "Commits",
     },
     programModal: {
       coursesHeading: "Kurser",

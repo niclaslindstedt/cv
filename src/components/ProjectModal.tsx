@@ -1,15 +1,37 @@
 import { useEffect } from "react";
 
-import type { Project } from "../data/cv.types";
+import projectStatsData from "../data/project-stats.json";
+import type {
+  GithubRepoRef,
+  Project,
+  ProjectStats,
+  ProjectStatsFile,
+} from "../data/cv.types";
+import { formatMonth } from "../utils/date";
 import { useLang } from "../utils/i18n";
+
+const projectStats = projectStatsData as ProjectStatsFile;
 
 type Props = {
   project: Project | null;
   onClose: () => void;
 };
 
+function statsKey(github: GithubRepoRef): string {
+  return `${github.owner}/${github.repo}`;
+}
+
+function lookupStats(github: GithubRepoRef): ProjectStats | undefined {
+  if (!projectStats?.enabled) return undefined;
+  return projectStats.projects?.[statsKey(github)];
+}
+
+function isoToYearMonth(iso: string): string {
+  return iso.slice(0, 7);
+}
+
 export function ProjectModal({ project, onClose }: Props) {
-  const { t, ui } = useLang();
+  const { t, lang, ui } = useLang();
 
   useEffect(() => {
     if (!project) return;
@@ -32,6 +54,15 @@ export function ProjectModal({ project, onClose }: Props) {
   if (!project) return null;
 
   const repoUrl = `https://github.com/${project.github.owner}/${project.github.repo}`;
+  const stats = lookupStats(project.github);
+  const dateRange =
+    stats && stats.firstCommitDate && stats.lastCommitDate
+      ? `${formatMonth(isoToYearMonth(stats.firstCommitDate), lang)} – ${formatMonth(
+          isoToYearMonth(stats.lastCommitDate),
+          lang,
+        )}`
+      : null;
+  const hasCommits = !!stats && stats.totalCommits > 0;
 
   return (
     <div
@@ -58,6 +89,26 @@ export function ProjectModal({ project, onClose }: Props) {
         <div className="skill-modal-body">
           <section className="skill-modal-detail">
             <p className="skill-modal-description">{t(project.description)}</p>
+            {(dateRange || hasCommits) && (
+              <dl className="project-meta">
+                {dateRange && (
+                  <div className="project-meta-row">
+                    <dt>{ui.projectModal.active}</dt>
+                    <dd>{dateRange}</dd>
+                  </div>
+                )}
+                {hasCommits && (
+                  <div className="project-meta-row">
+                    <dt>{ui.projectModal.commits}</dt>
+                    <dd>
+                      <span className="project-commit-total">
+                        {stats!.totalCommits}
+                      </span>
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            )}
             {project.openSource && (
               <a
                 className="skill-modal-link"
