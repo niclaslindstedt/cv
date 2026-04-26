@@ -174,7 +174,7 @@
       "sv": "CLI för att samla in och normalisera svenska rättsdokument från officiella källor — propositioner, statliga utredningar, prejudikat, myndighetsföreskrifter och EU-rätt — till ett enhetligt format i Markdown och JSON. Åtta insamlare täcker Riksdagens JSON-API, skrapning av Regeringen.se, Domstolsverkets REST-API, JO/JK/Lagrummet-skrapning, EUR-Lex SPARQL och CURIA/HUDOC; tillsammans hanterar de 21 dokumenttyper. Asynkron I/O med inbyggd hastighetsbegränsning respekterar källservrarna, inkrementell tillståndsspårning låter långa körningar fortsätta där de slutade och PDF-textextraktion drar ut innehåll ur bilagor. Utdata är git-vänlig: varje dokument blir en versionshanterad commit och diff. Publiceras på PyPI."
     },
     "stack": ["Python"],
-    "skills": ["Python", "Software Architecture", "Spec-driven development"],
+    "skills": ["Software Architecture", "Spec-driven development"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "juris"
@@ -233,7 +233,7 @@
       "sv": "Containeriserat säkerhetskopieringsverktyg för Docker-volymer och värdmappar. Säkerhetskopior är tar/zip/7z/rar-arkiv som kan GPG-krypteras, signeras och verifieras med sfv-checksummor; ett cronstyrt schema flyttar dem till långtidslagring och rensar gamla kopior enligt fönsterbaserade retentionsregler och tröskelvärden för ledigt utrymme. Docker-medveten variant pausar systerkontainrar under säkerhetskopieringsfönstret så att volymer inte fångas mitt under skrivning, och notifierar Slack eller Discord när jobbet är klart. Distribueras som multi-arch-avbildningar på Docker Hub, med både Ubuntu- och Alpine-variant. Täcks av en shell-baserad testsvit som kör varje kommando från början till slut."
     },
     "stack": ["Bash/Shell", "Docker"],
-    "skills": ["Bash/Shell", "Docker", "Cybersecurity"],
+    "skills": ["Cybersecurity"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "docker-backup"

@@ -22,7 +22,20 @@ function requireCompany(path, id) {
   return companies.get(id).name;
 }
 
-cv.projects.forEach((p, i) => check(`projects[${i}] (${p.name})`, p.skills));
+cv.projects.forEach((p, i) => {
+  check(`projects[${i}] (${p.name})`, p.skills);
+  const stack = Array.isArray(p.stack) ? p.stack : [];
+  const skills = Array.isArray(p.skills) ? p.skills : [];
+  const stackSet = new Set(stack);
+  const overlap = skills.filter((s) => stackSet.has(s));
+  if (overlap.length) {
+    errors.push(
+      `projects[${i}] (${p.name}): stack and skills overlap on ${overlap
+        .map((s) => `"${s}"`)
+        .join(", ")} — list each tech once, in stack`,
+    );
+  }
+});
 cv.experience.forEach((e, i) => {
   const companyLabel = requireCompany(
     `experience[${i}].companyId`,
