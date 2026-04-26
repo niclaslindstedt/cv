@@ -115,14 +115,14 @@
         },
         "github": { "$ref": "#/$defs/github" },
         "sideProject": { "$ref": "#/$defs/sideProject" },
-        "promotions": {
+        "roles": {
           "type": "array",
-          "minItems": 1,
-          "items": { "$ref": "#/$defs/promotion" }
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/role" }
         }
       }
     },
-    "promotion": {
+    "role": {
       "type": "object",
       "additionalProperties": false,
       "required": ["startDate", "title"],

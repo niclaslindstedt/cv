@@ -45,7 +45,7 @@ export type SideProjectPayload = {
   lastCommitDate?: string;
 };
 
-export type TimelinePromotion = {
+export type TimelineRole = {
   startDate: string;
   title: LocalizedString;
 };
@@ -66,7 +66,7 @@ export type TimelineBar = {
   segments: TimelineSegment[];
   github?: GitHubPayload;
   sideProject?: SideProjectPayload;
-  promotions?: TimelinePromotion[];
+  roles?: TimelineRole[];
 };
 
 export type TimelineTrack = {

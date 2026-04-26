@@ -381,27 +381,39 @@ without further adjustment.
 
 ### 5.7 Timeline promotion markers
 
-A merged title like `Senior Consultant → Manager → Senior Manager`
-on a single timeline bar conveys order but not _when_ each promotion
-took effect. To anchor the chain in time, each non-first role in
-`exp.roles` (and `assignment.roles`) emits a `promotions` entry on
-the bar in `timeline.json`. The renderer paints a 1px vertical line
-inside the bar at each promotion date.
+A bar with multiple roles (e.g. `Senior Consultant → Manager → Senior
+Manager`) needs to convey both the order of titles **and** when each
+promotion took effect. Each role in `exp.roles` (and `assignment.roles`)
+is emitted as an entry on the bar's `roles` array in `timeline.json`,
+and the renderer splits the bar into per-role text segments anchored
+to each role's `startDate`.
 
-- The line spans the bar's interior with a 4px inset top and bottom
-  so it reads as an internal divider, not a track gridline.
-- Color matches the bar's accent (blue for jobs, green for
-  assignments) at 0.55 opacity — present but never competing with
-  the title text.
-- Markers are decorative (`aria-hidden`); the screen-reader story
-  is already covered by the merged title in the bar's accessible
-  name. The native `title` tooltip names the promoted role and
-  date for sighted hover.
-- `pointer-events: none` keeps the entire bar a single click target.
+- Each segment is absolutely positioned within the bar at its
+  time-slice (left/width as percentages of the bar span) and uses
+  `overflow: hidden` with `text-overflow: clip` so role titles get
+  cut cleanly when the segment is too narrow (mobile, low zoom).
+- Between segments, a 1px vertical line marks the promotion date.
+  The line spans the bar's interior with a 4px inset top and bottom
+  so it reads as an internal divider, not a track gridline. Color
+  matches the bar's accent (blue for jobs, green for assignments)
+  at 0.55 opacity.
+- Each promoted segment is prefixed with a `→` glyph in
+  `--fg-muted` to make the chain readable as
+  `Role | → Role 2 | → Role 3`.
+- The first segment carries the bar's subtitle (company name)
+  beneath the role title; subsequent segments show only the role
+  title, since the company is the same across the entire bar.
+- Markers and the arrow are decorative (`aria-hidden`); the
+  screen-reader story is covered by the bar's accessible `title`
+  tooltip (full title and date range). The marker's native `title`
+  tooltip names the promoted role and date for sighted hover.
+- `pointer-events: none` on the markers keeps the entire bar a
+  single click target.
 
-A bar with one role has no `promotions` field and renders no
-markers. Other timeline kinds (education, course, side project,
-github) never have a `promotions` field.
+A bar with one role has no `roles` field and renders the original
+single-label layout (centered title + subtitle). Other timeline
+kinds (education, course, side project, github) never have a
+`roles` field.
 
 ### 5.8 Project date chip
 
