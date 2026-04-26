@@ -131,8 +131,8 @@ body::before {
 }
 
 .celestial.orb {
-  width: 14vmin;
-  height: 14vmin;
+  width: 20vmin;
+  height: 20vmin;
 }
 
 .orb-halo {
@@ -266,6 +266,39 @@ body::before {
   }
 }
 
+.orbfield {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 38% 32%,
+    rgba(255, 255, 255, calc(var(--orb-alpha, 0.16) * 1.4)) 0%,
+    rgba(232, 240, 250, var(--orb-alpha, 0.16)) 22%,
+    rgba(200, 215, 235, calc(var(--orb-alpha, 0.16) * 0.7)) 48%,
+    rgba(170, 188, 210, calc(var(--orb-alpha, 0.16) * 0.32)) 72%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%);
+  animation: ambient-orb-pulse var(--orb-duration, 14s) ease-in-out infinite
+    alternate;
+  animation-delay: var(--orb-delay, 0s);
+  will-change: opacity;
+}
+
+@keyframes ambient-orb-pulse {
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .cloudfield {
   position: absolute;
   inset: 0;
@@ -300,7 +333,8 @@ body::before {
   .orb-halo,
   .orb-body,
   .star,
-  .cloud {
+  .cloud,
+  .ambient-orb {
     animation: none !important;
   }
   .celestial {
