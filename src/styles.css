@@ -1458,6 +1458,7 @@ button.skill-pill-btn:focus-visible {
   right: 16px;
   display: flex;
   align-items: flex-start;
+  gap: 8px;
   padding-top: 16px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -1468,15 +1469,27 @@ button.skill-pill-btn:focus-visible {
   pointer-events: none;
 }
 
+.timeline-vis-track-icon {
+  flex: 0 0 auto;
+  color: var(--fg-muted);
+}
+
+.timeline-vis-track-label-text {
+  min-width: 0;
+}
+
 @media (max-width: 640px) {
   .timeline-vis-labels {
-    flex-basis: 112px;
+    flex-basis: 44px;
   }
   .timeline-vis-track-label {
-    left: 14px;
-    right: 12px;
-    font-size: 0.64rem;
-    letter-spacing: 0.04em;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    gap: 0;
+  }
+  .timeline-vis-track-label-text {
+    display: none;
   }
 }
 
