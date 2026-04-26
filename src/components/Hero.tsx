@@ -162,14 +162,14 @@ function FlagEN() {
 
 function FlagSV() {
   return (
-    <svg viewBox="0 0 60 30" aria-hidden="true" role="img">
+    <svg viewBox="0 0 16 10" aria-hidden="true" role="img">
       <clipPath id="flag-sv-clip">
-        <rect width="60" height="30" rx="3" />
+        <rect width="16" height="10" rx="0.8" />
       </clipPath>
       <g clipPath="url(#flag-sv-clip)">
-        <rect width="60" height="30" fill="#006AA7" />
-        <rect x="18" width="6" height="30" fill="#FECC00" />
-        <rect y="12" width="60" height="6" fill="#FECC00" />
+        <rect width="16" height="10" fill="#006AA7" />
+        <rect x="5" width="2" height="10" fill="#FECC00" />
+        <rect y="4" width="16" height="2" fill="#FECC00" />
       </g>
     </svg>
   );
