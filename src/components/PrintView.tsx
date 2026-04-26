@@ -77,10 +77,10 @@ function ExperienceEntry({ item }: { item: PrintExperience }) {
             </>
           )}
         </p>
-        <p className="print-job-tagline">{t(item.tagline)}</p>
         {item.roleHistory.length > 0 && (
           <RoleHistory roles={item.roleHistory} />
         )}
+        <p className="print-job-tagline">{t(item.tagline)}</p>
         {item.tags.length > 0 && (
           <p className="print-tags">{item.tags.join(", ")}</p>
         )}
@@ -112,8 +112,8 @@ function AssignmentEntry({ item }: { item: PrintAssignment }) {
         <span className="print-job-company">{item.client}</span>
       </h4>
       <p className="print-job-meta">{t(item.range)}</p>
-      <p className="print-job-tagline">{t(item.tagline)}</p>
       {item.roleHistory.length > 0 && <RoleHistory roles={item.roleHistory} />}
+      <p className="print-job-tagline">{t(item.tagline)}</p>
       {item.tags.length > 0 && (
         <p className="print-tags">{item.tags.join(", ")}</p>
       )}
