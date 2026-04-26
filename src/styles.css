@@ -1543,13 +1543,15 @@ button.skill-pill-btn:focus-visible {
     background-color 120ms ease;
 }
 
-.timeline-vis-track-label:hover,
-.timeline-vis-track-label:focus-visible {
-  color: var(--fg);
-  background-color: var(--accent-soft);
+@media (hover: hover) {
+  .timeline-vis-track-label:hover {
+    color: var(--fg);
+    background-color: var(--accent-soft);
+  }
 }
 
 .timeline-vis-track-label:focus-visible {
+  color: var(--fg);
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }

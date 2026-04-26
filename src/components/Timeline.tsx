@@ -199,14 +199,13 @@ export function Timeline({ open, onClose }: Props) {
         if (start < earliestStart) earliestStart = start;
       }
       const left = (earliestStart - minMonth) * monthPx;
-      const top = AXIS_SIZE + trackTop[trackIdx];
       viewport.scrollTo({
         left: Math.max(0, left - 24),
-        top: Math.max(0, top - 24),
+        top: viewport.scrollTop,
         behavior: "smooth",
       });
     },
-    [tracks, monthPx, minMonth, trackTop],
+    [tracks, monthPx, minMonth],
   );
 
   useEffect(() => {
@@ -507,7 +506,10 @@ export function Timeline({ open, onClose }: Props) {
                   }}
                   aria-label={labelText}
                   title={labelText}
-                  onClick={() => scrollToTrackStart(t)}
+                  onClick={(e) => {
+                    scrollToTrackStart(t);
+                    e.currentTarget.blur();
+                  }}
                 >
                   <TrackIcon kind={track.key} />
                   <span className="timeline-vis-track-label-text">
