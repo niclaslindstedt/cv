@@ -72,12 +72,24 @@ no chromatic accents — emphasis comes from value contrast and
 typographic weight.
 
 The light sky is layered: a single focal **chrome orb** (top centre,
-the sun replacement), a drifting cloud field, and an **ambient orb
-field** of ~9 secondary orbs at varying sizes (small to large), heavy
-blur, and very low alpha (~0.13–0.20). Ambient orbs are decorative
-atmosphere only — they should never read as objects, only as soft
-luminance variation. Don't add chromatic tint; reach for the
-silver/pearl gradient already used by `.ambient-orb`.
+the sun replacement), a drifting cloud field of ~5 blobs, and an
+**ambient orb field** of ~6 secondary orbs at varying sizes (small to
+large), heavily feathered, and very low alpha (~0.13–0.20). Ambient
+orbs are decorative atmosphere only — they should never read as
+objects, only as soft luminance variation. Don't add chromatic tint;
+reach for the silver/pearl gradient already used by `.ambient-orb`.
+
+**Don't use `filter: blur(...)` on clouds, ambient orbs, or focal-orb
+layers.** The "blurred blob" look is achieved with extended
+`radial-gradient` stops on `.cloud`, `.ambient-orb`, `.orb-halo`, and
+`.orb-body` — a single cached paint per element. Stacking many
+runtime `filter: blur` layers underneath the page's `backdrop-filter`
+glass cards crashes the iOS Safari compositor during scroll (cards
+paint blank). Keep the field deliberately small: more elements means
+more overdraw against every glass card on screen. `.celestial-sky`
+itself is a composite layer (`isolation: isolate; transform:
+translateZ(0)`) so its drift animations don't invalidate
+`backdrop-filter` reads above it.
 
 ### 2.3 Geometry
 
