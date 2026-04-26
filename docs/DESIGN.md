@@ -292,7 +292,28 @@ A card with `endDate === null` (currently active) gets the
 `rgba(122,183,255,0.55)` border and a 1px outer glow. No other
 "current" badge is needed.
 
-### 5.4 Code-style display
+### 5.4 Clickable hero summary
+
+The hero summary (`.hero-summary`) doubles as a button that opens a
+modal containing `cv.longSummary` — a longer narrative of the CV. The
+short summary still stands on its own as the headline; the modal is a
+"read more" affordance, not a substitute.
+
+- The control is a `<button>`, not a wrapping `<a>` — it opens an
+  in-page modal, not a route.
+- Hover affordance is a 1px dashed `--accent-soft` underline on the
+  paragraph plus a `Read more →` / `Läs mer →` hint rendered inline at
+  the end of the line in `--accent` (`0.85rem`, weight 500). The hint
+  is decorative (`aria-hidden`); the button's accessible name comes
+  from `aria-label`.
+- The modal is the standard glass modal from §4.7, with the author's
+  name as the title and the localized `cv.title` as the accent pill —
+  matching the tagline pill on `ProjectModal`.
+- Print collapses the control to plain text: no underline, no hint,
+  no cursor. The long form is intentionally _not_ inlined into the
+  printed CV — print stays scoped to the short summary.
+
+### 5.5 Code-style display
 
 Project names, course codes, and technology tags use `--font-mono`.
 This is the visual cue for "this is an identifier, not a sentence."

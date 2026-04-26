@@ -408,11 +408,55 @@ a:hover {
 }
 
 .hero-summary {
+  appearance: none;
   margin: 0 0 20px;
+  padding: 0;
+  font: inherit;
   font-size: 1.1rem;
   color: var(--fg);
   max-width: 640px;
   line-height: 1.6;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px dashed transparent;
+  cursor: pointer;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.hero-summary-text {
+  display: inline;
+}
+
+.hero-summary-hint {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0.8;
+  transition: opacity 120ms ease;
+}
+
+@media (hover: hover) {
+  .hero-summary:hover {
+    border-bottom-color: var(--accent-soft);
+  }
+
+  .hero-summary:hover .hero-summary-hint {
+    opacity: 1;
+  }
+}
+
+.hero-summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .hero-meta {
@@ -2565,6 +2609,14 @@ button.skill-pill-btn:focus-visible {
     font-size: 10.5pt;
     margin-bottom: 8px;
     max-width: none;
+    display: block;
+    border: 0 !important;
+    color: #111 !important;
+    cursor: auto;
+  }
+
+  .hero-summary-hint {
+    display: none !important;
   }
 
   .hero-meta {

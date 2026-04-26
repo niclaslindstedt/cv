@@ -15,6 +15,7 @@ import { ProjectModal } from "./components/ProjectModal";
 import { Projects } from "./components/Projects";
 import { SkillModal } from "./components/SkillModal";
 import { Skills } from "./components/Skills";
+import { SummaryModal } from "./components/SummaryModal";
 import { Timeline } from "./components/Timeline";
 import cv from "./data/cv.json";
 import type {
@@ -41,6 +42,7 @@ export function App() {
   );
   const companyStacks = useMemo(() => buildCompanyStackMap(cv), []);
   const [timelineOpen, setTimelineOpen] = useState(false);
+  const [summaryOpen, setSummaryOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [selectedFocus, setSelectedFocus] = useState<FocusArea | null>(null);
   const [selectedProgram, setSelectedProgram] = useState<EducationItem | null>(
@@ -76,6 +78,7 @@ export function App() {
             theme={theme}
             onToggleTheme={toggleTheme}
             onOpenTimeline={() => setTimelineOpen(true)}
+            onOpenSummary={() => setSummaryOpen(true)}
           />
           <Focus
             title={t(cv.sections.focus)}
@@ -125,6 +128,13 @@ export function App() {
         </footer>
       </div>
       <Timeline open={timelineOpen} onClose={() => setTimelineOpen(false)} />
+      <SummaryModal
+        open={summaryOpen}
+        name={cv.name}
+        title={cv.title}
+        longSummary={cv.longSummary}
+        onClose={() => setSummaryOpen(false)}
+      />
       <SkillModal
         skill={selectedSkill}
         usages={selectedSkill ? (skillUsages.get(selectedSkill) ?? []) : []}
