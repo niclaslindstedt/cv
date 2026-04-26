@@ -980,8 +980,12 @@ a:hover {
   display: block;
   /* Center the 14px icon with the first text line of the content
      (line-box 1.5em). align-items: start on the row keeps the icon pinned
-     to the first line even when role + meta wrap to two lines. */
-  margin-top: calc((1.5em - 14px) / 2);
+     to the first line even when role + meta wrap to two lines. The -2px
+     nudge compensates for the high cap-height of the monospace role font
+     (SF Mono / Menlo), where the visual text center sits above the
+     line-box geometric center — same compensation the main role title
+     applies via translateY(-1px). */
+  margin-top: calc((1.5em - 14px) / 2 - 2px);
 }
 
 .role-start-icon {
