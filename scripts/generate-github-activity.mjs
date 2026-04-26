@@ -3,8 +3,9 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
+import { loadCv } from "../src/data/load-cv.mjs";
+
 const here = dirname(fileURLToPath(import.meta.url));
-const cvPath = resolve(here, "..", "src", "data", "cv.json");
 const defaultOut = resolve(here, "..", "src", "data", "github-activity.json");
 
 const args = process.argv.slice(2);
@@ -207,7 +208,7 @@ function weekStartDate(isoDate) {
 }
 
 async function main() {
-  const cv = JSON.parse(readFileSync(cvPath, "utf8"));
+  const cv = loadCv();
   const profile = extractUsername(cv);
   if (!profile) {
     emit({ enabled: false, years: [] });

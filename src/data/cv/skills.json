@@ -1,0 +1,141 @@
+[
+  {
+    "key": "ai",
+    "label": {
+      "en": "AI",
+      "sv": "AI"
+    },
+    "items": [
+      "Spec-driven development",
+      "Multi-agent orchestration",
+      "Agentic Workflows",
+      "AI Agents",
+      "Multi-provider LLM integration",
+      "Agent sandboxing & isolation",
+      "Agent permissions & security",
+      "Agent-in-the-loop testing",
+      "RAG",
+      "Chatbots",
+      "Prompt engineering",
+      "AI evaluations",
+      "Claude Code",
+      "Agent Skills",
+      "Codex CLI",
+      "Gemini CLI",
+      "GitHub Copilot",
+      "Ollama"
+    ]
+  },
+  {
+    "key": "languages",
+    "label": {
+      "en": "Languages",
+      "sv": "Språk"
+    },
+    "items": [
+      "Rust",
+      "C#/.NET",
+      "TypeScript",
+      "Python",
+      "SQL",
+      "C++",
+      "Bash/Shell",
+      "PowerShell"
+    ]
+  },
+  {
+    "key": "frameworks",
+    "label": {
+      "en": "Frameworks",
+      "sv": "Ramverk"
+    },
+    "items": ["React", "React Native", "Vue", "Angular", "Node.js"]
+  },
+  {
+    "key": "cloud",
+    "label": {
+      "en": "Cloud",
+      "sv": "Moln"
+    },
+    "items": ["Azure", "AWS", "Azure DevOps"]
+  },
+  {
+    "key": "databases",
+    "label": {
+      "en": "Databases",
+      "sv": "Databaser"
+    },
+    "items": [
+      "PostgreSQL",
+      "Microsoft SQL Server",
+      "MySQL",
+      "MongoDB",
+      "Redis",
+      "CosmosDB",
+      "Vector Databases"
+    ]
+  },
+  {
+    "key": "devops",
+    "label": {
+      "en": "DevOps",
+      "sv": "DevOps"
+    },
+    "items": [
+      "Linux",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "CI/CD",
+      "Infrastructure as Code",
+      "Observability",
+      "Networking"
+    ]
+  },
+  {
+    "key": "practices",
+    "label": {
+      "en": "Practices",
+      "sv": "Arbetssätt"
+    },
+    "items": [
+      "Software Architecture",
+      "Microservices",
+      "Miniservices",
+      "gRPC/Protobuf",
+      "RFC Implementation",
+      "Agile Methodologies",
+      "Scrum"
+    ]
+  },
+  {
+    "key": "leadership",
+    "label": {
+      "en": "Leadership",
+      "sv": "Ledarskap"
+    },
+    "items": [
+      "Engineering Management",
+      "Team Management",
+      "Leadership",
+      "Mentoring",
+      "IT Strategy",
+      "Technology Roadmapping",
+      "Project Management"
+    ]
+  },
+  {
+    "key": "compliance",
+    "label": {
+      "en": "Compliance",
+      "sv": "Regelefterlevnad"
+    },
+    "items": [
+      "Cybersecurity",
+      "Regulatory Compliance",
+      "Risk Management",
+      "GDPR",
+      "CE marking"
+    ]
+  }
+]

@@ -12,7 +12,7 @@
     "typecheck": "tsc -b --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "validate:cv": "ajv validate -c ajv-formats --spec=draft2020 --strict=false -s schemas/cv.schema.json -d src/data/cv.json",
+    "validate:cv": "node scripts/validate-cv.mjs",
     "validate:skill-tags": "node scripts/validate-skill-tags.mjs",
     "validate:timeline-json": "node scripts/validate-timeline-json.mjs",
     "generate:timeline": "node scripts/generate-timeline.mjs",

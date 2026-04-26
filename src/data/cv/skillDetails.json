@@ -1,0 +1,770 @@
+{
+  "Spec-driven development": {
+    "description": {
+      "en": "Working from a written specification that captures intent, constraints, and acceptance criteria before code is written.",
+      "sv": "Att arbeta utifrån en skriven specifikation som fångar intention, begränsningar och acceptanskriterier innan kod skrivs."
+    },
+    "benefits": {
+      "en": "Reviewers and agents converge on the same target; drift becomes detectable and fixable.",
+      "sv": "Granskare och agenter konvergerar mot samma mål; avdrift går att upptäcka och åtgärda."
+    },
+    "drawbacks": {
+      "en": "Specs rot if not maintained; over-specifying small features costs more than the safety it adds.",
+      "sv": "Specifikationer ruttnar om de inte underhålls; överspecificering av små funktioner kostar mer än den säkerhet den ger."
+    }
+  },
+  "Multi-agent orchestration": {
+    "description": {
+      "en": "Coordinating multiple AI agents (often from different providers) into a single end-to-end workflow with handoffs, retries, and verification between them.",
+      "sv": "Att koordinera flera AI-agenter (ofta från olika leverantörer) till ett samlat arbetsflöde med överlämningar, omförsök och verifiering mellan stegen."
+    },
+    "benefits": {
+      "en": "Lets you pick the best agent for each step and recover from one agent's failure without restarting the whole run.",
+      "sv": "Låter dig välja bästa agent för varje steg och återhämta dig från en agents misslyckande utan att starta om hela körningen."
+    },
+    "drawbacks": {
+      "en": "Adds coordination cost, latency, and a new class of bugs that live between the agents rather than inside them.",
+      "sv": "Lägger till koordineringskostnad, latens och en ny typ av buggar som lever mellan agenterna snarare än inuti dem."
+    }
+  },
+  "Agentic Workflows": {
+    "description": {
+      "en": "Describing a sequence of agent steps (analyse, plan, edit, verify, ship) as a runnable, shareable artifact rather than a one-off prompt session.",
+      "sv": "Att beskriva en sekvens av agentsteg (analysera, planera, ändra, verifiera, leverera) som en körbar och delbar artefakt istället för en engångsprompt."
+    },
+    "benefits": {
+      "en": "Workflows can be versioned, replayed, and improved over time; results stop depending on whoever happened to be at the keyboard.",
+      "sv": "Arbetsflöden kan versionshanteras, spelas upp och förbättras över tid; resultatet slutar bero på vem som råkar sitta vid tangentbordet."
+    },
+    "drawbacks": {
+      "en": "Codifying a workflow too early locks in choices before you understand the problem.",
+      "sv": "Att kodifiera ett arbetsflöde för tidigt låser fast val innan man förstår problemet."
+    }
+  },
+  "AI Agents": {
+    "description": {
+      "en": "LLMs equipped with tools, memory, and a goal — they plan, take actions, observe results, and iterate until the goal is met or they give up.",
+      "sv": "LLM:er utrustade med verktyg, minne och ett mål — de planerar, agerar, observerar resultat och itererar tills målet är uppnått eller de ger upp."
+    },
+    "benefits": {
+      "en": "Handle messy, multi-step problems where you can't enumerate every branch in advance.",
+      "sv": "Hanterar röriga problem i flera steg där det inte går att räkna upp alla grenar i förväg."
+    },
+    "drawbacks": {
+      "en": "Non-determinism, cost, and the need for guardrails — an agent with broad tool access can do real damage if unsupervised.",
+      "sv": "Icke-determinism, kostnad och behov av skyddsräcken — en agent med bred verktygsåtkomst kan ställa till verklig skada om den är oövervakad."
+    }
+  },
+  "Multi-provider LLM integration": {
+    "description": {
+      "en": "Talking to several LLM providers (Anthropic, OpenAI, Google, local) behind one abstraction so the same code can switch between models without rewrites.",
+      "sv": "Att prata med flera LLM-leverantörer (Anthropic, OpenAI, Google, lokala) bakom en gemensam abstraktion så att samma kod kan växla mellan modeller utan omskrivningar."
+    },
+    "benefits": {
+      "en": "Avoids lock-in, lets you route by cost or capability, and survives a single provider's outage.",
+      "sv": "Undviker inlåsning, låter dig dirigera efter kostnad eller förmåga och överlever en enskild leverantörs avbrott."
+    },
+    "drawbacks": {
+      "en": "The lowest-common-denominator API loses provider-specific features unless you carefully expose them.",
+      "sv": "Den minsta gemensamma nämnaren tappar leverantörsspecifika funktioner om de inte exponeras avsiktligt."
+    }
+  },
+  "Agent sandboxing & isolation": {
+    "description": {
+      "en": "Running agents inside containers, worktrees, or VMs so they can edit files, run commands, and call networks without touching the host.",
+      "sv": "Att köra agenter inuti containrar, worktrees eller VM:er så att de kan ändra filer, köra kommandon och anropa nätverk utan att röra värddatorn."
+    },
+    "benefits": {
+      "en": "Lets you grant broader autonomy because the blast radius is contained.",
+      "sv": "Låter dig ge bredare självständighet eftersom skadeområdet är inneslutet."
+    },
+    "drawbacks": {
+      "en": "Sandboxes leak; perfect isolation costs setup time, performance, and developer ergonomics.",
+      "sv": "Sandlådor läcker; perfekt isolering kostar både uppsättningstid, prestanda och ergonomi."
+    }
+  },
+  "Agent permissions & security": {
+    "description": {
+      "en": "Designing fine-grained, signed permission models so an agent only has access to what it needs and can't silently widen its own scope.",
+      "sv": "Att designa finkorniga, signerade behörighetsmodeller så att en agent bara har åtkomst till det den behöver och inte i tysthet kan utöka sin egen omfattning."
+    },
+    "benefits": {
+      "en": "Confines agent damage to declared scope; auditable trail of what was authorized when.",
+      "sv": "Begränsar skada till deklarerat scope; granskningsbart spår av vad som tilläts när."
+    },
+    "drawbacks": {
+      "en": "More configuration to maintain, and a permissions UX that can be its own usability problem.",
+      "sv": "Mer konfiguration att underhålla och en behörighets-UX som lätt blir ett eget användarproblem."
+    }
+  },
+  "Agent-in-the-loop testing": {
+    "description": {
+      "en": "Using an LLM to evaluate test outputs that regex or schema assertions can't cleanly capture — fuzzy verdicts about whether output is correct, helpful, or in style.",
+      "sv": "Att använda en LLM för att bedöma testutdata som regex- eller schemapåståenden inte fångar — luddiga bedömningar om utdata är korrekt, hjälpsamt eller i stil."
+    },
+    "benefits": {
+      "en": "Tests scenarios that were previously untestable in CI without expensive humans.",
+      "sv": "Testar scenarier som tidigare var omöjliga att testa i CI utan dyra människor."
+    },
+    "drawbacks": {
+      "en": "Adds non-determinism and cost; needs careful prompt design and fallbacks for the cases the model gets wrong.",
+      "sv": "Lägger till icke-determinism och kostnad; kräver noggrann promptdesign och reservlogik för fall där modellen blir fel."
+    }
+  },
+  "RAG": {
+    "description": {
+      "en": "Retrieval-Augmented Generation — fetching relevant documents at query time and feeding them into the LLM's context so answers are grounded in your data instead of model memory.",
+      "sv": "Retrieval-Augmented Generation — hämtar relevanta dokument vid frågetillfället och stoppar in dem i LLM:ens kontext så att svaren grundas i din data istället för modellens minne."
+    },
+    "benefits": {
+      "en": "Cheaper than fine-tuning, easier to update, and the citations make answers verifiable.",
+      "sv": "Billigare än finjustering, enklare att uppdatera och citeringarna gör svaren verifierbara."
+    },
+    "drawbacks": {
+      "en": "Quality is dominated by retrieval quality; bad chunking, stale indexes, or noisy sources poison the output.",
+      "sv": "Kvaliteten domineras av sökkvaliteten; dålig chunkning, gamla index eller stökiga källor förgiftar utdata."
+    }
+  },
+  "Chatbots": {
+    "description": {
+      "en": "Conversational interfaces backed by LLMs, typically with retrieval, tools, and guardrails so the bot can answer questions and take actions safely.",
+      "sv": "Konversationsgränssnitt drivna av LLM:er, vanligtvis med sökning, verktyg och skyddsräcken så att boten kan svara på frågor och utföra åtgärder säkert."
+    },
+    "benefits": {
+      "en": "Natural-language entry point that scales support and self-service for users.",
+      "sv": "Naturligt språk som ingång som skalar support och självbetjäning för användare."
+    },
+    "drawbacks": {
+      "en": "Hallucinations, prompt injection, and the long tail of edge cases mean a chatbot is rarely 'finished'.",
+      "sv": "Hallucinationer, promptinjektion och den långa svansen av kantfall gör att en chattbot sällan är 'klar'."
+    }
+  },
+  "Prompt engineering": {
+    "description": {
+      "en": "Designing the instructions, examples, and structure given to an LLM so it produces useful, predictable output for a given task.",
+      "sv": "Att utforma instruktioner, exempel och struktur som ges till en LLM så att den producerar användbar och förutsägbar utdata för en given uppgift."
+    },
+    "benefits": {
+      "en": "Often the cheapest, fastest lever for improving output quality before reaching for fine-tuning or pipelines.",
+      "sv": "Ofta den billigaste och snabbaste hävstången för att förbättra kvaliteten innan finjustering eller pipelines tas till."
+    },
+    "drawbacks": {
+      "en": "Prompts are brittle across models and versions; what worked yesterday may regress with a model update.",
+      "sv": "Prompter är spröda mellan modeller och versioner; det som fungerade igår kan regressera vid en modelluppdatering."
+    }
+  },
+  "AI evaluations": {
+    "description": {
+      "en": "Building reproducible test suites for LLM-driven systems — datasets, scoring, and dashboards that tell you whether a change actually improved behaviour.",
+      "sv": "Att bygga reproducerbara testsviter för LLM-drivna system — datamängder, poängsättning och dashboards som visar om en ändring faktiskt förbättrade beteendet."
+    },
+    "benefits": {
+      "en": "Replaces 'feels better' with measurable progress; catches regressions before users do.",
+      "sv": "Ersätter 'känns bättre' med mätbar utveckling; fångar regressioner innan användarna gör det."
+    },
+    "drawbacks": {
+      "en": "Good evals are expensive to build and maintain; cheap evals tell you the wrong things confidently.",
+      "sv": "Bra evals är dyra att bygga och underhålla; billiga evals berättar fel saker med självförtroende."
+    }
+  },
+  "Claude Code": {
+    "description": {
+      "en": "Anthropic's terminal-native coding agent based on Claude — reads, edits, and executes against the local repo, with hooks, skills, and MCP for extension.",
+      "sv": "Anthropics terminalbaserade kodningsagent byggd på Claude — läser, ändrar och kör mot det lokala repot, med hooks, skills och MCP för utökning."
+    },
+    "benefits": {
+      "en": "Strong reasoning on large codebases; the CLI surface composes well with shell, git, and CI.",
+      "sv": "Stark resonemangsförmåga på stora kodbaser; CLI-ytan komponeras bra med skal, git och CI."
+    },
+    "drawbacks": {
+      "en": "Closed-source provider; usage costs scale quickly on long agentic loops.",
+      "sv": "Stängd källkod hos leverantören; användningskostnaden skalar snabbt på långa agentloopar."
+    },
+    "url": "https://docs.claude.com/en/docs/claude-code/overview"
+  },
+  "Agent Skills": {
+    "description": {
+      "en": "Reusable, instruction-driven extensions that Claude Code loads on demand — packaged Markdown plus assets that specialise the agent for a domain (e.g. updating a CV, refreshing a README, reviewing a PR).",
+      "sv": "Återanvändbara, instruktionsdrivna utökningar som Claude Code laddar vid behov — paketerad Markdown och tillgångar som specialiserar agenten för en domän (t.ex. uppdatera ett CV, uppdatera README eller granska en PR)."
+    },
+    "benefits": {
+      "en": "Codifies repeatable workflows in version-controlled prompts that any session can pick up; cheaper than building a custom agent from scratch.",
+      "sv": "Kodifierar återanvändbara arbetsflöden i versionshanterade prompter som vilken session som helst kan plocka upp; billigare än att bygga en egen agent från grunden."
+    },
+    "drawbacks": {
+      "en": "Tied to Claude Code's runtime; the format is still evolving and skills must be kept in sync as the spec changes.",
+      "sv": "Bundet till Claude Codes körtid; formatet utvecklas fortfarande och skills måste hållas i synk när specifikationen ändras."
+    }
+  },
+  "Codex CLI": {
+    "description": {
+      "en": "OpenAI's terminal coding agent — sandbox-first, runs in a container by default, with a JSON protocol for embedding in larger systems.",
+      "sv": "OpenAI:s terminala kodningsagent — sandlåda först, kör i container som standard, med ett JSON-protokoll för inbäddning i större system."
+    },
+    "benefits": {
+      "en": "Open-source CLI, strong default isolation, easy to script.",
+      "sv": "CLI med öppen källkod, stark standardisolering, lätt att skripta."
+    },
+    "drawbacks": {
+      "en": "Smaller agent ecosystem than Claude Code; some workflows still need bridging glue.",
+      "sv": "Mindre agentekosystem än Claude Code; vissa arbetsflöden kräver fortfarande integrationslim."
+    },
+    "url": "https://github.com/openai/codex"
+  },
+  "Gemini CLI": {
+    "description": {
+      "en": "Google's open-source terminal agent built on Gemini, with a focus on long-context tasks and tight integration with Google's developer tooling.",
+      "sv": "Googles open source-terminalagent byggd på Gemini, med fokus på uppgifter med långt sammanhang och tät integration med Googles utvecklarverktyg."
+    },
+    "benefits": {
+      "en": "Massive context window; competitive on cost for long documents and large codebases.",
+      "sv": "Stort kontextfönster; konkurrenskraftig på pris för långa dokument och stora kodbaser."
+    },
+    "drawbacks": {
+      "en": "Tooling and ecosystem lag the Anthropic and OpenAI CLIs in places.",
+      "sv": "Verktyg och ekosystem ligger på sina ställen efter Anthropic- och OpenAI-CLI:erna."
+    },
+    "url": "https://github.com/google-gemini/gemini-cli"
+  },
+  "GitHub Copilot": {
+    "description": {
+      "en": "GitHub's AI pair-programmer, available as IDE inline suggestions, a chat surface, and a CLI for repo-level agentic work.",
+      "sv": "GitHubs AI-parprogrammerare, tillgänglig som IDE-förslag inline, ett chattgränssnitt och en CLI för agentarbete på repo-nivå."
+    },
+    "benefits": {
+      "en": "Tight integration with GitHub: pull requests, issues, and existing developer workflows.",
+      "sv": "Tät integration med GitHub: pull requests, issues och befintliga utvecklingsflöden."
+    },
+    "drawbacks": {
+      "en": "Best-in-class for IDE inline; agent capabilities trail dedicated agentic CLIs for autonomous work.",
+      "sv": "Bäst i klassen för IDE-inline; agentförmågorna ligger efter dedikerade agentiska CLI:er för autonomt arbete."
+    },
+    "url": "https://github.com/features/copilot"
+  },
+  "Ollama": {
+    "description": {
+      "en": "Local LLM runner that exposes open-weight models behind an OpenAI-compatible API.",
+      "sv": "Lokal LLM-runner som exponerar modeller med öppna vikter bakom ett OpenAI-kompatibelt API."
+    },
+    "benefits": {
+      "en": "No data leaves the machine; predictable cost; great for CI fixtures.",
+      "sv": "Ingen data lämnar maskinen; förutsägbar kostnad; utmärkt för CI-fixturer."
+    },
+    "drawbacks": {
+      "en": "Open-weight models lag frontier models on hard reasoning; needs decent local hardware to be pleasant.",
+      "sv": "Modeller med öppna vikter ligger efter frontier-modeller på svårt resonemang; kräver hyfsad lokal hårdvara för att vara behaglig."
+    },
+    "url": "https://ollama.com"
+  },
+  "Rust": {
+    "description": {
+      "en": "Systems language with an ownership model that prevents most memory and concurrency bugs at compile time.",
+      "sv": "Systemspråk med en ägarskapsmodell som förhindrar de flesta minnes- och samtidighetsbuggar vid kompilering."
+    },
+    "benefits": {
+      "en": "Memory safety without GC, fearless concurrency, single static binary deploys.",
+      "sv": "Minnessäkerhet utan GC, ofarlig parallellism, distribution som en enda statisk binär."
+    },
+    "drawbacks": {
+      "en": "Steep learning curve; iteration speed is slower than scripted languages for early-stage exploration.",
+      "sv": "Brant inlärningskurva; iterationshastigheten är långsammare än skriptspråk i tidig utforskning."
+    },
+    "url": "https://www.rust-lang.org"
+  },
+  "C#/.NET": {
+    "description": {
+      "en": "Microsoft's cross-platform managed language and runtime, with a strong standard library for web, services, and tooling.",
+      "sv": "Microsofts plattformsoberoende språk och körmiljö, med ett starkt standardbibliotek för webb, tjänster och verktyg."
+    },
+    "benefits": {
+      "en": "Excellent tooling, mature ecosystem, strong typing, predictable performance.",
+      "sv": "Utmärkta verktyg, moget ekosystem, stark typning, förutsägbar prestanda."
+    },
+    "drawbacks": {
+      "en": "Microsoft-centric ergonomics; getting first-class status outside Windows/Azure took years.",
+      "sv": "Microsoft-centrerad ergonomi; det tog år att få förstaklasstatus utanför Windows/Azure."
+    },
+    "url": "https://dotnet.microsoft.com"
+  },
+  "TypeScript": {
+    "description": {
+      "en": "JavaScript with a structural type system bolted on top.",
+      "sv": "JavaScript med ett strukturellt typsystem ovanpå."
+    },
+    "benefits": {
+      "en": "Catches whole classes of bugs at the editor; refactors that would be terrifying in JS become routine.",
+      "sv": "Fångar hela kategorier av buggar redan i editorn; refaktoreringar som vore skrämmande i JS blir rutin."
+    },
+    "drawbacks": {
+      "en": "Type system has corners that are easy to lie to; build tooling is a perpetual rabbit hole.",
+      "sv": "Typsystemet har hörn som är lätta att ljuga för; byggverktygen är ett evigt kaninhål."
+    },
+    "url": "https://www.typescriptlang.org"
+  },
+  "Python": {
+    "description": {
+      "en": "General-purpose dynamic language widely used for data, ML, scripting, and web backends.",
+      "sv": "Allmänt dynamiskt språk som ofta används inom data, ML, skript och webbackend."
+    },
+    "benefits": {
+      "en": "Vast library ecosystem, fast iteration, easy to read; the lingua franca of ML.",
+      "sv": "Enormt biblioteksekosystem, snabb iteration, lättläst; ML-världens lingua franca."
+    },
+    "drawbacks": {
+      "en": "Performance, packaging, and runtime type errors that only surface at runtime.",
+      "sv": "Prestanda, paketering och typfel som bara dyker upp vid körning."
+    },
+    "url": "https://www.python.org"
+  },
+  "SQL": {
+    "description": {
+      "en": "The declarative query language for relational databases.",
+      "sv": "Det deklarativa frågespråket för relationsdatabaser."
+    }
+  },
+  "C++": {
+    "description": {
+      "en": "Long-standing systems language for software where you need control over memory, layout, and performance.",
+      "sv": "Långlivat systemspråk för mjukvara där man behöver kontroll över minne, layout och prestanda."
+    },
+    "url": "https://isocpp.org"
+  },
+  "Bash/Shell": {
+    "description": {
+      "en": "Bash and POSIX shell — the lingua franca for stitching together commands, files, and processes on a Unix-like system.",
+      "sv": "Bash och POSIX-shell — lingua franca för att knyta ihop kommandon, filer och processer på Unix-liknande system."
+    }
+  },
+  "PowerShell": {
+    "description": {
+      "en": "Microsoft's object-oriented shell and scripting language; commands return structured objects rather than text streams.",
+      "sv": "Microsofts objektorienterade shell och skriptspråk; kommandon returnerar strukturerade objekt i stället för textströmmar."
+    },
+    "url": "https://learn.microsoft.com/powershell"
+  },
+  "React": {
+    "description": {
+      "en": "Component-driven UI library for the web.",
+      "sv": "Komponentdrivet UI-bibliotek för webben."
+    },
+    "benefits": {
+      "en": "Huge ecosystem, strong hiring pool, predictable mental model around components and state.",
+      "sv": "Stort ekosystem, stark rekryteringsbas, förutsägbar mental modell kring komponenter och tillstånd."
+    },
+    "drawbacks": {
+      "en": "You're choosing an ecosystem, not a framework — the build/state/router stack is yours to assemble.",
+      "sv": "Du väljer ett ekosystem, inte ett ramverk — bygg/state/router-stacken får du sätta ihop själv."
+    },
+    "url": "https://react.dev"
+  },
+  "React Native": {
+    "description": {
+      "en": "Build native iOS/Android apps with React, bridging JS components to native UI primitives so most code is shared across platforms.",
+      "sv": "Bygg native iOS-/Android-appar med React, där JS-komponenter brygger till nativa UI-primitiver så att det mesta av koden delas mellan plattformarna."
+    },
+    "benefits": {
+      "en": "One team, one language, two stores; near-native performance for typical app workloads.",
+      "sv": "Ett team, ett språk, två appbutiker; nära native prestanda för typiska appbelastningar."
+    },
+    "drawbacks": {
+      "en": "Native modules and platform quirks still leak through; upgrades can be painful.",
+      "sv": "Nativmoduler och plattformsegenheter läcker igenom; uppgraderingar kan vara smärtsamma."
+    },
+    "url": "https://reactnative.dev"
+  },
+  "Vue": {
+    "description": {
+      "en": "Approachable component framework with single-file components, a built-in reactivity system, and an opinionated default stack (Router, Pinia).",
+      "sv": "Lättillgängligt komponentramverk med single-file-komponenter, inbyggd reaktivitet och en åsiktsstyrd standardstack (Router, Pinia)."
+    },
+    "url": "https://vuejs.org"
+  },
+  "Angular": {
+    "description": {
+      "en": "Google's batteries-included frontend framework — opinionated about structure, DI, RxJS, and the build pipeline.",
+      "sv": "Googles ramverk med batterier inkluderade — tydliga åsikter om struktur, DI, RxJS och byggpipelinen."
+    },
+    "url": "https://angular.dev"
+  },
+  "Node.js": {
+    "description": {
+      "en": "Server-side JavaScript runtime built on V8.",
+      "sv": "Serverbaserad JavaScript-körmiljö byggd på V8."
+    },
+    "benefits": {
+      "en": "Same language across stack, huge package ecosystem, fast for I/O-bound workloads.",
+      "sv": "Samma språk i hela stacken, stort paketekosystem, snabbt för I/O-bundna arbetsbelastningar."
+    },
+    "drawbacks": {
+      "en": "CPU-bound work needs careful design; the npm ecosystem occasionally bites in supply-chain ways.",
+      "sv": "CPU-tunga uppgifter kräver omsorgsfull design; npm-ekosystemet bits ibland på leveranskedjenivå."
+    },
+    "url": "https://nodejs.org"
+  },
+  "Azure": {
+    "description": {
+      "en": "Microsoft's cloud, with deep integration into the wider Microsoft stack (Entra ID, .NET, Office).",
+      "sv": "Microsofts moln, med djup integration i den övriga Microsoft-stacken (Entra ID, .NET, Office)."
+    },
+    "benefits": {
+      "en": "First-class for .NET shops; broad regulated/regional coverage in Europe.",
+      "sv": "Förstaklasstöd för .NET-företag; bred täckning för reglerade och regionala krav i Europa."
+    },
+    "drawbacks": {
+      "en": "Portal UX and naming churn; some services lag the AWS equivalents in maturity.",
+      "sv": "Portal-UX och ständigt ändrade namn; vissa tjänster ligger efter AWS-motsvarigheterna i mognad."
+    },
+    "url": "https://azure.microsoft.com"
+  },
+  "AWS": {
+    "description": {
+      "en": "The widest, deepest public cloud — if a primitive exists in the cloud, AWS probably ships it.",
+      "sv": "Det bredaste och djupaste publika molnet — finns en primitiv i molnet så finns den troligen hos AWS."
+    },
+    "benefits": {
+      "en": "Unmatched service breadth; mature region/availability story; vast hiring pool.",
+      "sv": "Oslagbar tjänstebredd; mogen region- och tillgänglighetsstory; stor rekryteringsbas."
+    },
+    "drawbacks": {
+      "en": "Pricing is intricate; IAM and networking ergonomics can swallow weeks of work.",
+      "sv": "Prissättningen är invecklad; IAM och nätverk kan sluka veckor av arbete."
+    },
+    "url": "https://aws.amazon.com"
+  },
+  "Azure DevOps": {
+    "description": {
+      "en": "Microsoft's CI/CD, repo, and work-tracking suite, with Pipelines (YAML) and Boards as the most-used pieces.",
+      "sv": "Microsofts svit för CI/CD, repo och ärendehantering, där Pipelines (YAML) och Boards är de mest använda delarna."
+    },
+    "url": "https://azure.microsoft.com/products/devops"
+  },
+  "PostgreSQL": {
+    "description": {
+      "en": "Open-source relational database with first-class support for JSON, full-text search, geospatial, and a strong extension ecosystem.",
+      "sv": "Open source-relationsdatabas med förstklassigt stöd för JSON, fulltextsökning, geodata och ett starkt utbyggnadsekosystem."
+    },
+    "benefits": {
+      "en": "Reliable, standards-compliant, runs everything from a hobby app to a large fleet without changing engines.",
+      "sv": "Pålitlig, standardenlig, hanterar allt från en hobbyapp till stor produktion utan att byta motor."
+    },
+    "drawbacks": {
+      "en": "Operational tuning (vacuum, replication, connection pooling) requires real expertise at scale.",
+      "sv": "Driftsetting (vacuum, replikering, anslutningspooling) kräver verklig expertis vid skala."
+    },
+    "url": "https://www.postgresql.org"
+  },
+  "Microsoft SQL Server": {
+    "description": {
+      "en": "Microsoft's enterprise relational database, with first-class tooling (SSMS, Profiler) and powerful T-SQL.",
+      "sv": "Microsofts relationsdatabas för företag, med förstklassiga verktyg (SSMS, Profiler) och kraftfullt T-SQL."
+    },
+    "url": "https://www.microsoft.com/sql-server"
+  },
+  "MySQL": {
+    "description": {
+      "en": "Widely deployed open-source relational database.",
+      "sv": "Brett utbyggd open source-relationsdatabas."
+    },
+    "benefits": {
+      "en": "Easy to operate, well-understood scaling patterns, abundant managed offerings.",
+      "sv": "Enkel att drifta, välkända skalningsmönster, många hanterade alternativ."
+    },
+    "drawbacks": {
+      "en": "Feature set lags Postgres in places (JSON, extensions, indexing); historical defaults can bite.",
+      "sv": "Funktionsuppsättningen ligger efter Postgres på sina ställen (JSON, tillägg, indexering); historiska standardvärden kan bita."
+    },
+    "url": "https://www.mysql.com"
+  },
+  "MongoDB": {
+    "description": {
+      "en": "Document-oriented database that stores BSON documents; suited to prototypes and workloads where the schema is genuinely fluid.",
+      "sv": "Dokumentorienterad databas som lagrar BSON-dokument; passar prototyper och arbetslaster där schemat verkligen är formbart."
+    },
+    "url": "https://www.mongodb.com"
+  },
+  "Redis": {
+    "description": {
+      "en": "In-memory key-value store used as cache, message broker, rate limiter, and a hundred other things.",
+      "sv": "Nyckel-värde-lager i minnet som används som cache, meddelandekö, rate limiter och hundra andra saker."
+    },
+    "url": "https://redis.io"
+  },
+  "CosmosDB": {
+    "description": {
+      "en": "Azure's globally distributed, multi-model database — SQL, MongoDB, Cassandra, and table APIs over the same engine.",
+      "sv": "Azures globalt distribuerade flermodelldatabas — SQL-, MongoDB-, Cassandra- och table-API:er över samma motor."
+    },
+    "url": "https://azure.microsoft.com/products/cosmos-db"
+  },
+  "Vector Databases": {
+    "description": {
+      "en": "Specialised stores for high-dimensional embeddings, indexed with approximate-nearest-neighbour algorithms (HNSW, IVF) to power semantic search, retrieval-augmented generation, and similarity-driven recommendation.",
+      "sv": "Specialiserade lager för högdimensionella embeddings, indexerade med approximate-nearest-neighbour-algoritmer (HNSW, IVF) för semantisk sökning, retrieval-augmented generation och rekommendationer."
+    },
+    "benefits": {
+      "en": "Sub-second similarity search at millions of items; the missing piece for RAG and recommendation in modern apps.",
+      "sv": "Likhetssökning under sekunden på miljontals poster; den saknade pusselbiten för RAG och rekommendationer i moderna appar."
+    },
+    "drawbacks": {
+      "en": "Index quality and embedding choice dominate results; operational tuning and re-indexing costs add up at scale.",
+      "sv": "Indexkvalitet och val av embedding dominerar resultaten; driftsetting och återindexering kostar vid skala."
+    }
+  },
+  "Linux": {
+    "description": {
+      "en": "Open-source Unix-like operating system that runs almost every server, container, and cloud workload in production today.",
+      "sv": "Öppen källkods-Unix-liknande operativsystem som idag driver i princip varje server, container och molnbelastning i produktion."
+    },
+    "url": "https://kernel.org"
+  },
+  "Networking": {
+    "description": {
+      "en": "TCP/IP, DNS, TLS, HTTP, and the layers below — how packets find their way between machines and how to debug it when they don't.",
+      "sv": "TCP/IP, DNS, TLS, HTTP och lagren under — hur paket hittar mellan maskiner och hur man felsöker när de inte gör det."
+    }
+  },
+  "Terraform": {
+    "description": {
+      "en": "HashiCorp's declarative infrastructure-as-code tool — resources defined in HCL, plans diffed against live state, changes applied idempotently.",
+      "sv": "HashiCorps deklarativa infrastructure-as-code-verktyg — resurser definieras i HCL, planer diffas mot live-tillståndet, ändringar appliceras idempotent."
+    },
+    "benefits": {
+      "en": "Reproducible infrastructure across environments and providers; plan/apply gives a clear preview before changes hit production.",
+      "sv": "Reproducerbar infrastruktur mellan miljöer och leverantörer; plan/apply ger en tydlig förhandsvisning innan ändringar når produktion."
+    },
+    "drawbacks": {
+      "en": "State files are a sensitive operational asset; provider drift and module versioning bite teams that don't invest in conventions.",
+      "sv": "Statefiler är en känslig drifttillgång; leverantörsdrift och modulversioner biter team som inte investerar i konventioner."
+    },
+    "url": "https://www.terraform.io"
+  },
+  "Observability": {
+    "description": {
+      "en": "Logs, metrics, and traces wired together so you can ask new questions about a running system without redeploying it.",
+      "sv": "Loggar, mätvärden och spår kopplade så att man kan ställa nya frågor om ett körande system utan att deploya om det."
+    },
+    "benefits": {
+      "en": "Faster incident resolution; data-driven capacity and reliability decisions instead of guessing.",
+      "sv": "Snabbare incidentlösning; datadrivna kapacitets- och tillförlitlighetsbeslut i stället för gissningar."
+    },
+    "drawbacks": {
+      "en": "Cardinality, retention, and ingestion costs grow fast; bad signals are worse than no signals because they invite false confidence.",
+      "sv": "Kardinalitet, retention och ingest-kostnader växer snabbt; dåliga signaler är värre än inga eftersom de inbjuder till falsk självsäkerhet."
+    }
+  },
+  "Docker": {
+    "description": {
+      "en": "Containers — package an application with its dependencies into a portable, reproducible image.",
+      "sv": "Containrar — paketera en applikation med sina beroenden i en portabel och reproducerbar avbildning."
+    },
+    "benefits": {
+      "en": "Reproducible across machines; isolates the runtime; the lingua franca of CI and orchestration tools.",
+      "sv": "Reproducerbar mellan maskiner; isolerar körmiljön; CI- och orkestreringsvärldens lingua franca."
+    },
+    "drawbacks": {
+      "en": "Image bloat and layer caching gotchas; security review of base images is your responsibility.",
+      "sv": "Image-svullnad och lager-caching-fällor; säkerhetsgranskning av basavbildningar är ditt ansvar."
+    },
+    "url": "https://www.docker.com"
+  },
+  "Kubernetes": {
+    "description": {
+      "en": "Container orchestrator that schedules, scales, and heals workloads across a cluster.",
+      "sv": "Containerorkestrator som schemalägger, skalar och självreparerar arbetslaster över ett kluster."
+    },
+    "benefits": {
+      "en": "Portable across clouds; rich ecosystem; declarative model that pairs well with GitOps.",
+      "sv": "Portabel mellan moln; rikt ekosystem; deklarativ modell som passar väl med GitOps."
+    },
+    "drawbacks": {
+      "en": "Operational complexity is high; small teams often pay more in ops than the orchestration buys them.",
+      "sv": "Driftkomplexiteten är hög; små team betalar ofta mer i drift än vad orkestreringen ger tillbaka."
+    },
+    "url": "https://kubernetes.io"
+  },
+  "CI/CD": {
+    "description": {
+      "en": "Continuous integration and delivery — every change is built, tested, and deployable on every push, with humans only in the approval loop.",
+      "sv": "Kontinuerlig integration och leverans — varje ändring byggs, testas och är driftsättbar vid varje push, med människor enbart i godkännandeloopen."
+    }
+  },
+  "Infrastructure as Code": {
+    "description": {
+      "en": "Declaring infrastructure (networks, clusters, databases) in version-controlled code so changes are reviewable, reproducible, and reversible.",
+      "sv": "Att deklarera infrastruktur (nätverk, kluster, databaser) i versionshanterad kod så att ändringar är granskbara, reproducerbara och återställbara."
+    },
+    "benefits": {
+      "en": "Replaces clickops with PR reviews; same infrastructure across environments; disaster recovery becomes a `terraform apply`.",
+      "sv": "Ersätter klickops med PR-granskning; samma infrastruktur i alla miljöer; katastrofåterställning blir ett `terraform apply`."
+    },
+    "drawbacks": {
+      "en": "Drift between code and reality is real; state files become a sensitive operational asset.",
+      "sv": "Avdrift mellan kod och verklighet är reell; statefiler blir en känslig drifttillgång."
+    }
+  },
+  "Software Architecture": {
+    "description": {
+      "en": "Deciding the structure, boundaries, and trade-offs of a system so today's features can ship and tomorrow's are still possible.",
+      "sv": "Att bestämma struktur, gränser och avvägningar i ett system så att dagens funktioner kan levereras och morgondagens fortfarande är möjliga."
+    }
+  },
+  "Microservices": {
+    "description": {
+      "en": "Splitting an application into independently deployable services, usually owned by separate teams and communicating over a network.",
+      "sv": "Att dela upp en applikation i självständigt driftsättbara tjänster, vanligtvis ägda av olika team och som kommunicerar över nätverk."
+    },
+    "benefits": {
+      "en": "Independent deploys, scale, and ownership; failures stay local.",
+      "sv": "Oberoende driftsättningar, skalning och ägarskap; fel hålls lokala."
+    },
+    "drawbacks": {
+      "en": "Network is now a part of every feature; observability, contracts, and consistency become hard problems.",
+      "sv": "Nätverket är nu en del av varje funktion; observerbarhet, kontrakt och konsistens blir svåra problem."
+    }
+  },
+  "Miniservices": {
+    "description": {
+      "en": "Pragmatic middle ground between monolith and microservices — a small number of well-bounded services rather than dozens of tiny ones.",
+      "sv": "Pragmatisk medelväg mellan monolit och mikrotjänster — ett fåtal välavgränsade tjänster istället för dussintals små."
+    },
+    "benefits": {
+      "en": "Most of the deployment independence with much less operational tax.",
+      "sv": "Det mesta av leveransoberoendet med betydligt mindre driftbelastning."
+    },
+    "drawbacks": {
+      "en": "Less granular scaling and ownership; service boundaries still demand discipline.",
+      "sv": "Mindre granulär skalning och ägarskap; tjänstegränser kräver fortfarande disciplin."
+    }
+  },
+  "gRPC/Protobuf": {
+    "description": {
+      "en": "Schema-first RPC over HTTP/2 with Protocol Buffers as the wire format.",
+      "sv": "Schema-först-RPC över HTTP/2 med Protocol Buffers som wire-format."
+    },
+    "benefits": {
+      "en": "Generated clients in every language; binary payloads and HTTP/2 streams shrink latency vs. JSON over HTTP/1.1.",
+      "sv": "Genererade klienter i alla språk; binära payloads och HTTP/2-strömmar minskar latens jämfört med JSON över HTTP/1.1."
+    },
+    "drawbacks": {
+      "en": "Browser support is awkward (gRPC-Web bridges, but isn't free); harder to debug than text protocols without the right tooling.",
+      "sv": "Webbläsarstödet är klumpigt (gRPC-Web bryggar, men är inte gratis); svårare att felsöka än textprotokoll utan rätt verktyg."
+    },
+    "url": "https://grpc.io"
+  },
+  "RFC Implementation": {
+    "description": {
+      "en": "Reading an IETF RFC end-to-end and producing a conforming implementation: parsing the normative MUST/SHOULD/MAY language, modelling state machines, and writing test vectors that prove the spec is met.",
+      "sv": "Att läsa en IETF-RFC från pärm till pärm och skriva en regelrätt implementation: tolka de normativa MUST/SHOULD/MAY-formuleringarna, modellera tillståndsmaskiner och skriva testvektorer som bevisar att specifikationen följs."
+    }
+  },
+  "Agile Methodologies": {
+    "description": {
+      "en": "Iterative, feedback-driven product development — small batches, frequent delivery, working software preferred over comprehensive documentation.",
+      "sv": "Iterativ, återkopplingsdriven produktutveckling — små partier, frekvent leverans, fungerande mjukvara framför uttömmande dokumentation."
+    }
+  },
+  "Scrum": {
+    "description": {
+      "en": "Specific Agile framework with fixed-length sprints, defined roles (PO, Scrum Master, team), and a small set of mandatory ceremonies.",
+      "sv": "Konkret agilt ramverk med fasta sprintlängder, definierade roller (PO, Scrum Master, team) och ett fåtal obligatoriska ceremonier."
+    },
+    "benefits": {
+      "en": "Predictable cadence; common vocabulary across organisations.",
+      "sv": "Förutsägbar takt; gemensamt vokabulär över organisationer."
+    },
+    "drawbacks": {
+      "en": "Ceremony heavy for small teams; sprint boundaries can fight long-running technical work.",
+      "sv": "Ceremonitungt för små team; sprintgränser krockar ibland med längre tekniskt arbete."
+    },
+    "url": "https://scrumguides.org"
+  },
+  "Engineering Management": {
+    "description": {
+      "en": "Building and running engineering teams: hiring, mentoring, performance, planning, and creating the conditions for the team to do its best work.",
+      "sv": "Att bygga och leda ingenjörsteam: rekrytering, mentorskap, prestation, planering och att skapa förutsättningarna för teamet att göra sitt bästa arbete."
+    }
+  },
+  "Team Management": {
+    "description": {
+      "en": "Day-to-day stewardship of a team's work: priorities, capacity, dependencies, and the small frictions that compound if left unattended.",
+      "sv": "Daglig styrning av ett teams arbete: prioriteringar, kapacitet, beroenden och de små friktioner som ackumuleras om de lämnas obehandlade."
+    }
+  },
+  "Leadership": {
+    "description": {
+      "en": "Setting direction, building trust, and getting people moving towards a shared goal.",
+      "sv": "Att sätta riktning, bygga tillit och få människor att röra sig mot ett gemensamt mål."
+    }
+  },
+  "Mentoring": {
+    "description": {
+      "en": "Helping individual engineers grow by sharing context, asking better questions than you answer, and creating space to fail safely.",
+      "sv": "Att hjälpa enskilda ingenjörer växa genom att dela kontext, ställa bättre frågor än du svarar på och skapa utrymme att misslyckas säkert."
+    }
+  },
+  "IT Strategy": {
+    "description": {
+      "en": "Aligning technology investment with business goals over a 1–3 year horizon — buy/build, platform choices, sourcing, and where to put the bets.",
+      "sv": "Att rikta teknikinvesteringar mot verksamhetsmål på 1–3 års sikt — köpa/bygga, plattformsval, sourcing och var satsningarna ska läggas."
+    }
+  },
+  "Technology Roadmapping": {
+    "description": {
+      "en": "Sequencing technical investment so each piece pays for the next: capability gaps, dependencies, sunset plans, and the trade-offs between them.",
+      "sv": "Att sekvensera teknisk investering så att varje del banar väg för nästa: kapacitetsluckor, beroenden, utfasningsplaner och avvägningarna mellan dem."
+    }
+  },
+  "Project Management": {
+    "description": {
+      "en": "Driving a defined piece of work to completion within scope, time, and cost — risk tracking, dependencies, stakeholders, and reporting.",
+      "sv": "Att driva ett avgränsat arbete i mål inom omfattning, tid och kostnad — riskhantering, beroenden, intressenter och rapportering."
+    }
+  },
+  "Cybersecurity": {
+    "description": {
+      "en": "Protecting systems and data through threat modelling, secure design, identity, monitoring, and incident response.",
+      "sv": "Att skydda system och data genom hotmodellering, säker design, identitet, övervakning och incidenthantering."
+    },
+    "benefits": {
+      "en": "Reduces probability and impact of breaches; an audited posture is a sales asset in regulated markets.",
+      "sv": "Minskar sannolikhet och konsekvens av intrång; en granskad säkerhetsposition är en försäljningsfördel på reglerade marknader."
+    },
+    "drawbacks": {
+      "en": "Friction trade-off with developer ergonomics; treated as a feature it lags, treated as a function of every feature it scales.",
+      "sv": "Friktionsavvägning mot utvecklarergonomi; behandlas det som en funktion blir det eftersläpande, behandlas det som en del av varje funktion skalar det."
+    }
+  },
+  "Regulatory Compliance": {
+    "description": {
+      "en": "Mapping legal and industry requirements (GDPR, MDR, PCI, ISO) into concrete controls, evidence, and process.",
+      "sv": "Att översätta juridiska och branschspecifika krav (GDPR, MDR, PCI, ISO) till konkreta kontroller, bevis och processer."
+    }
+  },
+  "Risk Management": {
+    "description": {
+      "en": "Identifying, ranking, and treating risks across product, security, and operations.",
+      "sv": "Att identifiera, rangordna och hantera risker över produkt, säkerhet och drift."
+    }
+  },
+  "GDPR": {
+    "description": {
+      "en": "EU regulation governing how personal data is collected, processed, stored, and shared.",
+      "sv": "EU-förordning som reglerar hur personuppgifter samlas in, behandlas, lagras och delas."
+    },
+    "benefits": {
+      "en": "Forcing function for data hygiene that pays back beyond compliance.",
+      "sv": "Tvingande kraft för datahygien som ger värde långt utöver regelefterlevnad."
+    },
+    "drawbacks": {
+      "en": "Documentation and consent flows add real friction; cross-border transfers are a moving target.",
+      "sv": "Dokumentation och samtyckesflöden ger reell friktion; gränsöverskridande överföringar är ett rörligt mål."
+    },
+    "url": "https://gdpr.eu"
+  },
+  "CE marking": {
+    "description": {
+      "en": "EU conformity marking for products — including software medical devices — declaring they meet the relevant directives.",
+      "sv": "EU:s överensstämmelsemärkning för produkter — inklusive medicintekniska programvaror — som intygar att de uppfyller relevanta direktiv."
+    }
+  }
+}

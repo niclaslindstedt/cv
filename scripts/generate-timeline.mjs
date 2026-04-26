@@ -3,8 +3,9 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
+import { loadCv } from "../src/data/load-cv.mjs";
+
 const here = dirname(fileURLToPath(import.meta.url));
-const cvPath = resolve(here, "..", "src", "data", "cv.json");
 const githubPath = resolve(here, "..", "src", "data", "github-activity.json");
 const projectStatsPath = resolve(
   here,
@@ -462,7 +463,7 @@ function buildLayout(cv, activity, projectStats) {
   return { minMonth, maxMonth, intervals, tracks };
 }
 
-const cv = JSON.parse(readFileSync(cvPath, "utf8"));
+const cv = loadCv();
 let activity = { enabled: false, years: [] };
 if (existsSync(githubPath)) {
   try {

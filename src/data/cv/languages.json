@@ -1,0 +1,22 @@
+[
+  {
+    "name": {
+      "en": "Swedish",
+      "sv": "Svenska"
+    },
+    "level": {
+      "en": "Native",
+      "sv": "Modersmål"
+    }
+  },
+  {
+    "name": {
+      "en": "English",
+      "sv": "Engelska"
+    },
+    "level": {
+      "en": "Professional",
+      "sv": "Professionell"
+    }
+  }
+]

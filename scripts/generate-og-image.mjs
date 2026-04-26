@@ -11,12 +11,12 @@ import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import wawoff from "wawoff2";
 
+import { loadCv } from "../src/data/load-cv.mjs";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-const cv = JSON.parse(
-  fs.readFileSync(path.join(ROOT, "src/data/cv.json"), "utf8"),
-);
+const cv = loadCv();
 
 const WIDTH = 1200;
 const HEIGHT = 630;

@@ -17,7 +17,7 @@ import { SkillModal } from "./components/SkillModal";
 import { Skills } from "./components/Skills";
 import { SummaryModal } from "./components/SummaryModal";
 import { Timeline } from "./components/Timeline";
-import cv from "./data/cv.json";
+import cv from "./data/cv";
 import type {
   Company,
   Course,

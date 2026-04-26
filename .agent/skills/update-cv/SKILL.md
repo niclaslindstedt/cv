@@ -12,15 +12,24 @@ user's explicit ask or confirmation.
 
 ## Files
 
-| File                     | Role                                              |
-| ------------------------ | ------------------------------------------------- |
-| `src/data/cv.json`       | The CV content. Edit here.                        |
-| `schemas/cv.schema.json` | JSON Schema. The contract `cv.json` must satisfy. |
-| `src/data/cv.types.ts`   | TypeScript mirror of the schema, consumed by UI.  |
-| `src/components/*.tsx`   | Renderers for each section.                       |
+| File                     | Role                                                                                                                                                                                                                                                 |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/data/cv.json`       | CV skeleton. Holds top-level scalar fields (`name`, `title`, `summary`, `links`, …) inline and uses the literal `"{...}"` sentinel for split categories. Don't replace a sentinel — edit the matching part file under `src/data/cv/<category>.json`. |
+| `src/data/cv/*.json`     | Per-category content: `meta`, `focus`, `projects`, `companies`, `experience`, `education`, `courses`, `skills`, `skillDetails`, `languages`. Edit here for any change inside one of these arrays/objects.                                            |
+| `src/data/load-cv.mjs`   | Assembles `cv.json` + `cv/*.json`. The Vite plugin, scripts, and `make validate` all go through it; the schema validates the assembled object.                                                                                                       |
+| `schemas/cv.schema.json` | JSON Schema. The contract the **assembled** CV must satisfy.                                                                                                                                                                                         |
+| `src/data/cv.types.ts`   | TypeScript mirror of the schema, consumed by UI.                                                                                                                                                                                                     |
+| `src/components/*.tsx`   | Renderers for each section.                                                                                                                                                                                                                          |
 
 Read `schemas/cv.schema.json` first if you are unsure of a field's
 shape — it is the authoritative contract.
+
+The split is purely a storage convention; the schema, the runtime
+shape, and the rendered site all see one assembled object. To add a
+new top-level category, add it to `cv.json` as `"<key>": "{...}"`,
+create `src/data/cv/<key>.json` with its content, and extend
+`schemas/cv.schema.json` + `src/data/cv.types.ts` as for any other
+schema change.
 
 ## Modes
 
@@ -55,9 +64,10 @@ Shared conventions:
 - **Do not** add fields the schema doesn't allow. If the user asks
   for one, follow "Schema changes" below.
 
-### Top-level fields (`name`, `title`, `location`, `summary`, `links`, `meta`, `actions`, `sections`)
+### Top-level fields (`name`, `title`, `location`, `summary`, `links`, `actions`, `sections`)
 
-- Path: root of the JSON object.
+- Path: root of `src/data/cv.json` (these stay inline, no split file).
+- `meta` lives in `src/data/cv/meta.json`.
 - `summary` — keep to ~2 sentences. If the user rewrites, preserve
   tone but push the newest focus areas to the front.
 - `links` — ordered array of `{ label, url, featured? }`. `featured:
