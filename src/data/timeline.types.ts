@@ -55,6 +55,7 @@ export type TimelineBar = {
   isOngoing: boolean;
   endMonthAtBuild: number;
   notes?: LocalizedString;
+  credits?: string;
   segments: TimelineSegment[];
   github?: GitHubPayload;
   sideProject?: SideProjectPayload;

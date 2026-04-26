@@ -183,7 +183,8 @@ function buildItems(cv) {
       kind: "education",
       title: localize(ed.field),
       subtitle,
-      description: localize(ed.credits),
+      description: localize(""),
+      credits: ed.credits,
       startDate: ed.startDate,
       endDate: ed.endDate,
       skills: ed.skills ?? [],
@@ -201,7 +202,8 @@ function buildItems(cv) {
       kind: "course",
       title: localize(course.name),
       subtitle,
-      description: localize(course.credits),
+      description: localize(""),
+      credits: course.credits,
       startDate: deriveCourseStart(course),
       endDate: deriveCourseEnd(course),
       skills: course.skills ?? [],
@@ -431,6 +433,7 @@ function buildLayout(cv, activity, projectStats) {
         segments: p.segments,
       };
       if (p.notes) bar.notes = p.notes;
+      if (p.credits) bar.credits = p.credits;
       if (p.github) bar.github = p.github;
       if (p.sideProject) bar.sideProject = p.sideProject;
       return bar;
