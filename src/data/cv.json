@@ -166,12 +166,12 @@
         "en": "Wraps Claude, Codex, Gemini, Copilot, and Ollama behind a single command so you can switch between them without learning five different CLIs. Adds cross-provider features on top: model size aliases, automatic provider/model selection, git worktree isolation, Docker sandboxing, structured JSON output with schema validation, and unified session logs. Ships as a CLI, a Rust library crate, and SDKs for TypeScript, Python, C#, Swift, Java, and Kotlin.",
         "sv": "Kapslar in Claude, Codex, Gemini, Copilot och Ollama bakom ett enda kommando så att du kan växla mellan dem utan att lära dig fem olika CLI:er. Lägger till funktioner på tvären: alias för modellstorlek, automatiskt val av leverantör/modell, isolering via git worktree, Docker-sandboxing, strukturerad JSON-utdata med schemavalidering och enhetliga sessionsloggar. Levereras som CLI, ett Rust-bibliotek och SDK:er för TypeScript, Python, C#, Swift, Java och Kotlin."
       },
+      "stack": ["Rust", "Docker"],
       "skills": [
-        "Rust",
         "Multi-provider LLM integration",
         "Agent sandboxing & isolation",
-        "Docker",
         "Claude Code",
+        "Agent Skills",
         "Codex CLI",
         "Gemini CLI",
         "GitHub Copilot",
@@ -190,12 +190,13 @@
         "en": "Orchestration CLI for AI coding agents. Describe a workflow in natural language, capture it as a shareable .zwf file, and replay it anywhere with a single command. Embeds zag for the underlying orchestration primitives. Ships with an HTTP API and an embedded React chat UI for designing workflows interactively.",
         "sv": "Orkestrerings-CLI för AI-kodningsagenter. Beskriv ett arbetsflöde med naturligt språk, fånga det i en delbar .zwf-fil och spela upp det var som helst med ett enda kommando. Bygger in zag för den underliggande orkestreringen. Levereras med ett HTTP-API och en inbäddad React-chatt för interaktiv arbetsflödesdesign."
       },
+      "stack": ["Rust", "React"],
       "skills": [
-        "Rust",
         "Multi-agent orchestration",
         "Agentic Workflows",
         "Prompt engineering",
-        "React"
+        "Claude Code",
+        "Agent Skills"
       ],
       "github": { "owner": "niclaslindstedt", "repo": "zig" },
       "openSource": true
@@ -210,7 +211,8 @@
         "en": "Connects AI agents to external services (Discord, GitHub, Slack, and more) through scoped service configurations instead of MCP servers. Fine-grained permission files go beyond what upstream APIs offer, with Ed25519-signed policies stored in the OS keychain so an agent with filesystem access can't silently widen its own scope. New providers are a single Rust trait implementation.",
         "sv": "Kopplar AI-agenter till externa tjänster (Discord, GitHub, Slack med flera) via avgränsade tjänstkonfigurationer istället för MCP-servrar. Finkornig behörighetsstyrning går längre än det leverantörernas API:er själva erbjuder, med Ed25519-signerade policyer lagrade i operativsystemets nyckelring så att en agent med filsystemsåtkomst inte i tysthet kan utöka sin egen omfattning. Nya leverantörer är en enda Rust trait-implementation."
       },
-      "skills": ["Rust", "Agent permissions & security"],
+      "stack": ["Rust"],
+      "skills": ["Agent permissions & security", "Claude Code", "Agent Skills"],
       "github": { "owner": "niclaslindstedt", "repo": "zad" },
       "openSource": true
     },
@@ -224,7 +226,13 @@
         "en": "Agent-assisted end-to-end testing with TOML scenario files. Uses an explicit arrange/act/assert structure with programmatic checks, then optionally delegates nuanced verdicts to an AI reviewer for the cases regex assertions can't cleanly handle. Machine-readable output makes it easy to plug into other tools.",
         "sv": "Agentassisterad end-to-end-testning med TOML-scenariofiler. Använder en explicit arrange/act/assert-struktur med programmatiska kontroller och kan vid behov delegera nyanserade bedömningar till en AI-granskare när regex-påståenden inte räcker till. Maskinläsbar utdata gör det enkelt att koppla in mot andra verktyg."
       },
-      "skills": ["Rust", "Agent-in-the-loop testing", "AI evaluations"],
+      "stack": ["Rust"],
+      "skills": [
+        "Agent-in-the-loop testing",
+        "AI evaluations",
+        "Claude Code",
+        "Agent Skills"
+      ],
       "github": { "owner": "niclaslindstedt", "repo": "ztf" },
       "openSource": true
     },
@@ -238,7 +246,8 @@
         "en": "Bootstraps new open source repos against a shared spec, then keeps them aligned over time. A freeform prompt is interpreted into a structured manifest that writes a complete repo to disk — license, docs, CI, release pipelines, and agent conventions — and creates the GitHub remote. Validating an existing repo reports and auto-fixes conformance gaps, or files one GitHub issue per violation.",
         "sv": "Initierar nya open source-repon mot en gemensam specifikation och håller dem sedan i linje över tid. En friform-prompt tolkas till ett strukturerat manifest som skriver ett komplett repo till disk — licens, dokumentation, CI, release-pipelines och agentkonventioner — och skapar GitHub-remoten. Validering av ett befintligt repo rapporterar och åtgärdar avvikelser automatiskt, eller skapar ett GitHub-issue per överträdelse."
       },
-      "skills": ["Rust", "Spec-driven development"],
+      "stack": ["Rust"],
+      "skills": ["Spec-driven development"],
       "github": { "owner": "niclaslindstedt", "repo": "oss-spec" },
       "openSource": true
     },
@@ -252,13 +261,8 @@
         "en": "Personal blog where each post can ship a technical and a non-technical version under one slug; readers pick their audience inside a terminal-themed React UI. Markdown lives in the repo so every revision is a commit and a diff, and posts are written, revised, and removed via Claude skills that enforce the frontmatter schema. A Vite extractor walks the post tree, validates frontmatter, and emits a single JSON the frontend reads — no CMS, no runtime server, just a static bundle deployed to GitHub Pages.",
         "sv": "Personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug; läsaren väljer målgrupp i ett terminal-tematiserat React-gränssnitt. Markdown ligger i repot så att varje revision är en commit och en diff, och inlägg skrivs, uppdateras och tas bort via Claude-skills som upprätthåller frontmatter-schemat. En Vite-extractor går igenom inläggsträdet, validerar frontmatter och genererar en enda JSON-fil som frontenden läser — ingen CMS, ingen runtime-server, bara en statisk bundle som driftas på GitHub Pages."
       },
-      "skills": [
-        "TypeScript",
-        "React",
-        "Node.js",
-        "Spec-driven development",
-        "Claude Code"
-      ],
+      "stack": ["TypeScript", "React", "Node.js"],
+      "skills": ["Spec-driven development", "Claude Code", "Agent Skills"],
       "github": { "owner": "niclaslindstedt", "repo": "blog" },
       "openSource": true
     },
@@ -272,12 +276,12 @@
         "en": "All CV content lives in one cv.json validated against a JSON Schema; a React + Vite frontend renders Hero, Focus, Projects, Experience, Skills, Education, and a zoomable Timeline from it. A custom Vite plugin synthesises the entire <head> — Open Graph, Twitter card, canonical URL, and JSON-LD Person + WebSite — directly from the data, while build-time scripts generate the timeline, GitHub commit activity, per-project commit stats, a 1200×630 OG image (via satori), and a sitemap. Maintenance is delegated to Claude skills (update-cv, update-summary, update-company-descriptions) that keep the JSON in sync with reality.",
         "sv": "Allt CV-innehåll bor i en enda cv.json som valideras mot ett JSON Schema; en React + Vite-frontend renderar sektionerna Hero, Fokus, Projekt, Erfarenhet, Kompetenser, Utbildning och en zoombar tidslinje från den. Ett eget Vite-plugin bygger hela <head> — Open Graph, Twitter card, canonical URL och JSON-LD Person + WebSite — direkt från datan, medan byggtidsskript genererar tidslinjen, GitHub-aktivitet, commit-statistik per projekt, en OG-bild i 1200×630 (via satori) och en sitemap. Underhåll delegeras till Claude-skills (update-cv, update-summary, update-company-descriptions) som håller JSON-filen i synk med verkligheten."
       },
+      "stack": ["TypeScript", "React", "Node.js"],
       "skills": [
-        "TypeScript",
-        "React",
-        "Node.js",
         "Spec-driven development",
-        "Software Architecture"
+        "Software Architecture",
+        "Claude Code",
+        "Agent Skills"
       ],
       "github": { "owner": "niclaslindstedt", "repo": "cv" },
       "openSource": true
@@ -292,6 +296,7 @@
         "en": "Multi-agent orchestration system explored as the precursor to the open-source zig/zag split. The repository remains private; the ideas were rewritten from scratch and released as zig (workflows) and zag (provider abstraction).",
         "sv": "System för multi-agentorkestrering som utforskades som föregångare till den open source-baserade zig/zag-uppdelningen. Repositoryt är privat; idéerna skrevs om från grunden och släpptes som zig (arbetsflöden) och zag (leverantörsabstraktion)."
       },
+      "stack": ["Rust", "PostgreSQL"],
       "skills": [
         "Multi-agent orchestration",
         "Agentic Workflows",
@@ -310,10 +315,8 @@
         "en": "ASP.NET Core implementation of OAuth 2.0 (RFC 6749) — authorization code, client credentials, password, and refresh-token grants — with JWT bearer tokens, scopes, roles, audit logging, and Postgres persistence via Entity Framework Core. Ships with a Blazor WebAssembly admin UI and Docker images for both the API and the SPA. OpenID Connect was on the roadmap.",
         "sv": "ASP.NET Core-implementation av OAuth 2.0 (RFC 6749) — authorization code, client credentials, password och refresh-token — med JWT-bearer-tokens, scopes, roller, audit-loggning och Postgres-persistens via Entity Framework Core. Levereras med ett Blazor WebAssembly-administrationsgränssnitt och Docker-avbildningar för både API:et och SPA:n. OpenID Connect fanns på roadmappen."
       },
+      "stack": ["C#/.NET", "PostgreSQL", "Docker"],
       "skills": [
-        "C#/.NET",
-        "PostgreSQL",
-        "Docker",
         "Software Architecture",
         "Cybersecurity",
         "RFC Implementation"
@@ -1494,6 +1497,7 @@
         "Prompt engineering",
         "AI evaluations",
         "Claude Code",
+        "Agent Skills",
         "Codex CLI",
         "Gemini CLI",
         "GitHub Copilot",
@@ -1797,6 +1801,20 @@
         "sv": "Stängd källkod hos leverantören; användningskostnaden skalar snabbt på långa agentloopar."
       },
       "url": "https://docs.claude.com/en/docs/claude-code/overview"
+    },
+    "Agent Skills": {
+      "description": {
+        "en": "Reusable, instruction-driven extensions that Claude Code loads on demand — packaged Markdown plus assets that specialise the agent for a domain (e.g. updating a CV, refreshing a README, reviewing a PR).",
+        "sv": "Återanvändbara, instruktionsdrivna utökningar som Claude Code laddar vid behov — paketerad Markdown och tillgångar som specialiserar agenten för en domän (t.ex. uppdatera ett CV, uppdatera README eller granska en PR)."
+      },
+      "benefits": {
+        "en": "Codifies repeatable workflows in version-controlled prompts that any session can pick up; cheaper than building a custom agent from scratch.",
+        "sv": "Kodifierar återanvändbara arbetsflöden i versionshanterade prompter som vilken session som helst kan plocka upp; billigare än att bygga en egen agent från grunden."
+      },
+      "drawbacks": {
+        "en": "Tied to Claude Code's runtime; the format is still evolving and skills must be kept in sync as the spec changes.",
+        "sv": "Bundet till Claude Codes körtid; formatet utvecklas fortfarande och skills måste hållas i synk när specifikationen ändras."
+      }
     },
     "Codex CLI": {
       "description": {
