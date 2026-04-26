@@ -46,6 +46,10 @@
   display: inline;
 }
 
+.hero-long-summary {
+  display: none;
+}
+
 .hero-summary-hint {
   font-size: 0.85rem;
   color: var(--accent);

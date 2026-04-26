@@ -31,16 +31,15 @@
   body {
     background: #ffffff;
     color: #111111;
+    orphans: 3;
+    widows: 3;
   }
 
   body::before {
     display: none;
   }
 
-  .celestial-sky {
-    display: none;
-  }
-
+  .celestial-sky,
   .glass-reflect {
     display: none;
   }
@@ -73,6 +72,7 @@
     flex-direction: column;
   }
 
+  /* Section order — professional CV layout. */
   .hero {
     order: 0;
     padding: 0 0 12px;
@@ -84,19 +84,19 @@
     order: 1;
   }
 
-  #education {
+  #projects {
     order: 2;
   }
 
-  #skills {
+  #education {
     order: 3;
   }
 
-  #focus {
+  #courses {
     order: 4;
   }
 
-  #projects {
+  #skills {
     order: 5;
   }
 
@@ -104,41 +104,42 @@
     order: 6;
   }
 
+  /* Web-only sections: hide in print. */
+  #focus,
+  #current-focus,
+  .footer {
+    display: none !important;
+  }
+
   .section {
     margin-bottom: 18px;
   }
 
+  /* Hero — controls, eyebrow, screen-only summary all suppressed.
+     Long summary replaces the short summary in print. */
   .hero-download,
   .hero-timeline-btn,
   .theme-toggle,
   .lang-toggle,
-  .timeline-vis-overlay {
+  .timeline-vis-overlay,
+  .hero-eyebrow,
+  .hero-summary,
+  .hero-summary-hint {
     display: none !important;
   }
 
   .hero-name {
     font-size: 20pt;
-    margin-bottom: 4px;
+    margin: 0 0 6px;
   }
 
-  .hero-eyebrow {
-    font-size: 9pt;
-    margin-bottom: 4px;
-    color: #444;
-  }
-
-  .hero-summary {
-    font-size: 10.5pt;
-    margin-bottom: 8px;
-    max-width: none;
+  .hero-long-summary {
     display: block;
-    border: 0 !important;
-    color: #111 !important;
-    cursor: auto;
-  }
-
-  .hero-summary-hint {
-    display: none !important;
+    margin: 0 0 12px;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: #111;
+    max-width: none;
   }
 
   .hero-meta {
@@ -155,12 +156,7 @@
     font-weight: 600;
   }
 
-  .hero-meta a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-weight: 400;
-    color: #555;
-  }
-
+  /* Section headings. */
   .section-title {
     font-size: 10pt;
     color: #111;
@@ -185,23 +181,57 @@
     display: block !important;
   }
 
+  /* Strip glass / pill chrome from cards. */
   .focus-list li,
   .focus-item-btn,
   .project,
   .timeline-item,
   .education-list > li,
-  .language-item,
-  .skill-pill {
+  .language-item {
     background: transparent !important;
     border-color: #bbb !important;
     color: #111 !important;
   }
 
+  /* Languages — flatten pills to a single inline line. */
+  .languages-list {
+    display: block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .language-item {
+    display: inline;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .language-item + .language-item::before {
+    content: ", ";
+    color: #444;
+  }
+
+  .language-name {
+    font-weight: 600;
+  }
+
+  .language-level::before {
+    content: " (";
+  }
+
+  .language-level::after {
+    content: ")";
+  }
+
+  /* Roles + education entries: whitespace separation, no dotted dividers. */
   .timeline-item,
   .education-list > li {
-    padding: 4px 0 !important;
+    padding: 0 !important;
+    margin-bottom: 10pt;
     border: 0 !important;
-    border-bottom: 1px dotted #bbb !important;
     border-radius: 0 !important;
   }
 
@@ -214,12 +244,46 @@
 
   .education-list p {
     line-height: 1.4;
+    margin: 0;
   }
 
-  button.skill-pill-btn {
-    color: #333 !important;
+  /* Company name: drop the dotted-underline tooltip affordance. */
+  .company,
+  .company-btn {
+    border-bottom: 0 !important;
+    color: #111 !important;
   }
 
+  /* Promotion / role-start glyphs are screen-only chrome. Keep the
+     role chain itself so career progression survives in print. */
+  .promotion-arrow,
+  .role-start-icon {
+    display: none !important;
+  }
+
+  .role-chain {
+    list-style: none;
+    border-left: 0;
+    padding: 0;
+    margin: 2px 0 0;
+  }
+
+  .role-chain-item {
+    display: block;
+    padding: 0;
+  }
+
+  .role-chain-content {
+    display: inline;
+  }
+
+  .role-chain-content .role-chain-meta::before {
+    content: " · ";
+    color: #888;
+  }
+
+  /* Per-role stack + skills: render as inline comma-separated text. */
+  button.skill-pill-btn,
   .entry-stack li,
   .entry-stack-btn,
   .entry-skills li,
@@ -241,6 +305,7 @@
   .entry-stack,
   .entry-skills {
     gap: 4px 10px;
+    margin: 2px 0 0;
   }
 
   .entry-stack li::after,
@@ -254,10 +319,11 @@
     content: "";
   }
 
+  /* Projects — compress to single-line entries, no dividers. */
   #projects .project {
-    padding: 4px 0;
+    padding: 2px 0;
+    margin-bottom: 0;
     border: 0;
-    border-bottom: 1px dotted #bbb;
     border-radius: 0;
   }
 
@@ -269,7 +335,7 @@
   }
 
   #projects .project-head h3 {
-    font-size: 11pt;
+    font-size: 10.5pt;
     display: inline;
   }
 
@@ -282,24 +348,74 @@
     content: " — ";
   }
 
+  /* Skills — grouped category lines: "Category: Skill, Skill, Skill". */
+  .skills {
+    display: block;
+  }
+
+  .skills-group {
+    display: block;
+    margin-bottom: 4pt;
+    break-inside: avoid;
+  }
+
+  .skills-group h3 {
+    display: inline;
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: #111;
+    margin: 0;
+  }
+
+  .skills-group h3::after {
+    content: ": ";
+    font-weight: 600;
+  }
+
+  .skills-group ul {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .skills-group ul > li {
+    display: inline;
+  }
+
+  .skills-group ul > li + li::before {
+    content: ", ";
+    color: #444;
+  }
+
+  .skill-pill,
+  details.skill-pill {
+    display: inline !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    font-size: 10.5pt !important;
+  }
+
   details.skill-pill > summary {
+    display: inline;
     list-style: none;
     padding: 0;
   }
 
+  .skill-pill-btn {
+    font: inherit;
+    color: #333 !important;
+  }
+
+  .skill-personal-badge,
   .skill-usage-count,
   .skill-usage-list {
     display: none !important;
   }
 
-  .skill-pill,
-  details.skill-pill {
-    border: 1px solid #bbb !important;
-    border-radius: 999px;
-    padding: 1px 8px;
-    font-size: 9.5pt;
-  }
-
+  /* Assignments (sub-engagements under a parent role) — expand inline. */
   details.assignments {
     display: block;
   }
@@ -312,10 +428,22 @@
     display: block !important;
   }
 
+  .assignments-list {
+    padding-left: 0;
+  }
+
+  .assignments-list .assignment-item::before,
+  .assignments-list .assignment-item::after {
+    display: none;
+  }
+
+  /* Page-break behavior. */
   .timeline-item,
   .assignment-item,
   .education-list > li,
-  .project {
+  .project,
+  .skills-group,
+  .language-item {
     break-inside: avoid;
     page-break-inside: avoid;
   }
@@ -330,32 +458,6 @@
   a {
     color: #111;
     text-decoration: none;
-  }
-
-  .footer {
-    border-color: #bbb;
-    color: #555;
-    font-size: 9pt;
-    margin-top: 16px;
-  }
-
-  .assignments-list {
-    padding-left: 0;
-  }
-
-  .assignments-list .assignment-item::before,
-  .assignments-list .assignment-item::after {
-    display: none;
-  }
-
-  .role-chain {
-    border-left-color: #888;
-  }
-
-  .promotion-arrow,
-  .role-start-icon {
-    color: #111;
-    opacity: 1;
   }
 
   .active-badge {

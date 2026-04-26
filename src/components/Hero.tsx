@@ -33,6 +33,9 @@ export function Hero({
           {ui.summaryModal.readMore}
         </span>
       </button>
+      <p className="hero-long-summary" aria-hidden="true">
+        {t(cv.longSummary)}
+      </p>
       <div className="hero-meta">
         {cv.links.map((link) => (
           <a
