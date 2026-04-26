@@ -288,6 +288,22 @@
       "openSource": true
     },
     {
+      "name": "juris",
+      "tagline": {
+        "en": "Git-native open database for Swedish legal documents.",
+        "sv": "Git-baserad öppen databas för svenska rättsdokument."
+      },
+      "description": {
+        "en": "CLI for collecting and normalizing Swedish legal documents from official sources — parliament bills, government inquiries, court precedents, agency regulations, and EU law — into a unified Markdown + JSON format. Eight collectors cover Riksdagen's JSON API, Regeringen.se scraping, Domstolsverket's REST API, JO/JK/Lagrummet scraping, EUR-Lex SPARQL, and CURIA/HUDOC; together they handle 21 document types. Async I/O with built-in rate limiting respects source servers, incremental state tracking lets long-running jobs resume where they left off, and PDF text extraction pulls content out of attachments. Output is git-friendly: every document becomes a versioned commit and diff. Published to PyPI.",
+        "sv": "CLI för att samla in och normalisera svenska rättsdokument från officiella källor — propositioner, statliga utredningar, prejudikat, myndighetsföreskrifter och EU-rätt — till ett enhetligt format i Markdown och JSON. Åtta insamlare täcker Riksdagens JSON-API, skrapning av Regeringen.se, Domstolsverkets REST-API, JO/JK/Lagrummet-skrapning, EUR-Lex SPARQL och CURIA/HUDOC; tillsammans hanterar de 21 dokumenttyper. Asynkron I/O med inbyggd hastighetsbegränsning respekterar källservrarna, inkrementell tillståndsspårning låter långa körningar fortsätta där de slutade och PDF-textextraktion drar ut innehåll ur bilagor. Utdata är git-vänlig: varje dokument blir en versionshanterad commit och diff. Publiceras på PyPI."
+      },
+      "stack": ["Python"],
+      "skills": ["Python", "Software Architecture", "Spec-driven development"],
+      "github": { "owner": "niclaslindstedt", "repo": "juris" },
+      "openSource": true,
+      "homepage": "https://niclaslindstedt.github.io/juris/"
+    },
+    {
       "name": "swarm",
       "tagline": {
         "en": "Agentic orchestration system, predecessor to zig and zag.",
@@ -323,6 +339,21 @@
         "RFC Implementation"
       ],
       "github": { "owner": "niclaslindstedt", "repo": "dotnet-oauth2-server" },
+      "openSource": true
+    },
+    {
+      "name": "docker-backup",
+      "tagline": {
+        "en": "Encrypted, scheduled backups for Docker volumes and host folders.",
+        "sv": "Krypterade, schemalagda säkerhetskopior för Docker-volymer och värdmappar."
+      },
+      "description": {
+        "en": "Containerized backup tool for Docker volumes and host folders. Backups are tar/zip/7z/rar archives that can be GPG-encrypted, signed, and verified with sfv checksums; a cron-driven schedule moves them to long-term storage and prunes old copies according to per-window retention rules and free-space thresholds. The Docker-aware variant pauses sibling containers around the backup window so volumes aren't captured mid-write, and notifies Slack or Discord on completion. Distributed as multi-arch images on Docker Hub, with both Ubuntu and Alpine variants. Covered by a shell-based test suite that runs each command end-to-end.",
+        "sv": "Containeriserat säkerhetskopieringsverktyg för Docker-volymer och värdmappar. Säkerhetskopior är tar/zip/7z/rar-arkiv som kan GPG-krypteras, signeras och verifieras med sfv-checksummor; ett cronstyrt schema flyttar dem till långtidslagring och rensar gamla kopior enligt fönsterbaserade retentionsregler och tröskelvärden för ledigt utrymme. Docker-medveten variant pausar systerkontainrar under säkerhetskopieringsfönstret så att volymer inte fångas mitt under skrivning, och notifierar Slack eller Discord när jobbet är klart. Distribueras som multi-arch-avbildningar på Docker Hub, med både Ubuntu- och Alpine-variant. Täcks av en shell-baserad testsvit som kör varje kommando från början till slut."
+      },
+      "stack": ["Bash/Shell", "Docker"],
+      "skills": ["Bash/Shell", "Docker", "Cybersecurity"],
+      "github": { "owner": "niclaslindstedt", "repo": "docker-backup" },
       "openSource": true
     }
   ],
