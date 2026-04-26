@@ -15,6 +15,7 @@ const projectStats = projectStatsData as ProjectStatsFile;
 type Props = {
   project: Project | null;
   onClose: () => void;
+  onSkillClick: (skill: string) => void;
 };
 
 function statsKey(github: GithubRepoRef): string {
@@ -30,7 +31,7 @@ function isoToYearMonth(iso: string): string {
   return iso.slice(0, 7);
 }
 
-export function ProjectModal({ project, onClose }: Props) {
+export function ProjectModal({ project, onClose, onSkillClick }: Props) {
   const { t, lang, ui } = useLang();
 
   useEffect(() => {
@@ -118,6 +119,26 @@ export function ProjectModal({ project, onClose }: Props) {
               >
                 {ui.projectModal.viewOnGitHub}
               </a>
+            )}
+            {project.stack && project.stack.length > 0 && (
+              <div className="company-modal-stack">
+                <h3 className="company-modal-stack-title">
+                  {ui.projectModal.stack}
+                </h3>
+                <ul className="entry-stack">
+                  {project.stack.map((tech) => (
+                    <li key={tech}>
+                      <button
+                        type="button"
+                        className="entry-stack-btn"
+                        onClick={() => onSkillClick(tech)}
+                      >
+                        {tech}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </section>
         </div>

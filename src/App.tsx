@@ -179,6 +179,10 @@ export function App() {
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
+        onSkillClick={(skill) => {
+          setSelectedProject(null);
+          setSelectedSkill(skill);
+        }}
       />
     </>
   );

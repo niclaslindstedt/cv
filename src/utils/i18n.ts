@@ -81,6 +81,7 @@ type UiStrings = {
     viewOnGitHub: string;
     active: string;
     commits: string;
+    stack: string;
   };
   programModal: {
     coursesHeading: string;
@@ -205,6 +206,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewOnGitHub: "View on GitHub ↗",
       active: "Active",
       commits: "Commits",
+      stack: "Stack",
     },
     programModal: {
       coursesHeading: "Courses",
@@ -330,6 +332,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewOnGitHub: "Visa på GitHub ↗",
       active: "Aktiv",
       commits: "Commits",
+      stack: "Stack",
     },
     programModal: {
       coursesHeading: "Kurser",
