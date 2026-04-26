@@ -12,8 +12,11 @@ type UiStrings = {
   theme: {
     switchToDark: string;
     switchToLight: string;
+    light: string;
+    dark: string;
   };
   hero: {
+    eyebrow: string;
     downloadAria: string;
     languageEnglish: string;
     languageSwedish: string;
@@ -132,8 +135,11 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     theme: {
       switchToDark: "Switch to dark mode",
       switchToLight: "Switch to light mode",
+      light: "Light mode",
+      dark: "Dark mode",
     },
     hero: {
+      eyebrow: "Resume",
       downloadAria: "Download CV as PDF (opens print dialog)",
       languageEnglish: "Switch to English",
       languageSwedish: "Switch to Swedish",
@@ -256,8 +262,11 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     theme: {
       switchToDark: "Byt till mörkt läge",
       switchToLight: "Byt till ljust läge",
+      light: "Ljust läge",
+      dark: "Mörkt läge",
     },
     hero: {
+      eyebrow: "CV",
       downloadAria: "Ladda ner CV som PDF (öppnar utskriftsdialog)",
       languageEnglish: "Byt till engelska",
       languageSwedish: "Byt till svenska",
