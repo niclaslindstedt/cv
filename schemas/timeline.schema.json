@@ -109,7 +109,21 @@
           "items": { "$ref": "#/$defs/segment" }
         },
         "github": { "$ref": "#/$defs/github" },
-        "sideProject": { "$ref": "#/$defs/sideProject" }
+        "sideProject": { "$ref": "#/$defs/sideProject" },
+        "promotions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/promotion" }
+        }
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["startDate", "title"],
+      "properties": {
+        "startDate": { "$ref": "#/$defs/isoMonth" },
+        "title": { "$ref": "#/$defs/localizedString" }
       }
     },
     "sideProject": {

@@ -43,6 +43,11 @@ export type SideProjectPayload = {
   repoUrl: string;
 };
 
+export type TimelinePromotion = {
+  startDate: string;
+  title: LocalizedString;
+};
+
 export type TimelineBar = {
   id: string;
   kind: TimelineKind;
@@ -58,6 +63,7 @@ export type TimelineBar = {
   segments: TimelineSegment[];
   github?: GitHubPayload;
   sideProject?: SideProjectPayload;
+  promotions?: TimelinePromotion[];
 };
 
 export type TimelineTrack = {
