@@ -65,6 +65,7 @@ type UiStrings = {
   };
   experience: {
     assignmentsSummary: (count: number) => string;
+    assignmentsHeading: string;
   };
   focus: {
     since: string;
@@ -203,6 +204,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     experience: {
       assignmentsSummary: (n) => `${n} assignment${n === 1 ? "" : "s"}`,
+      assignmentsHeading: "Assignments",
     },
     focus: {
       since: "since",
@@ -342,6 +344,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     experience: {
       assignmentsSummary: (n) => `${n} uppdrag`,
+      assignmentsHeading: "Uppdrag",
     },
     focus: {
       since: "sedan",

@@ -56,35 +56,47 @@ function ExperienceSection() {
 }
 
 function ExperienceEntry({ item }: { item: PrintExperience }) {
-  const { t } = useLang();
+  const { t, ui } = useLang();
+  const hasAssignments = item.assignments.length > 0;
+  const classes = ["print-job"];
+  if (hasAssignments) classes.push("print-job--with-assignments");
   return (
-    <li className="print-job">
-      <h3 className="print-job-title">
-        <span className="print-job-role">{t(item.role)}</span>
-        {" · "}
-        <span className="print-job-company">{item.company}</span>
-      </h3>
-      <p className="print-job-meta">
-        {t(item.range)}
-        {item.engagement && (
-          <>
-            {" · "}
-            <span className="print-job-engagement">{t(item.engagement)}</span>
-          </>
+    <li className={classes.join(" ")}>
+      <div className="print-job-header">
+        <h3 className="print-job-title">
+          <span className="print-job-role">{t(item.role)}</span>
+          {" · "}
+          <span className="print-job-company">{item.company}</span>
+        </h3>
+        <p className="print-job-meta">
+          {t(item.range)}
+          {item.engagement && (
+            <>
+              {" · "}
+              <span className="print-job-engagement">{t(item.engagement)}</span>
+            </>
+          )}
+        </p>
+        <p className="print-job-tagline">{t(item.tagline)}</p>
+        {item.roleHistory.length > 0 && (
+          <RoleHistory roles={item.roleHistory} />
         )}
-      </p>
-      <p className="print-job-tagline">{t(item.tagline)}</p>
-      {item.roleHistory.length > 0 && <RoleHistory roles={item.roleHistory} />}
-      {item.tags.length > 0 && (
-        <p className="print-tags">{item.tags.join(", ")}</p>
-      )}
-      {item.notes && <p className="print-notes">{t(item.notes)}</p>}
-      {item.assignments.length > 0 && (
-        <ul className="print-assignments">
-          {item.assignments.map((a, i) => (
-            <AssignmentEntry key={`${a.client}-${i}`} item={a} />
-          ))}
-        </ul>
+        {item.tags.length > 0 && (
+          <p className="print-tags">{item.tags.join(", ")}</p>
+        )}
+        {item.notes && <p className="print-notes">{t(item.notes)}</p>}
+      </div>
+      {hasAssignments && (
+        <div className="print-assignments-block">
+          <h4 className="print-assignments-heading">
+            {ui.experience.assignmentsHeading}
+          </h4>
+          <ul className="print-assignments">
+            {item.assignments.map((a, i) => (
+              <AssignmentEntry key={`${a.client}-${i}`} item={a} />
+            ))}
+          </ul>
+        </div>
       )}
     </li>
   );

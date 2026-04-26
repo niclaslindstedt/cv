@@ -90,8 +90,10 @@ function sortRolesAsc(roles) {
 
 function buildRoleHistory(sortedRoles) {
   if (!sortedRoles || sortedRoles.length < 2) return [];
-  const olderRoles = sortedRoles.slice(0, -1);
-  return [...olderRoles].reverse().map((r) => ({
+  // Print includes the newest role too: the parent header line shows the
+  // company's overall range, so listing every role with its own dates is the
+  // only way the timeline reads correctly without the screen's promotion icons.
+  return [...sortedRoles].reverse().map((r) => ({
     title: r.title,
     range: formatRange(r.startDate, r.endDate),
   }));
