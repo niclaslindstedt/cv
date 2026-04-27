@@ -9,6 +9,8 @@
   --sky-bottom: #0a1428;
   --sky-glow-1: rgba(70, 40, 120, 0.4);
   --sky-glow-2: rgba(20, 60, 130, 0.34);
+  --sky-glow-1-pos: 30% 110%;
+  --sky-glow-2-pos: 80% 110%;
   --celestial-x: 50%;
   --celestial-y: 12%;
   --scroll-progress: 0;
@@ -55,6 +57,7 @@
   --sky-bottom: #eef2f6;
   --sky-glow-1: rgba(180, 195, 215, 0.5);
   --sky-glow-2: rgba(225, 220, 230, 0.45);
+  --sky-glow-2-pos: 80% -10%;
   --orb-color: rgba(232, 240, 250, 1);
   --orb-color-soft: rgba(180, 200, 225, 0.16);
   --border: #c7cfd9;
