@@ -9,6 +9,10 @@
       "en": "Multi-provider LLM integration that wraps Claude, Codex, Gemini, Copilot, and Ollama behind a single command so you can switch between them without learning five different CLIs. Adds cross-provider features on top: model size aliases, automatic provider/model selection, git worktree isolation, Docker sandboxing, structured JSON output with schema validation, and unified session logs. Ships as a CLI, a Rust library crate, and SDKs for TypeScript, Python, C#, Swift, Java, and Kotlin.",
       "sv": "Multi-leverantörs-LLM-integration som kapslar in Claude, Codex, Gemini, Copilot och Ollama bakom ett enda kommando så att du kan växla mellan dem utan att lära dig fem olika CLI:er. Lägger till funktioner på tvären: alias för modellstorlek, automatiskt val av leverantör/modell, isolering via git worktree, Docker-sandboxing, strukturerad JSON-utdata med schemavalidering och enhetliga sessionsloggar. Levereras som CLI, ett Rust-bibliotek och SDK:er för TypeScript, Python, C#, Swift, Java och Kotlin."
     },
+    "printDescription": {
+      "en": "Multi-provider LLM CLI that puts Claude, Codex, Gemini, Copilot, and Ollama behind one command. Adds cross-provider features like model aliases, automatic provider selection, git worktree isolation, Docker sandboxing, and structured JSON output; ships as a CLI plus SDKs for six languages.",
+      "sv": "Multi-leverantörs-LLM-CLI som samlar Claude, Codex, Gemini, Copilot och Ollama bakom ett enda kommando. Lägger till funktioner på tvären som modellalias, automatiskt val av leverantör, isolering via git worktree, Docker-sandboxing och strukturerad JSON-utdata; levereras som CLI plus SDK:er för sex språk."
+    },
     "stack": [
       "Rust",
       "Docker",
@@ -49,6 +53,10 @@
       "en": "Orchestration CLI for AI coding agents. Describe a workflow in natural language, capture it as a shareable .zwf file, and replay it anywhere with a single command. Embeds zag for the underlying orchestration primitives. Ships with an HTTP API and an embedded React chat UI for designing workflows interactively.",
       "sv": "Orkestrerings-CLI för AI-kodningsagenter. Beskriv ett arbetsflöde med naturligt språk, fånga det i en delbar .zwf-fil och spela upp det var som helst med ett enda kommando. Bygger in zag för den underliggande orkestreringen. Levereras med ett HTTP-API och en inbäddad React-chatt för interaktiv arbetsflödesdesign."
     },
+    "printDescription": {
+      "en": "Orchestration CLI for AI coding agents. Workflows are described in natural language, captured as shareable .zwf files, and replayed anywhere with a single command. Built on top of zag and ships with an HTTP API and embedded chat UI for interactive design.",
+      "sv": "Orkestrerings-CLI för AI-kodningsagenter. Arbetsflöden beskrivs i naturligt språk, fångas i delbara .zwf-filer och spelas upp var som helst med ett enda kommando. Byggt på zag och levereras med HTTP-API och inbäddat chattgränssnitt för interaktiv design."
+    },
     "stack": ["Rust", "React"],
     "skills": [
       "Multi-agent orchestration",
@@ -76,6 +84,10 @@
       "en": "Connects AI agents to external services (Discord, GitHub, Slack, and more) through scoped service configurations instead of MCP servers. Fine-grained permission files go beyond what upstream APIs offer, with Ed25519-signed policies stored in the OS keychain so an agent with filesystem access can't silently widen its own scope. New providers are a single Rust trait implementation.",
       "sv": "Kopplar AI-agenter till externa tjänster (Discord, GitHub, Slack med flera) via avgränsade tjänstkonfigurationer istället för MCP-servrar. Finkornig behörighetsstyrning går längre än det leverantörernas API:er själva erbjuder, med Ed25519-signerade policyer lagrade i operativsystemets nyckelring så att en agent med filsystemsåtkomst inte i tysthet kan utöka sin egen omfattning. Nya leverantörer är en enda Rust trait-implementation."
     },
+    "printDescription": {
+      "en": "Service connector for AI agents (Discord, GitHub, Slack, and more) with finer-grained permissions than upstream APIs offer. Ed25519-signed policies stored in the OS keychain prevent an agent with filesystem access from silently widening its own scope; new providers are a single Rust trait implementation.",
+      "sv": "Tjänstkopplare för AI-agenter (Discord, GitHub, Slack med flera) med finkornigare behörigheter än det leverantörernas API:er själva erbjuder. Ed25519-signerade policyer i OS:ets nyckelring hindrar en agent med filsystemsåtkomst från att i tysthet utöka sin egen omfattning; nya leverantörer är en enda Rust trait-implementation."
+    },
     "stack": ["Rust"],
     "skills": ["Agent security", "Claude Code", "Agent skills"],
     "github": {
@@ -95,6 +107,10 @@
     "description": {
       "en": "Agent-assisted end-to-end testing with TOML scenario files. Uses an explicit arrange/act/assert structure with programmatic checks, then optionally delegates nuanced verdicts to an AI reviewer for the cases regex assertions can't cleanly handle. Machine-readable output makes it easy to plug into other tools.",
       "sv": "Agentassisterad end-to-end-testning med TOML-scenariofiler. Använder en explicit arrange/act/assert-struktur med programmatiska kontroller och kan vid behov delegera nyanserade bedömningar till en AI-granskare när regex-påståenden inte räcker till. Maskinläsbar utdata gör det enkelt att koppla in mot andra verktyg."
+    },
+    "printDescription": {
+      "en": "End-to-end testing framework with TOML scenario files and an explicit arrange/act/assert structure. Programmatic checks come first; nuanced verdicts can optionally be delegated to an AI reviewer for the cases regex assertions can't cleanly handle.",
+      "sv": "Ramverk för end-to-end-testning med TOML-scenariofiler och en explicit arrange/act/assert-struktur. Programmatiska kontroller kommer först; nyanserade bedömningar kan vid behov delegeras till en AI-granskare för de fall som regex-påståenden inte fångar rent."
     },
     "stack": ["Rust"],
     "skills": [
@@ -121,6 +137,10 @@
       "en": "Bootstraps new open source repos against a shared spec, then keeps them aligned over time. A freeform prompt is interpreted into a structured manifest that writes a complete repo to disk — license, docs, CI, release pipelines, and agent conventions — and creates the GitHub remote. Validating an existing repo reports and auto-fixes conformance gaps, or files one GitHub issue per violation.",
       "sv": "Initierar nya open source-repon mot en gemensam specifikation och håller dem sedan i linje över tid. En friform-prompt tolkas till ett strukturerat manifest som skriver ett komplett repo till disk — licens, dokumentation, CI, release-pipelines och agentkonventioner — och skapar GitHub-remoten. Validering av ett befintligt repo rapporterar och åtgärdar avvikelser automatiskt, eller skapar ett GitHub-issue per överträdelse."
     },
+    "printDescription": {
+      "en": "Bootstraps new open source repositories against a shared spec — license, docs, CI, release pipelines, and agent conventions — from a freeform prompt, then keeps them aligned over time by validating an existing repo and reporting or auto-fixing conformance gaps.",
+      "sv": "Initierar nya open source-repon mot en gemensam specifikation — licens, dokumentation, CI, release-pipelines och agentkonventioner — från en friform-prompt, och håller dem sedan i linje över tid genom att validera befintliga repon och rapportera eller åtgärda avvikelser automatiskt."
+    },
     "stack": ["Rust"],
     "skills": ["Spec-driven development", "Claude Code", "Agent skills"],
     "github": {
@@ -139,6 +159,10 @@
     "description": {
       "en": "Personal blog where each post can ship a technical and a non-technical version under one slug; readers pick their audience inside a terminal-themed React UI. Markdown lives in the repo so every revision is a commit and a diff, and posts are written, revised, and removed via Claude skills that enforce the frontmatter schema. A Vite extractor walks the post tree, validates frontmatter, and emits a single JSON the frontend reads — no CMS, no runtime server, just a static bundle deployed to GitHub Pages.",
       "sv": "Personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug; läsaren väljer målgrupp i ett terminal-tematiserat React-gränssnitt. Markdown ligger i repot så att varje revision är en commit och en diff, och inlägg skrivs, uppdateras och tas bort via Claude-skills som upprätthåller frontmatter-schemat. En Vite-extractor går igenom inläggsträdet, validerar frontmatter och genererar en enda JSON-fil som frontenden läser — ingen CMS, ingen runtime-server, bara en statisk bundle som driftas på GitHub Pages."
+    },
+    "printDescription": {
+      "en": "Personal blog where each post can ship a technical and a non-technical version under one slug. Markdown lives in the repo, content is maintained through Claude skills that enforce a frontmatter schema, and a Vite extractor emits a single JSON the static frontend reads — no CMS, no runtime server.",
+      "sv": "Personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug. Markdown ligger i repot, innehållet underhålls genom Claude-skills som upprätthåller ett frontmatter-schema och en Vite-extractor genererar en enda JSON som den statiska frontenden läser — ingen CMS, ingen runtime-server."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub workflows"],
     "skills": ["Spec-driven development", "Claude Code", "Agent skills"],
@@ -186,6 +210,10 @@
       "en": "CLI for collecting and normalizing Swedish legal documents from official sources — parliament bills, government inquiries, court precedents, agency regulations, and EU law — into a unified Markdown + JSON format. Eight collectors cover Riksdagen's JSON API, Regeringen.se scraping, Domstolsverket's REST API, JO/JK/Lagrummet scraping, EUR-Lex SPARQL, and CURIA/HUDOC; together they handle 21 document types. Async I/O with built-in rate limiting respects source servers, incremental state tracking lets long-running jobs resume where they left off, and PDF text extraction pulls content out of attachments. Output is git-friendly: every document becomes a versioned commit and diff. Published to PyPI.",
       "sv": "CLI för att samla in och normalisera svenska rättsdokument från officiella källor — propositioner, statliga utredningar, prejudikat, myndighetsföreskrifter och EU-rätt — till ett enhetligt format i Markdown och JSON. Åtta insamlare täcker Riksdagens JSON-API, skrapning av Regeringen.se, Domstolsverkets REST-API, JO/JK/Lagrummet-skrapning, EUR-Lex SPARQL och CURIA/HUDOC; tillsammans hanterar de 21 dokumenttyper. Asynkron I/O med inbyggd hastighetsbegränsning respekterar källservrarna, inkrementell tillståndsspårning låter långa körningar fortsätta där de slutade och PDF-textextraktion drar ut innehåll ur bilagor. Utdata är git-vänlig: varje dokument blir en versionshanterad commit och diff. Publiceras på PyPI."
     },
+    "printDescription": {
+      "en": "CLI that collects and normalizes Swedish legal documents — parliament bills, government inquiries, court precedents, agency regulations, and EU law — from official sources into a unified Markdown + JSON format. Source-specific collectors cover 21 document types, with async I/O, rate limiting, incremental resumability, and PDF text extraction. Output is git-friendly so every document becomes a versioned commit.",
+      "sv": "CLI som samlar in och normaliserar svenska rättsdokument — propositioner, statliga utredningar, prejudikat, myndighetsföreskrifter och EU-rätt — från officiella källor till ett enhetligt format i Markdown och JSON. Källspecifika insamlare täcker 21 dokumenttyper, med asynkron I/O, hastighetsbegränsning, inkrementell återupptagning och PDF-textextraktion. Utdata är git-vänlig så att varje dokument blir en versionshanterad commit."
+    },
     "stack": ["Python"],
     "skills": ["Software Architecture", "Spec-driven development"],
     "github": {
@@ -205,6 +233,10 @@
     "description": {
       "en": "Multi-agent orchestration system explored as the precursor to the open-source zig/zag split. The repository remains private; the ideas were rewritten from scratch and released as zig (workflows) and zag (provider abstraction).",
       "sv": "System för multi-agentorkestrering som utforskades som föregångare till den open source-baserade zig/zag-uppdelningen. Repositoryt är privat; idéerna skrevs om från grunden och släpptes som zig (arbetsflöden) och zag (leverantörsabstraktion)."
+    },
+    "printDescription": {
+      "en": "Multi-agent orchestration system explored as the precursor to the open-source zig/zag split. The repository remains private; the ideas were rewritten from scratch and released as zig (workflows) and zag (provider abstraction).",
+      "sv": "System för multi-agentorkestrering som utforskades som föregångare till den open source-baserade zig/zag-uppdelningen. Repot är privat; idéerna skrevs om från grunden och släpptes som zig (arbetsflöden) och zag (leverantörsabstraktion)."
     },
     "stack": ["Rust", "PostgreSQL"],
     "skills": [
@@ -228,6 +260,10 @@
       "en": "ASP.NET Core implementation of OAuth 2.0 (RFC 6749) — authorization code, client credentials, password, and refresh-token grants — with JWT bearer tokens, scopes, roles, audit logging, and Postgres persistence via Entity Framework Core. Ships with a Blazor WebAssembly admin UI and Docker images for both the API and the SPA. OpenID Connect was on the roadmap.",
       "sv": "ASP.NET Core-implementation av OAuth 2.0 (RFC 6749) — authorization code, client credentials, password och refresh-token — med JWT-bearer-tokens, scopes, roller, audit-loggning och Postgres-persistens via Entity Framework Core. Levereras med ett Blazor WebAssembly-administrationsgränssnitt och Docker-avbildningar för både API:et och SPA:n. OpenID Connect fanns på roadmappen."
     },
+    "printDescription": {
+      "en": "ASP.NET Core implementation of OAuth 2.0 (RFC 6749) covering authorization-code, client-credentials, password, and refresh-token grants. JWT bearer tokens, scopes, roles, audit logging, and Postgres persistence via Entity Framework Core; ships with a Blazor WebAssembly admin UI and Docker images for both API and SPA.",
+      "sv": "ASP.NET Core-implementation av OAuth 2.0 (RFC 6749) som täcker authorization code, client credentials, password och refresh-token. JWT-bearer-tokens, scopes, roller, audit-loggning och Postgres-persistens via Entity Framework Core; levereras med ett Blazor WebAssembly-administrationsgränssnitt och Docker-avbildningar för både API och SPA."
+    },
     "stack": ["C#/.NET", "PostgreSQL", "Docker"],
     "skills": ["Software Architecture", "Cybersecurity", "RFC Implementation"],
     "github": {
@@ -245,6 +281,10 @@
     "description": {
       "en": "Containerized backup tool for Docker volumes and host folders. Backups are tar/zip/7z/rar archives that can be GPG-encrypted, signed, and verified with sfv checksums; a cron-driven schedule moves them to long-term storage and prunes old copies according to per-window retention rules and free-space thresholds. The Docker-aware variant pauses sibling containers around the backup window so volumes aren't captured mid-write, and notifies Slack or Discord on completion. Distributed as multi-arch images on Docker Hub, with both Ubuntu and Alpine variants. Covered by a shell-based test suite that runs each command end-to-end.",
       "sv": "Containeriserat säkerhetskopieringsverktyg för Docker-volymer och värdmappar. Säkerhetskopior är tar/zip/7z/rar-arkiv som kan GPG-krypteras, signeras och verifieras med sfv-checksummor; ett cronstyrt schema flyttar dem till långtidslagring och rensar gamla kopior enligt fönsterbaserade retentionsregler och tröskelvärden för ledigt utrymme. Docker-medveten variant pausar systerkontainrar under säkerhetskopieringsfönstret så att volymer inte fångas mitt under skrivning, och notifierar Slack eller Discord när jobbet är klart. Distribueras som multi-arch-avbildningar på Docker Hub, med både Ubuntu- och Alpine-variant. Täcks av en shell-baserad testsvit som kör varje kommando från början till slut."
+    },
+    "printDescription": {
+      "en": "Containerized backup tool for Docker volumes and host folders. Archives can be GPG-encrypted, signed, and checksum-verified; a cron schedule moves them to long-term storage with per-window retention and free-space thresholds. The Docker-aware variant pauses sibling containers so volumes aren't captured mid-write, and notifies Slack or Discord on completion.",
+      "sv": "Containeriserat säkerhetskopieringsverktyg för Docker-volymer och värdmappar. Arkiv kan GPG-krypteras, signeras och checksumverifieras; ett cronstyrt schema flyttar dem till långtidslagring med fönsterbaserad retention och tröskelvärden för ledigt utrymme. Docker-medveten variant pausar systerkontainrar så att volymer inte fångas mitt under skrivning och notifierar Slack eller Discord när jobbet är klart."
     },
     "stack": ["Bash/Shell", "Docker"],
     "skills": ["Cybersecurity"],
