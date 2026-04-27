@@ -1,9 +1,12 @@
-// Emits dist/<cv.print.pdfFilename ?? "cv.pdf"> after `vite build`. Spins
-// up a tiny static file server over dist/, drives a headless Chromium with
-// Puppeteer, dispatches the site's `beforeprint` hook (so collapsed details
-// expand), then writes the PDF using the print stylesheet defined in
-// src/styles.css. With CV_LOCAL=1 the local override is applied, which is
-// the canonical way to bake a private PDF under a different filename.
+// Emits one dist/<base>-<lang>.pdf per supported UI language after
+// `vite build` (e.g. dist/cv-en.pdf and dist/cv-sv.pdf). Spins up a tiny
+// static file server over dist/, drives a headless Chromium with
+// Puppeteer, navigates with `?lang=<lang>` so the language picker in
+// readInitialLanguage forces the right language, dispatches the site's
+// `beforeprint` hook (so collapsed details expand), then writes the PDF
+// using the print stylesheet defined in src/styles.css. With CV_LOCAL=1
+// the local override is applied, which is the canonical way to bake
+// private PDFs under a different filename base.
 
 import fs from "node:fs";
 import http from "node:http";
@@ -24,6 +27,9 @@ if (!fs.existsSync(DIST)) {
 }
 
 const DEFAULT_PDF_FILENAME = "cv.pdf";
+// Mirrors the `Language` union in src/data/cv.types.ts. Update both
+// places when adding a new UI language.
+const LANGUAGES = ["en", "sv"];
 const cv = loadCv();
 const pdfFilename = cv.print?.pdfFilename ?? DEFAULT_PDF_FILENAME;
 if (path.basename(pdfFilename) !== pdfFilename) {
@@ -31,6 +37,12 @@ if (path.basename(pdfFilename) !== pdfFilename) {
     `Invalid cv.print.pdfFilename "${pdfFilename}" — must be a bare filename without directory separators.`,
   );
   process.exit(1);
+}
+
+function pdfFilenameFor(base, lang) {
+  const ext = path.extname(base);
+  const stem = ext ? base.slice(0, -ext.length) : base;
+  return `${stem}-${lang}${ext}`;
 }
 
 const MIME = {
@@ -119,31 +131,38 @@ try {
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
-  const page = await browser.newPage();
-  await page.emulateMediaType("print");
-  await page.goto(url, { waitUntil: "networkidle0", timeout: 60_000 });
 
-  // Mirror what main.tsx does on `beforeprint`: open every collapsed
-  // <details class="assignments"> so the PDF includes their content.
-  await page.evaluate(() => {
-    document.querySelectorAll("details.assignments").forEach((d) => {
-      d.open = true;
+  for (const lang of LANGUAGES) {
+    const page = await browser.newPage();
+    await page.emulateMediaType("print");
+    await page.goto(`${url}?lang=${lang}`, {
+      waitUntil: "networkidle0",
+      timeout: 60_000,
     });
-    // Also dispatch the event in case any other component listens for it.
-    window.dispatchEvent(new Event("beforeprint"));
-  });
 
-  const outPath = path.join(DIST, pdfFilename);
-  await page.pdf({
-    path: outPath,
-    format: "A4",
-    printBackground: true,
-    preferCSSPageSize: true,
-    margin: { top: "1.5cm", right: "1.5cm", bottom: "1.5cm", left: "1.5cm" },
-  });
+    // Mirror what main.tsx does on `beforeprint`: open every collapsed
+    // <details class="assignments"> so the PDF includes their content.
+    await page.evaluate(() => {
+      document.querySelectorAll("details.assignments").forEach((d) => {
+        d.open = true;
+      });
+      // Also dispatch the event in case any other component listens for it.
+      window.dispatchEvent(new Event("beforeprint"));
+    });
 
-  const { size } = fs.statSync(outPath);
-  console.log(`Wrote ${path.relative(ROOT, outPath)} (${size} bytes).`);
+    const outPath = path.join(DIST, pdfFilenameFor(pdfFilename, lang));
+    await page.pdf({
+      path: outPath,
+      format: "A4",
+      printBackground: true,
+      preferCSSPageSize: true,
+      margin: { top: "1.5cm", right: "1.5cm", bottom: "1.5cm", left: "1.5cm" },
+    });
+    await page.close();
+
+    const { size } = fs.statSync(outPath);
+    console.log(`Wrote ${path.relative(ROOT, outPath)} (${size} bytes).`);
+  }
 } finally {
   if (browser) await browser.close();
   server.close();
