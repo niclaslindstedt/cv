@@ -5,12 +5,12 @@
   padding: 48px 24px 64px;
   background:
     radial-gradient(
-      ellipse 120% 70% at 30% 110%,
+      ellipse 120% 70% at var(--sky-glow-1-pos),
       var(--sky-glow-1),
       transparent 60%
     ),
     radial-gradient(
-      ellipse 90% 60% at 80% -10%,
+      ellipse 90% 60% at var(--sky-glow-2-pos),
       var(--sky-glow-2),
       transparent 60%
     ),
