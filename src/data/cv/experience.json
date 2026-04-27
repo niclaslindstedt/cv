@@ -132,16 +132,16 @@
         "clientId": "seb",
         "startDate": "2020-02",
         "endDate": "2020-12",
-        "stack": ["C#/.NET", "Azure", "React", "TypeScript", "Miniservices"],
-        "skills": [
-          "Scrum",
+        "stack": [
+          "C#/.NET",
+          "Azure",
+          "React",
+          "TypeScript",
+          "Miniservices",
           "SQL",
-          "CI/CD",
-          "Architecture",
-          "Agile Methodologies",
-          "Azure DevOps",
-          "Bash/Shell"
+          "Azure DevOps"
         ],
+        "skills": ["Scrum", "CI/CD", "PowerShell"],
         "printDescription": {
           "en": "Senior developer at SEB on a C#/.NET miniservices stack on Azure, with React/TypeScript and Azure DevOps.",
           "sv": "Seniorutvecklare på SEB i en C#/.NET-miniservicestack på Azure, med React/TypeScript och Azure DevOps."
@@ -186,14 +186,10 @@
           "Architecture",
           "Leadership",
           "IT Strategy",
-          "Engineering Management",
-          "Agile Methodologies",
           "Team Management",
           "Observability",
           "Bash/Shell",
           "GDPR",
-          "Regulatory Compliance",
-          "Technology Roadmapping",
           "Mentoring"
         ],
         "printDescription": {
