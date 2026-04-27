@@ -105,6 +105,7 @@
         "range": { "$ref": "#/$defs/localizedString" },
         "engagement": { "$ref": "#/$defs/localizedString" },
         "tagline": { "$ref": "#/$defs/localizedString" },
+        "description": { "$ref": "#/$defs/localizedString" },
         "tags": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 }
@@ -129,6 +130,7 @@
         "client": { "type": "string", "minLength": 1 },
         "range": { "$ref": "#/$defs/localizedString" },
         "tagline": { "$ref": "#/$defs/localizedString" },
+        "description": { "$ref": "#/$defs/localizedString" },
         "tags": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 }
@@ -146,7 +148,8 @@
       "required": ["name", "tagline"],
       "properties": {
         "name": { "type": "string", "minLength": 1 },
-        "tagline": { "$ref": "#/$defs/localizedString" }
+        "tagline": { "$ref": "#/$defs/localizedString" },
+        "description": { "$ref": "#/$defs/localizedString" }
       }
     },
     "education": {
