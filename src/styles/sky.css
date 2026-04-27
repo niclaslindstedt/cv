@@ -221,7 +221,7 @@
   pointer-events: none;
   padding: 1.5px;
   background: radial-gradient(
-    320px circle at var(--reflect-1-x, 50%) var(--reflect-1-y, 50%),
+    480px circle at var(--reflect-1-x, 50%) var(--reflect-1-y, 50%),
     var(--reflect-1-color, transparent) 0%,
     transparent 70%
   );

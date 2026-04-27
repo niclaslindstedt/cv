@@ -1,7 +1,7 @@
 import type { CV } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
 import type { Theme } from "../utils/theme";
-import { LanguageToggle, ThemeToggle, TimelineButton } from "./Controls";
+import { LanguageToggle, ThemeToggle } from "./Controls";
 
 type Props = {
   cv: CV;
@@ -55,10 +55,13 @@ export function Hero({
             {t(link.label)}
           </a>
         ))}
-        <TimelineButton
-          label={t(cv.actions.timeline)}
+        <button
+          type="button"
+          className="hero-timeline-btn"
           onClick={onOpenTimeline}
-        />
+        >
+          {t(cv.actions.timeline)}
+        </button>
         <a
           className="hero-download"
           href={pdfHref}
