@@ -6,7 +6,7 @@
 // component then renders simple semantic HTML without depending on the
 // screen component tree.
 
-import { writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
@@ -14,6 +14,13 @@ import { loadCv } from "../src/data/load-cv.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const defaultOut = resolve(here, "..", "src", "data", "print.json");
+const projectStatsPath = resolve(
+  here,
+  "..",
+  "src",
+  "data",
+  "project-stats.json",
+);
 
 const args = process.argv.slice(2);
 let outPath = defaultOut;
@@ -161,13 +168,35 @@ function buildExperience(item, companies) {
   return baked;
 }
 
-function buildProject(project) {
+function buildProject(project, projectStats) {
   const baked = {
     name: project.name,
     tagline: project.tagline,
   };
+  const stats =
+    projectStats?.enabled && project.github
+      ? projectStats.projects?.[
+          `${project.github.owner}/${project.github.repo}`
+        ]
+      : null;
+  if (stats?.firstCommitDate && stats?.lastCommitDate) {
+    baked.range = formatRange(
+      stats.firstCommitDate.slice(0, 7),
+      stats.lastCommitDate.slice(0, 7),
+    );
+  }
   if (project.printDescription) baked.description = project.printDescription;
   return baked;
+}
+
+function loadProjectStats() {
+  if (!existsSync(projectStatsPath)) return null;
+  try {
+    return JSON.parse(readFileSync(projectStatsPath, "utf8"));
+  } catch (err) {
+    console.warn(`Could not parse project-stats.json (${err.message}).`);
+    return null;
+  }
 }
 
 function roundCredits(credits) {
@@ -238,7 +267,7 @@ function buildLanguage(language) {
   };
 }
 
-function buildPrintData(cv) {
+function buildPrintData(cv, projectStats) {
   const companies = new Map(cv.companies.map((c) => [c.id, c]));
   return {
     name: cv.name,
@@ -254,7 +283,7 @@ function buildPrintData(cv) {
       languages: cv.sections.languages,
     },
     experience: cv.experience.map((e) => buildExperience(e, companies)),
-    projects: cv.projects.map(buildProject),
+    projects: cv.projects.map((p) => buildProject(p, projectStats)),
     education: cv.education.map(buildEducation),
     courses: cv.courses.map(buildCourse),
     skills: cv.skills.map(buildSkillGroup),
@@ -263,7 +292,8 @@ function buildPrintData(cv) {
 }
 
 const cv = loadCv();
-const data = buildPrintData(cv);
+const projectStats = loadProjectStats();
+const data = buildPrintData(cv, projectStats);
 const json = `${JSON.stringify(data, null, 2)}\n`;
 
 if (toStdout) {

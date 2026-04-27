@@ -34,7 +34,11 @@
       "Observability",
       "Bash/Shell",
       "Mentoring"
-    ]
+    ],
+    "printDescription": {
+      "en": "IT architect at BookBeat, working on AI agents, RAG, and observability across a .NET/TypeScript microservice stack on Azure and Kubernetes.",
+      "sv": "IT-arkitekt på BookBeat, med arbete kring AI-agenter, RAG och observability i en .NET/TypeScript-mikrotjänststack på Azure och Kubernetes."
+    }
   },
   {
     "roles": [
@@ -70,7 +74,11 @@
       "Bash/Shell",
       "Mentoring",
       "Project Management"
-    ]
+    ],
+    "printDescription": {
+      "en": "CTO of IBNQ, a software platform for family offices, on a .NET/TypeScript stack on Azure.",
+      "sv": "CTO på IBNQ, en mjukvaruplattform för family offices, i en .NET/TypeScript-stack på Azure."
+    }
   },
   {
     "roles": [
@@ -103,6 +111,10 @@
     "startDate": "2020-01",
     "endDate": "2023-09",
     "skills": ["Mentoring"],
+    "printDescription": {
+      "en": "Consulting tenure at Etimo, a .NET and JavaScript consultancy; promoted from Senior Consultant to Senior Manager.",
+      "sv": "Konsultanställning på Etimo, ett .NET- och JavaScript-konsultbolag; befordrad från Seniorkonsult till Senior Manager."
+    },
     "assignments": [
       {
         "roles": [
@@ -127,7 +139,11 @@
           "Agile Methodologies",
           "Azure DevOps",
           "Bash/Shell"
-        ]
+        ],
+        "printDescription": {
+          "en": "Senior developer at SEB on a C#/.NET miniservices stack on Azure, with React/TypeScript and Azure DevOps.",
+          "sv": "Seniorutvecklare på SEB i en C#/.NET-miniservicestack på Azure, med React/TypeScript och Azure DevOps."
+        }
       },
       {
         "roles": [
@@ -174,7 +190,11 @@
           "Regulatory Compliance",
           "Technology Roadmapping",
           "Mentoring"
-        ]
+        ],
+        "printDescription": {
+          "en": "Joined Mitt Skolval, a school-selection platform, as senior developer and became CTO. TypeScript/Node.js on AWS Kubernetes.",
+          "sv": "Anslöt till Mitt Skolval, en plattform för skolval, som seniorutvecklare och blev CTO. TypeScript/Node.js på AWS Kubernetes."
+        }
       }
     ]
   },
@@ -220,7 +240,11 @@
       "Risk Management",
       "Technology Roadmapping",
       "Project Management"
-    ]
+    ],
+    "printDescription": {
+      "en": "Co-founder and CTO of Symptoms Europe, an eHealth platform for patient-reported outcomes, on a Vue/.NET stack on Azure.",
+      "sv": "Medgrundare och CTO på Symptoms Europe, en eHälsoplattform för patientrapporterade utfall, i en Vue/.NET-stack på Azure."
+    }
   },
   {
     "roles": [
@@ -247,7 +271,11 @@
       "Python",
       "Microsoft SQL Server"
     ],
-    "skills": ["CI/CD", "Cybersecurity", "Software Architecture", "Bash/Shell"]
+    "skills": ["CI/CD", "Cybersecurity", "Software Architecture", "Bash/Shell"],
+    "printDescription": {
+      "en": "Backend developer at Indicio, a forecasting and scenario-planning platform, on .NET, Python, and TypeScript with SQL Server.",
+      "sv": "Backendutvecklare på Indicio, en plattform för prognoser och scenarioplanering, med .NET, Python och TypeScript mot SQL Server."
+    }
   },
   {
     "roles": [
@@ -266,6 +294,10 @@
     "engagement": {
       "en": "part-time",
       "sv": "deltid"
+    },
+    "printDescription": {
+      "en": "Own aktiebolag, used as the legal entity for solo consulting alongside other roles.",
+      "sv": "Eget aktiebolag som används som juridisk enhet för solokonsultning vid sidan av övriga roller."
     }
   }
 ]
