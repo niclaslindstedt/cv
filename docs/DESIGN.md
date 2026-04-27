@@ -547,6 +547,10 @@ serif`). `headingFontFamily` is a separate stack applied to every
   toggles (`avoidInsideEntry`, `avoidInsideSubEntry`,
   `keepHeadingWithNext`) default to true and emit `break-inside: auto !important`
   overrides when set to false.
+- **Notes** — `includeNotes` (boolean) controls whether per-entry
+  `notes` (on experience, assignments, education) are rendered in the
+  printed/PDF CV. Default is `true`; set to `false` to omit notes from
+  print output entirely.
 
 When you add a new print block: declare its sizing/spacing in
 `print.css` using the existing `--print-*` variables, not literal `pt`

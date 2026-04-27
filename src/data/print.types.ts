@@ -44,6 +44,7 @@ export type PrintEducation = {
   level: LocalizedString;
   credits: string;
   range: LocalizedString;
+  notes?: LocalizedString;
 };
 
 export type PrintCourse = {

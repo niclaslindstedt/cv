@@ -230,6 +230,7 @@ export type PrintSettings = {
   spacing: PrintSpacing;
   headings: PrintHeadings;
   pageBreaks: PrintPageBreaks;
+  includeNotes: boolean;
 };
 
 export type Contact = {

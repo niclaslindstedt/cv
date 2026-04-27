@@ -121,6 +121,7 @@ function ExperienceEntry({ item }: { item: PrintExperience }) {
   const hasAssignments = item.assignments.length > 0;
   const classes = ["print-job"];
   if (hasAssignments) classes.push("print-job--with-assignments");
+  const includeNotes = printData.settings.includeNotes;
   return (
     <li className={classes.join(" ")}>
       <div className="print-job-header">
@@ -147,7 +148,9 @@ function ExperienceEntry({ item }: { item: PrintExperience }) {
         {item.tags.length > 0 && (
           <p className="print-tags">{item.tags.join(", ")}</p>
         )}
-        {item.notes && <p className="print-notes">{t(item.notes)}</p>}
+        {includeNotes && item.notes && (
+          <p className="print-notes">{t(item.notes)}</p>
+        )}
       </div>
       {hasAssignments && (
         <div className="print-assignments-block">
@@ -167,6 +170,7 @@ function ExperienceEntry({ item }: { item: PrintExperience }) {
 
 function AssignmentEntry({ item }: { item: PrintAssignment }) {
   const { t } = useLang();
+  const includeNotes = printData.settings.includeNotes;
   return (
     <li className="print-assignment">
       <h4 className="print-job-title">
@@ -180,7 +184,9 @@ function AssignmentEntry({ item }: { item: PrintAssignment }) {
       {item.tags.length > 0 && (
         <p className="print-tags">{item.tags.join(", ")}</p>
       )}
-      {item.notes && <p className="print-notes">{t(item.notes)}</p>}
+      {includeNotes && item.notes && (
+        <p className="print-notes">{t(item.notes)}</p>
+      )}
     </li>
   );
 }
@@ -250,6 +256,7 @@ function EducationSection() {
 
 function EducationEntry({ item }: { item: PrintEducation }) {
   const { t } = useLang();
+  const includeNotes = printData.settings.includeNotes;
   return (
     <li className="print-edu">
       <div className="print-edu-head">
@@ -259,6 +266,9 @@ function EducationEntry({ item }: { item: PrintEducation }) {
       <p className="print-edu-meta">
         {t(item.institution)} {" · "} {t(item.level)} {" · "} {item.credits}
       </p>
+      {includeNotes && item.notes && (
+        <p className="print-notes">{t(item.notes)}</p>
+      )}
     </li>
   );
 }
