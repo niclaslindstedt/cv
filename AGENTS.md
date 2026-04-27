@@ -9,31 +9,42 @@ files (e.g. `CLAUDE.md`) are symlinks pointing here (see
 
 `niclaslindstedt.se` — a personal site / CV built with Vite, React 18,
 and TypeScript. The built output is a static site deployed to GitHub
-Pages via `.github/workflows/pages.yml`. There is no backend, no tests
-yet, and no CLI.
+Pages via `.github/workflows/pages.yml`. There is no backend and no
+CLI; tests live under `tests/` (Vitest + Playwright).
 
 ## Build and test commands
 
 Prefer `make` targets over raw `npm run` commands so local and CI stay
 in sync:
 
-| Command          | What it does                                                                                     |
-| ---------------- | ------------------------------------------------------------------------------------------------ |
-| `make install`   | `npm ci`                                                                                         |
-| `make dev`       | Start Vite dev server                                                                            |
-| `make build`     | Type-check and produce production build                                                          |
-| `make preview`   | Preview the production build                                                                     |
-| `make lint`      | ESLint + TypeScript type-check                                                                   |
-| `make typecheck` | `tsc -b --noEmit` only                                                                           |
-| `make fmt`       | Prettier rewrite in place                                                                        |
-| `make fmt-check` | Prettier check without writing                                                                   |
-| `make validate`  | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json` |
-| `make local`     | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in         |
-| `make test`      | Placeholder — no tests yet                                                                       |
-| `make clean`     | Remove `dist/` and Vite cache                                                                    |
+| Command                   | What it does                                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------------------------ |
+| `make install`            | `npm ci`                                                                                         |
+| `make dev`                | Start Vite dev server                                                                            |
+| `make build`              | Type-check and produce production build                                                          |
+| `make preview`            | Preview the production build                                                                     |
+| `make lint`               | ESLint + TypeScript type-check                                                                   |
+| `make typecheck`          | `tsc -b --noEmit` only                                                                           |
+| `make fmt`                | Prettier rewrite in place                                                                        |
+| `make fmt-check`          | Prettier check without writing                                                                   |
+| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json` |
+| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in         |
+| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                              |
+| `make test-coverage`      | Vitest with v8 coverage                                                                          |
+| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                    |
+| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                        |
+| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                  |
+| `make clean`              | Remove `dist/` and Vite cache                                                                    |
 
-CI (`.github/workflows/ci.yml`) runs `make fmt-check`, `make validate`,
-`make lint`, and `make build` on every push and pull request.
+CI (`.github/workflows/ci.yml`) runs three jobs on every push and pull
+request:
+
+- **`ci`** — `make fmt-check`, `make validate`, `make lint`, `make build`,
+  `make test`, then uploads the built `dist/` as an artifact.
+- **`visual`** — downloads the `dist/` artifact and runs `make test-visual`
+  (Playwright on Chromium, desktop + mobile viewports).
+- **`lighthouse`** — downloads the `dist/` artifact and runs
+  `make lighthouse` to assert Web-Vitals + category-score budgets.
 
 ## Architecture summary
 
@@ -118,29 +129,42 @@ imports from `components/`. Keep it that way.
 
 When you change X, update Y:
 
-| If you change …                                   | Also update …                                                          |
-| ------------------------------------------------- | ---------------------------------------------------------------------- |
-| `package.json` scripts                            | `Makefile`, `README.md` Scripts section                                |
-| `Makefile` targets                                | `README.md` Scripts section, `.github/workflows/ci.yml`                |
-| `src/` top-level layout                           | `README.md` Structure section                                          |
-| `schemas/cv.schema.json`                          | `src/data/cv.types.ts` + any component consuming the changed field     |
-| `src/data/cv.types.ts`                            | `schemas/cv.schema.json` + any component consuming the changed field   |
-| `schemas/timeline.schema.json`                    | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`         |
-| `schemas/print.schema.json`                       | `src/data/print.types.ts` + `scripts/generate-print.mjs` + `PrintView` |
-| `cv.meta` (siteUrl / seo)                         | `vite.config.ts` `cvMetaHtmlPlugin` reads these directly               |
-| Node version in CI                                | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)                 |
-| `src/styles/tokens.css` or any new visual pattern | `docs/DESIGN.md` (in the **same** PR)                                  |
+| If you change …                                     | Also update …                                                          |
+| --------------------------------------------------- | ---------------------------------------------------------------------- |
+| `package.json` scripts                              | `Makefile`, `README.md` Scripts section                                |
+| `Makefile` targets                                  | `README.md` Scripts section, `.github/workflows/ci.yml`                |
+| Visual snapshots in `tests/visual/__screenshots__/` | Same PR — re-record only when the UI intentionally changed             |
+| Lighthouse budgets in `.lighthouserc.json`          | Mention in `README.md` Quality gates section                           |
+| `src/` top-level layout                             | `README.md` Structure section                                          |
+| `schemas/cv.schema.json`                            | `src/data/cv.types.ts` + any component consuming the changed field     |
+| `src/data/cv.types.ts`                              | `schemas/cv.schema.json` + any component consuming the changed field   |
+| `schemas/timeline.schema.json`                      | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`         |
+| `schemas/print.schema.json`                         | `src/data/print.types.ts` + `scripts/generate-print.mjs` + `PrintView` |
+| `cv.meta` (siteUrl / seo)                           | `vite.config.ts` `cvMetaHtmlPlugin` reads these directly               |
+| Node version in CI                                  | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)                 |
+| `src/styles/tokens.css` or any new visual pattern   | `docs/DESIGN.md` (in the **same** PR)                                  |
 
 ## Test conventions
 
-The repo has **no tests yet**. When tests are added:
+Tests live under `tests/` at the repo root (`OSS_SPEC.md` §20.3):
 
-- Keep them in dedicated files, not inline (`OSS_SPEC.md` §20).
-- Use the suffix convention `_test.ts` / `_tests.ts` or `*Test.ts`
-  (§20.2).
-- Place them under `tests/` at the repo root (§20.3).
-- Add a real `test` step to `package.json` and wire `make test` to it.
-- Add a `test` step to `.github/workflows/ci.yml`.
+- `tests/data/` — schema roundtrip + the `load-cv` deep-merge contract.
+- `tests/unit/` — pure-function unit tests (currently `utils/date`).
+- `tests/visual/` — Playwright visual regression. Baseline PNGs are
+  committed under `tests/visual/__screenshots__/` and were recorded on
+  Linux; CI runs on `ubuntu-latest` for the same reason. Re-record with
+  `make test-visual-update` only after an intentional UI change, and
+  commit the new pixels in the same PR.
+
+All test files end in `.test.ts` / `.test.mts` / `.tests.ts` per
+`OSS_SPEC.md` §20.2 (regex `_?[Tt]ests?$` on the stem). Vitest picks
+them up via `vitest.config.ts`; visual specs under `tests/visual/` are
+excluded from the Vitest `include` so Playwright owns them. Don't
+import test code from `src/`.
+
+When adding a new top-level test domain (e.g. integration tests),
+extend `vitest.config.ts` `include` rather than scattering test
+discovery across multiple configs.
 
 ## Maintenance skills
 

@@ -1,4 +1,4 @@
-.PHONY: install build test lint typecheck fmt fmt-check validate clean dev preview generate og pdf sitemap local
+.PHONY: install build test test-coverage test-visual test-visual-update lighthouse lint typecheck fmt fmt-check validate clean dev preview generate og pdf sitemap local
 
 install:
 	npm ci
@@ -10,7 +10,19 @@ local:
 	CV_LOCAL=1 npm run build
 
 test:
-	@echo "no tests yet"
+	npm test
+
+test-coverage:
+	npm run test:coverage
+
+test-visual:
+	npm run test:visual
+
+test-visual-update:
+	npm run test:visual:update
+
+lighthouse:
+	npm run lighthouse
 
 lint:
 	npm run lint
