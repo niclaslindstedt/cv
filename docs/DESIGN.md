@@ -50,7 +50,8 @@ need, add it here first.
 | `--glass-bg`        | `rgba(14,20,32,0.42)`        | `rgba(255,255,255,0.58)`         | Translucent surface for every content card.          |
 | `--glass-border`    | `rgba(255,255,255,0.07)`     | `rgba(20,28,40,0.07)`            | Hairline border on glass.                            |
 | `--glass-highlight` | `rgba(255,255,255,0.04)`     | `rgba(255,255,255,0.65)`         | Inner pill/chip fill on glass.                       |
-| `--overlay`         | `rgba(8,10,13,0.72)`         | `rgba(240,243,247,0.72)`         | Modal backdrop.                                      |
+| `--overlay`         | `rgba(8,10,13,0.72)`         | `rgba(240,243,247,0.72)`         | Timeline modal backdrop (heavier dim).               |
+| `--modal-overlay`   | `rgba(8,10,13,0.38)`         | `rgba(240,243,247,0.42)`         | Standard modal backdrop (frosted, see-through).      |
 | `--accent`          | `#7ab7ff`                    | `#1c2230`                        | Interactive color: links, buttons, focus, key data.  |
 | `--accent-soft`     | `rgba(122,183,255,0.12)`     | `rgba(28,34,48,0.08)`            | Quiet accent fill: pill backgrounds, hover states.   |
 | `--fg`              | `#e6e9ef`                    | `#11161e`                        | Primary text.                                        |
@@ -270,10 +271,20 @@ artificially truncated.
 
 ### 4.7 Modal
 
-Full-bleed `--overlay` backdrop with `backdrop-filter: blur(18px)`.
-Inner panel is a glass card with `blur(20px) saturate(170%)` and the
-standard close button top-right. Modal content scrolls; backdrop does
-not.
+Full-bleed backdrop with `backdrop-filter: blur(28px) saturate(180%)`
+over `--modal-overlay` (a more translucent fill than the timeline's
+`--overlay`) so the underlying page reads as frosted glass rather than
+a flat dim. The timeline's full-screen overlay keeps the heavier
+`--overlay` + `blur(18px)` since it replaces, rather than floats over,
+the page. Inner panel is a glass card with `blur(20px) saturate(170%)`
+and the standard close button top-right. Modal content scrolls;
+backdrop does not.
+
+Swipe-to-close (touch only) drags the panel with the finger and fades
+both panel and backdrop with distance. Past the threshold, the panel
+animates fully past the viewport edge (translate by `viewport +
+panel`) at full opacity while the backdrop fades — no mid-flight
+disappearance.
 
 ### 4.8 Empty state
 
