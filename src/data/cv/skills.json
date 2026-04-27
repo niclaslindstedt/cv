@@ -72,7 +72,6 @@
       "PostgreSQL",
       "Microsoft SQL Server",
       "MySQL",
-      "MongoDB",
       "Redis",
       "CosmosDB",
       "Vector databases"
@@ -119,12 +118,10 @@
       "sv": "Ledarskap"
     },
     "items": [
-      "Engineering management",
       "Team management",
       "Leadership",
       "Mentoring",
       "IT strategy",
-      "Technology roadmapping",
       "Project management"
     ]
   },
@@ -134,12 +131,6 @@
       "en": "Compliance",
       "sv": "Regelefterlevnad"
     },
-    "items": [
-      "Cybersecurity",
-      "Regulatory compliance",
-      "Risk management",
-      "GDPR",
-      "CE marking"
-    ]
+    "items": ["Cybersecurity", "Risk management", "GDPR", "CE marking"]
   }
 ]

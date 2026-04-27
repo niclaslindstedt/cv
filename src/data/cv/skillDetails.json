@@ -511,13 +511,6 @@
     },
     "url": "https://www.mysql.com"
   },
-  "MongoDB": {
-    "description": {
-      "en": "Document-oriented database that stores BSON documents; suited to prototypes and workloads where the schema is genuinely fluid.",
-      "sv": "Dokumentorienterad databas som lagrar BSON-dokument; passar prototyper och arbetslaster där schemat verkligen är formbart."
-    },
-    "url": "https://www.mongodb.com"
-  },
   "Redis": {
     "description": {
       "en": "In-memory key-value store used as cache, message broker, rate limiter, and a hundred other things.",
@@ -722,12 +715,6 @@
     },
     "url": "https://scrumguides.org"
   },
-  "Engineering management": {
-    "description": {
-      "en": "Building and running engineering teams: hiring, mentoring, performance, planning, and creating the conditions for the team to do its best work.",
-      "sv": "Att bygga och leda ingenjörsteam: rekrytering, mentorskap, prestation, planering och att skapa förutsättningarna för teamet att göra sitt bästa arbete."
-    }
-  },
   "Team management": {
     "description": {
       "en": "Day-to-day stewardship of a team's work: priorities, capacity, dependencies, and the small frictions that compound if left unattended.",
@@ -752,12 +739,6 @@
       "sv": "Att rikta teknikinvesteringar mot verksamhetsmål på 1–3 års sikt — köpa/bygga, plattformsval, sourcing och var satsningarna ska läggas."
     }
   },
-  "Technology roadmapping": {
-    "description": {
-      "en": "Sequencing technical investment so each piece pays for the next: capability gaps, dependencies, sunset plans, and the trade-offs between them.",
-      "sv": "Att sekvensera teknisk investering så att varje del banar väg för nästa: kapacitetsluckor, beroenden, utfasningsplaner och avvägningarna mellan dem."
-    }
-  },
   "Project management": {
     "description": {
       "en": "Driving a defined piece of work to completion within scope, time, and cost — risk tracking, dependencies, stakeholders, and reporting.",
@@ -776,12 +757,6 @@
     "drawbacks": {
       "en": "Friction trade-off with developer ergonomics; treated as a feature it lags, treated as a function of every feature it scales.",
       "sv": "Friktionsavvägning mot utvecklarergonomi; behandlas det som en funktion blir det eftersläpande, behandlas det som en del av varje funktion skalar det."
-    }
-  },
-  "Regulatory compliance": {
-    "description": {
-      "en": "Mapping legal and industry requirements (GDPR, MDR, PCI, ISO) into concrete controls, evidence, and process.",
-      "sv": "Att översätta juridiska och branschspecifika krav (GDPR, MDR, PCI, ISO) till konkreta kontroller, bevis och processer."
     }
   },
   "Risk management": {
