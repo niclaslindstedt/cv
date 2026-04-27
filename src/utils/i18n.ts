@@ -8,6 +8,7 @@ export const LANG_STORAGE_KEY = "lang";
 
 type UiStrings = {
   present: string;
+  skipToContent: string;
   months: string[];
   theme: {
     label: string;
@@ -132,6 +133,7 @@ type UiStrings = {
 export const UI_STRINGS: Record<Language, UiStrings> = {
   en: {
     present: "Present",
+    skipToContent: "Skip to main content",
     months: [
       "Jan",
       "Feb",
@@ -274,6 +276,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
   },
   sv: {
     present: "Pågående",
+    skipToContent: "Hoppa till huvudinnehåll",
     months: [
       "Jan",
       "Feb",

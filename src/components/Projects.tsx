@@ -24,16 +24,7 @@ export function Projects({
             <article
               key={project.name}
               className="project"
-              role="button"
-              tabIndex={0}
-              aria-label={ui.projectModal.detailAria(project.name)}
               onClick={() => onProjectClick(project)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  onProjectClick(project);
-                }
-              }}
             >
               <header className="project-head">
                 <h3>
