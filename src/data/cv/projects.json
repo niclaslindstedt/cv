@@ -89,7 +89,7 @@
       "sv": "Kopplar AI-agenter till Discord, GitHub, Slack och andra tjänster via Ed25519-signerade, avgränsade policyer lagrade i operativsystemets nyckelring — ett finkornigare alternativ till MCP-servrar som hindrar agenter med filsystemsåtkomst från att utöka sin egen omfattning."
     },
     "stack": ["Rust"],
-    "skills": ["Agent security", "Claude Code", "Agent skills"],
+    "skills": ["Integrations", "Agent security", "Claude Code", "Agent skills"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "zad"
@@ -215,7 +215,7 @@
       "sv": "Python-CLI som hämtar svenska rättsdokument — propositioner, prejudikat, myndighetsföreskrifter, EU-rätt — från åtta officiella källor till ett enhetligt format i Markdown och JSON. Åtta insamlare täcker 21 dokumenttyper med hastighetsbegränsad asynkron I/O och PDF-textextraktion. Publicerad på PyPI."
     },
     "stack": ["Python"],
-    "skills": ["Software Architecture", "Spec-driven development"],
+    "skills": ["Integrations", "Spec-driven development"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "juris"
@@ -242,7 +242,8 @@
     "skills": [
       "Agent orchestration",
       "Agentic workflows",
-      "Prompt engineering"
+      "Prompt engineering",
+      "MCP"
     ],
     "github": {
       "owner": "niclaslindstedt",

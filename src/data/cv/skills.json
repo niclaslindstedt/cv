@@ -19,6 +19,7 @@
       "AI evaluations",
       "Claude Code",
       "Agent skills",
+      "MCP",
       "Codex CLI",
       "Gemini CLI",
       "GitHub Copilot",
@@ -106,6 +107,7 @@
       "Miniservices",
       "gRPC/Protobuf",
       "RFC Implementation",
+      "Integrations",
       "Agile Methodologies",
       "Scrum"
     ]
