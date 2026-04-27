@@ -176,16 +176,17 @@ Reserved for state. Each token is a semantic flag and **always**
 appears together with a textual cue (a word, a shape change). Colour
 is never the sole signal of state — see §12.
 
-| Token        | Role                                                                                                                                |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Pulse**    | "Currently active" — current employer, current side project, ongoing assignment. Rendered as a brightened Aurora border + 1px glow. |
-| **Halt**     | "Incomplete" — courses started but not finished. Always paired with the word `INCOMPLETE`.                                          |
-| **Sapphire** | Timeline category: jobs.                                                                                                            |
-| **Mint**     | Timeline category: education.                                                                                                       |
-| **Ember**    | Timeline category: courses.                                                                                                         |
-| **Iris**     | Timeline category: side projects.                                                                                                   |
-| **Bloom**    | Timeline category: GitHub activity.                                                                                                 |
-| **Verdant**  | Timeline sub-category: assignments and assignment bars.                                                                             |
+| Token          | Role                                                                                                                                |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Pulse**      | "Currently active" — current employer, current side project, ongoing assignment. Rendered as a brightened Aurora border + 1px glow. |
+| **Halt**       | "Incomplete" — courses started but not finished. Always paired with the word `INCOMPLETE`.                                          |
+| **Sapphire**   | Timeline category: jobs.                                                                                                            |
+| **Mint**       | Timeline category: education.                                                                                                       |
+| **Ember**      | Timeline category: courses.                                                                                                         |
+| **Iris**       | Timeline category: side projects.                                                                                                   |
+| **Bloom**      | Timeline category: GitHub activity.                                                                                                 |
+| **Bloom Text** | Brightened Bloom variant for legible text/links on the dark Bloom-tinted pill.                                                      |
+| **Verdant**    | Timeline sub-category: assignments and assignment bars.                                                                             |
 
 Timeline category tokens are stored as RGB triplets so they can be
 combined with arbitrary alpha values inside the timeline component
@@ -298,16 +299,24 @@ or extract a new step _named_ here first.
 Three named tiers. There is no tablet-portrait special case — the
 layout holds together fluidly between Phone and Wide.
 
-| Tier      | Width           | What changes                                                                                                            |
-| --------- | --------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **Phone** | up to 520px     | Floating control bar collapses to icon-only; hero meta wraps; modal padding compacts; some grids drop to single column. |
-| **Wide**  | 520px and above | Default layout. Multi-column grids appear (focus list, skills group).                                                   |
-| **Print** | print medium    | All translucency collapses. See §13.                                                                                    |
+| Tier         | Width           | What changes                                                                                                                                                       |
+| ------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Phone**    | up to 520px     | Floating control bar collapses to icon-only; hero meta wraps; modal padding compacts; some grids drop to single column.                                            |
+| **Wide**     | 520px and above | Default layout. Multi-column grids appear (focus list, skills group).                                                                                              |
+| **Timeline** | up to 640px     | Timeline-overlay-only band: the track-label sidebar collapses to an icon-only column, the toolbar reflows for a corner-pinned close, and the details panel insets. |
+| **Print**    | print medium    | All translucency collapses. See §13.                                                                                                                               |
 
 A separate narrow breakpoint at **480px** exists for the floating
 control bar (compact form). Treat 480/520 as the same band — both
 exist only because Safari's hit-target geometry forced two minor
-adjustments. Do not invent a third.
+adjustments outside the timeline layout.
+
+The Timeline 640px breakpoint is scoped exclusively to
+`src/styles/timeline-vis.css`. It exists because the timeline overlay
+has its own internal grid (label column + zoomable canvas) whose
+sidebar must collapse before the page-level Phone breakpoint would
+otherwise force a column reflow. Do not propagate 640 outside the
+timeline; do not invent a fourth band.
 
 ### 5.4 Vertical rhythm
 
@@ -348,12 +357,13 @@ The site uses exactly three surface tiers, in this order:
 
 Glass is the brand. The exact recipe matters.
 
-| Surface          | Backdrop blur | Saturate | Background     |
-| ---------------- | ------------- | -------- | -------------- |
-| Standard card    | 14px          | 150%     | Vapor          |
-| Modal panel      | 18px          | 160%     | Vapor (denser) |
-| Modal backdrop   | 20px          | 180%     | Veil           |
-| Timeline overlay | 18px          | (none)   | Shroud         |
+| Surface                  | Backdrop blur | Saturate | Background     |
+| ------------------------ | ------------- | -------- | -------------- |
+| Standard card            | 14px          | 150%     | Vapor          |
+| Modal panel              | 18px          | 160%     | Vapor (denser) |
+| Modal backdrop           | 20px          | 180%     | Veil           |
+| Timeline overlay         | 18px          | (none)   | Shroud         |
+| Timeline details (float) | 14px          | 150%     | Vapor          |
 
 **Translucency rule.** On the dark theme home page, you should be
 able to see the Sky bleed faintly through every card. If you cannot,
@@ -955,74 +965,76 @@ table. **Update this whenever the implementation moves**.
 
 ### 15.1 Token map
 
-| Design name    | CSS custom property      | Source file                     |
-| -------------- | ------------------------ | ------------------------------- |
-| Nightfield     | `--bg`                   | `src/styles/tokens.css`         |
-| Slate          | `--bg-elev`              | `src/styles/tokens.css`         |
-| Vapor          | `--glass-bg`             | `src/styles/tokens.css`         |
-| Vapor Edge     | `--glass-border`         | `src/styles/tokens.css`         |
-| Vapor Sheen    | `--glass-highlight`      | `src/styles/tokens.css`         |
-| Veil           | `--modal-overlay`        | `src/styles/tokens.css`         |
-| Shroud         | `--overlay`              | `src/styles/tokens.css`         |
-| Aurora         | `--accent`               | `src/styles/tokens.css`         |
-| Aurora Mist    | `--accent-soft`          | `src/styles/tokens.css`         |
-| Graphite       | `--fg`                   | `src/styles/tokens.css`         |
-| Mist           | `--fg-muted`             | `src/styles/tokens.css`         |
-| Hairline       | `--border`               | `src/styles/tokens.css`         |
-| Float Shadow   | `--shadow`               | `src/styles/tokens.css`         |
-| Skyline Top    | `--sky-top`              | `src/styles/tokens.css`         |
-| Skyline Mid    | `--sky-mid`              | `src/styles/tokens.css`         |
-| Skyline Bottom | `--sky-bottom`           | `src/styles/tokens.css`         |
-| Sky Glow A     | `--sky-glow-1`           | `src/styles/tokens.css`         |
-| Sky Glow B     | `--sky-glow-2`           | `src/styles/tokens.css`         |
-| Orb            | `--orb-color`            | `src/styles/tokens.css`         |
-| Orb Soft       | `--orb-color-soft`       | `src/styles/tokens.css`         |
-| Sapphire       | `--tl-blue`              | `src/styles/tokens.css`         |
-| Mint           | `--tl-mint`              | `src/styles/tokens.css`         |
-| Ember          | `--tl-amber`             | `src/styles/tokens.css`         |
-| Iris           | `--tl-violet`            | `src/styles/tokens.css`         |
-| Bloom          | `--tl-pink`              | `src/styles/tokens.css`         |
-| Verdant        | `--tl-green`             | `src/styles/tokens.css`         |
-| `radius-md`    | `--radius`               | `src/styles/tokens.css`         |
-| `radius-pill`  | (literal `999px`)        | (no token — universal constant) |
-| Page column    | `--max-width`            | `src/styles/tokens.css`         |
-| Body Sans      | `font-family` on `:root` | `src/styles/tokens.css`         |
-| Code Mono      | `--font-mono`            | `src/styles/tokens.css`         |
-
-The semantic `Pulse` colour is currently expressed as a literal
-`rgba(122,183,255,0.55)` in `src/styles/experience.css` and
-`projects.css`. The `Halt` colour is currently expressed as a
-literal `#c62828` in `src/styles/modals.css`. Both are scheduled for
-tokenisation — see the sync skill's checklist.
+| Design name     | CSS custom property      | Source file                     |
+| --------------- | ------------------------ | ------------------------------- |
+| Nightfield      | `--bg`                   | `src/styles/tokens.css`         |
+| Slate           | `--bg-elev`              | `src/styles/tokens.css`         |
+| Vapor           | `--glass-bg`             | `src/styles/tokens.css`         |
+| Vapor Edge      | `--glass-border`         | `src/styles/tokens.css`         |
+| Vapor Sheen     | `--glass-highlight`      | `src/styles/tokens.css`         |
+| Veil            | `--modal-overlay`        | `src/styles/tokens.css`         |
+| Shroud          | `--overlay`              | `src/styles/tokens.css`         |
+| Aurora          | `--accent`               | `src/styles/tokens.css`         |
+| Aurora Mist     | `--accent-soft`          | `src/styles/tokens.css`         |
+| Graphite        | `--fg`                   | `src/styles/tokens.css`         |
+| Mist            | `--fg-muted`             | `src/styles/tokens.css`         |
+| Hairline        | `--border`               | `src/styles/tokens.css`         |
+| Float Shadow    | `--shadow`               | `src/styles/tokens.css`         |
+| Skyline Top     | `--sky-top`              | `src/styles/tokens.css`         |
+| Skyline Mid     | `--sky-mid`              | `src/styles/tokens.css`         |
+| Skyline Bottom  | `--sky-bottom`           | `src/styles/tokens.css`         |
+| Sky Glow A      | `--sky-glow-1`           | `src/styles/tokens.css`         |
+| Sky Glow B      | `--sky-glow-2`           | `src/styles/tokens.css`         |
+| Orb             | `--orb-color`            | `src/styles/tokens.css`         |
+| Orb Soft        | `--orb-color-soft`       | `src/styles/tokens.css`         |
+| Sapphire        | `--tl-blue`              | `src/styles/tokens.css`         |
+| Mint            | `--tl-mint`              | `src/styles/tokens.css`         |
+| Ember           | `--tl-amber`             | `src/styles/tokens.css`         |
+| Iris            | `--tl-violet`            | `src/styles/tokens.css`         |
+| Bloom           | `--tl-pink`              | `src/styles/tokens.css`         |
+| Bloom Text      | `--tl-green-fg`          | `src/styles/tokens.css`         |
+| Verdant         | `--tl-green`             | `src/styles/tokens.css`         |
+| Pulse           | `--pulse`                | `src/styles/tokens.css`         |
+| Pulse Soft      | `--pulse-soft`           | `src/styles/tokens.css`         |
+| Pulse Glow      | `--pulse-glow`           | `src/styles/tokens.css`         |
+| Halt            | `--halt`                 | `src/styles/tokens.css`         |
+| Halt Foreground | `--halt-fg`              | `src/styles/tokens.css`         |
+| `radius-md`     | `--radius`               | `src/styles/tokens.css`         |
+| `radius-pill`   | (literal `999px`)        | (no token — universal constant) |
+| Page column     | `--max-width`            | `src/styles/tokens.css`         |
+| Body Sans       | `font-family` on `:root` | `src/styles/tokens.css`         |
+| Code Mono       | `--font-mono`            | `src/styles/tokens.css`         |
 
 ### 15.2 Component map
 
-| Component (§9)         | Source file(s)                                                                                                          |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Card                   | All section components; styled per file (`projects.css`, `experience.css`, `education.css`, `focus.css`, `skills.css`). |
-| Pill                   | `src/styles/projects.css` (tech tags), `src/styles/education.css` (counts), `src/styles/hero.css` (link pills).         |
-| Badge — OPEN SOURCE    | `src/components/Projects.tsx` + `src/styles/projects.css`.                                                              |
-| Badge — INCOMPLETE     | `src/components/Courses.tsx` + `src/styles/modals.css`.                                                                 |
-| Badge — PRESENT        | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                          |
-| Badge — half/part-time | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                          |
-| Button                 | `src/components/Controls.tsx`; styles in `src/styles/toggles.css` and per-component CSS.                                |
-| Inline link            | `src/styles/base.css` and per-component CSS.                                                                            |
-| Section                | `src/components/Section.tsx` + `src/styles/section.css`.                                                                |
-| Modal — standard       | `src/components/{Skill,Focus,Summary,Project,Company,ProgramCourses,CourseMoments}Modal.tsx` + `src/styles/modals.css`. |
-| Modal — Timeline       | `src/components/Timeline.tsx` + `src/styles/timeline-vis.css`.                                                          |
-| Floating control bar   | `src/components/FloatingControls.tsx` + `src/styles/floating-controls.css`.                                             |
-| Project date chip      | `src/components/ProjectDateChip.tsx` + `src/styles/projects.css`.                                                       |
-| Empty state            | `src/components/Skills.tsx` + `src/styles/skills.css`.                                                                  |
+| Component (§9)         | Source file(s)                                                                                                                           |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Card                   | All section components; styled per file (`projects.css`, `experience.css`, `education.css`, `focus.css`, `skills.css`, `languages.css`). |
+| Pill                   | `src/styles/projects.css` (tech tags), `src/styles/education.css` (counts), `src/styles/hero.css` (link pills).                          |
+| Badge — OPEN SOURCE    | `src/components/Projects.tsx` + `src/styles/projects.css`.                                                                               |
+| Badge — INCOMPLETE     | `src/components/Courses.tsx` + `src/styles/modals.css`.                                                                                  |
+| Badge — PRESENT        | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                                           |
+| Badge — half/part-time | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                                           |
+| Button                 | `src/components/Controls.tsx`; styles in `src/styles/toggles.css` and per-component CSS.                                                 |
+| Inline link            | `src/styles/base.css` and per-component CSS.                                                                                             |
+| Section                | `src/components/Section.tsx` + `src/styles/section.css`.                                                                                 |
+| Modal — standard       | `src/components/{Skill,Focus,Summary,Project,Company,ProgramCourses,CourseMoments}Modal.tsx` + `src/styles/modals.css`.                  |
+| Modal — Timeline       | `src/components/Timeline.tsx` + `src/styles/timeline-vis.css`.                                                                           |
+| Floating control bar   | `src/components/FloatingControls.tsx` + `src/styles/floating-controls.css`.                                                              |
+| Project date chip      | `src/components/ProjectDateChip.tsx` + `src/styles/projects.css`.                                                                        |
+| Empty state            | `src/components/Skills.tsx` + `src/styles/skills.css`.                                                                                   |
+| Languages              | `src/components/Languages.tsx` + `src/styles/languages.css`.                                                                             |
+| Page chrome (Sky)      | `src/components/CelestialSky.tsx` + `src/styles/sky.css`; page column + footer in `src/styles/layout.css` and `src/styles/base.css`.     |
 
 ### 15.3 Pattern map
 
-| Pattern (§10)                      | Source file(s)                                                                 |
-| ---------------------------------- | ------------------------------------------------------------------------------ |
-| Promotion arrow + role chain       | `src/components/Experience.tsx` + `src/styles/experience.css`.                 |
-| Active / Present indicator         | `src/components/Experience.tsx` + `src/styles/experience.css`, `projects.css`. |
-| Timeline visualization             | `src/components/Timeline.tsx` + `src/styles/timeline-vis.css`.                 |
-| Wrapping with separator characters | `src/styles/education.css` (`.education-meta-trail`).                          |
-| Icon-in-text alignment             | `src/styles/experience.css`, `src/styles/section.css`, etc.                    |
+| Pattern (§10)                      | Source file(s)                                                                                                                           |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Promotion arrow + role chain       | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                                           |
+| Active / Present indicator         | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                                           |
+| Timeline visualization             | `src/components/Timeline.tsx` + `src/styles/timeline-vis.css`.                                                                           |
+| Wrapping with separator characters | `src/components/Education.tsx` (`<p class="education-meta-trail">` + `.education-meta-trail > span` rule in `src/styles/education.css`). |
+| Icon-in-text alignment             | `src/styles/experience.css`, `src/styles/section.css`, etc.                                                                              |
 
 ### 15.4 Print map
 

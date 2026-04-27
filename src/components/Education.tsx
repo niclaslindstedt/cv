@@ -48,10 +48,14 @@ export function Education({
                       {formatRange(item.startDate, item.endDate, lang)}
                     </span>
                   </div>
-                  <p>
-                    {t(item.institution)} · {t(item.level)} ·{" "}
-                    <span className="education-credits">
-                      {roundCredits(item.credits)}
+                  <p className="education-meta-trail">
+                    <span>{t(item.institution)}</span>
+                    <span> · {t(item.level)}</span>
+                    <span>
+                      {" · "}
+                      <span className="education-credits">
+                        {roundCredits(item.credits)}
+                      </span>
                     </span>
                     {hasCourses && (
                       <span className="education-courses-count">
@@ -68,10 +72,14 @@ export function Education({
                       {formatRange(item.startDate, item.endDate, lang)}
                     </span>
                   </div>
-                  <p>
-                    {t(item.institution)} · {t(item.level)} ·{" "}
-                    <span className="education-credits">
-                      {roundCredits(item.credits)}
+                  <p className="education-meta-trail">
+                    <span>{t(item.institution)}</span>
+                    <span> · {t(item.level)}</span>
+                    <span>
+                      {" · "}
+                      <span className="education-credits">
+                        {roundCredits(item.credits)}
+                      </span>
                     </span>
                   </p>
                 </>

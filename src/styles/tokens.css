@@ -21,6 +21,11 @@
   --fg-muted: #8a93a1;
   --accent: #7ab7ff;
   --accent-soft: rgba(122, 183, 255, 0.12);
+  --pulse: rgba(122, 183, 255, 0.55);
+  --pulse-soft: rgba(122, 183, 255, 0.45);
+  --pulse-glow: rgba(122, 183, 255, 0.25);
+  --halt: #c62828;
+  --halt-fg: #ffffff;
   /* Timeline category colors as RGB triplets — used via rgba(var(--tl-*), a) */
   --tl-blue: 122, 183, 255;
   --tl-mint: 168, 230, 207;
@@ -28,6 +33,7 @@
   --tl-violet: 214, 168, 255;
   --tl-pink: 244, 114, 182;
   --tl-green: 34, 197, 94;
+  --tl-green-fg: #4ade80;
   --overlay: rgba(8, 10, 13, 0.72);
   --modal-overlay: rgba(8, 10, 13, 0.18);
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
@@ -66,6 +72,12 @@
   --fg-muted: #4b5462;
   --accent: #1c2230;
   --accent-soft: rgba(28, 34, 48, 0.08);
+  --pulse: var(--border);
+  --pulse-soft: var(--border);
+  --pulse-glow: transparent;
+  --halt: #c62828;
+  --halt-fg: #ffffff;
+  --tl-green-fg: #15803d;
   --overlay: rgba(240, 243, 247, 0.72);
   --modal-overlay: rgba(240, 243, 247, 0.18);
   --shadow: 0 12px 40px rgba(11, 13, 16, 0.12);

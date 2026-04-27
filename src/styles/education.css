@@ -47,7 +47,11 @@
   margin: 0;
   color: var(--fg-muted);
   font-size: 0.95rem;
-  line-height: 1.7;
+  line-height: 1.5;
+}
+
+.education-meta-trail > span {
+  white-space: nowrap;
 }
 
 .education-credits {
