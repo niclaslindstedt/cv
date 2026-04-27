@@ -182,6 +182,20 @@
       "sv": "Bundet till Claude Codes körtid; formatet utvecklas fortfarande och skills måste hållas i synk när specifikationen ändras."
     }
   },
+  "MCP": {
+    "description": {
+      "en": "Anthropic's Model Context Protocol — an open standard for connecting AI agents to tools, data sources, and services through a uniform client/server interface.",
+      "sv": "Anthropics Model Context Protocol — en öppen standard för att koppla AI-agenter till verktyg, datakällor och tjänster genom ett enhetligt klient/server-gränssnitt."
+    },
+    "benefits": {
+      "en": "Decouples agents from their integrations: any MCP-aware agent can use any MCP server without bespoke glue, and capabilities can be swapped or sandboxed independently.",
+      "sv": "Frikopplar agenter från sina integrationer: vilken MCP-medveten agent som helst kan använda vilken MCP-server som helst utan specialskriven kod, och förmågor kan bytas ut eller sandboxas oberoende."
+    },
+    "drawbacks": {
+      "en": "Servers live as separate processes with their own lifecycle and permissions surface; debugging the seam between agent, server, and underlying tool is harder than a direct call.",
+      "sv": "Servrar lever som egna processer med egen livscykel och behörighetsyta; att felsöka skarven mellan agent, server och underliggande verktyg är svårare än ett direkt anrop."
+    }
+  },
   "Codex CLI": {
     "description": {
       "en": "OpenAI's terminal coding agent — sandbox-first, runs in a container by default, with a JSON protocol for embedding in larger systems.",
@@ -663,6 +677,20 @@
     "description": {
       "en": "Reading an IETF RFC end-to-end and producing a conforming implementation: parsing the normative MUST/SHOULD/MAY language, modelling state machines, and writing test vectors that prove the spec is met.",
       "sv": "Att läsa en IETF-RFC från pärm till pärm och skriva en regelrätt implementation: tolka de normativa MUST/SHOULD/MAY-formuleringarna, modellera tillståndsmaskiner och skriva testvektorer som bevisar att specifikationen följs."
+    }
+  },
+  "Integrations": {
+    "description": {
+      "en": "Building and maintaining the connective tissue between systems — APIs, webhooks, message queues, third-party SDKs — so data flows reliably across service boundaries.",
+      "sv": "Att bygga och underhålla bindväven mellan system — API:er, webhooks, meddelandeköer och tredjeparts-SDK:er — så att data flödar tillförlitligt över tjänstegränser."
+    },
+    "benefits": {
+      "en": "Unlocks workflows no single service can deliver alone and lets each system stay focused on its own responsibility.",
+      "sv": "Möjliggör arbetsflöden som ingen enskild tjänst klarar själv och låter varje system fokusera på sitt eget ansvar."
+    },
+    "drawbacks": {
+      "en": "Every integration adds a fault line — schema drift, rate limits, auth churn — that breaks at the worst time and is expensive to monitor.",
+      "sv": "Varje integration lägger till en brytlinje — schemadrift, hastighetsgränser, auth-byten — som spricker vid sämsta tillfället och är dyr att övervaka."
     }
   },
   "Agile Methodologies": {

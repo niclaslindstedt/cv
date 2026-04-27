@@ -32,6 +32,7 @@
       "AI Agents",
       "RAG",
       "Chatbots",
+      "MCP",
       "Cybersecurity",
       "Software Architecture",
       "Observability",
@@ -278,7 +279,13 @@
       "Python",
       "Microsoft SQL Server"
     ],
-    "skills": ["CI/CD", "Cybersecurity", "Software Architecture", "Bash/Shell"],
+    "skills": [
+      "CI/CD",
+      "Cybersecurity",
+      "Software Architecture",
+      "Integrations",
+      "Bash/Shell"
+    ],
     "printDescription": {
       "en": "Backend developer at Indicio, a forecasting and scenario-planning platform, on .NET, Python, and TypeScript with SQL Server.",
       "sv": "Backendutvecklare på Indicio, en plattform för prognoser och scenarioplanering, med .NET, Python och TypeScript mot SQL Server."
