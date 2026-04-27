@@ -19,10 +19,6 @@ export function useTheme() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     window.localStorage.setItem(STORAGE_KEY, theme);
-    const meta = document.querySelector<HTMLMetaElement>(
-      'meta[name="theme-color"]',
-    );
-    if (meta) meta.content = theme === "light" ? "#d2d8e1" : "#02030a";
   }, [theme]);
 
   useEffect(() => {
