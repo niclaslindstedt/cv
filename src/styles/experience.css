@@ -17,12 +17,11 @@
 }
 
 .timeline-item.is-active {
-  border-color: rgba(122, 183, 255, 0.55);
-  box-shadow: 0 0 0 1px rgba(122, 183, 255, 0.25);
+  border-color: var(--pulse);
+  box-shadow: 0 0 0 1px var(--pulse-glow);
 }
 
 :root[data-theme="light"] .timeline-item.is-active {
-  border-color: var(--border);
   box-shadow: none;
 }
 
@@ -46,7 +45,7 @@
 }
 
 :root[data-theme="light"] .active-badge {
-  color: #fff;
+  color: var(--halt-fg);
   background: var(--fg-muted);
 }
 
@@ -72,14 +71,9 @@
   list-style: none;
   margin: 0 0 10px;
   padding: 6px 0 6px 14px;
-  border-left: 1px solid var(--accent);
-  border-left-color: rgba(122, 183, 255, 0.45);
+  border-left: 1px solid var(--pulse-soft);
   display: grid;
   gap: 4px;
-}
-
-:root[data-theme="light"] .role-chain {
-  border-left-color: var(--border);
 }
 
 .role-chain-item {
@@ -222,7 +216,7 @@
   border-radius: 0 6px 6px 0;
   background: var(--accent-soft);
   color: var(--fg);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   white-space: pre-line;
 }
@@ -278,11 +272,7 @@
 
 .assignment-item.is-active > .assignment-body {
   padding-left: 10px;
-  border-left: 2px solid rgba(122, 183, 255, 0.55);
-}
-
-:root[data-theme="light"] .assignment-item.is-active > .assignment-body {
-  border-left-color: var(--border);
+  border-left: 2px solid var(--pulse);
 }
 
 .assignments-list .assignment-item::before {
@@ -322,7 +312,7 @@
 .assignment-body h4,
 .assignment-title {
   margin: 0 0 2px;
-  font-size: 0.98rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 

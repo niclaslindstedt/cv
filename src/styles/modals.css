@@ -17,8 +17,8 @@
   display: flex;
   flex-direction: column;
   background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(170%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -47,7 +47,7 @@
 .skill-modal-description {
   margin: 0;
   font-size: 0.95rem;
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--fg);
 }
 
@@ -86,7 +86,7 @@
 .skill-modal-pros dd,
 .skill-modal-cons dd {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
@@ -297,7 +297,7 @@
 
 .education-courses-count {
   margin-left: 8px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--accent);
 }
 
@@ -310,7 +310,7 @@
 
 .program-modal-count {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -381,7 +381,7 @@
 
 .program-course-code {
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--fg);
   padding: 1px 8px;
   background: var(--bg);
@@ -394,7 +394,7 @@
   align-items: baseline;
   gap: 6px;
   padding: 1px 10px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   border: 1px solid var(--accent);
   border-radius: 999px;
   color: var(--accent);
@@ -402,7 +402,7 @@
 }
 
 .program-course-grade-label {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -413,7 +413,7 @@
 }
 
 .program-course-progress {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   letter-spacing: 0.04em;
   color: var(--fg-muted);
 }
@@ -422,14 +422,14 @@
   display: inline-flex;
   align-items: center;
   padding: 1px 10px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  border: 1px solid #c62828;
+  border: 1px solid var(--halt);
   border-radius: 999px;
-  color: #fff;
-  background: #c62828;
+  color: var(--halt-fg);
+  background: var(--halt);
 }
 
 .program-course-moments {
@@ -441,7 +441,7 @@
 
 .program-course-moments-label {
   margin: 0;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -482,14 +482,14 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 6px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--fg-muted);
   font-variant-numeric: tabular-nums;
 }
 
 .program-moment-code {
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   padding: 0 6px;
   border: 1px solid var(--border);
   border-radius: 4px;
