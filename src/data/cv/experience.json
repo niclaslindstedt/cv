@@ -23,13 +23,12 @@
       "Terraform",
       "GitHub actions",
       "gRPC/Protobuf",
-      "Vector Databases",
+      "Vector databases",
       "CosmosDB",
       "Redis"
     ],
     "skills": [
-      "Agentic workflows",
-      "AI Agents",
+      "AI agents",
       "RAG",
       "Chatbots",
       "MCP",
@@ -70,12 +69,12 @@
     "skills": [
       "Architecture",
       "Database design",
-      "IT Strategy",
-      "Team Management",
+      "IT strategy",
+      "Team management",
       "Cybersecurity",
       "Bash/Shell",
       "Mentoring",
-      "Project Management"
+      "Project management"
     ],
     "printDescription": {
       "en": "CTO of IBNQ, a software platform for family offices, on a .NET/TypeScript stack on Azure.",
@@ -185,8 +184,8 @@
           "Cybersecurity",
           "Architecture",
           "Leadership",
-          "IT Strategy",
-          "Team Management",
+          "IT strategy",
+          "Team management",
           "Observability",
           "Bash/Shell",
           "GDPR",
@@ -231,13 +230,12 @@
       "Architecture",
       "Database design",
       "Leadership",
-      "IT Strategy",
-      "Agile Methodologies",
+      "IT strategy",
       "PowerShell",
       "GDPR",
       "CE marking",
-      "Risk Management",
-      "Project Management"
+      "Risk management",
+      "Project management"
     ],
     "printDescription": {
       "en": "Co-founder and CTO of Symptoms Europe, an eHealth platform for patient-reported outcomes, on a Vue/.NET stack on Azure.",

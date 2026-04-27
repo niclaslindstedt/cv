@@ -1,24 +1,13 @@
 [
   {
     "area": {
-      "en": "Agentic coding",
-      "sv": "Agentisk kodning"
+      "en": "Agentic CLI tooling",
+      "sv": "Agentiska CLI-verktyg"
     },
-    "since": "2025-05",
+    "since": "2025-11",
     "description": {
-      "en": "Treating AI coding agents as primary collaborators: the developer steers, reviews, and shapes the system while the agent does the typing. Most of the craft is in setting up the loop — context, guardrails, and feedback — so the agent stays useful as the codebase grows.",
-      "sv": "Att behandla AI-kodningsagenter som primära medarbetare: utvecklaren styr, granskar och formar systemet medan agenten skriver koden. Hantverket ligger i att sätta upp loopen — kontext, skyddsräcken och återkoppling — så att agenten förblir användbar när kodbasen växer."
-    }
-  },
-  {
-    "area": {
-      "en": "Spec-driven agentic coding",
-      "sv": "Spec-driven agentisk kodning"
-    },
-    "since": "2025-07",
-    "description": {
-      "en": "Anchoring every change to a written specification that both human and agent treat as the source of truth. Specs replace tribal knowledge, give the agent a stable target to converge on, and turn drift into something you can detect and fix automatically.",
-      "sv": "Att förankra varje ändring i en skriven specifikation som både människa och agent behandlar som sanning. Specifikationer ersätter tyst kunskap, ger agenten ett stabilt mål att konvergera mot och gör avdrift till något som kan upptäckas och åtgärdas automatiskt."
+      "en": "Building the command-line scaffolding that makes agents observable, sandboxable, scriptable, and composable from the shell. The CLI is where agents meet existing engineering workflows — git, CI, package managers, oncall — so it has to be boring, fast, and unsurprising.",
+      "sv": "Att bygga den kommandoradsstruktur som gör agenter observerbara, sandboxbara, skriptbara och komponerbara från skalet. CLI:t är där agenterna möter befintliga arbetsflöden — git, CI, paketsystem, oncall — så det måste vara tråkigt, snabbt och förutsägbart."
     }
   },
   {
@@ -34,13 +23,24 @@
   },
   {
     "area": {
-      "en": "Agentic CLI tooling",
-      "sv": "Agentiska CLI-verktyg"
+      "en": "Spec-driven agentic coding",
+      "sv": "Spec-driven agentisk kodning"
     },
-    "since": "2025-11",
+    "since": "2025-07",
     "description": {
-      "en": "Building the command-line scaffolding that makes agents observable, sandboxable, scriptable, and composable from the shell. The CLI is where agents meet existing engineering workflows — git, CI, package managers, oncall — so it has to be boring, fast, and unsurprising.",
-      "sv": "Att bygga den kommandoradsstruktur som gör agenter observerbara, sandboxbara, skriptbara och komponerbara från skalet. CLI:t är där agenterna möter befintliga arbetsflöden — git, CI, paketsystem, oncall — så det måste vara tråkigt, snabbt och förutsägbart."
+      "en": "Anchoring every change to a written specification that both human and agent treat as the source of truth. Specs replace tribal knowledge, give the agent a stable target to converge on, and turn drift into something you can detect and fix automatically.",
+      "sv": "Att förankra varje ändring i en skriven specifikation som både människa och agent behandlar som sanning. Specifikationer ersätter tyst kunskap, ger agenten ett stabilt mål att konvergera mot och gör avdrift till något som kan upptäckas och åtgärdas automatiskt."
+    }
+  },
+  {
+    "area": {
+      "en": "Agentic coding",
+      "sv": "Agentisk kodning"
+    },
+    "since": "2025-05",
+    "description": {
+      "en": "Treating AI coding agents as primary collaborators: the developer steers, reviews, and shapes the system while the agent does the typing. Most of the craft is in setting up the loop — context, guardrails, and feedback — so the agent stays useful as the codebase grows.",
+      "sv": "Att behandla AI-kodningsagenter som primära medarbetare: utvecklaren styr, granskar och formar systemet medan agenten skriver koden. Hantverket ligger i att sätta upp loopen — kontext, skyddsräcken och återkoppling — så att agenten förblir användbar när kodbasen växer."
     }
   }
 ]

@@ -41,7 +41,7 @@
       "sv": "Att kodifiera ett arbetsflöde för tidigt låser fast val innan man förstår problemet."
     }
   },
-  "AI Agents": {
+  "AI agents": {
     "description": {
       "en": "LLMs equipped with tools, memory, and a goal — they plan, take actions, observe results, and iterate until the goal is met or they give up.",
       "sv": "LLM:er utrustade med verktyg, minne och ett mål — de planerar, agerar, observerar resultat och itererar tills målet är uppnått eller de ger upp."
@@ -532,7 +532,7 @@
     },
     "url": "https://azure.microsoft.com/products/cosmos-db"
   },
-  "Vector Databases": {
+  "Vector databases": {
     "description": {
       "en": "Specialised stores for high-dimensional embeddings, indexed with approximate-nearest-neighbour algorithms (HNSW, IVF) to power semantic search, retrieval-augmented generation, and similarity-driven recommendation.",
       "sv": "Specialiserade lager för högdimensionella embeddings, indexerade med approximate-nearest-neighbour-algoritmer (HNSW, IVF) för semantisk sökning, retrieval-augmented generation och rekommendationer."
@@ -687,7 +687,7 @@
     },
     "url": "https://grpc.io"
   },
-  "RFC Implementation": {
+  "RFC implementation": {
     "description": {
       "en": "Reading an IETF RFC end-to-end and producing a conforming implementation: parsing the normative MUST/SHOULD/MAY language, modelling state machines, and writing test vectors that prove the spec is met.",
       "sv": "Att läsa en IETF-RFC från pärm till pärm och skriva en regelrätt implementation: tolka de normativa MUST/SHOULD/MAY-formuleringarna, modellera tillståndsmaskiner och skriva testvektorer som bevisar att specifikationen följs."
@@ -707,12 +707,6 @@
       "sv": "Varje integration lägger till en brytlinje — schemadrift, hastighetsgränser, auth-byten — som spricker vid sämsta tillfället och är dyr att övervaka."
     }
   },
-  "Agile Methodologies": {
-    "description": {
-      "en": "Iterative, feedback-driven product development — small batches, frequent delivery, working software preferred over comprehensive documentation.",
-      "sv": "Iterativ, återkopplingsdriven produktutveckling — små partier, frekvent leverans, fungerande mjukvara framför uttömmande dokumentation."
-    }
-  },
   "Scrum": {
     "description": {
       "en": "Specific Agile framework with fixed-length sprints, defined roles (PO, Scrum Master, team), and a small set of mandatory ceremonies.",
@@ -728,13 +722,13 @@
     },
     "url": "https://scrumguides.org"
   },
-  "Engineering Management": {
+  "Engineering management": {
     "description": {
       "en": "Building and running engineering teams: hiring, mentoring, performance, planning, and creating the conditions for the team to do its best work.",
       "sv": "Att bygga och leda ingenjörsteam: rekrytering, mentorskap, prestation, planering och att skapa förutsättningarna för teamet att göra sitt bästa arbete."
     }
   },
-  "Team Management": {
+  "Team management": {
     "description": {
       "en": "Day-to-day stewardship of a team's work: priorities, capacity, dependencies, and the small frictions that compound if left unattended.",
       "sv": "Daglig styrning av ett teams arbete: prioriteringar, kapacitet, beroenden och de små friktioner som ackumuleras om de lämnas obehandlade."
@@ -752,19 +746,19 @@
       "sv": "Att hjälpa enskilda ingenjörer växa genom att dela kontext, ställa bättre frågor än du svarar på och skapa utrymme att misslyckas säkert."
     }
   },
-  "IT Strategy": {
+  "IT strategy": {
     "description": {
       "en": "Aligning technology investment with business goals over a 1–3 year horizon — buy/build, platform choices, sourcing, and where to put the bets.",
       "sv": "Att rikta teknikinvesteringar mot verksamhetsmål på 1–3 års sikt — köpa/bygga, plattformsval, sourcing och var satsningarna ska läggas."
     }
   },
-  "Technology Roadmapping": {
+  "Technology roadmapping": {
     "description": {
       "en": "Sequencing technical investment so each piece pays for the next: capability gaps, dependencies, sunset plans, and the trade-offs between them.",
       "sv": "Att sekvensera teknisk investering så att varje del banar väg för nästa: kapacitetsluckor, beroenden, utfasningsplaner och avvägningarna mellan dem."
     }
   },
-  "Project Management": {
+  "Project management": {
     "description": {
       "en": "Driving a defined piece of work to completion within scope, time, and cost — risk tracking, dependencies, stakeholders, and reporting.",
       "sv": "Att driva ett avgränsat arbete i mål inom omfattning, tid och kostnad — riskhantering, beroenden, intressenter och rapportering."
@@ -784,13 +778,13 @@
       "sv": "Friktionsavvägning mot utvecklarergonomi; behandlas det som en funktion blir det eftersläpande, behandlas det som en del av varje funktion skalar det."
     }
   },
-  "Regulatory Compliance": {
+  "Regulatory compliance": {
     "description": {
       "en": "Mapping legal and industry requirements (GDPR, MDR, PCI, ISO) into concrete controls, evidence, and process.",
       "sv": "Att översätta juridiska och branschspecifika krav (GDPR, MDR, PCI, ISO) till konkreta kontroller, bevis och processer."
     }
   },
-  "Risk Management": {
+  "Risk management": {
     "description": {
       "en": "Identifying, ranking, and treating risks across product, security, and operations.",
       "sv": "Att identifiera, rangordna och hantera risker över produkt, säkerhet och drift."

@@ -165,7 +165,7 @@
       "sv": "Statisk personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug. En Vite-extractor går igenom markdown-trädet, validerar frontmatter och genererar en enda JSON som ett terminal-tematiserat React-gränssnitt läser — ingen CMS, ingen runtime-server."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
-    "skills": ["Spec-driven development", "Claude Code", "Agent skills"],
+    "skills": ["Claude Code", "Agent skills"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "blog"
@@ -188,12 +188,7 @@
       "sv": "Personlig CV-sajt driven av en enda schemavaliderad JSON-fil. Byggpipelinen härleder React-appen, SEO-metan och JSON-LD, OG-bilden, sitemap:en och en puppeteer-renderad PDF från samma data. Underhålls via Claude Code-skills istället för för hand."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
-    "skills": [
-      "Spec-driven development",
-      "Architecture",
-      "Claude Code",
-      "Agent skills"
-    ],
+    "skills": ["Architecture", "Claude Code", "Agent skills"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "cv"
@@ -215,7 +210,7 @@
       "sv": "Python-CLI som hämtar svenska rättsdokument — propositioner, prejudikat, myndighetsföreskrifter, EU-rätt — från åtta officiella källor till ett enhetligt format i Markdown och JSON. Åtta insamlare täcker 21 dokumenttyper med hastighetsbegränsad asynkron I/O och PDF-textextraktion. Publicerad på PyPI."
     },
     "stack": ["Python"],
-    "skills": ["Integrations", "Spec-driven development"],
+    "skills": ["Integrations"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "juris"
@@ -266,7 +261,7 @@
       "sv": "Fullständig ASP.NET Core-implementation av OAuth 2.0 (RFC 6749) som täcker authorization code, client credentials, password och refresh-token. JWT-bearer-tokens, scopes, roller, audit-loggning, Postgres-persistens, ett Blazor WebAssembly-administrationsgränssnitt och Docker-avbildningar för både API och SPA."
     },
     "stack": ["C#/.NET", "PostgreSQL", "Docker"],
-    "skills": ["Architecture", "Cybersecurity", "RFC Implementation"],
+    "skills": ["Cybersecurity", "RFC implementation"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "dotnet-oauth2-server"
