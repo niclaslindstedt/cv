@@ -21,8 +21,11 @@
       "Azure",
       "Kubernetes",
       "Terraform",
+      "GitHub actions",
       "gRPC/Protobuf",
-      "Vector Databases"
+      "Vector Databases",
+      "CosmosDB",
+      "Redis"
     ],
     "skills": [
       "Agentic workflows",
@@ -60,7 +63,8 @@
       "Azure",
       "React",
       "React Native",
-      "TypeScript"
+      "TypeScript",
+      "GitHub actions"
     ],
     "skills": [
       "Software Architecture",
@@ -173,7 +177,10 @@
           "TypeScript",
           "AWS",
           "Kubernetes",
-          "MySQL"
+          "Linux",
+          "GitHub actions",
+          "MySQL",
+          "Redis"
         ],
         "skills": [
           "CI/CD",

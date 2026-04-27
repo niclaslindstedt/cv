@@ -13,7 +13,7 @@
       "sv": "Specifikationer ruttnar om de inte underhålls; överspecificering av små funktioner kostar mer än den säkerhet den ger."
     }
   },
-  "Multi-agent orchestration": {
+  "Agent orchestration": {
     "description": {
       "en": "Coordinating multiple AI agents (often from different providers) into a single end-to-end workflow with handoffs, retries, and verification between them.",
       "sv": "Att koordinera flera AI-agenter (ofta från olika leverantörer) till ett samlat arbetsflöde med överlämningar, omförsök och verifiering mellan stegen."
@@ -438,7 +438,7 @@
     },
     "url": "https://aws.amazon.com"
   },
-  "GitHub workflows": {
+  "GitHub actions": {
     "description": {
       "en": "GitHub Actions YAML pipelines that run on every push or pull request — building, testing, validating, and deploying without leaving the repo.",
       "sv": "GitHub Actions-pipelines i YAML som körs vid varje push eller pull request — bygger, testar, validerar och driftsätter utan att lämna repot."
@@ -608,20 +608,6 @@
     "description": {
       "en": "Continuous integration and delivery — every change is built, tested, and deployable on every push, with humans only in the approval loop.",
       "sv": "Kontinuerlig integration och leverans — varje ändring byggs, testas och är driftsättbar vid varje push, med människor enbart i godkännandeloopen."
-    }
-  },
-  "Infrastructure as Code": {
-    "description": {
-      "en": "Declaring infrastructure (networks, clusters, databases) in version-controlled code so changes are reviewable, reproducible, and reversible.",
-      "sv": "Att deklarera infrastruktur (nätverk, kluster, databaser) i versionshanterad kod så att ändringar är granskbara, reproducerbara och återställbara."
-    },
-    "benefits": {
-      "en": "Replaces clickops with PR reviews; same infrastructure across environments; disaster recovery becomes a `terraform apply`.",
-      "sv": "Ersätter klickops med PR-granskning; samma infrastruktur i alla miljöer; katastrofåterställning blir ett `terraform apply`."
-    },
-    "drawbacks": {
-      "en": "Drift between code and reality is real; state files become a sensitive operational asset.",
-      "sv": "Avdrift mellan kod och verklighet är reell; statefiler blir en känslig drifttillgång."
     }
   },
   "Software Architecture": {
