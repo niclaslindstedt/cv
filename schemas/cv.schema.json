@@ -560,7 +560,8 @@
         "page",
         "spacing",
         "headings",
-        "pageBreaks"
+        "pageBreaks",
+        "includeNotes"
       ],
       "description": "Print/PDF rendering settings consumed by PrintView and the print stylesheet.",
       "properties": {
@@ -568,6 +569,10 @@
           "type": "string",
           "pattern": "^[^/\\\\]+\\.pdf$",
           "description": "Filename (no directories) the generated PDF is written to under dist/. Defaults to cv.pdf when absent. Useful in cv.local.json to write a distinct local PDF (e.g. cv.local.pdf) that won't get confused with the public one."
+        },
+        "includeNotes": {
+          "type": "boolean",
+          "description": "Whether per-entry `notes` (on experience, assignments, education) are rendered in the printed/PDF CV. When false, notes are omitted from print output."
         },
         "fontFamily": {
           "type": "string",

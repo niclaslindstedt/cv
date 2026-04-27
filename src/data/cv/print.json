@@ -28,5 +28,6 @@
     "avoidInsideEntry": true,
     "avoidInsideSubEntry": true,
     "keepHeadingWithNext": true
-  }
+  },
+  "includeNotes": true
 }

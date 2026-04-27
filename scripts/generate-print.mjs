@@ -207,13 +207,15 @@ function roundCredits(credits) {
 }
 
 function buildEducation(item) {
-  return {
+  const baked = {
     field: item.field,
     institution: item.institution,
     level: item.level,
     credits: roundCredits(item.credits),
     range: formatRange(item.startDate, item.endDate),
   };
+  if (item.notes) baked.notes = item.notes;
+  return baked;
 }
 
 function buildCourseRange(item) {
