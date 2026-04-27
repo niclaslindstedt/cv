@@ -6,6 +6,7 @@ import { CourseMomentsModal } from "./components/CourseMomentsModal";
 import { Courses } from "./components/Courses";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
+import { FloatingControls } from "./components/FloatingControls";
 import { Focus } from "./components/Focus";
 import { FocusModal } from "./components/FocusModal";
 import { Hero } from "./components/Hero";
@@ -129,6 +130,12 @@ export function App() {
           </span>
         </footer>
       </div>
+      <FloatingControls
+        timelineLabel={t(cv.actions.timeline)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        onOpenTimeline={() => setTimelineOpen(true)}
+      />
       <Timeline open={timelineOpen} onClose={() => setTimelineOpen(false)} />
       <SummaryModal
         open={summaryOpen}

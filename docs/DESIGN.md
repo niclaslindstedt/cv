@@ -486,6 +486,22 @@ renders as a `.project-date` chip:
 - Used in two places with identical semantics: `ProjectModal`'s
   Active row, and `Timeline`'s side-project details panel.
 
+### 5.9 Floating controls bar
+
+The Timeline button, language toggle, and theme toggle live in the
+hero meta row by default. Once the user scrolls past the hero (the
+`.hero-meta` row leaves the viewport), an `IntersectionObserver` mirrors
+those three controls into a fixed glass pill at `top: 16px; right:
+16px`. The bar fades in (`120ms ease`) and is hidden via `opacity` +
+`visibility` so it stays out of the tab order when not visible. It uses
+the standard glass surface (`--glass-bg`, `backdrop-filter`,
+`--glass-border`, `--shadow`). The shared button definitions live in
+`src/components/Controls.tsx`; the floating bar (`FloatingControls.tsx`)
+reuses them so the in-hero and floating instances always stay in sync.
+The Timeline button carries a small three-dot timeline glyph (a
+horizontal line with three filled circles) so it reads as an action,
+not a section link. Hidden in print.
+
 ---
 
 ## 6. Print
