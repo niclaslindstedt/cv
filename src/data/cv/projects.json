@@ -159,6 +159,10 @@
       "en": "This is the site you're viewing right now. The entire website — every section, every meta tag, the timeline, the OG image, the sitemap — is rendered from a single schema-validated cv.json. That JSON is maintained through Claude Code skills (update-cv, update-summary, update-company-descriptions) that read the schema, edit the data, and re-validate, so updates happen through conversation rather than by hand.",
       "sv": "Detta är sajten du tittar på just nu. Hela webbplatsen — varje sektion, varje meta-tagg, tidslinjen, OG-bilden, sitemap:en — renderas från en enda schemavaliderad cv.json. Den JSON-filen underhålls genom Claude Code-skills (update-cv, update-summary, update-company-descriptions) som läser schemat, redigerar datan och validerar om — uppdateringar sker via samtal istället för för hand."
     },
+    "printDescription": {
+      "en": "Personal CV site rendered from a single schema-validated JSON file — every section, meta tag, timeline entry, OG image, and the sitemap derive from it. Content is maintained through Claude Code skills that read the schema, edit the data, and re-validate, so updates happen through conversation rather than by hand.",
+      "sv": "Personlig CV-sajt som renderas från en enda schemavaliderad JSON-fil — varje sektion, meta-tagg, tidslinjepost, OG-bild och själva sitemap:en härleds från den. Innehållet underhålls genom Claude Code-skills som läser schemat, redigerar datan och validerar om, så uppdateringar sker via samtal istället för för hand."
+    },
     "stack": ["TypeScript", "React", "Node.js", "GitHub workflows"],
     "skills": [
       "Spec-driven development",

@@ -59,6 +59,7 @@ export type Project = {
   name: string;
   tagline: LocalizedString;
   description: LocalizedString;
+  printDescription?: LocalizedString;
   stack?: string[];
   skills: string[];
   github: GithubRepoRef;
@@ -118,6 +119,7 @@ export type Assignment = {
   stack?: string[];
   skills?: string[];
   notes?: LocalizedString;
+  printDescription?: LocalizedString;
 };
 
 export type Experience = {
@@ -129,6 +131,7 @@ export type Experience = {
   stack?: string[];
   skills?: string[];
   notes?: LocalizedString;
+  printDescription?: LocalizedString;
   assignments?: Assignment[];
 };
 

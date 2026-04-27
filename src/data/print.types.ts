@@ -12,6 +12,7 @@ export type PrintAssignment = {
   client: string;
   range: LocalizedString;
   tagline: LocalizedString;
+  description?: LocalizedString;
   tags: string[];
   notes?: LocalizedString;
   roleHistory: PrintRoleHistoryEntry[];
@@ -23,6 +24,7 @@ export type PrintExperience = {
   range: LocalizedString;
   engagement?: LocalizedString;
   tagline: LocalizedString;
+  description?: LocalizedString;
   tags: string[];
   notes?: LocalizedString;
   roleHistory: PrintRoleHistoryEntry[];
@@ -32,6 +34,7 @@ export type PrintExperience = {
 export type PrintProject = {
   name: string;
   tagline: LocalizedString;
+  description?: LocalizedString;
 };
 
 export type PrintEducation = {

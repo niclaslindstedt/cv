@@ -225,6 +225,10 @@
         "name": { "type": "string", "minLength": 1 },
         "tagline": { "$ref": "#/$defs/localizedString" },
         "description": { "$ref": "#/$defs/localizedString" },
+        "printDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Optional description used only in the print/PDF view. When omitted, no description is rendered for the project in print. Use this when the on-screen `description` wouldn't read naturally on paper (e.g. references to the live site, modal-only context)."
+        },
         "stack": { "$ref": "#/$defs/stringList" },
         "skills": {
           "type": "array",
@@ -350,6 +354,10 @@
         "stack": { "$ref": "#/$defs/stringList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "notes": { "$ref": "#/$defs/localizedString" },
+        "printDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Optional role-specific description used only in the print/PDF view, rendered below the company tagline. When omitted, no extra description is rendered for this job in print."
+        },
         "assignments": {
           "type": "array",
           "minItems": 1,
@@ -375,7 +383,11 @@
         },
         "stack": { "$ref": "#/$defs/stringList" },
         "skills": { "$ref": "#/$defs/stringList" },
-        "notes": { "$ref": "#/$defs/localizedString" }
+        "notes": { "$ref": "#/$defs/localizedString" },
+        "printDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Optional assignment-specific description used only in the print/PDF view, rendered below the client tagline. When omitted, no extra description is rendered for this assignment in print."
+        }
       }
     },
     "education": {

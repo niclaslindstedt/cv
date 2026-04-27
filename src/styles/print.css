@@ -187,6 +187,11 @@
     color: #111;
   }
 
+  .print-job-description {
+    margin: 0 0 var(--print-spacing-paragraph, 4pt);
+    color: #111;
+  }
+
   .print-tags {
     margin: 0 0 var(--print-spacing-paragraph, 4pt);
     font-size: 9.5pt;
@@ -281,6 +286,11 @@
   .print-project-name {
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-weight: 700;
+  }
+
+  .print-project-description {
+    margin: 1pt 0 0;
+    color: #111;
   }
 
   /* Education + Courses ----------------------------------------------- */

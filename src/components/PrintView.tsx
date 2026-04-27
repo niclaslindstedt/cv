@@ -132,6 +132,9 @@ function ExperienceEntry({ item }: { item: PrintExperience }) {
           <RoleHistory roles={item.roleHistory} />
         )}
         <p className="print-job-tagline">{t(item.tagline)}</p>
+        {item.description && (
+          <p className="print-job-description">{t(item.description)}</p>
+        )}
         {item.tags.length > 0 && (
           <p className="print-tags">{item.tags.join(", ")}</p>
         )}
@@ -165,6 +168,9 @@ function AssignmentEntry({ item }: { item: PrintAssignment }) {
       <p className="print-job-meta">{t(item.range)}</p>
       {item.roleHistory.length > 0 && <RoleHistory roles={item.roleHistory} />}
       <p className="print-job-tagline">{t(item.tagline)}</p>
+      {item.description && (
+        <p className="print-job-description">{t(item.description)}</p>
+      )}
       {item.tags.length > 0 && (
         <p className="print-tags">{item.tags.join(", ")}</p>
       )}
@@ -209,6 +215,9 @@ function ProjectEntry({ item }: { item: PrintProject }) {
       <strong className="print-project-name">{item.name}</strong>
       {": "}
       <span className="print-project-tagline">{t(item.tagline)}</span>
+      {item.description && (
+        <p className="print-project-description">{t(item.description)}</p>
+      )}
     </li>
   );
 }
