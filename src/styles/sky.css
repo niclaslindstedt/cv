@@ -1,10 +1,6 @@
 .celestial-sky {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  height: 100lvh;
+  inset: 4px 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
