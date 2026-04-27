@@ -19,6 +19,12 @@ export function Hero({
   onOpenSummary,
 }: Props) {
   const { lang, setLang, t, ui } = useLang();
+  const pdfBase = cv.print.pdfFilename ?? "cv.pdf";
+  const pdfDot = pdfBase.lastIndexOf(".");
+  const pdfStem = pdfDot > 0 ? pdfBase.slice(0, pdfDot) : pdfBase;
+  const pdfExt = pdfDot > 0 ? pdfBase.slice(pdfDot) : "";
+  const pdfHref = `${pdfStem}-${lang}${pdfExt}`;
+  const pdfDownloadName = `niclas-lindstedt-cv-${lang}${pdfExt}`;
   return (
     <header className="hero">
       <p className="hero-eyebrow">{ui.hero.eyebrow}</p>
@@ -55,8 +61,8 @@ export function Hero({
         />
         <a
           className="hero-download"
-          href={cv.print.pdfFilename ?? "cv.pdf"}
-          download="niclas-lindstedt-cv.pdf"
+          href={pdfHref}
+          download={pdfDownloadName}
           aria-label={ui.hero.downloadAria}
         >
           {t(cv.actions.downloadPdf)}

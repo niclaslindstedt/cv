@@ -440,6 +440,12 @@ export function translate(value: LocalizedString, lang: Language): string {
 
 export function readInitialLanguage(): Language {
   if (typeof window === "undefined") return "en";
+  // A `?lang=en|sv` query param wins over stored/browser preference. The
+  // PDF generator relies on this to render one PDF per language; it also
+  // makes shareable language-pinned links work.
+  const params = new URLSearchParams(window.location.search);
+  const queryLang = params.get("lang");
+  if (queryLang === "en" || queryLang === "sv") return queryLang;
   const stored = window.localStorage.getItem(LANG_STORAGE_KEY);
   if (stored === "en" || stored === "sv") return stored;
   const nav = window.navigator?.language ?? "";
