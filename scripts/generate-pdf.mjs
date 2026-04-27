@@ -1,7 +1,9 @@
-// Emits dist/cv.pdf after `vite build`. Spins up a tiny static file server
-// over dist/, drives a headless Chromium with Puppeteer, dispatches the
-// site's `beforeprint` hook (so collapsed details expand), then writes the
-// PDF using the print stylesheet defined in src/styles.css.
+// Emits dist/<cv.print.pdfFilename ?? "cv.pdf"> after `vite build`. Spins
+// up a tiny static file server over dist/, drives a headless Chromium with
+// Puppeteer, dispatches the site's `beforeprint` hook (so collapsed details
+// expand), then writes the PDF using the print stylesheet defined in
+// src/styles.css. With CV_LOCAL=1 the local override is applied, which is
+// the canonical way to bake a private PDF under a different filename.
 
 import fs from "node:fs";
 import http from "node:http";
@@ -10,12 +12,24 @@ import { fileURLToPath } from "node:url";
 
 import puppeteer from "puppeteer";
 
+import { loadCv } from "../src/data/load-cv.mjs";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
 
 if (!fs.existsSync(DIST)) {
   console.error("dist/ does not exist — run `vite build` before generate-pdf.");
+  process.exit(1);
+}
+
+const DEFAULT_PDF_FILENAME = "cv.pdf";
+const cv = loadCv();
+const pdfFilename = cv.print?.pdfFilename ?? DEFAULT_PDF_FILENAME;
+if (path.basename(pdfFilename) !== pdfFilename) {
+  console.error(
+    `Invalid cv.print.pdfFilename "${pdfFilename}" — must be a bare filename without directory separators.`,
+  );
   process.exit(1);
 }
 
@@ -119,7 +133,7 @@ try {
     window.dispatchEvent(new Event("beforeprint"));
   });
 
-  const outPath = path.join(DIST, "cv.pdf");
+  const outPath = path.join(DIST, pdfFilename);
   await page.pdf({
     path: outPath,
     format: "A4",

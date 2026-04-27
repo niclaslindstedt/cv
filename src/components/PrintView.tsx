@@ -82,10 +82,19 @@ function buildSettingsCss(s: PrintSettings): string {
 
 function PrintHero() {
   const { t } = useLang();
+  const contact = printData.contact;
+  const contactParts = contact
+    ? [contact.email, contact.phone, contact.address].filter(
+        (part): part is string => Boolean(part),
+      )
+    : [];
   return (
     <header className="print-hero">
       <h1 className="print-name">{printData.name}</h1>
       <p className="print-title">{t(printData.title)}</p>
+      {contactParts.length > 0 && (
+        <p className="print-contact">{contactParts.join(" · ")}</p>
+      )}
       <p className="print-summary">{t(printData.longSummary)}</p>
     </header>
   );

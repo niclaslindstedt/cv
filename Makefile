@@ -1,10 +1,13 @@
-.PHONY: install build test lint typecheck fmt fmt-check validate clean dev preview generate og pdf sitemap
+.PHONY: install build test lint typecheck fmt fmt-check validate clean dev preview generate og pdf sitemap local
 
 install:
 	npm ci
 
 build:
 	npm run build
+
+local:
+	CV_LOCAL=1 npm run build
 
 test:
 	@echo "no tests yet"

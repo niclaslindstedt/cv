@@ -221,6 +221,7 @@ export type PrintPageBreaks = {
 };
 
 export type PrintSettings = {
+  pdfFilename?: string;
   fontFamily: string;
   headingFontFamily: string;
   fontSize: string;
@@ -229,6 +230,12 @@ export type PrintSettings = {
   spacing: PrintSpacing;
   headings: PrintHeadings;
   pageBreaks: PrintPageBreaks;
+};
+
+export type Contact = {
+  email?: string;
+  phone?: string;
+  address?: string;
 };
 
 export type CV = {
@@ -250,4 +257,5 @@ export type CV = {
   skillDetails: Record<string, SkillDetail>;
   languages: SpokenLanguage[];
   print: PrintSettings;
+  contact?: Contact;
 };

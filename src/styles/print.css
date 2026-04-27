@@ -98,6 +98,14 @@
     font-weight: 500;
   }
 
+  .print-contact {
+    font-family: var(--print-heading-font-family, inherit);
+    margin: -6pt 0 10pt;
+    font-size: var(--print-heading-subheading, 9pt);
+    color: #555;
+    font-weight: 500;
+  }
+
   .print-summary {
     margin: 0;
     font-size: var(--print-font-size, 10.5pt);

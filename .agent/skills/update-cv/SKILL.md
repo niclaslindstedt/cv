@@ -12,14 +12,16 @@ user's explicit ask or confirmation.
 
 ## Files
 
-| File                     | Role                                                                                                                                                                                                                                                 |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/data/cv.json`       | CV skeleton. Holds top-level scalar fields (`name`, `title`, `summary`, `links`, …) inline and uses the literal `"{...}"` sentinel for split categories. Don't replace a sentinel — edit the matching part file under `src/data/cv/<category>.json`. |
-| `src/data/cv/*.json`     | Per-category content: `meta`, `focus`, `projects`, `companies`, `experience`, `education`, `courses`, `skills`, `skillDetails`, `languages`. Edit here for any change inside one of these arrays/objects.                                            |
-| `src/data/load-cv.mjs`   | Assembles `cv.json` + `cv/*.json`. The Vite plugin, scripts, and `make validate` all go through it; the schema validates the assembled object.                                                                                                       |
-| `schemas/cv.schema.json` | JSON Schema. The contract the **assembled** CV must satisfy.                                                                                                                                                                                         |
-| `src/data/cv.types.ts`   | TypeScript mirror of the schema, consumed by UI.                                                                                                                                                                                                     |
-| `src/components/*.tsx`   | Renderers for each section.                                                                                                                                                                                                                          |
+| File                             | Role                                                                                                                                                                                                                                                 |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/data/cv.json`               | CV skeleton. Holds top-level scalar fields (`name`, `title`, `summary`, `links`, …) inline and uses the literal `"{...}"` sentinel for split categories. Don't replace a sentinel — edit the matching part file under `src/data/cv/<category>.json`. |
+| `src/data/cv/*.json`             | Per-category content: `meta`, `focus`, `projects`, `companies`, `experience`, `education`, `courses`, `skills`, `skillDetails`, `languages`. Edit here for any change inside one of these arrays/objects.                                            |
+| `src/data/cv.local.json`         | **Gitignored** override deep-merged into the assembled CV when `CV_LOCAL=1`. Holds private content (email, phone, fuller job descriptions, alternate `pdfFilename`). Treated as the public CV's private companion — see "Sensitive content" below.   |
+| `src/data/cv.local.example.json` | Starter template for the local override. Committed.                                                                                                                                                                                                  |
+| `src/data/load-cv.mjs`           | Assembles `cv.json` + `cv/*.json` and applies `cv.local.json` on top when `CV_LOCAL=1`. The Vite plugin, scripts, and `make validate` all go through it; the schema validates the assembled object.                                                  |
+| `schemas/cv.schema.json`         | JSON Schema. The contract the **assembled** CV must satisfy.                                                                                                                                                                                         |
+| `src/data/cv.types.ts`           | TypeScript mirror of the schema, consumed by UI.                                                                                                                                                                                                     |
+| `src/components/*.tsx`           | Renderers for each section.                                                                                                                                                                                                                          |
 
 Read `schemas/cv.schema.json` first if you are unsure of a field's
 shape — it is the authoritative contract.
@@ -45,6 +47,67 @@ Choose one based on the user's message:
 
 If the request is ambiguous, default to recommendation mode and ask.
 
+## Sensitive content (mandatory triage step)
+
+The committed CV ships to GitHub Pages and is indexed publicly. The
+gitignored override at `src/data/cv.local.json` is the only safe place
+for private content — `make local` deep-merges it into the assembled
+CV before baking the PDF.
+
+**Before you write to any committed file**, scan the user's request
+for content that should not be public:
+
+- Personal contact details: email address, phone number, postal/home
+  address, personal national ID numbers.
+- Internal employer/client information: confidential project names,
+  customer names under NDA, unreleased product names, internal team
+  names, internal headcount/revenue figures, salaries.
+- Concrete impact numbers that would reveal proprietary metrics
+  (production traffic, ARR, churn, internal cost figures).
+- Any copy the user describes as "private", "for recruiters only",
+  "off the record", "don't put on the website", "for the printable
+  CV only", etc.
+
+If the request includes any of the above, **stop before editing the
+public CV** and confirm with the user, e.g.:
+
+> This looks like content I should keep out of the public CV. I'll
+> add it to `src/data/cv.local.json` (gitignored) so it only shows
+> up in `make local` PDFs and never reaches the deployed site. OK
+> to proceed?
+
+When applying:
+
+- Write the sensitive fields to `src/data/cv.local.json` only,
+  shaped as a partial override of the public CV (see the merge
+  rules below). Create the file from `cv.local.example.json` if it
+  doesn't exist yet.
+- Suggest setting `print.pdfFilename` in the override to a distinct
+  name (e.g. `"cv.local.pdf"`) so the private PDF cannot be
+  confused with the public `cv.pdf`. Both are gitignored via the
+  `*.pdf` rule.
+- Run validation in local mode (`CV_LOCAL=1 npm run validate:cv`)
+  and remind the user to verify with `make local` that the merged
+  PDF looks right.
+- **Never** commit `src/data/cv.local.json` itself, and never echo
+  the sensitive values into commit messages, PR descriptions, or
+  the public schema example. Adding new schema fields to support
+  the override is fine; populating them with real values in
+  committed JSON is not.
+
+### Override merge rules (`src/data/load-cv.mjs`)
+
+- **Plain objects** — merge key-by-key, override values win.
+- **Arrays** — merge element-by-element by index. Use `null` to
+  preserve the base entry at a given position; entries past the
+  base length are appended.
+- **Scalars** — override replaces base.
+
+Practical consequence: to override one experience entry's
+`printDescription`, place an array in the override whose first item
+is `{ "printDescription": { … } }`; index 0 maps to the most-recent
+role because the public `experience[]` is sorted newest-first.
+
 ## Edit flows
 
 Shared conventions:
@@ -64,7 +127,7 @@ Shared conventions:
 - **Do not** add fields the schema doesn't allow. If the user asks
   for one, follow "Schema changes" below.
 
-### Top-level fields (`name`, `title`, `location`, `summary`, `links`, `actions`, `sections`)
+### Top-level fields (`name`, `title`, `location`, `summary`, `links`, `actions`, `sections`, `contact`)
 
 - Path: root of `src/data/cv.json` (these stay inline, no split file).
 - `meta` lives in `src/data/cv/meta.json`.
@@ -79,6 +142,11 @@ true` renders the link as a pill (used for the blog link). The
 - `actions.timeline` / `actions.downloadPdf` — hero button labels.
 - `sections.*` — section headings (Focus, Projects, Experience,
   Education, Skills). Changing a value just renames the heading.
+- `contact` — optional `{ email?, phone?, address? }`. **Don't put
+  real values here.** This field exists so the override at
+  `src/data/cv.local.json` can populate it; the public CV ships
+  without it. If the user supplies an email/phone/address, route
+  the change to the override per "Sensitive content" above.
 
 ### `focus[]`
 
@@ -377,9 +445,18 @@ make fmt         # Prettier rewrites cv.json for consistent shape
 make typecheck   # Catches drift between cv.types.ts and the JSON
 ```
 
+If the edit touched `src/data/cv.local.json`, also run the validator
+in local mode so the merged shape is checked:
+
+```sh
+CV_LOCAL=1 npm run validate:cv
+```
+
 If `make dev` is already running, the browser hot-reloads and the
 change is visible immediately. For significant edits, open the dev
-server and eyeball the affected section before reporting done.
+server and eyeball the affected section before reporting done. For
+local-override edits, run `make local` and eyeball the produced
+`dist/<pdfFilename>` PDF.
 
 ## Skill self-improvement
 

@@ -87,7 +87,11 @@
       "minItems": 1,
       "items": { "$ref": "#/$defs/spokenLanguage" }
     },
-    "print": { "$ref": "#/$defs/printSettings" }
+    "print": { "$ref": "#/$defs/printSettings" },
+    "contact": {
+      "$ref": "#/$defs/contact",
+      "description": "Optional private contact details. Typically left out of the public CV and supplied via the gitignored src/data/cv.local.json override so they only end up in locally-generated PDFs."
+    }
   },
   "$defs": {
     "yearMonth": {
@@ -523,6 +527,28 @@
       "pattern": "^-?\\d+(\\.\\d+)?(pt|px|cm|mm|in|em|rem|%)$",
       "description": "A single CSS length value with explicit unit (pt, px, cm, mm, in, em, rem, %)."
     },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Private contact details rendered in the printed/PDF CV when present. All fields are optional — populate from the gitignored cv.local.json override to keep them off the public site.",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address rendered next to the hero in the PDF."
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Phone number rendered next to the hero in the PDF."
+        },
+        "address": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Postal/location string rendered next to the hero in the PDF."
+        }
+      }
+    },
     "printSettings": {
       "type": "object",
       "additionalProperties": false,
@@ -538,6 +564,11 @@
       ],
       "description": "Print/PDF rendering settings consumed by PrintView and the print stylesheet.",
       "properties": {
+        "pdfFilename": {
+          "type": "string",
+          "pattern": "^[^/\\\\]+\\.pdf$",
+          "description": "Filename (no directories) the generated PDF is written to under dist/. Defaults to cv.pdf when absent. Useful in cv.local.json to write a distinct local PDF (e.g. cv.local.pdf) that won't get confused with the public one."
+        },
         "fontFamily": {
           "type": "string",
           "minLength": 1,

@@ -267,9 +267,19 @@ function buildLanguage(language) {
   };
 }
 
+function buildContact(contact) {
+  if (!contact) return undefined;
+  const out = {};
+  if (contact.email) out.email = contact.email;
+  if (contact.phone) out.phone = contact.phone;
+  if (contact.address) out.address = contact.address;
+  return Object.keys(out).length > 0 ? out : undefined;
+}
+
 function buildPrintData(cv, projectStats) {
   const companies = new Map(cv.companies.map((c) => [c.id, c]));
-  return {
+  const contact = buildContact(cv.contact);
+  const data = {
     name: cv.name,
     title: cv.title,
     longSummary: cv.longSummary,
@@ -289,6 +299,8 @@ function buildPrintData(cv, projectStats) {
     skills: cv.skills.map(buildSkillGroup),
     languages: cv.languages.map(buildLanguage),
   };
+  if (contact) data.contact = contact;
+  return data;
 }
 
 const cv = loadCv();

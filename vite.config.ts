@@ -162,8 +162,9 @@ function cvAssemblyPlugin(): Plugin {
     load(id) {
       const cleanId = id.split("?")[0].replace(/\\/g, "/");
       if (!cleanId.endsWith(CV_JSON_SUFFIX)) return null;
-      const { cv: assembled, parts } = loadCvWithParts(cleanId);
+      const { cv: assembled, parts, overridePath } = loadCvWithParts(cleanId);
       for (const part of parts) this.addWatchFile(part);
+      if (overridePath) this.addWatchFile(overridePath);
       return JSON.stringify(assembled);
     },
   };
