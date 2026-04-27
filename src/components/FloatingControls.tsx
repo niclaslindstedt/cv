@@ -45,6 +45,7 @@ export function FloatingControls({
         label={timelineLabel}
         onClick={onOpenTimeline}
         className="floating-controls-timeline"
+        iconOnly
       />
       <LanguageToggle lang={lang} setLang={setLang} />
       <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />

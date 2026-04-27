@@ -217,15 +217,14 @@ border treatment, no fill.
 ### 4.4 Inline link
 
 Plain text colored with `--accent`, no underline by default,
-underlined on hover. **Used by default for inline references** (the
-hero meta row, in-card links).
+underlined on hover. **Used by default for inline references** (in-card
+links).
 
-The hero meta row deliberately ships _one_ exception: the **Featured**
-link (currently `Blog`) renders as an `--accent-soft` pill so the
-single most relevant outbound destination is always one tap away. This
-is a designed asymmetry — exactly one featured link, no more. If
-another link becomes more relevant, swap which entry is `featured` in
-`cv.json`; do not promote a second one.
+The hero meta row is the exception: every entry in `cv.links` (Blog,
+GitHub, LinkedIn, …) renders as an `--accent-soft` pill so the
+primary outbound destinations all read as actions. Mark each entry
+with `"featured": true` in `cv.json` to opt into the pill treatment;
+unmarked entries fall back to the plain inline-link style.
 
 ### 4.5 Card
 
@@ -492,15 +491,19 @@ The Timeline button, language toggle, and theme toggle live in the
 hero meta row by default. Once the user scrolls past the hero (the
 `.hero-meta` row leaves the viewport), an `IntersectionObserver` mirrors
 those three controls into a fixed glass pill at `top: 16px; right:
-16px`. The bar fades in (`120ms ease`) and is hidden via `opacity` +
-`visibility` so it stays out of the tab order when not visible. It uses
-the standard glass surface (`--glass-bg`, `backdrop-filter`,
-`--glass-border`, `--shadow`). The shared button definitions live in
-`src/components/Controls.tsx`; the floating bar (`FloatingControls.tsx`)
-reuses them so the in-hero and floating instances always stay in sync.
-The Timeline button carries a small three-dot timeline glyph (a
-horizontal line with three filled circles) so it reads as an action,
-not a section link. Hidden in print.
+16px`. The bar fades in with a soft `280ms ease-out` on `opacity` and
+`transform` (translateY) — slower than the standard `120ms` because
+this is a panel reveal, not hover feedback. It is hidden via `opacity`
+
+- `visibility` so it stays out of the tab order when not visible. It
+  uses the standard glass surface (`--glass-bg`, `backdrop-filter`,
+  `--glass-border`, `--shadow`). The shared button definitions live in
+  `src/components/Controls.tsx`; the floating bar (`FloatingControls.tsx`)
+  reuses them so the in-hero and floating instances always stay in sync.
+  The Timeline button uses its `iconOnly` mode in the floating bar — the
+  three-dot timeline glyph alone, in a 32px circle (28px on narrow
+  viewports) — so the bar stays compact while the in-hero variant keeps
+  its label. Hidden in print.
 
 ---
 

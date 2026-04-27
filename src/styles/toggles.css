@@ -1,25 +1,43 @@
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
 .theme-toggle-btn {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   padding: 0;
-  color: var(--accent);
+  color: var(--fg-muted);
   background: transparent;
-  border: 1px solid var(--border);
+  border: 0;
   border-radius: 999px;
   cursor: pointer;
+  opacity: 0.45;
   transition:
     color 120ms ease,
-    background 120ms ease,
-    border-color 120ms ease;
+    opacity 120ms ease,
+    box-shadow 120ms ease;
 }
 
 .theme-toggle-btn:hover {
-  background: var(--accent-soft);
-  border-color: var(--accent);
+  opacity: 0.85;
+  color: var(--accent);
+}
+
+.theme-toggle-btn[aria-pressed="true"] {
+  opacity: 1;
+  color: var(--accent);
+  box-shadow: 0 0 0 1.5px var(--accent);
+  cursor: default;
 }
 
 .theme-toggle-btn:focus-visible {

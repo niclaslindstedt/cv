@@ -6,15 +6,23 @@ export function TimelineButton({
   label,
   onClick,
   className = "hero-timeline-btn",
+  iconOnly = false,
 }: {
   label: string;
   onClick: () => void;
   className?: string;
+  iconOnly?: boolean;
 }) {
   return (
-    <button type="button" className={className} onClick={onClick}>
+    <button
+      type="button"
+      className={className}
+      onClick={onClick}
+      aria-label={iconOnly ? label : undefined}
+      title={iconOnly ? label : undefined}
+    >
       <TimelineIcon />
-      <span>{label}</span>
+      {!iconOnly && <span>{label}</span>}
     </button>
   );
 }
@@ -29,15 +37,28 @@ export function ThemeToggle({
   const { ui } = useLang();
   const isDark = theme === "dark";
   return (
-    <button
-      type="button"
-      className="theme-toggle-btn"
-      aria-label={isDark ? ui.theme.switchToLight : ui.theme.switchToDark}
-      title={isDark ? ui.theme.light : ui.theme.dark}
-      onClick={onToggleTheme}
-    >
-      {isDark ? <SunIcon /> : <MoonIcon />}
-    </button>
+    <div className="theme-toggle" role="group" aria-label={ui.theme.label}>
+      <button
+        type="button"
+        className="theme-toggle-btn"
+        aria-pressed={!isDark}
+        aria-label={ui.theme.switchToLight}
+        title={ui.theme.light}
+        onClick={isDark ? onToggleTheme : undefined}
+      >
+        <SunIcon />
+      </button>
+      <button
+        type="button"
+        className="theme-toggle-btn"
+        aria-pressed={isDark}
+        aria-label={ui.theme.switchToDark}
+        title={ui.theme.dark}
+        onClick={isDark ? undefined : onToggleTheme}
+      >
+        <MoonIcon />
+      </button>
+    </div>
   );
 }
 

@@ -84,7 +84,7 @@
   font-size: 0.95rem;
 }
 
-.hero-blog {
+.hero-link-pill {
   padding: 4px 12px;
   font-weight: 600;
   color: var(--accent);
@@ -94,7 +94,7 @@
 }
 
 @media (hover: hover) {
-  .hero-blog:hover {
+  .hero-link-pill:hover {
     text-decoration: none;
     border-color: var(--accent);
   }

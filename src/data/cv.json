@@ -25,17 +25,19 @@
     },
     {
       "label": {
-        "en": "GitHub",
-        "sv": "GitHub"
+        "en": "GitHub ↗",
+        "sv": "GitHub ↗"
       },
-      "url": "https://www.github.com/niclaslindstedt"
+      "url": "https://www.github.com/niclaslindstedt",
+      "featured": true
     },
     {
       "label": {
-        "en": "LinkedIn",
-        "sv": "LinkedIn"
+        "en": "LinkedIn ↗",
+        "sv": "LinkedIn ↗"
       },
-      "url": "https://www.linkedin.com/in/niclaslindstedt"
+      "url": "https://www.linkedin.com/in/niclaslindstedt",
+      "featured": true
     }
   ],
   "actions": {

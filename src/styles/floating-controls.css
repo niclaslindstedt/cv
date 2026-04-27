@@ -17,9 +17,9 @@
   visibility: hidden;
   transform: translateY(-8px);
   transition:
-    opacity 120ms ease,
-    transform 120ms ease,
-    visibility 0s linear 120ms;
+    opacity 280ms ease-out,
+    transform 280ms ease-out,
+    visibility 0s linear 280ms;
 }
 
 .floating-controls.is-visible {
@@ -27,17 +27,18 @@
   visibility: visible;
   transform: translateY(0);
   transition:
-    opacity 120ms ease,
-    transform 120ms ease,
+    opacity 280ms ease-out,
+    transform 280ms ease-out,
     visibility 0s linear 0s;
 }
 
 .floating-controls .lang-toggle,
-.floating-controls .theme-toggle-btn {
+.floating-controls .theme-toggle {
   border-color: transparent;
 }
 
-.floating-controls .lang-toggle {
+.floating-controls .lang-toggle,
+.floating-controls .theme-toggle {
   padding: 0;
 }
 
@@ -45,11 +46,11 @@
   appearance: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
   font: inherit;
-  font-size: 0.85rem;
-  font-weight: 600;
   color: var(--accent);
   background: transparent;
   border: 1px solid var(--accent-soft);
@@ -85,7 +86,8 @@
   }
 
   .floating-controls-timeline {
-    padding: 4px 10px;
+    width: 28px;
+    height: 28px;
   }
 }
 
