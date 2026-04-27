@@ -56,6 +56,7 @@ type UiStrings = {
     role: string;
     assignment: string;
     education: string;
+    course: string;
     usageAria: (skill: string) => string;
     close: string;
     empty: string;
@@ -192,9 +193,11 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       role: "Role",
       assignment: "Assignment",
       education: "Education",
+      course: "Course",
       usageAria: (skill) => `${skill} usage`,
       close: "Close",
-      empty: "No recorded usage in experience, assignments, or education yet.",
+      empty:
+        "No recorded usage in experience, assignments, education, or courses yet.",
       yearsLabel: (years) => {
         if (years <= 0) return "no recorded experience";
         if (years < 1) return "< 1 year";
@@ -333,10 +336,11 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       role: "Roll",
       assignment: "Uppdrag",
       education: "Utbildning",
+      course: "Kurs",
       usageAria: (skill) => `Användning av ${skill}`,
       close: "Stäng",
       empty:
-        "Ingen registrerad användning i erfarenhet, uppdrag eller utbildning ännu.",
+        "Ingen registrerad användning i erfarenhet, uppdrag, utbildning eller kurser ännu.",
       yearsLabel: (years) => {
         if (years <= 0) return "ingen registrerad erfarenhet";
         if (years < 1) return "< 1 år";
