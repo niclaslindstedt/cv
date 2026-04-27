@@ -10,6 +10,7 @@ type UiStrings = {
   present: string;
   months: string[];
   theme: {
+    label: string;
     switchToDark: string;
     switchToLight: string;
     light: string;
@@ -145,6 +146,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       "Dec",
     ],
     theme: {
+      label: "Theme",
       switchToDark: "Switch to dark mode",
       switchToLight: "Switch to light mode",
       light: "Light mode",
@@ -284,6 +286,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       "Dec",
     ],
     theme: {
+      label: "Tema",
       switchToDark: "Byt till mörkt läge",
       switchToLight: "Byt till ljust läge",
       light: "Ljust läge",

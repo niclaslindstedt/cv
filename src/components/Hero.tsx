@@ -41,7 +41,7 @@ export function Hero({
         {cv.links.map((link) => (
           <a
             key={link.url}
-            className={link.featured ? "hero-blog" : undefined}
+            className={link.featured ? "hero-link-pill" : undefined}
             href={link.url}
             target="_blank"
             rel="noreferrer"
