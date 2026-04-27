@@ -210,6 +210,13 @@ function ProjectEntry({ item }: { item: PrintProject }) {
   return (
     <li className="print-project">
       <strong className="print-project-name">{item.name}</strong>
+      {item.range && (
+        <span className="print-project-range">
+          {" ("}
+          {t(item.range)}
+          {")"}
+        </span>
+      )}
       {": "}
       <span className="print-project-tagline">
         {t(item.description ?? item.tagline)}
