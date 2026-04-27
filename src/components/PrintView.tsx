@@ -60,6 +60,7 @@ function buildSettingsCss(s: PrintSettings): string {
   html, body { orphans: ${pb.orphans}; widows: ${pb.widows}; }
   .print-view {
     --print-font-family: ${s.fontFamily};
+    --print-heading-font-family: ${s.headingFontFamily};
     --print-font-size: ${s.fontSize};
     --print-line-height: ${s.lineHeight};
     --print-spacing-section: ${spacing.section};

@@ -3,6 +3,10 @@ import ReactDOM from "react-dom/client";
 import { App } from "./App";
 import { LanguageProvider } from "./utils/LanguageProvider";
 import "@fontsource-variable/eb-garamond/wght.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
 import "./styles.css";
 
 if (typeof window !== "undefined") {

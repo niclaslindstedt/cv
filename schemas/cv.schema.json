@@ -516,6 +516,7 @@
       "additionalProperties": false,
       "required": [
         "fontFamily",
+        "headingFontFamily",
         "fontSize",
         "lineHeight",
         "page",
@@ -529,6 +530,11 @@
           "type": "string",
           "minLength": 1,
           "description": "CSS font-family stack used for the entire print/PDF body."
+        },
+        "headingFontFamily": {
+          "type": "string",
+          "minLength": 1,
+          "description": "CSS font-family stack applied to all print/PDF headings (name, title, section titles, entry titles, sub-headings)."
         },
         "fontSize": {
           "$ref": "#/$defs/cssLength",
