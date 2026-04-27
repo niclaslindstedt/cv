@@ -9,7 +9,7 @@
       "Spec-driven development",
       "Agent orchestration",
       "Agentic workflows",
-      "AI Agents",
+      "AI agents",
       "Agent sandboxing",
       "Agent security",
       "Agentic testing",
@@ -75,7 +75,7 @@
       "MongoDB",
       "Redis",
       "CosmosDB",
-      "Vector Databases"
+      "Vector databases"
     ]
   },
   {
@@ -107,9 +107,8 @@
       "Microservices",
       "Miniservices",
       "gRPC/Protobuf",
-      "RFC Implementation",
+      "RFC implementation",
       "Integrations",
-      "Agile Methodologies",
       "Scrum"
     ]
   },
@@ -120,13 +119,13 @@
       "sv": "Ledarskap"
     },
     "items": [
-      "Engineering Management",
-      "Team Management",
+      "Engineering management",
+      "Team management",
       "Leadership",
       "Mentoring",
-      "IT Strategy",
-      "Technology Roadmapping",
-      "Project Management"
+      "IT strategy",
+      "Technology roadmapping",
+      "Project management"
     ]
   },
   {
@@ -137,8 +136,8 @@
     },
     "items": [
       "Cybersecurity",
-      "Regulatory Compliance",
-      "Risk Management",
+      "Regulatory compliance",
+      "Risk management",
       "GDPR",
       "CE marking"
     ]

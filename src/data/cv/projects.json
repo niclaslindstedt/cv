@@ -261,7 +261,7 @@
       "sv": "Fullständig ASP.NET Core-implementation av OAuth 2.0 (RFC 6749) som täcker authorization code, client credentials, password och refresh-token. JWT-bearer-tokens, scopes, roller, audit-loggning, Postgres-persistens, ett Blazor WebAssembly-administrationsgränssnitt och Docker-avbildningar för både API och SPA."
     },
     "stack": ["C#/.NET", "PostgreSQL", "Docker"],
-    "skills": ["Cybersecurity", "RFC Implementation"],
+    "skills": ["Cybersecurity", "RFC implementation"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "dotnet-oauth2-server"
