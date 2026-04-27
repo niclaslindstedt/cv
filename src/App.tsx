@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { CelestialSky } from "./components/CelestialSky";
 import { CompanyModal } from "./components/CompanyModal";
 import { CourseMomentsModal } from "./components/CourseMomentsModal";
 import { Courses } from "./components/Courses";
@@ -72,7 +71,6 @@ export function App() {
 
   return (
     <>
-      <CelestialSky theme={theme} />
       <div className="page">
         <main className="container">
           <Hero
