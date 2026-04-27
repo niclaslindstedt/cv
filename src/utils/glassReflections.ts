@@ -49,7 +49,7 @@ export function useGlassReflections() {
       const reach = Math.hypot(vw, vh) * 0.6;
       const isDark = document.documentElement.dataset.theme !== "light";
       const color = isDark ? MOON_COLOR : ORB_COLOR;
-      const maxAlpha = isDark ? 0.18 : 0.22;
+      const maxAlpha = isDark ? 0.45 : 0.55;
       const ox = LIGHT_SOURCE.x * vw;
       const oy = LIGHT_SOURCE.y * vh;
       const scrollX = window.scrollX;

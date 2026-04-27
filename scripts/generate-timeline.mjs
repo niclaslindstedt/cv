@@ -215,6 +215,7 @@ function buildItems(cv) {
       subtitle,
       description: localize(""),
       credits: course.credits,
+      remote: course.remote === true ? true : undefined,
       startDate: deriveCourseStart(course),
       endDate: deriveCourseEnd(course),
       skills: course.skills ?? [],
