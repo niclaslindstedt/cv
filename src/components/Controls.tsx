@@ -21,8 +21,7 @@ export function TimelineButton({
       aria-label={iconOnly ? label : undefined}
       title={iconOnly ? label : undefined}
     >
-      <TimelineIcon />
-      {!iconOnly && <span>{label}</span>}
+      {iconOnly ? <TimelineIcon /> : <span>{label}</span>}
     </button>
   );
 }

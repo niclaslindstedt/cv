@@ -117,18 +117,6 @@
     border-color 120ms ease;
 }
 
-.hero-timeline-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.hero-timeline-btn svg {
-  width: 14px;
-  height: 14px;
-  display: block;
-}
-
 .hero-download:hover,
 .hero-timeline-btn:hover {
   background: var(--accent-soft);
