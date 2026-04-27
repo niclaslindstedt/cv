@@ -94,9 +94,14 @@ true` renders the link as a pill (used for the blog link). The
 - **Add** — insert an object with all six fields. Derive `tagline`
   from the user's one-line pitch; `description` from their longer
   blurb; `stack` from the languages/frameworks they mentioned;
-  `repo` must be a full `https://` URL.
+  `repo` must be a full `https://` URL. Also write a
+  `printDescription` (see "Print descriptions" below) — every
+  project should have one so the PDF doesn't fall back to the
+  short tagline.
 - **Update** — find by `name`. Typical edits: tagline, description,
-  stack additions.
+  stack additions. When the description changes meaningfully,
+  re-evaluate `printDescription` too — it is independent copy and
+  goes stale on its own.
 - **Remove** — delete by `name`. Also check `focus[]` and the `ai`
   skill group for stale references to the project's domain.
 
@@ -133,6 +138,12 @@ true` renders the link as a pill (used for the blog link). The
 - `engagement` is optional; omit it for a full-time role.
 - Assignments live on `experience[].assignments[]` and reference
   their own `clientId` in the shared `companies[]` list.
+- `printDescription` (optional, on both `experience[]` and
+  `experience[].assignments[]`) — paper-CV blurb describing what
+  the holder actually did at the company/client. Falls back to
+  the company/client `tagline` when omitted, which is fine for
+  short listings but rarely as good as a role-specific blurb.
+  See "Print descriptions" below for the writing rules.
 
 ### `education[]`
 
@@ -214,6 +225,75 @@ When in doubt about a rename, propose it in Recommendation mode and
 let the user pick — renames touch every reference in `experience`,
 `projects`, `education`, and `skillDetails`.
 
+## Print descriptions
+
+`printDescription` is a paper-only field that overrides the default
+text shown in the printed/PDF CV. It exists on `projects[]`,
+`experience[]`, and `experience[].assignments[]`. It is what readers
+of a static document — a recruiter scrolling a PDF, a printout in a
+stack — actually see for that entry. The field is optional; when
+omitted, the print bake (`scripts/generate-print.mjs`) falls back to
+the project `tagline` for projects and to the company/client
+`tagline` for experience and assignments.
+
+### Why it is separate from `description`
+
+The web view and the paper view are two different products:
+
+- **Web `tagline` + `description`** — the website is interactive.
+  `tagline` is a hook that fits next to the project name; the full
+  `description` lives behind a click (modal, expand, hover). The
+  reader chooses whether to dig in. The home page can stay clean,
+  and the description can be long because it is hidden by default.
+- **Paper `printDescription`** — the PDF is static. The reader
+  cannot click anything. There is no tagline-then-modal pattern
+  available; whatever you put on the page is what they see. The
+  text has to do the entire job in one read, and it has to fit in
+  the strict vertical budget of a printed CV.
+
+Because of that, the same content rarely works in both places. The
+web tagline is usually too short ("One CLI for all your AI coding
+agents.") and the web description is usually too long (a full
+paragraph of features and history). `printDescription` is the
+purpose-written middle.
+
+### What makes a good print description
+
+1. **1–2 sentences, ~25–55 words.** Long enough to be substantive,
+   short enough that ten projects fit on a page without crowding.
+2. **Lead with what the thing is, then what's distinctive.** A
+   recruiter scanning the page should know in the first six words
+   whether the entry is interesting to them.
+3. **Concrete and self-contained.** Name the technologies, the
+   scope, the artifact (CLI, library, service, SDK). No unresolved
+   references to "the homepage", "the modal", "the live demo" — the
+   reader cannot follow a link.
+4. **Impact-oriented for jobs and assignments.** What the holder
+   shipped, decided, or led — not what the company sells. Use
+   active verbs (built, led, shipped, designed, migrated).
+5. **No marketing voice and no hidden context.** Skip "powerful",
+   "cutting-edge", "world-class". Don't assume the reader has
+   already read the rest of the CV — every entry must stand alone.
+6. **Past tense for completed work, present for ongoing.**
+7. **Localize both `en` and `sv`** to the same level of polish; the
+   Swedish version is what Swedish-speaking readers see and is not
+   a second-class citizen.
+
+Anti-pattern: a `printDescription` that explains how the project's
+website is built ("This is the site you're viewing right now…").
+On paper, that meta-narration falls flat — the reader doesn't have
+the site in front of them. Describe the artifact, not the medium.
+
+### Editing flow
+
+- **Add or update**: write fresh copy that matches the rules above;
+  do not paraphrase the web `description`. Validate with `make
+validate`. Eyeball the rendered PDF (`make build` produces it)
+  for length — anything over ~55 words is suspect.
+- **Remove**: deleting `printDescription` is fine and reverts that
+  entry to the company/client/project `tagline` fallback. Useful
+  when the tagline already says everything that fits on paper.
+
 ## Recommendation mode
 
 When invoked without a concrete edit, scan `cv.json` and produce a
@@ -249,6 +329,12 @@ Group as:
      references that would need to update (in `projects[].skills`,
      `experience[].skills`, `assignments[].skills`,
      `education[].skills`, and the `skillDetails` key).
+- **Print drift** — flag entries where `printDescription` is
+  missing on a `projects[]` item (every project should have one),
+  or where it looks stale relative to the matching web
+  `description` (e.g. mentions a feature the web copy no longer
+  does, or vice versa). Propose a fresh `printDescription` per
+  the rules in "Print descriptions" above.
 
 Format as a numbered list. For each item, show:
 

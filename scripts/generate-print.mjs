@@ -133,6 +133,8 @@ function buildAssignment(assignment, companies) {
     tags: mergeTags(assignment.stack, assignment.skills),
     roleHistory: buildRoleHistory(sortedRoles),
   };
+  if (assignment.printDescription)
+    baked.description = assignment.printDescription;
   if (assignment.notes) baked.notes = assignment.notes;
   return baked;
 }
@@ -154,15 +156,18 @@ function buildExperience(item, companies) {
     ),
   };
   if (item.engagement) baked.engagement = item.engagement;
+  if (item.printDescription) baked.description = item.printDescription;
   if (item.notes) baked.notes = item.notes;
   return baked;
 }
 
 function buildProject(project) {
-  return {
+  const baked = {
     name: project.name,
     tagline: project.tagline,
   };
+  if (project.printDescription) baked.description = project.printDescription;
+  return baked;
 }
 
 function roundCredits(credits) {

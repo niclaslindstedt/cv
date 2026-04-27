@@ -225,6 +225,10 @@
         "name": { "type": "string", "minLength": 1 },
         "tagline": { "$ref": "#/$defs/localizedString" },
         "description": { "$ref": "#/$defs/localizedString" },
+        "printDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV in place of the tagline. Optimized for paper — concrete and impact-oriented, no links to click and no hidden detail to expand. Falls back to `tagline` when omitted."
+        },
         "stack": { "$ref": "#/$defs/stringList" },
         "skills": {
           "type": "array",
@@ -350,6 +354,10 @@
         "stack": { "$ref": "#/$defs/stringList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "notes": { "$ref": "#/$defs/localizedString" },
+        "printDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this role. Describes what the holder actually did at the company — paper-optimized: concrete, impact-oriented, no links to click. Falls back to the company's `tagline` when omitted."
+        },
         "assignments": {
           "type": "array",
           "minItems": 1,
@@ -375,7 +383,11 @@
         },
         "stack": { "$ref": "#/$defs/stringList" },
         "skills": { "$ref": "#/$defs/stringList" },
-        "notes": { "$ref": "#/$defs/localizedString" }
+        "notes": { "$ref": "#/$defs/localizedString" },
+        "printDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this assignment. Describes what the holder actually did at the client — paper-optimized: concrete, impact-oriented, no links to click. Falls back to the client's `tagline` when omitted."
+        }
       }
     },
     "education": {
