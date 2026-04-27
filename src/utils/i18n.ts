@@ -53,11 +53,12 @@ type UiStrings = {
     promotedTo: (title: string, date: string) => string;
   };
   skillModal: {
-    project: string;
-    role: string;
-    assignment: string;
-    education: string;
-    course: string;
+    projectsHeading: string;
+    jobsHeading: string;
+    assignmentsHeading: string;
+    educationHeading: string;
+    coursesHeading: string;
+    via: string;
     usageAria: (skill: string) => string;
     close: string;
     empty: string;
@@ -191,11 +192,12 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       promotedTo: (title, date) => `Promoted to ${title} · ${date}`,
     },
     skillModal: {
-      project: "Project",
-      role: "Role",
-      assignment: "Assignment",
-      education: "Education",
-      course: "Course",
+      projectsHeading: "Projects",
+      jobsHeading: "Jobs",
+      assignmentsHeading: "Assignments",
+      educationHeading: "Education",
+      coursesHeading: "Courses",
+      via: "via",
       usageAria: (skill) => `${skill} usage`,
       close: "Close",
       empty:
@@ -335,11 +337,12 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       promotedTo: (title, date) => `Befordrad till ${title} · ${date}`,
     },
     skillModal: {
-      project: "Projekt",
-      role: "Roll",
-      assignment: "Uppdrag",
-      education: "Utbildning",
-      course: "Kurs",
+      projectsHeading: "Projekt",
+      jobsHeading: "Anställningar",
+      assignmentsHeading: "Uppdrag",
+      educationHeading: "Utbildning",
+      coursesHeading: "Kurser",
+      via: "via",
       usageAria: (skill) => `Användning av ${skill}`,
       close: "Stäng",
       empty:
