@@ -193,11 +193,16 @@ A small filled label that conveys **state**:
 - `INCOMPLETE` → red fill, white text, uppercase. Only ever appears on
   course cards.
 - `PRESENT` → solid `--accent` fill with `--bg` text in dark mode;
-  `--fg-muted` fill with white text in light mode. Pinned to the
-  top-right of `.timeline-item` and `.assignment-item` cards while the
-  role/assignment is current. Uppercase, mono, `0.7rem`. The card's
-  blue border + glow is the secondary "current" affordance; the badge
-  is the primary one. Never use the same badge on other card families.
+  `--fg-muted` fill with white text in light mode. Rendered as a
+  **corner label** flush with the top-right of `.timeline-item` and
+  `.assignment-item` cards while the role/assignment is current: the
+  badge's top-right corner inherits the card's `var(--radius)`, its
+  bottom-left corner curves inward at the same radius, and the
+  remaining two corners are square — so the label appears folded into
+  the card rather than floating above it. Uppercase, mono, `0.7rem`.
+  The card's blue border + glow is the secondary "current" affordance;
+  the badge is the primary one. Never use the same badge on other card
+  families.
 - `half-time` / `part-time` → accent-soft pill on Experience cards.
   These are **distinct words**, not stylistic variants:
   - "half-time" / "halvtid" = exactly 50%.
