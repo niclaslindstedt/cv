@@ -215,6 +215,7 @@ function buildItems(cv) {
       subtitle,
       description: localize(""),
       credits: course.credits,
+      remote: course.remote === true ? true : undefined,
       startDate: deriveCourseStart(course),
       endDate: deriveCourseEnd(course),
       skills: course.skills ?? [],
@@ -449,6 +450,7 @@ function buildLayout(cv, activity, projectStats) {
       };
       if (p.notes) bar.notes = p.notes;
       if (p.credits) bar.credits = p.credits;
+      if (p.remote) bar.remote = p.remote;
       if (p.github) bar.github = p.github;
       if (p.sideProject) bar.sideProject = p.sideProject;
       if (p.roles) bar.roles = p.roles;
