@@ -5,9 +5,9 @@
   display: grid;
   place-items: center;
   padding: 24px;
-  background: var(--overlay);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  background: var(--modal-overlay);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
 }
 
 .skill-modal {

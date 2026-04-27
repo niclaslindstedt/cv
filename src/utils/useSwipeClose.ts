@@ -3,7 +3,7 @@ import { useEffect, useRef, type RefObject } from "react";
 const SWIPE_AXIS_LOCK_PX = 8;
 const SWIPE_CLOSE_THRESHOLD_PX = 80;
 const SWIPE_CLOSE_VELOCITY = 0.5;
-const CLOSE_ANIMATION_MS = 220;
+const CLOSE_ANIMATION_MS = 280;
 const SNAP_BACK_MS = 180;
 
 function findScrollableAncestor(
@@ -84,13 +84,25 @@ export function useSwipeClose(
 
     const animateOff = (offsetX: number, offsetY: number) => {
       closing = true;
-      el.style.transition = `transform ${CLOSE_ANIMATION_MS}ms ease-out, opacity ${CLOSE_ANIMATION_MS}ms ease-out`;
+      const flyX =
+        offsetX === 0
+          ? 0
+          : offsetX > 0
+            ? window.innerWidth + el.offsetWidth
+            : -(window.innerWidth + el.offsetWidth);
+      const flyY =
+        offsetY === 0
+          ? 0
+          : offsetY > 0
+            ? window.innerHeight + el.offsetHeight
+            : -(window.innerHeight + el.offsetHeight);
+      el.style.transition = `transform ${CLOSE_ANIMATION_MS}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${CLOSE_ANIMATION_MS}ms ease-in`;
       if (overlay) {
         overlay.style.transition = `opacity ${CLOSE_ANIMATION_MS}ms ease-out`;
       }
       requestAnimationFrame(() => {
-        el.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-        el.style.opacity = "0";
+        el.style.transform = `translate(${flyX}px, ${flyY}px)`;
+        el.style.opacity = "1";
         if (overlay) overlay.style.opacity = "0";
       });
       window.setTimeout(() => {
