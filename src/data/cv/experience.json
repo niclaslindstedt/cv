@@ -34,7 +34,7 @@
       "Chatbots",
       "MCP",
       "Cybersecurity",
-      "Software Architecture",
+      "Architecture",
       "Observability",
       "Bash/Shell",
       "Mentoring"
@@ -68,14 +68,11 @@
       "GitHub actions"
     ],
     "skills": [
-      "Software Architecture",
+      "Architecture",
+      "Database design",
       "IT Strategy",
       "Team Management",
       "Cybersecurity",
-      "GDPR",
-      "Regulatory Compliance",
-      "Risk Management",
-      "Technology Roadmapping",
       "Bash/Shell",
       "Mentoring",
       "Project Management"
@@ -140,7 +137,7 @@
           "Scrum",
           "SQL",
           "CI/CD",
-          "Software Architecture",
+          "Architecture",
           "Agile Methodologies",
           "Azure DevOps",
           "Bash/Shell"
@@ -186,7 +183,7 @@
         "skills": [
           "CI/CD",
           "Cybersecurity",
-          "Software Architecture",
+          "Architecture",
           "Leadership",
           "IT Strategy",
           "Engineering Management",
@@ -235,18 +232,15 @@
     "skills": [
       "CI/CD",
       "Cybersecurity",
-      "Software Architecture",
+      "Architecture",
+      "Database design",
       "Leadership",
       "IT Strategy",
-      "Engineering Management",
       "Agile Methodologies",
-      "Team Management",
       "PowerShell",
       "GDPR",
       "CE marking",
-      "Regulatory Compliance",
       "Risk Management",
-      "Technology Roadmapping",
       "Project Management"
     ],
     "printDescription": {
@@ -282,7 +276,8 @@
     "skills": [
       "CI/CD",
       "Cybersecurity",
-      "Software Architecture",
+      "Architecture",
+      "Database design",
       "Integrations",
       "Bash/Shell"
     ],

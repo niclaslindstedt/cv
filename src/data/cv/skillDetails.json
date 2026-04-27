@@ -624,10 +624,24 @@
       "sv": "Kontinuerlig integration och leverans — varje ändring byggs, testas och är driftsättbar vid varje push, med människor enbart i godkännandeloopen."
     }
   },
-  "Software Architecture": {
+  "Architecture": {
     "description": {
       "en": "Deciding the structure, boundaries, and trade-offs of a system so today's features can ship and tomorrow's are still possible.",
       "sv": "Att bestämma struktur, gränser och avvägningar i ett system så att dagens funktioner kan levereras och morgondagens fortfarande är möjliga."
+    }
+  },
+  "Database design": {
+    "description": {
+      "en": "Modelling data into tables, columns, keys, and indexes that match the read/write patterns of the system — and choosing where to relax normalisation for performance.",
+      "sv": "Att modellera data i tabeller, kolumner, nycklar och index som matchar systemets läs- och skrivmönster — och att välja var normalisering ska luckras upp för prestanda."
+    },
+    "benefits": {
+      "en": "A schema that fits the workload pays back daily in query speed, integrity, and the ease of every future change.",
+      "sv": "Ett schema som passar arbetslasten betalar tillbaka dagligen i frågehastighet, integritet och hur enkelt varje framtida ändring blir."
+    },
+    "drawbacks": {
+      "en": "Early choices are sticky; the cost of fixing a poor schema rises with every row and every dependent query.",
+      "sv": "Tidiga val är sega; kostnaden för att rätta ett dåligt schema ökar för varje rad och varje beroende fråga."
     }
   },
   "Microservices": {
