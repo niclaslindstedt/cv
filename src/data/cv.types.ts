@@ -219,6 +219,7 @@ export type PrintPageBreaks = {
 
 export type PrintSettings = {
   fontFamily: string;
+  headingFontFamily: string;
   fontSize: string;
   lineHeight: number;
   page: PrintPage;

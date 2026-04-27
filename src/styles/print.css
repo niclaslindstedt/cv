@@ -82,6 +82,7 @@
   }
 
   .print-name {
+    font-family: var(--print-heading-font-family, inherit);
     font-size: var(--print-heading-name, 24pt);
     font-weight: 700;
     margin: 0 0 4pt;
@@ -90,6 +91,7 @@
   }
 
   .print-title {
+    font-family: var(--print-heading-font-family, inherit);
     margin: 0 0 10pt;
     font-size: var(--print-heading-title, 12pt);
     color: #444;
@@ -110,6 +112,7 @@
   }
 
   .print-section-title {
+    font-family: var(--print-heading-font-family, inherit);
     font-size: var(--print-heading-section, 10pt);
     font-weight: 700;
     text-transform: uppercase;
@@ -157,6 +160,7 @@
   }
 
   .print-job-title {
+    font-family: var(--print-heading-font-family, inherit);
     font-size: var(--print-heading-entry, 11pt);
     font-weight: 700;
     margin: 0;
@@ -227,6 +231,7 @@
   }
 
   .print-assignments-heading {
+    font-family: var(--print-heading-font-family, inherit);
     font-size: var(--print-heading-subheading, 9pt);
     font-weight: 700;
     text-transform: uppercase;
@@ -279,7 +284,6 @@
   }
 
   .print-project-name {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-weight: 700;
   }
 
@@ -310,6 +314,7 @@
   }
 
   .print-edu-title {
+    font-family: var(--print-heading-font-family, inherit);
     font-size: var(--print-heading-subentry, 10.5pt);
     font-weight: 700;
     margin: 0;
@@ -337,16 +342,21 @@
   /* Skills ------------------------------------------------------------- */
 
   .print-skills {
-    list-style: disc;
-    padding: 0 0 0 16pt;
+    list-style: none;
+    padding: 0;
     margin: 0;
   }
 
   .print-skill-group {
     margin: 0 0 2pt;
     line-height: 1.45;
+    color: #444;
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  .print-skill-group::before {
+    content: "> ";
   }
 
   .print-skill-group:last-child {

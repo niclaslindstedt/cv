@@ -1,5 +1,6 @@
 {
   "fontFamily": "\"EB Garamond Variable\", \"EB Garamond\", Garamond, \"Adobe Garamond Pro\", \"Apple Garamond\", \"ITC Garamond\", Georgia, \"Times New Roman\", Times, serif",
+  "headingFontFamily": "\"Inter\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
   "fontSize": "10.5pt",
   "lineHeight": 1.4,
   "page": {

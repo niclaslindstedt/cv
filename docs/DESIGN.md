@@ -512,7 +512,11 @@ The contract:
 - **Font** — `fontFamily` is a CSS font-family stack used for the entire
   print body. The default is a Garamond-first serif stack (`"EB
 Garamond", Garamond, "Adobe Garamond Pro", "Apple Garamond", Georgia,
-serif`). `fontSize` is the body size; `lineHeight` is unitless.
+serif`). `headingFontFamily` is a separate stack applied to every
+  print heading (name, title, section titles, entry titles, sub-headings)
+  via `--print-heading-font-family`; the default pairs an Inter-first
+  sans-serif with the Garamond body for editorial contrast. `fontSize`
+  is the body size; `lineHeight` is unitless.
 - **Page** — `page.size` and `page.margin` map to the `@page` descriptor
   (`size: A4; margin: 2cm 1.8cm;` by default).
 - **Spacing** — five tokens (`section`, `entry`, `subEntry`, `paragraph`,
