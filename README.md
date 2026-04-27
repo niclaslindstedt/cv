@@ -55,6 +55,7 @@ All developer entry points are exposed via `make`:
 | `make og`        | Regenerate `public/og-image.png` from `cv.json`                                                                                                                                                                    |
 | `make pdf`       | Render `dist/cv.pdf` via headless Chromium (run after `vite build`)                                                                                                                                                |
 | `make sitemap`   | Write `dist/sitemap.xml` (run after `vite build`)                                                                                                                                                                  |
+| `make local`     | Build the site and PDF with the gitignored `src/data/cv.local.json` override merged in. The PDF is written to `dist/<cv.print.pdfFilename>` (defaults to `cv.pdf`; set in your override to e.g. `cv.local.pdf`)    |
 | `make test`      | Run the test suite                                                                                                                                                                                                 |
 | `make clean`     | Remove `dist/` and Vite cache                                                                                                                                                                                      |
 
@@ -111,6 +112,35 @@ scalars and the `"{...}"` placeholders) and the per-category files in
 `src/data/cv/` (shape enforced by `schemas/cv.schema.json`; TypeScript types
 in `src/data/cv.types.ts`). No environment variables are required for local
 development.
+
+### Local CV override (private PDFs)
+
+The committed CV is the public version that ships to GitHub Pages. For a
+private PDF that includes contact details, fuller job descriptions, or
+anything else you don't want indexed online, drop a gitignored override
+at `src/data/cv.local.json`:
+
+```bash
+cp src/data/cv.local.example.json src/data/cv.local.json
+$EDITOR src/data/cv.local.json
+make local
+```
+
+`make local` sets `CV_LOCAL=1` and runs the full build with the override
+deep-merged into the assembled CV. The PDF lands at
+`dist/<cv.print.pdfFilename>` — set `print.pdfFilename` in your override
+(e.g. `"cv.local.pdf"`) to keep it distinct from the public `cv.pdf`.
+
+Merge rules used by `src/data/load-cv.mjs`:
+
+- **Plain objects** — merge key-by-key, override values win.
+- **Arrays** — merge element-by-element by index. Use `null` to leave a
+  base entry unchanged at that position; entries past the base length
+  are appended.
+- **Scalars** — override replaces base.
+
+Both `src/data/cv.local.json` and any `*.pdf` are gitignored. Drop the
+override file when you want to confirm a clean public build.
 
 For CI and deployment the following GitHub secrets are used:
 

@@ -23,6 +23,7 @@
     "title": { "$ref": "#/$defs/localizedString" },
     "longSummary": { "$ref": "#/$defs/localizedString" },
     "settings": { "$ref": "#/$defs/settings" },
+    "contact": { "$ref": "#/$defs/contact" },
     "sections": {
       "type": "object",
       "additionalProperties": false,
@@ -213,6 +214,15 @@
       "type": "string",
       "pattern": "^-?\\d+(\\.\\d+)?(pt|px|cm|mm|in|em|rem|%)$"
     },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string", "minLength": 1 },
+        "address": { "type": "string", "minLength": 1 }
+      }
+    },
     "settings": {
       "type": "object",
       "additionalProperties": false,
@@ -227,6 +237,10 @@
         "pageBreaks"
       ],
       "properties": {
+        "pdfFilename": {
+          "type": "string",
+          "pattern": "^[^/\\\\]+\\.pdf$"
+        },
         "fontFamily": { "type": "string", "minLength": 1 },
         "headingFontFamily": { "type": "string", "minLength": 1 },
         "fontSize": { "$ref": "#/$defs/cssLength" },

@@ -18,5 +18,15 @@ src/data/github-activity.json
 # Generated artifacts (see scripts/generate-project-stats.mjs)
 src/data/project-stats.json
 
+# Local CV override (see src/data/load-cv.mjs). Holds private contact
+# details and any sensitive copy a public CV should not carry; consumed
+# only when CV_LOCAL=1 (e.g. `make local`). The committed
+# cv.local.example.json is a starter template.
+src/data/cv.local.json
+
+# Generated PDF resumes — both the public dist/cv.pdf and any private
+# variants from `make local` should never end up committed.
+*.pdf
+
 # Claude Code worktrees
 .claude/worktrees/

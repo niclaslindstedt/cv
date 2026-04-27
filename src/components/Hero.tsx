@@ -55,7 +55,7 @@ export function Hero({
         />
         <a
           className="hero-download"
-          href="cv.pdf"
+          href={cv.print.pdfFilename ?? "cv.pdf"}
           download="niclas-lindstedt-cv.pdf"
           aria-label={ui.hero.downloadAria}
         >

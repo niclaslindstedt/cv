@@ -1,0 +1,19 @@
+{
+  "$schema": "../../schemas/cv.schema.json",
+  "contact": {
+    "email": "you@example.com",
+    "phone": "+46 70 000 00 00",
+    "address": "Stockholm, Sweden"
+  },
+  "print": {
+    "pdfFilename": "cv.local.pdf"
+  },
+  "experience": [
+    {
+      "printDescription": {
+        "en": "Private details about the most recent role that should not appear on the public site.",
+        "sv": "Privata detaljer om den senaste rollen som inte ska synas på den publika sajten."
+      }
+    }
+  ]
+}
