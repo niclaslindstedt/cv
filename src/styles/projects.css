@@ -137,6 +137,7 @@
 }
 
 .project-commit-total {
+  padding-left: 8px;
   font-family: var(--font-mono);
   font-weight: 600;
   font-size: 0.95rem;
@@ -208,7 +209,6 @@
 
 .project-date-sep {
   color: var(--fg-muted);
-  margin: 0 4px;
 }
 
 .project-stack,
