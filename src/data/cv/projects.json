@@ -59,7 +59,7 @@
     },
     "stack": ["Rust", "React"],
     "skills": [
-      "Multi-agent orchestration",
+      "Agent orchestration",
       "Agentic workflows",
       "Prompt engineering",
       "Claude Code",
@@ -164,7 +164,7 @@
       "en": "Static personal blog where each post can ship a technical and a non-technical version under one slug. A Vite extractor walks the markdown tree, validates frontmatter, and emits a single JSON consumed by a terminal-themed React UI — no CMS, no runtime server.",
       "sv": "Statisk personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug. En Vite-extractor går igenom markdown-trädet, validerar frontmatter och genererar en enda JSON som ett terminal-tematiserat React-gränssnitt läser — ingen CMS, ingen runtime-server."
     },
-    "stack": ["TypeScript", "React", "Node.js", "GitHub workflows"],
+    "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
     "skills": ["Spec-driven development", "Claude Code", "Agent skills"],
     "github": {
       "owner": "niclaslindstedt",
@@ -187,7 +187,7 @@
       "en": "Personal CV site driven by a single schema-validated JSON file. The build pipeline derives the React app, the SEO meta and JSON-LD, the OG image, the sitemap, and a puppeteer-rendered PDF from the same data. Maintained through Claude Code skills rather than by hand.",
       "sv": "Personlig CV-sajt driven av en enda schemavaliderad JSON-fil. Byggpipelinen härleder React-appen, SEO-metan och JSON-LD, OG-bilden, sitemap:en och en puppeteer-renderad PDF från samma data. Underhålls via Claude Code-skills istället för för hand."
     },
-    "stack": ["TypeScript", "React", "Node.js", "GitHub workflows"],
+    "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
     "skills": [
       "Spec-driven development",
       "Software Architecture",
@@ -240,7 +240,7 @@
     },
     "stack": ["Rust", "PostgreSQL"],
     "skills": [
-      "Multi-agent orchestration",
+      "Agent orchestration",
       "Agentic workflows",
       "Prompt engineering"
     ],

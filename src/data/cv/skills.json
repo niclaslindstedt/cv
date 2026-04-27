@@ -7,7 +7,7 @@
     },
     "items": [
       "Spec-driven development",
-      "Multi-agent orchestration",
+      "Agent orchestration",
       "Agentic workflows",
       "AI Agents",
       "Agent sandboxing",
@@ -89,8 +89,7 @@
       "Kubernetes",
       "Terraform",
       "CI/CD",
-      "GitHub workflows",
-      "Infrastructure as Code",
+      "GitHub actions",
       "Observability",
       "Networking"
     ]

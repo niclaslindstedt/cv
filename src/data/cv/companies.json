@@ -79,21 +79,21 @@
   },
   {
     "id": "mitt-skolval",
-    "name": "Mitt Skolval",
+    "name": "Svensk Utbildningsteknologi AB",
     "tagline": {
-      "en": "School selection platform.",
-      "sv": "Plattform för skolval."
+      "en": "Swedish edtech company behind Mitt Skolval.",
+      "sv": "Svenskt edtech-bolag bakom Mitt Skolval."
     },
     "description": {
-      "en": "Swedish edtech product from Svensk Utbildningsteknologi (Swedutech). Handles school selection and student transfers for municipalities and independent school operators, aiming to place as many students as possible at a preferred school.",
-      "sv": "Svensk edtech-produkt från Svensk Utbildningsteknologi (Swedutech). Hanterar skolval och elevbyten åt kommuner och fristående skolhuvudmän, med målet att så många elever som möjligt ska få en plats vid en önskad skola."
+      "en": "Swedish edtech company (Swedutech) behind the Mitt Skolval product. Handles school selection and student transfers for municipalities and independent school operators, aiming to place as many students as possible at a preferred school.",
+      "sv": "Svenskt edtech-bolag (Swedutech) bakom produkten Mitt Skolval. Hanterar skolval och elevbyten åt kommuner och fristående skolhuvudmän, med målet att så många elever som möjligt ska få en plats vid en önskad skola."
     },
     "url": "https://www.swedutech.se",
     "sourceUrls": [
       {
         "title": "Swedutech about page",
         "url": "https://swedutech.se/about",
-        "description": "About page of Swedutech, the parent company behind the Mitt Skolval product."
+        "description": "About page of Swedutech (Svensk Utbildningsteknologi AB), the company behind the Mitt Skolval product."
       }
     ]
   },
