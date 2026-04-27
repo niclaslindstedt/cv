@@ -40,7 +40,7 @@
   ],
   "actions": {
     "timeline": {
-      "en": "Timeline view",
+      "en": "Timeline",
       "sv": "Tidslinje"
     },
     "downloadPdf": {
