@@ -962,7 +962,7 @@ export function Timeline({ open, onClose }: Props) {
               </p>
               {hasMultipleRoles && (
                 <ul className="timeline-vis-details-roles">
-                  {roleRanges.map((r) => (
+                  {[...roleRanges].reverse().map((r) => (
                     <li key={r.key} className="timeline-vis-details-role">
                       <span className="timeline-vis-details-role-title">
                         {t(r.title)}
