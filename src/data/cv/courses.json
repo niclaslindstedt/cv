@@ -44,6 +44,7 @@
     "credits": "15 ECTS",
     "startDate": "2015-01",
     "completedDate": "2015-06",
-    "engagement": 0.5
+    "engagement": 0.5,
+    "remote": true
   }
 ]

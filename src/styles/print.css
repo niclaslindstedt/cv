@@ -194,7 +194,11 @@
   .print-tags {
     margin: 0 0 var(--print-spacing-paragraph, 4pt);
     font-size: 9.5pt;
-    color: #333;
+    color: #444;
+  }
+
+  .print-tags::before {
+    content: "> ";
   }
 
   .print-notes {
@@ -342,21 +346,16 @@
   /* Skills ------------------------------------------------------------- */
 
   .print-skills {
-    list-style: none;
-    padding: 0;
+    list-style: disc;
+    padding: 0 0 0 16pt;
     margin: 0;
   }
 
   .print-skill-group {
     margin: 0 0 2pt;
     line-height: 1.45;
-    color: #444;
     break-inside: avoid;
     page-break-inside: avoid;
-  }
-
-  .print-skill-group::before {
-    content: "> ";
   }
 
   .print-skill-group:last-child {
