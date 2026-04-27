@@ -36,8 +36,8 @@
       "Mentoring"
     ],
     "printDescription": {
-      "en": "Architects platform direction at BookBeat's audiobook and e-book streaming service, with a focus on AI agents, retrieval-augmented chatbots, observability, and security across a .NET/TypeScript microservice estate on Azure and Kubernetes.",
-      "sv": "Driver plattformsarkitekturen på BookBeats strömningstjänst för ljud- och e-böcker, med fokus på AI-agenter, retrieval-augmented chatbots, observability och säkerhet i en .NET/TypeScript-mikrotjänststack på Azure och Kubernetes."
+      "en": "IT architect at BookBeat, working on AI agents, RAG, and observability across a .NET/TypeScript microservice stack on Azure and Kubernetes.",
+      "sv": "IT-arkitekt på BookBeat, med arbete kring AI-agenter, RAG och observability i en .NET/TypeScript-mikrotjänststack på Azure och Kubernetes."
     }
   },
   {
@@ -76,8 +76,8 @@
       "Project Management"
     ],
     "printDescription": {
-      "en": "Led engineering as CTO of IBNQ, a wealth-management platform for family offices and private banks. Owned architecture, technology roadmap, GDPR and risk compliance, and team management across a .NET/TypeScript stack on Azure.",
-      "sv": "Ledde tekniken som CTO på IBNQ, en plattform för förmögenhetsförvaltning åt family offices och privatbanker. Ansvarade för arkitektur, teknikvägval, GDPR- och riskefterlevnad samt teamledning i en .NET/TypeScript-stack på Azure."
+      "en": "CTO of IBNQ, a software platform for family offices, on a .NET/TypeScript stack on Azure.",
+      "sv": "CTO på IBNQ, en mjukvaruplattform för family offices, i en .NET/TypeScript-stack på Azure."
     }
   },
   {
@@ -112,8 +112,8 @@
     "endDate": "2023-09",
     "skills": ["Mentoring"],
     "printDescription": {
-      "en": "Stockholm-based .NET and JavaScript consultancy; promoted from Senior Consultant to Manager and then Senior Manager over the tenure. Combined client delivery with internal mentoring of fellow consultants.",
-      "sv": "Stockholmsbaserat konsultbolag inom .NET och JavaScript; befordrad från Seniorkonsult till Manager och sedan Senior Manager under tjänstgöringen. Kombinerade leverans hos kund med intern mentorering av kollegor."
+      "en": "Consulting tenure at Etimo, a .NET and JavaScript consultancy; promoted from Senior Consultant to Senior Manager.",
+      "sv": "Konsultanställning på Etimo, ett .NET- och JavaScript-konsultbolag; befordrad från Seniorkonsult till Senior Manager."
     },
     "assignments": [
       {
@@ -141,8 +141,8 @@
           "Bash/Shell"
         ],
         "printDescription": {
-          "en": "Senior developer in a Scrum team at SEB, building C#/.NET miniservices on Azure with React/TypeScript front-ends, SQL data access, and Azure DevOps CI/CD pipelines.",
-          "sv": "Seniorutvecklare i ett Scrum-team på SEB. Byggde miniservices i C#/.NET på Azure med React/TypeScript-frontend, SQL-datalager och CI/CD-pipelines i Azure DevOps."
+          "en": "Senior developer at SEB on a C#/.NET miniservices stack on Azure, with React/TypeScript and Azure DevOps.",
+          "sv": "Seniorutvecklare på SEB i en C#/.NET-miniservicestack på Azure, med React/TypeScript och Azure DevOps."
         }
       },
       {
@@ -192,8 +192,8 @@
           "Mentoring"
         ],
         "printDescription": {
-          "en": "Joined Mitt Skolval as senior developer and grew into CTO of the engineering organisation behind a Swedish school-selection platform. Owned architecture, team and roadmap, GDPR-compliant operations, and observability on a TypeScript/Node.js stack on AWS Kubernetes.",
-          "sv": "Anslöt till Mitt Skolval som seniorutvecklare och växte till CTO för utvecklingsorganisationen bakom en svensk plattform för skolval. Ansvarade för arkitektur, team och roadmap, GDPR-säker drift samt observability i en TypeScript/Node.js-stack på AWS Kubernetes."
+          "en": "Joined Mitt Skolval, a school-selection platform, as senior developer and became CTO. TypeScript/Node.js on AWS Kubernetes.",
+          "sv": "Anslöt till Mitt Skolval, en plattform för skolval, som seniorutvecklare och blev CTO. TypeScript/Node.js på AWS Kubernetes."
         }
       }
     ]
@@ -242,8 +242,8 @@
       "Project Management"
     ],
     "printDescription": {
-      "en": "Co-founded Symptoms Europe and led engineering as CTO of a CE-marked eHealth platform for patient-reported outcomes. Owned architecture, GDPR and medical-device regulatory compliance, and the Vue/.NET stack on Azure.",
-      "sv": "Medgrundade Symptoms Europe och ledde tekniken som CTO för en CE-märkt eHälsoplattform för patientrapporterade utfall. Ansvarade för arkitektur, GDPR- och medicinteknisk regelefterlevnad samt Vue/.NET-stacken på Azure."
+      "en": "Co-founder and CTO of Symptoms Europe, an eHealth platform for patient-reported outcomes, on a Vue/.NET stack on Azure.",
+      "sv": "Medgrundare och CTO på Symptoms Europe, en eHälsoplattform för patientrapporterade utfall, i en Vue/.NET-stack på Azure."
     }
   },
   {
@@ -273,8 +273,8 @@
     ],
     "skills": ["CI/CD", "Cybersecurity", "Software Architecture", "Bash/Shell"],
     "printDescription": {
-      "en": "Backend engineer on Indicio's forecasting and scenario-planning platform. Worked across .NET, Python, and TypeScript services backed by SQL Server, with CI/CD pipelines and security hardening.",
-      "sv": "Backendutvecklare på Indicios plattform för prognoser och scenarioplanering. Arbetade med tjänster i .NET, Python och TypeScript mot SQL Server, med CI/CD-pipelines och säkerhetshärdning."
+      "en": "Backend developer at Indicio, a forecasting and scenario-planning platform, on .NET, Python, and TypeScript with SQL Server.",
+      "sv": "Backendutvecklare på Indicio, en plattform för prognoser och scenarioplanering, med .NET, Python och TypeScript mot SQL Server."
     }
   },
   {
@@ -296,8 +296,8 @@
       "sv": "deltid"
     },
     "printDescription": {
-      "en": "Solo Swedish aktiebolag used as the legal vehicle for part-time consulting and contract work taken on alongside other roles.",
-      "sv": "Eget svenskt aktiebolag som används som juridisk enhet för deltidskonsultning och kontraktsuppdrag vid sidan av övriga roller."
+      "en": "Own aktiebolag, used as the legal entity for solo consulting alongside other roles.",
+      "sv": "Eget aktiebolag som används som juridisk enhet för solokonsultning vid sidan av övriga roller."
     }
   }
 ]
