@@ -96,6 +96,53 @@ export function LanguageToggle({
   );
 }
 
+export function ThemeToggleCompact({
+  theme,
+  onToggleTheme,
+}: {
+  theme: Theme;
+  onToggleTheme: () => void;
+}) {
+  const { ui } = useLang();
+  const isDark = theme === "dark";
+  const label = isDark ? ui.theme.switchToLight : ui.theme.switchToDark;
+  return (
+    <button
+      type="button"
+      className="theme-toggle-compact"
+      aria-label={label}
+      title={label}
+      onClick={onToggleTheme}
+    >
+      {isDark ? <SunIcon /> : <MoonIcon />}
+    </button>
+  );
+}
+
+export function LanguageToggleCompact({
+  lang,
+  setLang,
+}: {
+  lang: Language;
+  setLang: (lang: Language) => void;
+}) {
+  const { ui } = useLang();
+  const target: Language = lang === "en" ? "sv" : "en";
+  const label =
+    target === "en" ? ui.hero.languageEnglish : ui.hero.languageSwedish;
+  return (
+    <button
+      type="button"
+      className="lang-toggle-compact"
+      aria-label={label}
+      title={label}
+      onClick={() => setLang(target)}
+    >
+      {target === "en" ? <FlagEN /> : <FlagSV />}
+    </button>
+  );
+}
+
 function TimelineIcon() {
   return (
     <svg

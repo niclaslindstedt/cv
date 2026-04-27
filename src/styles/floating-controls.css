@@ -5,8 +5,8 @@
   z-index: 40;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 6px 8px;
   background: var(--glass-bg);
   backdrop-filter: blur(14px) saturate(150%);
   -webkit-backdrop-filter: blur(14px) saturate(150%);
@@ -30,16 +30,6 @@
     opacity 280ms ease-out,
     transform 280ms ease-out,
     visibility 0s linear 0s;
-}
-
-.floating-controls .lang-toggle,
-.floating-controls .theme-toggle {
-  border-color: transparent;
-}
-
-.floating-controls .lang-toggle,
-.floating-controls .theme-toggle {
-  padding: 0;
 }
 
 .floating-controls-timeline {
@@ -81,8 +71,8 @@
   .floating-controls {
     top: 12px;
     right: 12px;
-    gap: 8px;
-    padding: 6px 10px;
+    gap: 6px;
+    padding: 5px 7px;
   }
 
   .floating-controls-timeline {
