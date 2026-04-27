@@ -13,6 +13,7 @@ import timelineData from "../data/timeline.json";
 import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { useModalFocus } from "../utils/useModalFocus";
 import { NoteIcon } from "./NoteIcon";
 import { ProjectDateChip } from "./ProjectDateChip";
 import { TrackIcon } from "./TrackIcon";
@@ -138,8 +139,11 @@ export function Timeline({ open, onClose }: Props) {
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const labelsInnerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
+
+  useModalFocus(overlayRef, open);
 
   const tracks = layout.tracks;
   const intervals = layout.intervals;
@@ -407,6 +411,7 @@ export function Timeline({ open, onClose }: Props) {
           onClick={() => setSelectedId(bar.id)}
           title={ghTitle}
           aria-label={ghTitle}
+          tabIndex={-1}
         >
           {cells.map((cell, i) => {
             const opacity = ghOpacity(
@@ -525,7 +530,13 @@ export function Timeline({ open, onClose }: Props) {
   };
 
   return (
-    <div className="timeline-vis-overlay" role="dialog" aria-modal="true">
+    <div
+      ref={overlayRef}
+      className="timeline-vis-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label={ui.timeline.title}
+    >
       <div className="timeline-vis-toolbar">
         <div className="timeline-vis-title">
           <strong>{ui.timeline.title}</strong>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import type { LocalizedString } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 
 type Props = {
@@ -22,6 +23,7 @@ export function SummaryModal({
   const { t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, open, onClose);
+  useModalFocus(modalRef, open);
 
   useEffect(() => {
     if (!open) return;

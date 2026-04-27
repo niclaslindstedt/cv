@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import type { Course, CourseMoment } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 
 function sumCredits(moments: CourseMoment[], reference: string): string | null {
@@ -35,6 +36,7 @@ export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!course, onClose);
+  useModalFocus(modalRef, !!course);
 
   useEffect(() => {
     if (!course) return;

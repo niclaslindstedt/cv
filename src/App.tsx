@@ -53,7 +53,7 @@ export function App() {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
-  const { t } = useLang();
+  const { t, ui } = useLang();
   useGlassReflections();
 
   useEffect(() => {
@@ -71,8 +71,11 @@ export function App() {
 
   return (
     <>
+      <a className="skip-link" href="#main-content">
+        {ui.skipToContent}
+      </a>
       <div className="page">
-        <main className="container">
+        <main id="main-content" className="container" tabIndex={-1}>
           <Hero
             cv={cv}
             theme={theme}
