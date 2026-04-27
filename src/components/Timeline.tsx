@@ -473,7 +473,7 @@ export function Timeline({ open, onClose }: Props) {
             )}
             <span className="timeline-vis-item-segment-label">
               <span className="timeline-vis-item-title">{t(role.title)}</span>
-              {!isPromoted && barSubtitle && (
+              {barSubtitle && (
                 <span className="timeline-vis-item-sub">{barSubtitle}</span>
               )}
             </span>
