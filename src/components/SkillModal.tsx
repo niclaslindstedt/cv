@@ -23,7 +23,8 @@ const KIND_ORDER: Record<SkillUsage["kind"], number> = {
   assignment: 0,
   experience: 1,
   education: 2,
-  project: 3,
+  course: 3,
+  project: 4,
 };
 
 function sortUsages(usages: SkillUsage[]): SkillUsage[] {
@@ -73,6 +74,7 @@ export function SkillModal({ skill, usages, detail, onClose }: Props) {
     experience: ui.skillModal.role,
     assignment: ui.skillModal.assignment,
     education: ui.skillModal.education,
+    course: ui.skillModal.course,
   };
 
   return (

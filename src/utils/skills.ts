@@ -16,7 +16,7 @@ function joinRoleTitles(roles: RoleTenure[]): LocalizedString {
 }
 
 export type SkillUsage = {
-  kind: "project" | "experience" | "assignment" | "education";
+  kind: "project" | "experience" | "assignment" | "education" | "course";
   label: string | LocalizedString;
   role?: LocalizedString;
   startDate?: string;
@@ -85,6 +85,18 @@ export function buildSkillUsageMap(
         label: ed.institution,
         startDate: ed.startDate,
         endDate: ed.endDate,
+      });
+    }
+  }
+
+  for (const course of cv.courses ?? []) {
+    for (const skill of course.skills ?? []) {
+      push(skill, {
+        kind: "course",
+        label: course.institution,
+        role: course.name,
+        startDate: course.startDate,
+        endDate: course.completedDate ?? null,
       });
     }
   }
