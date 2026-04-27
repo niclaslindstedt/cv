@@ -100,3 +100,56 @@
   border-radius: 2px;
   display: block;
 }
+
+.theme-toggle-compact,
+.lang-toggle-compact {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--fg-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease;
+}
+
+.theme-toggle-compact:hover,
+.lang-toggle-compact:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.theme-toggle-compact:focus-visible,
+.lang-toggle-compact:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-toggle-compact svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.lang-toggle-compact svg {
+  width: auto;
+  height: 12px;
+  border-radius: 2px;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .theme-toggle-compact,
+  .lang-toggle-compact {
+    width: 28px;
+    height: 28px;
+  }
+}

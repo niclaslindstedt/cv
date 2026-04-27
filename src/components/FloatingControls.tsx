@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 
 import { useLang } from "../utils/i18n";
 import type { Theme } from "../utils/theme";
-import { LanguageToggle, ThemeToggle, TimelineButton } from "./Controls";
+import {
+  LanguageToggleCompact,
+  ThemeToggleCompact,
+  TimelineButton,
+} from "./Controls";
 
 type Props = {
   timelineLabel: string;
@@ -47,8 +51,8 @@ export function FloatingControls({
         className="floating-controls-timeline"
         iconOnly
       />
-      <LanguageToggle lang={lang} setLang={setLang} />
-      <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
+      <LanguageToggleCompact lang={lang} setLang={setLang} />
+      <ThemeToggleCompact theme={theme} onToggleTheme={onToggleTheme} />
     </div>
   );
 }
