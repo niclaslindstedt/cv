@@ -43,7 +43,7 @@
   font: inherit;
   color: var(--accent);
   background: transparent;
-  border: 1px solid var(--accent-soft);
+  border: 1px solid var(--border);
   border-radius: 999px;
   cursor: pointer;
   transition:
