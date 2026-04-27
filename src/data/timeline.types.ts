@@ -63,6 +63,7 @@ export type TimelineBar = {
   endMonthAtBuild: number;
   notes?: LocalizedString;
   credits?: string;
+  remote?: boolean;
   segments: TimelineSegment[];
   github?: GitHubPayload;
   sideProject?: SideProjectPayload;

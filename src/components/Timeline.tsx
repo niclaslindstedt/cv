@@ -972,11 +972,19 @@ export function Timeline({ open, onClose }: Props) {
                   ))}
                 </ul>
               )}
-              {selectedItem.credits && (
+              {(selectedItem.credits || selectedItem.remote) && (
                 <p className="timeline-vis-details-dates">
-                  <span className="timeline-vis-credits-pill">
-                    {selectedItem.credits}
-                  </span>
+                  {selectedItem.credits && (
+                    <span className="timeline-vis-credits-pill">
+                      {selectedItem.credits}
+                    </span>
+                  )}
+                  {selectedItem.credits && selectedItem.remote && " "}
+                  {selectedItem.remote && (
+                    <span className="timeline-vis-credits-pill">
+                      {t({ en: "Remote", sv: "Distans" })}
+                    </span>
+                  )}
                 </p>
               )}
               {t(selectedItem.description) && (
