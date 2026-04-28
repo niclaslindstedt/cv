@@ -42,6 +42,7 @@ validate:
 	npm run validate:skill-tags
 	npm run validate:timeline-json
 	npm run validate:print-json
+	npm run validate:search-index-json
 
 generate:
 	npm run generate:data
