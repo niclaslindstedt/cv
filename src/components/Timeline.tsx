@@ -15,6 +15,7 @@ import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { NoteIcon } from "./NoteIcon";
 import { ProjectDateChip } from "./ProjectDateChip";
+import { ResetIcon } from "./ResetIcon";
 import { TrackIcon } from "./TrackIcon";
 
 const MIN_SCALE = 0.4;
@@ -513,11 +514,12 @@ export function Timeline() {
             </button>
             <button
               type="button"
-              className="timeline-vis-btn"
+              className="timeline-vis-btn timeline-vis-btn-icon"
               onClick={() => setScale(1)}
               aria-label={ui.timeline.resetZoom}
+              title={ui.timeline.resetZoom}
             >
-              {ui.timeline.reset}
+              <ResetIcon />
             </button>
           </div>
         </div>
@@ -572,7 +574,7 @@ export function Timeline() {
             className="timeline-vis-content"
             style={{
               width: axisLength,
-              minHeight: `max(100%, ${AXIS_SIZE + contentHeight}px)`,
+              minHeight: `max(100%, ${AXIS_SIZE + contentHeight + 100}px)`,
             }}
           >
             <div
