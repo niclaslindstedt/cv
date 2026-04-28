@@ -20,23 +20,36 @@ type Props = {
   onClose: () => void;
 };
 
-const KIND_ORDER: Record<SkillUsage["kind"], number> = {
-  assignment: 0,
-  experience: 1,
-  education: 2,
-  course: 3,
-  project: 4,
-};
+const GROUP_ORDER: SkillUsage["kind"][] = [
+  "experience",
+  "assignment",
+  "education",
+  "course",
+  "project",
+];
 
-function sortUsages(usages: SkillUsage[]): SkillUsage[] {
-  return [...usages].sort((a, b) => {
-    const ad = a.startDate ?? "";
-    const bd = b.startDate ?? "";
-    if (ad && bd && ad !== bd) return bd.localeCompare(ad);
-    if (ad && !bd) return -1;
-    if (!ad && bd) return 1;
-    return KIND_ORDER[a.kind] - KIND_ORDER[b.kind];
-  });
+function groupByKind(
+  usages: SkillUsage[],
+): Record<SkillUsage["kind"], SkillUsage[]> {
+  const groups: Record<SkillUsage["kind"], SkillUsage[]> = {
+    experience: [],
+    assignment: [],
+    education: [],
+    course: [],
+    project: [],
+  };
+  for (const u of usages) groups[u.kind].push(u);
+  for (const kind of GROUP_ORDER) {
+    groups[kind].sort((a, b) => {
+      const ad = a.startDate ?? "";
+      const bd = b.startDate ?? "";
+      if (ad && bd && ad !== bd) return bd.localeCompare(ad);
+      if (ad && !bd) return -1;
+      if (!ad && bd) return 1;
+      return 0;
+    });
+  }
+  return groups;
 }
 
 export function SkillModal({ skill, usages, detail, onClose }: Props) {
@@ -69,15 +82,33 @@ export function SkillModal({ skill, usages, detail, onClose }: Props) {
   if (!skill) return null;
 
   const years = yearsOfExperience(usages);
-  const sorted = sortUsages(usages);
+  const groups = groupByKind(usages);
 
-  const kindLabels: Record<SkillUsage["kind"], string> = {
-    project: ui.skillModal.project,
-    experience: ui.skillModal.role,
-    assignment: ui.skillModal.assignment,
-    education: ui.skillModal.education,
-    course: ui.skillModal.course,
+  const groupHeadings: Record<SkillUsage["kind"], string> = {
+    project: ui.skillModal.projectsHeading,
+    experience: ui.skillModal.jobsHeading,
+    assignment: ui.skillModal.assignmentsHeading,
+    education: ui.skillModal.educationHeading,
+    course: ui.skillModal.coursesHeading,
   };
+
+  const pillLabel = (u: SkillUsage): string =>
+    u.kind === "course" && u.role ? t(u.role) : resolveLabel(u.label);
+
+  const pillTooltip = (u: SkillUsage): string => {
+    const parts: string[] = [];
+    if (u.kind === "experience" && u.role) parts.push(t(u.role));
+    if (u.kind === "assignment") {
+      if (u.role) parts.push(t(u.role));
+      if (u.via) parts.push(`${ui.skillModal.via} ${u.via}`);
+    }
+    if (u.kind === "course") parts.push(resolveLabel(u.label));
+    if (u.startDate)
+      parts.push(formatRange(u.startDate, u.endDate ?? null, lang));
+    return parts.join(" · ");
+  };
+
+  const visibleGroups = GROUP_ORDER.filter((k) => groups[k].length > 0);
 
   return (
     <div
@@ -142,33 +173,31 @@ export function SkillModal({ skill, usages, detail, onClose }: Props) {
               )}
             </section>
           )}
-          {sorted.length > 0 ? (
-            <ul className="skill-modal-list">
-              {sorted.map((u, i) => (
-                <li key={`${u.kind}-${i}`} className="skill-modal-item">
-                  <span className="skill-modal-kind">{kindLabels[u.kind]}</span>
-                  <div className="skill-modal-label">
-                    {u.role ? (
-                      <>
-                        <span className="skill-modal-role">{t(u.role)}</span>
-                        <span className="skill-modal-sublabel">
-                          {resolveLabel(u.label)}
-                        </span>
-                      </>
-                    ) : (
-                      <span className="skill-modal-role">
-                        {resolveLabel(u.label)}
-                      </span>
-                    )}
-                  </div>
-                  {u.startDate && (
-                    <span className="skill-modal-range">
-                      {formatRange(u.startDate, u.endDate ?? null, lang)}
-                    </span>
-                  )}
-                </li>
+          {visibleGroups.length > 0 ? (
+            <div className="skill-modal-groups">
+              {visibleGroups.map((kind) => (
+                <section key={kind} className="skill-modal-group">
+                  <h3 className="skill-modal-group-heading">
+                    {groupHeadings[kind]}
+                  </h3>
+                  <ul className="skill-modal-pills">
+                    {groups[kind].map((u, i) => {
+                      const tip = pillTooltip(u);
+                      return (
+                        <li key={`${kind}-${i}`}>
+                          <span
+                            className="skill-modal-pill"
+                            title={tip || undefined}
+                          >
+                            {pillLabel(u)}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
               ))}
-            </ul>
+            </div>
           ) : (
             <p className="skill-modal-empty">{ui.skillModal.empty}</p>
           )}
