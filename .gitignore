@@ -30,3 +30,9 @@ src/data/cv.local.json
 
 # Claude Code worktrees
 .claude/worktrees/
+
+# Test artifacts
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
