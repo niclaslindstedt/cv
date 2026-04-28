@@ -15,7 +15,6 @@ import { ProgramCoursesModal } from "./components/ProgramCoursesModal";
 import { ProjectModal } from "./components/ProjectModal";
 import { Projects } from "./components/Projects";
 import { SearchModal } from "./components/SearchModal";
-import { SearchTrigger } from "./components/SearchTrigger";
 import { SkillModal } from "./components/SkillModal";
 import { Skills } from "./components/Skills";
 import { SummaryModal } from "./components/SummaryModal";
@@ -130,6 +129,24 @@ export function App() {
     meta.setAttribute("content", t(cv.meta.description));
   }, [t]);
 
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      const cmdK = (e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K");
+      const slash =
+        e.key === "/" &&
+        !e.metaKey &&
+        !e.ctrlKey &&
+        !e.altKey &&
+        !isEditableTarget(e.target);
+      if (cmdK || slash) {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -197,8 +214,8 @@ export function App() {
         theme={theme}
         onToggleTheme={toggleTheme}
         onOpenTimeline={() => setTimelineOpen(true)}
+        onOpenSearch={() => setSearchOpen(true)}
       />
-      <SearchTrigger onOpen={() => setSearchOpen(true)} />
       <SearchModal
         open={searchOpen}
         onClose={() => setSearchOpen(false)}
@@ -263,4 +280,11 @@ export function App() {
       />
     </>
   );
+}
+
+function isEditableTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable) return true;
+  const tag = target.tagName;
+  return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
 }

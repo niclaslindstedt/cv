@@ -45,17 +45,19 @@ function pickLang(value, lang) {
   return localized(value)[lang];
 }
 
-function normalizeText(text) {
-  return text
-    .normalize("NFKD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function joinHaystack(...parts) {
-  return parts.filter((p) => typeof p === "string" && p.length > 0).join(" · ");
+function dedupe(list) {
+  const out = [];
+  const seen = new Set();
+  for (const item of list) {
+    if (typeof item !== "string") continue;
+    const trimmed = item.trim();
+    if (!trimmed) continue;
+    const key = trimmed.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(trimmed);
+  }
+  return out;
 }
 
 function buildRecords(cv) {
@@ -68,7 +70,7 @@ function buildRecords(cv) {
     openerKey,
     title,
     secondary,
-    body,
+    fieldsByLang,
     localizedTitle,
     localizedSecondary,
   }) {
@@ -76,17 +78,27 @@ function buildRecords(cv) {
       const titleStr = pickLang(title, lang);
       if (!titleStr) continue;
       const secondaryStr = secondary ? pickLang(secondary, lang) : "";
-      const bodyStr = body ? pickLang(body, lang) : "";
-      const haystackRaw = joinHaystack(titleStr, secondaryStr, bodyStr);
-      const haystack = normalizeText(haystackRaw);
-      if (!haystack) continue;
+      const fields = fieldsByLang(lang);
+      // Title is always indexed; require it.
+      const fieldsOut = { title: fields.title || titleStr };
+      if (secondaryStr) fieldsOut.secondary = secondaryStr;
+      if (fields.description && fields.description.trim()) {
+        fieldsOut.description = fields.description.trim();
+      }
+      const stack = dedupe(fields.stack ?? []);
+      if (stack.length) fieldsOut.stack = stack;
+      const skills = dedupe(fields.skills ?? []);
+      if (skills.length) fieldsOut.skills = skills;
+      const aliases = dedupe(fields.aliases ?? []);
+      if (aliases.length) fieldsOut.aliases = aliases;
+
       const record = {
         id: `${id}-${lang}`,
         kind,
         openerKey,
         title: titleStr,
         lang,
-        haystack,
+        fields: fieldsOut,
       };
       if (secondaryStr) record.secondary = secondaryStr;
       if (localizedTitle) record.localizedTitle = localized(localizedTitle);
@@ -104,7 +116,10 @@ function buildRecords(cv) {
     openerKey: "summary",
     title: cv.title,
     secondary: cv.summary,
-    body: cv.longSummary,
+    fieldsByLang: (lang) => ({
+      title: pickLang(cv.title, lang),
+      description: pickLang(cv.longSummary, lang),
+    }),
     localizedTitle: cv.title,
     localizedSecondary: cv.summary,
   });
@@ -116,33 +131,36 @@ function buildRecords(cv) {
       kind: "focus",
       openerKey: focus.area.en,
       title: focus.area,
-      body: focus.description,
+      fieldsByLang: (lang) => ({
+        title: pickLang(focus.area, lang),
+        description: pickLang(focus.description, lang),
+        aliases: focus.aliases ?? [],
+      }),
       localizedTitle: focus.area,
     });
   });
 
   // Projects.
   cv.projects.forEach((project) => {
-    const stack = [...(project.stack ?? []), ...(project.skills ?? [])].join(
-      " ",
-    );
     emit({
       id: `project-${project.name}`,
       kind: "project",
       openerKey: project.name,
       title: { en: project.name, sv: project.name },
       secondary: project.tagline,
-      body: {
-        en: `${pickLang(project.description, "en")} ${stack}`,
-        sv: `${pickLang(project.description, "sv")} ${stack}`,
-      },
+      fieldsByLang: (lang) => ({
+        title: project.name,
+        description: `${pickLang(project.tagline, lang)} ${pickLang(project.description, lang)}`,
+        stack: project.stack ?? [],
+        skills: project.skills ?? [],
+        aliases: project.aliases ?? [],
+      }),
       localizedTitle: { en: project.name, sv: project.name },
       localizedSecondary: project.tagline,
     });
   });
 
-  // Companies — index even if not directly clickable; clicking goes to the
-  // company detail modal.
+  // Companies — clicking goes to the company detail modal.
   cv.companies.forEach((company) => {
     emit({
       id: `company-${company.id}`,
@@ -150,7 +168,12 @@ function buildRecords(cv) {
       openerKey: company.id,
       title: { en: company.name, sv: company.name },
       secondary: company.tagline,
-      body: company.description,
+      fieldsByLang: (lang) => ({
+        title: company.name,
+        description: `${pickLang(company.tagline, lang)} ${pickLang(company.description, lang)}`,
+        stack: company.stack ?? [],
+        aliases: company.aliases ?? [],
+      }),
       localizedTitle: { en: company.name, sv: company.name },
       localizedSecondary: company.tagline,
     });
@@ -165,18 +188,23 @@ function buildRecords(cv) {
     );
     const titleEn = sortedRoles.map((r) => pickLang(r.title, "en")).join(" → ");
     const titleSv = sortedRoles.map((r) => pickLang(r.title, "sv")).join(" → ");
-    const stack = [...(exp.stack ?? []), ...(exp.skills ?? [])].join(" ");
-    const notes = exp.notes ?? { en: "", sv: "" };
     emit({
       id: `exp-${i}`,
       kind: "experience",
       openerKey: company.id,
       title: { en: titleEn, sv: titleSv },
       secondary: { en: company.name, sv: company.name },
-      body: {
-        en: `${pickLang(notes, "en")} ${stack}`,
-        sv: `${pickLang(notes, "sv")} ${stack}`,
-      },
+      fieldsByLang: (lang) => ({
+        title: lang === "sv" ? titleSv : titleEn,
+        description: pickLang(exp.notes ?? { en: "", sv: "" }, lang),
+        stack: exp.stack ?? [],
+        skills: exp.skills ?? [],
+        aliases: [
+          ...(exp.aliases ?? []),
+          // Each role title is also a useful alias (e.g. "CTO" should find a CTO role).
+          ...sortedRoles.map((r) => pickLang(r.title, lang)),
+        ],
+      }),
       localizedTitle: { en: titleEn, sv: titleSv },
       localizedSecondary: { en: company.name, sv: company.name },
     });
@@ -193,11 +221,6 @@ function buildRecords(cv) {
       const asgTitleSv = sortedAsg
         .map((r) => pickLang(r.title, "sv"))
         .join(" → ");
-      const asgStack = [
-        ...(assignment.stack ?? []),
-        ...(assignment.skills ?? []),
-      ].join(" ");
-      const asgNotes = assignment.notes ?? { en: "", sv: "" };
       emit({
         id: `exp-${i}-asg-${j}`,
         kind: "assignment",
@@ -207,10 +230,17 @@ function buildRecords(cv) {
           en: `${client.name} · via ${company.name}`,
           sv: `${client.name} · via ${company.name}`,
         },
-        body: {
-          en: `${pickLang(asgNotes, "en")} ${asgStack}`,
-          sv: `${pickLang(asgNotes, "sv")} ${asgStack}`,
-        },
+        fieldsByLang: (lang) => ({
+          title: lang === "sv" ? asgTitleSv : asgTitleEn,
+          description: pickLang(assignment.notes ?? { en: "", sv: "" }, lang),
+          stack: assignment.stack ?? [],
+          skills: assignment.skills ?? [],
+          aliases: [
+            ...(assignment.aliases ?? []),
+            client.name,
+            ...sortedAsg.map((r) => pickLang(r.title, lang)),
+          ],
+        }),
         localizedTitle: { en: asgTitleEn, sv: asgTitleSv },
         localizedSecondary: {
           en: `${client.name} · via ${company.name}`,
@@ -222,8 +252,6 @@ function buildRecords(cv) {
 
   // Education programs.
   cv.education.forEach((ed, i) => {
-    const skills = (ed.skills ?? []).join(" ");
-    const notes = ed.notes ?? { en: "", sv: "" };
     const subtitleEn = `${pickLang(ed.institution, "en")} · ${pickLang(ed.level, "en")}`;
     const subtitleSv = `${pickLang(ed.institution, "sv")} · ${pickLang(ed.level, "sv")}`;
     emit({
@@ -232,10 +260,16 @@ function buildRecords(cv) {
       openerKey: pickLang(ed.field, "en"),
       title: ed.field,
       secondary: { en: subtitleEn, sv: subtitleSv },
-      body: {
-        en: `${pickLang(notes, "en")} ${skills}`,
-        sv: `${pickLang(notes, "sv")} ${skills}`,
-      },
+      fieldsByLang: (lang) => ({
+        title: pickLang(ed.field, lang),
+        description: pickLang(ed.notes ?? { en: "", sv: "" }, lang),
+        skills: ed.skills ?? [],
+        aliases: [
+          ...(ed.aliases ?? []),
+          pickLang(ed.institution, lang),
+          pickLang(ed.level, lang),
+        ],
+      }),
       localizedTitle: ed.field,
       localizedSecondary: { en: subtitleEn, sv: subtitleSv },
     });
@@ -243,7 +277,6 @@ function buildRecords(cv) {
 
   // Standalone courses.
   cv.courses.forEach((course, i) => {
-    const skills = (course.skills ?? []).join(" ");
     const subtitleEn = `${pickLang(course.institution, "en")} · ${course.code}`;
     const subtitleSv = `${pickLang(course.institution, "sv")} · ${course.code}`;
     emit({
@@ -252,7 +285,15 @@ function buildRecords(cv) {
       openerKey: pickLang(course.name, "en"),
       title: course.name,
       secondary: { en: subtitleEn, sv: subtitleSv },
-      body: { en: skills, sv: skills },
+      fieldsByLang: (lang) => ({
+        title: pickLang(course.name, lang),
+        skills: course.skills ?? [],
+        aliases: [
+          ...(course.aliases ?? []),
+          course.code,
+          pickLang(course.institution, lang),
+        ],
+      }),
       localizedTitle: course.name,
       localizedSecondary: { en: subtitleEn, sv: subtitleSv },
     });
@@ -272,7 +313,11 @@ function buildRecords(cv) {
         openerKey: skill,
         title: { en: skill, sv: skill },
         secondary: group.label,
-        body: description,
+        fieldsByLang: (lang) => ({
+          title: skill,
+          description: pickLang(description, lang),
+          aliases: detail?.aliases ?? [],
+        }),
         localizedTitle: { en: skill, sv: skill },
         localizedSecondary: group.label,
       });

@@ -55,13 +55,21 @@ describe("Search index", () => {
     expect(langs).toContain("sv");
   });
 
-  it("normalises diacritics in the haystack", () => {
+  it("emits a non-empty title field for every record", () => {
     for (const r of index.records) {
-      // Combining diacritical marks should never survive normalisation.
-      expect(r.haystack).not.toMatch(/[̀-ͯ]/);
-      // Normalised haystack is always lowercase.
-      expect(r.haystack).toBe(r.haystack.toLowerCase());
+      expect(typeof r.fields.title).toBe("string");
+      expect(r.fields.title.length).toBeGreaterThan(0);
     }
+  });
+
+  it("indexes hidden aliases when the source data declares them", () => {
+    const kubernetes = index.records.find(
+      (r) => r.kind === "skill" && r.openerKey === "Kubernetes",
+    );
+    expect(kubernetes).toBeDefined();
+    expect(kubernetes!.fields.aliases ?? []).toEqual(
+      expect.arrayContaining(["k8s"]),
+    );
   });
 
   it("resolves every openerKey back to a CV item", () => {
