@@ -37,6 +37,7 @@ import {
 import type { SearchKind } from "./data/search-index.types";
 import { useGlassReflections } from "./utils/glassReflections";
 import { useLang } from "./utils/i18n";
+import { useRoute } from "./utils/route";
 import { buildCompanyStackMap, buildSkillUsageMap } from "./utils/skills";
 import { useTheme } from "./utils/theme";
 
@@ -90,7 +91,7 @@ export function App() {
     }
     return map;
   }, [companies]);
-  const [timelineOpen, setTimelineOpen] = useState(false);
+  const route = useRoute();
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
@@ -152,7 +153,9 @@ export function App() {
   };
 
   useEffect(() => {
-    document.title = t(cv.meta.documentTitle);
+    const base = t(cv.meta.documentTitle);
+    document.title =
+      route === "timeline" ? `${ui.timeline.title} — ${base}` : base;
     let meta = document.querySelector<HTMLMetaElement>(
       'meta[name="description"]',
     );
@@ -162,9 +165,10 @@ export function App() {
       document.head.appendChild(meta);
     }
     meta.setAttribute("content", t(cv.meta.description));
-  }, [t]);
+  }, [t, route, ui.timeline.title]);
 
   useEffect(() => {
+    if (route === "timeline") return;
     function onKey(e: KeyboardEvent) {
       const cmdK = (e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K");
       const slash =
@@ -180,7 +184,11 @@ export function App() {
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, []);
+  }, [route]);
+
+  if (route === "timeline") {
+    return <Timeline />;
+  }
 
   return (
     <>
@@ -193,7 +201,6 @@ export function App() {
             cv={cv}
             theme={theme}
             onToggleTheme={toggleTheme}
-            onOpenTimeline={() => setTimelineOpen(true)}
             onOpenSummary={() => setSummaryOpen(true)}
             onOpenSearch={() => setSearchOpen(true)}
           />
@@ -249,7 +256,6 @@ export function App() {
         timelineLabel={t(cv.actions.timeline)}
         theme={theme}
         onToggleTheme={toggleTheme}
-        onOpenTimeline={() => setTimelineOpen(true)}
         onOpenSearch={() => setSearchOpen(true)}
       />
       <SearchModal
@@ -257,7 +263,6 @@ export function App() {
         onClose={() => setSearchOpen(false)}
         onSelect={handleSearchSelect}
       />
-      <Timeline open={timelineOpen} onClose={() => setTimelineOpen(false)} />
       <SummaryModal
         open={summaryOpen}
         name={cv.name}

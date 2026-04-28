@@ -142,7 +142,6 @@ token table — every shade in the system has, or should have, a name.
 | **Vapor Edge**   | Hairline border around glass.                                                                                                | white at 7% alpha       | navy at 7% alpha        |
 | **Vapor Sheen**  | Inner chip / pill fill on a glass card.                                                                                      | white at 4% alpha       | white at 65% alpha      |
 | **Veil**         | Standard modal backdrop. Translucent so the page reads behind.                                                               | near-black at 18% alpha | near-white at 18% alpha |
-| **Shroud**       | Timeline full-screen overlay. Heavier dim than Veil.                                                                         | near-black at 72% alpha | near-white at 72% alpha |
 | **Aurora**       | Interactive accent. Links, buttons, focus, key data.                                                                         | luminous sky-blue       | deep graphite           |
 | **Aurora Mist**  | Quiet accent fill. Pill backgrounds, hover wash.                                                                             | aurora at ~12% alpha    | graphite at ~8% alpha   |
 | **Graphite**     | Primary text. Always the highest-contrast text on Vapor.                                                                     | pale ice                | deep slate              |
@@ -287,24 +286,24 @@ or extract a new step _named_ here first.
 
 ### 5.2 Containers
 
-| Container        | Width                                                            |
-| ---------------- | ---------------------------------------------------------------- |
-| Page column      | `max-width: 860px`, centered.                                    |
-| Modal panel      | `max-width: 560px`.                                              |
-| Hero summary     | `max-width: 640px` (so the eye can sweep one line in two beats). |
-| Timeline overlay | Full viewport.                                                   |
+| Container     | Width                                                                                                          |
+| ------------- | -------------------------------------------------------------------------------------------------------------- |
+| Page column   | `max-width: 860px`, centered.                                                                                  |
+| Modal panel   | `max-width: 560px`.                                                                                            |
+| Hero summary  | `max-width: 640px` (so the eye can sweep one line in two beats).                                               |
+| Timeline page | Full viewport. Sits in normal document flow at `/timeline` so iOS Safari can keep the address bar translucent. |
 
 ### 5.3 Breakpoints
 
 Three named tiers. There is no tablet-portrait special case — the
 layout holds together fluidly between Phone and Wide.
 
-| Tier         | Width           | What changes                                                                                                                                                       |
-| ------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Phone**    | up to 520px     | Floating control bar collapses to icon-only; hero meta wraps; modal padding compacts; some grids drop to single column.                                            |
-| **Wide**     | 520px and above | Default layout. Multi-column grids appear (focus list, skills group).                                                                                              |
-| **Timeline** | up to 640px     | Timeline-overlay-only band: the track-label sidebar collapses to an icon-only column, the toolbar reflows for a corner-pinned close, and the details panel insets. |
-| **Print**    | print medium    | All translucency collapses. See §13.                                                                                                                               |
+| Tier         | Width           | What changes                                                                                                                          |
+| ------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **Phone**    | up to 520px     | Floating control bar collapses to icon-only; hero meta wraps; modal padding compacts; some grids drop to single column.               |
+| **Wide**     | 520px and above | Default layout. Multi-column grids appear (focus list, skills group).                                                                 |
+| **Timeline** | up to 640px     | Timeline-page-only band: the track-label sidebar collapses to an icon-only column and the details panel insets to the viewport edges. |
+| **Print**    | print medium    | All translucency collapses. See §13.                                                                                                  |
 
 A separate narrow breakpoint at **480px** exists for the floating
 control bar (compact form). Treat 480/520 as the same band — both
@@ -312,7 +311,7 @@ exist only because Safari's hit-target geometry forced two minor
 adjustments outside the timeline layout.
 
 The Timeline 640px breakpoint is scoped exclusively to
-`src/styles/timeline-vis.css`. It exists because the timeline overlay
+`src/styles/timeline-vis.css`. It exists because the timeline page
 has its own internal grid (label column + zoomable canvas) whose
 sidebar must collapse before the page-level Phone breakpoint would
 otherwise force a column reflow. Do not propagate 640 outside the
@@ -362,7 +361,7 @@ Glass is the brand. The exact recipe matters.
 | Standard card            | 14px          | 150%     | Vapor          |
 | Modal panel              | 18px          | 160%     | Vapor (denser) |
 | Modal backdrop           | 20px          | 180%     | Veil           |
-| Timeline overlay         | 18px          | (none)   | Shroud         |
+| Timeline page            | (none)        | (none)   | Sky            |
 | Timeline details (float) | 14px          | 150%     | Vapor          |
 
 **Translucency rule.** On the dark theme home page, you should be
@@ -592,9 +591,11 @@ distinct by purpose:
   the page is visibly hinted at as glass beneath, not blacked out.
   Inner panel is a Glass card (`max-width: 560px`) with the standard
   close button at top-right.
-- **Timeline overlay** — replaces the page rather than floating over
-  it. Uses the heavier **Shroud** backdrop because the underlying
-  page would compete for attention.
+
+The timeline is **not** a modal. It is a separate page at `/timeline`
+(see §9.10) — a navigation, not an overlay — so iOS Safari can keep
+the address bar translucent and the back button gives the natural
+return path.
 
 **Interaction contract.**
 
@@ -752,7 +753,7 @@ not clearer.
 
 ### 10.3 Timeline visualization
 
-The Timeline overlay is the most complex composite in the system. It
+The Timeline page is the most complex composite in the system. It
 renders horizontal bars by category across a zoomable, pannable date
 axis.
 
@@ -1028,7 +1029,6 @@ table. **Update this whenever the implementation moves**.
 | Vapor Edge      | `--glass-border`         | `src/styles/tokens.css`         |
 | Vapor Sheen     | `--glass-highlight`      | `src/styles/tokens.css`         |
 | Veil            | `--modal-overlay`        | `src/styles/tokens.css`         |
-| Shroud          | `--overlay`              | `src/styles/tokens.css`         |
 | Aurora          | `--accent`               | `src/styles/tokens.css`         |
 | Aurora Mist     | `--accent-soft`          | `src/styles/tokens.css`         |
 | Graphite        | `--fg`                   | `src/styles/tokens.css`         |

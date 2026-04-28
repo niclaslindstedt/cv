@@ -20,6 +20,24 @@
       content="Niclas Lindstedt — IT Architect building open-source tools for agentic coding."
     />
     <title>Niclas Lindstedt — IT Architect</title>
+    <script>
+      // Restore the deep link saved by 404.html before React mounts so the
+      // app's router sees the original path rather than "/".
+      try {
+        var redirect = sessionStorage.getItem("cv:redirect");
+        if (redirect) {
+          sessionStorage.removeItem("cv:redirect");
+          if (
+            redirect !==
+            window.location.pathname +
+              window.location.search +
+              window.location.hash
+          ) {
+            window.history.replaceState(null, "", redirect);
+          }
+        }
+      } catch (_e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

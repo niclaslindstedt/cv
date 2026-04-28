@@ -1,13 +1,17 @@
 import type { CV } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
 import type { Theme } from "../utils/theme";
-import { LanguageToggle, SearchButton, ThemeToggle } from "./Controls";
+import {
+  LanguageToggle,
+  SearchButton,
+  ThemeToggle,
+  TimelineLink,
+} from "./Controls";
 
 type Props = {
   cv: CV;
   theme: Theme;
   onToggleTheme: () => void;
-  onOpenTimeline: () => void;
   onOpenSummary: () => void;
   onOpenSearch: () => void;
 };
@@ -16,7 +20,6 @@ export function Hero({
   cv,
   theme,
   onToggleTheme,
-  onOpenTimeline,
   onOpenSummary,
   onOpenSearch,
 }: Props) {
@@ -57,13 +60,7 @@ export function Hero({
             {t(link.label)}
           </a>
         ))}
-        <button
-          type="button"
-          className="hero-timeline-btn"
-          onClick={onOpenTimeline}
-        >
-          {t(cv.actions.timeline)}
-        </button>
+        <TimelineLink label={t(cv.actions.timeline)} />
         <a
           className="hero-download"
           href={pdfHref}
