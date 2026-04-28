@@ -20,6 +20,8 @@ type UiStrings = {
   };
   hero: {
     eyebrow: string;
+    timeline: string;
+    pdf: string;
     downloadAria: string;
     languageEnglish: string;
     languageSwedish: string;
@@ -179,6 +181,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     hero: {
       eyebrow: "Resume",
+      timeline: "Timeline",
+      pdf: "PDF",
       downloadAria: "Download CV as PDF",
       languageEnglish: "Switch to English",
       languageSwedish: "Switch to Swedish",
@@ -354,6 +358,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     hero: {
       eyebrow: "CV",
+      timeline: "Tidslinje",
+      pdf: "PDF",
       downloadAria: "Ladda ner CV som PDF",
       languageEnglish: "Byt till engelska",
       languageSwedish: "Byt till svenska",

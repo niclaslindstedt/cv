@@ -265,7 +265,7 @@ export function App() {
         </footer>
       </div>
       <FloatingControls
-        timelineLabel={t(cv.actions.timeline)}
+        timelineLabel={ui.hero.timeline}
         theme={theme}
         onToggleTheme={toggleTheme}
         onOpenSearch={() => setSearchOpen(true)}

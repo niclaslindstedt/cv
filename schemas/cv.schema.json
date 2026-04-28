@@ -12,7 +12,6 @@
     "summary",
     "longSummary",
     "links",
-    "actions",
     "sections",
     "focus",
     "projects",
@@ -43,7 +42,6 @@
       "minItems": 1,
       "items": { "$ref": "#/$defs/link" }
     },
-    "actions": { "$ref": "#/$defs/actions" },
     "sections": { "$ref": "#/$defs/sections" },
     "focus": {
       "type": "array",
@@ -160,15 +158,6 @@
         "label": { "$ref": "#/$defs/localizedString" },
         "url": { "type": "string", "format": "uri" },
         "featured": { "type": "boolean" }
-      }
-    },
-    "actions": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["timeline", "downloadPdf"],
-      "properties": {
-        "timeline": { "$ref": "#/$defs/localizedString" },
-        "downloadPdf": { "$ref": "#/$defs/localizedString" }
       }
     },
     "sections": {

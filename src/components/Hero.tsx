@@ -60,7 +60,7 @@ export function Hero({
             {t(link.label)}
           </a>
         ))}
-        <TimelineLink label={t(cv.actions.timeline)} />
+        <TimelineLink label={ui.hero.timeline} />
         <a
           className="hero-download"
           href={pdfHref}
@@ -68,7 +68,7 @@ export function Hero({
           aria-label={ui.hero.downloadAria}
         >
           <PdfIcon />
-          <span>{t(cv.actions.downloadPdf)}</span>
+          <span>{ui.hero.pdf}</span>
         </a>
         <LanguageToggle lang={lang} setLang={setLang} />
         <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
