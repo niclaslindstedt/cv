@@ -695,17 +695,17 @@ different kind. Each row carries:
   category is glanceable without dominating the row.
 - **Title + secondary.** Standard 0.95rem semibold title; optional
   smaller Mist secondary (e.g. company name for an experience).
-- **Match explanation.** A Code Mono Mist line beneath the row that
-  states which field produced the best match and how
-  (e.g. `matched alias "k8s"`, `contains description "agents"`,
-  `≈ skill "kubrentes"`). Surfaces the search ranking instead of
-  hiding it; users can immediately tell whether a hit is solid or a
-  fuzzy stretch.
 
-Match-type vocabulary is fixed at four levels — **exact**, **prefix**,
-**partial**, **fuzzy** — and rendered consistently in both
-languages. Field weights and match modifiers are documented in
-[`docs/SEARCH.md`](SEARCH.md).
+The ranker still uses field weights and match-type modifiers
+internally, but the modal does **not** surface that machinery to
+readers — the row is the result, not a debug trace. Field weights
+and match modifiers are documented in [`docs/SEARCH.md`](SEARCH.md).
+
+The search input itself is rendered as a single rounded field that
+contains the magnifier icon, the text input, and the WebKit clear-X
+cancel button. The modal-close button sits **outside** that field as
+a separate circular control, so the inline X is unambiguously the
+clear-input affordance and the outer X dismisses the modal.
 
 ---
 
@@ -743,6 +743,13 @@ inside a single card as a `roles[]` array.
 - Title type in the chain uses Code Mono (matching the heading role)
   at Meta size.
 - Alignment follows §10.5.
+- **Assignment subject line.** When an Assignment modal renders the
+  subject (client company), the consultancy is labelled with a
+  small accent pill (§9.2) reading `via <Consultancy>`. The pill is
+  `nowrap` so it stays a single token; the subject row is
+  `flex-wrap` so the pill drops to its own line when the client
+  name fills the width. Used only here — jobs have no consultancy
+  layer, so the pill never appears outside the assignment subject.
 
 ### 10.2 Active / Present indicator
 

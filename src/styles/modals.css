@@ -133,7 +133,10 @@
   color: var(--fg-muted);
   font-weight: 400;
   font-size: 0.9em;
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
   min-width: 0;
   max-width: 100%;
   overflow-wrap: anywhere;
@@ -143,10 +146,23 @@
   font-weight: 400;
 }
 
+/* Render the consultancy ("via X") as a pill so it stays a single
+ * unbreakable token: when the subject line is too long, the pill wraps
+ * to its own row instead of breaking mid-name. */
 .experience-modal-via {
-  color: var(--fg-muted);
-  font-size: 0.9em;
-  font-weight: 400;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  border-radius: 999px;
 }
 
 .experience-modal-meta {

@@ -2,7 +2,6 @@ import { useDeferredValue, useEffect, useRef, useState } from "react";
 
 import type { SearchKind, SearchRecord } from "../data/search-index.types";
 import { useLang } from "../utils/i18n";
-import type { SearchMatch } from "../utils/search";
 import { useSearch } from "../utils/search";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
@@ -71,47 +70,49 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
       >
         <div className="search-modal-scroll">
           <header className="search-modal-head">
-            <svg
-              className="search-modal-icon"
-              viewBox="0 0 24 24"
-              width="16"
-              height="16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <circle cx="11" cy="11" r="7" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-            <input
-              ref={inputRef}
-              type="search"
-              className="search-modal-input"
-              placeholder={ui.search.placeholder}
-              aria-label={ui.search.inputAria}
-              value={query}
-              onChange={(e) => {
-                const next = e.target.value;
-                setQuery(next);
-                // iOS Safari leaves the caret at the previous typed position
-                // when the WebKit search cancel button clears the field, so
-                // the placeholder renders with a stray caret mid-text. Snap
-                // the selection back to the start whenever the value clears.
-                if (next === "") e.target.setSelectionRange(0, 0);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  e.currentTarget.blur();
-                }
-              }}
-              enterKeyHint="search"
-              autoComplete="off"
-              spellCheck={false}
-            />
+            <div className="search-modal-field">
+              <svg
+                className="search-modal-icon"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                ref={inputRef}
+                type="search"
+                className="search-modal-input"
+                placeholder={ui.search.placeholder}
+                aria-label={ui.search.inputAria}
+                value={query}
+                onChange={(e) => {
+                  const next = e.target.value;
+                  setQuery(next);
+                  // iOS Safari leaves the caret at the previous typed position
+                  // when the WebKit search cancel button clears the field, so
+                  // the placeholder renders with a stray caret mid-text. Snap
+                  // the selection back to the start whenever the value clears.
+                  if (next === "") e.target.setSelectionRange(0, 0);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.currentTarget.blur();
+                  }
+                }}
+                enterKeyHint="search"
+                autoComplete="off"
+                spellCheck={false}
+              />
+            </div>
             <button
               type="button"
               className="search-modal-close"
@@ -145,7 +146,6 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
                   <SearchResultItem
                     key={`${hit.record.kind}:${hit.record.openerKey}:${hit.record.lang}`}
                     record={hit.record}
-                    match={hit.matches[0]}
                     lang={lang}
                     onSelect={onSelect}
                   />
@@ -161,12 +161,10 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
 
 function SearchResultItem({
   record,
-  match,
   lang,
   onSelect,
 }: {
   record: SearchRecord;
-  match: SearchMatch | undefined;
   lang: "en" | "sv";
   onSelect: (kind: SearchKind, openerKey: string) => void;
 }) {
@@ -174,7 +172,6 @@ function SearchResultItem({
   const title = record.localizedTitle?.[lang] ?? record.title;
   const secondary = record.localizedSecondary?.[lang] ?? record.secondary;
   const kindLabel = ui.search.kindLabels[record.kind];
-  const explanation = match ? ui.search.matchExplanation(match) : null;
   return (
     <li className="search-result">
       <button
@@ -188,11 +185,6 @@ function SearchResultItem({
         </span>
         {secondary && (
           <span className="search-result-secondary">{secondary}</span>
-        )}
-        {explanation && (
-          <span className="search-result-match" aria-label={explanation.aria}>
-            {explanation.text}
-          </span>
         )}
       </button>
     </li>

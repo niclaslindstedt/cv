@@ -199,7 +199,6 @@ export function ExperienceModal({
               </button>
               {isAssignment && (
                 <span className="experience-modal-via">
-                  {" "}
                   {ui.experienceModal.via(data.via.name)}
                 </span>
               )}
