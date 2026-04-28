@@ -224,7 +224,6 @@ export function ExperienceModal({
               )}
             </div>
             {hasPromotion && <RoleChain roles={sortedRoles} />}
-            <p className="experience-modal-tagline">{t(subject.tagline)}</p>
             <p className="skill-modal-description">{t(subject.description)}</p>
             {subject.url && (
               <a
