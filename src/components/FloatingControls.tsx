@@ -5,14 +5,13 @@ import type { Theme } from "../utils/theme";
 import {
   LanguageToggleCompact,
   ThemeToggleCompact,
-  TimelineButton,
+  TimelineLink,
 } from "./Controls";
 
 type Props = {
   timelineLabel: string;
   theme: Theme;
   onToggleTheme: () => void;
-  onOpenTimeline: () => void;
   onOpenSearch: () => void;
 };
 
@@ -23,7 +22,6 @@ export function FloatingControls({
   timelineLabel,
   theme,
   onToggleTheme,
-  onOpenTimeline,
   onOpenSearch,
 }: Props) {
   const { lang, setLang, ui } = useLang();
@@ -125,9 +123,8 @@ export function FloatingControls({
           <SearchIcon />
         </button>
         <div className="floating-controls-extra" aria-hidden={!scrolled}>
-          <TimelineButton
+          <TimelineLink
             label={timelineLabel}
-            onClick={onOpenTimeline}
             className="floating-controls-timeline"
             iconOnly
           />

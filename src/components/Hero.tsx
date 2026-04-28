@@ -1,23 +1,16 @@
 import type { CV } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
 import type { Theme } from "../utils/theme";
-import { LanguageToggle, ThemeToggle } from "./Controls";
+import { LanguageToggle, ThemeToggle, TimelineLink } from "./Controls";
 
 type Props = {
   cv: CV;
   theme: Theme;
   onToggleTheme: () => void;
-  onOpenTimeline: () => void;
   onOpenSummary: () => void;
 };
 
-export function Hero({
-  cv,
-  theme,
-  onToggleTheme,
-  onOpenTimeline,
-  onOpenSummary,
-}: Props) {
+export function Hero({ cv, theme, onToggleTheme, onOpenSummary }: Props) {
   const { lang, setLang, t, ui } = useLang();
   const pdfBase = cv.print.pdfFilename ?? "cv.pdf";
   const pdfDot = pdfBase.lastIndexOf(".");
@@ -55,13 +48,7 @@ export function Hero({
             {t(link.label)}
           </a>
         ))}
-        <button
-          type="button"
-          className="hero-timeline-btn"
-          onClick={onOpenTimeline}
-        >
-          {t(cv.actions.timeline)}
-        </button>
+        <TimelineLink label={t(cv.actions.timeline)} />
         <a
           className="hero-download"
           href={pdfHref}

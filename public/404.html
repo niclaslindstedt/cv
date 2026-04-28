@@ -4,17 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
-    <meta http-equiv="refresh" content="0; url=/" />
     <link rel="canonical" href="https://niclaslindstedt.se/" />
-    <title>Not found — niclaslindstedt.se</title>
+    <title>Loading — niclaslindstedt.se</title>
     <script>
+      // GitHub Pages serves this file for any path that isn't a real asset.
+      // Stash the requested path so index.html can restore it after the
+      // SPA boots, then redirect to the site root.
+      try {
+        var path =
+          window.location.pathname +
+          window.location.search +
+          window.location.hash;
+        if (path && path !== "/") {
+          sessionStorage.setItem("cv:redirect", path);
+        }
+      } catch (_e) {}
       window.location.replace("/");
     </script>
   </head>
   <body>
     <p>
-      Page not found. Redirecting to
-      <a href="/">niclaslindstedt.se</a>.
+      Loading
+      <a href="/">niclaslindstedt.se</a>…
     </p>
   </body>
 </html>

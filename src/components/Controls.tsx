@@ -1,28 +1,42 @@
+import type { MouseEvent } from "react";
+
 import type { Language } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { navigate } from "../utils/route";
 import type { Theme } from "../utils/theme";
 
-export function TimelineButton({
+export function TimelineLink({
   label,
-  onClick,
   className = "hero-timeline-btn",
   iconOnly = false,
 }: {
   label: string;
-  onClick: () => void;
   className?: string;
   iconOnly?: boolean;
 }) {
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      e.defaultPrevented ||
+      e.button !== 0 ||
+      e.metaKey ||
+      e.ctrlKey ||
+      e.shiftKey ||
+      e.altKey
+    )
+      return;
+    e.preventDefault();
+    navigate("/timeline");
+  };
   return (
-    <button
-      type="button"
+    <a
+      href="/timeline"
       className={className}
       onClick={onClick}
       aria-label={iconOnly ? label : undefined}
       title={iconOnly ? label : undefined}
     >
       {iconOnly ? <TimelineIcon /> : <span>{label}</span>}
-    </button>
+    </a>
   );
 }
 
