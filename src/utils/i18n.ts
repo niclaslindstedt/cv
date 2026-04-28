@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 
 import type { Language, LocalizedString } from "../data/cv.types";
+import type { SearchKind, SearchMatch } from "../data/search-index.types";
 
 export type { Language, LocalizedString };
 
@@ -138,16 +139,10 @@ type UiStrings = {
     emptyHint: string;
     noResults: (query: string) => string;
     resultCountAria: (count: number) => string;
-    groupLabels: {
-      project: string;
-      company: string;
-      experience: string;
-      assignment: string;
-      education: string;
-      course: string;
-      skill: string;
-      focus: string;
-      summary: string;
+    kindLabels: Record<SearchKind, string>;
+    matchExplanation: (match: SearchMatch) => {
+      text: string;
+      aria: string;
     };
   };
 };
@@ -306,16 +301,35 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       noResults: (query) => `No matches for “${query}”.`,
       resultCountAria: (n) =>
         n === 1 ? "1 search result" : `${n} search results`,
-      groupLabels: {
-        project: "Projects",
-        company: "Companies",
+      kindLabels: {
+        project: "Project",
+        company: "Company",
         experience: "Experience",
-        assignment: "Assignments",
+        assignment: "Assignment",
         education: "Education",
-        course: "Courses",
-        skill: "Skills",
+        course: "Course",
+        skill: "Skill",
         focus: "Focus",
         summary: "About",
+      },
+      matchExplanation: (match) => {
+        const fieldLabel: Record<SearchMatch["field"], string> = {
+          title: "name",
+          alias: "alias",
+          stack: "stack",
+          skill: "skill",
+          secondary: "subtitle",
+          description: "description",
+        };
+        const typeLabel: Record<SearchMatch["type"], string> = {
+          exact: "matched",
+          prefix: "starts with",
+          partial: "contains",
+          fuzzy: "≈",
+        };
+        const text = `${typeLabel[match.type]} ${fieldLabel[match.field]} “${match.value}”`;
+        const aria = `Matched ${fieldLabel[match.field]} ${match.value} (${match.type} match)`;
+        return { text, aria };
       },
     },
   },
@@ -472,16 +486,35 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       emptyHint: "Skriv för att söka i roller, projekt, kompetenser med mera.",
       noResults: (query) => `Inga träffar för ”${query}”.`,
       resultCountAria: (n) => (n === 1 ? "1 sökträff" : `${n} sökträffar`),
-      groupLabels: {
+      kindLabels: {
         project: "Projekt",
         company: "Företag",
         experience: "Erfarenhet",
         assignment: "Uppdrag",
         education: "Utbildning",
-        course: "Kurser",
-        skill: "Kompetenser",
+        course: "Kurs",
+        skill: "Kompetens",
         focus: "Fokus",
         summary: "Om",
+      },
+      matchExplanation: (match) => {
+        const fieldLabel: Record<SearchMatch["field"], string> = {
+          title: "namn",
+          alias: "alias",
+          stack: "stack",
+          skill: "kompetens",
+          secondary: "underrubrik",
+          description: "beskrivning",
+        };
+        const typeLabel: Record<SearchMatch["type"], string> = {
+          exact: "matchade",
+          prefix: "börjar med",
+          partial: "innehåller",
+          fuzzy: "≈",
+        };
+        const text = `${typeLabel[match.type]} ${fieldLabel[match.field]} ”${match.value}”`;
+        const aria = `Träffade ${fieldLabel[match.field]} ${match.value} (${match.type})`;
+        return { text, aria };
       },
     },
   },

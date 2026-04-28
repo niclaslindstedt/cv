@@ -231,6 +231,8 @@ Run `nvm use` in the repo root — `.nvmrc` pins the correct version.
 ## Documentation
 
 - [`docs/getting-started.md`](docs/getting-started.md) — step-by-step local setup guide.
+- [`docs/DESIGN.md`](docs/DESIGN.md) — design language, components, and patterns (the source of truth for visual changes).
+- [`docs/SEARCH.md`](docs/SEARCH.md) — how the in-page search index, ranking model, and aliases work.
 - [`AGENTS.md`](AGENTS.md) — architecture summary and guidance for AI coding agents.
 
 ## Contributing

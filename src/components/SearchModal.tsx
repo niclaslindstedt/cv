@@ -2,6 +2,7 @@ import { useDeferredValue, useEffect, useRef, useState } from "react";
 
 import type { SearchKind, SearchRecord } from "../data/search-index.types";
 import { useLang } from "../utils/i18n";
+import type { SearchMatch } from "../utils/search";
 import { useSearch } from "../utils/search";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
@@ -118,24 +119,16 @@ export function SearchModal({ open, onClose, onSelect }: Props) {
           {showNoResults && (
             <p className="search-empty-hint">{ui.search.noResults(trimmed)}</p>
           )}
-          {hasQuery && results.groups.length > 0 && (
+          {hasQuery && results.hits.length > 0 && (
             <ul className="search-results">
-              {results.groups.map((group) => (
-                <li key={group.kind} className="search-results-group">
-                  <span className="search-results-eyebrow">
-                    {ui.search.groupLabels[group.kind]}
-                  </span>
-                  <ul className="search-results-list">
-                    {group.hits.map((hit) => (
-                      <SearchResultItem
-                        key={`${hit.record.kind}:${hit.record.openerKey}:${hit.record.lang}`}
-                        record={hit.record}
-                        lang={lang}
-                        onSelect={onSelect}
-                      />
-                    ))}
-                  </ul>
-                </li>
+              {results.hits.map((hit) => (
+                <SearchResultItem
+                  key={`${hit.record.kind}:${hit.record.openerKey}:${hit.record.lang}`}
+                  record={hit.record}
+                  match={hit.matches[0]}
+                  lang={lang}
+                  onSelect={onSelect}
+                />
               ))}
             </ul>
           )}
@@ -147,15 +140,20 @@ export function SearchModal({ open, onClose, onSelect }: Props) {
 
 function SearchResultItem({
   record,
+  match,
   lang,
   onSelect,
 }: {
   record: SearchRecord;
+  match: SearchMatch | undefined;
   lang: "en" | "sv";
   onSelect: (kind: SearchKind, openerKey: string) => void;
 }) {
+  const { ui } = useLang();
   const title = record.localizedTitle?.[lang] ?? record.title;
   const secondary = record.localizedSecondary?.[lang] ?? record.secondary;
+  const kindLabel = ui.search.kindLabels[record.kind];
+  const explanation = match ? ui.search.matchExplanation(match) : null;
   return (
     <li className="search-result">
       <button
@@ -163,9 +161,17 @@ function SearchResultItem({
         className="search-result-button"
         onClick={() => onSelect(record.kind, record.openerKey)}
       >
-        <span className="search-result-title">{title}</span>
+        <span className="search-result-row">
+          <span className="search-result-kind">{kindLabel}</span>
+          <span className="search-result-title">{title}</span>
+        </span>
         {secondary && (
           <span className="search-result-secondary">{secondary}</span>
+        )}
+        {explanation && (
+          <span className="search-result-match" aria-label={explanation.aria}>
+            {explanation.text}
+          </span>
         )}
       </button>
     </li>

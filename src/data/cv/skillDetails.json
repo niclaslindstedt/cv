@@ -11,7 +11,8 @@
     "drawbacks": {
       "en": "Specs rot if not maintained; over-specifying small features costs more than the safety it adds.",
       "sv": "Specifikationer ruttnar om de inte underhålls; överspecificering av små funktioner kostar mer än den säkerhet den ger."
-    }
+    },
+    "aliases": ["sdd", "spec driven", "specs"]
   },
   "Agent orchestration": {
     "description": {
@@ -25,7 +26,8 @@
     "drawbacks": {
       "en": "Adds coordination cost, latency, and a new class of bugs that live between the agents rather than inside them.",
       "sv": "Lägger till koordineringskostnad, latens och en ny typ av buggar som lever mellan agenterna snarare än inuti dem."
-    }
+    },
+    "aliases": ["multi-agent", "orchestration"]
   },
   "Agentic workflows": {
     "description": {
@@ -39,7 +41,8 @@
     "drawbacks": {
       "en": "Codifying a workflow too early locks in choices before you understand the problem.",
       "sv": "Att kodifiera ett arbetsflöde för tidigt låser fast val innan man förstår problemet."
-    }
+    },
+    "aliases": ["agent workflows", "workflow"]
   },
   "AI agents": {
     "description": {
@@ -53,7 +56,8 @@
     "drawbacks": {
       "en": "Non-determinism, cost, and the need for guardrails — an agent with broad tool access can do real damage if unsupervised.",
       "sv": "Icke-determinism, kostnad och behov av skyddsräcken — en agent med bred verktygsåtkomst kan ställa till verklig skada om den är oövervakad."
-    }
+    },
+    "aliases": ["agents", "llm agents", "autonomous agents"]
   },
   "Agent sandboxing": {
     "description": {
@@ -67,7 +71,8 @@
     "drawbacks": {
       "en": "Sandboxes leak; perfect isolation costs setup time, performance, and developer ergonomics.",
       "sv": "Sandlådor läcker; perfekt isolering kostar både uppsättningstid, prestanda och ergonomi."
-    }
+    },
+    "aliases": ["sandboxing", "agent sandbox", "container isolation"]
   },
   "Agent security": {
     "description": {
@@ -81,7 +86,8 @@
     "drawbacks": {
       "en": "More configuration to maintain, and a permissions UX that can be its own usability problem.",
       "sv": "Mer konfiguration att underhålla och en behörighets-UX som lätt blir ett eget användarproblem."
-    }
+    },
+    "aliases": ["agent safety", "ai security", "agent permissions"]
   },
   "Agentic testing": {
     "description": {
@@ -95,7 +101,8 @@
     "drawbacks": {
       "en": "Adds non-determinism and cost; needs careful prompt design and fallbacks for the cases the model gets wrong.",
       "sv": "Lägger till icke-determinism och kostnad; kräver noggrann promptdesign och reservlogik för fall där modellen blir fel."
-    }
+    },
+    "aliases": ["agent testing", "ai testing", "llm testing"]
   },
   "RAG": {
     "description": {
@@ -109,7 +116,12 @@
     "drawbacks": {
       "en": "Quality is dominated by retrieval quality; bad chunking, stale indexes, or noisy sources poison the output.",
       "sv": "Kvaliteten domineras av sökkvaliteten; dålig chunkning, gamla index eller stökiga källor förgiftar utdata."
-    }
+    },
+    "aliases": [
+      "retrieval-augmented generation",
+      "retrieval augmented",
+      "retrieval"
+    ]
   },
   "Chatbots": {
     "description": {
@@ -123,7 +135,8 @@
     "drawbacks": {
       "en": "Hallucinations, prompt injection, and the long tail of edge cases mean a chatbot is rarely 'finished'.",
       "sv": "Hallucinationer, promptinjektion och den långa svansen av kantfall gör att en chattbot sällan är 'klar'."
-    }
+    },
+    "aliases": ["chatbot", "conversational ai", "conversational interface"]
   },
   "Prompt engineering": {
     "description": {
@@ -137,7 +150,8 @@
     "drawbacks": {
       "en": "Prompts are brittle across models and versions; what worked yesterday may regress with a model update.",
       "sv": "Prompter är spröda mellan modeller och versioner; det som fungerade igår kan regressera vid en modelluppdatering."
-    }
+    },
+    "aliases": ["prompts", "prompting", "prompt design"]
   },
   "AI evaluations": {
     "description": {
@@ -151,7 +165,8 @@
     "drawbacks": {
       "en": "Good evals are expensive to build and maintain; cheap evals tell you the wrong things confidently.",
       "sv": "Bra evals är dyra att bygga och underhålla; billiga evals berättar fel saker med självförtroende."
-    }
+    },
+    "aliases": ["evals", "ai evals", "model evals", "llm evals"]
   },
   "Claude Code": {
     "description": {
@@ -166,7 +181,8 @@
       "en": "Closed-source provider; usage costs scale quickly on long agentic loops.",
       "sv": "Stängd källkod hos leverantören; användningskostnaden skalar snabbt på långa agentloopar."
     },
-    "url": "https://docs.claude.com/en/docs/claude-code/overview"
+    "url": "https://docs.claude.com/en/docs/claude-code/overview",
+    "aliases": ["claude", "anthropic", "claude cli"]
   },
   "Agent skills": {
     "description": {
@@ -180,7 +196,8 @@
     "drawbacks": {
       "en": "Tied to Claude Code's runtime; the format is still evolving and skills must be kept in sync as the spec changes.",
       "sv": "Bundet till Claude Codes körtid; formatet utvecklas fortfarande och skills måste hållas i synk när specifikationen ändras."
-    }
+    },
+    "aliases": ["skills", "claude skills"]
   },
   "MCP": {
     "description": {
@@ -194,7 +211,8 @@
     "drawbacks": {
       "en": "Servers live as separate processes with their own lifecycle and permissions surface; debugging the seam between agent, server, and underlying tool is harder than a direct call.",
       "sv": "Servrar lever som egna processer med egen livscykel och behörighetsyta; att felsöka skarven mellan agent, server och underliggande verktyg är svårare än ett direkt anrop."
-    }
+    },
+    "aliases": ["model context protocol"]
   },
   "Codex CLI": {
     "description": {
@@ -209,7 +227,8 @@
       "en": "Smaller agent ecosystem than Claude Code; some workflows still need bridging glue.",
       "sv": "Mindre agentekosystem än Claude Code; vissa arbetsflöden kräver fortfarande integrationslim."
     },
-    "url": "https://github.com/openai/codex"
+    "url": "https://github.com/openai/codex",
+    "aliases": ["codex", "openai codex"]
   },
   "Gemini CLI": {
     "description": {
@@ -224,7 +243,8 @@
       "en": "Tooling and ecosystem lag the Anthropic and OpenAI CLIs in places.",
       "sv": "Verktyg och ekosystem ligger på sina ställen efter Anthropic- och OpenAI-CLI:erna."
     },
-    "url": "https://github.com/google-gemini/gemini-cli"
+    "url": "https://github.com/google-gemini/gemini-cli",
+    "aliases": ["gemini", "google gemini"]
   },
   "GitHub Copilot": {
     "description": {
@@ -239,7 +259,8 @@
       "en": "Best-in-class for IDE inline; agent capabilities trail dedicated agentic CLIs for autonomous work.",
       "sv": "Bäst i klassen för IDE-inline; agentförmågorna ligger efter dedikerade agentiska CLI:er för autonomt arbete."
     },
-    "url": "https://github.com/features/copilot"
+    "url": "https://github.com/features/copilot",
+    "aliases": ["copilot", "gh copilot"]
   },
   "Ollama": {
     "description": {
@@ -254,7 +275,8 @@
       "en": "Open-weight models lag frontier models on hard reasoning; needs decent local hardware to be pleasant.",
       "sv": "Modeller med öppna vikter ligger efter frontier-modeller på svårt resonemang; kräver hyfsad lokal hårdvara för att vara behaglig."
     },
-    "url": "https://ollama.com"
+    "url": "https://ollama.com",
+    "aliases": ["local llm", "open weights"]
   },
   "Rust": {
     "description": {
@@ -269,7 +291,8 @@
       "en": "Steep learning curve; iteration speed is slower than scripted languages for early-stage exploration.",
       "sv": "Brant inlärningskurva; iterationshastigheten är långsammare än skriptspråk i tidig utforskning."
     },
-    "url": "https://www.rust-lang.org"
+    "url": "https://www.rust-lang.org",
+    "aliases": ["rustlang", "cargo"]
   },
   "C#/.NET": {
     "description": {
@@ -284,7 +307,8 @@
       "en": "Microsoft-centric ergonomics; getting first-class status outside Windows/Azure took years.",
       "sv": "Microsoft-centrerad ergonomi; det tog år att få förstaklasstatus utanför Windows/Azure."
     },
-    "url": "https://dotnet.microsoft.com"
+    "url": "https://dotnet.microsoft.com",
+    "aliases": ["csharp", "c#", "dotnet", ".net", "dot net"]
   },
   "TypeScript": {
     "description": {
@@ -299,7 +323,8 @@
       "en": "Type system has corners that are easy to lie to; build tooling is a perpetual rabbit hole.",
       "sv": "Typsystemet har hörn som är lätta att ljuga för; byggverktygen är ett evigt kaninhål."
     },
-    "url": "https://www.typescriptlang.org"
+    "url": "https://www.typescriptlang.org",
+    "aliases": ["ts", "tsc"]
   },
   "Python": {
     "description": {
@@ -314,54 +339,62 @@
       "en": "Performance, packaging, and runtime type errors that only surface at runtime.",
       "sv": "Prestanda, paketering och typfel som bara dyker upp vid körning."
     },
-    "url": "https://www.python.org"
+    "url": "https://www.python.org",
+    "aliases": ["py", "py3", "python3"]
   },
   "SQL": {
     "description": {
       "en": "The declarative query language for relational databases.",
       "sv": "Det deklarativa frågespråket för relationsdatabaser."
-    }
+    },
+    "aliases": ["relational queries", "ansi sql"]
   },
   "Swift": {
     "description": {
       "en": "Apple's modern systems language for iOS, macOS, and server-side workloads — type-safe, fast, and the lingua franca of the Apple developer ecosystem.",
       "sv": "Apples moderna systemspråk för iOS, macOS och serversidan — typsäkert, snabbt och Apple-ekosystemets lingua franca."
     },
-    "url": "https://www.swift.org"
+    "url": "https://www.swift.org",
+    "aliases": ["swiftlang", "ios development"]
   },
   "Java": {
     "description": {
       "en": "Mature, statically typed JVM language with one of the largest enterprise ecosystems in the industry.",
       "sv": "Moget, statiskt typat JVM-språk med ett av branschens största företagsekosystem."
     },
-    "url": "https://www.java.com"
+    "url": "https://www.java.com",
+    "aliases": ["jvm"]
   },
   "Kotlin": {
     "description": {
       "en": "Pragmatic JVM language with first-class null safety and coroutines; the default for new Android development and a strong Java replacement on the server.",
       "sv": "Pragmatiskt JVM-språk med förstklassig null-säkerhet och coroutines; standard för ny Android-utveckling och en stark Java-ersättare på servern."
     },
-    "url": "https://kotlinlang.org"
+    "url": "https://kotlinlang.org",
+    "aliases": ["kt"]
   },
   "C++": {
     "description": {
       "en": "Long-standing systems language for software where you need control over memory, layout, and performance.",
       "sv": "Långlivat systemspråk för mjukvara där man behöver kontroll över minne, layout och prestanda."
     },
-    "url": "https://isocpp.org"
+    "url": "https://isocpp.org",
+    "aliases": ["cpp", "cxx", "c plus plus"]
   },
   "Bash/Shell": {
     "description": {
       "en": "Bash and POSIX shell — the lingua franca for stitching together commands, files, and processes on a Unix-like system.",
       "sv": "Bash och POSIX-shell — lingua franca för att knyta ihop kommandon, filer och processer på Unix-liknande system."
-    }
+    },
+    "aliases": ["bash", "shell", "sh", "zsh", "posix shell"]
   },
   "PowerShell": {
     "description": {
       "en": "Microsoft's object-oriented shell and scripting language; commands return structured objects rather than text streams.",
       "sv": "Microsofts objektorienterade shell och skriptspråk; kommandon returnerar strukturerade objekt i stället för textströmmar."
     },
-    "url": "https://learn.microsoft.com/powershell"
+    "url": "https://learn.microsoft.com/powershell",
+    "aliases": ["pwsh", "ps1"]
   },
   "React": {
     "description": {
@@ -376,7 +409,8 @@
       "en": "You're choosing an ecosystem, not a framework — the build/state/router stack is yours to assemble.",
       "sv": "Du väljer ett ekosystem, inte ett ramverk — bygg/state/router-stacken får du sätta ihop själv."
     },
-    "url": "https://react.dev"
+    "url": "https://react.dev",
+    "aliases": ["reactjs", "react.js"]
   },
   "React Native": {
     "description": {
@@ -391,21 +425,24 @@
       "en": "Native modules and platform quirks still leak through; upgrades can be painful.",
       "sv": "Nativmoduler och plattformsegenheter läcker igenom; uppgraderingar kan vara smärtsamma."
     },
-    "url": "https://reactnative.dev"
+    "url": "https://reactnative.dev",
+    "aliases": ["rn", "reactnative"]
   },
   "Vue": {
     "description": {
       "en": "Approachable component framework with single-file components, a built-in reactivity system, and an opinionated default stack (Router, Pinia).",
       "sv": "Lättillgängligt komponentramverk med single-file-komponenter, inbyggd reaktivitet och en åsiktsstyrd standardstack (Router, Pinia)."
     },
-    "url": "https://vuejs.org"
+    "url": "https://vuejs.org",
+    "aliases": ["vuejs", "vue.js"]
   },
   "Angular": {
     "description": {
       "en": "Google's batteries-included frontend framework — opinionated about structure, DI, RxJS, and the build pipeline.",
       "sv": "Googles ramverk med batterier inkluderade — tydliga åsikter om struktur, DI, RxJS och byggpipelinen."
     },
-    "url": "https://angular.dev"
+    "url": "https://angular.dev",
+    "aliases": ["angularjs"]
   },
   "Node.js": {
     "description": {
@@ -420,7 +457,8 @@
       "en": "CPU-bound work needs careful design; the npm ecosystem occasionally bites in supply-chain ways.",
       "sv": "CPU-tunga uppgifter kräver omsorgsfull design; npm-ekosystemet bits ibland på leveranskedjenivå."
     },
-    "url": "https://nodejs.org"
+    "url": "https://nodejs.org",
+    "aliases": ["node", "nodejs"]
   },
   "Azure": {
     "description": {
@@ -435,7 +473,8 @@
       "en": "Portal UX and naming churn; some services lag the AWS equivalents in maturity.",
       "sv": "Portal-UX och ständigt ändrade namn; vissa tjänster ligger efter AWS-motsvarigheterna i mognad."
     },
-    "url": "https://azure.microsoft.com"
+    "url": "https://azure.microsoft.com",
+    "aliases": ["microsoft azure", "msazure"]
   },
   "AWS": {
     "description": {
@@ -450,7 +489,8 @@
       "en": "Pricing is intricate; IAM and networking ergonomics can swallow weeks of work.",
       "sv": "Prissättningen är invecklad; IAM och nätverk kan sluka veckor av arbete."
     },
-    "url": "https://aws.amazon.com"
+    "url": "https://aws.amazon.com",
+    "aliases": ["amazon web services", "amazon cloud"]
   },
   "GitHub actions": {
     "description": {
@@ -465,14 +505,16 @@
       "en": "YAML composition is awkward at scale; minutes and matrix builds get expensive on private repos.",
       "sv": "YAML-komposition blir klumpig vid skala; körminuter och matrix-byggen blir dyra på privata repon."
     },
-    "url": "https://docs.github.com/actions"
+    "url": "https://docs.github.com/actions",
+    "aliases": ["gh actions", "ghactions", "github workflows"]
   },
   "Azure DevOps": {
     "description": {
       "en": "Microsoft's CI/CD, repo, and work-tracking suite, with Pipelines (YAML) and Boards as the most-used pieces.",
       "sv": "Microsofts svit för CI/CD, repo och ärendehantering, där Pipelines (YAML) och Boards är de mest använda delarna."
     },
-    "url": "https://azure.microsoft.com/products/devops"
+    "url": "https://azure.microsoft.com/products/devops",
+    "aliases": ["ado", "vsts", "azuredevops"]
   },
   "PostgreSQL": {
     "description": {
@@ -487,14 +529,16 @@
       "en": "Operational tuning (vacuum, replication, connection pooling) requires real expertise at scale.",
       "sv": "Driftsetting (vacuum, replikering, anslutningspooling) kräver verklig expertis vid skala."
     },
-    "url": "https://www.postgresql.org"
+    "url": "https://www.postgresql.org",
+    "aliases": ["postgres", "pg", "psql"]
   },
   "Microsoft SQL Server": {
     "description": {
       "en": "Microsoft's enterprise relational database, with first-class tooling (SSMS, Profiler) and powerful T-SQL.",
       "sv": "Microsofts relationsdatabas för företag, med förstklassiga verktyg (SSMS, Profiler) och kraftfullt T-SQL."
     },
-    "url": "https://www.microsoft.com/sql-server"
+    "url": "https://www.microsoft.com/sql-server",
+    "aliases": ["mssql", "sql server", "sqlserver", "ms sql"]
   },
   "MySQL": {
     "description": {
@@ -509,21 +553,24 @@
       "en": "Feature set lags Postgres in places (JSON, extensions, indexing); historical defaults can bite.",
       "sv": "Funktionsuppsättningen ligger efter Postgres på sina ställen (JSON, tillägg, indexering); historiska standardvärden kan bita."
     },
-    "url": "https://www.mysql.com"
+    "url": "https://www.mysql.com",
+    "aliases": ["maria", "mariadb"]
   },
   "Redis": {
     "description": {
       "en": "In-memory key-value store used as cache, message broker, rate limiter, and a hundred other things.",
       "sv": "Nyckel-värde-lager i minnet som används som cache, meddelandekö, rate limiter och hundra andra saker."
     },
-    "url": "https://redis.io"
+    "url": "https://redis.io",
+    "aliases": ["kv store", "key-value store", "in-memory store"]
   },
   "CosmosDB": {
     "description": {
       "en": "Azure's globally distributed, multi-model database — SQL, MongoDB, Cassandra, and table APIs over the same engine.",
       "sv": "Azures globalt distribuerade flermodelldatabas — SQL-, MongoDB-, Cassandra- och table-API:er över samma motor."
     },
-    "url": "https://azure.microsoft.com/products/cosmos-db"
+    "url": "https://azure.microsoft.com/products/cosmos-db",
+    "aliases": ["cosmos", "azure cosmos", "cosmos db"]
   },
   "Vector databases": {
     "description": {
@@ -537,20 +584,23 @@
     "drawbacks": {
       "en": "Index quality and embedding choice dominate results; operational tuning and re-indexing costs add up at scale.",
       "sv": "Indexkvalitet och val av embedding dominerar resultaten; driftsetting och återindexering kostar vid skala."
-    }
+    },
+    "aliases": ["vector db", "vector store", "embeddings db", "vectordb"]
   },
   "Linux": {
     "description": {
       "en": "Open-source Unix-like operating system that runs almost every server, container, and cloud workload in production today.",
       "sv": "Öppen källkods-Unix-liknande operativsystem som idag driver i princip varje server, container och molnbelastning i produktion."
     },
-    "url": "https://kernel.org"
+    "url": "https://kernel.org",
+    "aliases": ["gnu/linux", "unix"]
   },
   "Networking": {
     "description": {
       "en": "TCP/IP, DNS, TLS, HTTP, and the layers below — how packets find their way between machines and how to debug it when they don't.",
       "sv": "TCP/IP, DNS, TLS, HTTP och lagren under — hur paket hittar mellan maskiner och hur man felsöker när de inte gör det."
-    }
+    },
+    "aliases": ["tcp/ip", "networks", "lan", "wan"]
   },
   "Terraform": {
     "description": {
@@ -565,7 +615,8 @@
       "en": "State files are a sensitive operational asset; provider drift and module versioning bite teams that don't invest in conventions.",
       "sv": "Statefiler är en känslig drifttillgång; leverantörsdrift och modulversioner biter team som inte investerar i konventioner."
     },
-    "url": "https://www.terraform.io"
+    "url": "https://www.terraform.io",
+    "aliases": ["tf", "iac", "infrastructure as code"]
   },
   "Observability": {
     "description": {
@@ -579,7 +630,8 @@
     "drawbacks": {
       "en": "Cardinality, retention, and ingestion costs grow fast; bad signals are worse than no signals because they invite false confidence.",
       "sv": "Kardinalitet, retention och ingest-kostnader växer snabbt; dåliga signaler är värre än inga eftersom de inbjuder till falsk självsäkerhet."
-    }
+    },
+    "aliases": ["o11y", "monitoring", "telemetry", "tracing"]
   },
   "Docker": {
     "description": {
@@ -594,7 +646,8 @@
       "en": "Image bloat and layer caching gotchas; security review of base images is your responsibility.",
       "sv": "Image-svullnad och lager-caching-fällor; säkerhetsgranskning av basavbildningar är ditt ansvar."
     },
-    "url": "https://www.docker.com"
+    "url": "https://www.docker.com",
+    "aliases": ["containers", "dockerfile", "oci"]
   },
   "Kubernetes": {
     "description": {
@@ -609,19 +662,27 @@
       "en": "Operational complexity is high; small teams often pay more in ops than the orchestration buys them.",
       "sv": "Driftkomplexiteten är hög; små team betalar ofta mer i drift än vad orkestreringen ger tillbaka."
     },
-    "url": "https://kubernetes.io"
+    "url": "https://kubernetes.io",
+    "aliases": ["k8s", "kube"]
   },
   "CI/CD": {
     "description": {
       "en": "Continuous integration and delivery — every change is built, tested, and deployable on every push, with humans only in the approval loop.",
       "sv": "Kontinuerlig integration och leverans — varje ändring byggs, testas och är driftsättbar vid varje push, med människor enbart i godkännandeloopen."
-    }
+    },
+    "aliases": [
+      "continuous integration",
+      "continuous delivery",
+      "cicd",
+      "pipelines"
+    ]
   },
   "Architecture": {
     "description": {
       "en": "Deciding the structure, boundaries, and trade-offs of a system so today's features can ship and tomorrow's are still possible.",
       "sv": "Att bestämma struktur, gränser och avvägningar i ett system så att dagens funktioner kan levereras och morgondagens fortfarande är möjliga."
-    }
+    },
+    "aliases": ["architect", "system design", "software architecture"]
   },
   "Database design": {
     "description": {
@@ -635,7 +696,8 @@
     "drawbacks": {
       "en": "Early choices are sticky; the cost of fixing a poor schema rises with every row and every dependent query.",
       "sv": "Tidiga val är sega; kostnaden för att rätta ett dåligt schema ökar för varje rad och varje beroende fråga."
-    }
+    },
+    "aliases": ["db design", "schema design", "data modelling", "data modeling"]
   },
   "Microservices": {
     "description": {
@@ -649,7 +711,8 @@
     "drawbacks": {
       "en": "Network is now a part of every feature; observability, contracts, and consistency become hard problems.",
       "sv": "Nätverket är nu en del av varje funktion; observerbarhet, kontrakt och konsistens blir svåra problem."
-    }
+    },
+    "aliases": ["micro services", "msvc"]
   },
   "Miniservices": {
     "description": {
@@ -663,7 +726,8 @@
     "drawbacks": {
       "en": "Less granular scaling and ownership; service boundaries still demand discipline.",
       "sv": "Mindre granulär skalning och ägarskap; tjänstegränser kräver fortfarande disciplin."
-    }
+    },
+    "aliases": ["mini services"]
   },
   "gRPC/Protobuf": {
     "description": {
@@ -678,13 +742,15 @@
       "en": "Browser support is awkward (gRPC-Web bridges, but isn't free); harder to debug than text protocols without the right tooling.",
       "sv": "Webbläsarstödet är klumpigt (gRPC-Web bryggar, men är inte gratis); svårare att felsöka än textprotokoll utan rätt verktyg."
     },
-    "url": "https://grpc.io"
+    "url": "https://grpc.io",
+    "aliases": ["grpc", "protobuf", "protocol buffers", "proto", "proto3"]
   },
   "RFC implementation": {
     "description": {
       "en": "Reading an IETF RFC end-to-end and producing a conforming implementation: parsing the normative MUST/SHOULD/MAY language, modelling state machines, and writing test vectors that prove the spec is met.",
       "sv": "Att läsa en IETF-RFC från pärm till pärm och skriva en regelrätt implementation: tolka de normativa MUST/SHOULD/MAY-formuleringarna, modellera tillståndsmaskiner och skriva testvektorer som bevisar att specifikationen följs."
-    }
+    },
+    "aliases": ["rfc", "request for comments"]
   },
   "Integrations": {
     "description": {
@@ -698,7 +764,8 @@
     "drawbacks": {
       "en": "Every integration adds a fault line — schema drift, rate limits, auth churn — that breaks at the worst time and is expensive to monitor.",
       "sv": "Varje integration lägger till en brytlinje — schemadrift, hastighetsgränser, auth-byten — som spricker vid sämsta tillfället och är dyr att övervaka."
-    }
+    },
+    "aliases": ["integration", "third-party integrations", "etl"]
   },
   "Scrum": {
     "description": {
@@ -713,37 +780,43 @@
       "en": "Ceremony heavy for small teams; sprint boundaries can fight long-running technical work.",
       "sv": "Ceremonitungt för små team; sprintgränser krockar ibland med längre tekniskt arbete."
     },
-    "url": "https://scrumguides.org"
+    "url": "https://scrumguides.org",
+    "aliases": ["agile", "sprint", "kanban"]
   },
   "Team management": {
     "description": {
       "en": "Day-to-day stewardship of a team's work: priorities, capacity, dependencies, and the small frictions that compound if left unattended.",
       "sv": "Daglig styrning av ett teams arbete: prioriteringar, kapacitet, beroenden och de små friktioner som ackumuleras om de lämnas obehandlade."
-    }
+    },
+    "aliases": ["team lead", "people management", "engineering management"]
   },
   "Leadership": {
     "description": {
       "en": "Setting direction, building trust, and getting people moving towards a shared goal.",
       "sv": "Att sätta riktning, bygga tillit och få människor att röra sig mot ett gemensamt mål."
-    }
+    },
+    "aliases": ["leading", "lead", "ledarskap"]
   },
   "Mentoring": {
     "description": {
       "en": "Helping individual engineers grow by sharing context, asking better questions than you answer, and creating space to fail safely.",
       "sv": "Att hjälpa enskilda ingenjörer växa genom att dela kontext, ställa bättre frågor än du svarar på och skapa utrymme att misslyckas säkert."
-    }
+    },
+    "aliases": ["mentor", "mentorship", "coaching"]
   },
   "IT strategy": {
     "description": {
       "en": "Aligning technology investment with business goals over a 1–3 year horizon — buy/build, platform choices, sourcing, and where to put the bets.",
       "sv": "Att rikta teknikinvesteringar mot verksamhetsmål på 1–3 års sikt — köpa/bygga, plattformsval, sourcing och var satsningarna ska läggas."
-    }
+    },
+    "aliases": ["tech strategy", "technology strategy"]
   },
   "Project management": {
     "description": {
       "en": "Driving a defined piece of work to completion within scope, time, and cost — risk tracking, dependencies, stakeholders, and reporting.",
       "sv": "Att driva ett avgränsat arbete i mål inom omfattning, tid och kostnad — riskhantering, beroenden, intressenter och rapportering."
-    }
+    },
+    "aliases": ["pm", "project lead", "project planning"]
   },
   "Cybersecurity": {
     "description": {
@@ -757,13 +830,15 @@
     "drawbacks": {
       "en": "Friction trade-off with developer ergonomics; treated as a feature it lags, treated as a function of every feature it scales.",
       "sv": "Friktionsavvägning mot utvecklarergonomi; behandlas det som en funktion blir det eftersläpande, behandlas det som en del av varje funktion skalar det."
-    }
+    },
+    "aliases": ["cyber", "security", "infosec", "appsec"]
   },
   "Risk management": {
     "description": {
       "en": "Identifying, ranking, and treating risks across product, security, and operations.",
       "sv": "Att identifiera, rangordna och hantera risker över produkt, säkerhet och drift."
-    }
+    },
+    "aliases": ["risk", "risk analysis"]
   },
   "GDPR": {
     "description": {
@@ -778,12 +853,14 @@
       "en": "Documentation and consent flows add real friction; cross-border transfers are a moving target.",
       "sv": "Dokumentation och samtyckesflöden ger reell friktion; gränsöverskridande överföringar är ett rörligt mål."
     },
-    "url": "https://gdpr.eu"
+    "url": "https://gdpr.eu",
+    "aliases": ["data protection", "dataskydd", "gdpr compliance"]
   },
   "CE marking": {
     "description": {
       "en": "EU conformity marking for products — including software medical devices — declaring they meet the relevant directives.",
       "sv": "EU:s överensstämmelsemärkning för produkter — inklusive medicintekniska programvaror — som intygar att de uppfyller relevanta direktiv."
-    }
+    },
+    "aliases": ["ce mark", "ce märkning"]
   }
 }
