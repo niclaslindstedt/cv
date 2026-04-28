@@ -72,24 +72,32 @@
   border-radius: 2px;
 }
 
-.project-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 8px;
+.project-oss-badge {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  padding: 3px 9px;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  border-radius: 999px;
-  border: 1px solid transparent;
+  color: var(--bg);
+  background: var(--accent);
+  border: 0;
+  border-top-right-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+  line-height: 1.4;
+  pointer-events: none;
 }
 
-.project-pill-oss {
-  flex: 0 0 auto;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border-color: var(--accent-soft);
+:root[data-theme="light"] .project-oss-badge {
+  color: var(--halt-fg);
+  background: var(--fg-muted);
+}
+
+.project:has(.project-oss-badge) .project-head h3 {
+  padding-right: 96px;
 }
 
 .project-tagline {
