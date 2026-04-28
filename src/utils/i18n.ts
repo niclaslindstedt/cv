@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 import type { Language, LocalizedString } from "../data/cv.types";
-import type { SearchKind, SearchMatch } from "../data/search-index.types";
+import type { SearchKind } from "../data/search-index.types";
 
 export type { Language, LocalizedString };
 
@@ -149,10 +149,6 @@ type UiStrings = {
     noResults: (query: string) => string;
     resultCountAria: (count: number) => string;
     kindLabels: Record<SearchKind, string>;
-    matchExplanation: (match: SearchMatch) => {
-      text: string;
-      aria: string;
-    };
   };
 };
 
@@ -330,25 +326,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         focus: "Focus",
         summary: "About",
       },
-      matchExplanation: (match) => {
-        const fieldLabel: Record<SearchMatch["field"], string> = {
-          title: "name",
-          alias: "alias",
-          stack: "stack",
-          skill: "skill",
-          secondary: "subtitle",
-          description: "description",
-        };
-        const typeLabel: Record<SearchMatch["type"], string> = {
-          exact: "matched",
-          prefix: "starts with",
-          partial: "contains",
-          fuzzy: "≈",
-        };
-        const text = `${typeLabel[match.type]} ${fieldLabel[match.field]} “${match.value}”`;
-        const aria = `Matched ${fieldLabel[match.field]} ${match.value} (${match.type} match)`;
-        return { text, aria };
-      },
     },
   },
   sv: {
@@ -523,25 +500,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         skill: "Kompetens",
         focus: "Fokus",
         summary: "Om",
-      },
-      matchExplanation: (match) => {
-        const fieldLabel: Record<SearchMatch["field"], string> = {
-          title: "namn",
-          alias: "alias",
-          stack: "stack",
-          skill: "kompetens",
-          secondary: "underrubrik",
-          description: "beskrivning",
-        };
-        const typeLabel: Record<SearchMatch["type"], string> = {
-          exact: "matchade",
-          prefix: "börjar med",
-          partial: "innehåller",
-          fuzzy: "≈",
-        };
-        const text = `${typeLabel[match.type]} ${fieldLabel[match.field]} ”${match.value}”`;
-        const aria = `Träffade ${fieldLabel[match.field]} ${match.value} (${match.type})`;
-        return { text, aria };
       },
     },
   },
