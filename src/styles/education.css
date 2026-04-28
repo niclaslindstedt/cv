@@ -51,15 +51,6 @@
   line-height: 1.5;
 }
 
-.education-meta-trail {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.education-meta-trail > span {
-  white-space: nowrap;
-}
-
 .education-credits {
   display: inline-block;
   padding: 2px 10px;

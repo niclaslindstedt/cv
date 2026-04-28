@@ -18,7 +18,7 @@ import { ProjectDateChip } from "./ProjectDateChip";
 import { ResetIcon } from "./ResetIcon";
 import { TrackIcon } from "./TrackIcon";
 
-const MIN_SCALE = 0.4;
+const MIN_SCALE = 0.3;
 const MAX_SCALE = 8;
 const BASE_MONTH_PX = 14;
 const LANE_SIZE = 48;
