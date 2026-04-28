@@ -666,14 +666,11 @@ the real input and the ranked results.
   one cluster.
 - **Placement.** Last item of both rows. On desktop (≥ 640px) the
   meta row stays single-line and `margin-left: auto` pushes the
-  button to the right edge, separated from the theme toggle by a 1px
-  Mist divider — the search reads as a sibling of the Timeline /
-  language / theme cluster rather than an extension of it. On mobile
-  (< 640px) the row wraps and the auto-margin is dropped, so the
-  button sits naturally adjacent to the theme toggle on whichever
-  wrapped row it lands on (left-aligned within that row). The
-  divider is omitted on mobile so the search and theme controls read
-  as one tight cluster.
+  button to the right edge so the search reads as a sibling of the
+  Timeline / language / theme cluster. On mobile (< 640px) the row
+  wraps and the auto-margin is dropped, so the button sits naturally
+  adjacent to the theme toggle on whichever wrapped row it lands on
+  (left-aligned within that row).
 - **Reveal.** The hero variant is always visible above the fold.
   The floating-bar variant fades in (and the whole pill with it)
   once `.hero-meta` scrolls off, gated by the same

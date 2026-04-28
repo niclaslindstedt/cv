@@ -145,13 +145,11 @@
 }
 
 /* Search trigger lives at the end of the hero meta row. On desktop
- * (≥640px) `margin-left: auto` pushes it to the far right of the row,
- * separated from the rest of the menu by a 1px Mist divider. On
- * narrower viewports the meta row wraps; the button sits naturally next
- * to the theme toggle on whatever wrapped row it lands on (left-aligned
- * within that row), so the controls stay grouped together. */
+ * (≥640px) `margin-left: auto` pushes it to the far right of the row.
+ * On narrower viewports the meta row wraps; the button sits naturally
+ * next to the theme toggle on whatever wrapped row it lands on
+ * (left-aligned within that row), so the controls stay grouped together. */
 .hero-search-btn {
-  position: relative;
   appearance: none;
   display: inline-flex;
   align-items: center;
@@ -192,17 +190,5 @@
 @media (min-width: 640px) {
   .hero-search-btn {
     margin-left: auto;
-  }
-
-  .hero-search-btn::before {
-    content: "";
-    position: absolute;
-    left: -10px;
-    top: 50%;
-    width: 1px;
-    height: 20px;
-    background: var(--border);
-    transform: translateY(-50%);
-    pointer-events: none;
   }
 }
