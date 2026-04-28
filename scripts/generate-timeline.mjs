@@ -324,20 +324,26 @@ function buildLayout(cv, activity, projectStats) {
   const githubItems = buildGithubItems(activity, cv, projectStats);
   items.push(...githubItems);
 
+  // Track order is tuned for mobile viewports: github goes above sideProject so
+  // its single-lane heatmap stays above the fold. sideProject can stack many
+  // simultaneous projects into 6+ lanes, which would otherwise push the github
+  // lane below the visible area on phones.
   const trackDefs = [
     { key: "experience", label: { en: "Jobs", sv: "Anställningar" } },
     { key: "assignment", label: { en: "Assignments", sv: "Uppdrag" } },
+  ];
+  if (githubItems.length > 0) {
+    trackDefs.push({ key: "github", label: { en: "GitHub", sv: "GitHub" } });
+  }
+  trackDefs.push(
     { key: "education", label: { en: "Education", sv: "Utbildning" } },
     { key: "course", label: { en: "Courses", sv: "Kurser" } },
-  ];
+  );
   if (sideProjectItems.length > 0) {
     trackDefs.push({
       key: "sideProject",
       label: { en: "Side projects", sv: "Sidoprojekt" },
     });
-  }
-  if (githubItems.length > 0) {
-    trackDefs.push({ key: "github", label: { en: "GitHub", sv: "GitHub" } });
   }
 
   const prepared = items.map((item) => {
