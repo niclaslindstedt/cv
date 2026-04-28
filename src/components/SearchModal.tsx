@@ -16,19 +16,20 @@ type Props = {
 export function SearchModal({ open, onClose, onSelect }: Props) {
   const { lang, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
-  const [prevOpen, setPrevOpen] = useState(open);
-  if (open !== prevOpen) {
-    // Reset the query on every open/close transition without paying for an
-    // effect (per React's "Adjusting state when a prop changes" pattern).
-    setPrevOpen(open);
-    if (!open && query !== "") setQuery("");
-  }
   const deferredQuery = useDeferredValue(query);
   const { results, ready } = useSearch(deferredQuery, open);
 
   useSwipeClose(modalRef, open, onClose);
   useModalFocus(modalRef, open);
+
+  // Select any persisted query on reopen so typing replaces it immediately.
+  useEffect(() => {
+    if (!open) return;
+    const input = inputRef.current;
+    if (input && input.value.length > 0) input.select();
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -86,6 +87,7 @@ export function SearchModal({ open, onClose, onSelect }: Props) {
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
             <input
+              ref={inputRef}
               type="search"
               className="search-modal-input"
               placeholder={ui.search.placeholder}

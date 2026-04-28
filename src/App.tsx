@@ -94,6 +94,8 @@ export function App() {
   const route = useRoute();
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [reopenSearchOnModalClose, setReopenSearchOnModalClose] =
+    useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [selectedFocus, setSelectedFocus] = useState<FocusArea | null>(null);
   const [selectedProgram, setSelectedProgram] = useState<EducationItem | null>(
@@ -110,6 +112,7 @@ export function App() {
 
   const handleSearchSelect = (kind: SearchKind, openerKey: string) => {
     setSearchOpen(false);
+    setReopenSearchOnModalClose(true);
     switch (kind) {
       case "summary":
         setSummaryOpen(true);
@@ -149,6 +152,15 @@ export function App() {
         setSelectedSkill(openerKey);
         return;
       }
+    }
+  };
+
+  // Closing a modal opened from a search result returns the user to search.
+  const closeAndReturnToSearch = (close: () => void) => () => {
+    close();
+    if (reopenSearchOnModalClose) {
+      setReopenSearchOnModalClose(false);
+      setSearchOpen(true);
     }
   };
 
@@ -260,7 +272,10 @@ export function App() {
       />
       <SearchModal
         open={searchOpen}
-        onClose={() => setSearchOpen(false)}
+        onClose={() => {
+          setSearchOpen(false);
+          setReopenSearchOnModalClose(false);
+        }}
         onSelect={handleSearchSelect}
       />
       <SummaryModal
@@ -268,7 +283,7 @@ export function App() {
         name={cv.name}
         title={cv.title}
         longSummary={cv.longSummary}
-        onClose={() => setSummaryOpen(false)}
+        onClose={closeAndReturnToSearch(() => setSummaryOpen(false))}
       />
       <SkillModal
         skill={selectedSkill}
@@ -278,15 +293,15 @@ export function App() {
             ? (cv.skillDetails as Record<string, SkillDetail>)[selectedSkill]
             : undefined
         }
-        onClose={() => setSelectedSkill(null)}
+        onClose={closeAndReturnToSearch(() => setSelectedSkill(null))}
       />
       <FocusModal
         focus={selectedFocus}
-        onClose={() => setSelectedFocus(null)}
+        onClose={closeAndReturnToSearch(() => setSelectedFocus(null))}
       />
       <ProgramCoursesModal
         program={selectedProgram}
-        onClose={() => setSelectedProgram(null)}
+        onClose={closeAndReturnToSearch(() => setSelectedProgram(null))}
         onSkillClick={(skill) => {
           setSelectedProgram(null);
           setSelectedSkill(skill);
@@ -294,7 +309,7 @@ export function App() {
       />
       <CourseMomentsModal
         course={selectedCourse}
-        onClose={() => setSelectedCourse(null)}
+        onClose={closeAndReturnToSearch(() => setSelectedCourse(null))}
         onSkillClick={(skill) => {
           setSelectedCourse(null);
           setSelectedSkill(skill);
@@ -305,7 +320,7 @@ export function App() {
         stack={
           selectedCompany ? (companyStacks.get(selectedCompany.id) ?? []) : []
         }
-        onClose={() => setSelectedCompany(null)}
+        onClose={closeAndReturnToSearch(() => setSelectedCompany(null))}
         onSkillClick={(skill) => {
           setSelectedCompany(null);
           setSelectedSkill(skill);
@@ -313,7 +328,7 @@ export function App() {
       />
       <ProjectModal
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={closeAndReturnToSearch(() => setSelectedProject(null))}
         onSkillClick={(skill) => {
           setSelectedProject(null);
           setSelectedSkill(skill);
@@ -321,7 +336,7 @@ export function App() {
       />
       <ExperienceModal
         data={selectedExperience}
-        onClose={() => setSelectedExperience(null)}
+        onClose={closeAndReturnToSearch(() => setSelectedExperience(null))}
         onSkillClick={(skill) => {
           setSelectedExperience(null);
           setSelectedSkill(skill);
