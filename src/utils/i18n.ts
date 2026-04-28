@@ -82,6 +82,14 @@ type UiStrings = {
     stack: string;
     terminated: string;
   };
+  experienceModal: {
+    detailAria: (title: string) => string;
+    assignmentAria: (title: string) => string;
+    via: (company: string) => string;
+    aboutCompany: (company: string) => string;
+    aboutClient: (company: string) => string;
+    visitCompanyWebsite: (company: string) => string;
+  };
   summaryModal: {
     detailAria: (name: string) => string;
     readMore: string;
@@ -242,6 +250,14 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       visitWebsite: "Visit website ↗",
       stack: "Stack",
       terminated: "Terminated",
+    },
+    experienceModal: {
+      detailAria: (title) => `${title} — experience details`,
+      assignmentAria: (title) => `${title} — assignment details`,
+      via: (company) => `via ${company}`,
+      aboutCompany: (company) => `About ${company}`,
+      aboutClient: (company) => `About ${company}`,
+      visitCompanyWebsite: (company) => `Visit ${company} ↗`,
     },
     summaryModal: {
       detailAria: (name) => `${name} — full summary`,
@@ -429,6 +445,14 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       visitWebsite: "Besök webbplats ↗",
       stack: "Stack",
       terminated: "Avvecklat",
+    },
+    experienceModal: {
+      detailAria: (title) => `${title} — anställningsdetaljer`,
+      assignmentAria: (title) => `${title} — uppdragsdetaljer`,
+      via: (company) => `via ${company}`,
+      aboutCompany: (company) => `Om ${company}`,
+      aboutClient: (company) => `Om ${company}`,
+      visitCompanyWebsite: (company) => `Besök ${company} ↗`,
     },
     summaryModal: {
       detailAria: (name) => `${name} — fullständig sammanfattning`,

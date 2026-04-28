@@ -108,6 +108,40 @@
   gap: 8px;
 }
 
+.experience-modal .skill-modal-title .role {
+  font-family: var(--font-mono);
+}
+
+.experience-modal-subject {
+  color: var(--fg-muted);
+  font-weight: 400;
+}
+
+.experience-modal-subject .company-btn {
+  font-weight: 400;
+}
+
+.experience-modal-via {
+  color: var(--fg-muted);
+  font-size: 0.85em;
+  font-weight: 400;
+}
+
+.experience-modal-meta {
+  margin: 0;
+}
+
+.experience-modal-tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--fg-muted);
+}
+
+.experience-modal .role-chain {
+  margin: 0;
+}
+
 .company-modal-stack {
   display: flex;
   flex-direction: column;

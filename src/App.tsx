@@ -5,6 +5,8 @@ import { CourseMomentsModal } from "./components/CourseMomentsModal";
 import { Courses } from "./components/Courses";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
+import type { ExperienceModalData } from "./components/ExperienceModal";
+import { ExperienceModal } from "./components/ExperienceModal";
 import { FloatingControls } from "./components/FloatingControls";
 import { Focus } from "./components/Focus";
 import { FocusModal } from "./components/FocusModal";
@@ -28,6 +30,10 @@ import type {
   Project,
   SkillDetail,
 } from "./data/cv.types";
+import {
+  assignmentOpenerKey,
+  experienceOpenerKey,
+} from "./data/opener-keys.mjs";
 import type { SearchKind } from "./data/search-index.types";
 import { useGlassReflections } from "./utils/glassReflections";
 import { useLang } from "./utils/i18n";
@@ -62,6 +68,29 @@ export function App() {
     () => new Map<string, Course>(cv.courses.map((c) => [c.name.en, c])),
     [],
   );
+  const experienceByKey = useMemo(() => {
+    const map = new Map<string, ExperienceModalData>();
+    for (const exp of cv.experience) {
+      const company = companies.get(exp.companyId);
+      if (!company) continue;
+      map.set(experienceOpenerKey(exp), {
+        kind: "experience",
+        item: exp,
+        company,
+      });
+      for (const asg of exp.assignments ?? []) {
+        const client = companies.get(asg.clientId);
+        if (!client) continue;
+        map.set(assignmentOpenerKey(exp, asg), {
+          kind: "assignment",
+          item: asg,
+          client,
+          via: company,
+        });
+      }
+    }
+    return map;
+  }, [companies]);
   const route = useRoute();
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -73,6 +102,8 @@ export function App() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedExperience, setSelectedExperience] =
+    useState<ExperienceModalData | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
   const { t, ui } = useLang();
   useGlassReflections();
@@ -93,11 +124,15 @@ export function App() {
         if (project) setSelectedProject(project);
         return;
       }
-      case "company":
-      case "experience":
-      case "assignment": {
+      case "company": {
         const company = companies.get(openerKey);
         if (company) setSelectedCompany(company);
+        return;
+      }
+      case "experience":
+      case "assignment": {
+        const experience = experienceByKey.get(openerKey);
+        if (experience) setSelectedExperience(experience);
         return;
       }
       case "education": {
@@ -282,6 +317,18 @@ export function App() {
         onSkillClick={(skill) => {
           setSelectedProject(null);
           setSelectedSkill(skill);
+        }}
+      />
+      <ExperienceModal
+        data={selectedExperience}
+        onClose={() => setSelectedExperience(null)}
+        onSkillClick={(skill) => {
+          setSelectedExperience(null);
+          setSelectedSkill(skill);
+        }}
+        onCompanyClick={(company) => {
+          setSelectedExperience(null);
+          setSelectedCompany(company);
         }}
       />
     </>
