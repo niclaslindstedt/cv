@@ -1,6 +1,27 @@
 [
   {
     "area": {
+      "en": "Cybersecurity",
+      "sv": "Cybersäkerhet"
+    },
+    "since": "2026-02",
+    "description": {
+      "en": "Keeping security intact in the era of vibe coding while using agents to land the security work that used to slip down the backlog. Agents make both bad defaults and good defaults cheap — they ship insecure code faster, but they also make MFA, encryption, secret rotation, and least-privilege small enough to actually do. The craft is wiring security review and hardening into the loop so it ships with the feature, not as a follow-up ticket.",
+      "sv": "Att hålla säkerheten intakt i vibe-kodningens tidsålder samtidigt som agenter används för att leverera säkerhetsarbetet som annars hamnar längst ner i backloggen. Agenter gör både dåliga och bra standardvärden billiga — de skickar ut osäker kod snabbare, men de gör också MFA, kryptering, hemlighetsrotation och minsta behörighet små nog att faktiskt genomföra. Hantverket är att koppla in säkerhetsgranskning och härdning i loopen så att det levereras med funktionen, inte som en uppföljningsbiljett."
+    },
+    "aliases": [
+      "cybersecurity",
+      "security",
+      "appsec",
+      "infosec",
+      "secure coding",
+      "mfa",
+      "encryption",
+      "hardening"
+    ]
+  },
+  {
+    "area": {
       "en": "Agentic CLI tooling",
       "sv": "Agentiska CLI-verktyg"
     },
