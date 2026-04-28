@@ -1,6 +1,19 @@
-import type { Project } from "../data/cv.types";
+import { useMemo } from "react";
+
+import projectStatsData from "../data/project-stats.json";
+import type {
+  GithubRepoRef,
+  Project,
+  ProjectStats,
+  ProjectStatsFile,
+} from "../data/cv.types";
+import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { Section } from "./Section";
+
+const projectStats = projectStatsData as ProjectStatsFile;
+
+const ACTIVE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 
 type Props = {
   title: string;
@@ -9,21 +22,57 @@ type Props = {
   onProjectClick: (project: Project) => void;
 };
 
+function statsKey(github: GithubRepoRef): string {
+  return `${github.owner}/${github.repo}`;
+}
+
+function lookupStats(github: GithubRepoRef): ProjectStats | undefined {
+  if (!projectStats?.enabled) return undefined;
+  return projectStats.projects?.[statsKey(github)];
+}
+
+function lastCommitMs(stats: ProjectStats | undefined): number {
+  if (!stats?.lastCommitDate) return -Infinity;
+  const ms = Date.parse(stats.lastCommitDate);
+  return Number.isFinite(ms) ? ms : -Infinity;
+}
+
+function nowMs(): number {
+  return new Date().getTime();
+}
+
 export function Projects({
   title,
   projects,
   onSkillClick,
   onProjectClick,
 }: Props) {
-  const { t, ui } = useLang();
+  const { t, lang, ui } = useLang();
+  const decoratedProjects = useMemo(() => {
+    const now = nowMs();
+    return [...projects]
+      .map((project) => {
+        const stats = lookupStats(project.github);
+        const lastMs = lastCommitMs(stats);
+        const isActive =
+          Number.isFinite(lastMs) && now - lastMs <= ACTIVE_WINDOW_MS;
+        return { project, stats, lastMs, isActive };
+      })
+      .sort((a, b) => b.lastMs - a.lastMs);
+  }, [projects]);
   return (
     <Section id="projects" title={title}>
       <div className="projects">
-        {projects.map((project) => {
+        {decoratedProjects.map(({ project, stats, isActive }) => {
+          const hasDateRange = !!(
+            stats?.firstCommitDate && stats?.lastCommitDate
+          );
+          const classes = ["project"];
+          if (isActive) classes.push("is-active");
           return (
             <article
               key={project.name}
-              className="project"
+              className={classes.join(" ")}
               onClick={() => onProjectClick(project)}
             >
               {project.openSource && (
@@ -43,6 +92,15 @@ export function Projects({
                     {project.name}
                   </button>
                 </h3>
+                {hasDateRange && (
+                  <p className="project-dates">
+                    {formatRange(
+                      stats!.firstCommitDate!.slice(0, 7),
+                      stats!.lastCommitDate!.slice(0, 7),
+                      lang,
+                    )}
+                  </p>
+                )}
                 <p className="project-tagline">{t(project.tagline)}</p>
               </header>
               {project.stack && project.stack.length > 0 && (
