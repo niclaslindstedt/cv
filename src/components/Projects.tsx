@@ -26,6 +26,9 @@ export function Projects({
               className="project"
               onClick={() => onProjectClick(project)}
             >
+              {project.openSource && (
+                <span className="project-oss-badge">open source</span>
+              )}
               <header className="project-head">
                 <h3>
                   <button
@@ -39,11 +42,6 @@ export function Projects({
                   >
                     {project.name}
                   </button>
-                  {project.openSource && (
-                    <span className="project-pill project-pill-oss">
-                      open source
-                    </span>
-                  )}
                 </h3>
                 <p className="project-tagline">{t(project.tagline)}</p>
               </header>

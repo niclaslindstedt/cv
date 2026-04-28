@@ -196,7 +196,8 @@
         "printDescription": {
           "en": "Joined Mitt Skolval, a school-selection platform, as senior developer and became CTO. TypeScript/Node.js on AWS Kubernetes.",
           "sv": "Anslöt till Mitt Skolval, en plattform för skolval, som seniorutvecklare och blev CTO. TypeScript/Node.js på AWS Kubernetes."
-        }
+        },
+        "aliases": ["Mitt Skolval"]
       }
     ]
   },
