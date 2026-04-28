@@ -183,6 +183,7 @@ The repo ships Claude skills under `.agent/skills/` (with
 | `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV                                                    |
 | `update-readme`               | Resync `README.md` with the code it describes                                                                                           |
 | `sync-design`                 | Audit `src/styles/` and `src/components/` against `docs/DESIGN.md` (the design source of truth); propose patches, apply on confirmation |
+| `debug-visual`                | Diagnose a failing Visual workflow, decide whether the snapshot drift is intentional, re-record baselines if so, and commit the pixels  |
 | `maintenance`                 | Umbrella skill — routes to every `update-*` and `sync-*`                                                                                |
 
 Invoke `maintenance` when you've landed a batch of changes and want a
