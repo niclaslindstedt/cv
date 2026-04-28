@@ -43,7 +43,6 @@
 }
 
 .floating-controls-search {
-  position: relative;
   appearance: none;
   display: inline-flex;
   align-items: center;
@@ -51,7 +50,6 @@
   flex: 0 0 auto;
   width: 32px;
   height: 32px;
-  margin-left: 6px;
   padding: 0;
   font: inherit;
   color: var(--accent);
@@ -63,20 +61,6 @@
     background 120ms ease,
     border-color 120ms ease,
     color 120ms ease;
-}
-
-/* Vertical divider that separates the search trigger from the rest of
- * the menu, matching the in-hero meta row. */
-.floating-controls-search::before {
-  content: "";
-  position: absolute;
-  left: -10px;
-  top: 50%;
-  width: 1px;
-  height: 18px;
-  background: var(--border);
-  transform: translateY(-50%);
-  pointer-events: none;
 }
 
 @media (hover: hover) {
@@ -146,15 +130,6 @@
   .floating-controls-timeline {
     width: 28px;
     height: 28px;
-  }
-
-  .floating-controls-search {
-    margin-left: 4px;
-  }
-
-  .floating-controls-search::before {
-    left: -8px;
-    height: 16px;
   }
 }
 
