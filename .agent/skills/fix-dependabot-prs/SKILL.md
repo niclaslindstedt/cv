@@ -109,15 +109,15 @@ Read the failing check run logs via the MCP GitHub tools (or the
 status API) to identify which step failed. Then run the equivalent
 `make` target locally:
 
-| Failing CI step | Local command         |
-| --------------- | --------------------- |
-| Format check    | `make fmt-check`      |
-| Schema validate | `make validate`       |
-| Lint / types    | `make lint`           |
-| Build           | `make build`          |
-| Unit tests      | `make test`           |
-| Visual tests    | `make test-visual`    |
-| Lighthouse      | `make lighthouse`     |
+| Failing CI step | Local command      |
+| --------------- | ------------------ |
+| Format check    | `make fmt-check`   |
+| Schema validate | `make validate`    |
+| Lint / types    | `make lint`        |
+| Build           | `make build`       |
+| Unit tests      | `make test`        |
+| Visual tests    | `make test-visual` |
+| Lighthouse      | `make lighthouse`  |
 
 Fix the underlying cause — never bypass the check (no `--no-verify`,
 no skipped tests). If the bump genuinely breaks the codebase (API
@@ -159,8 +159,8 @@ Once every failing PR from Pass 2 has been pushed:
 
 At the end, print a table:
 
-| PR  | Title | Outcome                         |
-| --- | ----- | ------------------------------- |
+| PR  | Title | Outcome                                                    |
+| --- | ----- | ---------------------------------------------------------- |
 | #N  | …     | merged / skipped (rebasing) / left open (CI red after fix) |
 
 So the user can see at a glance what landed and what still needs eyes.
