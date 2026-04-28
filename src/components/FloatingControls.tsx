@@ -16,9 +16,6 @@ type Props = {
   onOpenSearch: () => void;
 };
 
-const SCROLL_DIRECTION_THRESHOLD_PX = 4;
-const OVERSCROLL_PULL_THRESHOLD_PX = 24;
-
 export function FloatingControls({
   timelineLabel,
   theme,
@@ -28,7 +25,6 @@ export function FloatingControls({
 }: Props) {
   const { lang, setLang, ui } = useLang();
   const [scrolled, setScrolled] = useState(false);
-  const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(() => {
     const target = document.querySelector(".hero-meta");
@@ -47,95 +43,28 @@ export function FloatingControls({
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    // Reveal the search field only when the user scrolls up. At the very
-    // top of the page that means an overscroll/pull-down — the standard
-    // pattern for summoning a search bar in native applications.
-    let lastY = window.scrollY;
-    let touchStartY = 0;
-    let touching = false;
-
-    const onScroll = () => {
-      const y = window.scrollY;
-      const dy = y - lastY;
-      if (dy < -SCROLL_DIRECTION_THRESHOLD_PX) setSearchVisible(true);
-      else if (dy > SCROLL_DIRECTION_THRESHOLD_PX) setSearchVisible(false);
-      lastY = y;
-    };
-
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length !== 1) {
-        touching = false;
-        return;
-      }
-      touching = true;
-      touchStartY = e.touches[0].clientY;
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      if (!touching) return;
-      if (window.scrollY > 0) return;
-      const dy = e.touches[0].clientY - touchStartY;
-      if (dy > OVERSCROLL_PULL_THRESHOLD_PX) setSearchVisible(true);
-    };
-
-    const onTouchEnd = () => {
-      touching = false;
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("touchend", onTouchEnd, { passive: true });
-    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("touchcancel", onTouchEnd);
-    };
-  }, []);
-
   return (
-    <>
+    <div className={`floating-controls${scrolled ? " is-scrolled" : ""}`}>
+      <div className="floating-controls-extra" aria-hidden={!scrolled}>
+        <TimelineButton
+          label={timelineLabel}
+          onClick={onOpenTimeline}
+          className="floating-controls-timeline"
+          iconOnly
+        />
+        <LanguageToggleCompact lang={lang} setLang={setLang} />
+        <ThemeToggleCompact theme={theme} onToggleTheme={onToggleTheme} />
+      </div>
       <button
         type="button"
-        className={`floating-search${searchVisible ? " is-visible" : ""}`}
+        className="floating-controls-search"
         onClick={onOpenSearch}
         aria-label={ui.search.open}
-        aria-hidden={!searchVisible}
-        tabIndex={searchVisible ? 0 : -1}
+        title={ui.search.open}
       >
         <SearchIcon />
-        <span className="floating-search-text">{ui.search.placeholder}</span>
       </button>
-      <div
-        className={`floating-controls${scrolled ? " is-scrolled" : ""}${searchVisible ? " is-search-collapsed" : ""}`}
-      >
-        <button
-          type="button"
-          className="floating-controls-search"
-          onClick={onOpenSearch}
-          aria-label={ui.search.open}
-          title={ui.search.open}
-          aria-hidden={searchVisible}
-          tabIndex={searchVisible ? -1 : 0}
-        >
-          <SearchIcon />
-        </button>
-        <div className="floating-controls-extra" aria-hidden={!scrolled}>
-          <TimelineButton
-            label={timelineLabel}
-            onClick={onOpenTimeline}
-            className="floating-controls-timeline"
-            iconOnly
-          />
-          <LanguageToggleCompact lang={lang} setLang={setLang} />
-          <ThemeToggleCompact theme={theme} onToggleTheme={onToggleTheme} />
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
 

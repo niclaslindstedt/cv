@@ -1,89 +1,12 @@
 /* Floating-controls layer.
  *
- * Two pieces:
- *   - .floating-search — a wide "tap to search" field, top-centred, hidden
- *     by default, revealed only when the user scrolls up (or pulls down at
- *     the top of the page). The standard "summon-a-search-bar" pattern.
- *   - .floating-controls — the small top-right pill. Holds the compact
- *     search icon (visible whenever the wide field is hidden, so search is
- *     reachable while scrolling down) plus Timeline, language, and theme
- *     (revealed once the hero scrolls past). The pill itself fades out
- *     only when nothing inside it is visible. */
-
-.floating-search {
-  position: fixed;
-  top: 16px;
-  left: 50%;
-  z-index: 41;
-  width: min(70vw, 520px);
-  max-width: calc(100vw - 32px);
-
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
-  font: inherit;
-  text-align: left;
-  color: var(--fg-muted);
-
-  background: var(--glass-bg);
-  backdrop-filter: blur(14px) saturate(150%);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
-  border: 1px solid var(--glass-border);
-  border-radius: 999px;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-
-  transform: translate(-50%, calc(-100% - 24px));
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    transform 280ms ease-out,
-    opacity 280ms ease-out,
-    color 120ms ease,
-    border-color 120ms ease,
-    visibility 0s linear 280ms;
-}
-
-.floating-search.is-visible {
-  transform: translate(-50%, 0);
-  opacity: 1;
-  visibility: visible;
-  transition:
-    transform 280ms ease-out,
-    opacity 280ms ease-out,
-    color 120ms ease,
-    border-color 120ms ease,
-    visibility 0s linear 0s;
-}
-
-.floating-search svg {
-  flex: 0 0 auto;
-  width: 16px;
-  height: 16px;
-  color: var(--accent);
-}
-
-.floating-search-text {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 0.95rem;
-}
-
-@media (hover: hover) {
-  .floating-search:hover {
-    color: var(--fg);
-    border-color: var(--accent);
-  }
-}
-
-.floating-search:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
+ * A small Glass pill anchored top-right. The search icon sits at the
+ * far right and is always visible, so search is reachable both at the
+ * very top of the page and after scrolling. Timeline, language, and
+ * theme slide in to the left of the search once the hero scrolls past
+ * (gated by the .hero-meta IntersectionObserver). A thin divider
+ * separates the search trigger from the rest of the menu when the
+ * extras are present. */
 
 .floating-controls {
   position: fixed;
@@ -100,26 +23,10 @@
   border: 1px solid var(--glass-border);
   border-radius: 999px;
   box-shadow: var(--shadow);
-  transition:
-    opacity 280ms ease-out,
-    transform 280ms ease-out,
-    visibility 0s linear 0s;
-}
-
-/* Pill collapses entirely when nothing inside it is visible — i.e. the
- * wide search field is showing AND the hero hasn't scrolled past yet. */
-.floating-controls.is-search-collapsed:not(.is-scrolled) {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px);
-  pointer-events: none;
-  transition:
-    opacity 280ms ease-out,
-    transform 280ms ease-out,
-    visibility 0s linear 280ms;
 }
 
 .floating-controls-search {
+  position: relative;
   appearance: none;
   display: inline-flex;
   align-items: center;
@@ -127,6 +34,7 @@
   flex: 0 0 auto;
   width: 32px;
   height: 32px;
+  margin-left: 6px;
   padding: 0;
   font: inherit;
   color: var(--accent);
@@ -134,15 +42,31 @@
   border: 1px solid var(--border);
   border-radius: 999px;
   cursor: pointer;
-  overflow: hidden;
   transition:
-    width 240ms ease,
-    border-width 240ms ease,
-    opacity 200ms ease,
-    margin 240ms ease,
     background 120ms ease,
     border-color 120ms ease,
     color 120ms ease;
+}
+
+/* Vertical divider between the extras group and the always-visible
+ * search trigger. Fades in alongside the extras so the pill reads as
+ * a single icon when the hero is in view. */
+.floating-controls-search::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity 280ms ease-out;
+  pointer-events: none;
+}
+
+.floating-controls.is-scrolled .floating-controls-search::before {
+  opacity: 1;
 }
 
 @media (hover: hover) {
@@ -163,17 +87,6 @@
   display: block;
 }
 
-/* When the wide field is showing, collapse the icon button so the pill
- * shrinks down to just the secondary controls (or disappears entirely
- * if those aren't revealed yet either). */
-.floating-controls.is-search-collapsed .floating-controls-search {
-  width: 0;
-  border-width: 0;
-  opacity: 0;
-  margin-right: -8px;
-  pointer-events: none;
-}
-
 .floating-controls-extra {
   display: flex;
   align-items: center;
@@ -182,7 +95,7 @@
   overflow: hidden;
   opacity: 0;
   visibility: hidden;
-  transform: translateX(8px);
+  transform: translateX(-8px);
   transition:
     max-width 280ms ease-out,
     opacity 280ms ease-out,
@@ -244,12 +157,6 @@
 }
 
 @media (max-width: 480px) {
-  .floating-search {
-    top: 12px;
-    padding: 7px 14px;
-    width: min(86vw, 480px);
-  }
-
   .floating-controls {
     top: 12px;
     right: 12px;
@@ -262,10 +169,18 @@
     width: 28px;
     height: 28px;
   }
+
+  .floating-controls-search {
+    margin-left: 4px;
+  }
+
+  .floating-controls-search::before {
+    left: -8px;
+    height: 16px;
+  }
 }
 
 @media print {
-  .floating-search,
   .floating-controls {
     display: none !important;
   }

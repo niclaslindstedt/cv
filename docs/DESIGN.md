@@ -653,20 +653,26 @@ is confusing.
 
 ### 9.11 Search trigger
 
-The search affordance is the magnifier-icon button that lives **inside
-the floating control bar** (§9.8). The bar itself is mounted from the
-moment the page renders, so the search button is reachable both at the
-very top of the page (before any scroll) and after the user has
-scrolled past the hero. Clicking the button opens the standard search
-Modal (§9.7) which hosts the real input and the ranked results.
+The search affordance is the magnifier-icon button that lives **at the
+right edge of the floating control bar** (§9.8). The bar itself is
+mounted from the moment the page renders, so the search button is
+reachable both at the very top of the page (before any scroll) and
+after the user has scrolled past the hero. Clicking the button opens
+the standard search Modal (§9.7) which hosts the real input and the
+ranked results.
 
 - **Surface.** Same 32×32 Aurora-stroke icon button as the other
   controls in the floating bar — no separate pill.
+- **Placement.** Right-most slot in the floating bar, separated from
+  the rest of the menu by a 1px Mist divider. Reads as a sibling of
+  the Timeline / language / theme group rather than a distinct
+  affordance.
 - **Reveal.** Always visible. The bar's other controls (Timeline,
   language, theme) are gated by the `.hero-meta`
   IntersectionObserver and slide in to the left of the search button
   once the hero scrolls off; the search button never moves and never
-  fades.
+  fades. The divider fades in together with the extras so the pill
+  reads as a single icon while the hero is in view.
 - **Compactness.** On Phone the icon shrinks to 28×28, matching the
   rest of the floating bar.
 - **Keyboard.** `⌘K` / `Ctrl+K` and `/` (when focus is not in another
