@@ -3,8 +3,7 @@
   z-index: 1;
   display: grid;
   grid-template-rows: auto 1fr;
-  height: 100dvh;
-  height: 100lvh;
+  height: 100svh;
   color: var(--fg);
 }
 
