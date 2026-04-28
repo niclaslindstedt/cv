@@ -169,13 +169,6 @@
   margin: 0;
 }
 
-.experience-modal-tagline {
-  margin: 0;
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--fg-muted);
-}
-
 .experience-modal .role-chain {
   margin: 0;
 }
@@ -195,7 +188,8 @@
   color: var(--fg-muted);
 }
 
-.company-modal-stack .entry-stack {
+.company-modal-stack .entry-stack,
+.company-modal-stack .entry-skills {
   margin: 0;
 }
 
