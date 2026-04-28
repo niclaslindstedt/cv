@@ -74,7 +74,8 @@
       "Cybersecurity",
       "Bash/Shell",
       "Mentoring",
-      "Project management"
+      "Project management",
+      "Integrations"
     ],
     "printDescription": {
       "en": "CTO of IBNQ, a software platform for family offices, on a .NET/TypeScript stack on Azure.",
@@ -189,7 +190,8 @@
           "Observability",
           "Bash/Shell",
           "GDPR",
-          "Mentoring"
+          "Mentoring",
+          "Integrations"
         ],
         "printDescription": {
           "en": "Joined Mitt Skolval, a school-selection platform, as senior developer and became CTO. TypeScript/Node.js on AWS Kubernetes.",
