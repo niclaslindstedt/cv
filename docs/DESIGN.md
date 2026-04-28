@@ -651,6 +651,31 @@ render a broken-looking control or skip the affordance. An empty
 thing that explains itself is honest; an empty thing that vanishes
 is confusing.
 
+### 9.11 Search trigger
+
+A fixed Glass pill that mirrors the floating control bar's reveal
+contract on the opposite edge of the viewport (top-left). It looks
+like a search input but is a button — clicking it opens the standard
+search Modal (§9.7) which hosts the real input and the grouped
+results.
+
+- **Surface.** Glass pill with the standard recipe (Vapor + Vapor
+  Edge + Float Shadow). Magnifier icon in Aurora, placeholder-
+  styled label in Mist, optional Code-Mono shortcut hint
+  (`⌘K` / `Ctrl+K`) on the right in a Vapor-Sheen chip.
+- **Reveal.** Same `medium` fade + downward translateY as the
+  floating control bar, triggered by the same `.hero-meta`
+  IntersectionObserver. Both pills appear together once the hero
+  has scrolled off.
+- **Tab order.** Hidden via `opacity` + `visibility` + `tabindex`
+  so the pill stays out of the tab order when not visible.
+- **Compactness.** On Phone, the label and shortcut chip drop and
+  the pill becomes icon-only — same compactness rule as the
+  floating control bar.
+- **Keyboard.** `⌘K` / `Ctrl+K` and `/` (when the focus is not in
+  another text input) open the search modal globally.
+- **Print.** Hidden.
+
 ---
 
 ## 10. Patterns
@@ -1021,6 +1046,7 @@ table. **Update this whenever the implementation moves**.
 | Modal — standard       | `src/components/{Skill,Focus,Summary,Project,Company,ProgramCourses,CourseMoments}Modal.tsx` + `src/styles/modals.css`.                  |
 | Modal — Timeline       | `src/components/Timeline.tsx` + `src/styles/timeline-vis.css`.                                                                           |
 | Floating control bar   | `src/components/FloatingControls.tsx` + `src/styles/floating-controls.css`.                                                              |
+| Search trigger         | `src/components/SearchTrigger.tsx` + `src/components/SearchModal.tsx` + `src/styles/search.css`.                                         |
 | Project date chip      | `src/components/ProjectDateChip.tsx` + `src/styles/projects.css`.                                                                        |
 | Empty state            | `src/components/Skills.tsx` + `src/styles/skills.css`.                                                                                   |
 | Languages              | `src/components/Languages.tsx` + `src/styles/languages.css`.                                                                             |

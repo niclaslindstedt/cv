@@ -128,6 +128,28 @@ type UiStrings = {
     expand: (title: string) => string;
     collapse: (title: string) => string;
   };
+  search: {
+    open: string;
+    shortcutHint: string;
+    placeholder: string;
+    close: string;
+    dialogAria: string;
+    inputAria: string;
+    emptyHint: string;
+    noResults: (query: string) => string;
+    resultCountAria: (count: number) => string;
+    groupLabels: {
+      project: string;
+      company: string;
+      experience: string;
+      assignment: string;
+      education: string;
+      course: string;
+      skill: string;
+      focus: string;
+      summary: string;
+    };
+  };
 };
 
 export const UI_STRINGS: Record<Language, UiStrings> = {
@@ -273,6 +295,29 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       expand: (title) => `Expand ${title} section`,
       collapse: (title) => `Collapse ${title} section`,
     },
+    search: {
+      open: "Search",
+      shortcutHint: "⌘K",
+      placeholder: "Search the CV…",
+      close: "Close search",
+      dialogAria: "Search the CV",
+      inputAria: "Search query",
+      emptyHint: "Type to search across roles, projects, skills, and more.",
+      noResults: (query) => `No matches for “${query}”.`,
+      resultCountAria: (n) =>
+        n === 1 ? "1 search result" : `${n} search results`,
+      groupLabels: {
+        project: "Projects",
+        company: "Companies",
+        experience: "Experience",
+        assignment: "Assignments",
+        education: "Education",
+        course: "Courses",
+        skill: "Skills",
+        focus: "Focus",
+        summary: "About",
+      },
+    },
   },
   sv: {
     present: "Pågående",
@@ -416,6 +461,28 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     section: {
       expand: (title) => `Expandera ${title.toLowerCase()}`,
       collapse: (title) => `Fäll ihop ${title.toLowerCase()}`,
+    },
+    search: {
+      open: "Sök",
+      shortcutHint: "⌘K",
+      placeholder: "Sök i CV:n…",
+      close: "Stäng sökning",
+      dialogAria: "Sök i CV:n",
+      inputAria: "Sökfråga",
+      emptyHint: "Skriv för att söka i roller, projekt, kompetenser med mera.",
+      noResults: (query) => `Inga träffar för ”${query}”.`,
+      resultCountAria: (n) => (n === 1 ? "1 sökträff" : `${n} sökträffar`),
+      groupLabels: {
+        project: "Projekt",
+        company: "Företag",
+        experience: "Erfarenhet",
+        assignment: "Uppdrag",
+        education: "Utbildning",
+        course: "Kurser",
+        skill: "Kompetenser",
+        focus: "Fokus",
+        summary: "Om",
+      },
     },
   },
 };

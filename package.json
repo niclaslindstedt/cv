@@ -23,6 +23,7 @@
     "validate:skill-tags": "node scripts/validate-skill-tags.mjs",
     "validate:timeline-json": "node scripts/validate-timeline-json.mjs",
     "validate:print-json": "node scripts/validate-print-json.mjs",
+    "validate:search-index-json": "node scripts/validate-search-index-json.mjs",
     "generate:timeline": "node scripts/generate-timeline.mjs",
     "generate:print": "node scripts/generate-print.mjs",
     "generate:github-activity": "node scripts/generate-github-activity.mjs",
@@ -31,7 +32,8 @@
     "generate:print-html": "node scripts/generate-print-html.mjs",
     "generate:pdf": "node scripts/generate-pdf.mjs",
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
-    "generate:data": "node scripts/generate-github-activity.mjs && node scripts/generate-project-stats.mjs && node scripts/generate-timeline.mjs && node scripts/generate-print.mjs",
+    "generate:search-index": "node scripts/generate-search-index.mjs",
+    "generate:data": "node scripts/generate-github-activity.mjs && node scripts/generate-project-stats.mjs && node scripts/generate-timeline.mjs && node scripts/generate-print.mjs && node scripts/generate-search-index.mjs",
     "postinstall": "npm run generate:data",
     "prebuild": "npm run generate:data && npm run generate:og",
     "predev": "npm run generate:data",
@@ -39,6 +41,7 @@
     "prelint": "npm run generate:data"
   },
   "dependencies": {
+    "fuse.js": "^7.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
