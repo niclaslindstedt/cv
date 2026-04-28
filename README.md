@@ -4,6 +4,7 @@
 [![Visual](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml)
 [![Lighthouse](https://github.com/niclaslindstedt/cv/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/lighthouse.yml)
 [![Pages](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml)
+[![Dependabot](https://github.com/niclaslindstedt/cv/actions/workflows/dependabot.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/dependabot.yml)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
 Personal site and CV for Niclas Lindstedt — built with Vite, React 18,
@@ -129,8 +130,8 @@ typed components as the live site.
 
 ## Quality gates
 
-Three independent workflows run on every push and pull request, each
-with its own one-word status badge:
+Independent workflows run on every push and pull request, each with
+its own one-word status badge:
 
 - **CI** (`.github/workflows/ci.yml`) — Prettier check, schema
   validation (CV, timeline, print view, search index, skill-tag
@@ -144,6 +145,9 @@ with its own one-word status badge:
   against the built `dist/` with hard budgets in `.lighthouserc.json`:
   LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤ 300 ms, plus accessibility and SEO
   category scores.
+- **Dependabot** (`.github/workflows/dependabot.yml`) — fails when any
+  Dependabot PR is open so the badge turns red until the queue is
+  cleared; re-runs hourly via cron and on PR open/close events.
 
 Deployment runs separately as **Pages**
 (`.github/workflows/pages.yml`) on every push to `main`.
