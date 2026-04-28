@@ -173,7 +173,8 @@
         "credits": "7.5 ECTS",
         "completed": false
       }
-    ]
+    ],
+    "aliases": ["informatics", "is", "informationssystem"]
   },
   {
     "field": {
@@ -541,7 +542,8 @@
           }
         ]
       }
-    ]
+    ],
+    "aliases": ["med", "medicin", "läkarprogrammet", "medical school"]
   },
   {
     "field": {
@@ -670,6 +672,7 @@
           }
         ]
       }
-    ]
+    ],
+    "aliases": ["med", "medicin", "läkarprogrammet", "medical school"]
   }
 ]

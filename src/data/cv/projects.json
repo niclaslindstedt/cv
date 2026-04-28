@@ -41,7 +41,12 @@
     "cratesIo": "zag",
     "npm": "@nlindstedt/zag-agent",
     "pypi": "zag-agent",
-    "nuget": "Zag"
+    "nuget": "Zag",
+    "aliases": [
+      "agent cli",
+      "multi-provider llm cli",
+      "claude codex gemini cli"
+    ]
   },
   {
     "name": "zig",
@@ -72,7 +77,8 @@
     "openSource": true,
     "homepage": "https://niclaslindstedt.github.io/zig",
     "cratesIo": "zig-cli",
-    "npm": "@nlindstedt/zig-workflow"
+    "npm": "@nlindstedt/zig-workflow",
+    "aliases": ["zig workflow", "zwf", "agent workflow runner"]
   },
   {
     "name": "zad",
@@ -96,7 +102,8 @@
     },
     "openSource": true,
     "homepage": "https://niclaslindstedt.github.io/zad",
-    "cratesIo": "zad"
+    "cratesIo": "zad",
+    "aliases": ["agent permissions", "scoped agent access"]
   },
   {
     "name": "ztf",
@@ -125,7 +132,8 @@
     },
     "openSource": true,
     "homepage": "https://niclaslindstedt.github.io/ztf",
-    "cratesIo": "ztf"
+    "cratesIo": "ztf",
+    "aliases": ["agent terminal forwarder", "agent terminal"]
   },
   {
     "name": "oss-spec",
@@ -148,7 +156,8 @@
       "repo": "oss-spec"
     },
     "openSource": true,
-    "cratesIo": "oss-spec"
+    "cratesIo": "oss-spec",
+    "aliases": ["open source spec", "oss specification", "ossspec"]
   },
   {
     "name": "blog",
@@ -171,7 +180,8 @@
       "repo": "blog"
     },
     "openSource": true,
-    "homepage": "https://blog.niclaslindstedt.se"
+    "homepage": "https://blog.niclaslindstedt.se",
+    "aliases": ["personal blog", "writing"]
   },
   {
     "name": "cv",
@@ -193,7 +203,8 @@
       "owner": "niclaslindstedt",
       "repo": "cv"
     },
-    "openSource": true
+    "openSource": true,
+    "aliases": ["resume", "personal site", "personal website", "cv site"]
   },
   {
     "name": "juris",
@@ -217,7 +228,8 @@
     },
     "openSource": true,
     "homepage": "https://niclaslindstedt.github.io/juris/",
-    "pypi": "juris"
+    "pypi": "juris",
+    "aliases": ["legal", "law"]
   },
   {
     "name": "swarm",
@@ -244,7 +256,8 @@
       "owner": "niclaslindstedt",
       "repo": "swarm-cli"
     },
-    "openSource": false
+    "openSource": false,
+    "aliases": ["agent swarm", "swarm of agents"]
   },
   {
     "name": "dotnet-oauth2-server",
@@ -266,7 +279,8 @@
       "owner": "niclaslindstedt",
       "repo": "dotnet-oauth2-server"
     },
-    "openSource": true
+    "openSource": true,
+    "aliases": ["oauth", "oauth2", "auth server", "dotnet auth"]
   },
   {
     "name": "docker-backup",
@@ -289,6 +303,7 @@
       "repo": "docker-backup"
     },
     "openSource": true,
-    "dockerHub": "niclaslindstedt/docker-backup"
+    "dockerHub": "niclaslindstedt/docker-backup",
+    "aliases": ["docker backups", "container backup"]
   }
 ]

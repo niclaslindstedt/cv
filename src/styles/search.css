@@ -1,109 +1,8 @@
-/* Search trigger — floating pill mirroring .floating-controls reveal.
- * Lives in the top-left so it doesn't fight FloatingControls top-right. */
-
-.search-trigger {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 40;
-  appearance: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 12px 6px 12px;
-  font: inherit;
-  font-size: 0.85rem;
-  color: var(--fg-muted);
-  background: var(--glass-bg);
-  backdrop-filter: blur(14px) saturate(150%);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
-  border: 1px solid var(--glass-border);
-  border-radius: 999px;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px);
-  transition:
-    opacity 280ms ease-out,
-    transform 280ms ease-out,
-    visibility 0s linear 280ms,
-    border-color 120ms ease,
-    color 120ms ease,
-    background 120ms ease;
-}
-
-.search-trigger.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  transition:
-    opacity 280ms ease-out,
-    transform 280ms ease-out,
-    visibility 0s linear 0s,
-    border-color 120ms ease,
-    color 120ms ease,
-    background 120ms ease;
-}
-
-.search-trigger:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-
-.search-trigger:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.search-trigger-icon {
-  flex: 0 0 auto;
-  color: var(--accent);
-}
-
-.search-trigger-label {
-  flex: 1 1 auto;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.search-trigger-kbd {
-  flex: 0 0 auto;
-  padding: 2px 6px;
-  font: inherit;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--fg-muted);
-  background: var(--glass-highlight);
-  border: 1px solid var(--glass-border);
-  border-radius: 6px;
-  line-height: 1;
-}
-
-@media (max-width: 520px) {
-  .search-trigger {
-    top: 12px;
-    left: 12px;
-    padding: 5px 7px;
-  }
-
-  .search-trigger-label,
-  .search-trigger-kbd {
-    display: none;
-  }
-}
-
-@media print {
-  .search-trigger {
-    display: none !important;
-  }
-}
-
 /* Search modal — extends the standard modal pattern from modals.css.
  * Surface, sizing, and motion are intentionally identical so the modal
  * contract (focus trap, swipe-close, Escape, body-scroll lock) renders
- * the same way. */
+ * the same way. The search trigger now lives inside the floating control
+ * bar (see floating-controls.css). */
 
 .search-modal-overlay {
   position: fixed;
@@ -215,31 +114,12 @@
   line-height: 1.5;
 }
 
+/* Flat ranked result list — results are mixed across kinds (highest score
+ * first) so a strong stack/skill match never loses to a weak title match
+ * just because they belong to different categories. The kind shows up as a
+ * badge on each row instead. */
+
 .search-results {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.search-results-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.search-results-eyebrow {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-  padding: 0 4px;
-}
-
-.search-results-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -258,7 +138,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
+  gap: 3px;
   padding: 8px 12px;
   font: inherit;
   text-align: left;
@@ -283,10 +163,33 @@
   outline-offset: 2px;
 }
 
+.search-result-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+}
+
+.search-result-kind {
+  flex: 0 0 auto;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  border-radius: 999px;
+  padding: 2px 8px;
+  line-height: 1.2;
+}
+
 .search-result-title {
+  flex: 1 1 auto;
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 .search-result-secondary {
@@ -297,6 +200,13 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.search-result-match {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--fg-muted);
+  line-height: 1.3;
 }
 
 @media (max-width: 520px) {

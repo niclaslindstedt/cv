@@ -200,7 +200,8 @@
       "properties": {
         "area": { "$ref": "#/$defs/localizedString" },
         "since": { "$ref": "#/$defs/yearMonth" },
-        "description": { "$ref": "#/$defs/localizedString" }
+        "description": { "$ref": "#/$defs/localizedString" },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "skillDetail": {
@@ -211,8 +212,16 @@
         "description": { "$ref": "#/$defs/localizedString" },
         "benefits": { "$ref": "#/$defs/localizedString" },
         "drawbacks": { "$ref": "#/$defs/localizedString" },
-        "url": { "type": "string", "format": "uri" }
+        "url": { "type": "string", "format": "uri" },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
+    },
+    "aliasList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Hidden alternative names, abbreviations, or spellings used to surface this entry from search. Never rendered on the site."
     },
     "project": {
       "type": "object",
@@ -288,7 +297,8 @@
           "type": "string",
           "pattern": "^[A-Za-z][A-Za-z0-9_.-]*$",
           "description": "NuGet package id. When set, the project modal renders a 'View on NuGet' link to https://www.nuget.org/packages/{name}/."
-        }
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "company": {
@@ -312,7 +322,8 @@
           "minItems": 1,
           "description": "Reference URLs the `update-company-descriptions` skill consults when rewriting `tagline` and `description`. Not rendered on the site.",
           "items": { "$ref": "#/$defs/sourceUrl" }
-        }
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "sourceUrl": {
@@ -366,7 +377,8 @@
           "type": "array",
           "minItems": 1,
           "items": { "$ref": "#/$defs/assignment" }
-        }
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "assignment": {
@@ -391,7 +403,8 @@
         "printDescription": {
           "$ref": "#/$defs/localizedString",
           "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this assignment. Describes what the holder actually did at the client — paper-optimized: concrete, impact-oriented, no links to click. Falls back to the client's `tagline` when omitted."
-        }
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "education": {
@@ -418,7 +431,8 @@
           "type": "array",
           "minItems": 1,
           "items": { "$ref": "#/$defs/programCourse" }
-        }
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "programCourse": {
@@ -496,7 +510,8 @@
           "description": "Sub-parts (Swedish: \"moment\") that make up the course. Use to break down vague course names or to record courses that were only partially completed.",
           "items": { "$ref": "#/$defs/courseMoment" }
         },
-        "skills": { "$ref": "#/$defs/stringList" }
+        "skills": { "$ref": "#/$defs/stringList" },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "skillGroup": {

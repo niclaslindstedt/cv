@@ -653,28 +653,50 @@ is confusing.
 
 ### 9.11 Search trigger
 
-A fixed Glass pill that mirrors the floating control bar's reveal
-contract on the opposite edge of the viewport (top-left). It looks
-like a search input but is a button — clicking it opens the standard
-search Modal (§9.7) which hosts the real input and the grouped
-results.
+The search affordance is the magnifier-icon button that lives **inside
+the floating control bar** (§9.8). The bar itself is mounted from the
+moment the page renders, so the search button is reachable both at the
+very top of the page (before any scroll) and after the user has
+scrolled past the hero. Clicking the button opens the standard search
+Modal (§9.7) which hosts the real input and the ranked results.
 
-- **Surface.** Glass pill with the standard recipe (Vapor + Vapor
-  Edge + Float Shadow). Magnifier icon in Aurora, placeholder-
-  styled label in Mist, optional Code-Mono shortcut hint
-  (`⌘K` / `Ctrl+K`) on the right in a Vapor-Sheen chip.
-- **Reveal.** Same `medium` fade + downward translateY as the
-  floating control bar, triggered by the same `.hero-meta`
-  IntersectionObserver. Both pills appear together once the hero
-  has scrolled off.
-- **Tab order.** Hidden via `opacity` + `visibility` + `tabindex`
-  so the pill stays out of the tab order when not visible.
-- **Compactness.** On Phone, the label and shortcut chip drop and
-  the pill becomes icon-only — same compactness rule as the
-  floating control bar.
-- **Keyboard.** `⌘K` / `Ctrl+K` and `/` (when the focus is not in
-  another text input) open the search modal globally.
-- **Print.** Hidden.
+- **Surface.** Same 32×32 Aurora-stroke icon button as the other
+  controls in the floating bar — no separate pill.
+- **Reveal.** Always visible. The bar's other controls (Timeline,
+  language, theme) are gated by the `.hero-meta`
+  IntersectionObserver and slide in to the left of the search button
+  once the hero scrolls off; the search button never moves and never
+  fades.
+- **Compactness.** On Phone the icon shrinks to 28×28, matching the
+  rest of the floating bar.
+- **Keyboard.** `⌘K` / `Ctrl+K` and `/` (when focus is not in another
+  text input) open the search modal globally. The handlers live in
+  `App.tsx` so they're active regardless of scroll position.
+- **Print.** Hidden, together with the rest of the floating bar.
+
+### 9.12 Search results
+
+Ranked, **flat** result list inside the search modal. Results are
+mixed across kinds and ordered strictly by score, so a strong
+stack/skill match never loses its slot to a weak title match in a
+different kind. Each row carries:
+
+- **Kind badge.** A pill on the left of the title row (`Project`,
+  `Skill`, `Experience`, …) painted in Aurora-on-Aurora-Mist so the
+  category is glanceable without dominating the row.
+- **Title + secondary.** Standard 0.95rem semibold title; optional
+  smaller Mist secondary (e.g. company name for an experience).
+- **Match explanation.** A Code Mono Mist line beneath the row that
+  states which field produced the best match and how
+  (e.g. `matched alias "k8s"`, `contains description "agents"`,
+  `≈ skill "kubrentes"`). Surfaces the search ranking instead of
+  hiding it; users can immediately tell whether a hit is solid or a
+  fuzzy stretch.
+
+Match-type vocabulary is fixed at four levels — **exact**, **prefix**,
+**partial**, **fuzzy** — and rendered consistently in both
+languages. Field weights and match modifiers are documented in
+[`docs/SEARCH.md`](SEARCH.md).
 
 ---
 

@@ -11,6 +11,31 @@ export type SearchKind =
   | "focus"
   | "summary";
 
+export type SearchField =
+  | "title"
+  | "alias"
+  | "stack"
+  | "skill"
+  | "secondary"
+  | "description";
+
+export type SearchMatchType = "exact" | "prefix" | "partial" | "fuzzy";
+
+export type SearchMatch = {
+  field: SearchField;
+  value: string;
+  type: SearchMatchType;
+};
+
+export type SearchFields = {
+  title: string;
+  secondary?: string;
+  description?: string;
+  stack?: string[];
+  skills?: string[];
+  aliases?: string[];
+};
+
 export type SearchRecord = {
   id: string;
   kind: SearchKind;
@@ -18,7 +43,7 @@ export type SearchRecord = {
   title: string;
   secondary?: string;
   lang: Language;
-  haystack: string;
+  fields: SearchFields;
   localizedTitle?: LocalizedString;
   localizedSecondary?: LocalizedString;
 };

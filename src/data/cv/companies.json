@@ -22,7 +22,8 @@
         "url": "https://sv.wikipedia.org/wiki/Bookbeat",
         "description": "Swedish Wikipedia article covering Bookbeat's history, ownership, and reach."
       }
-    ]
+    ],
+    "aliases": ["book beat", "bookbeat ab"]
   },
   {
     "id": "ibnq",
@@ -35,7 +36,8 @@
       "en": "Wealth-management platform for family offices and private banks: aggregating personal and asset information, AI-assisted decision-making, and data administration for high-net-worth clients.",
       "sv": "Plattform för förmögenhetsförvaltning åt family offices och privatbanker: aggregering av person- och tillgångsdata, AI-stödd beslutsfattning och dataadministration för förmögna klienter."
     },
-    "terminated": true
+    "terminated": true,
+    "aliases": ["ibnq ab", "family office platform"]
   },
   {
     "id": "etimo",
@@ -55,7 +57,8 @@
         "url": "https://etimo.se/om-oss",
         "description": "Etimo's own Swedish-language about page describing the team, location, and the company's social and pro-bono commitments."
       }
-    ]
+    ],
+    "aliases": ["etimo ab"]
   },
   {
     "id": "seb",
@@ -75,7 +78,8 @@
         "url": "https://seb.se/om-seb",
         "description": "SEB's own Swedish-language about page describing the bank's business, scale, and history."
       }
-    ]
+    ],
+    "aliases": ["skandinaviska enskilda banken", "seb bank"]
   },
   {
     "id": "mitt-skolval",
@@ -95,6 +99,12 @@
         "url": "https://swedutech.se/about",
         "description": "About page of Swedutech (Svensk Utbildningsteknologi AB), the company behind the Mitt Skolval product."
       }
+    ],
+    "aliases": [
+      "mittskolval",
+      "mitt skolval",
+      "svensk utbildningsteknologi",
+      "svut"
     ]
   },
   {
@@ -115,7 +125,8 @@
         "url": "https://www.symptoms.se/om-symptoms",
         "description": "Symptoms' own Swedish-language about page covering the platform and its purpose."
       }
-    ]
+    ],
+    "aliases": ["symptoms europe", "symptoms ab"]
   },
   {
     "id": "indicio",
@@ -135,7 +146,8 @@
         "url": "https://www.indicio.com/about",
         "description": "Indicio's own about page describing the company and its forecasting platform."
       }
-    ]
+    ],
+    "aliases": ["indicio technologies", "indicio ab"]
   },
   {
     "id": "agilator",
@@ -147,6 +159,7 @@
     "description": {
       "en": "Niclas's own Swedish aktiebolag, used as the legal entity for solo consulting engagements taken on alongside his other roles.",
       "sv": "Niclas eget aktiebolag, som används som juridisk enhet för solokonsultuppdrag vid sidan av övriga roller."
-    }
+    },
+    "aliases": ["agilator ab"]
   }
 ]

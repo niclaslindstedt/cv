@@ -41,6 +41,7 @@ export type FocusArea = {
   area: LocalizedString;
   since: string;
   description: LocalizedString;
+  aliases?: string[];
 };
 
 export type SkillDetail = {
@@ -48,6 +49,7 @@ export type SkillDetail = {
   benefits?: LocalizedString;
   drawbacks?: LocalizedString;
   url?: string;
+  aliases?: string[];
 };
 
 export type GithubRepoRef = {
@@ -70,6 +72,7 @@ export type Project = {
   pypi?: string;
   npm?: string;
   nuget?: string;
+  aliases?: string[];
 };
 
 export type ProjectStats = {
@@ -103,6 +106,7 @@ export type Company = {
   terminated?: boolean;
   stack?: string[];
   sourceUrls?: SourceUrl[];
+  aliases?: string[];
 };
 
 export type RoleTenure = {
@@ -120,6 +124,7 @@ export type Assignment = {
   skills?: string[];
   notes?: LocalizedString;
   printDescription?: LocalizedString;
+  aliases?: string[];
 };
 
 export type Experience = {
@@ -133,6 +138,7 @@ export type Experience = {
   notes?: LocalizedString;
   printDescription?: LocalizedString;
   assignments?: Assignment[];
+  aliases?: string[];
 };
 
 export type CourseMoment = {
@@ -163,6 +169,7 @@ export type Education = {
   skills?: string[];
   notes?: LocalizedString;
   courses?: ProgramCourse[];
+  aliases?: string[];
 };
 
 export type Course = {
@@ -177,6 +184,7 @@ export type Course = {
   completed?: boolean;
   moments?: CourseMoment[];
   skills?: string[];
+  aliases?: string[];
 };
 
 export type SkillGroup = {
