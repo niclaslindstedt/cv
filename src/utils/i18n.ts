@@ -89,6 +89,7 @@ type UiStrings = {
     aboutCompany: (company: string) => string;
     aboutClient: (company: string) => string;
     visitCompanyWebsite: (company: string) => string;
+    skills: string;
   };
   summaryModal: {
     detailAria: (name: string) => string;
@@ -258,6 +259,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       aboutCompany: (company) => `About ${company}`,
       aboutClient: (company) => `About ${company}`,
       visitCompanyWebsite: (company) => `Visit ${company} ↗`,
+      skills: "Skills",
     },
     summaryModal: {
       detailAria: (name) => `${name} — full summary`,
@@ -453,6 +455,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       aboutCompany: (company) => `Om ${company}`,
       aboutClient: (company) => `Om ${company}`,
       visitCompanyWebsite: (company) => `Besök ${company} ↗`,
+      skills: "Kompetenser",
     },
     summaryModal: {
       detailAria: (name) => `${name} — fullständig sammanfattning`,

@@ -144,11 +144,12 @@
   outline-offset: 2px;
 }
 
-/* Search trigger lives at the end of the hero meta row. `margin-left:
- * auto` pushes it to the far right of whatever row it lands on — on
- * desktop that's the same row as the rest of the menu (with a 1px
- * Mist divider separating it); on mobile, the meta row wraps and the
- * button settles into the right edge of its wrapped row. */
+/* Search trigger lives at the end of the hero meta row. On desktop
+ * (≥640px) `margin-left: auto` pushes it to the far right of the row,
+ * separated from the rest of the menu by a 1px Mist divider. On
+ * narrower viewports the meta row wraps; the button sits naturally next
+ * to the theme toggle on whatever wrapped row it lands on (left-aligned
+ * within that row), so the controls stay grouped together. */
 .hero-search-btn {
   position: relative;
   appearance: none;
@@ -157,7 +158,6 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  margin-left: auto;
   padding: 0;
   font: inherit;
   color: var(--accent);
@@ -190,6 +190,10 @@
 }
 
 @media (min-width: 640px) {
+  .hero-search-btn {
+    margin-left: auto;
+  }
+
   .hero-search-btn::before {
     content: "";
     position: absolute;
