@@ -49,13 +49,9 @@ export function Education({
                     </span>
                   </div>
                   <p className="education-meta-trail">
-                    <span>{t(item.institution)}</span>
-                    <span> · {t(item.level)}</span>
-                    <span>
-                      {" · "}
-                      <span className="education-credits">
-                        {roundCredits(item.credits)}
-                      </span>
+                    {t(item.institution)} · {t(item.level)} ·{" "}
+                    <span className="education-credits">
+                      {roundCredits(item.credits)}
                     </span>
                     {hasCourses && (
                       <span className="education-courses-count">
@@ -73,13 +69,9 @@ export function Education({
                     </span>
                   </div>
                   <p className="education-meta-trail">
-                    <span>{t(item.institution)}</span>
-                    <span> · {t(item.level)}</span>
-                    <span>
-                      {" · "}
-                      <span className="education-credits">
-                        {roundCredits(item.credits)}
-                      </span>
+                    {t(item.institution)} · {t(item.level)} ·{" "}
+                    <span className="education-credits">
+                      {roundCredits(item.credits)}
                     </span>
                   </p>
                 </>
