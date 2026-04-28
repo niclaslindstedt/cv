@@ -3,8 +3,7 @@
   z-index: 1;
   display: grid;
   grid-template-rows: auto 1fr;
-  height: 100dvh;
-  height: 100lvh;
+  height: 100svh;
   color: var(--fg);
 }
 
@@ -13,7 +12,6 @@
   min-height: 0;
   min-width: 0;
   overflow: hidden;
-  padding-bottom: calc(100lvh - 100dvh);
 }
 
 .timeline-vis-labels {
