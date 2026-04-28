@@ -92,18 +92,13 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--bg);
-  background: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
   border: 0;
   border-top-right-radius: var(--radius);
   border-bottom-left-radius: var(--radius);
   line-height: 1.4;
   pointer-events: none;
-}
-
-:root[data-theme="light"] .project-oss-badge {
-  color: var(--halt-fg);
-  background: var(--fg-muted);
 }
 
 .project:has(.project-oss-badge) .project-head h3 {
@@ -112,9 +107,7 @@
 
 .project-dates {
   margin: 0 0 4px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
+  font-size: 0.9rem;
   color: var(--fg-muted);
 }
 
