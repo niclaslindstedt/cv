@@ -7,6 +7,10 @@ import addFormats from "ajv-formats";
 import { describe, expect, it } from "vitest";
 
 import { loadCv } from "../../src/data/load-cv.mjs";
+import {
+  assignmentOpenerKey,
+  experienceOpenerKey,
+} from "../../src/data/opener-keys.mjs";
 import searchIndex from "../../src/data/search-index.json";
 import type { SearchIndex } from "../../src/data/search-index.types";
 
@@ -81,6 +85,13 @@ describe("Search index", () => {
     const courseNames = new Set(cv.courses.map((c) => c.name.en));
     const skills = new Set<string>();
     for (const group of cv.skills) for (const s of group.items) skills.add(s);
+    const experienceKeys = new Set(cv.experience.map(experienceOpenerKey));
+    const assignmentKeys = new Set<string>();
+    for (const exp of cv.experience) {
+      for (const asg of exp.assignments ?? []) {
+        assignmentKeys.add(assignmentOpenerKey(exp, asg));
+      }
+    }
 
     for (const r of index.records) {
       switch (r.kind) {
@@ -88,9 +99,13 @@ describe("Search index", () => {
           expect(projects.has(r.openerKey)).toBe(true);
           break;
         case "company":
-        case "experience":
-        case "assignment":
           expect(companies.has(r.openerKey)).toBe(true);
+          break;
+        case "experience":
+          expect(experienceKeys.has(r.openerKey)).toBe(true);
+          break;
+        case "assignment":
+          expect(assignmentKeys.has(r.openerKey)).toBe(true);
           break;
         case "focus":
           expect(focusAreas.has(r.openerKey)).toBe(true);

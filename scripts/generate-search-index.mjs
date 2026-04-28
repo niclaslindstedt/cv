@@ -4,6 +4,10 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
 import { loadCv } from "../src/data/load-cv.mjs";
+import {
+  assignmentOpenerKey,
+  experienceOpenerKey,
+} from "../src/data/opener-keys.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const defaultOut = resolve(here, "..", "src", "data", "search-index.json");
@@ -179,7 +183,7 @@ function buildRecords(cv) {
     });
   });
 
-  // Experience entries — title is the role chain, opens the company modal.
+  // Experience entries — title is the role chain, opens the experience modal.
   cv.experience.forEach((exp, i) => {
     const company = companies.get(exp.companyId);
     if (!company) return;
@@ -191,7 +195,7 @@ function buildRecords(cv) {
     emit({
       id: `exp-${i}`,
       kind: "experience",
-      openerKey: company.id,
+      openerKey: experienceOpenerKey(exp),
       title: { en: titleEn, sv: titleSv },
       secondary: { en: company.name, sv: company.name },
       fieldsByLang: (lang) => ({
@@ -201,6 +205,7 @@ function buildRecords(cv) {
         skills: exp.skills ?? [],
         aliases: [
           ...(exp.aliases ?? []),
+          company.name,
           // Each role title is also a useful alias (e.g. "CTO" should find a CTO role).
           ...sortedRoles.map((r) => pickLang(r.title, lang)),
         ],
@@ -224,7 +229,7 @@ function buildRecords(cv) {
       emit({
         id: `exp-${i}-asg-${j}`,
         kind: "assignment",
-        openerKey: client.id,
+        openerKey: assignmentOpenerKey(exp, assignment),
         title: { en: asgTitleEn, sv: asgTitleSv },
         secondary: {
           en: `${client.name} · via ${company.name}`,
