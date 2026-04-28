@@ -1,12 +1,10 @@
 /* Floating-controls layer.
  *
- * A small Glass pill anchored top-right. The search icon sits at the
- * far right and is always visible, so search is reachable both at the
- * very top of the page and after scrolling. Timeline, language, and
- * theme slide in to the left of the search once the hero scrolls past
- * (gated by the .hero-meta IntersectionObserver). A thin divider
- * separates the search trigger from the rest of the menu when the
- * extras are present. */
+ * A small Glass pill anchored top-right that mirrors the in-hero meta
+ * row's controls (Timeline, language, theme, search) once the user
+ * scrolls past the hero. Hidden in its entirety while the hero is in
+ * view — the in-hero meta row owns those affordances above the fold.
+ * Reveal/hide is gated by an IntersectionObserver on `.hero-meta`. */
 
 .floating-controls {
   position: fixed;
@@ -23,6 +21,25 @@
   border: 1px solid var(--glass-border);
   border-radius: 999px;
   box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition:
+    opacity 280ms ease-out,
+    transform 280ms ease-out,
+    visibility 0s linear 280ms;
+}
+
+.floating-controls.is-scrolled {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition:
+    opacity 280ms ease-out,
+    transform 280ms ease-out,
+    visibility 0s linear 0s;
 }
 
 .floating-controls-search {
@@ -48,9 +65,8 @@
     color 120ms ease;
 }
 
-/* Vertical divider between the extras group and the always-visible
- * search trigger. Fades in alongside the extras so the pill reads as
- * a single icon when the hero is in view. */
+/* Vertical divider that separates the search trigger from the rest of
+ * the menu, matching the in-hero meta row. */
 .floating-controls-search::before {
   content: "";
   position: absolute;
@@ -59,14 +75,8 @@
   width: 1px;
   height: 18px;
   background: var(--border);
-  opacity: 0;
   transform: translateY(-50%);
-  transition: opacity 280ms ease-out;
   pointer-events: none;
-}
-
-.floating-controls.is-scrolled .floating-controls-search::before {
-  opacity: 1;
 }
 
 @media (hover: hover) {
@@ -85,38 +95,6 @@
   width: 14px;
   height: 14px;
   display: block;
-}
-
-.floating-controls-extra {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  max-width: 0;
-  overflow: hidden;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(-8px);
-  transition:
-    max-width 280ms ease-out,
-    opacity 280ms ease-out,
-    transform 280ms ease-out,
-    visibility 0s linear 280ms;
-}
-
-.floating-controls.is-scrolled .floating-controls-extra {
-  max-width: 240px;
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0);
-  transition:
-    max-width 280ms ease-out,
-    opacity 280ms ease-out,
-    transform 280ms ease-out,
-    visibility 0s linear 0s;
-}
-
-.floating-controls-extra > * {
-  flex: 0 0 auto;
 }
 
 .floating-controls-timeline {

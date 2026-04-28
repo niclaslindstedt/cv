@@ -1,7 +1,7 @@
 import type { CV } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
 import type { Theme } from "../utils/theme";
-import { LanguageToggle, ThemeToggle } from "./Controls";
+import { LanguageToggle, SearchButton, ThemeToggle } from "./Controls";
 
 type Props = {
   cv: CV;
@@ -9,6 +9,7 @@ type Props = {
   onToggleTheme: () => void;
   onOpenTimeline: () => void;
   onOpenSummary: () => void;
+  onOpenSearch: () => void;
 };
 
 export function Hero({
@@ -17,6 +18,7 @@ export function Hero({
   onToggleTheme,
   onOpenTimeline,
   onOpenSummary,
+  onOpenSearch,
 }: Props) {
   const { lang, setLang, t, ui } = useLang();
   const pdfBase = cv.print.pdfFilename ?? "cv.pdf";
@@ -72,6 +74,7 @@ export function Hero({
         </a>
         <LanguageToggle lang={lang} setLang={setLang} />
         <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
+        <SearchButton onClick={onOpenSearch} />
       </div>
     </header>
   );
