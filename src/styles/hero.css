@@ -115,6 +115,7 @@
   appearance: none;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   height: 32px;
   padding: 0 14px;
   font: inherit;
@@ -129,6 +130,12 @@
   transition:
     background 120ms ease,
     border-color 120ms ease;
+}
+
+.hero-download svg {
+  width: 14px;
+  height: 14px;
+  display: block;
 }
 
 .hero-download:hover,

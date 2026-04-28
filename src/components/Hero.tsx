@@ -67,12 +67,30 @@ export function Hero({
           download={pdfDownloadName}
           aria-label={ui.hero.downloadAria}
         >
-          {t(cv.actions.downloadPdf)}
+          <PdfIcon />
+          <span>{t(cv.actions.downloadPdf)}</span>
         </a>
         <LanguageToggle lang={lang} setLang={setLang} />
         <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
         <SearchButton onClick={onOpenSearch} />
       </div>
     </header>
+  );
+}
+
+function PdfIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+      <path d="M14 3v5h5" />
+    </svg>
   );
 }
