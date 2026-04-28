@@ -102,7 +102,15 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
               placeholder={ui.search.placeholder}
               aria-label={ui.search.inputAria}
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                const next = e.target.value;
+                setQuery(next);
+                // iOS Safari leaves the caret at the previous typed position
+                // when the WebKit search cancel button clears the field, so
+                // the placeholder renders with a stray caret mid-text. Snap
+                // the selection back to the start whenever the value clears.
+                if (next === "") e.target.setSelectionRange(0, 0);
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
