@@ -36,7 +36,7 @@ in sync:
 | `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                  |
 | `make clean`              | Remove `dist/` and Vite cache                                                                    |
 
-CI is split into three independent workflows, each with its own
+CI is split into independent workflows, each with its own
 one-word status badge. They run on every push and pull request:
 
 - **CI** (`.github/workflows/ci.yml`) — `make fmt-check`, `make validate`,
@@ -45,6 +45,9 @@ one-word status badge. They run on every push and pull request:
   `make test-visual` (Playwright on Chromium, desktop + mobile viewports).
 - **Lighthouse** (`.github/workflows/lighthouse.yml`) — `make build`,
   then `make lighthouse` to assert Web-Vitals + category-score budgets.
+- **Dependabot** (`.github/workflows/dependabot.yml`) — fails when any
+  Dependabot PR is open so the README badge turns red until the queue is
+  cleared. Re-runs hourly via cron and on PR open/close events.
 
 Deployment runs separately in **Pages** (`.github/workflows/pages.yml`)
 on every push to `main`.
