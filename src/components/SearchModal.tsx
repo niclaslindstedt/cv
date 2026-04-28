@@ -27,11 +27,13 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
   useModalFocus(modalRef, active);
 
   // Select any persisted query on reopen so typing replaces it immediately.
+  // Keyed on `open` (not `active`) so returning from a destination modal
+  // restores focus without re-selecting the text the user already typed.
   useEffect(() => {
-    if (!active) return;
+    if (!open) return;
     const input = inputRef.current;
     if (input && input.value.length > 0) input.select();
-  }, [active]);
+  }, [open]);
 
   useEffect(() => {
     if (!active) return;
