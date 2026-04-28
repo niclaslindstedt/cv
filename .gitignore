@@ -17,6 +17,8 @@ src/data/print.json
 src/data/github-activity.json
 # Generated artifacts (see scripts/generate-project-stats.mjs)
 src/data/project-stats.json
+# Generated artifacts (see scripts/generate-search-index.mjs)
+src/data/search-index.json
 
 # Local CV override (see src/data/load-cv.mjs). Holds private contact
 # details and any sensitive copy a public CV should not carry; consumed

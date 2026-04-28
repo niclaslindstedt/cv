@@ -14,6 +14,8 @@ import { PrintView } from "./components/PrintView";
 import { ProgramCoursesModal } from "./components/ProgramCoursesModal";
 import { ProjectModal } from "./components/ProjectModal";
 import { Projects } from "./components/Projects";
+import { SearchModal } from "./components/SearchModal";
+import { SearchTrigger } from "./components/SearchTrigger";
 import { SkillModal } from "./components/SkillModal";
 import { Skills } from "./components/Skills";
 import { SummaryModal } from "./components/SummaryModal";
@@ -27,6 +29,7 @@ import type {
   Project,
   SkillDetail,
 } from "./data/cv.types";
+import type { SearchKind } from "./data/search-index.types";
 import { useGlassReflections } from "./utils/glassReflections";
 import { useLang } from "./utils/i18n";
 import { buildCompanyStackMap, buildSkillUsageMap } from "./utils/skills";
@@ -42,8 +45,26 @@ export function App() {
     [companies],
   );
   const companyStacks = useMemo(() => buildCompanyStackMap(cv), []);
+  const projectsByName = useMemo(
+    () => new Map<string, Project>(cv.projects.map((p) => [p.name, p])),
+    [],
+  );
+  const focusByAreaEn = useMemo(
+    () => new Map<string, FocusArea>(cv.focus.map((f) => [f.area.en, f])),
+    [],
+  );
+  const educationByFieldEn = useMemo(
+    () =>
+      new Map<string, EducationItem>(cv.education.map((e) => [e.field.en, e])),
+    [],
+  );
+  const courseByNameEn = useMemo(
+    () => new Map<string, Course>(cv.courses.map((c) => [c.name.en, c])),
+    [],
+  );
   const [timelineOpen, setTimelineOpen] = useState(false);
   const [summaryOpen, setSummaryOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [selectedFocus, setSelectedFocus] = useState<FocusArea | null>(null);
   const [selectedProgram, setSelectedProgram] = useState<EducationItem | null>(
@@ -55,6 +76,46 @@ export function App() {
   const { theme, toggle: toggleTheme } = useTheme();
   const { t, ui } = useLang();
   useGlassReflections();
+
+  const handleSearchSelect = (kind: SearchKind, openerKey: string) => {
+    setSearchOpen(false);
+    switch (kind) {
+      case "summary":
+        setSummaryOpen(true);
+        return;
+      case "focus": {
+        const focus = focusByAreaEn.get(openerKey);
+        if (focus) setSelectedFocus(focus);
+        return;
+      }
+      case "project": {
+        const project = projectsByName.get(openerKey);
+        if (project) setSelectedProject(project);
+        return;
+      }
+      case "company":
+      case "experience":
+      case "assignment": {
+        const company = companies.get(openerKey);
+        if (company) setSelectedCompany(company);
+        return;
+      }
+      case "education": {
+        const program = educationByFieldEn.get(openerKey);
+        if (program) setSelectedProgram(program);
+        return;
+      }
+      case "course": {
+        const course = courseByNameEn.get(openerKey);
+        if (course) setSelectedCourse(course);
+        return;
+      }
+      case "skill": {
+        setSelectedSkill(openerKey);
+        return;
+      }
+    }
+  };
 
   useEffect(() => {
     document.title = t(cv.meta.documentTitle);
@@ -136,6 +197,12 @@ export function App() {
         theme={theme}
         onToggleTheme={toggleTheme}
         onOpenTimeline={() => setTimelineOpen(true)}
+      />
+      <SearchTrigger onOpen={() => setSearchOpen(true)} />
+      <SearchModal
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onSelect={handleSearchSelect}
       />
       <Timeline open={timelineOpen} onClose={() => setTimelineOpen(false)} />
       <SummaryModal
