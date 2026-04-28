@@ -13,15 +13,9 @@ import timelineData from "../data/timeline.json";
 import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
-import { useModalFocus } from "../utils/useModalFocus";
 import { NoteIcon } from "./NoteIcon";
 import { ProjectDateChip } from "./ProjectDateChip";
 import { TrackIcon } from "./TrackIcon";
-
-type Props = {
-  open: boolean;
-  onClose: () => void;
-};
 
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 8;
@@ -132,18 +126,15 @@ function ghOpacity(
   return Math.min(1, 0.12 + norm * 0.88);
 }
 
-export function Timeline({ open, onClose }: Props) {
+export function Timeline() {
   const { lang, t, ui } = useLang();
   const [scale, setScale] = useState(1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const labelsInnerRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
-
-  useModalFocus(overlayRef, open);
 
   const tracks = layout.tracks;
   const intervals = layout.intervals;
@@ -231,7 +222,6 @@ export function Timeline({ open, onClose }: Props) {
   );
 
   useEffect(() => {
-    if (!open) return;
     const el = viewportRef.current;
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
@@ -242,10 +232,9 @@ export function Timeline({ open, onClose }: Props) {
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
-  }, [open]);
+  }, []);
 
   useEffect(() => {
-    if (!open) return;
     const viewport = viewportRef.current;
     const inner = labelsInnerRef.current;
     if (!viewport || !inner) return;
@@ -255,51 +244,18 @@ export function Timeline({ open, onClose }: Props) {
     onScroll();
     viewport.addEventListener("scroll", onScroll, { passive: true });
     return () => viewport.removeEventListener("scroll", onScroll);
-  }, [open, contentHeight]);
-
-  const handleClose = useCallback(() => {
-    setSelectedId(null);
-    setScale(1);
-    onClose();
-  }, [onClose]);
+  }, [contentHeight]);
 
   useEffect(() => {
-    if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (selectedId) setSelectedId(null);
-        else handleClose();
+        else window.history.back();
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open, handleClose, selectedId]);
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    window.history.pushState({ cvTimelineOpen: true }, "");
-    const onPopState = () => {
-      setSelectedId(null);
-      setScale(1);
-      onClose();
-    };
-    window.addEventListener("popstate", onPopState);
-    return () => {
-      window.removeEventListener("popstate", onPopState);
-      if (window.history.state?.cvTimelineOpen) {
-        window.history.back();
-      }
-    };
-  }, [open, onClose]);
+  }, [selectedId]);
 
   const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "touch") return;
@@ -330,8 +286,6 @@ export function Timeline({ open, onClose }: Props) {
     pointersRef.current.delete(e.pointerId);
     if (pointersRef.current.size < 2) pinchRef.current = null;
   };
-
-  if (!open) return null;
 
   const monthNames = ui.months;
 
@@ -530,13 +484,7 @@ export function Timeline({ open, onClose }: Props) {
   };
 
   return (
-    <div
-      ref={overlayRef}
-      className="timeline-vis-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-label={ui.timeline.title}
-    >
+    <div className="timeline-vis-page" aria-label={ui.timeline.title}>
       <div className="timeline-vis-toolbar">
         <div className="timeline-vis-title">
           <strong>{ui.timeline.title}</strong>
@@ -572,14 +520,6 @@ export function Timeline({ open, onClose }: Props) {
               {ui.timeline.reset}
             </button>
           </div>
-          <button
-            type="button"
-            className="timeline-vis-close"
-            onClick={handleClose}
-            aria-label={ui.timeline.close}
-          >
-            <span aria-hidden="true">✕</span>
-          </button>
         </div>
       </div>
 
