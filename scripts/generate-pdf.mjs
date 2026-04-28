@@ -1,12 +1,12 @@
 // Emits one dist/<base>-<lang>.pdf per supported UI language after
-// `vite build` (e.g. dist/cv-en.pdf and dist/cv-sv.pdf). Spins up a tiny
-// static file server over dist/, drives a headless Chromium with
-// Puppeteer, navigates with `?lang=<lang>` so the language picker in
-// readInitialLanguage forces the right language, dispatches the site's
-// `beforeprint` hook (so collapsed details expand), then writes the PDF
-// using the print stylesheet defined in src/styles.css. With CV_LOCAL=1
-// the local override is applied, which is the canonical way to bake
-// private PDFs under a different filename base.
+// `vite build` (e.g. dist/cv-en.pdf and dist/cv-sv.pdf). Loads the static
+// dist/print-<lang>.html pages produced by generate-print-html.mjs through
+// a tiny static file server over dist/, then drives a headless Chromium
+// with Puppeteer to print them. The pre-rendered markup means we don't
+// have to wait for the SPA to hydrate or expand collapsed <details>; the
+// page is already in its final printable form. With CV_LOCAL=1 the local
+// override is applied at print.json bake time, which is the canonical way
+// to bake private PDFs under a different filename base.
 
 import fs from "node:fs";
 import http from "node:http";
@@ -28,7 +28,8 @@ if (!fs.existsSync(DIST)) {
 
 const DEFAULT_PDF_FILENAME = "cv.pdf";
 // Mirrors the `Language` union in src/data/cv.types.ts. Update both
-// places when adding a new UI language.
+// places when adding a new UI language. Kept in sync with
+// generate-print-html.mjs.
 const LANGUAGES = ["en", "sv"];
 const cv = loadCv();
 const pdfFilename = cv.print?.pdfFilename ?? DEFAULT_PDF_FILENAME;
@@ -37,6 +38,16 @@ if (path.basename(pdfFilename) !== pdfFilename) {
     `Invalid cv.print.pdfFilename "${pdfFilename}" — must be a bare filename without directory separators.`,
   );
   process.exit(1);
+}
+
+for (const lang of LANGUAGES) {
+  const printHtml = path.join(DIST, `print-${lang}.html`);
+  if (!fs.existsSync(printHtml)) {
+    console.error(
+      `${path.relative(ROOT, printHtml)} is missing — run \`generate:print-html\` before generate-pdf.`,
+    );
+    process.exit(1);
+  }
 }
 
 function pdfFilenameFor(base, lang) {
@@ -95,15 +106,9 @@ function serveDist() {
         stat = fs.statSync(filePath);
       }
     } catch {
-      // SPA fallback: any unknown route should serve index.html.
-      filePath = path.join(DIST, "index.html");
-      try {
-        stat = fs.statSync(filePath);
-      } catch {
-        res.writeHead(404);
-        res.end("Not found");
-        return;
-      }
+      res.writeHead(404);
+      res.end("Not found");
+      return;
     }
     const type =
       MIME[path.extname(filePath).toLowerCase()] ?? "application/octet-stream";
@@ -123,7 +128,7 @@ function serveDist() {
 }
 
 const { server, port } = await serveDist();
-const url = `http://127.0.0.1:${port}/`;
+const url = `http://127.0.0.1:${port}`;
 
 let browser;
 try {
@@ -135,19 +140,9 @@ try {
   for (const lang of LANGUAGES) {
     const page = await browser.newPage();
     await page.emulateMediaType("print");
-    await page.goto(`${url}?lang=${lang}`, {
+    await page.goto(`${url}/print-${lang}.html`, {
       waitUntil: "networkidle0",
       timeout: 60_000,
-    });
-
-    // Mirror what main.tsx does on `beforeprint`: open every collapsed
-    // <details class="assignments"> so the PDF includes their content.
-    await page.evaluate(() => {
-      document.querySelectorAll("details.assignments").forEach((d) => {
-        d.open = true;
-      });
-      // Also dispatch the event in case any other component listens for it.
-      window.dispatchEvent(new Event("beforeprint"));
     });
 
     const outPath = path.join(DIST, pdfFilenameFor(pdfFilename, lang));
