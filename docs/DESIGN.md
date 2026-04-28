@@ -664,14 +664,16 @@ the real input and the ranked results.
   the hero meta row and the floating bar — same family, same icon,
   same height as the surrounding pills and toggles so the row reads as
   one cluster.
-- **Placement.** Last item of both rows, with `margin-left: auto` so
-  it always lands at the right edge of whichever row it wraps into.
-  On desktop (≥ 640px) the meta row stays single-line so the button
-  settles next to the theme toggle, separated from it by a 1px Mist
-  divider — the search reads as a sibling of the Timeline / language
-  / theme cluster rather than an extension of it. On mobile the row
-  wraps; the divider is omitted because the button typically lands
-  alone on its own line.
+- **Placement.** Last item of both rows. On desktop (≥ 640px) the
+  meta row stays single-line and `margin-left: auto` pushes the
+  button to the right edge, separated from the theme toggle by a 1px
+  Mist divider — the search reads as a sibling of the Timeline /
+  language / theme cluster rather than an extension of it. On mobile
+  (< 640px) the row wraps and the auto-margin is dropped, so the
+  button sits naturally adjacent to the theme toggle on whichever
+  wrapped row it lands on (left-aligned within that row). The
+  divider is omitted on mobile so the search and theme controls read
+  as one tight cluster.
 - **Reveal.** The hero variant is always visible above the fold.
   The floating-bar variant fades in (and the whole pill with it)
   once `.hero-meta` scrolls off, gated by the same
@@ -722,16 +724,23 @@ engagement) each represent **one continuous tenure**. Internal
 promotions or title changes do not break that continuity — they live
 inside a single card as a `roles[]` array.
 
-- A `small`-sized arrow icon (Aurora) appears on the card heading
-  whenever the parent has more than one role, and on every role row
-  in the chain except the original starting role at the bottom.
-- When `roles.length > 1`, the card renders a numbered chain
-  directly after the date row. Rows are listed reverse-
-  chronologically; each row is one line: arrow, title, date range.
-  The bottom row (the original starting title) shows a `small`
-  hollow-circle icon (Aurora at 0.7 opacity) so the column reads as
-  a chain anchored at an origin rather than a series of arrows
-  trailing into space.
+- **On the timeline card heading,** a `small`-sized arrow icon
+  (Aurora) appears in the title whenever the parent has more than
+  one role. The chain (when `roles.length > 1`) renders directly
+  after the date row and lists **only the older roles** —
+  reverse-chronological — because the heading already shows the
+  newest title.
+- **In the experience/assignment modal,** the title does **not**
+  carry the arrow icon. The newest role stays in the title alone
+  (so long company names stay visually clean), and the role chain
+  in the body renders **every** role including the newest one, so
+  the full promotion history is one self-contained list rather
+  than split between the title and the chain.
+- Within the chain, every row shows arrow + title + date range, in
+  reverse-chronological order. The bottom row (the original
+  starting title) shows a `small` hollow-circle icon (Aurora at 0.7
+  opacity) so the column reads as a chain anchored at an origin
+  rather than a series of arrows trailing into space.
 - The chain sits inside a 1px Aurora left border that visually
   anchors the progression.
 - Title type in the chain uses Code Mono (matching the heading role)

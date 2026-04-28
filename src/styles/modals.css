@@ -108,13 +108,35 @@
   gap: 8px;
 }
 
+.experience-modal .skill-modal-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+  flex: 1 1 0;
+}
+
 .experience-modal .skill-modal-title .role {
   font-family: var(--font-mono);
+}
+
+.experience-modal-role-line {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
 }
 
 .experience-modal-subject {
   color: var(--fg-muted);
   font-weight: 400;
+  font-size: 0.9em;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .experience-modal-subject .company-btn {
@@ -123,7 +145,7 @@
 
 .experience-modal-via {
   color: var(--fg-muted);
-  font-size: 0.85em;
+  font-size: 0.9em;
   font-weight: 400;
 }
 

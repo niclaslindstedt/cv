@@ -98,8 +98,7 @@ function sortRolesAsc(roles: RoleTenure[]): RoleTenure[] {
 
 function RoleChain({ roles }: { roles: RoleTenure[] }) {
   const { lang, t } = useLang();
-  const olderRoles = sortRolesAsc(roles).slice(0, -1);
-  const reversed = [...olderRoles].reverse();
+  const reversed = [...sortRolesAsc(roles)].reverse();
   return (
     <ol className="role-chain">
       {reversed.map((r, idx) => {
@@ -183,10 +182,13 @@ export function ExperienceModal({
       >
         <header className="skill-modal-head">
           <h2 className="skill-modal-title experience-modal-title">
-            {hasPromotion && <PromotionArrow />}
-            <span className="role">{t(newestRole.title)}</span>
+            <span className="experience-modal-role-line">
+              <span className="role">{t(newestRole.title)}</span>
+              {isActive && (
+                <span className="skill-modal-years">{ui.present}</span>
+              )}
+            </span>
             <span className="experience-modal-subject">
-              {" · "}
               <button
                 type="button"
                 className="company company-btn"
@@ -202,9 +204,6 @@ export function ExperienceModal({
                 </span>
               )}
             </span>
-            {isActive && (
-              <span className="skill-modal-years">{ui.present}</span>
-            )}
           </h2>
           <button
             type="button"
@@ -259,19 +258,24 @@ export function ExperienceModal({
               </div>
             )}
             {skills.length > 0 && (
-              <ul className="entry-skills">
-                {skills.map((skill) => (
-                  <li key={skill}>
-                    <button
-                      type="button"
-                      className="entry-skill-btn"
-                      onClick={() => onSkillClick(skill)}
-                    >
-                      {skill}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <div className="company-modal-stack">
+                <h3 className="company-modal-stack-title">
+                  {ui.experienceModal.skills}
+                </h3>
+                <ul className="entry-skills">
+                  {skills.map((skill) => (
+                    <li key={skill}>
+                      <button
+                        type="button"
+                        className="entry-skill-btn"
+                        onClick={() => onSkillClick(skill)}
+                      >
+                        {skill}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
             {item.notes && (
               <p className="entry-notes">
