@@ -654,26 +654,34 @@ is confusing.
 
 ### 9.11 Search trigger
 
-The search affordance is the magnifier-icon button that lives **inside
-the floating control bar** (§9.8). The bar itself is mounted from the
-moment the page renders, so the search button is reachable both at the
-very top of the page (before any scroll) and after the user has
-scrolled past the hero. Clicking the button opens the standard search
-Modal (§9.7) which hosts the real input and the ranked results.
+The search affordance is the magnifier-icon button that lives in the
+**hero meta row** while the hero is in view, and mirrors into the
+**floating control bar** (§9.8) once the user scrolls past it.
+Clicking the button opens the standard search Modal (§9.7) which hosts
+the real input and the ranked results.
 
-- **Surface.** Same 32×32 Aurora-stroke icon button as the other
-  controls in the floating bar — no separate pill.
-- **Reveal.** Always visible. The bar's other controls (Timeline,
-  language, theme) are gated by the `.hero-meta`
-  IntersectionObserver and slide in to the left of the search button
-  once the hero scrolls off; the search button never moves and never
-  fades.
-- **Compactness.** On Phone the icon shrinks to 28×28, matching the
-  rest of the floating bar.
+- **Surface.** A circular Aurora-stroke icon button in the hero meta
+  row (34×34), and a 32×32 sibling in the floating bar — same family,
+  same icon, just sized to match each context.
+- **Placement.** Last item of both rows, with `margin-left: auto` so
+  it always lands at the right edge of whichever row it wraps into.
+  On desktop (≥ 640px) the meta row stays single-line so the button
+  settles next to the theme toggle, separated from it by a 1px Mist
+  divider — the search reads as a sibling of the Timeline / language
+  / theme cluster rather than an extension of it. On mobile the row
+  wraps; the divider is omitted because the button typically lands
+  alone on its own line.
+- **Reveal.** The hero variant is always visible above the fold.
+  The floating-bar variant fades in (and the whole pill with it)
+  once `.hero-meta` scrolls off, gated by the same
+  IntersectionObserver as the rest of the floating bar.
+- **Compactness.** On Phone the floating-bar icon shrinks to 28×28,
+  matching the rest of the bar.
 - **Keyboard.** `⌘K` / `Ctrl+K` and `/` (when focus is not in another
   text input) open the search modal globally. The handlers live in
   `App.tsx` so they're active regardless of scroll position.
-- **Print.** Hidden, together with the rest of the floating bar.
+- **Print.** Hidden, together with the rest of the floating bar; the
+  in-hero button inherits the meta row's print rules.
 
 ### 9.12 Search results
 

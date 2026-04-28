@@ -8,6 +8,7 @@
 
 .education-list > li {
   position: relative;
+  min-width: 0;
   padding: 20px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
@@ -48,6 +49,11 @@
   color: var(--fg-muted);
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+.education-meta-trail {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .education-meta-trail > span {

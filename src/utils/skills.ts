@@ -19,6 +19,7 @@ export type SkillUsage = {
   kind: "project" | "experience" | "assignment" | "education" | "course";
   label: string | LocalizedString;
   role?: LocalizedString;
+  via?: string;
   startDate?: string;
   endDate?: string | null;
 };
@@ -69,7 +70,8 @@ export function buildSkillUsageMap(
       for (const tag of uniq(assignment.stack, assignment.skills)) {
         push(tag, {
           kind: "assignment",
-          label: `${companyName(assignment.clientId)} (${companyName(exp.companyId)})`,
+          label: companyName(assignment.clientId),
+          via: companyName(exp.companyId),
           role: joinRoleTitles(assignment.roles),
           startDate: assignment.startDate,
           endDate: assignment.endDate,

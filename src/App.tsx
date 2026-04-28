@@ -167,6 +167,7 @@ export function App() {
             theme={theme}
             onToggleTheme={toggleTheme}
             onOpenSummary={() => setSummaryOpen(true)}
+            onOpenSearch={() => setSearchOpen(true)}
           />
           <Focus
             title={t(cv.sections.focus)}
