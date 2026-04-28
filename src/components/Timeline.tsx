@@ -587,7 +587,7 @@ export function Timeline() {
             className="timeline-vis-content"
             style={{
               width: axisLength,
-              minHeight: `max(100%, ${AXIS_SIZE + contentHeight + 100}px)`,
+              minHeight: `max(100%, ${AXIS_SIZE + contentHeight}px)`,
             }}
           >
             <div
