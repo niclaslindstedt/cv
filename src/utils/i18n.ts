@@ -30,7 +30,6 @@ type UiStrings = {
     zoomIn: string;
     zoomOut: string;
     resetZoom: string;
-    reset: string;
     close: string;
     closeDetails: string;
     viewOnGitHub: string;
@@ -190,11 +189,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     timeline: {
       title: "Career timeline",
-      hint: "Ctrl+scroll to zoom · pinch on touch · drag to pan",
+      hint: "Drag to pan · use −/+ or pinch to zoom",
       zoomIn: "Zoom in",
       zoomOut: "Zoom out",
       resetZoom: "Reset zoom",
-      reset: "Reset",
       close: "Close timeline",
       closeDetails: "Close details",
       viewOnGitHub: "View on GitHub →",
@@ -385,11 +383,10 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     timeline: {
       title: "Karriärtidslinje",
-      hint: "Ctrl+skroll för att zooma · nyp på pekskärm · dra för att panorera",
+      hint: "Dra för att panorera · använd −/+ eller nyp för att zooma",
       zoomIn: "Zooma in",
       zoomOut: "Zooma ut",
       resetZoom: "Återställ zoom",
-      reset: "Återställ",
       close: "Stäng tidslinje",
       closeDetails: "Stäng detaljer",
       viewOnGitHub: "Visa på GitHub →",
