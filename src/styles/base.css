@@ -12,10 +12,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+html {
+  min-height: 100dvh;
+  min-height: 100lvh;
+}
+
 body {
   position: relative;
   overflow-x: hidden;
   background-color: var(--sky-top);
+  min-height: 100dvh;
+  min-height: 100lvh;
 }
 
 a {
