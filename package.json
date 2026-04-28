@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && npm run generate:pdf && npm run generate:sitemap",
+    "build": "tsc -b && vite build && npm run generate:print-html && npm run generate:pdf && npm run generate:sitemap",
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
@@ -28,6 +28,7 @@
     "generate:github-activity": "node scripts/generate-github-activity.mjs",
     "generate:project-stats": "node scripts/generate-project-stats.mjs",
     "generate:og": "node scripts/generate-og-image.mjs",
+    "generate:print-html": "node scripts/generate-print-html.mjs",
     "generate:pdf": "node scripts/generate-pdf.mjs",
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "generate:data": "node scripts/generate-github-activity.mjs && node scripts/generate-project-stats.mjs && node scripts/generate-timeline.mjs && node scripts/generate-print.mjs",
