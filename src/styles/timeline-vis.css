@@ -17,7 +17,7 @@
 .timeline-vis-labels {
   position: relative;
   flex: 0 0 136px;
-  background: var(--bg-elev);
+  background: var(--sky-top);
   border-right: 1px solid var(--border);
   overflow: hidden;
   z-index: 6;
@@ -97,7 +97,7 @@
   gap: 12px;
   padding: 12px 20px;
   border-bottom: 1px solid var(--border);
-  background: var(--bg-elev);
+  background: var(--sky-top);
 }
 
 .timeline-vis-title {
@@ -174,7 +174,7 @@
       rgba(var(--tl-blue), 0.06),
       transparent 40%
     ),
-    var(--bg);
+    var(--sky-top);
 }
 
 .timeline-vis-content {
@@ -185,7 +185,7 @@
   position: sticky;
   top: 0;
   border-bottom: 1px solid var(--border);
-  background: var(--bg-elev);
+  background: var(--sky-top);
   z-index: 5;
 }
 
