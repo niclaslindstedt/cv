@@ -18,12 +18,12 @@
 
 /* Stays visible behind the destination modal so a swipe-close on top reveals
  * the search results underneath without blinking through to the page. The
- * overlay's own backdrop is dropped so we don't double-stack translucent
- * layers on top of the destination modal's own blurred overlay. */
+ * tinted background is dropped so we don't darken twice on top of the
+ * destination modal's own overlay, but the blur stays active — without it,
+ * the destination overlay's blur fades to nothing during swipe-close and
+ * the page flashes through unblurred for the duration of the animation. */
 .search-modal-overlay--inert {
   background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
 .search-modal {
@@ -44,11 +44,17 @@
 
 /* Single scroll container for head + body so the search bar scrolls
  * with results (iOS-style): visible at the top, hidden when scrolled
- * down, revealed again on overscroll-up. */
+ * down, revealed again on overscroll-up. `overscroll-behavior: contain`
+ * stops touch/wheel scrolls from chaining out to the page underneath
+ * once the results list reaches its top or bottom — needed because the
+ * body is no longer locked with `overflow: hidden` while the modal is
+ * open (that lock made iOS 26 Safari render the Liquid Glass address
+ * bar opaque). */
 .search-modal-scroll {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
 }
