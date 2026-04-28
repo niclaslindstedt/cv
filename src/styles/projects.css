@@ -29,6 +29,15 @@
   outline-offset: 2px;
 }
 
+.project.is-active {
+  border-color: var(--pulse);
+  box-shadow: 0 0 0 1px var(--pulse-glow);
+}
+
+:root[data-theme="light"] .project.is-active {
+  box-shadow: none;
+}
+
 .project-head {
   margin-bottom: 8px;
 }
@@ -99,6 +108,14 @@
 
 .project:has(.project-oss-badge) .project-head h3 {
   padding-right: 96px;
+}
+
+.project-dates {
+  margin: 0 0 4px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
 }
 
 .project-tagline {
