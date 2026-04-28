@@ -570,7 +570,10 @@ export function Timeline() {
         >
           <div
             className="timeline-vis-content"
-            style={{ width: axisLength, height: AXIS_SIZE + contentHeight }}
+            style={{
+              width: axisLength,
+              minHeight: `max(100%, ${AXIS_SIZE + contentHeight}px)`,
+            }}
           >
             <div
               className="timeline-vis-axis"
@@ -614,7 +617,7 @@ export function Timeline() {
                 left: 0,
                 top: AXIS_SIZE,
                 width: axisLength,
-                height: contentHeight,
+                bottom: 0,
               }}
             >
               {yearTicks.map((tick) => {
