@@ -9,36 +9,38 @@ import { useSwipeClose } from "../utils/useSwipeClose";
 
 type Props = {
   open: boolean;
+  inert?: boolean;
   onClose: () => void;
   onSelect: (kind: SearchKind, openerKey: string) => void;
 };
 
-export function SearchModal({ open, onClose, onSelect }: Props) {
+export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
   const { lang, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
+  const active = open && !inert;
   const { results, ready } = useSearch(deferredQuery, open);
 
-  useSwipeClose(modalRef, open, onClose);
-  useModalFocus(modalRef, open);
+  useSwipeClose(modalRef, active, onClose);
+  useModalFocus(modalRef, active);
 
   // Select any persisted query on reopen so typing replaces it immediately.
   useEffect(() => {
-    if (!open) return;
+    if (!active) return;
     const input = inputRef.current;
     if (input && input.value.length > 0) input.select();
-  }, [open]);
+  }, [active]);
 
   useEffect(() => {
-    if (!open) return;
+    if (!active) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [active, onClose]);
 
   useEffect(() => {
     if (!open) return;
@@ -58,11 +60,16 @@ export function SearchModal({ open, onClose, onSelect }: Props) {
 
   return (
     <div
-      className="search-modal-overlay"
+      className={
+        inert
+          ? "search-modal-overlay search-modal-overlay--inert"
+          : "search-modal-overlay"
+      }
       role="dialog"
       aria-modal="true"
       aria-label={ui.search.dialogAria}
-      onClick={onClose}
+      aria-hidden={inert ? "true" : undefined}
+      onClick={inert ? undefined : onClose}
     >
       <div
         ref={modalRef}
