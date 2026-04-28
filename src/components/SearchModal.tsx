@@ -103,6 +103,13 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
               aria-label={ui.search.inputAria}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  e.currentTarget.blur();
+                }
+              }}
+              enterKeyHint="search"
               autoComplete="off"
               spellCheck={false}
             />
