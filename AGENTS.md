@@ -36,15 +36,18 @@ in sync:
 | `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                  |
 | `make clean`              | Remove `dist/` and Vite cache                                                                    |
 
-CI (`.github/workflows/ci.yml`) runs three jobs on every push and pull
-request:
+CI is split into three independent workflows, each with its own
+one-word status badge. They run on every push and pull request:
 
-- **`ci`** — `make fmt-check`, `make validate`, `make lint`, `make build`,
-  `make test`, then uploads the built `dist/` as an artifact.
-- **`visual`** — downloads the `dist/` artifact and runs `make test-visual`
-  (Playwright on Chromium, desktop + mobile viewports).
-- **`lighthouse`** — downloads the `dist/` artifact and runs
-  `make lighthouse` to assert Web-Vitals + category-score budgets.
+- **CI** (`.github/workflows/ci.yml`) — `make fmt-check`, `make validate`,
+  `make lint`, `make build`, `make test`.
+- **Visual** (`.github/workflows/visual.yml`) — `make build`, then
+  `make test-visual` (Playwright on Chromium, desktop + mobile viewports).
+- **Lighthouse** (`.github/workflows/lighthouse.yml`) — `make build`,
+  then `make lighthouse` to assert Web-Vitals + category-score budgets.
+
+Deployment runs separately in **Pages** (`.github/workflows/pages.yml`)
+on every push to `main`.
 
 ## Architecture summary
 

@@ -1,6 +1,8 @@
 # niclaslindstedt.se
 
 [![CI](https://github.com/niclaslindstedt/cv/actions/workflows/ci.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/ci.yml)
+[![Visual](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml)
+[![Lighthouse](https://github.com/niclaslindstedt/cv/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/lighthouse.yml)
 [![Pages](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
@@ -127,20 +129,24 @@ typed components as the live site.
 
 ## Quality gates
 
-Three CI jobs run on every push and pull request
-(`.github/workflows/ci.yml`):
+Three independent workflows run on every push and pull request, each
+with its own one-word status badge:
 
-- **`ci`** — Prettier check, schema validation (CV, timeline, print
-  view, search index, skill-tag registry), ESLint, TypeScript, the
-  production build, and the Vitest suite (schema roundtrip, `load-cv`
-  deep-merge contract, `utils/date`). Uploads `dist/` as an artifact.
-- **`visual`** — Playwright visual regression on Chromium, desktop and
-  mobile viewports. Baselines live under
-  `tests/visual/__screenshots__/` and were recorded on Linux; CI runs
-  on `ubuntu-latest` to keep pixels stable.
-- **`lighthouse`** — `lhci autorun` against the built `dist/` with
-  hard budgets in `.lighthouserc.json`: LCP ≤ 2.5 s, CLS ≤ 0.1, TBT
-  ≤ 300 ms, plus accessibility and SEO category scores.
+- **CI** (`.github/workflows/ci.yml`) — Prettier check, schema
+  validation (CV, timeline, print view, search index, skill-tag
+  registry), ESLint, TypeScript, the production build, and the Vitest
+  suite (schema roundtrip, `load-cv` deep-merge contract, `utils/date`).
+- **Visual** (`.github/workflows/visual.yml`) — Playwright visual
+  regression on Chromium, desktop and mobile viewports. Baselines live
+  under `tests/visual/__screenshots__/` and were recorded on Linux; CI
+  runs on `ubuntu-latest` to keep pixels stable.
+- **Lighthouse** (`.github/workflows/lighthouse.yml`) — `lhci autorun`
+  against the built `dist/` with hard budgets in `.lighthouserc.json`:
+  LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤ 300 ms, plus accessibility and SEO
+  category scores.
+
+Deployment runs separately as **Pages**
+(`.github/workflows/pages.yml`) on every push to `main`.
 
 Conventional Commits, squash-merge only — the squash-merge title
 becomes the changelog entry on `main`.

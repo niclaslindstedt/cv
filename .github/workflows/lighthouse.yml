@@ -1,0 +1,38 @@
+name: Lighthouse
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
+      - run: make build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
+      # Reuse Playwright's Chromium so Lighthouse has a real browser on
+      # the runner. `chrome-launcher` (used by lhci) honours CHROME_PATH.
+      - name: Install Chromium for Lighthouse
+        run: npx playwright install --with-deps chromium
+      - name: Run Lighthouse CI
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        run: |
+          CHROME_PATH="$(node -e 'const p=require("@playwright/test").chromium.executablePath(); process.stdout.write(p)')"
+          export CHROME_PATH
+          npm run lighthouse
