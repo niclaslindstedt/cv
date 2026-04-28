@@ -237,7 +237,11 @@
   margin: 12px 0 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 4px;
+}
+
+.project-stack + .project-skills {
+  margin-top: 4px;
 }
 
 .project-stack li,
