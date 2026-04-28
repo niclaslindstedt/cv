@@ -5,6 +5,7 @@
 
 .project {
   position: relative;
+  min-width: 0;
   padding: 20px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
