@@ -40,16 +40,6 @@
       "featured": true
     }
   ],
-  "actions": {
-    "timeline": {
-      "en": "Timeline",
-      "sv": "Tidslinje"
-    },
-    "downloadPdf": {
-      "en": "Download PDF ↓",
-      "sv": "Ladda ner PDF ↓"
-    }
-  },
   "sections": {
     "focus": {
       "en": "Current focus",

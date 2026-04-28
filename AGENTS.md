@@ -131,6 +131,14 @@ imports from `components/`. Keep it that way.
   described there, **update `docs/DESIGN.md` first in the same PR**.
   PR descriptions for visual changes should reference the section(s)
   they conform to.
+- **Always run `make test-visual` after pushing a UI-affecting PR.**
+  The Visual check is the slowest signal in CI and the diff threshold
+  (`maxDiffPixelRatio: 0.01` in `playwright.config.ts`) is tight enough
+  that a local `make test-visual` can pass while CI still fails on
+  sub-pixel font drift. As soon as the PR is open, watch the `visual`
+  check; if it fails, regenerate the affected baselines (delete the
+  PNG, then `make test-visual-update`) and push the fix in the same
+  branch instead of waiting for review. Saves a review round-trip.
 
 ## Documentation sync points
 

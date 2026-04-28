@@ -22,11 +22,6 @@ export type Link = {
   featured?: boolean;
 };
 
-export type Actions = {
-  timeline: LocalizedString;
-  downloadPdf: LocalizedString;
-};
-
 export type Sections = {
   focus: LocalizedString;
   projects: LocalizedString;
@@ -254,7 +249,6 @@ export type CV = {
   summary: LocalizedString;
   longSummary: LocalizedString;
   links: Link[];
-  actions: Actions;
   sections: Sections;
   focus: FocusArea[];
   projects: Project[];
