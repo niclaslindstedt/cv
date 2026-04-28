@@ -4,241 +4,203 @@
 [![Pages](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
-Personal site and CV for Niclas Lindstedt — AI/agentic coding work, built
-with Vite, React 18, and TypeScript.
+Personal site and CV for Niclas Lindstedt — built with Vite, React 18,
+and TypeScript, deployed as a static bundle to GitHub Pages.
 
-## Why?
+> Live at **[niclaslindstedt.se](https://niclaslindstedt.se)**.
 
-- **Single source of truth** — all CV content lives in `src/data/cv.json` (skeleton) and `src/data/cv/*.json` (per-category parts), assembled at build/validate time and validated against `schemas/cv.schema.json`; no CMS, no database.
-- **Static output** — deploys as a plain HTML/CSS/JS bundle; no server required.
-- **Type-safe content** — TypeScript strict mode and JSON-schema validation both guard the data shape.
-- **Fast iteration** — Vite's instant dev server and HMR make local edits visible in milliseconds.
-- **Fully automated deploy** — every push to `main` ships to GitHub Pages automatically.
+## Overview
 
-## Prerequisites
+The site is a single-page React app whose content is stored as JSON,
+schema-validated at build time, and re-projected into several output
+surfaces — the rendered site, a bilingual PDF resume, an Open Graph
+share image, a sitemap, and an in-page search index — from one source.
+There is no CMS, no database, and no runtime backend; everything ships
+as static assets.
 
-- **Node.js** ≥ 24 (see `.nvmrc` — use `nvm use` to activate)
-- **npm** ≥ 10 (bundled with Node 24)
+## At a glance
 
-## Install
+- **Stack** — React 18, Vite 5, TypeScript (strict mode), plain CSS with
+  design tokens.
+- **Content** — JSON skeleton + per-category JSON parts, deep-merged at
+  build time, validated with AJV against `schemas/cv.schema.json`.
+- **Output** — static site to GitHub Pages, bilingual PDF (English /
+  Swedish) via headless Chromium, 1200×630 OG image via
+  [satori](https://github.com/vercel/satori), `sitemap.xml`, and a
+  weighted in-page search index — all derived from the same CV data.
+- **Tests** — Vitest for data and units, Playwright visual regression
+  with committed pixel baselines, Lighthouse CI with hard Web Vitals,
+  accessibility, and SEO budgets.
+- **Deploy** — every push to `main` ships to GitHub Pages via
+  `.github/workflows/pages.yml`.
 
-```bash
-git clone https://github.com/niclaslindstedt/cv.git
-cd cv
-make install
-```
+## How it works
 
-## Quick start
+### Content as data
 
-```bash
-make dev    # start Vite dev server at http://localhost:5173
-```
+The CV is JSON, not React props. `src/data/cv.json` holds the skeleton —
+top-level scalars (name, summary, links, meta) and `"{...}"` placeholders
+that point at per-category files in `src/data/cv/` (`projects.json`,
+`experience.json`, `companies.json`, `skills.json`, …). At build and
+validate time `src/data/load-cv.mjs` deep-merges them into a single
+object that's checked against `schemas/cv.schema.json` via AJV. Anything
+that breaks the schema fails the build before TypeScript ever sees it.
 
-Edit content under `src/data/cv/` (one file per category — `focus.json`, `projects.json`, `experience.json`, …) or top-level scalars in `src/data/cv.json` itself. Types live in `src/data/cv.types.ts`. The Vite dev server hot-reloads when any part changes. Prefer the `update-cv` Claude skill for guided edits and recommendations.
+A gitignored override at `src/data/cv.local.json` provides a private
+layer for content that shouldn't ship publicly — full contact details,
+longer descriptions, anything indexable. `make local` deep-merges it on
+top and produces a separate set of PDFs alongside the public site.
 
-## Usage
+### One source, many surfaces
 
-All developer entry points are exposed via `make`:
+The same assembled CV drives every visible artifact:
 
-| Command                   | What it does                                                                                                                                                                                                                                                                                                                                    |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `make install`            | `npm ci`                                                                                                                                                                                                                                                                                                                                        |
-| `make dev`                | Start Vite dev server                                                                                                                                                                                                                                                                                                                           |
-| `make build`              | Type-check and produce production build                                                                                                                                                                                                                                                                                                         |
-| `make preview`            | Preview the production build                                                                                                                                                                                                                                                                                                                    |
-| `make lint`               | ESLint + TypeScript type-check                                                                                                                                                                                                                                                                                                                  |
-| `make typecheck`          | `tsc -b --noEmit` only                                                                                                                                                                                                                                                                                                                          |
-| `make fmt`                | Prettier rewrite in place                                                                                                                                                                                                                                                                                                                       |
-| `make fmt-check`          | Prettier check without writing                                                                                                                                                                                                                                                                                                                  |
-| `make validate`           | Validate the assembled CV against `schemas/cv.schema.json`, the skill-tag registry, `src/data/timeline.json` against `schemas/timeline.schema.json`, and `src/data/print.json` against `schemas/print.schema.json`                                                                                                                              |
-| `make generate`           | Regenerate `src/data/timeline.json` and `src/data/print.json` from `cv.json`                                                                                                                                                                                                                                                                    |
-| `make og`                 | Regenerate `public/og-image.png` from `cv.json`                                                                                                                                                                                                                                                                                                 |
-| `make print-html`         | SSR the print view per UI language to `dist/print-<lang>.html` (run after `vite build`; consumed by `make pdf`)                                                                                                                                                                                                                                 |
-| `make pdf`                | Render one PDF per UI language (`dist/cv-en.pdf`, `dist/cv-sv.pdf`) via headless Chromium from `dist/print-<lang>.html` (run after `vite build` + `make print-html`)                                                                                                                                                                            |
-| `make sitemap`            | Write `dist/sitemap.xml` (run after `vite build`)                                                                                                                                                                                                                                                                                               |
-| `make local`              | Build the site and PDFs with the gitignored `src/data/cv.local.json` override merged in. PDFs are written to `dist/<base>-<lang>.pdf` where `<base>` is `cv.print.pdfFilename` minus its extension (defaults to `cv`, producing `cv-en.pdf` / `cv-sv.pdf`; set the override to e.g. `"cv.local.pdf"` for `cv.local-en.pdf` / `cv.local-sv.pdf`) |
-| `make test`               | Run the Vitest suite (schema roundtrip, `load-cv` deep-merge, date utils)                                                                                                                                                                                                                                                                       |
-| `make test-coverage`      | Same suite with v8 coverage report                                                                                                                                                                                                                                                                                                              |
-| `make test-visual`        | Run Playwright visual-regression tests against committed snapshots in `tests/visual/__screenshots__/` (requires a built `dist/`)                                                                                                                                                                                                                |
-| `make test-visual-update` | Re-record the visual snapshots after an intentional UI change                                                                                                                                                                                                                                                                                   |
-| `make lighthouse`         | Run Lighthouse CI against `dist/` and assert budgets defined in `.lighthouserc.json` (LCP / CLS / TBT, plus accessibility & SEO category scores)                                                                                                                                                                                                |
-| `make clean`              | Remove `dist/` and Vite cache                                                                                                                                                                                                                                                                                                                   |
+- **The React site** — `App.tsx` composes the per-section components
+  (`Hero`, `Focus`, `Projects`, `Experience`, `Skills`, `Timeline`, …),
+  each consuming typed slices of the CV.
+- **A bilingual PDF** — `scripts/generate-print.mjs` bakes a
+  print-shaped JSON; `scripts/generate-print-html.mjs` server-side
+  renders `<PrintView />` to `dist/print-en.html` and `dist/print-sv.html`;
+  `scripts/generate-pdf.mjs` opens each in headless Chromium and
+  exports `cv-en.pdf` / `cv-sv.pdf`. The PDF generator never boots the
+  SPA — no hydration, no font race conditions, identical output every
+  run.
+- **The `<head>` block** — a small Vite plugin (`cvMetaHtmlPlugin` in
+  `vite.config.ts`) injects Open Graph and Twitter card meta, the
+  canonical URL, and JSON-LD (`Person`, `WebSite`) derived from
+  `cv.meta`, `cv.links`, `cv.skills`, and `cv.education`.
+- **An OG share image** — `scripts/generate-og-image.mjs` renders a
+  1200×630 PNG via satori into `public/og-image.png` during `prebuild`.
+- **A sitemap** — `scripts/generate-sitemap.mjs` writes `dist/sitemap.xml`
+  after `vite build`.
+- **An in-page search index** — `scripts/generate-search-index.mjs`
+  builds `src/data/search-index.json` from the CV plus hidden `aliases`
+  on individual records.
 
-`src/data/timeline.json`, `src/data/print.json`,
-`src/data/github-activity.json`, and `src/data/project-stats.json` are
-generated artifacts (gitignored). They are rebuilt automatically on
-`npm ci`, `npm run build`, `npm run dev`, `npm run lint`, and
-`npm run typecheck`, or on demand via `make generate`.
-The GitHub activity fetch reads from a `GITHUB_TOKEN` env var (needs
-`read:user` scope). The per-project stats fetch reads
-`PROJECT_STATS_TOKEN` first, falling back to `GITHUB_TOKEN`; reaching
-private project repositories requires a PAT with `repo` scope, which the
-default workflow `GITHUB_TOKEN` does not have. In CI, set a
-`PROJECT_STATS_TOKEN` repository secret to a PAT scoped to the private
-project repos. Without a token, the timeline's GitHub track and project
-commit stats are omitted but the build still succeeds.
+### Build pipeline
 
-## Structure
+Two custom Vite plugins live in `vite.config.ts`:
+
+- `cv-assembly` expands the JSON placeholders during dev and build, so
+  the React app imports a single fully-resolved CV object via
+  `src/data/cv.ts`.
+- `cvMetaHtmlPlugin` injects the SEO `<head>` block at build time.
+
+`npm run build` chains `tsc -b` → `vite build` →
+`generate:print-html` → `generate:pdf` → `generate:sitemap`. Pre-build
+hooks regenerate the timeline, GitHub activity, per-project commit
+stats, print JSON, search index, and OG image. The data fetchers
+gracefully degrade when their tokens are missing — the GitHub commit
+track and per-project stats simply drop out rather than failing the
+build.
+
+### Visual system
+
+Design tokens (color, type scale, spacing, motion) live in
+`src/styles/tokens.css`; per-domain CSS partials (`hero.css`,
+`projects.css`, `experience.css`, `timeline-vis.css`, `print.css`, …)
+consume them. `src/styles.css` is a thin `@import` aggregator. Dark
+mode and print styles share the same token set.
+
+`docs/DESIGN.md` is the source of truth for visual changes; the
+`sync-design` maintenance skill audits drift between the document and
+the CSS / component layer.
+
+### Search
+
+The search modal uses a hand-written ranker in `src/utils/search.ts` —
+no third-party search library. Each record is indexed across weighted
+fields (`title` > `alias` > `stack` > `skill` > `secondary` >
+`description`) with match-type modifiers for exact, prefix, partial,
+and fuzzy hits. Records carry hidden `aliases` so common abbreviations
+("k8s", "TS", "react") resolve to the right entry without polluting
+the visible copy. Full reference in
+[`docs/SEARCH.md`](docs/SEARCH.md).
+
+### i18n and PDF
+
+The site is bilingual (English / Swedish). UI strings live in
+`src/utils/i18n.ts`; content fields use `LocalizedString` shapes that
+the components resolve via a `LanguageProvider` context. The print
+pipeline emits one PDF per language, using the same data and the same
+typed components as the live site.
+
+## Quality gates
+
+Three CI jobs run on every push and pull request
+(`.github/workflows/ci.yml`):
+
+- **`ci`** — Prettier check, schema validation (CV, timeline, print
+  view, search index, skill-tag registry), ESLint, TypeScript, the
+  production build, and the Vitest suite (schema roundtrip, `load-cv`
+  deep-merge contract, `utils/date`). Uploads `dist/` as an artifact.
+- **`visual`** — Playwright visual regression on Chromium, desktop and
+  mobile viewports. Baselines live under
+  `tests/visual/__screenshots__/` and were recorded on Linux; CI runs
+  on `ubuntu-latest` to keep pixels stable.
+- **`lighthouse`** — `lhci autorun` against the built `dist/` with
+  hard budgets in `.lighthouserc.json`: LCP ≤ 2.5 s, CLS ≤ 0.1, TBT
+  ≤ 300 ms, plus accessibility and SEO category scores.
+
+Conventional Commits, squash-merge only — the squash-merge title
+becomes the changelog entry on `main`.
+
+## Project layout
 
 ```
 src/
 ├── App.tsx              # root component — composes CV sections in order
-├── main.tsx             # React 18 entry, mounts <App /> into #root
-├── output.ts            # shared console output helpers
-├── styles.css           # @import aggregator — see styles/ for partials
+├── main.tsx             # React 18 entry
+├── styles.css           # @import aggregator
 ├── styles/              # per-domain CSS partials (tokens, hero, projects,
-│                        # experience, timeline-vis, modals, print, …)
-├── components/          # Hero, Focus, Projects, Experience, Skills,
-│                        # Education, Courses, Languages, Timeline,
-│                        # CelestialSky, Section, and modals
-│                        # (Project, Company, Skill, Focus, Summary,
-│                        # ProgramCourses, CourseMoments)
+│                        # experience, timeline-vis, print, …)
+├── components/          # one file per section + modals (Project, Company,
+│                        # Skill, Focus, Summary, …) + PrintView
 ├── data/
 │   ├── cv.json          # CV skeleton; "{...}" placeholders point at cv/*.json
-│   ├── cv/              # per-category part files (focus, projects, experience, …)
+│   ├── cv/              # per-category parts (projects, experience, skills, …)
 │   ├── cv.ts            # typed wrapper around the assembled CV
-│   ├── cv.types.ts      # types mirroring the CV schema
-│   ├── load-cv.mjs      # pure-Node assembler used by Vite, scripts, validators
-│   └── timeline.types.ts
-└── utils/               # date, skills, theme, i18n + LanguageProvider,
-                         # glassReflections, useSwipeClose
+│   ├── cv.types.ts      # types mirroring the schema
+│   └── load-cv.mjs      # pure-Node assembler used by Vite, scripts, validators
+└── utils/               # date, search, theme, i18n, LanguageProvider, …
+
+schemas/                 # JSON schemas (cv, timeline, print, search-index)
+scripts/                 # generators + validators (timeline, print, OG, PDF, …)
+tests/                   # Vitest (data + unit) and Playwright (visual)
+docs/                    # DESIGN.md, SEARCH.md, getting-started.md
 ```
 
-Top-level supporting directories: `schemas/` (JSON schemas), `scripts/`
-(timeline generator, validators), `docs/` (contributor guides), and
-`.agent/skills/` (Claude maintenance skills, symlinked from
-`.claude/skills/`). See [AGENTS.md](AGENTS.md) for architecture rules and
-dependency direction.
+See [`AGENTS.md`](AGENTS.md) for the full architecture summary,
+dependency direction, and change-routing table.
 
-## Configuration
-
-No runtime config file. CV content is edited in `src/data/cv.json` (top-level
-scalars and the `"{...}"` placeholders) and the per-category files in
-`src/data/cv/` (shape enforced by `schemas/cv.schema.json`; TypeScript types
-in `src/data/cv.types.ts`). No environment variables are required for local
-development.
-
-### Local CV override (private PDFs)
-
-The committed CV is the public version that ships to GitHub Pages. For a
-private PDF that includes contact details, fuller job descriptions, or
-anything else you don't want indexed online, drop a gitignored override
-at `src/data/cv.local.json`:
+## Running it locally
 
 ```bash
-cp src/data/cv.local.example.json src/data/cv.local.json
-$EDITOR src/data/cv.local.json
-make local
+nvm use            # Node 24, pinned in .nvmrc
+make install       # npm ci
+make dev           # Vite dev server at http://localhost:5173
 ```
 
-`make local` sets `CV_LOCAL=1` and runs the full build with the override
-deep-merged into the assembled CV. Each supported UI language gets its
-own PDF at `dist/<base>-<lang>.pdf` (where `<base>` is `cv.print.pdfFilename`
-minus its extension) — set `print.pdfFilename` in your override
-(e.g. `"cv.local.pdf"`) to keep your private PDFs (`cv.local-en.pdf` /
-`cv.local-sv.pdf`) distinct from the public `cv-en.pdf` / `cv-sv.pdf`.
+Other useful targets:
 
-Merge rules used by `src/data/load-cv.mjs`:
+| Command         | What it does                                                      |
+| --------------- | ----------------------------------------------------------------- |
+| `make build`    | Type-check, production build, generate per-language PDFs, sitemap |
+| `make validate` | Validate the assembled CV and generated artifacts against schemas |
+| `make test`     | Vitest suite (data + unit tests)                                  |
+| `make local`    | Build with the gitignored `cv.local.json` override merged in      |
 
-- **Plain objects** — merge key-by-key, override values win.
-- **Arrays** — merge element-by-element by index. Use `null` to leave a
-  base entry unchanged at that position; entries past the base length
-  are appended.
-- **Scalars** — override replaces base.
+The full `make` target reference and troubleshooting notes live in
+[`docs/getting-started.md`](docs/getting-started.md).
 
-Both `src/data/cv.local.json` and any `*.pdf` are gitignored. Drop the
-override file when you want to confirm a clean public build.
+## Further reading
 
-For CI and deployment the following GitHub secrets are used:
-
-| Secret                      | Purpose                                                                                                                           |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `PROJECT_STATS_TOKEN`       | PAT with `repo` scope so per-project commit stats can read private repos                                                          |
-| `VITE_GOATCOUNTER_ENDPOINT` | GoatCounter pageview endpoint (e.g. `https://niclaslindstedt.goatcounter.com/count`); when unset, no analytics snippet is emitted |
-
-## SEO & analytics
-
-The site emits a fully-populated `<head>` (Open Graph, Twitter card,
-canonical URL, keywords, `Person` + `WebSite` JSON-LD), a 1200×630 OG
-image, a `sitemap.xml`, and a `robots.txt` — all derived from
-`src/data/cv.json` at build time by `vite.config.ts` (`cvMetaHtmlPlugin`)
-and the helper scripts under `scripts/`. To preview the rendered head
-locally, run `make build && make preview` and view source.
-
-**GoatCounter (one-time setup)**
-
-1. Sign up at [goatcounter.com](https://www.goatcounter.com) and
-   register a site (e.g. `niclaslindstedt`).
-2. Copy the count endpoint —
-   `https://<site-code>.goatcounter.com/count`.
-3. Add it as the GitHub repo secret `VITE_GOATCOUNTER_ENDPOINT`.
-4. Trigger a deploy (push to `main` or re-run the Pages workflow).
-5. Visit the live site once and confirm a pageview lands in the
-   GoatCounter dashboard within ~1 minute.
-
-**Google Search Console**
-
-Verification is performed out-of-band (DNS or another mechanism) — no
-verification meta tag or HTML file is committed to the repo. Once
-verified, submit `https://niclaslindstedt.se/sitemap.xml` to the
-property to seed indexing.
-
-## Quality gates
-
-Three CI jobs run on every pull request:
-
-- **`ci`** — formatting, schema validation, ESLint + TypeScript, the production
-  build, and the Vitest suite (see `tests/`).
-- **`visual`** — Playwright visual regression. Spec lives in
-  `tests/visual/site.spec.ts`; baselines are committed under
-  `tests/visual/__screenshots__/` and were recorded on Linux. Re-record them
-  after an intentional UI change with `make test-visual-update` and commit the
-  new pixels.
-- **`lighthouse`** — `lhci autorun` against the built `dist/`. Assertions live
-  in `.lighthouserc.json` and gate Web Vitals (LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤
-  300 ms) plus accessibility and SEO category scores.
-
-The `visual` and `lighthouse` jobs both consume the `dist/` artifact uploaded
-by the `ci` job, so they don't rebuild from source.
-
-## Examples
-
-See the deployed site at
-[niclaslindstedt.se](https://niclaslindstedt.se) for the live output.
-
-This project is a website, not a library — there are no runnable code
-examples beyond the live site itself.
-
-## Troubleshooting
-
-**Build fails with TypeScript errors**
-Run `make typecheck` for the full error list. If the error points at
-`src/data/cv.json`, run `make validate` — schema errors usually give a
-clearer message than the structural type mismatch.
-
-**Dev server is slow to start**
-Delete the Vite cache: `make clean`, then `make dev`.
-
-**Styles look wrong after a change**
-Hard-refresh the browser (`Cmd+Shift+R` / `Ctrl+Shift+R`) to bypass HMR cache.
-
-**`npm ci` fails**
-Delete `node_modules/` manually and re-run `make install`.
-
-**Wrong Node version**
-Run `nvm use` in the repo root — `.nvmrc` pins the correct version.
-
-## Documentation
-
-- [`docs/getting-started.md`](docs/getting-started.md) — step-by-step local setup guide.
-- [`docs/DESIGN.md`](docs/DESIGN.md) — design language, components, and patterns (the source of truth for visual changes).
-- [`docs/SEARCH.md`](docs/SEARCH.md) — how the in-page search index, ranking model, and aliases work.
-- [`AGENTS.md`](AGENTS.md) — architecture summary and guidance for AI coding agents.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for prerequisites, workflow, commit
-conventions, and PR guidelines.
+- [`docs/DESIGN.md`](docs/DESIGN.md) — design language, components, and
+  patterns.
+- [`docs/SEARCH.md`](docs/SEARCH.md) — search index, ranking model, and
+  aliases.
+- [`AGENTS.md`](AGENTS.md) — architecture and contribution rules.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — branch and commit conventions.
 
 ## License
 
