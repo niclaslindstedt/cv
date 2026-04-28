@@ -35,7 +35,7 @@ jobs:
           PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
           VITE_GOATCOUNTER_ENDPOINT: ${{ secrets.VITE_GOATCOUNTER_ENDPOINT }}
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
