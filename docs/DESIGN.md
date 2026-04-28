@@ -660,9 +660,10 @@ The search affordance is the magnifier-icon button that lives in the
 Clicking the button opens the standard search Modal (§9.7) which hosts
 the real input and the ranked results.
 
-- **Surface.** A circular Aurora-stroke icon button in the hero meta
-  row (34×34), and a 32×32 sibling in the floating bar — same family,
-  same icon, just sized to match each context.
+- **Surface.** A circular Aurora-stroke icon button, 32×32 in both
+  the hero meta row and the floating bar — same family, same icon,
+  same height as the surrounding pills and toggles so the row reads as
+  one cluster.
 - **Placement.** Last item of both rows, with `margin-left: auto` so
   it always lands at the right edge of whichever row it wraps into.
   On desktop (≥ 640px) the meta row stays single-line so the button

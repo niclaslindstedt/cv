@@ -85,7 +85,11 @@
 }
 
 .hero-link-pill {
-  padding: 4px 12px;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--accent);
   background: var(--accent-soft);
@@ -109,7 +113,10 @@
 .hero-download,
 .hero-timeline-btn {
   appearance: none;
-  padding: 4px 12px;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
   font: inherit;
   font-size: 0.9rem;
   font-weight: 600;
@@ -148,8 +155,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   margin-left: auto;
   padding: 0;
   font: inherit;

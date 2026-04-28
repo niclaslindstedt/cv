@@ -2,7 +2,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 3px;
+  padding: 2px;
   background: transparent;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -55,7 +55,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 3px;
+  padding: 2px;
   background: transparent;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -96,7 +96,7 @@
 
 .lang-toggle-btn svg {
   width: auto;
-  height: 11px;
+  height: 13px;
   border-radius: 2px;
   display: block;
 }
