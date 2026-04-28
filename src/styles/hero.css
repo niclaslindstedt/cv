@@ -136,3 +136,62 @@
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* Search trigger lives at the end of the hero meta row. `margin-left:
+ * auto` pushes it to the far right of whatever row it lands on — on
+ * desktop that's the same row as the rest of the menu (with a 1px
+ * Mist divider separating it); on mobile, the meta row wraps and the
+ * button settles into the right edge of its wrapped row. */
+.hero-search-btn {
+  position: relative;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-left: auto;
+  padding: 0;
+  font: inherit;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+@media (hover: hover) {
+  .hero-search-btn:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+}
+
+.hero-search-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hero-search-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .hero-search-btn::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}

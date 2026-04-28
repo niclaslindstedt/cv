@@ -160,6 +160,7 @@ export function App() {
             onToggleTheme={toggleTheme}
             onOpenTimeline={() => setTimelineOpen(true)}
             onOpenSummary={() => setSummaryOpen(true)}
+            onOpenSearch={() => setSearchOpen(true)}
           />
           <Focus
             title={t(cv.sections.focus)}

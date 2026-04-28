@@ -26,6 +26,27 @@ export function TimelineButton({
   );
 }
 
+export function SearchButton({
+  onClick,
+  className,
+}: {
+  onClick: () => void;
+  className?: string;
+}) {
+  const { ui } = useLang();
+  return (
+    <button
+      type="button"
+      className={className ?? "hero-search-btn"}
+      onClick={onClick}
+      aria-label={ui.search.open}
+      title={ui.search.open}
+    >
+      <SearchIcon />
+    </button>
+  );
+}
+
 export function ThemeToggle({
   theme,
   onToggleTheme,
@@ -139,6 +160,23 @@ export function LanguageToggleCompact({
     >
       {target === "en" ? <FlagEN /> : <FlagSV />}
     </button>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="7" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
   );
 }
 
