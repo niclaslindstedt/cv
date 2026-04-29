@@ -8,6 +8,7 @@ import type {
   ProjectStatsFile,
 } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 import { ProjectDateChip } from "./ProjectDateChip";
@@ -34,6 +35,7 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!project, onClose);
   useModalFocus(modalRef, !!project);
+  useBodyScrollLock(!!project);
 
   useEffect(() => {
     if (!project) return;
@@ -43,15 +45,6 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [project, onClose]);
-
-  useEffect(() => {
-    if (!project) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [project]);
 
   if (!project) return null;
 

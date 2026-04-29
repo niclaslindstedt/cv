@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import type { Course, CourseMoment } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 
@@ -37,6 +38,7 @@ export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!course, onClose);
   useModalFocus(modalRef, !!course);
+  useBodyScrollLock(!!course);
 
   useEffect(() => {
     if (!course) return;
@@ -46,15 +48,6 @@ export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [course, onClose]);
-
-  useEffect(() => {
-    if (!course) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [course]);
 
   if (!course) return null;
 

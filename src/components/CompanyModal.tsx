@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import type { Company } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 
@@ -17,6 +18,7 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!company, onClose);
   useModalFocus(modalRef, !!company);
+  useBodyScrollLock(!!company);
 
   useEffect(() => {
     if (!company) return;
@@ -26,15 +28,6 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [company, onClose]);
-
-  useEffect(() => {
-    if (!company) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [company]);
 
   if (!company) return null;
 

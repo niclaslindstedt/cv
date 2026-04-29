@@ -3,6 +3,7 @@ import { useDeferredValue, useEffect, useRef, useState } from "react";
 import type { SearchKind, SearchRecord } from "../data/search-index.types";
 import { useLang } from "../utils/i18n";
 import { useSearch } from "../utils/search";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 
@@ -24,6 +25,7 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
 
   useSwipeClose(modalRef, active, onClose);
   useModalFocus(modalRef, active);
+  useBodyScrollLock(open);
 
   // Select any persisted query on reopen so typing replaces it immediately.
   // Keyed on `open` (not `active`) so returning from a destination modal
