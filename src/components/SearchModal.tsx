@@ -6,6 +6,7 @@ import { useSearch } from "../utils/search";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
+import { useVisualViewportPin } from "../utils/useVisualViewportPin";
 
 type Props = {
   open: boolean;
@@ -16,6 +17,7 @@ type Props = {
 
 export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
   const { lang, ui } = useLang();
+  const overlayRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
@@ -26,6 +28,7 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
   useSwipeClose(modalRef, active, onClose);
   useModalFocus(modalRef, active);
   useBodyScrollLock(open);
+  useVisualViewportPin(overlayRef, open);
 
   // Select any persisted query on reopen so typing replaces it immediately.
   // Keyed on `open` (not `active`) so returning from a destination modal
@@ -54,6 +57,7 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
 
   return (
     <div
+      ref={overlayRef}
       className={
         inert
           ? "search-modal-overlay search-modal-overlay--inert"
