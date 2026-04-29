@@ -26,6 +26,17 @@
   background: transparent;
 }
 
+/* Desktop has no swipe-close, so keeping the search modal mounted underneath
+ * the destination modal just stacks two translucent surfaces on top of each
+ * other — the page bleeds through and both modals look washed out. Hide the
+ * search modal entirely while a destination modal is open; reopening it
+ * after the destination closes restores it instantly (state is preserved). */
+@media (hover: hover) and (pointer: fine) {
+  .search-modal-overlay--inert {
+    display: none;
+  }
+}
+
 .search-modal {
   width: 100%;
   max-width: 560px;
