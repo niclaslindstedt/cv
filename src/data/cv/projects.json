@@ -172,8 +172,15 @@
       "en": "Static personal blog where each post can ship a technical and a non-technical version under one slug. Markdown is compiled at build time to a single JSON the React frontend reads; posts are managed through Claude skills.",
       "sv": "Statisk personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug. Markdown kompileras vid byggtid till en enda JSON som React-frontenden läser; inlägg hanteras via Claude-skills."
     },
-    "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
-    "skills": ["Claude Code", "Agent skills", "SEO"],
+    "stack": [
+      "TypeScript",
+      "React",
+      "Node.js",
+      "GitHub actions",
+      "Claude Code",
+      "Agent skills"
+    ],
+    "skills": ["SEO"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "blog"
@@ -197,7 +204,7 @@
       "sv": "Personlig CV-sajt skriven i JSON och validerad mot ett enda schema. Bygget härleder React-appen, sökindexet, SEO-metan, OG-bilden, tidslinjen och en utskrivbar PDF från samma källa. Underhålls via Claude Code-skills."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
-    "skills": ["SEO"],
+    "skills": ["Claude Code", "Agent skills", "SEO"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "cv"
