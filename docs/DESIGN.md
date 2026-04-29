@@ -362,7 +362,7 @@ Glass is the brand. The exact recipe matters.
 | Modal panel              | 18px          | 160%     | Vapor (denser) |
 | Modal backdrop           | 20px          | 180%     | Veil           |
 | Timeline page            | (none)        | (none)   | Sky            |
-| Timeline details (float) | 14px          | 150%     | Vapor          |
+| Timeline details (float) | 14px          | 150%     | Vapor (denser) |
 
 **Translucency rule.** On the dark theme home page, you should be
 able to see the Sky bleed faintly through every card. If you cannot,
