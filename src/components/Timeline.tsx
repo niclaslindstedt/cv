@@ -26,7 +26,6 @@ const LANE_GAP = 4;
 const TRACK_HEADER = 8;
 const TRACK_GAP = 24;
 const AXIS_SIZE = 40;
-const SCROLL_BUFFER = 200;
 const GH_DAILY_THRESHOLD = 30;
 const GH_WEEKLY_THRESHOLD = 10;
 const GH_DAYS_PER_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -588,7 +587,7 @@ export function Timeline() {
             className="timeline-vis-content"
             style={{
               width: axisLength,
-              minHeight: `max(100%, ${AXIS_SIZE + contentHeight + SCROLL_BUFFER}px)`,
+              minHeight: `max(100%, ${AXIS_SIZE + contentHeight}px)`,
             }}
           >
             <div
