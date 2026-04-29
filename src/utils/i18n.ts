@@ -42,7 +42,6 @@ type UiStrings = {
     course: string;
     sideProject: string;
     skillsUsed: string;
-    starts: string;
     yUnit: string;
     mUnit: string;
     commits: (n: number) => string;
@@ -203,7 +202,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       course: "Course",
       sideProject: "Side project",
       skillsUsed: "Skills used",
-      starts: "Starts",
       yUnit: "y",
       mUnit: "m",
       commits: (n) => `${n} commit${n === 1 ? "" : "s"}`,
@@ -380,7 +378,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       course: "Kurs",
       sideProject: "Sidoprojekt",
       skillsUsed: "Använda kompetenser",
-      starts: "Startar",
       yUnit: "år",
       mUnit: "mån",
       commits: (n) => `${n} commit${n === 1 ? "" : "s"}`,

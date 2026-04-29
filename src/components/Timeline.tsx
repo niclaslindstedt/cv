@@ -170,7 +170,8 @@ export function Timeline() {
       heights.push(h);
       cumulative += h + TRACK_GAP;
     }
-    const total = cumulative > 0 ? cumulative - TRACK_GAP : 0;
+    const total =
+      cumulative > 0 ? cumulative - TRACK_GAP + TRACK_HEADER - LANE_GAP : 0;
     return {
       trackTop: tops,
       trackHeight: heights,
@@ -791,8 +792,8 @@ export function Timeline() {
               ) : (
                 formatRange(selectedItem.startDate, selectedItem.endDate, lang)
               )}
+              {" · "}
               <span className="timeline-vis-details-duration">
-                {" · "}
                 {formatDuration(
                   monthIndex(selectedItem.startDate),
                   monthIndex(selectedItem.endDate ?? selectedItem.startDate),
@@ -904,8 +905,8 @@ export function Timeline() {
                   selectedItem.endDate,
                   lang,
                 )}
+                {" · "}
                 <span className="timeline-vis-details-duration">
-                  {" · "}
                   {formatDuration(
                     monthIndex(selectedItem.startDate),
                     selectedItem.isOngoing
@@ -927,8 +928,8 @@ export function Timeline() {
                       </span>
                       <span className="timeline-vis-details-role-meta">
                         {formatRange(r.startDate, r.endIso, lang)}
+                        {" · "}
                         <span className="timeline-vis-details-duration">
-                          {" · "}
                           {formatDuration(
                             r.startMonth,
                             r.endMonth,
@@ -979,9 +980,6 @@ export function Timeline() {
                   </ul>
                 </>
               )}
-              <p className="timeline-vis-details-when">
-                {ui.timeline.starts} {formatMonth(selectedItem.startDate, lang)}
-              </p>
             </aside>
           );
         })()}
