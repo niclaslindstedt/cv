@@ -188,6 +188,33 @@ export function Timeline() {
     return null;
   }, [selectedId, tracks]);
 
+  const sameKindBars = useMemo<TimelineBar[]>(() => {
+    if (!selectedItem) return [];
+    const kind = selectedItem.kind;
+    const bars: TimelineBar[] = [];
+    for (const track of tracks) {
+      for (const bar of track.bars) {
+        if (bar.kind === kind) bars.push(bar);
+      }
+    }
+    bars.sort((a, b) => {
+      const aStart = a.segments[0].startMonth;
+      const bStart = b.segments[0].startMonth;
+      if (aStart !== bStart) return aStart - bStart;
+      return a.id.localeCompare(b.id);
+    });
+    return bars;
+  }, [selectedItem, tracks]);
+
+  const navIndex = selectedItem
+    ? sameKindBars.findIndex((b) => b.id === selectedItem.id)
+    : -1;
+  const prevBar = navIndex > 0 ? sameKindBars[navIndex - 1] : null;
+  const nextBar =
+    navIndex >= 0 && navIndex < sameKindBars.length - 1
+      ? sameKindBars[navIndex + 1]
+      : null;
+
   const zoomAt = useCallback((factor: number) => {
     setScale((s) => clamp(s * factor, MIN_SCALE, MAX_SCALE));
   }, []);
@@ -223,6 +250,59 @@ export function Timeline() {
     [tracks, monthPx, minMonth, trackTop, trackHeight],
   );
 
+  const scrollToBar = useCallback(
+    (bar: TimelineBar) => {
+      const viewport = viewportRef.current;
+      if (!viewport) return;
+      let trackIdx = -1;
+      for (let t = 0; t < tracks.length; t++) {
+        if (tracks[t].bars.some((b) => b.id === bar.id)) {
+          trackIdx = t;
+          break;
+        }
+      }
+      if (trackIdx < 0) return;
+      const startMonth = bar.segments[0].startMonth;
+      const lastSeg = bar.segments[bar.segments.length - 1];
+      const endMonth = bar.isOngoing
+        ? Math.max(lastSeg.endMonth, nowMonthIndex() + 1)
+        : lastSeg.endMonth;
+      const barLeft = (startMonth - minMonth) * monthPx;
+      const barWidth = Math.max(1, (endMonth - startMonth) * monthPx);
+      const targetLeft = Math.max(
+        0,
+        barLeft + barWidth / 2 - viewport.clientWidth / 2,
+      );
+      const lane = bar.segments[0].activeLane;
+      const barTop =
+        AXIS_SIZE + trackTop[trackIdx] + TRACK_HEADER + lane * LANE_SIZE;
+      const barBottom = barTop + LANE_SIZE;
+      const viewTop = viewport.scrollTop + AXIS_SIZE;
+      const viewBottom = viewport.scrollTop + viewport.clientHeight;
+      let nextTop = viewport.scrollTop;
+      if (barTop < viewTop) {
+        nextTop = Math.max(0, barTop - AXIS_SIZE - 16);
+      } else if (barBottom > viewBottom) {
+        nextTop = Math.max(0, barBottom - viewport.clientHeight + 16);
+      }
+      viewport.scrollTo({
+        left: targetLeft,
+        top: nextTop,
+        behavior: "smooth",
+      });
+    },
+    [tracks, monthPx, minMonth, trackTop],
+  );
+
+  const navigateTo = useCallback(
+    (bar: TimelineBar | null) => {
+      if (!bar) return;
+      setSelectedId(bar.id);
+      scrollToBar(bar);
+    },
+    [scrollToBar],
+  );
+
   useEffect(() => {
     const el = viewportRef.current;
     if (!el) return;
@@ -253,11 +333,20 @@ export function Timeline() {
       if (e.key === "Escape") {
         if (selectedId) setSelectedId(null);
         else window.history.back();
+        return;
+      }
+      if (!selectedId) return;
+      if (e.key === "ArrowLeft" && prevBar) {
+        e.preventDefault();
+        navigateTo(prevBar);
+      } else if (e.key === "ArrowRight" && nextBar) {
+        e.preventDefault();
+        navigateTo(nextBar);
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [selectedId]);
+  }, [selectedId, prevBar, nextBar, navigateTo]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -679,14 +768,38 @@ export function Timeline() {
               <span className="timeline-vis-pill timeline-vis-github">
                 GitHub
               </span>
-              <button
-                type="button"
-                className="timeline-vis-btn"
-                onClick={() => setSelectedId(null)}
-                aria-label={ui.timeline.closeDetails}
-              >
-                ✕
-              </button>
+              <div className="timeline-vis-details-nav">
+                {prevBar && (
+                  <button
+                    type="button"
+                    className="timeline-vis-btn timeline-vis-btn-icon"
+                    onClick={() => navigateTo(prevBar)}
+                    aria-label={ui.timeline.previousDetails}
+                    title={ui.timeline.previousDetails}
+                  >
+                    ‹
+                  </button>
+                )}
+                {nextBar && (
+                  <button
+                    type="button"
+                    className="timeline-vis-btn timeline-vis-btn-icon"
+                    onClick={() => navigateTo(nextBar)}
+                    aria-label={ui.timeline.nextDetails}
+                    title={ui.timeline.nextDetails}
+                  >
+                    ›
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="timeline-vis-btn"
+                  onClick={() => setSelectedId(null)}
+                  aria-label={ui.timeline.closeDetails}
+                >
+                  ✕
+                </button>
+              </div>
             </div>
             <h3 className="timeline-vis-details-title">
               {t(selectedItem.title)}
@@ -758,14 +871,38 @@ export function Timeline() {
               <span className="timeline-vis-pill timeline-vis-sideProject">
                 {ui.timeline.sideProject}
               </span>
-              <button
-                type="button"
-                className="timeline-vis-btn"
-                onClick={() => setSelectedId(null)}
-                aria-label={ui.timeline.closeDetails}
-              >
-                ✕
-              </button>
+              <div className="timeline-vis-details-nav">
+                {prevBar && (
+                  <button
+                    type="button"
+                    className="timeline-vis-btn timeline-vis-btn-icon"
+                    onClick={() => navigateTo(prevBar)}
+                    aria-label={ui.timeline.previousDetails}
+                    title={ui.timeline.previousDetails}
+                  >
+                    ‹
+                  </button>
+                )}
+                {nextBar && (
+                  <button
+                    type="button"
+                    className="timeline-vis-btn timeline-vis-btn-icon"
+                    onClick={() => navigateTo(nextBar)}
+                    aria-label={ui.timeline.nextDetails}
+                    title={ui.timeline.nextDetails}
+                  >
+                    ›
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="timeline-vis-btn"
+                  onClick={() => setSelectedId(null)}
+                  aria-label={ui.timeline.closeDetails}
+                >
+                  ✕
+                </button>
+              </div>
             </div>
             <h3 className="timeline-vis-details-title">
               {t(selectedItem.title)}
@@ -884,14 +1021,38 @@ export function Timeline() {
                         ? ui.timeline.course
                         : ui.timeline.education}
                 </span>
-                <button
-                  type="button"
-                  className="timeline-vis-btn"
-                  onClick={() => setSelectedId(null)}
-                  aria-label={ui.timeline.closeDetails}
-                >
-                  ✕
-                </button>
+                <div className="timeline-vis-details-nav">
+                  {prevBar && (
+                    <button
+                      type="button"
+                      className="timeline-vis-btn timeline-vis-btn-icon"
+                      onClick={() => navigateTo(prevBar)}
+                      aria-label={ui.timeline.previousDetails}
+                      title={ui.timeline.previousDetails}
+                    >
+                      ‹
+                    </button>
+                  )}
+                  {nextBar && (
+                    <button
+                      type="button"
+                      className="timeline-vis-btn timeline-vis-btn-icon"
+                      onClick={() => navigateTo(nextBar)}
+                      aria-label={ui.timeline.nextDetails}
+                      title={ui.timeline.nextDetails}
+                    >
+                      ›
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className="timeline-vis-btn"
+                    onClick={() => setSelectedId(null)}
+                    aria-label={ui.timeline.closeDetails}
+                  >
+                    ✕
+                  </button>
+                </div>
               </div>
               <h3 className="timeline-vis-details-title">{headingText}</h3>
               {showSubtitle && (

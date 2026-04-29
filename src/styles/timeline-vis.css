@@ -432,7 +432,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   margin-bottom: 8px;
+}
+
+.timeline-vis-details-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.timeline-vis-details-nav .timeline-vis-btn-icon {
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .timeline-vis-pill {
