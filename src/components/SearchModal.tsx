@@ -30,6 +30,19 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
   useBodyScrollLock(open);
   useVisualViewportPin(overlayRef, open);
 
+  // Hide the page content underneath while the search modal is open.
+  // The modal's translucent + backdrop-filtered overlay would otherwise
+  // show the body shifting around behind it as iOS pans the visual
+  // viewport with the keyboard up — the page itself is locked, but the
+  // optical illusion reads as "still scrollable".
+  useEffect(() => {
+    if (!open) return;
+    document.documentElement.classList.add("search-open");
+    return () => {
+      document.documentElement.classList.remove("search-open");
+    };
+  }, [open]);
+
   // Select any persisted query on reopen so typing replaces it immediately.
   // Keyed on `open` (not `active`) so returning from a destination modal
   // restores focus without re-selecting the text the user already typed.

@@ -265,6 +265,18 @@
   }
 }
 
+/* Touch devices only: blank out the page content while the search modal
+ * is open. The modal's frosted-glass overlay would otherwise show the
+ * body shifting underneath as iOS pans the visual viewport with the
+ * keyboard up — the page is locked, but the visible parallax reads as
+ * "still scrollable". Desktop keeps the glass-over-content look. */
+@media (pointer: coarse) {
+  html.search-open .page,
+  html.search-open .floating-controls {
+    visibility: hidden;
+  }
+}
+
 @media print {
   .search-modal-overlay {
     display: none !important;
