@@ -34,6 +34,8 @@ type UiStrings = {
     resetZoom: string;
     close: string;
     closeDetails: string;
+    previousDetails: string;
+    nextDetails: string;
     viewOnGitHub: string;
     viewRepository: string;
     job: string;
@@ -194,6 +196,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       resetZoom: "Reset zoom",
       close: "Close timeline",
       closeDetails: "Close details",
+      previousDetails: "Previous",
+      nextDetails: "Next",
       viewOnGitHub: "View on GitHub →",
       viewRepository: "View repository →",
       job: "Job",
@@ -370,6 +374,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       resetZoom: "Återställ zoom",
       close: "Stäng tidslinje",
       closeDetails: "Stäng detaljer",
+      previousDetails: "Föregående",
+      nextDetails: "Nästa",
       viewOnGitHub: "Visa på GitHub →",
       viewRepository: "Visa repo →",
       job: "Anställning",
