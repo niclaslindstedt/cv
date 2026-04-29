@@ -261,6 +261,33 @@
     "aliases": ["agent swarm", "swarm of agents"]
   },
   {
+    "name": "app-endix",
+    "tagline": {
+      "en": "An early take on spec-driven development as a set of slash-command prompts.",
+      "sv": "En tidig version av spec-driven utveckling som en uppsättning slash-prompts."
+    },
+    "description": {
+      "en": "An early take on spec-driven development packaged as a small set of slash-command prompts. /spec turned an idea into a spec.md, /plan produced an implementation plan from it, /create-tickets split the plan into tickets sized to fit a single agent session, and /next-ticket pulled the next ticket off the queue and built it. State lived on the file system. Written before GitHub released SpecKit.",
+      "sv": "En tidig version av spec-driven utveckling paketerad som en liten uppsättning slash-prompts. /spec gjorde en idé till en spec.md, /plan tog fram en implementationsplan utifrån den, /create-tickets delade upp planen i ärenden som rymdes i en enda agentsession och /next-ticket plockade nästa ärende från kön och byggde det. Tillstånd låg på filsystemet. Skrevs innan GitHub släppte SpecKit."
+    },
+    "printDescription": {
+      "en": "An early take on spec-driven development packaged as a small set of slash-command prompts: /spec wrote a spec.md, /plan turned it into an implementation plan, /create-tickets split the plan into agent-sized tickets, and /next-ticket built the next one. State on the file system. Predates GitHub's SpecKit.",
+      "sv": "En tidig version av spec-driven utveckling paketerad som slash-prompts: /spec skrev en spec.md, /plan gjorde den till en implementationsplan, /create-tickets delade planen i agentstora ärenden och /next-ticket byggde nästa. Tillstånd på filsystemet. Föregår GitHubs SpecKit."
+    },
+    "skills": ["Spec-driven development", "Agentic workflows"],
+    "github": {
+      "owner": "niclaslindstedt",
+      "repo": "app-endix"
+    },
+    "openSource": false,
+    "aliases": [
+      "appendix",
+      "app endix",
+      "spec-driven prompts",
+      "speckit predecessor"
+    ]
+  },
+  {
     "name": "dotnet-oauth2-server",
     "tagline": {
       "en": "OAuth 2.0 authorization server in ASP.NET Core.",
