@@ -198,6 +198,11 @@ async function main() {
     return;
   }
 
+  const tokenSource = process.env.PROJECT_STATS_TOKEN
+    ? "PROJECT_STATS_TOKEN"
+    : process.env.GITHUB_TOKEN
+      ? "GITHUB_TOKEN"
+      : null;
   const token = process.env.PROJECT_STATS_TOKEN || process.env.GITHUB_TOKEN;
   if (!token) {
     if (!toStdout && existsSync(outPath)) {
@@ -215,6 +220,27 @@ async function main() {
     return;
   }
 
+  if (!toStdout) {
+    let viewerLogin = null;
+    try {
+      const data = await fetchGraphQL(token, `query { viewer { login } }`, {});
+      viewerLogin = data?.viewer?.login ?? null;
+    } catch (err) {
+      console.warn(
+        `Project stats: ${tokenSource} viewer probe failed — ${err.message}`,
+      );
+    }
+    if (viewerLogin) {
+      console.log(
+        `Project stats: using ${tokenSource} (authenticated as @${viewerLogin}); ${refs.length} repo(s) to fetch.`,
+      );
+    } else {
+      console.log(
+        `Project stats: using ${tokenSource} (viewer login unknown); ${refs.length} repo(s) to fetch.`,
+      );
+    }
+  }
+
   const projects = {};
   const failed = [];
   for (const ref of refs) {
@@ -228,6 +254,11 @@ async function main() {
       projects[projectKey(ref.owner, ref.repo)] = stats;
     } catch (err) {
       failed.push({ ref, message: err.message });
+      if (!toStdout) {
+        console.warn(
+          `Project stats: ${ref.owner}/${ref.repo} failed — ${err.message}`,
+        );
+      }
     }
   }
 
