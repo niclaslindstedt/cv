@@ -138,21 +138,6 @@
     },
     "aliases": ["chatbot", "conversational ai", "conversational interface"]
   },
-  "Prompt engineering": {
-    "description": {
-      "en": "Designing the instructions, examples, and structure given to an LLM so it produces useful, predictable output for a given task.",
-      "sv": "Att utforma instruktioner, exempel och struktur som ges till en LLM så att den producerar användbar och förutsägbar utdata för en given uppgift."
-    },
-    "benefits": {
-      "en": "Often the cheapest, fastest lever for improving output quality before reaching for fine-tuning or pipelines.",
-      "sv": "Ofta den billigaste och snabbaste hävstången för att förbättra kvaliteten innan finjustering eller pipelines tas till."
-    },
-    "drawbacks": {
-      "en": "Prompts are brittle across models and versions; what worked yesterday may regress with a model update.",
-      "sv": "Prompter är spröda mellan modeller och versioner; det som fungerade igår kan regressera vid en modelluppdatering."
-    },
-    "aliases": ["prompts", "prompting", "prompt design"]
-  },
   "AI evaluations": {
     "description": {
       "en": "Building reproducible test suites for LLM-driven systems — datasets, scoring, and dashboards that tell you whether a change actually improved behaviour.",
