@@ -812,19 +812,20 @@
     "url": "https://scrumguides.org",
     "aliases": ["agile", "sprint", "kanban"]
   },
-  "Team management": {
-    "description": {
-      "en": "Day-to-day stewardship of a team's work: priorities, capacity, dependencies, and the small frictions that compound if left unattended.",
-      "sv": "Daglig styrning av ett teams arbete: prioriteringar, kapacitet, beroenden och de små friktioner som ackumuleras om de lämnas obehandlade."
-    },
-    "aliases": ["team lead", "people management", "engineering management"]
-  },
   "Leadership": {
     "description": {
       "en": "Setting direction, building trust, and getting people moving towards a shared goal.",
       "sv": "Att sätta riktning, bygga tillit och få människor att röra sig mot ett gemensamt mål."
     },
-    "aliases": ["leading", "lead", "ledarskap"]
+    "aliases": [
+      "leading",
+      "lead",
+      "ledarskap",
+      "team management",
+      "team lead",
+      "people management",
+      "engineering management"
+    ]
   },
   "Mentoring": {
     "description": {
