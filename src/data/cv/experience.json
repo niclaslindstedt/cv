@@ -74,7 +74,7 @@
       "Architecture",
       "Database design",
       "IT strategy",
-      "Team management",
+      "Leadership",
       "Cybersecurity",
       "Bash/Shell",
       "Mentoring",
@@ -191,7 +191,6 @@
           "Architecture",
           "Leadership",
           "IT strategy",
-          "Team management",
           "Observability",
           "Bash/Shell",
           "Docker",
@@ -225,14 +224,7 @@
       "en": "half-time",
       "sv": "halvtid"
     },
-    "stack": [
-      "TypeScript",
-      "Vue",
-      "C#/.NET",
-      "Azure",
-      "MSSQL",
-      "Docker"
-    ],
+    "stack": ["TypeScript", "Vue", "C#/.NET", "Azure", "MSSQL", "Docker"],
     "skills": [
       "CI/CD",
       "Cybersecurity",
@@ -269,13 +261,7 @@
       "en": "half-time",
       "sv": "halvtid"
     },
-    "stack": [
-      "TypeScript",
-      "Angular",
-      "C#/.NET",
-      "Python",
-      "MSSQL"
-    ],
+    "stack": ["TypeScript", "Angular", "C#/.NET", "Python", "MSSQL"],
     "skills": [
       "CI/CD",
       "Cybersecurity",
