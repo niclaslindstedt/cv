@@ -25,10 +25,13 @@
       "gRPC/Protobuf",
       "Vector databases",
       "CosmosDB",
-      "Redis"
+      "Redis",
+      "MSSQL",
+      "PostgreSQL"
     ],
     "skills": [
       "AI agents",
+      "Agentic workflows",
       "RAG",
       "Chatbots",
       "MCP",
@@ -60,6 +63,7 @@
     "stack": [
       "C#/.NET",
       "PostgreSQL",
+      "Redis",
       "Azure",
       "React",
       "React Native",
@@ -138,10 +142,11 @@
           "React",
           "TypeScript",
           "Miniservices",
-          "SQL",
+          "MSSQL",
+          "Docker Swarm",
           "Azure DevOps"
         ],
-        "skills": ["Scrum", "CI/CD", "PowerShell"],
+        "skills": ["Scrum", "CI/CD", "Docker", "PowerShell"],
         "printDescription": {
           "en": "Senior developer at SEB on a C#/.NET miniservices stack on Azure, with React/TypeScript and Azure DevOps.",
           "sv": "Seniorutvecklare på SEB i en C#/.NET-miniservicestack på Azure, med React/TypeScript och Azure DevOps."
@@ -189,6 +194,7 @@
           "Team management",
           "Observability",
           "Bash/Shell",
+          "Docker",
           "GDPR",
           "Mentoring",
           "Integrations"
@@ -224,7 +230,7 @@
       "Vue",
       "C#/.NET",
       "Azure",
-      "Microsoft SQL Server",
+      "MSSQL",
       "Docker"
     ],
     "skills": [
@@ -268,7 +274,7 @@
       "Angular",
       "C#/.NET",
       "Python",
-      "Microsoft SQL Server"
+      "MSSQL"
     ],
     "skills": [
       "CI/CD",

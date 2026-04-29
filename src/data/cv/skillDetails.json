@@ -532,13 +532,13 @@
     "url": "https://www.postgresql.org",
     "aliases": ["postgres", "pg", "psql"]
   },
-  "Microsoft SQL Server": {
+  "MSSQL": {
     "description": {
       "en": "Microsoft's enterprise relational database, with first-class tooling (SSMS, Profiler) and powerful T-SQL.",
       "sv": "Microsofts relationsdatabas för företag, med förstklassiga verktyg (SSMS, Profiler) och kraftfullt T-SQL."
     },
     "url": "https://www.microsoft.com/sql-server",
-    "aliases": ["mssql", "sql server", "sqlserver", "ms sql"]
+    "aliases": ["microsoft sql server", "sql server", "sqlserver", "ms sql"]
   },
   "MySQL": {
     "description": {
@@ -595,13 +595,6 @@
     "url": "https://kernel.org",
     "aliases": ["gnu/linux", "unix"]
   },
-  "Networking": {
-    "description": {
-      "en": "TCP/IP, DNS, TLS, HTTP, and the layers below — how packets find their way between machines and how to debug it when they don't.",
-      "sv": "TCP/IP, DNS, TLS, HTTP och lagren under — hur paket hittar mellan maskiner och hur man felsöker när de inte gör det."
-    },
-    "aliases": ["tcp/ip", "networks", "lan", "wan"]
-  },
   "Terraform": {
     "description": {
       "en": "HashiCorp's declarative infrastructure-as-code tool — resources defined in HCL, plans diffed against live state, changes applied idempotently.",
@@ -648,6 +641,22 @@
     },
     "url": "https://www.docker.com",
     "aliases": ["containers", "dockerfile", "oci"]
+  },
+  "Docker Swarm": {
+    "description": {
+      "en": "Docker's built-in container orchestrator — clusters Docker hosts together so services can be scheduled, scaled, and load-balanced across them.",
+      "sv": "Dockers inbyggda containerorkestrator — klustrar Docker-värdar så att tjänster kan schemaläggas, skalas och lastbalanseras över dem."
+    },
+    "benefits": {
+      "en": "Far simpler than Kubernetes for small fleets; uses the same Docker CLI and Compose files teams already know.",
+      "sv": "Betydligt enklare än Kubernetes för små miljöer; använder samma Docker-CLI och Compose-filer som teamen redan kan."
+    },
+    "drawbacks": {
+      "en": "Smaller ecosystem and slower-moving than Kubernetes; rarely the right choice for large or multi-cloud deployments.",
+      "sv": "Mindre ekosystem och långsammare utveckling än Kubernetes; sällan rätt val för stora eller flermolnsdriftsättningar."
+    },
+    "url": "https://docs.docker.com/engine/swarm/",
+    "aliases": ["swarm", "docker swarm mode"]
   },
   "Kubernetes": {
     "description": {
@@ -766,6 +775,26 @@
       "sv": "Varje integration lägger till en brytlinje — schemadrift, hastighetsgränser, auth-byten — som spricker vid sämsta tillfället och är dyr att övervaka."
     },
     "aliases": ["integration", "third-party integrations", "etl"]
+  },
+  "SEO": {
+    "description": {
+      "en": "Search engine optimisation — shaping a site's structure, metadata, performance, and content so search engines and AI answer engines can find, understand, and surface it.",
+      "sv": "Sökmotoroptimering — att utforma en sajts struktur, metadata, prestanda och innehåll så att sökmotorer och AI-svarstjänster kan hitta, förstå och visa den."
+    },
+    "benefits": {
+      "en": "Cheap, durable distribution — well-indexed pages keep earning impressions long after the work is done.",
+      "sv": "Billig och uthållig spridning — välindexerade sidor fortsätter ge visningar långt efter att arbetet är gjort."
+    },
+    "drawbacks": {
+      "en": "Feedback is slow and noisy; ranking signals shift as engines update, so yesterday's playbook rots.",
+      "sv": "Återkopplingen är långsam och brusig; rankingsignaler ändras när motorerna uppdateras, så gårdagens recept ruttnar."
+    },
+    "aliases": [
+      "search engine optimization",
+      "search engine optimisation",
+      "geo",
+      "generative engine optimization"
+    ]
   },
   "Scrum": {
     "description": {
