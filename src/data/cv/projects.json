@@ -174,7 +174,7 @@
       "sv": "Statisk personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug. En Vite-extractor går igenom markdown-trädet, validerar frontmatter och genererar en enda JSON som ett terminal-tematiserat React-gränssnitt läser — ingen CMS, ingen runtime-server."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
-    "skills": ["Claude Code", "Agent skills"],
+    "skills": ["Claude Code", "Agent skills", "SEO"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "blog"
@@ -198,7 +198,7 @@
       "sv": "Personlig CV-sajt driven av en enda schemavaliderad JSON-fil. Byggpipelinen härleder React-appen, SEO-metan och JSON-LD, OG-bilden, sitemap:en och en puppeteer-renderad PDF från samma data. Underhålls via Claude Code-skills istället för för hand."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
-    "skills": ["Architecture", "Claude Code", "Agent skills"],
+    "skills": ["SEO"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "cv"
