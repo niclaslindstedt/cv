@@ -185,16 +185,16 @@
   {
     "name": "cv",
     "tagline": {
-      "en": "The site you're on — a personal CV driven by a single schema-validated JSON file.",
-      "sv": "Sajten du befinner dig på — ett personligt CV drivet av en enda schemavaliderad JSON-fil."
+      "en": "The site you're on — a personal CV driven entirely by schema-validated JSON.",
+      "sv": "Sajten du befinner dig på — ett personligt CV drivet helt av schemavaliderad JSON."
     },
     "description": {
-      "en": "This is the site you're viewing right now. The entire website — every section, every meta tag, the timeline, the OG image, the sitemap — is rendered from a single schema-validated cv.json. That JSON is maintained through Claude Code skills (update-cv, update-summary, update-company-descriptions) that read the schema, edit the data, and re-validate, so updates happen through conversation rather than by hand.",
-      "sv": "Detta är sajten du tittar på just nu. Hela webbplatsen — varje sektion, varje meta-tagg, tidslinjen, OG-bilden, sitemap:en — renderas från en enda schemavaliderad cv.json. Den JSON-filen underhålls genom Claude Code-skills (update-cv, update-summary, update-company-descriptions) som läser schemat, redigerar datan och validerar om — uppdateringar sker via samtal istället för för hand."
+      "en": "This is the site you're viewing right now. Every section, the search index, the meta tags and JSON-LD, the timeline, the OG image, the sitemap, and a puppeteer-baked PDF resume are all rendered from a per-category JSON dataset that's assembled at build time and validated as one schema. The data is maintained through a fleet of Claude Code skills — update-cv for content, update-summary and update-company-descriptions for prose, sync-design for the styles, debug-visual for snapshot drift, and a maintenance umbrella that runs the lot — so updates happen through conversation rather than by hand.",
+      "sv": "Detta är sajten du tittar på just nu. Varje sektion, sökindexet, meta-taggarna och JSON-LD, tidslinjen, OG-bilden, sitemap:en och en puppeteer-bakad PDF-CV genereras alla från ett uppdelat JSON-dataset som sätts samman vid byggtid och valideras som ett enda schema. Datan underhålls genom en flotta av Claude Code-skills — update-cv för innehåll, update-summary och update-company-descriptions för text, sync-design för stilarna, debug-visual för snapshot-drift och en maintenance-paraply som kör hela sviten — så uppdateringar sker via samtal istället för för hand."
     },
     "printDescription": {
-      "en": "Personal CV site driven by a single schema-validated JSON file. The build pipeline derives the React app, the SEO meta and JSON-LD, the OG image, the sitemap, and a puppeteer-rendered PDF from the same data. Maintained through Claude Code skills rather than by hand.",
-      "sv": "Personlig CV-sajt driven av en enda schemavaliderad JSON-fil. Byggpipelinen härleder React-appen, SEO-metan och JSON-LD, OG-bilden, sitemap:en och en puppeteer-renderad PDF från samma data. Underhålls via Claude Code-skills istället för för hand."
+      "en": "Personal CV site driven by per-category JSON files that are assembled at build time and validated against a single schema. The build pipeline derives the React app, the in-browser search index, the SEO meta and JSON-LD, the OG image, the sitemap, and a puppeteer-rendered PDF resume from the same data. Maintained through a fleet of Claude Code skills rather than by hand.",
+      "sv": "Personlig CV-sajt driven av uppdelade JSON-filer per kategori som sätts samman vid byggtid och valideras mot ett enda schema. Byggpipelinen härleder React-appen, sökindexet i webbläsaren, SEO-metan och JSON-LD, OG-bilden, sitemap:en och en puppeteer-renderad PDF-CV från samma data. Underhålls via en flotta av Claude Code-skills istället för för hand."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
     "skills": ["SEO"],
