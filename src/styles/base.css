@@ -9,6 +9,7 @@ body {
   color: var(--fg);
   background-color: var(--sky-top);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
