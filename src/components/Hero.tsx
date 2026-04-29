@@ -32,8 +32,13 @@ export function Hero({
   const pdfDownloadName = `niclas-lindstedt-cv-${lang}${pdfExt}`;
   return (
     <header className="hero">
-      <p className="hero-eyebrow">{ui.hero.eyebrow}</p>
+      <span className="hero-glow" aria-hidden="true" />
+      <p className="hero-eyebrow">
+        <span className="hero-eyebrow-dot" aria-hidden="true" />
+        {ui.hero.eyebrow}
+      </p>
       <h1 className="hero-name">{cv.name}</h1>
+      <p className="hero-title">{t(cv.title)}</p>
       <button
         type="button"
         className="hero-summary"
@@ -49,31 +54,36 @@ export function Hero({
         {t(cv.longSummary)}
       </p>
       <div className="hero-meta">
-        {cv.links.map((link) => (
+        <div className="hero-meta-group hero-meta-links">
+          {cv.links.map((link) => (
+            <a
+              key={link.url}
+              className={link.featured ? "hero-link-pill" : undefined}
+              href={link.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t(link.label)}
+            </a>
+          ))}
+        </div>
+        <div className="hero-meta-group hero-meta-controls">
+          <TimelineLink label={ui.hero.timeline} />
           <a
-            key={link.url}
-            className={link.featured ? "hero-link-pill" : undefined}
-            href={link.url}
-            target="_blank"
-            rel="noreferrer"
+            className="hero-download"
+            href={pdfHref}
+            download={pdfDownloadName}
+            aria-label={ui.hero.downloadAria}
           >
-            {t(link.label)}
+            <PdfIcon />
+            <span>{ui.hero.pdf}</span>
           </a>
-        ))}
-        <TimelineLink label={ui.hero.timeline} />
-        <a
-          className="hero-download"
-          href={pdfHref}
-          download={pdfDownloadName}
-          aria-label={ui.hero.downloadAria}
-        >
-          <PdfIcon />
-          <span>{ui.hero.pdf}</span>
-        </a>
-        <LanguageToggle lang={lang} setLang={setLang} />
-        <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
-        <SearchButton onClick={onOpenSearch} />
+          <LanguageToggle lang={lang} setLang={setLang} />
+          <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
+          <SearchButton onClick={onOpenSearch} />
+        </div>
       </div>
+      <span className="glass-reflect" aria-hidden="true" />
     </header>
   );
 }
