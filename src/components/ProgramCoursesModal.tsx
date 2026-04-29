@@ -6,6 +6,7 @@ import type {
 } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 import { NoteIcon } from "./NoteIcon";
@@ -35,6 +36,7 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!program, onClose);
   useModalFocus(modalRef, !!program);
+  useBodyScrollLock(!!program);
 
   useEffect(() => {
     if (!program) return;
@@ -44,15 +46,6 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [program, onClose]);
-
-  useEffect(() => {
-    if (!program) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [program]);
 
   if (!program) return null;
 

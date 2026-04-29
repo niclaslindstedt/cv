@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import type { FocusArea } from "../data/cv.types";
 import { formatMonth } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 
@@ -16,6 +17,7 @@ export function FocusModal({ focus, onClose }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!focus, onClose);
   useModalFocus(modalRef, !!focus);
+  useBodyScrollLock(!!focus);
 
   useEffect(() => {
     if (!focus) return;
@@ -25,15 +27,6 @@ export function FocusModal({ focus, onClose }: Props) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [focus, onClose]);
-
-  useEffect(() => {
-    if (!focus) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [focus]);
 
   if (!focus) return null;
 

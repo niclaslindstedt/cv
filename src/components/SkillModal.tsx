@@ -4,6 +4,7 @@ import type { LocalizedString, SkillDetail } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { yearsOfExperience, type SkillUsage } from "../utils/skills";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 
@@ -57,6 +58,7 @@ export function SkillModal({ skill, usages, detail, onClose }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!skill, onClose);
   useModalFocus(modalRef, !!skill);
+  useBodyScrollLock(!!skill);
 
   const resolveLabel = (v: string | LocalizedString) =>
     isLocalized(v) ? t(v) : v;
@@ -69,15 +71,6 @@ export function SkillModal({ skill, usages, detail, onClose }: Props) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [skill, onClose]);
-
-  useEffect(() => {
-    if (!skill) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [skill]);
 
   if (!skill) return null;
 

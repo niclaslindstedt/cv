@@ -8,6 +8,7 @@ import type {
 } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 import { NoteIcon } from "./NoteIcon";
@@ -129,6 +130,7 @@ export function ExperienceModal({
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!data, onClose);
   useModalFocus(modalRef, !!data);
+  useBodyScrollLock(!!data);
 
   useEffect(() => {
     if (!data) return;
@@ -138,15 +140,6 @@ export function ExperienceModal({
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [data, onClose]);
-
-  useEffect(() => {
-    if (!data) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [data]);
 
   if (!data) return null;
 

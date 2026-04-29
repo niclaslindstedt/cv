@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import type { LocalizedString } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
 
@@ -24,6 +25,7 @@ export function SummaryModal({
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, open, onClose);
   useModalFocus(modalRef, open);
+  useBodyScrollLock(open);
 
   useEffect(() => {
     if (!open) return;
@@ -33,15 +35,6 @@ export function SummaryModal({
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
 
   if (!open) return null;
 

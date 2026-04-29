@@ -16,7 +16,7 @@
   max-height: min(720px, calc(100dvh - 48px));
   display: flex;
   flex-direction: column;
-  background: var(--glass-bg);
+  background: var(--glass-bg-modal);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border: 1px solid var(--glass-border);
