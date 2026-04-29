@@ -14,10 +14,11 @@ skills and aggregates their output.
 Run the skills below in order. Skip a row if its target artifact does
 not exist yet.
 
-| Order | Skill           | Target                                               |
-| ----- | --------------- | ---------------------------------------------------- |
-| 1     | `update-readme` | `README.md`                                          |
-| 2     | `sync-design`   | `src/styles/` + `src/components/` ↔ `docs/DESIGN.md` |
+| Order | Skill                | Target                                                    |
+| ----- | -------------------- | --------------------------------------------------------- |
+| 1     | `update-readme`      | `README.md`                                               |
+| 2     | `sync-design`        | `src/styles/` + `src/components/` ↔ `docs/DESIGN.md`      |
+| 3     | `sync-cross-browser` | `src/styles/` cross-browser parity (Safari is the master) |
 
 Add a row every time a new `update-*` or `sync-*` skill is added —
 the registry is the only source of truth for which sync skills exist.
@@ -25,7 +26,9 @@ the registry is the only source of truth for which sync skills exist.
 Run order matters: `update-readme` first so any upstream documentation
 moves are reconciled before downstream skills read them; `sync-design`
 runs after so it can react to documentation drift exposed by the
-README sweep.
+README sweep; `sync-cross-browser` runs last so any property-level
+patches it applies sit on top of a design-conformant tree (it never
+retunes design tokens, only adds missing prefixes and standard pairs).
 
 ## Tracking mechanism
 
