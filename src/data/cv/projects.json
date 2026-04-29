@@ -245,11 +245,7 @@
       "sv": "Privat föregångare till zig och zag. System för multi-agentorkestrering vars idéer skrevs om från grunden och delades upp i de öppna zig (arbetsflöden) och zag (leverantörsabstraktion)."
     },
     "stack": ["Rust", "PostgreSQL"],
-    "skills": [
-      "Agent orchestration",
-      "Agentic workflows",
-      "MCP"
-    ],
+    "skills": ["Agent orchestration", "Agentic workflows", "MCP"],
     "github": {
       "owner": "niclaslindstedt",
       "repo": "swarm-cli"
