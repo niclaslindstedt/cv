@@ -3,9 +3,11 @@
   --bg-elev: #0c1322;
   --glass-bg: rgba(14, 20, 32, 0.42);
   /* Vapor (denser) per docs/DESIGN.md §6.2 — modal panels read as a more
-   * solid surface than cards. Firefox under-renders nested backdrop-filter
-   * (a modal sits inside an overlay that already filters the page), so the
-   * bumped alpha is also what keeps the panel readable there. */
+   * solid surface than cards. Firefox and Edge under-render nested
+   * backdrop-filter (a modal sits inside an overlay that already filters
+   * the page; the timeline detail popover sits inside a scrolling/
+   * transformed timeline), so the bumped alpha is also what keeps the
+   * panel readable there. */
   --glass-bg-modal: rgba(14, 20, 32, 0.82);
   --glass-border: rgba(255, 255, 255, 0.07);
   --glass-highlight: rgba(255, 255, 255, 0.04);
