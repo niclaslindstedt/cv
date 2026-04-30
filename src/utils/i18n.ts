@@ -296,7 +296,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       completed: "Completed",
       inProgress: "In progress",
       close: "Close",
-      moments: "Components",
+      moments: "Modules",
       momentNotCompleted: "Not completed",
       courseProgress: (earned, total) => `${earned} of ${total} earned`,
       incomplete: "Incomplete",
@@ -313,9 +313,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       unusedStack: "Part of the stack but not personally practiced",
     },
     courses: {
-      viewMomentsAria: (course) => `View components for ${course}`,
-      momentsAria: (course) => `${course} components`,
-      momentsCount: (n) => `${n} component${n === 1 ? "" : "s"}`,
+      viewMomentsAria: (course) => `View modules for ${course}`,
+      momentsAria: (course) => `${course} modules`,
+      momentsCount: (n) => `${n} module${n === 1 ? "" : "s"}`,
     },
     section: {
       expand: (title) => `Expand ${title} section`,
