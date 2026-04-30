@@ -8,7 +8,7 @@
    * the page; the timeline detail popover sits inside a scrolling/
    * transformed timeline), so the bumped alpha is also what keeps the
    * panel readable there. */
-  --glass-bg-modal: rgba(14, 20, 32, 0.82);
+  --glass-bg-modal: rgba(14, 20, 32, 0.94);
   --glass-border: rgba(255, 255, 255, 0.07);
   --glass-highlight: rgba(255, 255, 255, 0.04);
   --sky-top: #02030a;
@@ -63,7 +63,7 @@
   --bg: #ebeef3;
   --bg-elev: #f6f8fb;
   --glass-bg: rgba(255, 255, 255, 0.58);
-  --glass-bg-modal: rgba(255, 255, 255, 0.88);
+  --glass-bg-modal: rgba(255, 255, 255, 0.96);
   --glass-border: rgba(20, 28, 40, 0.18);
   --glass-highlight: rgba(255, 255, 255, 0.65);
   --sky-top: #d2d8e1;
