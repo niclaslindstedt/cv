@@ -259,7 +259,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       detailAria: (company) => `${company} details`,
       visitWebsite: "Visit website ↗",
       stack: "Stack",
-      terminated: "Terminated",
+      terminated: "Discontinued",
     },
     experienceModal: {
       detailAria: (title) => `${title} — experience details`,

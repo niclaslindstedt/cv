@@ -167,9 +167,6 @@ button.skill-pill-btn:focus-visible {
 
 .entry-stack-btn-unused {
   color: var(--fg-muted);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-:root[data-theme="light"] .entry-stack-btn-unused {
-  background: rgba(20, 28, 40, 0.05);
+  background: transparent;
+  border-color: var(--accent-soft);
 }

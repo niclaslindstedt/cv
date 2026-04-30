@@ -136,6 +136,6 @@
       "en": "Compliance",
       "sv": "Regelefterlevnad"
     },
-    "items": ["Cybersecurity", "Risk management", "GDPR", "CE marking"]
+    "items": ["Cybersecurity", "Risk management", "GDPR", "CE marking", "WCAG"]
   }
 ]

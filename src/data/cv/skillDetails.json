@@ -972,5 +972,21 @@
       "sv": "EU:s överensstämmelsemärkning för produkter — inklusive medicintekniska programvaror — som intygar att de uppfyller relevanta direktiv."
     },
     "aliases": ["ce mark", "ce märkning"]
+  },
+  "WCAG": {
+    "description": {
+      "en": "W3C accessibility standard that defines testable success criteria — perceivable, operable, understandable, robust — for making web content usable by people with disabilities.",
+      "sv": "W3C:s tillgänglighetsstandard som definierar testbara framgångskriterier — uppfattningsbar, hanterbar, begriplig, robust — för att göra webbinnehåll användbart för personer med funktionsnedsättning."
+    },
+    "benefits": {
+      "en": "Bakes accessibility into the same review and CI gates as the rest of the build, and aligns with EU EN 301 549 / EAA obligations.",
+      "sv": "Bakar in tillgänglighet i samma gransknings- och CI-grindar som resten av bygget, och linjerar mot EU:s EN 301 549 och tillgänglighetsdirektivet."
+    },
+    "drawbacks": {
+      "en": "AA conformance demands real design and engineering work — color contrast, focus order, ARIA semantics — and automated checks only catch a fraction of failures.",
+      "sv": "AA-konformitet kräver verkligt design- och utvecklingsarbete — kontrast, fokusordning, ARIA-semantik — och automatiska kontroller fångar bara en bråkdel av bristerna."
+    },
+    "url": "https://www.w3.org/WAI/standards-guidelines/wcag/",
+    "aliases": ["accessibility", "a11y", "web accessibility", "tillgänglighet"]
   }
 }
