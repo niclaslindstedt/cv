@@ -1,4 +1,4 @@
-# niclaslindstedt.se
+# cv
 
 [![CI](https://github.com/niclaslindstedt/cv/actions/workflows/ci.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/ci.yml)
 [![Visual](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml)
