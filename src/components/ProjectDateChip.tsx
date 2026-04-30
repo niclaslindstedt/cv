@@ -10,13 +10,11 @@ export function ProjectDateChip({ iso, lang }: Props) {
   const month = formatMonth(iso.slice(0, 7), lang);
   const full = formatFullDate(iso, lang);
   return (
-    <button
-      type="button"
-      className="project-date"
-      aria-label={full}
-      title={full}
-    >
+    <button type="button" className="project-date" aria-label={full}>
       <time dateTime={iso.slice(0, 10)}>{month}</time>
+      <span className="project-date-tooltip" role="tooltip" aria-hidden="true">
+        {full}
+      </span>
     </button>
   );
 }
