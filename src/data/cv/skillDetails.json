@@ -858,6 +858,18 @@
     },
     "aliases": ["mentor", "mentorship", "coaching"]
   },
+  "Technical interviews": {
+    "description": {
+      "en": "Assessing engineering candidates through structured conversations, code review, and pair-programming exercises — calibrated against a rubric so signal stays consistent across interviewers.",
+      "sv": "Att bedöma ingenjörskandidater genom strukturerade samtal, kodgranskning och parprogrammeringsövningar — kalibrerade mot en rubrik så att signalen blir konsekvent mellan intervjuare."
+    },
+    "aliases": [
+      "interviewing",
+      "candidate assessment",
+      "engineering interviews",
+      "tech interviews"
+    ]
+  },
   "IT strategy": {
     "description": {
       "en": "Aligning technology investment with business goals over a 1–3 year horizon — buy/build, platform choices, sourcing, and where to put the bets.",

@@ -18,6 +18,52 @@
   },
   {
     "name": {
+      "en": "Game Programming in Windows – II",
+      "sv": "Spelprogrammering i Windows – II"
+    },
+    "code": "DT114G",
+    "institution": {
+      "en": "Mid Sweden University",
+      "sv": "Mittuniversitetet"
+    },
+    "credits": "9 ECTS",
+    "startDate": "2015-09",
+    "engagement": 0.5,
+    "remote": true,
+    "completed": false,
+    "moments": [
+      {
+        "name": {
+          "en": "Written Exam",
+          "sv": "Skriftlig tentamen"
+        },
+        "code": "T101",
+        "credits": "3 ECTS",
+        "completedDate": "2016-01"
+      },
+      {
+        "name": {
+          "en": "Assignments 1",
+          "sv": "Inlämningsuppgifter 1"
+        },
+        "code": "I101",
+        "credits": "1.5 ECTS",
+        "completedDate": "2016-01"
+      },
+      {
+        "name": {
+          "en": "Assignments 2",
+          "sv": "Inlämningsuppgifter 2"
+        },
+        "code": "I201",
+        "credits": "1.5 ECTS",
+        "completedDate": "2016-01"
+      }
+    ],
+    "skills": ["C++"]
+  },
+  {
+    "name": {
       "en": "Game Design",
       "sv": "Speldesign"
     },

@@ -119,7 +119,13 @@
       "en": "Leadership",
       "sv": "Ledarskap"
     },
-    "items": ["Leadership", "Mentoring", "IT strategy", "Project management"]
+    "items": [
+      "Leadership",
+      "Mentoring",
+      "Technical interviews",
+      "IT strategy",
+      "Project management"
+    ]
   },
   {
     "key": "compliance",
