@@ -35,9 +35,9 @@
   --fg-muted: #8a93a1;
   --accent: #7ab7ff;
   --accent-soft: rgba(122, 183, 255, 0.12);
-  --pulse: rgba(122, 183, 255, 0.55);
+  --pulse: rgba(122, 183, 255, 0.85);
   --pulse-soft: rgba(122, 183, 255, 0.45);
-  --pulse-glow: rgba(122, 183, 255, 0.25);
+  --pulse-glow: rgba(122, 183, 255, 0.45);
   --halt: #c62828;
   --halt-fg: #ffffff;
   /* Timeline category colors as RGB triplets — used via rgba(var(--tl-*), a) */

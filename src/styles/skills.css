@@ -29,9 +29,13 @@
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--fg);
-  background: var(--glass-highlight);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
   border-radius: 999px;
+}
+
+:root[data-theme="light"] .skill-pill {
+  background: rgba(20, 28, 40, 0.06);
 }
 
 .skill-pill-empty {
@@ -139,8 +143,12 @@ button.skill-pill-btn:focus-visible {
 
 .entry-skill-btn {
   color: var(--fg-muted);
-  background: transparent;
-  border-color: var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: transparent;
+}
+
+:root[data-theme="light"] .entry-skill-btn {
+  background: rgba(20, 28, 40, 0.05);
 }
 
 @media (hover: hover) {
