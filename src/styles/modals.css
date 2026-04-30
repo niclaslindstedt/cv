@@ -489,13 +489,13 @@
   align-items: center;
   padding: 1px 10px;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  border: 1px solid var(--halt);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  color: var(--halt-fg);
-  background: var(--halt);
+  color: var(--fg-muted);
+  background: var(--accent-soft);
 }
 
 .program-course-moments {
