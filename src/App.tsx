@@ -311,6 +311,10 @@ export function App() {
       <FocusModal
         focus={selectedFocus}
         onClose={() => setSelectedFocus(null)}
+        onSkillClick={(skill) => {
+          setSelectedFocus(null);
+          setSelectedSkill(skill);
+        }}
       />
       <ProgramCoursesModal
         program={selectedProgram}

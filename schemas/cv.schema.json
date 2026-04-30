@@ -190,6 +190,13 @@
         "area": { "$ref": "#/$defs/localizedString" },
         "since": { "$ref": "#/$defs/yearMonth" },
         "description": { "$ref": "#/$defs/localizedString" },
+        "skills": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Skill names (must match strings used in skills/items) that this focus area expresses. Rendered as clickable chips on the focus tile and modal."
+        },
         "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },

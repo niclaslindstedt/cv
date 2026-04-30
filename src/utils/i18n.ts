@@ -80,6 +80,9 @@ type UiStrings = {
   focus: {
     since: string;
     detailAria: (area: string) => string;
+    duration: (months: number) => string;
+    skillsHeading: string;
+    skillCount: (count: number) => string;
   };
   companyModal: {
     detailAria: (company: string) => string;
@@ -254,6 +257,16 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     focus: {
       since: "since",
       detailAria: (area) => `${area} details`,
+      duration: (months) => {
+        if (months < 1) return "this month";
+        if (months < 12) return `${months} mo`;
+        const years = Math.floor(months / 12);
+        const rem = months % 12;
+        if (rem === 0) return years === 1 ? "1 yr" : `${years} yrs`;
+        return years === 1 ? `1 yr ${rem} mo` : `${years} yrs ${rem} mo`;
+      },
+      skillsHeading: "Skills",
+      skillCount: (n) => (n === 1 ? "1 skill" : `${n} skills`),
     },
     companyModal: {
       detailAria: (company) => `${company} details`,
@@ -439,6 +452,16 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     focus: {
       since: "sedan",
       detailAria: (area) => `Detaljer för ${area}`,
+      duration: (months) => {
+        if (months < 1) return "denna månad";
+        if (months < 12) return `${months} mån`;
+        const years = Math.floor(months / 12);
+        const rem = months % 12;
+        if (rem === 0) return `${years} år`;
+        return `${years} år ${rem} mån`;
+      },
+      skillsHeading: "Kompetenser",
+      skillCount: (n) => (n === 1 ? "1 kompetens" : `${n} kompetenser`),
     },
     companyModal: {
       detailAria: (company) => `Detaljer för ${company}`,
