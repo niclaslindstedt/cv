@@ -74,14 +74,6 @@ export function Courses({
                 {t(item.institution)} ·{" "}
                 <span className="education-credits">{item.code}</span> ·{" "}
                 <span className="education-credits">{item.credits}</span>
-                {incomplete && (
-                  <>
-                    {" · "}
-                    <span className="course-incomplete-pill">
-                      {ui.programModal.incomplete}
-                    </span>
-                  </>
-                )}
                 {partial && earned !== null && (
                   <>
                     {" · "}

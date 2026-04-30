@@ -14,6 +14,44 @@
     "completedDate": "2015-08",
     "engagement": 0.5,
     "remote": true,
+    "moments": [
+      {
+        "name": {
+          "en": "Written Exam",
+          "sv": "Tentamen"
+        },
+        "code": "T101",
+        "credits": "3 ECTS",
+        "completedDate": "2015-08"
+      },
+      {
+        "name": {
+          "en": "Project",
+          "sv": "Projekt"
+        },
+        "code": "P101",
+        "credits": "3 ECTS",
+        "completedDate": "2015-08"
+      },
+      {
+        "name": {
+          "en": "Assignments 1",
+          "sv": "Inlämningsuppgifter 1"
+        },
+        "code": "I101",
+        "credits": "3 ECTS",
+        "completedDate": "2015-08"
+      },
+      {
+        "name": {
+          "en": "Assignments 2",
+          "sv": "Inlämningsuppgifter 2"
+        },
+        "code": "I201",
+        "credits": "3 ECTS",
+        "completedDate": "2015-08"
+      }
+    ],
     "skills": ["C++"]
   },
   {
@@ -75,7 +113,18 @@
     "credits": "7.5 ECTS",
     "startDate": "2015-06",
     "completedDate": "2015-07",
-    "engagement": 1
+    "engagement": 1,
+    "moments": [
+      {
+        "name": {
+          "en": "Labs / Seminars",
+          "sv": "Laborationer/Seminarier"
+        },
+        "code": "4000",
+        "credits": "7.5 ECTS",
+        "completedDate": "2015-07"
+      }
+    ]
   },
   {
     "name": {
@@ -91,6 +140,26 @@
     "startDate": "2015-01",
     "completedDate": "2015-06",
     "engagement": 0.5,
-    "remote": true
+    "remote": true,
+    "moments": [
+      {
+        "name": {
+          "en": "Written Exam",
+          "sv": "Tentamen"
+        },
+        "code": "1000",
+        "credits": "15 ECTS",
+        "completedDate": "2015-06"
+      },
+      {
+        "name": {
+          "en": "Mandatory Requirements",
+          "sv": "Fullgjort obligatorium"
+        },
+        "code": "FOBL",
+        "credits": "0 ECTS",
+        "completedDate": "2015-06"
+      }
+    ]
   }
 ]
