@@ -18,10 +18,35 @@ html {
   min-height: 100lvh;
 }
 
+/* The page gradient lives on .page (see layout.css) so it scrolls with
+ * content. Mirror it here as a viewport-fixed fallback so the iOS 26
+ * Safari sample band — the strip behind the Dynamic Island and the
+ * floating URL bar — still reads the gradient when scroll-lock pins
+ * <body> to `position: fixed`. Without this, the bars tint to flat
+ * --sky-top (~black) the moment a modal opens. */
 body {
   position: relative;
   overflow-x: hidden;
   background-color: var(--sky-top);
+  background-image:
+    radial-gradient(
+      ellipse 120% 70% at var(--sky-glow-1-pos),
+      var(--sky-glow-1),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 90% 60% at var(--sky-glow-2-pos),
+      var(--sky-glow-2),
+      transparent 60%
+    ),
+    linear-gradient(
+      to bottom,
+      var(--sky-top) 0%,
+      var(--sky-mid) 55%,
+      var(--sky-bottom) 100%
+    );
+  background-attachment: fixed;
+  background-size: 100% 100%;
   min-height: 100dvh;
   min-height: 100lvh;
 }
