@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import type { LocalizedString, SkillDetail } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { renderInlineCode } from "../utils/inlineCode";
 import { yearsOfExperience, type SkillUsage } from "../utils/skills";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
@@ -137,19 +138,21 @@ export function SkillModal({ skill, usages, detail, onClose }: Props) {
         <div className="skill-modal-body">
           {detail && (
             <section className="skill-modal-detail">
-              <p className="skill-modal-description">{t(detail.description)}</p>
+              <p className="skill-modal-description">
+                {renderInlineCode(t(detail.description))}
+              </p>
               {(detail.benefits || detail.drawbacks) && (
                 <dl className="skill-modal-pros-cons">
                   {detail.benefits && (
                     <div className="skill-modal-pros">
                       <dt>{ui.skillModal.benefits}</dt>
-                      <dd>{t(detail.benefits)}</dd>
+                      <dd>{renderInlineCode(t(detail.benefits))}</dd>
                     </div>
                   )}
                   {detail.drawbacks && (
                     <div className="skill-modal-cons">
                       <dt>{ui.skillModal.drawbacks}</dt>
-                      <dd>{t(detail.drawbacks)}</dd>
+                      <dd>{renderInlineCode(t(detail.drawbacks))}</dd>
                     </div>
                   )}
                 </dl>

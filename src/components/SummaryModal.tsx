@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import type { LocalizedString } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { renderInlineCode } from "../utils/inlineCode";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
@@ -67,7 +68,9 @@ export function SummaryModal({
         </header>
         <div className="skill-modal-body">
           <section className="skill-modal-detail">
-            <p className="skill-modal-description">{t(longSummary)}</p>
+            <p className="skill-modal-description">
+              {renderInlineCode(t(longSummary))}
+            </p>
           </section>
         </div>
       </div>

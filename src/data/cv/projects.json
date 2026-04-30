@@ -55,12 +55,12 @@
       "sv": "Beskriv agentarbetsflöden i naturligt språk, fånga dem som delbara filer och spela upp dem var som helst."
     },
     "description": {
-      "en": "Captures agent workflows from natural-language descriptions into a portable .zwf file format that can be replayed deterministically across machines. Built on top of zag for the underlying provider abstraction, with an HTTP API and an embedded chat UI for designing workflows interactively.",
-      "sv": "Fångar agentarbetsflöden från beskrivningar i naturligt språk till ett portabelt .zwf-format som kan spelas upp deterministiskt mellan maskiner. Bygger på zag för den underliggande leverantörsabstraktionen, med ett HTTP-API och ett inbäddat chattgränssnitt för interaktiv design av arbetsflöden."
+      "en": "Captures agent workflows from natural-language descriptions into a portable `.zwf` file format that can be replayed deterministically across machines. Built on top of zag for the underlying provider abstraction, with an HTTP API and an embedded chat UI for designing workflows interactively.",
+      "sv": "Fångar agentarbetsflöden från beskrivningar i naturligt språk till ett portabelt `.zwf`-format som kan spelas upp deterministiskt mellan maskiner. Bygger på zag för den underliggande leverantörsabstraktionen, med ett HTTP-API och ett inbäddat chattgränssnitt för interaktiv design av arbetsflöden."
     },
     "printDescription": {
-      "en": "Captures agent workflows as portable .zwf files, replayable deterministically across machines. Built on zag, with an HTTP API and an embedded chat UI for interactive workflow design.",
-      "sv": "Fångar agentarbetsflöden som portabla .zwf-filer, återspelbara deterministiskt mellan maskiner. Bygger på zag, med ett HTTP-API och ett inbäddat chattgränssnitt för interaktiv arbetsflödesdesign."
+      "en": "Captures agent workflows as portable `.zwf` files, replayable deterministically across machines. Built on zag, with an HTTP API and an embedded chat UI for interactive workflow design.",
+      "sv": "Fångar agentarbetsflöden som portabla `.zwf`-filer, återspelbara deterministiskt mellan maskiner. Bygger på zag, med ett HTTP-API och ett inbäddat chattgränssnitt för interaktiv arbetsflödesdesign."
     },
     "stack": ["Rust", "React"],
     "skills": [
@@ -267,12 +267,12 @@
       "sv": "En tidig version av spec-driven utveckling som en uppsättning slash-prompts."
     },
     "description": {
-      "en": "An early take on spec-driven development packaged as a small set of slash-command prompts. /spec turned an idea into a spec.md, /plan produced an implementation plan from it, /create-tickets split the plan into tickets sized to fit a single agent session, and /next-ticket pulled the next ticket off the queue and built it. State lived on the file system. Written before GitHub released SpecKit.",
-      "sv": "En tidig version av spec-driven utveckling paketerad som en liten uppsättning slash-prompts. /spec gjorde en idé till en spec.md, /plan tog fram en implementationsplan utifrån den, /create-tickets delade upp planen i ärenden som rymdes i en enda agentsession och /next-ticket plockade nästa ärende från kön och byggde det. Tillstånd låg på filsystemet. Skrevs innan GitHub släppte SpecKit."
+      "en": "An early take on spec-driven development packaged as a small set of slash-command prompts. `/spec` turned an idea into a `spec.md`, `/plan` produced an implementation plan from it, `/create-tickets` split the plan into tickets sized to fit a single agent session, and `/next-ticket` pulled the next ticket off the queue and built it. State lived on the file system. Written before GitHub released SpecKit.",
+      "sv": "En tidig version av spec-driven utveckling paketerad som en liten uppsättning slash-prompts. `/spec` gjorde en idé till en `spec.md`, `/plan` tog fram en implementationsplan utifrån den, `/create-tickets` delade upp planen i ärenden som rymdes i en enda agentsession och `/next-ticket` plockade nästa ärende från kön och byggde det. Tillstånd låg på filsystemet. Skrevs innan GitHub släppte SpecKit."
     },
     "printDescription": {
-      "en": "An early take on spec-driven development packaged as a small set of slash-command prompts: /spec wrote a spec.md, /plan turned it into an implementation plan, /create-tickets split the plan into agent-sized tickets, and /next-ticket built the next one. State on the file system. Predates GitHub's SpecKit.",
-      "sv": "En tidig version av spec-driven utveckling paketerad som slash-prompts: /spec skrev en spec.md, /plan gjorde den till en implementationsplan, /create-tickets delade planen i agentstora ärenden och /next-ticket byggde nästa. Tillstånd på filsystemet. Föregår GitHubs SpecKit."
+      "en": "An early take on spec-driven development packaged as a small set of slash-command prompts: `/spec` wrote a `spec.md`, `/plan` turned it into an implementation plan, `/create-tickets` split the plan into agent-sized tickets, and `/next-ticket` built the next one. State on the file system. Predates GitHub's SpecKit.",
+      "sv": "En tidig version av spec-driven utveckling paketerad som slash-prompts: `/spec` skrev en `spec.md`, `/plan` gjorde den till en implementationsplan, `/create-tickets` delade planen i agentstora ärenden och `/next-ticket` byggde nästa. Tillstånd på filsystemet. Föregår GitHubs SpecKit."
     },
     "skills": ["Spec-driven development", "Agentic workflows"],
     "github": {

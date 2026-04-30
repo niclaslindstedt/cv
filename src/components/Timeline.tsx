@@ -13,6 +13,7 @@ import timelineData from "../data/timeline.json";
 import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { renderInlineCode } from "../utils/inlineCode";
 import { NoteIcon } from "./NoteIcon";
 import { ProjectDateChip } from "./ProjectDateChip";
 import { ResetIcon } from "./ResetIcon";
@@ -946,7 +947,7 @@ export function Timeline() {
             </p>
             {t(selectedItem.description) && (
               <p className="timeline-vis-details-desc">
-                {t(selectedItem.description)}
+                {renderInlineCode(t(selectedItem.description))}
               </p>
             )}
             {selectedItem.sideProject.openSource && (
@@ -1120,7 +1121,7 @@ export function Timeline() {
               )}
               {t(selectedItem.description) && (
                 <p className="timeline-vis-details-desc">
-                  {t(selectedItem.description)}
+                  {renderInlineCode(t(selectedItem.description))}
                 </p>
               )}
               {selectedItem.notes && (
