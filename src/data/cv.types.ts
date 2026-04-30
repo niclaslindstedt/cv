@@ -36,6 +36,7 @@ export type FocusArea = {
   area: LocalizedString;
   since: string;
   description: LocalizedString;
+  skills?: string[];
   aliases?: string[];
 };
 
