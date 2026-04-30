@@ -38,7 +38,12 @@ import type { SearchKind } from "./data/search-index.types";
 import { useGlassReflections } from "./utils/glassReflections";
 import { useLang } from "./utils/i18n";
 import { useRoute } from "./utils/route";
-import { buildCompanyStackMap, buildSkillUsageMap } from "./utils/skills";
+import {
+  buildCompanyStackMap,
+  buildSkillUsageMap,
+  buildUnusedStackOnlySet,
+  buildUnusedStackUsageMap,
+} from "./utils/skills";
 import { useTheme } from "./utils/theme";
 
 export function App() {
@@ -51,6 +56,11 @@ export function App() {
     [companies],
   );
   const companyStacks = useMemo(() => buildCompanyStackMap(cv), []);
+  const unusedStackOnly = useMemo(() => buildUnusedStackOnlySet(cv), []);
+  const unusedStackLocations = useMemo(
+    () => buildUnusedStackUsageMap(cv, companies),
+    [companies],
+  );
   const projectsByName = useMemo(
     () => new Map<string, Project>(cv.projects.map((p) => [p.name, p])),
     [],
@@ -251,6 +261,7 @@ export function App() {
             title={t(cv.sections.skills)}
             skills={cv.skills}
             usages={skillUsages}
+            hiddenSkills={unusedStackOnly}
             onSkillClick={setSelectedSkill}
           />
           <Languages
@@ -287,6 +298,9 @@ export function App() {
       <SkillModal
         skill={selectedSkill}
         usages={selectedSkill ? (skillUsages.get(selectedSkill) ?? []) : []}
+        unusedAt={
+          selectedSkill ? (unusedStackLocations.get(selectedSkill) ?? []) : []
+        }
         detail={
           selectedSkill
             ? (cv.skillDetails as Record<string, SkillDetail>)[selectedSkill]

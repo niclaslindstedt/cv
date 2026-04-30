@@ -9,6 +9,7 @@ import type {
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
+import { stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
@@ -151,9 +152,10 @@ export function ExperienceModal({
   const newestRole = sortedRoles[sortedRoles.length - 1];
   const hasPromotion = sortedRoles.length > 1;
   const isActive = item.endDate === null;
-  const stack =
+  const stack = stackEntries(
     item.stack ??
-    (data.kind === "experience" ? data.company.stack : data.client.stack);
+      (data.kind === "experience" ? data.company.stack : data.client.stack),
+  );
   const skills = item.skills ?? [];
   const titleText = sortedRoles.map((r) => t(r.title)).join(" → ");
 
@@ -231,20 +233,25 @@ export function ExperienceModal({
                 {ui.experienceModal.visitCompanyWebsite(subject.name)}
               </a>
             )}
-            {stack && stack.length > 0 && (
+            {stack.length > 0 && (
               <div className="company-modal-stack">
                 <h3 className="company-modal-stack-title">
                   {ui.companyModal.stack}
                 </h3>
                 <ul className="entry-stack">
                   {stack.map((tech) => (
-                    <li key={tech}>
+                    <li key={tech.name}>
                       <button
                         type="button"
-                        className="entry-stack-btn"
-                        onClick={() => onSkillClick(tech)}
+                        className={
+                          tech.unused
+                            ? "entry-stack-btn entry-stack-btn-unused"
+                            : "entry-stack-btn"
+                        }
+                        onClick={() => onSkillClick(tech.name)}
+                        title={tech.unused ? ui.skills.unusedStack : undefined}
                       >
-                        {tech}
+                        {tech.name}
                       </button>
                     </li>
                   ))}

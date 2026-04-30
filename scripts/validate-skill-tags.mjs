@@ -13,6 +13,26 @@ function check(path, tags) {
   }
 }
 
+function stackEntries(items) {
+  return (Array.isArray(items) ? items : []).map((item) =>
+    typeof item === "string"
+      ? { name: item, unused: false }
+      : { name: item.name, unused: item.unused === true },
+  );
+}
+
+function checkStack(path, items) {
+  for (const entry of stackEntries(items)) {
+    // Unused stack entries describe a tech the holder never personally
+    // practiced — they intentionally do not need to appear in the
+    // categorized skills list.
+    if (entry.unused) continue;
+    if (!known.has(entry.name)) {
+      errors.push(`${path}: unknown stack tech "${entry.name}"`);
+    }
+  }
+}
+
 const companies = new Map(cv.companies.map((c) => [c.id, c]));
 function requireCompany(path, id) {
   if (!companies.has(id)) {
@@ -24,9 +44,10 @@ function requireCompany(path, id) {
 
 cv.projects.forEach((p, i) => {
   check(`projects[${i}] (${p.name})`, p.skills);
-  const stack = Array.isArray(p.stack) ? p.stack : [];
+  checkStack(`projects[${i}] (${p.name})`, p.stack);
+  const stackNames = stackEntries(p.stack).map((e) => e.name);
   const skills = Array.isArray(p.skills) ? p.skills : [];
-  const stackSet = new Set(stack);
+  const stackSet = new Set(stackNames);
   const overlap = skills.filter((s) => stackSet.has(s));
   if (overlap.length) {
     errors.push(
@@ -36,18 +57,23 @@ cv.projects.forEach((p, i) => {
     );
   }
 });
+cv.companies.forEach((c, i) => {
+  checkStack(`companies[${i}] (${c.name})`, c.stack);
+});
 cv.experience.forEach((e, i) => {
   const companyLabel = requireCompany(
     `experience[${i}].companyId`,
     e.companyId,
   );
   check(`experience[${i}] (${companyLabel})`, e.skills);
+  checkStack(`experience[${i}] (${companyLabel})`, e.stack);
   (e.assignments ?? []).forEach((a, j) => {
     const clientLabel = requireCompany(
       `experience[${i}].assignments[${j}].clientId`,
       a.clientId,
     );
     check(`experience[${i}].assignments[${j}] (${clientLabel})`, a.skills);
+    checkStack(`experience[${i}].assignments[${j}] (${clientLabel})`, a.stack);
   });
 });
 (cv.education ?? []).forEach((ed, i) =>

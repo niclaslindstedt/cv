@@ -49,6 +49,12 @@ function pickLang(value, lang) {
   return localized(value)[lang];
 }
 
+function stackNames(list) {
+  return (list ?? []).map((item) =>
+    typeof item === "string" ? item : item?.name,
+  );
+}
+
 function dedupe(list) {
   const out = [];
   const seen = new Set();
@@ -155,7 +161,7 @@ function buildRecords(cv) {
       fieldsByLang: (lang) => ({
         title: project.name,
         description: `${pickLang(project.tagline, lang)} ${pickLang(project.description, lang)}`,
-        stack: project.stack ?? [],
+        stack: stackNames(project.stack),
         skills: project.skills ?? [],
         aliases: project.aliases ?? [],
       }),
@@ -175,7 +181,7 @@ function buildRecords(cv) {
       fieldsByLang: (lang) => ({
         title: company.name,
         description: `${pickLang(company.tagline, lang)} ${pickLang(company.description, lang)}`,
-        stack: company.stack ?? [],
+        stack: stackNames(company.stack),
         aliases: company.aliases ?? [],
       }),
       localizedTitle: { en: company.name, sv: company.name },
@@ -201,7 +207,7 @@ function buildRecords(cv) {
       fieldsByLang: (lang) => ({
         title: lang === "sv" ? titleSv : titleEn,
         description: pickLang(exp.notes ?? { en: "", sv: "" }, lang),
-        stack: exp.stack ?? [],
+        stack: stackNames(exp.stack),
         skills: exp.skills ?? [],
         aliases: [
           ...(exp.aliases ?? []),
@@ -238,7 +244,7 @@ function buildRecords(cv) {
         fieldsByLang: (lang) => ({
           title: lang === "sv" ? asgTitleSv : asgTitleEn,
           description: pickLang(assignment.notes ?? { en: "", sv: "" }, lang),
-          stack: assignment.stack ?? [],
+          stack: stackNames(assignment.stack),
           skills: assignment.skills ?? [],
           aliases: [
             ...(assignment.aliases ?? []),

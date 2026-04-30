@@ -52,7 +52,7 @@
       "en": "Frameworks",
       "sv": "Ramverk"
     },
-    "items": ["React", "React Native", "Vue", "Angular", "Node.js"]
+    "items": ["React", "React Native", "Vue", "Angular", "Svelte", "Node.js"]
   },
   {
     "key": "cloud",
@@ -91,6 +91,9 @@
       "Terraform",
       "CI/CD",
       "GitHub actions",
+      "Jenkins",
+      "TeamCity",
+      "Octopus Deploy",
       "Observability"
     ]
   },

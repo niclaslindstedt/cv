@@ -328,6 +328,17 @@
   font-size: 0.9rem;
 }
 
+.skill-modal-unused-hint {
+  margin: 0 0 8px;
+  color: var(--fg-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.skill-modal-pill-unused {
+  color: var(--fg-muted);
+}
+
 @media (max-width: 520px) {
   .skill-modal-overlay {
     padding: 12px;

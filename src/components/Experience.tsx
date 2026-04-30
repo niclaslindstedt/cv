@@ -6,6 +6,7 @@ import type {
 } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { stackEntries } from "../utils/stack";
 import { NoteIcon } from "./NoteIcon";
 import { Section } from "./Section";
 
@@ -177,7 +178,7 @@ function ExperienceItemView({
 }) {
   const { lang, t, ui } = useLang();
   const company = resolveCompany(companies, item.companyId);
-  const stack = item.stack ?? company.stack;
+  const stack = stackEntries(item.stack ?? company.stack);
   const isActive = item.endDate === null;
   const sortedRoles = sortRolesAsc(item.roles);
   const newestRole = sortedRoles[sortedRoles.length - 1];
@@ -202,16 +203,21 @@ function ExperienceItemView({
         </div>
         {hasPromotion && <RoleChain roles={sortedRoles} />}
         <p>{t(company.tagline)}</p>
-        {stack && stack.length > 0 && (
+        {stack.length > 0 && (
           <ul className="entry-stack">
             {stack.map((tech) => (
-              <li key={tech}>
+              <li key={tech.name}>
                 <button
                   type="button"
-                  className="entry-stack-btn"
-                  onClick={() => onSkillClick(tech)}
+                  className={
+                    tech.unused
+                      ? "entry-stack-btn entry-stack-btn-unused"
+                      : "entry-stack-btn"
+                  }
+                  onClick={() => onSkillClick(tech.name)}
+                  title={tech.unused ? ui.skills.unusedStack : undefined}
                 >
-                  {tech}
+                  {tech.name}
                 </button>
               </li>
             ))}
@@ -296,6 +302,7 @@ function AssignmentItemView({
 }) {
   const { lang, t, ui } = useLang();
   const client = resolveCompany(companies, a.clientId);
+  const stack = stackEntries(a.stack);
   const isActive = a.endDate === null;
   const sortedRoles = sortRolesAsc(a.roles);
   const newestRole = sortedRoles[sortedRoles.length - 1];
@@ -317,16 +324,21 @@ function AssignmentItemView({
         </div>
         {hasPromotion && <RoleChain roles={sortedRoles} />}
         <p>{t(client.tagline)}</p>
-        {a.stack && a.stack.length > 0 && (
+        {stack.length > 0 && (
           <ul className="entry-stack">
-            {a.stack.map((tech) => (
-              <li key={tech}>
+            {stack.map((tech) => (
+              <li key={tech.name}>
                 <button
                   type="button"
-                  className="entry-stack-btn"
-                  onClick={() => onSkillClick(tech)}
+                  className={
+                    tech.unused
+                      ? "entry-stack-btn entry-stack-btn-unused"
+                      : "entry-stack-btn"
+                  }
+                  onClick={() => onSkillClick(tech.name)}
+                  title={tech.unused ? ui.skills.unusedStack : undefined}
                 >
-                  {tech}
+                  {tech.name}
                 </button>
               </li>
             ))}

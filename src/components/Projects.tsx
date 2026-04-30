@@ -5,6 +5,7 @@ import type { Project, ProjectStats, ProjectStatsFile } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { aggregateProjectStats } from "../utils/projectStats";
+import { stackEntries } from "../utils/stack";
 import { Section } from "./Section";
 
 const projectStats = projectStatsData as ProjectStatsFile;
@@ -92,17 +93,22 @@ export function Projects({
               </header>
               {project.stack && project.stack.length > 0 && (
                 <ul className="project-stack">
-                  {project.stack.map((tech) => (
-                    <li key={tech}>
+                  {stackEntries(project.stack).map((tech) => (
+                    <li key={tech.name}>
                       <button
                         type="button"
-                        className="project-stack-btn"
+                        className={
+                          tech.unused
+                            ? "project-stack-btn project-stack-btn-unused"
+                            : "project-stack-btn"
+                        }
                         onClick={(e) => {
                           e.stopPropagation();
-                          onSkillClick(tech);
+                          onSkillClick(tech.name);
                         }}
+                        title={tech.unused ? ui.skills.unusedStack : undefined}
                       >
-                        {tech}
+                        {tech.name}
                       </button>
                     </li>
                   ))}

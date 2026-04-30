@@ -15,7 +15,7 @@
     "endDate": null,
     "stack": [
       "TypeScript",
-      "React",
+      { "name": "React", "unused": true },
       "C#/.NET",
       "Microservices",
       "Azure",
@@ -73,7 +73,7 @@
       "Redis",
       "Azure",
       "React",
-      "React Native",
+      { "name": "React Native", "unused": true },
       "TypeScript",
       "GitHub actions"
     ],
@@ -304,9 +304,10 @@
     },
     "stack": [
       "TypeScript",
-      "Angular",
+      { "name": "Angular", "unused": true },
       "C#/.NET",
       "Python",
+      { "name": "R", "unused": true },
       "MSSQL",
       "Linux",
       "TeamCity",

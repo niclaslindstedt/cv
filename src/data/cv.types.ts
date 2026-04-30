@@ -52,12 +52,14 @@ export type GithubRepoRef = {
   repo: string;
 };
 
+export type StackItem = string | { name: string; unused?: boolean };
+
 export type Project = {
   name: string;
   tagline: LocalizedString;
   description: LocalizedString;
   printDescription?: LocalizedString;
-  stack?: string[];
+  stack?: StackItem[];
   skills: string[];
   github: GithubRepoRef[];
   openSource: boolean;
@@ -99,7 +101,7 @@ export type Company = {
   description: LocalizedString;
   url?: string;
   terminated?: boolean;
-  stack?: string[];
+  stack?: StackItem[];
   sourceUrls?: SourceUrl[];
   aliases?: string[];
 };
@@ -115,7 +117,7 @@ export type Assignment = {
   clientId: string;
   startDate: string;
   endDate: string | null;
-  stack?: string[];
+  stack?: StackItem[];
   skills?: string[];
   notes?: LocalizedString;
   printDescription?: LocalizedString;
@@ -128,7 +130,7 @@ export type Experience = {
   startDate: string;
   endDate: string | null;
   engagement?: LocalizedString;
-  stack?: string[];
+  stack?: StackItem[];
   skills?: string[];
   notes?: LocalizedString;
   printDescription?: LocalizedString;

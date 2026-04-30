@@ -4,7 +4,11 @@ import type { LocalizedString, SkillDetail } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
-import { yearsOfExperience, type SkillUsage } from "../utils/skills";
+import {
+  yearsOfExperience,
+  type SkillUsage,
+  type UnusedStackLocation,
+} from "../utils/skills";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
@@ -18,6 +22,7 @@ function isLocalized(
 type Props = {
   skill: string | null;
   usages: SkillUsage[];
+  unusedAt: UnusedStackLocation[];
   detail?: SkillDetail;
   onClose: () => void;
 };
@@ -54,7 +59,13 @@ function groupByKind(
   return groups;
 }
 
-export function SkillModal({ skill, usages, detail, onClose }: Props) {
+export function SkillModal({
+  skill,
+  usages,
+  unusedAt,
+  detail,
+  onClose,
+}: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!skill, onClose);
@@ -194,8 +205,41 @@ export function SkillModal({ skill, usages, detail, onClose }: Props) {
                 </section>
               ))}
             </div>
-          ) : (
+          ) : unusedAt.length === 0 ? (
             <p className="skill-modal-empty">{ui.skillModal.empty}</p>
+          ) : null}
+          {unusedAt.length > 0 && (
+            <section className="skill-modal-group skill-modal-unused">
+              <h3 className="skill-modal-group-heading">
+                {ui.skillModal.unusedHeading}
+              </h3>
+              <p className="skill-modal-unused-hint">
+                {ui.skillModal.unusedHint}
+              </p>
+              <ul className="skill-modal-pills">
+                {unusedAt.map((u, i) => {
+                  const parts: string[] = [];
+                  if (u.role) parts.push(t(u.role));
+                  if (u.via) parts.push(`${ui.skillModal.via} ${u.via}`);
+                  if (u.startDate) {
+                    parts.push(
+                      formatRange(u.startDate, u.endDate ?? null, lang),
+                    );
+                  }
+                  const tip = parts.join(" · ");
+                  return (
+                    <li key={`unused-${i}`}>
+                      <span
+                        className="skill-modal-pill skill-modal-pill-unused"
+                        title={tip || undefined}
+                      >
+                        {resolveLabel(u.label)}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
           )}
         </div>
       </div>
