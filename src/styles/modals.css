@@ -286,6 +286,11 @@
   gap: 6px;
 }
 
+.skill-modal-group .entry-skills,
+.skill-modal-group .entry-stack {
+  margin: 0;
+}
+
 .skill-modal-group-heading {
   margin: 0;
   font-size: 0.7rem;

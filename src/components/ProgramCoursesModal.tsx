@@ -196,19 +196,24 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
                       </div>
                     )}
                     {course.skills && course.skills.length > 0 && (
-                      <ul className="entry-skills">
-                        {course.skills.map((skill) => (
-                          <li key={skill}>
-                            <button
-                              type="button"
-                              className="entry-skill-btn"
-                              onClick={() => onSkillClick(skill)}
-                            >
-                              {skill}
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
+                      <section className="skill-modal-group program-course-skills">
+                        <h3 className="skill-modal-group-heading">
+                          {ui.programModal.skills}
+                        </h3>
+                        <ul className="entry-skills">
+                          {course.skills.map((skill) => (
+                            <li key={skill}>
+                              <button
+                                type="button"
+                                className="entry-skill-btn"
+                                onClick={() => onSkillClick(skill)}
+                              >
+                                {skill}
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
                     )}
                   </li>
                 );
