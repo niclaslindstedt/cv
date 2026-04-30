@@ -271,7 +271,7 @@
       "en": "half-time",
       "sv": "halvtid"
     },
-    "stack": ["TypeScript", "Angular", "C#/.NET", "Python", "MSSQL"],
+    "stack": ["TypeScript", "Angular", "C#/.NET", "Python", "MSSQL", "Linux"],
     "skills": [
       "CI/CD",
       "Cybersecurity",
