@@ -335,6 +335,38 @@
     ]
   },
   {
+    "name": "etimo-achievements",
+    "tagline": {
+      "en": "Gamification platform for distributing achievements across a team via Slack.",
+      "sv": "Gamification-plattform som delar ut achievements i ett team via Slack."
+    },
+    "description": {
+      "en": "Web app where teams create, award, and track achievements that surface as Slack messages, encouraging balanced task distribution and recognition. TypeScript end-to-end with a Node.js/Express API on PostgreSQL, deployed on Kubernetes via GitHub Actions. Started as an Etimo open-source project and was later picked up by two of Etimo's client startups.",
+      "sv": "Webbapp där team skapar, delar ut och följer achievements som dyker upp som Slack-meddelanden, för att stötta balanserad uppgiftsfördelning och uppskattning. TypeScript hela vägen med ett Node.js/Express-API mot PostgreSQL, driftsatt på Kubernetes via GitHub Actions. Började som ett open source-projekt på Etimo och plockades sedan upp av två av Etimos kundstartups."
+    },
+    "printDescription": {
+      "en": "Open-source gamification platform that surfaces team achievements as Slack messages. TypeScript end-to-end on Node.js/Express, PostgreSQL, and Kubernetes. Built at Etimo and reused at two client startups.",
+      "sv": "Open source-gamificationsplattform som lyfter teamets achievements som Slack-meddelanden. TypeScript hela vägen på Node.js/Express, PostgreSQL och Kubernetes. Byggd på Etimo och återanvänd på två kundstartups."
+    },
+    "stack": [
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Docker",
+      "Kubernetes",
+      "GitHub actions"
+    ],
+    "skills": ["Integrations"],
+    "github": [
+      {
+        "owner": "Etimo",
+        "repo": "etimo-achievements"
+      }
+    ],
+    "openSource": true,
+    "aliases": ["achievements", "etimo gamification", "slack achievements"]
+  },
+  {
     "name": "dotnet-oauth2-server",
     "tagline": {
       "en": "OAuth 2.0 authorization server in ASP.NET Core.",

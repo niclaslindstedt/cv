@@ -22,6 +22,7 @@
       "Kubernetes",
       "Terraform",
       "GitHub actions",
+      "Octopus Deploy",
       "gRPC/Protobuf",
       "Vector databases",
       "CosmosDB",
@@ -122,12 +123,32 @@
     "companyId": "etimo",
     "startDate": "2020-01",
     "endDate": "2023-09",
-    "skills": ["Mentoring"],
+    "skills": ["Mentoring", "Technical interviews"],
     "printDescription": {
       "en": "Consulting tenure at Etimo, a .NET and JavaScript consultancy; promoted from Senior Consultant to Senior Manager.",
       "sv": "Konsultanställning på Etimo, ett .NET- och JavaScript-konsultbolag; befordrad från Seniorkonsult till Senior Manager."
     },
     "assignments": [
+      {
+        "roles": [
+          {
+            "title": {
+              "en": "Software Engineer",
+              "sv": "Mjukvaruingenjör"
+            },
+            "startDate": "2020-01",
+            "endDate": "2020-02"
+          }
+        ],
+        "clientId": "timewave",
+        "startDate": "2020-01",
+        "endDate": "2020-02",
+        "stack": ["TypeScript", "Vue"],
+        "printDescription": {
+          "en": "Short engagement at TimeWave, building a customer-facing communication frontend in Vue against existing APIs.",
+          "sv": "Kort uppdrag på TimeWave med att bygga ett kundvänt kommunikationsgränssnitt i Vue mot befintliga API:er."
+        }
+      },
       {
         "roles": [
           {
@@ -150,6 +171,7 @@
           "Miniservices",
           "MSSQL",
           "Docker Swarm",
+          "Jenkins",
           "Azure DevOps"
         ],
         "skills": ["Scrum", "CI/CD", "Docker", "PowerShell"],
@@ -234,7 +256,16 @@
       "en": "half-time",
       "sv": "halvtid"
     },
-    "stack": ["TypeScript", "Vue", "C#/.NET", "Azure", "MSSQL", "Docker"],
+    "stack": [
+      "TypeScript",
+      "Vue",
+      "C#/.NET",
+      "Azure",
+      "MSSQL",
+      "Docker",
+      "TeamCity",
+      "Octopus Deploy"
+    ],
     "skills": [
       "CI/CD",
       "Cybersecurity",
@@ -271,7 +302,16 @@
       "en": "half-time",
       "sv": "halvtid"
     },
-    "stack": ["TypeScript", "Angular", "C#/.NET", "Python", "MSSQL", "Linux"],
+    "stack": [
+      "TypeScript",
+      "Angular",
+      "C#/.NET",
+      "Python",
+      "MSSQL",
+      "Linux",
+      "TeamCity",
+      "Octopus Deploy"
+    ],
     "skills": [
       "CI/CD",
       "Cybersecurity",

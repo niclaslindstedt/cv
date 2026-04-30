@@ -82,6 +82,27 @@
     "aliases": ["skandinaviska enskilda banken", "seb bank"]
   },
   {
+    "id": "timewave",
+    "name": "TimeWave AB",
+    "tagline": {
+      "en": "Business management system for cleaning and home-service companies.",
+      "sv": "Affärssystem för städ- och hemservicebolag."
+    },
+    "description": {
+      "en": "Swedish vendor of a business management system for cleaning and home-service companies — scheduling, time tracking, invoicing, and customer management with built-in support for the RUT household-services tax deduction. Used by more than 300 companies.",
+      "sv": "Svensk leverantör av ett affärssystem för städ- och hemservicebolag — schemaläggning, tidrapportering, fakturering och kundhantering med inbyggt stöd för RUT-avdraget. Används av fler än 300 bolag."
+    },
+    "url": "https://www.timewave.se",
+    "sourceUrls": [
+      {
+        "title": "TimeWave website",
+        "url": "https://www.timewave.se",
+        "description": "TimeWave's own Swedish-language website describing the cleaning-industry business system."
+      }
+    ],
+    "aliases": ["timewave ab", "time wave"]
+  },
+  {
     "id": "mitt-skolval",
     "name": "Svensk Utbildningsteknologi AB",
     "tagline": {
