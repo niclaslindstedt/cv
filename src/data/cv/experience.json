@@ -35,9 +35,13 @@
       "RAG",
       "Chatbots",
       "MCP",
+      "Claude Code",
+      "GitHub Copilot",
+      "Codex CLI",
       "Cybersecurity",
       "Architecture",
       "Observability",
+      "CI/CD",
       "Bash/Shell",
       "Mentoring"
     ],
@@ -63,6 +67,7 @@
     "stack": [
       "C#/.NET",
       "PostgreSQL",
+      "CosmosDB",
       "Redis",
       "Azure",
       "React",
@@ -180,6 +185,7 @@
           "TypeScript",
           "AWS",
           "Kubernetes",
+          "Terraform",
           "Linux",
           "GitHub actions",
           "MySQL",
@@ -187,6 +193,7 @@
         ],
         "skills": [
           "CI/CD",
+          "Cloud migration",
           "Cybersecurity",
           "Architecture",
           "Leadership",
