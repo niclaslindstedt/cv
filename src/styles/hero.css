@@ -7,7 +7,7 @@
  * not inside the hero, so it can diffuse through the glass below. */
 .hero {
   position: relative;
-  padding: 76px 0 28px;
+  padding: 36px 0 28px;
   margin-bottom: 48px;
   border-bottom: 1px solid var(--glass-border);
   background: var(--glass-bg);
@@ -25,7 +25,7 @@
 
 @media (max-width: 520px) {
   .hero {
-    padding: 64px 0 22px;
+    padding: 28px 0 22px;
   }
 
   .hero-inner {
