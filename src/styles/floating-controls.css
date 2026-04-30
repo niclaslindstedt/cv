@@ -8,8 +8,8 @@
 
 .floating-controls {
   position: fixed;
-  top: 16px;
-  right: 16px;
+  top: calc(env(safe-area-inset-top, 0px) + 16px);
+  right: calc(env(safe-area-inset-right, 0px) + 16px);
   z-index: 40;
   display: flex;
   align-items: center;
@@ -120,8 +120,8 @@
 
 @media (max-width: 480px) {
   .floating-controls {
-    top: 12px;
-    right: 12px;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    right: calc(env(safe-area-inset-right, 0px) + 12px);
     gap: 6px;
     padding: 5px 7px;
   }
