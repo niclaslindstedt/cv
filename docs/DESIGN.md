@@ -503,6 +503,22 @@ a card so the page reads as a stack of weighted units.
   only the company title opens a modal) get **no** card-level hover.
   Only the interactive sub-element gets feedback.
 
+#### Hero exception — full-bleed band
+
+The Hero is the one card that **does not** keep card-radius or vertical
+borders. It spans the full viewport width as a glass band anchored to
+the top of the page; rounded sides would clip at the viewport edges
+and break the seal. The band keeps the standard glass surface (§6.2)
+and a 1px Vapor Edge along the bottom only — the bottom border is the
+tier boundary between hero and the cards below. Inner content is
+constrained to the same max-width column as the rest of the page via
+a `.hero-inner` wrapper, so the column still reads as a single
+gravity. The aurora glow that used to live inside the hero now lives
+on a Sky-tier `.page-glow` element (see §6.1 — it sits behind every
+glass card and is sampled through their `backdrop-filter`, so the
+glow diffuses through the cards instead of being trapped inside the
+hero's overflow box).
+
 ### 9.2 Pill
 
 A rounded-rectangle (`radius-pill` = 999px) chip used for

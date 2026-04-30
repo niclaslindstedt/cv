@@ -32,55 +32,56 @@ export function Hero({
   const pdfDownloadName = `niclas-lindstedt-cv-${lang}${pdfExt}`;
   return (
     <header className="hero">
-      <span className="hero-glow" aria-hidden="true" />
-      <p className="hero-eyebrow">
-        <span className="hero-eyebrow-dot" aria-hidden="true" />
-        {ui.hero.eyebrow}
-      </p>
-      <h1 className="hero-name">{cv.name}</h1>
-      <p className="hero-title">{t(cv.title)}</p>
-      <button
-        type="button"
-        className="hero-summary"
-        onClick={onOpenSummary}
-        aria-label={ui.summaryModal.detailAria(cv.name)}
-      >
-        <span className="hero-summary-text">{t(cv.summary)}</span>
-        <span className="hero-summary-hint" aria-hidden="true">
-          {ui.summaryModal.readMore}
-        </span>
-      </button>
-      <p className="hero-long-summary" aria-hidden="true">
-        {t(cv.longSummary)}
-      </p>
-      <div className="hero-meta">
-        <div className="hero-meta-group hero-meta-links">
-          {cv.links.map((link) => (
+      <div className="hero-inner">
+        <p className="hero-eyebrow">
+          <span className="hero-eyebrow-dot" aria-hidden="true" />
+          {ui.hero.eyebrow}
+        </p>
+        <h1 className="hero-name">{cv.name}</h1>
+        <p className="hero-title">{t(cv.title)}</p>
+        <button
+          type="button"
+          className="hero-summary"
+          onClick={onOpenSummary}
+          aria-label={ui.summaryModal.detailAria(cv.name)}
+        >
+          <span className="hero-summary-text">{t(cv.summary)}</span>
+          <span className="hero-summary-hint" aria-hidden="true">
+            {ui.summaryModal.readMore}
+          </span>
+        </button>
+        <p className="hero-long-summary" aria-hidden="true">
+          {t(cv.longSummary)}
+        </p>
+        <div className="hero-meta">
+          <div className="hero-meta-group hero-meta-links">
+            {cv.links.map((link) => (
+              <a
+                key={link.url}
+                className={link.featured ? "hero-link-pill" : undefined}
+                href={link.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t(link.label)}
+              </a>
+            ))}
+          </div>
+          <div className="hero-meta-group hero-meta-controls">
+            <TimelineLink label={ui.hero.timeline} />
             <a
-              key={link.url}
-              className={link.featured ? "hero-link-pill" : undefined}
-              href={link.url}
-              target="_blank"
-              rel="noreferrer"
+              className="hero-download"
+              href={pdfHref}
+              download={pdfDownloadName}
+              aria-label={ui.hero.downloadAria}
             >
-              {t(link.label)}
+              <PdfIcon />
+              <span>{ui.hero.pdf}</span>
             </a>
-          ))}
-        </div>
-        <div className="hero-meta-group hero-meta-controls">
-          <TimelineLink label={ui.hero.timeline} />
-          <a
-            className="hero-download"
-            href={pdfHref}
-            download={pdfDownloadName}
-            aria-label={ui.hero.downloadAria}
-          >
-            <PdfIcon />
-            <span>{ui.hero.pdf}</span>
-          </a>
-          <LanguageToggle lang={lang} setLang={setLang} />
-          <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
-          <SearchButton onClick={onOpenSearch} />
+            <LanguageToggle lang={lang} setLang={setLang} />
+            <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
+            <SearchButton onClick={onOpenSearch} />
+          </div>
         </div>
       </div>
       <span className="glass-reflect" aria-hidden="true" />

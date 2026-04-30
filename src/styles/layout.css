@@ -28,7 +28,7 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  padding: 48px 24px 64px;
+  padding: 0 0 64px;
   background:
     radial-gradient(
       ellipse 120% 70% at var(--sky-glow-1-pos),
@@ -48,9 +48,45 @@
     );
 }
 
+/* Aurora glow that lives on the Sky tier (behind every glass card).
+ * Anchored to the top-right corner where the hero sits, then bleeds
+ * downward as a softer reflected echo so its colour is sampled by the
+ * backdrop-filter of the cards below — the glow diffuses through the
+ * glass cards instead of being trapped inside the hero box. */
+.page-glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(1100px, 100vw);
+  height: 120vh;
+  max-height: 1500px;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* Primary aurora bloom — anchored in the hero's upper-right. */
+    radial-gradient(
+      ellipse 50% 35% at 82% 10%,
+      var(--accent-soft) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 42% at 76% 16%,
+      var(--accent-soft) 0%,
+      transparent 70%
+    ),
+    /* Reflected echo — softer, lower, mirrored toward the column to
+     * keep the glow alive through the first cards below the hero. */
+    radial-gradient(
+        ellipse 55% 35% at 38% 48%,
+        var(--accent-soft) 0%,
+        transparent 75%
+      );
+}
+
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0 24px;
 }
 
 .footer {
