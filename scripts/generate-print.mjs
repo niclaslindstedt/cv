@@ -173,16 +173,30 @@ function buildProject(project, projectStats) {
     name: project.name,
     tagline: project.tagline,
   };
-  const stats =
-    projectStats?.enabled && project.github
-      ? projectStats.projects?.[
-          `${project.github.owner}/${project.github.repo}`
-        ]
-      : null;
-  if (stats?.firstCommitDate && stats?.lastCommitDate) {
+  let firstCommitDate = null;
+  let lastCommitDate = null;
+  if (projectStats?.enabled) {
+    for (const gh of project.github ?? []) {
+      const stats = projectStats.projects?.[`${gh.owner}/${gh.repo}`];
+      if (!stats) continue;
+      if (
+        stats.firstCommitDate &&
+        (!firstCommitDate || stats.firstCommitDate < firstCommitDate)
+      ) {
+        firstCommitDate = stats.firstCommitDate;
+      }
+      if (
+        stats.lastCommitDate &&
+        (!lastCommitDate || stats.lastCommitDate > lastCommitDate)
+      ) {
+        lastCommitDate = stats.lastCommitDate;
+      }
+    }
+  }
+  if (firstCommitDate && lastCommitDate) {
     baked.range = formatRange(
-      stats.firstCommitDate.slice(0, 7),
-      stats.lastCommitDate.slice(0, 7),
+      firstCommitDate.slice(0, 7),
+      lastCommitDate.slice(0, 7),
     );
   }
   if (project.printDescription) baked.description = project.printDescription;

@@ -32,10 +32,12 @@
       "GitHub Copilot",
       "Ollama"
     ],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "zag"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "zag"
+      }
+    ],
     "openSource": true,
     "homepage": "https://niclaslindstedt.github.io/zag",
     "cratesIo": "zag",
@@ -69,10 +71,12 @@
       "Claude Code",
       "Agent skills"
     ],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "zig"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "zig"
+      }
+    ],
     "openSource": true,
     "homepage": "https://niclaslindstedt.github.io/zig",
     "cratesIo": "zig-cli",
@@ -95,10 +99,12 @@
     },
     "stack": ["Rust"],
     "skills": ["Integrations", "Agent security", "Claude Code", "Agent skills"],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "zad"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "zad"
+      }
+    ],
     "openSource": true,
     "homepage": "https://niclaslindstedt.github.io/zad",
     "cratesIo": "zad",
@@ -125,10 +131,12 @@
       "Claude Code",
       "Agent skills"
     ],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "ztf"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "ztf"
+      }
+    ],
     "openSource": true,
     "homepage": "https://niclaslindstedt.github.io/ztf",
     "cratesIo": "ztf",
@@ -150,10 +158,12 @@
     },
     "stack": ["Rust"],
     "skills": ["Spec-driven development", "Claude Code", "Agent skills"],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "oss-spec"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "oss-spec"
+      }
+    ],
     "openSource": true,
     "cratesIo": "oss-spec",
     "aliases": ["open source spec", "oss specification", "ossspec"]
@@ -181,10 +191,12 @@
       "Agent skills"
     ],
     "skills": ["SEO"],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "blog"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "blog"
+      }
+    ],
     "openSource": true,
     "homepage": "https://blog.niclaslindstedt.se",
     "aliases": ["personal blog", "writing"]
@@ -205,10 +217,12 @@
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
     "skills": ["Claude Code", "Agent skills", "SEO"],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "cv"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "cv"
+      }
+    ],
     "openSource": true,
     "aliases": ["resume", "personal site", "personal website", "cv site"]
   },
@@ -228,10 +242,12 @@
     },
     "stack": ["Python"],
     "skills": ["Integrations"],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "juris"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "juris"
+      }
+    ],
     "openSource": true,
     "homepage": "https://niclaslindstedt.github.io/juris/",
     "pypi": "juris",
@@ -253,10 +269,16 @@
     },
     "stack": ["Rust", "PostgreSQL", "Svelte"],
     "skills": ["Agent orchestration", "Agentic workflows", "MCP"],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "swarm-cli"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "swarm-cli"
+      },
+      {
+        "owner": "niclaslindstedt",
+        "repo": "swarm"
+      }
+    ],
     "openSource": false,
     "aliases": ["agent swarm", "swarm of agents"]
   },
@@ -275,10 +297,12 @@
       "sv": "En tidig version av spec-driven utveckling paketerad som slash-prompts: `/spec` skrev en `spec.md`, `/plan` gjorde den till en implementationsplan, `/create-tickets` delade planen i agentstora ärenden och `/next-ticket` byggde nästa. Tillstånd på filsystemet. Föregår GitHubs SpecKit."
     },
     "skills": ["Spec-driven development", "Agentic workflows"],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "app-endix"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "app-endix"
+      }
+    ],
     "openSource": false,
     "aliases": [
       "appendix",
@@ -303,10 +327,12 @@
     },
     "stack": ["C#/.NET", "PostgreSQL", "Docker"],
     "skills": ["Cybersecurity", "RFC implementation"],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "dotnet-oauth2-server"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "dotnet-oauth2-server"
+      }
+    ],
     "openSource": true,
     "aliases": ["oauth", "oauth2", "auth server", "dotnet auth"]
   },
@@ -326,10 +352,12 @@
     },
     "stack": ["Bash/Shell", "Docker"],
     "skills": ["Cybersecurity"],
-    "github": {
-      "owner": "niclaslindstedt",
-      "repo": "docker-backup"
-    },
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "docker-backup"
+      }
+    ],
     "openSource": true,
     "dockerHub": "niclaslindstedt/docker-backup",
     "aliases": ["docker backups", "container backup"]

@@ -168,16 +168,17 @@ function collectProjectRefs(cv) {
   const refs = [];
   const seen = new Set();
   for (const project of cv.projects ?? []) {
-    const gh = project.github;
-    if (!gh?.owner || !gh?.repo) continue;
-    const key = projectKey(gh.owner, gh.repo);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    refs.push({
-      owner: gh.owner,
-      repo: gh.repo,
-      openSource: project.openSource === true,
-    });
+    for (const gh of project.github ?? []) {
+      if (!gh?.owner || !gh?.repo) continue;
+      const key = projectKey(gh.owner, gh.repo);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      refs.push({
+        owner: gh.owner,
+        repo: gh.repo,
+        openSource: project.openSource === true,
+      });
+    }
   }
   return refs;
 }

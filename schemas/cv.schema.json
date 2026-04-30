@@ -238,24 +238,29 @@
           "items": { "type": "string", "minLength": 1 }
         },
         "github": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["owner", "repo"],
-          "properties": {
-            "owner": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*$"
-            },
-            "repo": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9._-]+$"
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["owner", "repo"],
+            "properties": {
+              "owner": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*$"
+              },
+              "repo": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9._-]+$"
+              }
             }
           },
-          "description": "Identifies the GitHub repository used to fetch commit stats at build time. The owner/repo pair is also used to derive the public link when openSource is true."
+          "description": "GitHub repositories backing this project. Commit stats are fetched for each repo at build time and aggregated (earliest/latest commit, summed totals). The first entry is the canonical repo — its owner/repo pair derives the public link when openSource is true."
         },
         "openSource": {
           "type": "boolean",
-          "description": "Whether the repository is publicly accessible. When true, the project renders an open-source pill and a link to github.com/{owner}/{repo}; when false, only description, dates, and commit stats are shown."
+          "description": "Whether the repositories are publicly accessible. When true, the project renders an open-source pill and a link to github.com/{owner}/{repo} for the first repo in `github`; when false, only description, dates, and commit stats are shown."
         },
         "homepage": {
           "type": "string",
