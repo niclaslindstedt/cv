@@ -23,6 +23,7 @@
       "Codex CLI",
       "Gemini CLI",
       "GitHub Copilot",
+      "ChatGPT",
       "Ollama"
     ]
   },
@@ -40,7 +41,6 @@
       "Swift",
       "Java",
       "Kotlin",
-      "SQL",
       "C++",
       "Bash/Shell",
       "PowerShell"
@@ -103,6 +103,7 @@
     "items": [
       "Architecture",
       "Database design",
+      "Cloud migration",
       "Microservices",
       "Miniservices",
       "gRPC/Protobuf",

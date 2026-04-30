@@ -30,7 +30,8 @@
       "Codex CLI",
       "Gemini CLI",
       "GitHub Copilot",
-      "Ollama"
+      "Ollama",
+      "CI/CD"
     ],
     "github": [
       {
@@ -69,7 +70,8 @@
       "Agent orchestration",
       "Agentic workflows",
       "Claude Code",
-      "Agent skills"
+      "Agent skills",
+      "CI/CD"
     ],
     "github": [
       {
@@ -98,7 +100,13 @@
       "sv": "Behörighetslager för AI-agenter som pratar med externa tjänster. Kopplingar är signerade, avgränsade mandat lagrade i operativsystemets nyckelring, så att en agent med filsystemsåtkomst inte kan utöka sin egen omfattning — ett finkornigare alternativ till MCP."
     },
     "stack": ["Rust"],
-    "skills": ["Integrations", "Agent security", "Claude Code", "Agent skills"],
+    "skills": [
+      "Integrations",
+      "Agent security",
+      "Claude Code",
+      "Agent skills",
+      "CI/CD"
+    ],
     "github": [
       {
         "owner": "niclaslindstedt",
@@ -129,7 +137,8 @@
       "Agentic testing",
       "AI evaluations",
       "Claude Code",
-      "Agent skills"
+      "Agent skills",
+      "CI/CD"
     ],
     "github": [
       {
@@ -157,7 +166,12 @@
       "sv": "Behandlar konventioner för open source-repon som ett kontrakt. Genererar ett komplett repo utifrån en friform-prompt; revidera och åtgärdar automatiskt avvikelser i befintliga repon, eller skapar ett issue per avvikelse."
     },
     "stack": ["Rust"],
-    "skills": ["Spec-driven development", "Claude Code", "Agent skills"],
+    "skills": [
+      "Spec-driven development",
+      "Claude Code",
+      "Agent skills",
+      "CI/CD"
+    ],
     "github": [
       {
         "owner": "niclaslindstedt",
@@ -241,7 +255,7 @@
       "sv": "Python-CLI som normaliserar svenska rättsdokument — riksdag, regering, domstolar, myndigheter, EU-rätt — till ett git-vänligt korpus i Markdown och JSON. Asynkron I/O med hastighetsbegränsning; PDF-textextraktion. Publicerad på PyPI."
     },
     "stack": ["Python"],
-    "skills": ["Integrations"],
+    "skills": ["Integrations", "CI/CD"],
     "github": [
       {
         "owner": "niclaslindstedt",

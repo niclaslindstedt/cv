@@ -262,6 +262,22 @@
     "url": "https://github.com/features/copilot",
     "aliases": ["copilot", "gh copilot"]
   },
+  "ChatGPT": {
+    "description": {
+      "en": "OpenAI's flagship chat product — a general-purpose conversational interface to GPT models, with tool use, code interpreter, image generation, and a plugin ecosystem.",
+      "sv": "OpenAI:s flaggskeppsprodukt — ett generellt konversationsgränssnitt till GPT-modeller, med verktygsanrop, kodtolk, bildgenerering och ett plugin-ekosystem."
+    },
+    "benefits": {
+      "en": "Low-friction entry point for prompt experiments and one-off agentic tasks; the broadest hosted feature set in the consumer AI category.",
+      "sv": "Låg tröskel för promptexperiment och engångs-agentuppgifter; den bredaste molnbaserade funktionsuppsättningen i konsument-AI-kategorin."
+    },
+    "drawbacks": {
+      "en": "Closed product surface that changes under you; not a substitute for a controlled API integration when output stability matters.",
+      "sv": "Stängd produktyta som förändras under dig; ingen ersättning för en kontrollerad API-integration när stabil utdata är viktig."
+    },
+    "url": "https://chat.openai.com",
+    "aliases": ["openai chat", "gpt", "openai"]
+  },
   "Ollama": {
     "description": {
       "en": "Local LLM runner that exposes open-weight models behind an OpenAI-compatible API.",
@@ -341,13 +357,6 @@
     },
     "url": "https://www.python.org",
     "aliases": ["py", "py3", "python3"]
-  },
-  "SQL": {
-    "description": {
-      "en": "The declarative query language for relational databases.",
-      "sv": "Det deklarativa frågespråket för relationsdatabaser."
-    },
-    "aliases": ["relational queries", "ansi sql"]
   },
   "Swift": {
     "description": {
@@ -707,6 +716,21 @@
       "sv": "Tidiga val är sega; kostnaden för att rätta ett dåligt schema ökar för varje rad och varje beroende fråga."
     },
     "aliases": ["db design", "schema design", "data modelling", "data modeling"]
+  },
+  "Cloud migration": {
+    "description": {
+      "en": "Moving workloads from on-prem or one cloud to another — re-platforming services, refactoring data stores, and rewiring identity, networking, and CI/CD around the destination's primitives.",
+      "sv": "Att flytta arbetslaster från on-prem eller mellan moln — att replattformsutveckla tjänster, refaktorera datalager och koppla om identitet, nätverk och CI/CD kring destinationens primitiver."
+    },
+    "benefits": {
+      "en": "Unlocks managed services, elastic capacity, and a smaller ops footprint; forces overdue cleanup of forgotten dependencies.",
+      "sv": "Låser upp hanterade tjänster, elastisk kapacitet och mindre driftbörda; tvingar fram översedd städning av bortglömda beroenden."
+    },
+    "drawbacks": {
+      "en": "Lift-and-shift rarely captures the cloud's value; deeper re-architecture stretches the migration window and lengthens the period of double-running cost.",
+      "sv": "Lift-and-shift fångar sällan molnets värde; djupare omarkitektering förlänger migreringsfönstret och perioden av dubbla driftkostnader."
+    },
+    "aliases": ["cloud migrations", "re-platforming", "lift and shift"]
   },
   "Microservices": {
     "description": {
