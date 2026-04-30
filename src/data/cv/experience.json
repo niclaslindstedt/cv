@@ -35,6 +35,7 @@
       "RAG",
       "Chatbots",
       "MCP",
+      "Prompt engineering",
       "Claude Code",
       "GitHub Copilot",
       "Codex CLI",
@@ -194,6 +195,8 @@
         "skills": [
           "CI/CD",
           "Cloud migration",
+          "Prompt engineering",
+          "ChatGPT",
           "Cybersecurity",
           "Architecture",
           "Leadership",

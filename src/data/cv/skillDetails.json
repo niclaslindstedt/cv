@@ -262,6 +262,22 @@
     "url": "https://github.com/features/copilot",
     "aliases": ["copilot", "gh copilot"]
   },
+  "ChatGPT": {
+    "description": {
+      "en": "OpenAI's flagship chat product — a general-purpose conversational interface to GPT models, with tool use, code interpreter, image generation, and a plugin ecosystem.",
+      "sv": "OpenAI:s flaggskeppsprodukt — ett generellt konversationsgränssnitt till GPT-modeller, med verktygsanrop, kodtolk, bildgenerering och ett plugin-ekosystem."
+    },
+    "benefits": {
+      "en": "Low-friction entry point for prompt experiments and one-off agentic tasks; the broadest hosted feature set in the consumer AI category.",
+      "sv": "Låg tröskel för promptexperiment och engångs-agentuppgifter; den bredaste molnbaserade funktionsuppsättningen i konsument-AI-kategorin."
+    },
+    "drawbacks": {
+      "en": "Closed product surface that changes under you; not a substitute for a controlled API integration when output stability matters.",
+      "sv": "Stängd produktyta som förändras under dig; ingen ersättning för en kontrollerad API-integration när stabil utdata är viktig."
+    },
+    "url": "https://chat.openai.com",
+    "aliases": ["openai chat", "gpt", "openai"]
+  },
   "Ollama": {
     "description": {
       "en": "Local LLM runner that exposes open-weight models behind an OpenAI-compatible API.",
