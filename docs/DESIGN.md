@@ -898,9 +898,19 @@ button — the long form is supplementary, not the substitute.
 
 - Body text on Vapor over the darkest Sky region clears WCAG AA
   (4.5:1). Re-check after any token change.
-- Mist text (metadata) clears WCAG AA Large (3:1) at minimum; aim
-  for AA where possible.
+- Mist text (metadata) clears full WCAG AA (≥4.5:1) on Vapor and
+  Vapor Edge in both themes.
 - Aurora text on Vapor clears WCAG AA in both themes.
+- **Non-text contrast (WCAG 1.4.11).** Hairline (`--border`) and
+  Vapor Edge (`--glass-border`) are calibrated to clear 3:1
+  against Nightfield in both themes so component boundaries on
+  inputs, modal close pills, the search field, and content cards
+  are perceivable. Do not weaken these tokens without rechecking
+  the affected components against a contrast tool.
+- Buttons identified only by their border (transparent fill —
+  e.g. `.hero-download`, `.hero-timeline-btn`, `.skill-modal-link`)
+  use a solid `--accent` border, not Aurora Mist, so the button
+  shape itself meets 1.4.11.
 
 ### 12.2 Focus
 

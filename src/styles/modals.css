@@ -92,12 +92,17 @@
 
 .skill-modal-link {
   align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
   padding: 4px 12px;
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--accent);
   background: var(--accent-soft);
-  border: 1px solid var(--accent-soft);
+  /* Solid accent so the pill clears WCAG 1.4.11 3:1 — accent-soft
+   * border alone is invisible (~1.18:1) against the modal surface. */
+  border: 1px solid var(--accent);
   border-radius: 999px;
   text-decoration: none;
 }
@@ -242,7 +247,12 @@
 
 .skill-modal-close {
   appearance: none;
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 12px;
   font: inherit;
   font-weight: 700;
   color: var(--fg);

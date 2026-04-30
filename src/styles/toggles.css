@@ -21,20 +21,16 @@
   border: 0;
   border-radius: 999px;
   cursor: pointer;
-  opacity: 0.45;
   transition:
     color 120ms ease,
-    opacity 120ms ease,
     box-shadow 120ms ease;
 }
 
 .theme-toggle-btn:hover {
-  opacity: 0.85;
   color: var(--accent);
 }
 
 .theme-toggle-btn[aria-pressed="true"] {
-  opacity: 1;
   color: var(--accent);
   box-shadow: 0 0 0 1.5px var(--accent);
   cursor: default;
@@ -73,19 +69,23 @@
   border: 0;
   border-radius: 999px;
   cursor: pointer;
-  opacity: 0.45;
+  /* Inactive flag is desaturated rather than reduced in opacity — opacity
+   * dropped the SVG fill below the WCAG 1.4.11 3:1 threshold for the
+   * "inactive" graphical state (was 2.14:1 at opacity 0.45). Grayscale
+   * keeps both flags fully opaque while still reading as "off". */
+  filter: grayscale(1);
   transition:
-    opacity 120ms ease,
+    filter 120ms ease,
     box-shadow 120ms ease,
     transform 120ms ease;
 }
 
 .lang-toggle-btn:hover {
-  opacity: 0.85;
+  filter: grayscale(0.4);
 }
 
 .lang-toggle-btn[aria-pressed="true"] {
-  opacity: 1;
+  filter: grayscale(0);
   box-shadow: 0 0 0 1.5px var(--accent);
 }
 
