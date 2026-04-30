@@ -59,7 +59,7 @@ export type Project = {
   printDescription?: LocalizedString;
   stack?: string[];
   skills: string[];
-  github: GithubRepoRef;
+  github: GithubRepoRef[];
   openSource: boolean;
   homepage?: string;
   dockerHub?: string;

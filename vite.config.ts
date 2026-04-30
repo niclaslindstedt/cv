@@ -83,7 +83,8 @@ function buildProjectGraph(): Record<string, unknown>[] {
   return cv.projects
     .filter((p) => p.openSource)
     .map((p) => {
-      const repoUrl = `https://github.com/${p.github.owner}/${p.github.repo}`;
+      const primaryRepo = p.github[0];
+      const repoUrl = `https://github.com/${primaryRepo.owner}/${primaryRepo.repo}`;
       const node: Record<string, unknown> = {
         "@type": "SoftwareSourceCode",
         "@id": `${SITE_URL}/#project-${p.name}`,

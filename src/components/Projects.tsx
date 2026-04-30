@@ -1,14 +1,10 @@
 import { useMemo } from "react";
 
 import projectStatsData from "../data/project-stats.json";
-import type {
-  GithubRepoRef,
-  Project,
-  ProjectStats,
-  ProjectStatsFile,
-} from "../data/cv.types";
+import type { Project, ProjectStats, ProjectStatsFile } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { aggregateProjectStats } from "../utils/projectStats";
 import { Section } from "./Section";
 
 const projectStats = projectStatsData as ProjectStatsFile;
@@ -21,15 +17,6 @@ type Props = {
   onSkillClick: (skill: string) => void;
   onProjectClick: (project: Project) => void;
 };
-
-function statsKey(github: GithubRepoRef): string {
-  return `${github.owner}/${github.repo}`;
-}
-
-function lookupStats(github: GithubRepoRef): ProjectStats | undefined {
-  if (!projectStats?.enabled) return undefined;
-  return projectStats.projects?.[statsKey(github)];
-}
 
 function lastCommitMs(stats: ProjectStats | undefined): number {
   if (!stats?.lastCommitDate) return -Infinity;
@@ -52,7 +39,7 @@ export function Projects({
     const now = nowMs();
     return [...projects]
       .map((project) => {
-        const stats = lookupStats(project.github);
+        const stats = aggregateProjectStats(project.github, projectStats);
         const lastMs = lastCommitMs(stats);
         const isActive =
           Number.isFinite(lastMs) && now - lastMs <= ACTIVE_WINDOW_MS;

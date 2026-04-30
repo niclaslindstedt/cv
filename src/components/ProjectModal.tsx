@@ -1,14 +1,10 @@
 import { useEffect, useRef } from "react";
 
 import projectStatsData from "../data/project-stats.json";
-import type {
-  GithubRepoRef,
-  Project,
-  ProjectStats,
-  ProjectStatsFile,
-} from "../data/cv.types";
+import type { Project, ProjectStatsFile } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
+import { aggregateProjectStats } from "../utils/projectStats";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
@@ -21,15 +17,6 @@ type Props = {
   onClose: () => void;
   onSkillClick: (skill: string) => void;
 };
-
-function statsKey(github: GithubRepoRef): string {
-  return `${github.owner}/${github.repo}`;
-}
-
-function lookupStats(github: GithubRepoRef): ProjectStats | undefined {
-  if (!projectStats?.enabled) return undefined;
-  return projectStats.projects?.[statsKey(github)];
-}
 
 export function ProjectModal({ project, onClose, onSkillClick }: Props) {
   const { t, lang, ui } = useLang();
@@ -49,7 +36,8 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
 
   if (!project) return null;
 
-  const repoUrl = `https://github.com/${project.github.owner}/${project.github.repo}`;
+  const primaryRepo = project.github[0];
+  const repoUrl = `https://github.com/${primaryRepo.owner}/${primaryRepo.repo}`;
   const dockerHubUrl = project.dockerHub
     ? project.dockerHub.includes("/")
       ? `https://hub.docker.com/r/${project.dockerHub}`
@@ -74,7 +62,7 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
     npmUrl ||
     nugetUrl
   );
-  const stats = lookupStats(project.github);
+  const stats = aggregateProjectStats(project.github, projectStats);
   const hasDateRange = !!(
     stats &&
     stats.firstCommitDate &&
