@@ -527,8 +527,12 @@ tags.
 
 Two variants:
 
-- **Tech tag.** Vapor Sheen fill, Hairline outline, Code Mono type
-  at Micro size. Used for skill chips on a card.
+- **Tech tag.** Soft Mist fill (a light tonal wash — ~5–6% white in
+  dark mode, ~5–6% navy in light mode), no resting outline, Code
+  Mono type at Micro size. Used for skill chips on a card. The fill
+  alone separates the chip from the card surface; the chip's text
+  carries WCAG 1.4.11 component identity, so the border is reserved
+  for hover/focus feedback.
 - **Accent pill.** Aurora Mist fill, Aurora text. Used for ECTS
   counts, course counts, percentages, language toggle, hero meta
   link buttons.
