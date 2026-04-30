@@ -360,6 +360,12 @@
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
         "engagement": { "$ref": "#/$defs/localizedString" },
+        "fte": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "description": "Effort as a fraction of full-time (e.g. 1 = full-time, 0.5 = half-time). Defaults to 1 when omitted. Used to weight skill-experience year totals so overlapping part-time roles don't inflate `yearsOfExperience`."
+        },
         "stack": { "$ref": "#/$defs/stackList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "notes": { "$ref": "#/$defs/localizedString" },
@@ -390,6 +396,12 @@
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": {
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
+        },
+        "fte": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "description": "Effort as a fraction of full-time for this assignment (e.g. 1 = full-time, 0.5 = half-time). Inherits the parent experience's `fte` when omitted; falls back to 1 if neither is set."
         },
         "stack": { "$ref": "#/$defs/stackList" },
         "skills": { "$ref": "#/$defs/stringList" },

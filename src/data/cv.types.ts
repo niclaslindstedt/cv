@@ -117,6 +117,7 @@ export type Assignment = {
   clientId: string;
   startDate: string;
   endDate: string | null;
+  fte?: number;
   stack?: StackItem[];
   skills?: string[];
   notes?: LocalizedString;
@@ -130,6 +131,7 @@ export type Experience = {
   startDate: string;
   endDate: string | null;
   engagement?: LocalizedString;
+  fte?: number;
   stack?: StackItem[];
   skills?: string[];
   notes?: LocalizedString;

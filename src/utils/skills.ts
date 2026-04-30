@@ -24,6 +24,7 @@ export type SkillUsage = {
   via?: string;
   startDate?: string;
   endDate?: string | null;
+  fte?: number;
 };
 
 export type UnusedStackLocation = {
@@ -75,6 +76,7 @@ export function buildSkillUsageMap(
         role: joinRoleTitles(exp.roles),
         startDate: exp.startDate,
         endDate: exp.endDate,
+        fte: exp.fte,
       });
     }
     for (const assignment of exp.assignments ?? []) {
@@ -89,6 +91,7 @@ export function buildSkillUsageMap(
           role: joinRoleTitles(assignment.roles),
           startDate: assignment.startDate,
           endDate: assignment.endDate,
+          fte: assignment.fte ?? exp.fte,
         });
       }
     }
@@ -292,34 +295,38 @@ function nowMonthIndex(now: Date): number {
   return now.getFullYear() * 12 + now.getMonth();
 }
 
+// Sums effective months across all experience/assignment usages, weighted by
+// each usage's `fte` (defaulting to 1 = full-time). When part-time roles
+// overlap, the per-month FTE is summed and capped at 1 — so two simultaneous
+// half-time jobs count as one full-time month, not two.
 export function yearsOfExperience(
   usages: SkillUsage[],
   now: Date = new Date(),
 ): number {
   const nowIdx = nowMonthIndex(now);
-  const intervals: Array<[number, number]> = [];
+  const events: Array<{ m: number; delta: number }> = [];
   for (const u of usages) {
     if (!u.startDate) continue;
     if (u.kind !== "experience" && u.kind !== "assignment") continue;
     const start = monthIndex(u.startDate);
     const end = u.endDate ? monthIndex(u.endDate) : nowIdx;
-    if (end > start) intervals.push([start, end]);
+    if (end <= start) continue;
+    const fte = u.fte ?? 1;
+    events.push({ m: start, delta: fte });
+    events.push({ m: end, delta: -fte });
   }
-  intervals.sort((a, b) => a[0] - b[0]);
+  events.sort((a, b) => a.m - b.m);
 
   let totalMonths = 0;
-  let curStart = -1;
-  let curEnd = -1;
-  for (const [s, e] of intervals) {
-    if (s > curEnd) {
-      if (curEnd > curStart) totalMonths += curEnd - curStart;
-      curStart = s;
-      curEnd = e;
-    } else if (e > curEnd) {
-      curEnd = e;
+  let curFte = 0;
+  let prev = events[0]?.m ?? 0;
+  for (const ev of events) {
+    if (ev.m > prev && curFte > 0) {
+      totalMonths += Math.min(curFte, 1) * (ev.m - prev);
     }
+    curFte += ev.delta;
+    prev = ev.m;
   }
-  if (curEnd > curStart) totalMonths += curEnd - curStart;
 
   return totalMonths / 12;
 }
