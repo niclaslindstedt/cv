@@ -164,6 +164,11 @@
   }
 }
 
+.search-modal-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .search-modal-body {
   display: flex;
   flex-direction: column;
