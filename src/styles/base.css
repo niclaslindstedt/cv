@@ -41,6 +41,18 @@ a:focus-visible {
   border-radius: 2px;
 }
 
+/* Inline code spans inside body copy — descriptions, summaries, notes —
+ * rendered for `…`-delimited spans by src/utils/inlineCode.tsx. */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  padding: 0.05em 0.4em;
+  background: var(--glass-highlight);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

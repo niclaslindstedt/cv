@@ -12,6 +12,7 @@ import type {
   PrintSkillGroup,
 } from "../data/print.types";
 import { useLang } from "../utils/i18n";
+import { renderInlineCode } from "../utils/inlineCode";
 
 const printData = printDataRaw as PrintData;
 
@@ -95,7 +96,9 @@ function PrintHero() {
       {contactParts.length > 0 && (
         <p className="print-contact">{contactParts.join(" · ")}</p>
       )}
-      <p className="print-summary">{t(printData.longSummary)}</p>
+      <p className="print-summary">
+        {renderInlineCode(t(printData.longSummary))}
+      </p>
     </header>
   );
 }
@@ -143,13 +146,13 @@ function ExperienceEntry({ item }: { item: PrintExperience }) {
           <RoleHistory roles={item.roleHistory} />
         )}
         <p className="print-job-tagline">
-          {t(item.description ?? item.tagline)}
+          {renderInlineCode(t(item.description ?? item.tagline))}
         </p>
         {item.tags.length > 0 && (
           <p className="print-tags">{item.tags.join(", ")}</p>
         )}
         {includeNotes && item.notes && (
-          <p className="print-notes">{t(item.notes)}</p>
+          <p className="print-notes">{renderInlineCode(t(item.notes))}</p>
         )}
       </div>
       {hasAssignments && (
@@ -180,12 +183,14 @@ function AssignmentEntry({ item }: { item: PrintAssignment }) {
       </h4>
       <p className="print-job-meta">{t(item.range)}</p>
       {item.roleHistory.length > 0 && <RoleHistory roles={item.roleHistory} />}
-      <p className="print-job-tagline">{t(item.description ?? item.tagline)}</p>
+      <p className="print-job-tagline">
+        {renderInlineCode(t(item.description ?? item.tagline))}
+      </p>
       {item.tags.length > 0 && (
         <p className="print-tags">{item.tags.join(", ")}</p>
       )}
       {includeNotes && item.notes && (
-        <p className="print-notes">{t(item.notes)}</p>
+        <p className="print-notes">{renderInlineCode(t(item.notes))}</p>
       )}
     </li>
   );
@@ -234,7 +239,7 @@ function ProjectEntry({ item }: { item: PrintProject }) {
       )}
       {": "}
       <span className="print-project-tagline">
-        {t(item.description ?? item.tagline)}
+        {renderInlineCode(t(item.description ?? item.tagline))}
       </span>
     </li>
   );
@@ -267,7 +272,7 @@ function EducationEntry({ item }: { item: PrintEducation }) {
         {t(item.institution)} {" · "} {t(item.level)} {" · "} {item.credits}
       </p>
       {includeNotes && item.notes && (
-        <p className="print-notes">{t(item.notes)}</p>
+        <p className="print-notes">{renderInlineCode(t(item.notes))}</p>
       )}
     </li>
   );

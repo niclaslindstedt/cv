@@ -8,6 +8,7 @@ import type {
   ProjectStatsFile,
 } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { renderInlineCode } from "../utils/inlineCode";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
@@ -109,7 +110,9 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
         </header>
         <div className="skill-modal-body">
           <section className="skill-modal-detail">
-            <p className="skill-modal-description">{t(project.description)}</p>
+            <p className="skill-modal-description">
+              {renderInlineCode(t(project.description))}
+            </p>
             {(hasDateRange || hasCommits) && (
               <dl className="project-meta">
                 {hasDateRange && (

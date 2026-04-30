@@ -8,6 +8,7 @@ import type {
 } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { renderInlineCode } from "../utils/inlineCode";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
@@ -217,7 +218,9 @@ export function ExperienceModal({
               )}
             </div>
             {hasPromotion && <RoleChain roles={sortedRoles} />}
-            <p className="skill-modal-description">{t(subject.description)}</p>
+            <p className="skill-modal-description">
+              {renderInlineCode(t(subject.description))}
+            </p>
             {subject.url && (
               <a
                 className="skill-modal-link"
