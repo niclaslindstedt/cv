@@ -291,6 +291,10 @@
       {
         "owner": "niclaslindstedt",
         "repo": "swarm"
+      },
+      {
+        "owner": "niclaslindstedt",
+        "repo": "swarmd"
       }
     ],
     "openSource": false,
