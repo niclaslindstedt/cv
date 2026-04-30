@@ -239,6 +239,26 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                 </ul>
               </div>
             )}
+            {project.skills.length > 0 && (
+              <div className="company-modal-stack">
+                <h3 className="company-modal-stack-title">
+                  {ui.projectModal.skills}
+                </h3>
+                <ul className="entry-skills">
+                  {project.skills.map((skill) => (
+                    <li key={skill}>
+                      <button
+                        type="button"
+                        className="entry-skill-btn"
+                        onClick={() => onSkillClick(skill)}
+                      >
+                        {skill}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </section>
         </div>
       </div>

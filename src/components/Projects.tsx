@@ -121,22 +121,6 @@ export function Projects({
                   ))}
                 </ul>
               )}
-              <ul className="project-skills">
-                {project.skills.map((skill) => (
-                  <li key={skill}>
-                    <button
-                      type="button"
-                      className="project-skill-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onSkillClick(skill);
-                      }}
-                    >
-                      {skill}
-                    </button>
-                  </li>
-                ))}
-              </ul>
               <span className="glass-reflect" aria-hidden="true" />
             </article>
           );

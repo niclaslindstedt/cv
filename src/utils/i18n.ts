@@ -109,6 +109,7 @@ type UiStrings = {
     active: string;
     commits: string;
     stack: string;
+    skills: string;
   };
   programModal: {
     coursesHeading: string;
@@ -277,6 +278,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       active: "Active",
       commits: "Commits",
       stack: "Stack",
+      skills: "Skills",
     },
     programModal: {
       coursesHeading: "Courses",
@@ -456,6 +458,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       active: "Aktiv",
       commits: "Commits",
       stack: "Stack",
+      skills: "Kompetenser",
     },
     programModal: {
       coursesHeading: "Kurser",
