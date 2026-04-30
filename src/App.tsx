@@ -208,14 +208,15 @@ export function App() {
         {ui.skipToContent}
       </a>
       <div className="page">
+        <span className="page-glow" aria-hidden="true" />
+        <Hero
+          cv={cv}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          onOpenSummary={() => setSummaryOpen(true)}
+          onOpenSearch={() => setSearchOpen(true)}
+        />
         <main id="main-content" className="container" tabIndex={-1}>
-          <Hero
-            cv={cv}
-            theme={theme}
-            onToggleTheme={toggleTheme}
-            onOpenSummary={() => setSummaryOpen(true)}
-            onOpenSearch={() => setSearchOpen(true)}
-          />
           <Focus
             title={t(cv.sections.focus)}
             focus={cv.focus}

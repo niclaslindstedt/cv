@@ -33,6 +33,7 @@
   }
 
   .celestial-sky,
+  .page-glow,
   .glass-reflect,
   .footer,
   .timeline-vis-overlay,
@@ -42,7 +43,7 @@
   }
 
   /* Hide every screen-only section. Only PrintView prints. */
-  .page > main.container > .hero,
+  .page > .hero,
   .page > main.container > .section,
   .page > footer.footer {
     display: none !important;
