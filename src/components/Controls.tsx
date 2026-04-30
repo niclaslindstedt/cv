@@ -78,7 +78,7 @@ export function ThemeToggle({
         aria-pressed={!isDark}
         aria-label={ui.theme.switchToLight}
         title={ui.theme.light}
-        onClick={isDark ? onToggleTheme : undefined}
+        onClick={onToggleTheme}
       >
         <SunIcon />
       </button>
@@ -88,7 +88,7 @@ export function ThemeToggle({
         aria-pressed={isDark}
         aria-label={ui.theme.switchToDark}
         title={ui.theme.dark}
-        onClick={isDark ? undefined : onToggleTheme}
+        onClick={onToggleTheme}
       >
         <MoonIcon />
       </button>
@@ -105,7 +105,11 @@ export function LanguageToggle({
 }) {
   const { ui } = useLang();
   return (
-    <div className="lang-toggle" role="group" aria-label="Language">
+    <div
+      className="lang-toggle"
+      role="group"
+      aria-label={ui.hero.languageLabel}
+    >
       <button
         type="button"
         className="lang-toggle-btn"

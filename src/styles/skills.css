@@ -105,11 +105,11 @@ button.skill-pill-btn:focus-visible {
   margin: 10px 0 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 
 .entry-stack + .entry-skills {
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .entry-stack li,
@@ -120,7 +120,8 @@ button.skill-pill-btn:focus-visible {
 .entry-stack-btn,
 .entry-skill-btn {
   appearance: none;
-  padding: 1px 8px;
+  min-height: 24px;
+  padding: 3px 10px;
   font: inherit;
   font-family: var(--font-mono);
   font-size: 0.75rem;

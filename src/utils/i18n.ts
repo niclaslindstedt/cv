@@ -23,6 +23,7 @@ type UiStrings = {
     timeline: string;
     pdf: string;
     downloadAria: string;
+    languageLabel: string;
     languageEnglish: string;
     languageSwedish: string;
   };
@@ -186,6 +187,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       timeline: "Timeline",
       pdf: "PDF",
       downloadAria: "Download CV as PDF",
+      languageLabel: "Language",
       languageEnglish: "Switch to English",
       languageSwedish: "Switch to Swedish",
     },
@@ -365,6 +367,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       timeline: "Tidslinje",
       pdf: "PDF",
       downloadAria: "Ladda ner CV som PDF",
+      languageLabel: "Språk",
       languageEnglish: "Byt till engelska",
       languageSwedish: "Byt till svenska",
     },

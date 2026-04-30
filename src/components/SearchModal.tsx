@@ -141,16 +141,12 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
               ✕
             </button>
           </header>
-          <div
-            className="search-modal-body"
-            role="region"
-            aria-live="polite"
-            aria-label={
-              hasQuery && ready
+          <div className="search-modal-body">
+            <p className="sr-only" role="status" aria-live="polite">
+              {hasQuery && ready
                 ? ui.search.resultCountAria(results.total)
-                : undefined
-            }
-          >
+                : ""}
+            </p>
             {showEmptyHint && (
               <p className="search-empty-hint">{ui.search.emptyHint}</p>
             )}
