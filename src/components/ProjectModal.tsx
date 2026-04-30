@@ -5,6 +5,7 @@ import type { Project, ProjectStatsFile } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
 import { aggregateProjectStats } from "../utils/projectStats";
+import { stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useSwipeClose } from "../utils/useSwipeClose";
@@ -69,6 +70,7 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
     stats.lastCommitDate
   );
   const hasCommits = !!stats && stats.totalCommits > 0;
+  const stack = stackEntries(project.stack);
 
   return (
     <div
@@ -207,20 +209,25 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                 )}
               </div>
             )}
-            {project.stack && project.stack.length > 0 && (
+            {stack.length > 0 && (
               <div className="company-modal-stack">
                 <h3 className="company-modal-stack-title">
                   {ui.projectModal.stack}
                 </h3>
                 <ul className="entry-stack">
-                  {project.stack.map((tech) => (
-                    <li key={tech}>
+                  {stack.map((tech) => (
+                    <li key={tech.name}>
                       <button
                         type="button"
-                        className="entry-stack-btn"
-                        onClick={() => onSkillClick(tech)}
+                        className={
+                          tech.unused
+                            ? "entry-stack-btn entry-stack-btn-unused"
+                            : "entry-stack-btn"
+                        }
+                        onClick={() => onSkillClick(tech.name)}
+                        title={tech.unused ? ui.skills.unusedStack : undefined}
                       >
-                        {tech}
+                        {tech.name}
                       </button>
                     </li>
                   ))}

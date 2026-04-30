@@ -110,8 +110,12 @@ function mergeTags(...lists) {
   const seen = new Set();
   const out = [];
   for (const list of lists) {
-    for (const item of list ?? []) {
-      if (!seen.has(item)) {
+    for (const raw of list ?? []) {
+      // Skip unused stack entries — the printed CV only lists tech the
+      // holder personally practiced.
+      if (raw && typeof raw === "object" && raw.unused === true) continue;
+      const item = typeof raw === "string" ? raw : raw?.name;
+      if (item && !seen.has(item)) {
         seen.add(item);
         out.push(item);
       }

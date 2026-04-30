@@ -231,7 +231,7 @@
           "$ref": "#/$defs/localizedString",
           "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV in place of the tagline. Optimized for paper — concrete and impact-oriented, no links to click and no hidden detail to expand. Falls back to `tagline` when omitted."
         },
-        "stack": { "$ref": "#/$defs/stringList" },
+        "stack": { "$ref": "#/$defs/stackList" },
         "skills": {
           "type": "array",
           "minItems": 1,
@@ -310,7 +310,7 @@
         "description": { "$ref": "#/$defs/localizedString" },
         "url": { "type": "string", "format": "uri" },
         "terminated": { "type": "boolean" },
-        "stack": { "$ref": "#/$defs/stringList" },
+        "stack": { "$ref": "#/$defs/stackList" },
         "sourceUrls": {
           "type": "array",
           "minItems": 1,
@@ -360,7 +360,7 @@
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
         "engagement": { "$ref": "#/$defs/localizedString" },
-        "stack": { "$ref": "#/$defs/stringList" },
+        "stack": { "$ref": "#/$defs/stackList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "notes": { "$ref": "#/$defs/localizedString" },
         "printDescription": {
@@ -391,7 +391,7 @@
         "endDate": {
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
-        "stack": { "$ref": "#/$defs/stringList" },
+        "stack": { "$ref": "#/$defs/stackList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "notes": { "$ref": "#/$defs/localizedString" },
         "printDescription": {
@@ -521,6 +521,28 @@
     "stringList": {
       "type": "array",
       "items": { "type": "string", "minLength": 1 }
+    },
+    "stackList": {
+      "type": "array",
+      "description": "Technologies in the stack. Use the object form `{ \"name\": \"…\", \"unused\": true }` to mark a tech that was part of the company/project stack but never personally practiced. Unused entries render as muted pills inline and are excluded from the skills section and from skill-usage aggregation.",
+      "items": { "$ref": "#/$defs/stackItem" }
+    },
+    "stackItem": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "unused": {
+              "type": "boolean",
+              "description": "When true, the tech was part of the stack but the holder never personally practiced it."
+            }
+          }
+        }
+      ]
     },
     "spokenLanguage": {
       "type": "object",

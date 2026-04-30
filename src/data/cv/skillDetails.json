@@ -453,6 +453,14 @@
     "url": "https://angular.dev",
     "aliases": ["angularjs"]
   },
+  "Svelte": {
+    "description": {
+      "en": "Compiler-first frontend framework: components compile to lean imperative DOM updates instead of running a virtual DOM at runtime.",
+      "sv": "Kompilatorbaserat frontend-ramverk: komponenter kompileras till smala, imperativa DOM-uppdateringar istället för att köra en virtuell DOM vid körning."
+    },
+    "url": "https://svelte.dev",
+    "aliases": ["sveltekit", "svelte.js"]
+  },
   "Node.js": {
     "description": {
       "en": "Server-side JavaScript runtime built on V8.",
@@ -516,6 +524,42 @@
     },
     "url": "https://docs.github.com/actions",
     "aliases": ["gh actions", "ghactions", "github workflows"]
+  },
+  "Jenkins": {
+    "description": {
+      "en": "Long-running, plugin-driven CI/CD server that runs builds and pipelines on dedicated agents.",
+      "sv": "Etablerad, plugindriven CI/CD-server som kör byggen och pipelines på dedikerade agenter."
+    },
+    "benefits": {
+      "en": "Self-hostable, language-agnostic, and battle-tested with a plugin for nearly every tool you might integrate.",
+      "sv": "Kan köras självhostat, språkneutralt och beprövat med plugin för nästan alla verktyg man kan tänkas integrera mot."
+    },
+    "drawbacks": {
+      "en": "Plugin sprawl, Groovy DSL quirks, and master/agent operations are real ongoing maintenance.",
+      "sv": "Pluginspridning, egenheter i Groovy-DSL:en och master/agent-drift är reellt löpande underhåll."
+    },
+    "url": "https://www.jenkins.io",
+    "aliases": ["jenkins ci"]
+  },
+  "TeamCity": {
+    "description": {
+      "en": "JetBrains' build server — fast incremental builds, build chains, and first-class support for .NET and JVM ecosystems.",
+      "sv": "JetBrains byggserver — snabba inkrementella byggen, byggkedjor och förstklassigt stöd för .NET- och JVM-ekosystemen."
+    },
+    "url": "https://www.jetbrains.com/teamcity",
+    "aliases": ["team city"]
+  },
+  "Octopus Deploy": {
+    "description": {
+      "en": "Release-management and deployment tool that picks up build artifacts and promotes them across environments with auditable, repeatable steps.",
+      "sv": "Verktyg för release- och driftsättning som tar emot byggartefakter och promotar dem genom miljöer med spårbara, upprepbara steg."
+    },
+    "benefits": {
+      "en": "Strong separation between build and deploy; environment-aware variables and approvals make production releases predictable.",
+      "sv": "Tydlig separation mellan bygg och driftsättning; miljöanpassade variabler och godkännanden gör produktionsreleaser förutsägbara."
+    },
+    "url": "https://octopus.com",
+    "aliases": ["octopus"]
   },
   "Azure DevOps": {
     "description": {

@@ -62,6 +62,8 @@ type UiStrings = {
     assignmentsHeading: string;
     educationHeading: string;
     coursesHeading: string;
+    unusedHeading: string;
+    unusedHint: string;
     via: string;
     usageAria: (skill: string) => string;
     close: string;
@@ -133,6 +135,7 @@ type UiStrings = {
     emptyTooltip: string;
     personalInterest: string;
     personalInterestTooltip: string;
+    unusedStack: string;
   };
   courses: {
     viewMomentsAria: (course: string) => string;
@@ -226,6 +229,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       assignmentsHeading: "Assignments",
       educationHeading: "Education",
       coursesHeading: "Courses",
+      unusedHeading: "On the stack but not personally practiced",
+      unusedHint:
+        "Listed in the stack at these places but never personally practiced.",
       via: "via",
       usageAria: (skill) => `${skill} usage`,
       close: "Close",
@@ -304,6 +310,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       personalInterest: "Personal interest",
       personalInterestTooltip:
         "Self-directed: not yet used in a job, assignment, or project.",
+      unusedStack: "Part of the stack but not personally practiced",
     },
     courses: {
       viewMomentsAria: (course) => `View components for ${course}`,
@@ -407,6 +414,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       assignmentsHeading: "Uppdrag",
       educationHeading: "Utbildning",
       coursesHeading: "Kurser",
+      unusedHeading: "Ingick i stacken men inte personligt utövad",
+      unusedHint:
+        "Fanns i stacken på dessa ställen men har aldrig utövats personligen.",
       via: "via",
       usageAria: (skill) => `Användning av ${skill}`,
       close: "Stäng",
@@ -485,6 +495,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       personalInterest: "Personligt intresse",
       personalInterestTooltip:
         "Eget intresse: ännu inte använt i ett jobb, uppdrag eller projekt.",
+      unusedStack: "Ingick i stacken men inte personligt utövad",
     },
     courses: {
       viewMomentsAria: (course) => `Visa moment för ${course}`,
