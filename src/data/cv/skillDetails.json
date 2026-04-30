@@ -153,6 +153,21 @@
     },
     "aliases": ["evals", "ai evals", "model evals", "llm evals"]
   },
+  "Prompt engineering": {
+    "description": {
+      "en": "Designing prompts, system messages, and tool descriptions so an LLM produces the right output reliably — picking the right structure, examples, and constraints for the task.",
+      "sv": "Att designa prompts, systemmeddelanden och verktygsbeskrivningar så att en LLM producerar rätt utdata på ett pålitligt sätt — att välja rätt struktur, exempel och begränsningar för uppgiften."
+    },
+    "benefits": {
+      "en": "Often the cheapest lever for better output; small wording changes can replace fine-tuning, extra tools, or larger models.",
+      "sv": "Ofta den billigaste hävstången för bättre utdata; små formuleringsändringar kan ersätta finjustering, extra verktyg eller större modeller."
+    },
+    "drawbacks": {
+      "en": "Prompts are brittle across model versions and providers; what worked yesterday can quietly regress after an upgrade.",
+      "sv": "Prompts är sköra mellan modellversioner och leverantörer; det som fungerade igår kan i tysthet försämras efter en uppgradering."
+    },
+    "aliases": ["prompting", "prompt design", "prompt writing"]
+  },
   "Claude Code": {
     "description": {
       "en": "Anthropic's terminal-native coding agent based on Claude — reads, edits, and executes against the local repo, with hooks, skills, and MCP for extension.",
