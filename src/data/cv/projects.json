@@ -240,18 +240,18 @@
   {
     "name": "swarm",
     "tagline": {
-      "en": "Agentic orchestration system, predecessor to zig and zag.",
-      "sv": "Agentiskt orkestreringssystem, föregångare till zig och zag."
+      "en": "Workflow orchestration for Claude Code.",
+      "sv": "Arbetsflödesorkestrering för Claude Code."
     },
     "description": {
-      "en": "An early exploration of multi-agent orchestration. The repository stays private; the ideas worth keeping were rewritten from scratch and split into zig and zag.",
-      "sv": "En tidig utforskning av multi-agentorkestrering. Repositoryt förblir privat; idéerna som var värda att behålla skrevs om från grunden och delades upp i zig och zag."
+      "en": "Workflow orchestration for Claude Code. Wraps the agent CLI with a rules-based process engine and persistent state so long-running projects survive across sessions. Built-in workflows guide the agent from spec → plan → epics → tickets → code review, and `swarm run` always picks up exactly where it left off. A local dashboard streams progress, surfaces logs, and lets you steer the agent via chat without interrupting the loop.",
+      "sv": "Arbetsflödesorkestrering för Claude Code. Lindar agent-CLI:t i en regelbaserad processmotor och beständigt tillstånd så att långkörande projekt överlever mellan sessioner. Inbyggda arbetsflöden leder agenten från spec → plan → epics → ärenden → kodgranskning, och `swarm run` plockar alltid upp exakt där den slutade. En lokal dashboard streamar förloppet, visar loggar och låter dig styra agenten via chatt utan att avbryta loopen."
     },
     "printDescription": {
-      "en": "Private precursor to zig and zag — an early take on multi-agent orchestration whose ideas were rewritten from scratch and released as the open-source pair.",
-      "sv": "Privat föregångare till zig och zag — en tidig version av multi-agentorkestrering vars idéer skrevs om från grunden och släpptes som det öppna paret."
+      "en": "Workflow orchestration for Claude Code. Wraps the agent CLI with a rules-based process engine and persistent state, so projects survive across sessions and `swarm run` always picks up where it left off. A local dashboard streams progress and lets you steer the agent via chat.",
+      "sv": "Arbetsflödesorkestrering för Claude Code. Lindar agent-CLI:t i en regelbaserad processmotor och beständigt tillstånd så att projekt överlever mellan sessioner och `swarm run` alltid plockar upp där den slutade. En lokal dashboard streamar förloppet och låter dig styra agenten via chatt."
     },
-    "stack": ["Rust", "PostgreSQL"],
+    "stack": ["Rust", "PostgreSQL", "Svelte"],
     "skills": ["Agent orchestration", "Agentic workflows", "MCP"],
     "github": {
       "owner": "niclaslindstedt",
