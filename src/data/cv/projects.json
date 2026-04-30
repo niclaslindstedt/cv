@@ -296,7 +296,12 @@
       "en": "An early take on spec-driven development packaged as a small set of slash-command prompts: `/spec` wrote a `spec.md`, `/plan` turned it into an implementation plan, `/create-tickets` split the plan into agent-sized tickets, and `/next-ticket` built the next one. State on the file system. Predates GitHub's SpecKit.",
       "sv": "En tidig version av spec-driven utveckling paketerad som slash-prompts: `/spec` skrev en `spec.md`, `/plan` gjorde den till en implementationsplan, `/create-tickets` delade planen i agentstora ärenden och `/next-ticket` byggde nästa. Tillstånd på filsystemet. Föregår GitHubs SpecKit."
     },
-    "skills": ["Spec-driven development", "Agentic workflows"],
+    "stack": ["Python"],
+    "skills": [
+      "Spec-driven development",
+      "Agentic workflows",
+      "Prompt engineering"
+    ],
     "github": [
       {
         "owner": "niclaslindstedt",
