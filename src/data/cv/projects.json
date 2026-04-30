@@ -230,7 +230,7 @@
       "sv": "Personlig CV-sajt skriven i JSON och validerad mot ett enda schema. Bygget härleder React-appen, sökindexet, SEO-metan, OG-bilden, tidslinjen och en utskrivbar PDF från samma källa. Underhålls via Claude Code-skills."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
-    "skills": ["Claude Code", "Agent skills", "SEO"],
+    "skills": ["Claude Code", "Agent skills", "SEO", "WCAG"],
     "github": [
       {
         "owner": "niclaslindstedt",
