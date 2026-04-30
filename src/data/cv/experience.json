@@ -256,6 +256,7 @@
       "en": "half-time",
       "sv": "halvtid"
     },
+    "fte": 0.5,
     "stack": [
       "TypeScript",
       "Vue",
@@ -302,6 +303,7 @@
       "en": "half-time",
       "sv": "halvtid"
     },
+    "fte": 0.5,
     "stack": [
       "TypeScript",
       { "name": "Angular", "unused": true },
