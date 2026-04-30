@@ -137,6 +137,7 @@ export function Timeline() {
   const labelsInnerRef = useRef<HTMLDivElement>(null);
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
+  const didInitialScrollRef = useRef(false);
 
   const tracks = layout.tracks;
   const intervals = layout.intervals;
@@ -303,6 +304,17 @@ export function Timeline() {
     },
     [scrollToBar],
   );
+
+  useEffect(() => {
+    if (didInitialScrollRef.current) return;
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    didInitialScrollRef.current = true;
+    const nowIdx = nowMonthIndex();
+    const targetX = (nowIdx - minMonth) * monthPx;
+    const left = Math.max(0, targetX - viewport.clientWidth / 2);
+    viewport.scrollTo({ left, top: 0, behavior: "auto" });
+  }, [minMonth, monthPx]);
 
   useEffect(() => {
     const el = viewportRef.current;
