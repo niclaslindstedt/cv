@@ -13,8 +13,8 @@ export function ProjectDateChip({ iso, lang }: Props) {
     <button
       type="button"
       className="project-date"
-      data-full={full}
       aria-label={full}
+      title={full}
     >
       <time dateTime={iso.slice(0, 10)}>{month}</time>
     </button>

@@ -233,9 +233,12 @@
 
 .assignments > summary {
   cursor: pointer;
-  display: inline-block;
-  padding: 3px 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 12px;
   font-size: 0.8rem;
+  line-height: 1.4;
   color: var(--accent);
   background: var(--accent-soft);
   border-radius: 999px;

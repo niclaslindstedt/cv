@@ -41,10 +41,7 @@ export function FloatingControls({
   }, []);
 
   return (
-    <div
-      className={`floating-controls${scrolled ? " is-scrolled" : ""}`}
-      aria-hidden={!scrolled}
-    >
+    <div className={`floating-controls${scrolled ? " is-scrolled" : ""}`}>
       <TimelineLink
         label={timelineLabel}
         className="floating-controls-timeline"
