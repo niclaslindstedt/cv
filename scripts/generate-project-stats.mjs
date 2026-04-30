@@ -104,7 +104,7 @@ const COMMIT_HISTORY_QUERY = `
   }
 `;
 
-async function fetchProjectStats(token, owner, repo, username) {
+async function fetchProjectStats(token, owner, repo, username, openSource) {
   const lowerUser = username.toLowerCase();
   let cursor = null;
   let totalCommits = 0;
@@ -132,8 +132,10 @@ async function fetchProjectStats(token, owner, repo, username) {
       throw new Error(`No commit history for ${owner}/${repo}`);
     }
     for (const node of history.nodes ?? []) {
-      const login = node.author?.user?.login?.toLowerCase() ?? null;
-      if (login !== lowerUser) continue;
+      if (openSource) {
+        const login = node.author?.user?.login?.toLowerCase() ?? null;
+        if (login !== lowerUser) continue;
+      }
       totalCommits += 1;
       const date = node.committedDate;
       if (date) {
@@ -171,7 +173,11 @@ function collectProjectRefs(cv) {
     const key = projectKey(gh.owner, gh.repo);
     if (seen.has(key)) continue;
     seen.add(key);
-    refs.push({ owner: gh.owner, repo: gh.repo });
+    refs.push({
+      owner: gh.owner,
+      repo: gh.repo,
+      openSource: project.openSource === true,
+    });
   }
   return refs;
 }
@@ -250,6 +256,7 @@ async function main() {
         ref.owner,
         ref.repo,
         username,
+        ref.openSource,
       );
       projects[projectKey(ref.owner, ref.repo)] = stats;
     } catch (err) {
