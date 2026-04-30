@@ -177,7 +177,10 @@
   font-weight: 600;
   color: var(--accent);
   background: var(--accent-soft);
-  border: 1px solid var(--accent-soft);
+  /* Border is the only edge against the page glass — accent-soft only
+   * gave 1.18:1 against the page background, below WCAG 1.4.11. The
+   * solid-accent border gets the pill to ~9.6:1. */
+  border: 1px solid var(--accent);
   border-radius: 999px;
 }
 
@@ -207,7 +210,10 @@
   font-weight: 600;
   color: var(--accent);
   background: transparent;
-  border: 1px solid var(--accent-soft);
+  /* Solid accent rather than accent-soft — the soft variant (alpha 0.12)
+   * rendered at 1.18:1 against the page background, which fails the
+   * WCAG 1.4.11 3:1 minimum for a button identified by its border. */
+  border: 1px solid var(--accent);
   border-radius: 999px;
   cursor: pointer;
   text-decoration: none;

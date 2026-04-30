@@ -146,7 +146,12 @@
 
 .timeline-vis-btn {
   appearance: none;
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 12px;
   font: inherit;
   font-size: 0.85rem;
   color: var(--fg);
@@ -161,6 +166,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
   padding: 4px 10px;
 }
 
@@ -449,6 +456,8 @@
 
 .timeline-vis-details-nav .timeline-vis-btn-icon {
   padding: 0;
+  min-width: 24px;
+  min-height: 24px;
   width: 24px;
   height: 24px;
   font-size: 1.1rem;

@@ -9,7 +9,11 @@
    * transformed timeline), so the bumped alpha is also what keeps the
    * panel readable there. */
   --glass-bg-modal: rgba(14, 20, 32, 0.94);
-  --glass-border: rgba(255, 255, 255, 0.07);
+  /* Card / panel border. Bumped from rgba(255,255,255,0.07) so cards meet
+   * the WCAG 1.4.11 3:1 non-text contrast for UI component boundaries
+   * against the dark page background — the original 0.07 alpha rendered
+   * at ~1.14:1 which read as "no border" to low-vision users. */
+  --glass-border: rgba(255, 255, 255, 0.36);
   --glass-highlight: rgba(255, 255, 255, 0.04);
   --sky-top: #02030a;
   --sky-mid: #060a18;
@@ -23,7 +27,10 @@
   --scroll-progress: 0;
   --orb-color: rgba(180, 200, 230, 1);
   --orb-color-soft: rgba(180, 200, 230, 0.12);
-  --border: #1d2533;
+  /* Component / input boundary. Bumped from #1d2533 (1.30:1) to #5a6478
+   * so transparent buttons, the search input field, and modal close pills
+   * meet WCAG 1.4.11 3:1 non-text contrast against the page background. */
+  --border: #5a6478;
   --fg: #e6e9ef;
   --fg-muted: #8a93a1;
   --accent: #7ab7ff;
@@ -64,7 +71,9 @@
   --bg-elev: #f6f8fb;
   --glass-bg: rgba(255, 255, 255, 0.58);
   --glass-bg-modal: rgba(255, 255, 255, 0.96);
-  --glass-border: rgba(20, 28, 40, 0.18);
+  /* Bumped from rgba(20,28,40,0.18) so light-theme cards also clear
+   * 3:1 non-text contrast against the page background. */
+  --glass-border: rgba(20, 28, 40, 0.5);
   --glass-highlight: rgba(255, 255, 255, 0.65);
   --sky-top: #d2d8e1;
   --sky-mid: #e0e5ec;
@@ -74,7 +83,9 @@
   --sky-glow-2-pos: 80% -10%;
   --orb-color: rgba(232, 240, 250, 1);
   --orb-color-soft: rgba(180, 200, 225, 0.16);
-  --border: #c7cfd9;
+  /* Bumped from #c7cfd9 (1.35:1) to #7e889a so component boundaries
+   * meet WCAG 1.4.11 3:1 against the light page background. */
+  --border: #7e889a;
   --fg: #11161e;
   --fg-muted: #4b5462;
   --accent: #1c2230;

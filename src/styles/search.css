@@ -145,7 +145,12 @@
 .search-modal-close {
   appearance: none;
   flex: 0 0 auto;
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 12px;
   font: inherit;
   font-weight: 700;
   color: var(--fg);
