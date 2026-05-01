@@ -266,11 +266,17 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       detailAria: (area) => `${area} details`,
       duration: (months) => {
         if (months < 1) return "this month";
-        if (months < 12) return `${months} mo`;
+        if (months < 12) return months === 1 ? "1 month" : `${months} months`;
+        if (months >= 36) {
+          const rounded = Math.round(months / 12);
+          return rounded === 1 ? "1 year" : `${rounded} years`;
+        }
         const years = Math.floor(months / 12);
         const rem = months % 12;
-        if (rem === 0) return years === 1 ? "1 yr" : `${years} yrs`;
-        return years === 1 ? `1 yr ${rem} mo` : `${years} yrs ${rem} mo`;
+        const yearStr = years === 1 ? "1 year" : `${years} years`;
+        if (rem === 0) return yearStr;
+        const monthStr = rem === 1 ? "1 month" : `${rem} months`;
+        return `${yearStr}, ${monthStr}`;
       },
       skillsHeading: "Skills",
       skillCount: (n) => (n === 1 ? "1 skill" : `${n} skills`),
@@ -465,11 +471,16 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       detailAria: (area) => `Detaljer för ${area}`,
       duration: (months) => {
         if (months < 1) return "denna månad";
-        if (months < 12) return `${months} mån`;
+        if (months < 12) return months === 1 ? "1 månad" : `${months} månader`;
+        if (months >= 36) {
+          const rounded = Math.round(months / 12);
+          return `${rounded} år`;
+        }
         const years = Math.floor(months / 12);
         const rem = months % 12;
         if (rem === 0) return `${years} år`;
-        return `${years} år ${rem} mån`;
+        const monthStr = rem === 1 ? "1 månad" : `${rem} månader`;
+        return `${years} år, ${monthStr}`;
       },
       skillsHeading: "Kompetenser",
       skillCount: (n) => (n === 1 ? "1 kompetens" : `${n} kompetenser`),
