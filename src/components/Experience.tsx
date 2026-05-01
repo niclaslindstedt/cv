@@ -278,9 +278,12 @@ function AssignmentList({
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
 }) {
+  const sorted = [...assignments].sort((a, b) =>
+    b.startDate.localeCompare(a.startDate),
+  );
   return (
     <ol className="assignments-list">
-      {assignments.map((a) => (
+      {sorted.map((a) => (
         <AssignmentItemView
           key={`${a.clientId}-${a.startDate}`}
           assignment={a}
