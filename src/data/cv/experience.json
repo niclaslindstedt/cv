@@ -258,8 +258,8 @@
     },
     "fte": 0.5,
     "stack": [
-      "TypeScript",
-      "Vue",
+      { "name": "TypeScript", "unused": true },
+      { "name": "Vue", "unused": true },
       "C#/.NET",
       "Azure",
       "MSSQL",
@@ -305,7 +305,7 @@
     },
     "fte": 0.5,
     "stack": [
-      "TypeScript",
+      { "name": "TypeScript", "unused": true },
       { "name": "Angular", "unused": true },
       "C#/.NET",
       "Python",
