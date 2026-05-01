@@ -144,7 +144,7 @@ export function CelestialSky({ theme }: Props) {
               />
             ))}
           </div>
-          <div className="celestial orb" aria-label="Orb">
+          <div className="celestial orb">
             <div className="orb-halo" />
             <div className="orb-body" />
           </div>
