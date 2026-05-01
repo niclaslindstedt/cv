@@ -42,7 +42,7 @@ function buildSettingsCss(s: PrintSettings): string {
   const overrides: string[] = [];
   if (!pb.avoidInsideEntry) {
     overrides.push(
-      ".print-job, .print-edu { break-inside: auto !important; page-break-inside: auto !important; }",
+      ".print-edu { break-inside: auto !important; page-break-inside: auto !important; }",
     );
   }
   if (!pb.avoidInsideSubEntry) {
@@ -148,13 +148,13 @@ function ExperienceEntry({ item }: { item: PrintExperience }) {
         <p className="print-job-tagline">
           {renderInlineCode(t(item.description ?? item.tagline))}
         </p>
-        {item.tags.length > 0 && (
-          <p className="print-tags">{item.tags.join(", ")}</p>
-        )}
-        {includeNotes && item.notes && (
-          <p className="print-notes">{renderInlineCode(t(item.notes))}</p>
-        )}
       </div>
+      {item.tags.length > 0 && (
+        <p className="print-tags">{item.tags.join(", ")}</p>
+      )}
+      {includeNotes && item.notes && (
+        <p className="print-notes">{renderInlineCode(t(item.notes))}</p>
+      )}
       {hasAssignments && (
         <div className="print-assignments-block">
           <h4 className="print-assignments-heading">
