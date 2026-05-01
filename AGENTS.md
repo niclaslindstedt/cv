@@ -202,16 +202,17 @@ discovery across multiple configs.
 The repo ships Claude skills under `.agent/skills/` (with
 `.claude/skills` symlinked to it — `OSS_SPEC.md` §21.2):
 
-| Skill                         | Purpose                                                                                                                                 |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `update-cv`                   | Add/update/remove entries in `src/data/cv.json` and the per-category files in `src/data/cv/`; recommends what to change                 |
-| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field)                                                    |
-| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV                                                    |
-| `update-readme`               | Resync `README.md` with the code it describes                                                                                           |
-| `sync-design`                 | Audit `src/styles/` and `src/components/` against `docs/DESIGN.md` (the design source of truth); propose patches, apply on confirmation |
-| `sync-cross-browser`          | Audit `src/styles/` for cross-browser CSS drift with Safari as the master; propose patches to bring Chrome and Firefox into line        |
-| `debug-visual`                | Diagnose a failing Visual workflow, decide whether the snapshot drift is intentional, re-record baselines if so, and commit the pixels  |
-| `maintenance`                 | Umbrella skill — routes to every `update-*` and `sync-*`                                                                                |
+| Skill                         | Purpose                                                                                                                                                                                                                               |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `update-cv`                   | Add/update/remove entries in `src/data/cv.json` and the per-category files in `src/data/cv/`; recommends what to change                                                                                                               |
+| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field)                                                                                                                                                  |
+| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV                                                                                                                                                  |
+| `update-readme`               | Resync `README.md` with the code it describes                                                                                                                                                                                         |
+| `sync-design`                 | Audit `src/styles/` and `src/components/` against `docs/DESIGN.md` (the design source of truth); propose patches, apply on confirmation                                                                                               |
+| `sync-cross-browser`          | Audit `src/styles/` for cross-browser CSS drift with Safari as the master; propose patches to bring Chrome and Firefox into line                                                                                                      |
+| `debug-visual`                | Diagnose a failing Visual workflow, decide whether the snapshot drift is intentional, re-record baselines if so, and commit the pixels                                                                                                |
+| `verify-wcag`                 | Walk the manual WCAG 2.2 checklist for everything axe-core can't catch (keyboard, focus order, screen-reader semantics, motion, reflow, target size, label/alt-text quality); ships the spec under `.agent/skills/verify-wcag/specs/` |
+| `maintenance`                 | Umbrella skill — routes to every `update-*` and `sync-*`                                                                                                                                                                              |
 
 Invoke `maintenance` when you've landed a batch of changes and want a
 single pass that brings drift-prone artifacts back in sync. Invoke a
