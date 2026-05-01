@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -179,6 +180,10 @@ export function Timeline() {
   const didInitialScrollRef = useRef(false);
   const scaleRef = useRef(1);
   const scaleTweenRef = useRef<number | null>(null);
+  const zoomAnchorRef = useRef<{
+    pixelOffset: number;
+    monthAtPixel: number;
+  } | null>(null);
 
   const tracks = layout.tracks;
   const intervals = layout.intervals;
@@ -271,32 +276,62 @@ export function Timeline() {
     };
   }, []);
 
-  const tweenScale = useCallback((to: number) => {
-    if (scaleTweenRef.current !== null) {
-      cancelAnimationFrame(scaleTweenRef.current);
-      scaleTweenRef.current = null;
-    }
-    const target = clamp(to, MIN_SCALE, MAX_SCALE);
-    const startScale = scaleRef.current;
-    if (prefersReducedMotion() || Math.abs(target - startScale) < 0.001) {
-      setScale(target);
-      return;
-    }
-    const startTime = performance.now();
-    const tick = (now: number) => {
-      const elapsed = now - startTime;
-      const t = Math.min(1, elapsed / ZOOM_TWEEN_MS);
-      const eased = 1 - Math.pow(1 - t, 3);
-      const next = startScale + (target - startScale) * eased;
-      setScale(next);
-      if (t < 1) {
-        scaleTweenRef.current = requestAnimationFrame(tick);
-      } else {
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const anchor = zoomAnchorRef.current;
+    if (!anchor) return;
+    const newMonthPx = BASE_MONTH_PX * scale;
+    const newAxisLength = totalMonths * newMonthPx;
+    const target = anchor.monthAtPixel * newMonthPx - anchor.pixelOffset;
+    const maxScroll = Math.max(0, newAxisLength - viewport.clientWidth);
+    viewport.scrollLeft = Math.max(0, Math.min(maxScroll, target));
+  }, [scale, totalMonths]);
+
+  const captureZoomAnchor = useCallback((clientX: number | null) => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const rect = viewport.getBoundingClientRect();
+    const pixelOffset =
+      clientX !== null
+        ? Math.max(0, Math.min(viewport.clientWidth, clientX - rect.left))
+        : viewport.clientWidth / 2;
+    const currentMonthPx = BASE_MONTH_PX * scaleRef.current;
+    const monthAtPixel = (viewport.scrollLeft + pixelOffset) / currentMonthPx;
+    zoomAnchorRef.current = { pixelOffset, monthAtPixel };
+  }, []);
+
+  const tweenScale = useCallback(
+    (to: number) => {
+      if (scaleTweenRef.current !== null) {
+        cancelAnimationFrame(scaleTweenRef.current);
         scaleTweenRef.current = null;
       }
-    };
-    scaleTweenRef.current = requestAnimationFrame(tick);
-  }, []);
+      const target = clamp(to, MIN_SCALE, MAX_SCALE);
+      const startScale = scaleRef.current;
+      if (Math.abs(target - startScale) < 0.001) return;
+      captureZoomAnchor(null);
+      if (prefersReducedMotion()) {
+        setScale(target);
+        return;
+      }
+      const startTime = performance.now();
+      const tick = (now: number) => {
+        const elapsed = now - startTime;
+        const t = Math.min(1, elapsed / ZOOM_TWEEN_MS);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const next = startScale + (target - startScale) * eased;
+        setScale(next);
+        if (t < 1) {
+          scaleTweenRef.current = requestAnimationFrame(tick);
+        } else {
+          scaleTweenRef.current = null;
+        }
+      };
+      scaleTweenRef.current = requestAnimationFrame(tick);
+    },
+    [captureZoomAnchor],
+  );
 
   const zoomAt = useCallback(
     (factor: number) => {
@@ -438,12 +473,13 @@ export function Timeline() {
     const onWheel = (e: WheelEvent) => {
       if (!(e.ctrlKey || e.metaKey)) return;
       e.preventDefault();
+      captureZoomAnchor(e.clientX);
       const factor = Math.exp(-e.deltaY * 0.0018);
       setScale((s) => clamp(s * factor, MIN_SCALE, MAX_SCALE));
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
-  }, []);
+  }, [captureZoomAnchor]);
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -537,6 +573,7 @@ export function Timeline() {
       const dx = pts[1].x - pts[0].x;
       const dy = pts[1].y - pts[0].y;
       pinchRef.current = { dist: Math.hypot(dx, dy) || 1, scale };
+      captureZoomAnchor((pts[0].x + pts[1].x) / 2);
     }
   };
 
