@@ -1,6 +1,7 @@
 import type { Education as EducationItem } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { CategoryGlyph } from "./CategoryGlyph";
 import { Section } from "./Section";
 
 type Props = {
@@ -25,7 +26,7 @@ export function Education({
 }: Props) {
   const { lang, t, ui } = useLang();
   return (
-    <Section id="education" title={title}>
+    <Section id="education" title={title} category="education">
       <ul className="education-list">
         {education.map((item) => {
           const courseCount = item.courses?.length ?? 0;
@@ -35,6 +36,9 @@ export function Education({
           const field = t(item.field);
           return (
             <li key={`${item.institution.en}-${item.startDate}`}>
+              <span className="card-glyph-bar" aria-hidden="true">
+                <CategoryGlyph category="education" />
+              </span>
               {isClickable ? (
                 <button
                   type="button"

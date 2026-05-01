@@ -7,8 +7,9 @@
 }
 
 .timeline-item {
+  --cat-rgb: var(--tl-blue);
   position: relative;
-  padding: 20px;
+  padding: 20px 20px 20px 56px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   background: var(--glass-bg);
