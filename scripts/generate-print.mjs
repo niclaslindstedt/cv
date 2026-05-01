@@ -162,9 +162,9 @@ function buildExperience(item, companies) {
     tagline: company.tagline,
     tags: mergeTags(stack, item.skills),
     roleHistory: buildRoleHistory(sortedRoles),
-    assignments: (item.assignments ?? []).map((a) =>
-      buildAssignment(a, companies),
-    ),
+    assignments: [...(item.assignments ?? [])]
+      .sort((a, b) => b.startDate.localeCompare(a.startDate))
+      .map((a) => buildAssignment(a, companies)),
   };
   if (item.engagement) baked.engagement = item.engagement;
   if (item.printDescription) baked.description = item.printDescription;
