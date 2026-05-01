@@ -26,15 +26,23 @@ function findScrollableAncestor(
   return null;
 }
 
-export function useSwipeClose(
+export type HorizontalSwipeNav = {
+  onLeft?: (() => void) | null;
+  onRight?: (() => void) | null;
+};
+
+export function useModalSwipe(
   ref: RefObject<HTMLElement | null>,
   enabled: boolean,
   onClose: () => void,
   fadeOverlay = true,
+  horizontalNav?: HorizontalSwipeNav,
 ): void {
   const onCloseRef = useRef(onClose);
+  const horizontalNavRef = useRef(horizontalNav);
   useEffect(() => {
     onCloseRef.current = onClose;
+    horizontalNavRef.current = horizontalNav;
   });
 
   useEffect(() => {
@@ -204,6 +212,13 @@ export function useSwipeClose(
         const adx = Math.abs(dx);
         const velocity = adx / dt;
         if (adx > SWIPE_CLOSE_THRESHOLD_PX || velocity > SWIPE_CLOSE_VELOCITY) {
+          const nav = horizontalNavRef.current;
+          const handler = dx > 0 ? nav?.onRight : nav?.onLeft;
+          if (handler) {
+            handler();
+            snapBack();
+            return;
+          }
           const off = dx >= 0 ? window.innerWidth : -window.innerWidth;
           animateOff(off, 0);
           return;

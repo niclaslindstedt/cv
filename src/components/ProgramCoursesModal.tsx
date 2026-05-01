@@ -8,7 +8,7 @@ import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { useModalSwipe } from "../utils/useModalSwipe";
 import { NoteIcon } from "./NoteIcon";
 
 function sumCredits(moments: CourseMoment[], reference: string): string | null {
@@ -34,7 +34,7 @@ type Props = {
 export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, !!program, onClose);
+  useModalSwipe(modalRef, !!program, onClose);
   useModalFocus(modalRef, !!program);
   useBodyScrollLock(!!program);
 

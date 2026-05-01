@@ -8,7 +8,7 @@ import { aggregateProjectStats } from "../utils/projectStats";
 import { stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { useModalSwipe } from "../utils/useModalSwipe";
 import { ProjectDateChip } from "./ProjectDateChip";
 
 const projectStats = projectStatsData as ProjectStatsFile;
@@ -22,7 +22,7 @@ type Props = {
 export function ProjectModal({ project, onClose, onSkillClick }: Props) {
   const { t, lang, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, !!project, onClose);
+  useModalSwipe(modalRef, !!project, onClose);
   useModalFocus(modalRef, !!project);
   useBodyScrollLock(!!project);
 

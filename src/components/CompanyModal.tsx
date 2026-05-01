@@ -6,7 +6,7 @@ import { renderInlineCode } from "../utils/inlineCode";
 import type { CompanyStackEntry } from "../utils/skills";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { useModalSwipe } from "../utils/useModalSwipe";
 
 type Props = {
   company: Company | null;
@@ -18,7 +18,7 @@ type Props = {
 export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
   const { t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, !!company, onClose);
+  useModalSwipe(modalRef, !!company, onClose);
   useModalFocus(modalRef, !!company);
   useBodyScrollLock(!!company);
 

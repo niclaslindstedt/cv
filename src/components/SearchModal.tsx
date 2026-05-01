@@ -5,7 +5,7 @@ import { useLang } from "../utils/i18n";
 import { useSearch } from "../utils/search";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { useModalSwipe } from "../utils/useModalSwipe";
 import { useVisualViewportPin } from "../utils/useVisualViewportPin";
 
 type Props = {
@@ -25,7 +25,7 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
   const active = open && !inert;
   const { results, ready } = useSearch(deferredQuery, open);
 
-  useSwipeClose(modalRef, active, onClose);
+  useModalSwipe(modalRef, active, onClose);
   useModalFocus(modalRef, active);
   useBodyScrollLock(open);
   useVisualViewportPin(overlayRef, open);

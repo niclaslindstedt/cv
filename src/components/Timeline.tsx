@@ -12,9 +12,10 @@ import {
 import timelineData from "../data/timeline.json";
 import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
-import { useLang } from "../utils/i18n";
+import { useLang, type LanguageContextValue } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { useModalFocus } from "../utils/useModalFocus";
+import { useModalSwipe } from "../utils/useModalSwipe";
 import { NoteIcon } from "./NoteIcon";
 import { ProjectDateChip } from "./ProjectDateChip";
 import { ResetIcon } from "./ResetIcon";
@@ -127,6 +128,34 @@ function ghOpacity(
   );
   const norm = Math.log1p(count) / Math.log1p(refMax);
   return Math.min(1, 0.12 + norm * 0.88);
+}
+
+type DetailsSideButtonProps = {
+  direction: "prev" | "next";
+  target: TimelineBar | null;
+  onClick: () => void;
+  ui: LanguageContextValue["ui"]["timeline"];
+};
+
+function DetailsSideButton({
+  direction,
+  target,
+  onClick,
+  ui,
+}: DetailsSideButtonProps) {
+  const label = direction === "prev" ? ui.previousDetails : ui.nextDetails;
+  return (
+    <button
+      type="button"
+      className={`timeline-vis-details-side timeline-vis-details-side-${direction}`}
+      onClick={onClick}
+      disabled={!target}
+      aria-label={label}
+      title={label}
+    >
+      <span aria-hidden="true">{direction === "prev" ? "‹" : "›"}</span>
+    </button>
+  );
 }
 
 export function Timeline() {
@@ -380,26 +409,42 @@ export function Timeline() {
 
   const closeDetails = useCallback(() => setSelectedId(null), []);
   const detailsKind = selectedItem?.kind ?? null;
-  useSwipeClose(
+  const swipeNav = useMemo(
+    () => ({
+      onLeft: nextBar ? () => navigateTo(nextBar) : null,
+      onRight: prevBar ? () => navigateTo(prevBar) : null,
+    }),
+    [prevBar, nextBar, navigateTo],
+  );
+  useModalSwipe(
     githubDetailsRef,
     detailsKind === "github",
     closeDetails,
     false,
+    swipeNav,
   );
-  useSwipeClose(
+  useModalSwipe(
     sideProjectDetailsRef,
     detailsKind === "sideProject",
     closeDetails,
     false,
+    swipeNav,
   );
-  useSwipeClose(
-    otherDetailsRef,
+  const otherDetailsActive =
     detailsKind !== null &&
-      detailsKind !== "github" &&
-      detailsKind !== "sideProject",
+    detailsKind !== "github" &&
+    detailsKind !== "sideProject";
+  useModalSwipe(
+    otherDetailsRef,
+    otherDetailsActive,
     closeDetails,
     false,
+    swipeNav,
   );
+
+  useModalFocus(githubDetailsRef, detailsKind === "github");
+  useModalFocus(sideProjectDetailsRef, detailsKind === "sideProject");
+  useModalFocus(otherDetailsRef, otherDetailsActive);
 
   const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "touch") return;
@@ -815,110 +860,101 @@ export function Timeline() {
             role="region"
             aria-labelledby="timeline-vis-details-title"
           >
-            <div className="timeline-vis-details-head">
-              <span className="timeline-vis-pill timeline-vis-github">
-                GitHub
-              </span>
-              <div className="timeline-vis-details-nav">
-                {prevBar && (
-                  <button
-                    type="button"
-                    className="timeline-vis-btn timeline-vis-btn-icon"
-                    onClick={() => navigateTo(prevBar)}
-                    aria-label={ui.timeline.previousDetails}
-                    title={ui.timeline.previousDetails}
-                  >
-                    ‹
-                  </button>
-                )}
-                {nextBar && (
-                  <button
-                    type="button"
-                    className="timeline-vis-btn timeline-vis-btn-icon"
-                    onClick={() => navigateTo(nextBar)}
-                    aria-label={ui.timeline.nextDetails}
-                    title={ui.timeline.nextDetails}
-                  >
-                    ›
-                  </button>
-                )}
+            <DetailsSideButton
+              direction="prev"
+              target={prevBar}
+              onClick={() => navigateTo(prevBar)}
+              ui={ui.timeline}
+            />
+            <div className="timeline-vis-details-body">
+              <div className="timeline-vis-details-head">
+                <span className="timeline-vis-pill timeline-vis-github">
+                  GitHub
+                </span>
                 <button
                   type="button"
-                  className="timeline-vis-btn"
+                  className="timeline-vis-btn timeline-vis-btn-icon timeline-vis-details-close"
                   onClick={() => setSelectedId(null)}
                   aria-label={ui.timeline.closeDetails}
+                  title={ui.timeline.closeDetails}
                 >
                   ✕
                 </button>
               </div>
+              <h3
+                id="timeline-vis-details-title"
+                className="timeline-vis-details-title"
+              >
+                {t(selectedItem.title)}
+              </h3>
+              <p className="timeline-vis-details-sub">
+                <span className="timeline-vis-commit-pill">
+                  {ui.timeline.commits(selectedItem.github.totalCommits)}
+                </span>
+              </p>
+              <p className="timeline-vis-details-dates">
+                {ui.timeline.yearRange(t(selectedItem.title))}
+              </p>
+              <p className="timeline-vis-details-desc">
+                {ui.timeline.busiestMonth}:{" "}
+                {monthNames[selectedItem.github.busiestMonth - 1]} ·{" "}
+                <span className="timeline-vis-commit-pill">
+                  {ui.timeline.commits(selectedItem.github.busiestMonthCount)}
+                </span>
+                <br />
+                {ui.timeline.busiestWeek}:{" "}
+                {formatMonthDay(selectedItem.github.busiestWeekStart)} ·{" "}
+                <span className="timeline-vis-commit-pill">
+                  {ui.timeline.commits(selectedItem.github.busiestWeekCount)}
+                </span>
+                <br />
+                {ui.timeline.busiestDay}:{" "}
+                {formatMonthDay(selectedItem.github.busiestDay)} ·{" "}
+                <span className="timeline-vis-commit-pill">
+                  {ui.timeline.commits(selectedItem.github.busiestDayCount)}
+                </span>
+                {selectedItem.github.busiestRepo && (
+                  <>
+                    <br />
+                    {ui.timeline.busiestRepo}:{" "}
+                    {selectedItem.github.busiestRepo.openSource ? (
+                      <a
+                        href={selectedItem.github.busiestRepo.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {selectedItem.github.busiestRepo.name}
+                      </a>
+                    ) : (
+                      selectedItem.github.busiestRepo.name
+                    )}{" "}
+                    ·{" "}
+                    <span className="timeline-vis-commit-pill">
+                      {ui.timeline.commits(
+                        selectedItem.github.busiestRepo.commits,
+                      )}
+                    </span>
+                  </>
+                )}
+              </p>
+              <a
+                className="timeline-vis-details-link"
+                href={`${selectedItem.github.profileUrl}?tab=overview&from=${t(selectedItem.title)}-01-01&to=${t(selectedItem.title)}-12-31`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {ui.timeline.viewOnGitHub}
+              </a>
+              <p className="timeline-vis-details-when">
+                @{selectedItem.github.username}
+              </p>
             </div>
-            <h3
-              id="timeline-vis-details-title"
-              className="timeline-vis-details-title"
-            >
-              {t(selectedItem.title)}
-            </h3>
-            <p className="timeline-vis-details-sub">
-              <span className="timeline-vis-commit-pill">
-                {ui.timeline.commits(selectedItem.github.totalCommits)}
-              </span>
-            </p>
-            <p className="timeline-vis-details-dates">
-              {ui.timeline.yearRange(t(selectedItem.title))}
-            </p>
-            <p className="timeline-vis-details-desc">
-              {ui.timeline.busiestMonth}:{" "}
-              {monthNames[selectedItem.github.busiestMonth - 1]} ·{" "}
-              <span className="timeline-vis-commit-pill">
-                {ui.timeline.commits(selectedItem.github.busiestMonthCount)}
-              </span>
-              <br />
-              {ui.timeline.busiestWeek}:{" "}
-              {formatMonthDay(selectedItem.github.busiestWeekStart)} ·{" "}
-              <span className="timeline-vis-commit-pill">
-                {ui.timeline.commits(selectedItem.github.busiestWeekCount)}
-              </span>
-              <br />
-              {ui.timeline.busiestDay}:{" "}
-              {formatMonthDay(selectedItem.github.busiestDay)} ·{" "}
-              <span className="timeline-vis-commit-pill">
-                {ui.timeline.commits(selectedItem.github.busiestDayCount)}
-              </span>
-              {selectedItem.github.busiestRepo && (
-                <>
-                  <br />
-                  {ui.timeline.busiestRepo}:{" "}
-                  {selectedItem.github.busiestRepo.openSource ? (
-                    <a
-                      href={selectedItem.github.busiestRepo.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {selectedItem.github.busiestRepo.name}
-                    </a>
-                  ) : (
-                    selectedItem.github.busiestRepo.name
-                  )}{" "}
-                  ·{" "}
-                  <span className="timeline-vis-commit-pill">
-                    {ui.timeline.commits(
-                      selectedItem.github.busiestRepo.commits,
-                    )}
-                  </span>
-                </>
-              )}
-            </p>
-            <a
-              className="timeline-vis-details-link"
-              href={`${selectedItem.github.profileUrl}?tab=overview&from=${t(selectedItem.title)}-01-01&to=${t(selectedItem.title)}-12-31`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {ui.timeline.viewOnGitHub}
-            </a>
-            <p className="timeline-vis-details-when">
-              @{selectedItem.github.username}
-            </p>
+            <DetailsSideButton
+              direction="next"
+              target={nextBar}
+              onClick={() => navigateTo(nextBar)}
+              ui={ui.timeline}
+            />
           </aside>
         )}
       {selectedItem &&
@@ -930,113 +966,108 @@ export function Timeline() {
             role="region"
             aria-labelledby="timeline-vis-details-title"
           >
-            <div className="timeline-vis-details-head">
-              <span className="timeline-vis-pill timeline-vis-sideProject">
-                {ui.timeline.sideProject}
-              </span>
-              <div className="timeline-vis-details-nav">
-                {prevBar && (
-                  <button
-                    type="button"
-                    className="timeline-vis-btn timeline-vis-btn-icon"
-                    onClick={() => navigateTo(prevBar)}
-                    aria-label={ui.timeline.previousDetails}
-                    title={ui.timeline.previousDetails}
-                  >
-                    ‹
-                  </button>
-                )}
-                {nextBar && (
-                  <button
-                    type="button"
-                    className="timeline-vis-btn timeline-vis-btn-icon"
-                    onClick={() => navigateTo(nextBar)}
-                    aria-label={ui.timeline.nextDetails}
-                    title={ui.timeline.nextDetails}
-                  >
-                    ›
-                  </button>
-                )}
+            <DetailsSideButton
+              direction="prev"
+              target={prevBar}
+              onClick={() => navigateTo(prevBar)}
+              ui={ui.timeline}
+            />
+            <div className="timeline-vis-details-body">
+              <div className="timeline-vis-details-head">
+                <span className="timeline-vis-pill timeline-vis-sideProject">
+                  {ui.timeline.sideProject}
+                </span>
                 <button
                   type="button"
-                  className="timeline-vis-btn"
+                  className="timeline-vis-btn timeline-vis-btn-icon timeline-vis-details-close"
                   onClick={() => setSelectedId(null)}
                   aria-label={ui.timeline.closeDetails}
+                  title={ui.timeline.closeDetails}
                 >
                   ✕
                 </button>
               </div>
-            </div>
-            <h3
-              id="timeline-vis-details-title"
-              className="timeline-vis-details-title"
-            >
-              {t(selectedItem.title)}
-            </h3>
-            <p className="timeline-vis-details-sub">
-              {t(selectedItem.subtitle)}
-            </p>
-            <p className="timeline-vis-details-dates">
-              {selectedItem.sideProject.firstCommitDate &&
-              selectedItem.sideProject.lastCommitDate ? (
-                <>
-                  <ProjectDateChip
-                    iso={selectedItem.sideProject.firstCommitDate}
-                    lang={lang}
-                  />
-                  <span className="project-date-sep" aria-hidden="true">
-                    –
-                  </span>
-                  <ProjectDateChip
-                    iso={selectedItem.sideProject.lastCommitDate}
-                    lang={lang}
-                  />
-                </>
-              ) : (
-                formatRange(selectedItem.startDate, selectedItem.endDate, lang)
-              )}
-              {" · "}
-              <span className="timeline-vis-details-duration">
-                {formatDuration(
-                  monthIndex(selectedItem.startDate),
-                  monthIndex(selectedItem.endDate ?? selectedItem.startDate),
-                  ui.timeline.yUnit,
-                  ui.timeline.mUnit,
-                )}
-              </span>
-            </p>
-            <p className="timeline-vis-details-dates">
-              <span className="timeline-vis-commit-pill">
-                {ui.timeline.commits(selectedItem.sideProject.totalCommits)}
-              </span>
-            </p>
-            {t(selectedItem.description) && (
-              <p className="timeline-vis-details-desc">
-                {renderInlineCode(t(selectedItem.description))}
-              </p>
-            )}
-            {selectedItem.sideProject.openSource && (
-              <a
-                className="timeline-vis-details-link"
-                href={selectedItem.sideProject.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <h3
+                id="timeline-vis-details-title"
+                className="timeline-vis-details-title"
               >
-                {ui.timeline.viewRepository}
-              </a>
-            )}
-            {selectedItem.skills.length > 0 && (
-              <>
-                <h4 className="timeline-vis-details-skills-title">
-                  {ui.timeline.skillsUsed}
-                </h4>
-                <ul className="timeline-vis-details-skills">
-                  {selectedItem.skills.map((skill) => (
-                    <li key={skill}>{skill}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+                {t(selectedItem.title)}
+              </h3>
+              <p className="timeline-vis-details-sub">
+                {t(selectedItem.subtitle)}
+              </p>
+              <p className="timeline-vis-details-dates">
+                {selectedItem.sideProject.firstCommitDate &&
+                selectedItem.sideProject.lastCommitDate ? (
+                  <>
+                    <ProjectDateChip
+                      iso={selectedItem.sideProject.firstCommitDate}
+                      lang={lang}
+                    />
+                    <span className="project-date-sep" aria-hidden="true">
+                      –
+                    </span>
+                    <ProjectDateChip
+                      iso={selectedItem.sideProject.lastCommitDate}
+                      lang={lang}
+                    />
+                  </>
+                ) : (
+                  formatRange(
+                    selectedItem.startDate,
+                    selectedItem.endDate,
+                    lang,
+                  )
+                )}
+                {" · "}
+                <span className="timeline-vis-details-duration">
+                  {formatDuration(
+                    monthIndex(selectedItem.startDate),
+                    monthIndex(selectedItem.endDate ?? selectedItem.startDate),
+                    ui.timeline.yUnit,
+                    ui.timeline.mUnit,
+                  )}
+                </span>
+              </p>
+              <p className="timeline-vis-details-dates">
+                <span className="timeline-vis-commit-pill">
+                  {ui.timeline.commits(selectedItem.sideProject.totalCommits)}
+                </span>
+              </p>
+              {t(selectedItem.description) && (
+                <p className="timeline-vis-details-desc">
+                  {renderInlineCode(t(selectedItem.description))}
+                </p>
+              )}
+              {selectedItem.sideProject.openSource && (
+                <a
+                  className="timeline-vis-details-link"
+                  href={selectedItem.sideProject.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {ui.timeline.viewRepository}
+                </a>
+              )}
+              {selectedItem.skills.length > 0 && (
+                <>
+                  <h4 className="timeline-vis-details-skills-title">
+                    {ui.timeline.skillsUsed}
+                  </h4>
+                  <ul className="timeline-vis-details-skills">
+                    {selectedItem.skills.map((skill) => (
+                      <li key={skill}>{skill}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+            <DetailsSideButton
+              direction="next"
+              target={nextBar}
+              onClick={() => navigateTo(nextBar)}
+              ui={ui.timeline}
+            />
           </aside>
         )}
       {selectedItem &&
@@ -1080,143 +1111,134 @@ export function Timeline() {
               role="region"
               aria-labelledby="timeline-vis-details-title"
             >
-              <div className="timeline-vis-details-head">
-                <span
-                  className={`timeline-vis-pill timeline-vis-${selectedItem.kind}`}
-                >
-                  {selectedItem.kind === "experience"
-                    ? ui.timeline.job
-                    : selectedItem.kind === "assignment"
-                      ? ui.timeline.assignment
-                      : selectedItem.kind === "course"
-                        ? ui.timeline.course
-                        : ui.timeline.education}
-                </span>
-                <div className="timeline-vis-details-nav">
-                  {prevBar && (
-                    <button
-                      type="button"
-                      className="timeline-vis-btn timeline-vis-btn-icon"
-                      onClick={() => navigateTo(prevBar)}
-                      aria-label={ui.timeline.previousDetails}
-                      title={ui.timeline.previousDetails}
-                    >
-                      ‹
-                    </button>
-                  )}
-                  {nextBar && (
-                    <button
-                      type="button"
-                      className="timeline-vis-btn timeline-vis-btn-icon"
-                      onClick={() => navigateTo(nextBar)}
-                      aria-label={ui.timeline.nextDetails}
-                      title={ui.timeline.nextDetails}
-                    >
-                      ›
-                    </button>
-                  )}
+              <DetailsSideButton
+                direction="prev"
+                target={prevBar}
+                onClick={() => navigateTo(prevBar)}
+                ui={ui.timeline}
+              />
+              <div className="timeline-vis-details-body">
+                <div className="timeline-vis-details-head">
+                  <span
+                    className={`timeline-vis-pill timeline-vis-${selectedItem.kind}`}
+                  >
+                    {selectedItem.kind === "experience"
+                      ? ui.timeline.job
+                      : selectedItem.kind === "assignment"
+                        ? ui.timeline.assignment
+                        : selectedItem.kind === "course"
+                          ? ui.timeline.course
+                          : ui.timeline.education}
+                  </span>
                   <button
                     type="button"
-                    className="timeline-vis-btn"
+                    className="timeline-vis-btn timeline-vis-btn-icon timeline-vis-details-close"
                     onClick={() => setSelectedId(null)}
                     aria-label={ui.timeline.closeDetails}
+                    title={ui.timeline.closeDetails}
                   >
                     ✕
                   </button>
                 </div>
-              </div>
-              <h3
-                id="timeline-vis-details-title"
-                className="timeline-vis-details-title"
-              >
-                {headingText}
-              </h3>
-              {showSubtitle && (
-                <p className="timeline-vis-details-sub">
-                  {t(selectedItem.subtitle)}
-                </p>
-              )}
-              <p className="timeline-vis-details-dates">
-                {formatRange(
-                  selectedItem.startDate,
-                  selectedItem.endDate,
-                  lang,
+                <h3
+                  id="timeline-vis-details-title"
+                  className="timeline-vis-details-title"
+                >
+                  {headingText}
+                </h3>
+                {showSubtitle && (
+                  <p className="timeline-vis-details-sub">
+                    {t(selectedItem.subtitle)}
+                  </p>
                 )}
-                {" · "}
-                <span className="timeline-vis-details-duration">
-                  {formatDuration(
-                    monthIndex(selectedItem.startDate),
-                    selectedItem.isOngoing
-                      ? now
-                      : monthIndex(
-                          selectedItem.endDate ?? selectedItem.startDate,
-                        ),
-                    ui.timeline.yUnit,
-                    ui.timeline.mUnit,
-                  )}
-                </span>
-              </p>
-              {hasMultipleRoles && (
-                <ul className="timeline-vis-details-roles">
-                  {[...roleRanges].reverse().map((r) => (
-                    <li key={r.key} className="timeline-vis-details-role">
-                      <span className="timeline-vis-details-role-title">
-                        {t(r.title)}
-                      </span>
-                      <span className="timeline-vis-details-role-meta">
-                        {formatRange(r.startDate, r.endIso, lang)}
-                        {" · "}
-                        <span className="timeline-vis-details-duration">
-                          {formatDuration(
-                            r.startMonth,
-                            r.endMonth,
-                            ui.timeline.yUnit,
-                            ui.timeline.mUnit,
-                          )}
-                        </span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {(selectedItem.credits || selectedItem.remote) && (
                 <p className="timeline-vis-details-dates">
-                  {selectedItem.credits && (
-                    <span className="timeline-vis-credits-pill">
-                      {selectedItem.credits}
-                    </span>
+                  {formatRange(
+                    selectedItem.startDate,
+                    selectedItem.endDate,
+                    lang,
                   )}
-                  {selectedItem.credits && selectedItem.remote && " "}
-                  {selectedItem.remote && (
-                    <span className="timeline-vis-credits-pill">
-                      {t({ en: "Remote", sv: "Distans" })}
-                    </span>
-                  )}
+                  {" · "}
+                  <span className="timeline-vis-details-duration">
+                    {formatDuration(
+                      monthIndex(selectedItem.startDate),
+                      selectedItem.isOngoing
+                        ? now
+                        : monthIndex(
+                            selectedItem.endDate ?? selectedItem.startDate,
+                          ),
+                      ui.timeline.yUnit,
+                      ui.timeline.mUnit,
+                    )}
+                  </span>
                 </p>
-              )}
-              {t(selectedItem.description) && (
-                <p className="timeline-vis-details-desc">
-                  {renderInlineCode(t(selectedItem.description))}
-                </p>
-              )}
-              {selectedItem.notes && (
-                <p className="timeline-vis-details-notes">
-                  <NoteIcon />
-                  <span>{t(selectedItem.notes)}</span>
-                </p>
-              )}
-              {selectedItem.skills.length > 0 && (
-                <>
-                  <h4 className="timeline-vis-details-skills-title">
-                    {ui.timeline.skillsUsed}
-                  </h4>
-                  <ul className="timeline-vis-details-skills">
-                    {selectedItem.skills.map((skill) => (
-                      <li key={skill}>{skill}</li>
+                {hasMultipleRoles && (
+                  <ul className="timeline-vis-details-roles">
+                    {[...roleRanges].reverse().map((r) => (
+                      <li key={r.key} className="timeline-vis-details-role">
+                        <span className="timeline-vis-details-role-title">
+                          {t(r.title)}
+                        </span>
+                        <span className="timeline-vis-details-role-meta">
+                          {formatRange(r.startDate, r.endIso, lang)}
+                          {" · "}
+                          <span className="timeline-vis-details-duration">
+                            {formatDuration(
+                              r.startMonth,
+                              r.endMonth,
+                              ui.timeline.yUnit,
+                              ui.timeline.mUnit,
+                            )}
+                          </span>
+                        </span>
+                      </li>
                     ))}
                   </ul>
-                </>
-              )}
+                )}
+                {(selectedItem.credits || selectedItem.remote) && (
+                  <p className="timeline-vis-details-dates">
+                    {selectedItem.credits && (
+                      <span className="timeline-vis-credits-pill">
+                        {selectedItem.credits}
+                      </span>
+                    )}
+                    {selectedItem.credits && selectedItem.remote && " "}
+                    {selectedItem.remote && (
+                      <span className="timeline-vis-credits-pill">
+                        {t({ en: "Remote", sv: "Distans" })}
+                      </span>
+                    )}
+                  </p>
+                )}
+                {t(selectedItem.description) && (
+                  <p className="timeline-vis-details-desc">
+                    {renderInlineCode(t(selectedItem.description))}
+                  </p>
+                )}
+                {selectedItem.notes && (
+                  <p className="timeline-vis-details-notes">
+                    <NoteIcon />
+                    <span>{t(selectedItem.notes)}</span>
+                  </p>
+                )}
+                {selectedItem.skills.length > 0 && (
+                  <>
+                    <h4 className="timeline-vis-details-skills-title">
+                      {ui.timeline.skillsUsed}
+                    </h4>
+                    <ul className="timeline-vis-details-skills">
+                      {selectedItem.skills.map((skill) => (
+                        <li key={skill}>{skill}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
+              <DetailsSideButton
+                direction="next"
+                target={nextBar}
+                onClick={() => navigateTo(nextBar)}
+                ui={ui.timeline}
+              />
             </aside>
           );
         })()}
