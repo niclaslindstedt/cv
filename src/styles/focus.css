@@ -128,9 +128,30 @@
   color: var(--accent);
 }
 
-/* Focus modal: header with glyph chip and pull-quote lede. */
+/* Focus modal: header with glyph chip and pull-quote lede.
+ *
+ * Focus stays on the Aurora palette (per DESIGN.md §9.7 it's not one
+ * of the four category-tinted sections), but the header borrows the
+ * same tinted-gradient recipe as `.skill-modal--cat .skill-modal-head`
+ * (§10.5) so it reads as part of the modal family rather than a flat
+ * neutral surface. Mechanism: drive the gradient and glyph chip from
+ * `--accent-rgb` so both themes pick up the right Aurora hue. */
 .focus-modal-head {
   align-items: flex-start;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--accent-rgb), 0.18),
+    rgba(var(--accent-rgb), 0.06)
+  );
+  border-bottom-color: rgba(var(--accent-rgb), 0.45);
+}
+
+:root[data-theme="light"] .focus-modal-head {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--accent-rgb), 0.22),
+    rgba(var(--accent-rgb), 0.08)
+  );
 }
 
 .focus-modal-glyph {
@@ -143,8 +164,12 @@
   margin-top: 2px;
   border-radius: 8px;
   color: var(--accent);
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-soft);
+  background: rgba(var(--accent-rgb), 0.16);
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+}
+
+:root[data-theme="light"] .focus-modal-glyph {
+  background: rgba(var(--accent-rgb), 0.22);
 }
 
 .focus-modal-lede {
