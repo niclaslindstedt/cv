@@ -24,6 +24,7 @@ import { TrackIcon } from "./TrackIcon";
 const MIN_SCALE = 0.3;
 const MAX_SCALE = 8;
 const BASE_MONTH_PX = 14;
+const ZOOM_TWEEN_MS = 240;
 const LANE_SIZE = 48;
 const LANE_GAP = 4;
 const TRACK_HEADER = 8;
@@ -37,6 +38,11 @@ const layout = timelineData as TimelineData;
 
 function clamp(n: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, n));
+}
+
+function prefersReducedMotion(): boolean {
+  if (typeof window === "undefined" || !window.matchMedia) return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 function monthIndex(iso: string): number {
@@ -171,6 +177,8 @@ export function Timeline() {
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
   const didInitialScrollRef = useRef(false);
+  const scaleRef = useRef(1);
+  const scaleTweenRef = useRef<number | null>(null);
 
   const tracks = layout.tracks;
   const intervals = layout.intervals;
@@ -250,9 +258,52 @@ export function Timeline() {
       ? sameKindBars[navIndex + 1]
       : null;
 
-  const zoomAt = useCallback((factor: number) => {
-    setScale((s) => clamp(s * factor, MIN_SCALE, MAX_SCALE));
+  useEffect(() => {
+    scaleRef.current = scale;
+  }, [scale]);
+
+  useEffect(() => {
+    return () => {
+      if (scaleTweenRef.current !== null) {
+        cancelAnimationFrame(scaleTweenRef.current);
+        scaleTweenRef.current = null;
+      }
+    };
   }, []);
+
+  const tweenScale = useCallback((to: number) => {
+    if (scaleTweenRef.current !== null) {
+      cancelAnimationFrame(scaleTweenRef.current);
+      scaleTweenRef.current = null;
+    }
+    const target = clamp(to, MIN_SCALE, MAX_SCALE);
+    const startScale = scaleRef.current;
+    if (prefersReducedMotion() || Math.abs(target - startScale) < 0.001) {
+      setScale(target);
+      return;
+    }
+    const startTime = performance.now();
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / ZOOM_TWEEN_MS);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const next = startScale + (target - startScale) * eased;
+      setScale(next);
+      if (t < 1) {
+        scaleTweenRef.current = requestAnimationFrame(tick);
+      } else {
+        scaleTweenRef.current = null;
+      }
+    };
+    scaleTweenRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  const zoomAt = useCallback(
+    (factor: number) => {
+      tweenScale(scaleRef.current * factor);
+    },
+    [tweenScale],
+  );
 
   const scrollToTrackStart = useCallback(
     (trackIdx: number) => {
@@ -366,14 +417,18 @@ export function Timeline() {
     }
 
     setScale(initialScale);
+    scaleRef.current = initialScale;
 
     const newMonthPx = BASE_MONTH_PX * initialScale;
     const targetX = (nowIdx - minMonth) * newMonthPx;
     const left = Math.max(0, targetX - clientWidth + 24);
 
+    const scrollBehavior: ScrollBehavior = prefersReducedMotion()
+      ? "auto"
+      : "smooth";
     requestAnimationFrame(() => {
       const v = viewportRef.current;
-      if (v) v.scrollTo({ left, top: 0, behavior: "auto" });
+      if (v) v.scrollTo({ left, top: 0, behavior: scrollBehavior });
     });
   }, [minMonth, tracks]);
 
@@ -737,7 +792,7 @@ export function Timeline() {
             <button
               type="button"
               className="timeline-vis-btn timeline-vis-btn-icon"
-              onClick={() => setScale(1)}
+              onClick={() => tweenScale(1)}
               aria-label={ui.timeline.resetZoom}
               title={ui.timeline.resetZoom}
             >
