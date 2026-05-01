@@ -23,7 +23,7 @@ export function SearchModal({ open, inert = false, onClose, onSelect }: Props) {
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
   const active = open && !inert;
-  const { results, ready } = useSearch(deferredQuery, open);
+  const { results, ready } = useSearch(deferredQuery);
 
   useModalSwipe(modalRef, active, onClose);
   useModalFocus(modalRef, active);

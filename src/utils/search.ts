@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
+import searchIndexData from "../data/search-index.json";
 import type {
   SearchField,
   SearchIndex,
@@ -8,6 +9,8 @@ import type {
   SearchMatchType,
   SearchRecord,
 } from "../data/search-index.types";
+
+const searchIndex = searchIndexData as unknown as SearchIndex;
 
 export type { SearchMatch, SearchMatchType };
 
@@ -44,34 +47,6 @@ const MATCH_MODIFIERS: Record<SearchMatchType, number> = {
 const RESULT_LIMIT = 60;
 const MIN_QUERY_LENGTH = 2;
 const FUZZY_MIN_LENGTH = 4;
-
-let cachedIndex: SearchIndex | null = null;
-let inflight: Promise<SearchIndex> | null = null;
-
-async function loadIndex(): Promise<SearchIndex> {
-  if (cachedIndex) return cachedIndex;
-  if (inflight) return inflight;
-  inflight = import("../data/search-index.json").then((mod) => {
-    cachedIndex = mod.default as unknown as SearchIndex;
-    return cachedIndex;
-  });
-  return inflight;
-}
-
-export function useSearchIndex(enabled: boolean): SearchIndex | null {
-  const [index, setIndex] = useState<SearchIndex | null>(cachedIndex);
-  useEffect(() => {
-    if (!enabled || index) return;
-    let cancelled = false;
-    loadIndex().then((loaded) => {
-      if (!cancelled) setIndex(loaded);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [enabled, index]);
-  return index;
-}
 
 export function normalize(text: string): string {
   return text
@@ -259,14 +234,10 @@ export function search(index: SearchIndex, query: string): SearchResults {
 
 export type GroupKindOrder = SearchKind;
 
-export function useSearch(
-  query: string,
-  enabled: boolean,
-): { results: SearchResults; ready: boolean } {
-  const index = useSearchIndex(enabled);
-  const results = useMemo(() => {
-    if (!index) return { total: 0, hits: [] } as SearchResults;
-    return search(index, query);
-  }, [index, query]);
-  return { results, ready: !!index };
+export function useSearch(query: string): {
+  results: SearchResults;
+  ready: boolean;
+} {
+  const results = useMemo(() => search(searchIndex, query), [query]);
+  return { results, ready: true };
 }
