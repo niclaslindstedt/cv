@@ -1,17 +1,17 @@
 import { useEffect, useRef } from "react";
 
-import type { Course, CourseMoment } from "../data/cv.types";
+import type { Course, CourseModule } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
 
-function sumCredits(moments: CourseMoment[], reference: string): string | null {
-  if (moments.length === 0) return null;
+function sumCredits(modules: CourseModule[], reference: string): string | null {
+  if (modules.length === 0) return null;
   let total = 0;
-  for (const moment of moments) {
-    const parsed = parseFloat(moment.credits.replace(",", "."));
+  for (const mod of modules) {
+    const parsed = parseFloat(mod.credits.replace(",", "."));
     if (Number.isNaN(parsed)) return null;
     total += parsed;
   }
@@ -21,8 +21,8 @@ function sumCredits(moments: CourseMoment[], reference: string): string | null {
   return `${rounded}${unit}`;
 }
 
-function latestMomentDate(moments: CourseMoment[]): string | undefined {
-  const dates = moments.map((m) => m.completedDate).filter(Boolean) as string[];
+function latestModuleDate(modules: CourseModule[]): string | undefined {
+  const dates = modules.map((m) => m.completedDate).filter(Boolean) as string[];
   if (dates.length === 0) return undefined;
   return dates.reduce((latest, d) => (d > latest ? d : latest));
 }
@@ -33,7 +33,7 @@ type Props = {
   onSkillClick: (skill: string) => void;
 };
 
-export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
+export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
   useModalSwipe(modalRef, !!course, onClose);
@@ -52,22 +52,22 @@ export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
   if (!course) return null;
 
   const name = t(course.name);
-  const moments = course.moments ?? [];
-  const completedMoments = moments.filter((m) => m.completedDate);
-  const endDate = course.completedDate ?? latestMomentDate(moments);
+  const modules = course.modules ?? [];
+  const completedModules = modules.filter((m) => m.completedDate);
+  const endDate = course.completedDate ?? latestModuleDate(modules);
   const incomplete = course.completed === false;
   const earned =
-    moments.length > 0 ? sumCredits(completedMoments, course.credits) : null;
+    modules.length > 0 ? sumCredits(completedModules, course.credits) : null;
   const partial =
     incomplete ||
-    (!course.completedDate && moments.some((m) => !m.completedDate));
+    (!course.completedDate && modules.some((m) => !m.completedDate));
 
   return (
     <div
       className="skill-modal-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label={ui.courses.momentsAria(name)}
+      aria-label={ui.courses.modulesAria(name)}
       onClick={onClose}
     >
       <div
@@ -124,33 +124,33 @@ export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
                 </span>
               )}
             </div>
-            {moments.length > 0 && (
+            {modules.length > 0 && (
               <p className="program-modal-count">
-                {ui.courses.momentsCount(moments.length)}
+                {ui.courses.modulesCount(modules.length)}
               </p>
             )}
           </section>
-          {moments.length > 0 && (
-            <ul className="program-moment-list course-modal-moments">
-              {moments.map((moment, index) => (
+          {modules.length > 0 && (
+            <ul className="program-module-list course-modal-modules">
+              {modules.map((mod, index) => (
                 <li
-                  key={moment.code ?? `${course.code}-${index}`}
+                  key={mod.code ?? `${course.code}-${index}`}
                   className={
-                    moment.completedDate
-                      ? "program-moment-item"
-                      : "program-moment-item program-moment-item--pending"
+                    mod.completedDate
+                      ? "program-module-item"
+                      : "program-module-item program-module-item--pending"
                   }
                 >
-                  <span className="program-moment-name">{t(moment.name)}</span>
-                  <span className="program-moment-meta">
-                    {moment.code && (
-                      <span className="program-moment-code">{moment.code}</span>
+                  <span className="program-module-name">{t(mod.name)}</span>
+                  <span className="program-module-meta">
+                    {mod.code && (
+                      <span className="program-module-code">{mod.code}</span>
                     )}
-                    <span className="education-credits">{moment.credits}</span>
-                    <span className="program-moment-date">
-                      {moment.completedDate
-                        ? formatMonth(moment.completedDate, lang)
-                        : ui.programModal.momentNotCompleted}
+                    <span className="education-credits">{mod.credits}</span>
+                    <span className="program-module-date">
+                      {mod.completedDate
+                        ? formatMonth(mod.completedDate, lang)
+                        : ui.programModal.moduleNotCompleted}
                     </span>
                   </span>
                 </li>

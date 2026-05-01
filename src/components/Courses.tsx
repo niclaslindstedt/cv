@@ -1,4 +1,4 @@
-import type { Course, CourseMoment } from "../data/cv.types";
+import type { Course, CourseModule } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { CategoryGlyph } from "./CategoryGlyph";
@@ -16,18 +16,18 @@ function parseCredits(credits: string): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function sumMomentCredits(moments: CourseMoment[]): number | null {
+function sumModuleCredits(modules: CourseModule[]): number | null {
   let total = 0;
-  for (const moment of moments) {
-    const value = parseCredits(moment.credits);
+  for (const mod of modules) {
+    const value = parseCredits(mod.credits);
     if (value === null) return null;
     total += value;
   }
   return Math.round(total * 10) / 10;
 }
 
-function latestMomentDate(moments: CourseMoment[]): string | undefined {
-  const dates = moments.map((m) => m.completedDate).filter(Boolean) as string[];
+function latestModuleDate(modules: CourseModule[]): string | undefined {
+  const dates = modules.map((m) => m.completedDate).filter(Boolean) as string[];
   if (dates.length === 0) return undefined;
   return dates.reduce((latest, d) => (d > latest ? d : latest));
 }
@@ -44,12 +44,12 @@ export function Courses({
     <Section id="courses" title={title} category="course">
       <ul className="education-list">
         {courses.map((item) => {
-          const moments = item.moments ?? [];
-          const completedMoments = moments.filter((m) => m.completedDate);
-          const endDate = item.completedDate ?? latestMomentDate(moments);
+          const modules = item.modules ?? [];
+          const completedModules = modules.filter((m) => m.completedDate);
+          const endDate = item.completedDate ?? latestModuleDate(modules);
           const fullCredits = parseCredits(item.credits);
           const earned =
-            moments.length > 0 ? sumMomentCredits(completedMoments) : null;
+            modules.length > 0 ? sumModuleCredits(completedModules) : null;
           const incomplete = item.completed === false;
           const partial =
             incomplete ||
@@ -57,7 +57,7 @@ export function Courses({
               earned !== null &&
               fullCredits !== null &&
               earned < fullCredits);
-          const hasMoments = moments.length > 0;
+          const hasModules = modules.length > 0;
           const courseName = t(item.name);
           const headBody = (
             <>
@@ -102,9 +102,9 @@ export function Courses({
                     </span>
                   </>
                 )}
-                {hasMoments && (
+                {hasModules && (
                   <span className="education-courses-count">
-                    {ui.courses.momentsCount(moments.length)}
+                    {ui.courses.modulesCount(modules.length)}
                   </span>
                 )}
               </p>
@@ -115,12 +115,12 @@ export function Courses({
               <span className="card-glyph-bar" aria-hidden="true">
                 <CategoryGlyph category="course" />
               </span>
-              {hasMoments ? (
+              {hasModules ? (
                 <button
                   type="button"
                   className="education-program-btn"
                   onClick={() => onCourseClick(item)}
-                  aria-label={ui.courses.viewMomentsAria(courseName)}
+                  aria-label={ui.courses.viewModulesAria(courseName)}
                 >
                   {headBody}
                 </button>

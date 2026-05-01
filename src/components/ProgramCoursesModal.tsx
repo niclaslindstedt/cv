@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import type {
-  CourseMoment,
+  CourseModule,
   Education as EducationItem,
 } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
@@ -11,11 +11,11 @@ import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
 import { NoteIcon } from "./NoteIcon";
 
-function sumCredits(moments: CourseMoment[], reference: string): string | null {
-  if (moments.length === 0) return null;
+function sumCredits(modules: CourseModule[], reference: string): string | null {
+  if (modules.length === 0) return null;
   let total = 0;
-  for (const moment of moments) {
-    const parsed = parseFloat(moment.credits.replace(",", "."));
+  for (const mod of modules) {
+    const parsed = parseFloat(mod.credits.replace(",", "."));
     if (Number.isNaN(parsed)) return null;
     total += parsed;
   }
@@ -102,17 +102,17 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
           {courses.length > 0 && (
             <ul className="program-courses-list">
               {courses.map((course) => {
-                const moments = course.moments ?? [];
-                const hasMoments = moments.length > 0;
+                const modules = course.modules ?? [];
+                const hasModules = modules.length > 0;
                 const incomplete = course.completed === false;
                 const partial =
                   incomplete ||
-                  (hasMoments &&
+                  (hasModules &&
                     !course.completedDate &&
-                    moments.some((m) => !m.completedDate));
-                const earned = hasMoments
+                    modules.some((m) => !m.completedDate));
+                const earned = hasModules
                   ? sumCredits(
-                      moments.filter((m) => m.completedDate),
+                      modules.filter((m) => m.completedDate),
                       course.credits,
                     )
                   : null;
@@ -124,7 +124,7 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
                         {course.completedDate
                           ? formatMonth(course.completedDate, lang)
                           : partial
-                            ? ui.programModal.momentNotCompleted
+                            ? ui.programModal.moduleNotCompleted
                             : ui.programModal.inProgress}
                       </span>
                     </div>
@@ -157,37 +157,37 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
                         </span>
                       )}
                     </div>
-                    {hasMoments && (
-                      <div className="program-course-moments">
-                        <p className="program-course-moments-label">
-                          {ui.programModal.moments}
+                    {hasModules && (
+                      <div className="program-course-modules">
+                        <p className="program-course-modules-label">
+                          {ui.programModal.modules}
                         </p>
-                        <ul className="program-moment-list">
-                          {moments.map((moment, index) => (
+                        <ul className="program-module-list">
+                          {modules.map((mod, index) => (
                             <li
-                              key={moment.code ?? `${course.code}-${index}`}
+                              key={mod.code ?? `${course.code}-${index}`}
                               className={
-                                moment.completedDate
-                                  ? "program-moment-item"
-                                  : "program-moment-item program-moment-item--pending"
+                                mod.completedDate
+                                  ? "program-module-item"
+                                  : "program-module-item program-module-item--pending"
                               }
                             >
-                              <span className="program-moment-name">
-                                {t(moment.name)}
+                              <span className="program-module-name">
+                                {t(mod.name)}
                               </span>
-                              <span className="program-moment-meta">
-                                {moment.code && (
-                                  <span className="program-moment-code">
-                                    {moment.code}
+                              <span className="program-module-meta">
+                                {mod.code && (
+                                  <span className="program-module-code">
+                                    {mod.code}
                                   </span>
                                 )}
                                 <span className="education-credits">
-                                  {moment.credits}
+                                  {mod.credits}
                                 </span>
-                                <span className="program-moment-date">
-                                  {moment.completedDate
-                                    ? formatMonth(moment.completedDate, lang)
-                                    : ui.programModal.momentNotCompleted}
+                                <span className="program-module-date">
+                                  {mod.completedDate
+                                    ? formatMonth(mod.completedDate, lang)
+                                    : ui.programModal.moduleNotCompleted}
                                 </span>
                               </span>
                             </li>
