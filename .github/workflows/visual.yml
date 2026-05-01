@@ -18,13 +18,13 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
+      # Build without GitHub tokens so generate-github-activity and
+      # generate-project-stats fall back to their committed `enabled: false`
+      # caches. With tokens present they refetch live data, which makes the
+      # projects section sort order and active-state classes drift between
+      # runs and against locally recorded baselines. Visual regression tests
+      # the UI structure; stats freshness is exercised by Pages on deploy.
       - run: make build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
       - run: npm run test:visual

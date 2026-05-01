@@ -15,6 +15,22 @@ const STABILIZE_CSS = `
   .celestial-sky, canvas { visibility: hidden !important; }
 `;
 
+// Element-screenshots of tall sections force Playwright to scroll and stitch;
+// fixed-position UI then appears in different positions between stability
+// re-shots. Hide it for section snapshots so the comparison stays stable.
+// Also neutralise UI that depends on the project-stats / github-activity
+// caches — those are rebuilt from live GitHub data when a token is present
+// (CI) but stay empty otherwise (local sandbox without a token), so anything
+// they drive would diverge between environments.
+const SECTION_OVERLAY_CSS = `
+  .skip-link, .floating-controls { display: none !important; }
+  .project-dates { display: none !important; }
+  .project.is-active {
+    border-color: var(--card-border) !important;
+    box-shadow: none !important;
+  }
+`;
+
 async function preparePage(page: Page) {
   await page.clock.install({ time: new Date(FIXED_TIME) });
   await page.addStyleTag({ content: STABILIZE_CSS });
@@ -39,13 +55,31 @@ test.describe("homepage layout", () => {
     }
   }
 
-  test("focus section — en / dark", async ({ page }) => {
-    await page.goto("/?lang=en");
-    await preparePage(page);
-    const section = page.locator("#focus, [data-section='focus']").first();
-    await expect(section).toBeVisible();
-    await expect(section).toHaveScreenshot("focus-en-dark.png");
-  });
+  const CATEGORY_SECTIONS = [
+    "focus",
+    "projects",
+    "experience",
+    "education",
+    "courses",
+    "skills",
+    "languages",
+  ] as const;
+
+  for (const id of CATEGORY_SECTIONS) {
+    test(`${id} section — en / dark`, async ({ page }) => {
+      await page.goto("/?lang=en");
+      await preparePage(page);
+      await page.addStyleTag({ content: SECTION_OVERLAY_CSS });
+      const section = page.locator(`#${id}`).first();
+      await expect(section).toBeVisible();
+      // Scroll into view and let RAF-driven glass reflections settle so the
+      // section's gradient values stop changing between stability re-shots.
+      await section.scrollIntoViewIfNeeded();
+      await page.mouse.move(0, 0);
+      await page.waitForTimeout(300);
+      await expect(section).toHaveScreenshot(`${id}-en-dark.png`);
+    });
+  }
 
   test("full page — en / dark (above the fold)", async ({ page }) => {
     await page.goto("/?lang=en");
