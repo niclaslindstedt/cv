@@ -1,7 +1,6 @@
-import type { CSSProperties } from "react";
-
 import type { SkillGroup } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { skillGroupStyle } from "../utils/skillGroup";
 import { jobAssignmentCount, type SkillUsage } from "../utils/skills";
 import { Section } from "./Section";
 import { SkillGroupGlyph } from "./SkillGroupGlyph";
@@ -13,43 +12,6 @@ type Props = {
   hiddenSkills: Set<string>;
   onSkillClick: (skill: string) => void;
 };
-
-// Colour assignments for each skill group. Reuses the existing --tl-* palette
-// and the three skill-specific tokens (--tl-cyan / --tl-coral / --tl-steel)
-// added in tokens.css. Mirrors docs/DESIGN.md §10.6.
-const GROUP_RGB: Record<string, string> = {
-  ai: "var(--tl-pink)",
-  languages: "var(--tl-blue)",
-  frameworks: "var(--tl-violet)",
-  cloud: "var(--tl-cyan)",
-  databases: "var(--tl-mint)",
-  devops: "var(--tl-amber)",
-  practices: "var(--tl-green)",
-  leadership: "var(--tl-coral)",
-  compliance: "var(--tl-steel)",
-};
-
-const GROUP_FG: Record<string, string> = {
-  ai: "var(--tl-pink-fg)",
-  languages: "var(--tl-blue-fg)",
-  frameworks: "var(--tl-violet-fg)",
-  cloud: "var(--tl-cyan-fg)",
-  databases: "var(--tl-mint-fg)",
-  devops: "var(--tl-amber-fg)",
-  practices: "var(--tl-green-fg)",
-  leadership: "var(--tl-coral-fg)",
-  compliance: "var(--tl-steel-fg)",
-};
-
-function groupStyle(key: string): CSSProperties | undefined {
-  const rgb = GROUP_RGB[key];
-  const fg = GROUP_FG[key];
-  if (!rgb) return undefined;
-  return {
-    "--cat-rgb": rgb,
-    "--cat-fg": fg ?? rgb,
-  } as CSSProperties;
-}
 
 function sortSkills(
   items: string[],
@@ -82,7 +44,7 @@ export function Skills({
         {skills.map((group) => {
           const visibleItems = group.items.filter((s) => !hiddenSkills.has(s));
           if (visibleItems.length === 0) return null;
-          const style = groupStyle(group.key);
+          const style = skillGroupStyle(group.key);
           return (
             <div
               key={group.key}

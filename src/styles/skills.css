@@ -41,9 +41,13 @@
   display: block;
 }
 
+/* Indent the pills under the group glyph so the glyph reads as the
+ * hierarchy anchor for the items inside it. The padding equals the
+ * 22px glyph chip + the 8px gap defined on .skills-group-title, so
+ * pills line up with the label text rather than the glyph edge. */
 .skills-group > ul {
   list-style: none;
-  padding: 0;
+  padding: 0 0 0 30px;
   margin: 0;
   display: flex;
   flex-wrap: wrap;

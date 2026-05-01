@@ -38,6 +38,7 @@ import type { SearchKind } from "./data/search-index.types";
 import { useGlassReflections } from "./utils/glassReflections";
 import { useLang } from "./utils/i18n";
 import { useRoute } from "./utils/route";
+import { findSkillGroupKey } from "./utils/skillGroup";
 import {
   buildCompanyStackMap,
   buildSkillUsageMap,
@@ -297,6 +298,11 @@ export function App() {
       />
       <SkillModal
         skill={selectedSkill}
+        groupKey={
+          selectedSkill
+            ? findSkillGroupKey(cv.skills, selectedSkill)
+            : undefined
+        }
         usages={selectedSkill ? (skillUsages.get(selectedSkill) ?? []) : []}
         unusedAt={
           selectedSkill ? (unusedStackLocations.get(selectedSkill) ?? []) : []
