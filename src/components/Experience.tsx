@@ -5,7 +5,7 @@ import type {
   RoleTenure,
 } from "../data/cv.types";
 import { formatRange } from "../utils/date";
-import { useLang } from "../utils/i18n";
+import { useLang, type LanguageContextValue } from "../utils/i18n";
 import { stackEntries } from "../utils/stack";
 import { CategoryGlyph } from "./CategoryGlyph";
 import { NoteIcon } from "./NoteIcon";
@@ -19,7 +19,7 @@ type Props = {
   onCompanyClick: (company: Company) => void;
 };
 
-function PromotionArrow() {
+function PromotionArrow({ ui }: { ui: LanguageContextValue["ui"] }) {
   return (
     <svg
       className="promotion-arrow"
@@ -31,7 +31,7 @@ function PromotionArrow() {
       strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      aria-label="Promoted"
+      aria-label={ui.experience.promoted}
       role="img"
     >
       <line x1="12" y1="19" x2="12" y2="5" />
@@ -40,7 +40,7 @@ function PromotionArrow() {
   );
 }
 
-function RoleStartIcon() {
+function RoleStartIcon({ ui }: { ui: LanguageContextValue["ui"] }) {
   return (
     <svg
       className="role-start-icon"
@@ -52,7 +52,7 @@ function RoleStartIcon() {
       strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      aria-label="Starting role"
+      aria-label={ui.experience.startingRole}
       role="img"
     >
       <circle cx="12" cy="12" r="4" />
@@ -60,7 +60,7 @@ function RoleStartIcon() {
   );
 }
 
-function TerminatedIcon() {
+function TerminatedIcon({ ui }: { ui: LanguageContextValue["ui"] }) {
   return (
     <svg
       className="company-terminated"
@@ -72,10 +72,9 @@ function TerminatedIcon() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      aria-label="Company terminated"
+      aria-label={ui.companyModal.terminated}
       role="img"
     >
-      <title>Company terminated</title>
       <path d="M6 20 V9 a6 6 0 0 1 12 0 V20 Z" />
       <line x1="12" y1="12" x2="12" y2="17" />
       <line x1="10" y1="14" x2="14" y2="14" />
@@ -90,6 +89,7 @@ function CompanyButton({
   company: Company;
   onClick: (company: Company) => void;
 }) {
+  const { ui } = useLang();
   return (
     <button
       type="button"
@@ -97,7 +97,7 @@ function CompanyButton({
       onClick={() => onClick(company)}
     >
       {company.name}
-      {company.terminated && <TerminatedIcon />}
+      {company.terminated && <TerminatedIcon ui={ui} />}
     </button>
   );
 }
@@ -116,7 +116,7 @@ function sortRolesAsc(roles: RoleTenure[]): RoleTenure[] {
 }
 
 function RoleChain({ roles }: { roles: RoleTenure[] }) {
-  const { lang, t } = useLang();
+  const { lang, t, ui } = useLang();
   // The newest role is already shown in the title, so only render the
   // promotion history below it: older roles, newest of those first, with the
   // original starting role at the bottom.
@@ -128,7 +128,7 @@ function RoleChain({ roles }: { roles: RoleTenure[] }) {
         const isOldest = idx === reversed.length - 1;
         return (
           <li key={`${r.startDate}-${r.title.en}`} className="role-chain-item">
-            {isOldest ? <RoleStartIcon /> : <PromotionArrow />}
+            {isOldest ? <RoleStartIcon ui={ui} /> : <PromotionArrow ui={ui} />}
             <span className="role-chain-content">
               <span className="role">{t(r.title)}</span>
               <span className="role-chain-meta">
@@ -194,7 +194,7 @@ function ExperienceItemView({
       {isActive && <span className="active-badge">{ui.present}</span>}
       <div className="timeline-body">
         <h3 className="timeline-title">
-          {hasPromotion && <PromotionArrow />}
+          {hasPromotion && <PromotionArrow ui={ui} />}
           <span className="role">{t(newestRole.title)}</span>
           {" · "}
           <CompanyButton company={company} onClick={onCompanyClick} />
@@ -318,7 +318,7 @@ function AssignmentItemView({
       {isActive && <span className="active-badge">{ui.present}</span>}
       <div className="assignment-body">
         <h4 className="assignment-title">
-          {hasPromotion && <PromotionArrow />}
+          {hasPromotion && <PromotionArrow ui={ui} />}
           <span className="role">{t(newestRole.title)}</span>
           {" · "}
           <CompanyButton company={client} onClick={onCompanyClick} />

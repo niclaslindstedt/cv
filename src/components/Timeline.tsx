@@ -14,6 +14,7 @@ import type { TimelineBar, TimelineData } from "../data/timeline.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
+import { useSwipeClose } from "../utils/useSwipeClose";
 import { NoteIcon } from "./NoteIcon";
 import { ProjectDateChip } from "./ProjectDateChip";
 import { ResetIcon } from "./ResetIcon";
@@ -135,6 +136,9 @@ export function Timeline() {
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const labelsInnerRef = useRef<HTMLDivElement>(null);
+  const githubDetailsRef = useRef<HTMLElement>(null);
+  const sideProjectDetailsRef = useRef<HTMLElement>(null);
+  const otherDetailsRef = useRef<HTMLElement>(null);
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
   const didInitialScrollRef = useRef(false);
@@ -373,6 +377,22 @@ export function Timeline() {
       body.style.overflow = prevBody;
     };
   }, []);
+
+  const closeDetails = useCallback(() => setSelectedId(null), []);
+  const detailsKind = selectedItem?.kind ?? null;
+  useSwipeClose(githubDetailsRef, detailsKind === "github", closeDetails);
+  useSwipeClose(
+    sideProjectDetailsRef,
+    detailsKind === "sideProject",
+    closeDetails,
+  );
+  useSwipeClose(
+    otherDetailsRef,
+    detailsKind !== null &&
+      detailsKind !== "github" &&
+      detailsKind !== "sideProject",
+    closeDetails,
+  );
 
   const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "touch") return;
@@ -783,6 +803,7 @@ export function Timeline() {
         selectedItem.kind === "github" &&
         selectedItem.github && (
           <aside
+            ref={githubDetailsRef}
             className="timeline-vis-details"
             role="region"
             aria-labelledby="timeline-vis-details-title"
@@ -860,13 +881,17 @@ export function Timeline() {
                 <>
                   <br />
                   {ui.timeline.busiestRepo}:{" "}
-                  <a
-                    href={selectedItem.github.busiestRepo.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {selectedItem.github.busiestRepo.name}
-                  </a>{" "}
+                  {selectedItem.github.busiestRepo.openSource ? (
+                    <a
+                      href={selectedItem.github.busiestRepo.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {selectedItem.github.busiestRepo.name}
+                    </a>
+                  ) : (
+                    selectedItem.github.busiestRepo.name
+                  )}{" "}
                   ·{" "}
                   <span className="timeline-vis-commit-pill">
                     {ui.timeline.commits(
@@ -893,6 +918,7 @@ export function Timeline() {
         selectedItem.kind === "sideProject" &&
         selectedItem.sideProject && (
           <aside
+            ref={sideProjectDetailsRef}
             className="timeline-vis-details"
             role="region"
             aria-labelledby="timeline-vis-details-title"
@@ -1042,6 +1068,7 @@ export function Timeline() {
             : [];
           return (
             <aside
+              ref={otherDetailsRef}
               className="timeline-vis-details"
               role="region"
               aria-labelledby="timeline-vis-details-title"
