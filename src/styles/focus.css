@@ -135,8 +135,14 @@
  * same tinted-gradient recipe as `.skill-modal--cat .skill-modal-head`
  * (§10.5) so it reads as part of the modal family rather than a flat
  * neutral surface. Mechanism: drive the gradient and glyph chip from
- * `--accent-rgb` so both themes pick up the right Aurora hue. */
-.focus-modal-head {
+ * `--accent-rgb` so both themes pick up the right Aurora hue.
+ *
+ * The selectors stack `.skill-modal-head.focus-modal-head` instead of
+ * just `.focus-modal-head` because focus.css is imported before
+ * modals.css; without the extra class hop, modals.css's
+ * `.skill-modal-head { background: var(--glass-highlight) }` wins on
+ * cascade order and the gradient never lands. */
+.skill-modal-head.focus-modal-head {
   align-items: flex-start;
   background: linear-gradient(
     180deg,
@@ -146,7 +152,7 @@
   border-bottom-color: rgba(var(--accent-rgb), 0.45);
 }
 
-:root[data-theme="light"] .focus-modal-head {
+:root[data-theme="light"] .skill-modal-head.focus-modal-head {
   background: linear-gradient(
     180deg,
     rgba(var(--accent-rgb), 0.22),
