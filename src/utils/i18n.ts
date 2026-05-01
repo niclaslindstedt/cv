@@ -37,6 +37,7 @@ type UiStrings = {
     closeDetails: string;
     previousDetails: string;
     nextDetails: string;
+    detailsOpened: (title: string) => string;
     viewOnGitHub: string;
     viewRepository: string;
     job: string;
@@ -208,6 +209,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       closeDetails: "Close details",
       previousDetails: "Previous",
       nextDetails: "Next",
+      detailsOpened: (title) => `Details opened: ${title}`,
       viewOnGitHub: "View on GitHub →",
       viewRepository: "View repository →",
       job: "Job",
@@ -403,6 +405,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       closeDetails: "Stäng detaljer",
       previousDetails: "Föregående",
       nextDetails: "Nästa",
+      detailsOpened: (title) => `Detaljer öppnade: ${title}`,
       viewOnGitHub: "Visa på GitHub →",
       viewRepository: "Visa repo →",
       job: "Anställning",
