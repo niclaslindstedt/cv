@@ -102,11 +102,6 @@ export function Courses({
                     </span>
                   </>
                 )}
-                {hasModules && (
-                  <span className="education-courses-count">
-                    {ui.courses.modulesCount(modules.length)}
-                  </span>
-                )}
               </p>
             </>
           );
