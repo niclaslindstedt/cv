@@ -52,25 +52,6 @@
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
-  animation: hero-eyebrow-pulse 11s ease-in-out infinite alternate;
-}
-
-@keyframes hero-eyebrow-pulse {
-  0% {
-    opacity: 0.55;
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-eyebrow-dot {
-    animation: none;
-    opacity: 1;
-  }
 }
 
 .hero-name {
