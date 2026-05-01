@@ -1,0 +1,19 @@
+{
+  "defaults": {
+    "standard": "WCAG2AAA",
+    "timeout": 60000,
+    "wait": 1500,
+    "useIncognitoBrowserContext": true,
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox", "--disable-setuid-sandbox"]
+    },
+    "reporters": ["cli"],
+    "ignore": ["notice", "warning"]
+  },
+  "urls": [
+    "http://127.0.0.1:4175/?lang=en",
+    "http://127.0.0.1:4175/?lang=sv",
+    "http://127.0.0.1:4175/print-en.html",
+    "http://127.0.0.1:4175/print-sv.html"
+  ]
+}

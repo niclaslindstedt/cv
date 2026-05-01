@@ -17,32 +17,50 @@ CLI; tests live under `tests/` (Vitest + Playwright).
 Prefer `make` targets over raw `npm run` commands so local and CI stay
 in sync:
 
-| Command                   | What it does                                                                                     |
-| ------------------------- | ------------------------------------------------------------------------------------------------ |
-| `make install`            | `npm ci`                                                                                         |
-| `make dev`                | Start Vite dev server                                                                            |
-| `make build`              | Type-check and produce production build                                                          |
-| `make preview`            | Preview the production build                                                                     |
-| `make lint`               | ESLint + TypeScript type-check                                                                   |
-| `make typecheck`          | `tsc -b --noEmit` only                                                                           |
-| `make fmt`                | Prettier rewrite in place                                                                        |
-| `make fmt-check`          | Prettier check without writing                                                                   |
-| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json` |
-| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in         |
-| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                              |
-| `make test-coverage`      | Vitest with v8 coverage                                                                          |
-| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                    |
-| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                        |
-| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                  |
-| `make clean`              | Remove `dist/` and Vite cache                                                                    |
+| Command                   | What it does                                                                                                                                                                                                 |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `make install`            | `npm ci`                                                                                                                                                                                                     |
+| `make dev`                | Start Vite dev server                                                                                                                                                                                        |
+| `make build`              | Type-check and produce production build                                                                                                                                                                      |
+| `make preview`            | Preview the production build                                                                                                                                                                                 |
+| `make lint`               | ESLint + TypeScript type-check                                                                                                                                                                               |
+| `make typecheck`          | `tsc -b --noEmit` only                                                                                                                                                                                       |
+| `make fmt`                | Prettier rewrite in place                                                                                                                                                                                    |
+| `make fmt-check`          | Prettier check without writing                                                                                                                                                                               |
+| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json`                                                                                                             |
+| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in                                                                                                                     |
+| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                                                                                                                                          |
+| `make test-coverage`      | Vitest with v8 coverage                                                                                                                                                                                      |
+| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                                                                                                                                |
+| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                                                                                                                                    |
+| `make test-a11y`          | Playwright + axe-core WCAG 2.2 AA scan of the built site, plus an advisory AAA pass that logs but never fails (`playwright.a11y.config.ts`)                                                                  |
+| `make test-pa11y`         | pa11y-ci (HTML CodeSniffer) WCAG 2.2 AAA scan against the preview server. Slow; run locally before launches or via the daily `Accessibility (deep)` workflow. Set `PA11Y_ADVISORY=1` to log without failing. |
+| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                                                                                                                              |
+| `make clean`              | Remove `dist/` and Vite cache                                                                                                                                                                                |
 
-CI is split into independent workflows, each with its own
-one-word status badge. They run on every push and pull request:
+CI is split into independent workflows. The per-PR ones each carry a
+one-word status badge and run on every push and pull request; the
+scheduled ones run on cron and are advisory:
 
 - **CI** (`.github/workflows/ci.yml`) — `make fmt-check`, `make validate`,
   `make lint`, `make build`, `make test`.
 - **Visual** (`.github/workflows/visual.yml`) — `make build`, then
   `make test-visual` (Playwright on Chromium, desktop + mobile viewports).
+- **Accessibility** (`.github/workflows/a11y.yml`) — `make build`, then
+  `make test-a11y` (Playwright + axe-core, Chromium desktop + mobile,
+  both languages and themes). Fails on any WCAG 2.0 / 2.1 / 2.2 Level A
+  or AA violation. A second AAA pass (`wcag2aaa` / `wcag21aaa` /
+  `wcag22aaa`) runs alongside as advisory only — its findings are
+  printed to the workflow log and attached to the test report, but do
+  not fail the build, so the badge stays green when AA passes.
+- **Accessibility (deep)** (`.github/workflows/a11y-deep.yml`) — runs
+  `make test-pa11y` (pa11y-ci / HTML CodeSniffer at WCAG 2.2 AAA)
+  against the homepage in both languages plus the print views. Uses a
+  different rule engine from axe-core, so it surfaces findings the
+  per-PR job misses — a "second opinion" on conformance. Scheduled
+  daily at 06:00 UTC and manually dispatchable; never runs on push or
+  PR. Always advisory (`continue-on-error: true` + the runner exits 0
+  with `PA11Y_ADVISORY=1`).
 - **Lighthouse** (`.github/workflows/lighthouse.yml`) — `make build`,
   then `make lighthouse` to assert Web-Vitals + category-score budgets.
 - **Dependabot** (`.github/workflows/dependabot.yml`) — fails when any
@@ -171,12 +189,19 @@ Tests live under `tests/` at the repo root (`OSS_SPEC.md` §20.3):
   Linux; CI runs on `ubuntu-latest` for the same reason. Re-record with
   `make test-visual-update` only after an intentional UI change, and
   commit the new pixels in the same PR.
+- `tests/a11y/` — Playwright + axe-core WCAG 2.2 AA scan of the built
+  site, driven by `playwright.a11y.config.ts`. Asserts zero violations
+  tagged `wcag2a` / `wcag2aa` / `wcag21a` / `wcag21aa` / `wcag22a` /
+  `wcag22aa` for both languages × both themes × desktop + mobile
+  viewports. A second pass collects AAA-tier findings (`wcag2aaa` /
+  `wcag21aaa` / `wcag22aaa`) and surfaces them as console output and
+  attached JSON on the test report; AAA findings never fail the test.
 
 All test files end in `.test.ts` / `.test.mts` / `.tests.ts` per
 `OSS_SPEC.md` §20.2 (regex `_?[Tt]ests?$` on the stem). Vitest picks
-them up via `vitest.config.ts`; visual specs under `tests/visual/` are
-excluded from the Vitest `include` so Playwright owns them. Don't
-import test code from `src/`.
+them up via `vitest.config.ts`; visual and a11y specs under
+`tests/visual/` and `tests/a11y/` are excluded from the Vitest
+`include` so Playwright owns them. Don't import test code from `src/`.
 
 When adding a new top-level test domain (e.g. integration tests),
 extend `vitest.config.ts` `include` rather than scattering test
@@ -187,16 +212,17 @@ discovery across multiple configs.
 The repo ships Claude skills under `.agent/skills/` (with
 `.claude/skills` symlinked to it — `OSS_SPEC.md` §21.2):
 
-| Skill                         | Purpose                                                                                                                                 |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `update-cv`                   | Add/update/remove entries in `src/data/cv.json` and the per-category files in `src/data/cv/`; recommends what to change                 |
-| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field)                                                    |
-| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV                                                    |
-| `update-readme`               | Resync `README.md` with the code it describes                                                                                           |
-| `sync-design`                 | Audit `src/styles/` and `src/components/` against `docs/DESIGN.md` (the design source of truth); propose patches, apply on confirmation |
-| `sync-cross-browser`          | Audit `src/styles/` for cross-browser CSS drift with Safari as the master; propose patches to bring Chrome and Firefox into line        |
-| `debug-visual`                | Diagnose a failing Visual workflow, decide whether the snapshot drift is intentional, re-record baselines if so, and commit the pixels  |
-| `maintenance`                 | Umbrella skill — routes to every `update-*` and `sync-*`                                                                                |
+| Skill                         | Purpose                                                                                                                                                                                                                               |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `update-cv`                   | Add/update/remove entries in `src/data/cv.json` and the per-category files in `src/data/cv/`; recommends what to change                                                                                                               |
+| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field)                                                                                                                                                  |
+| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV                                                                                                                                                  |
+| `update-readme`               | Resync `README.md` with the code it describes                                                                                                                                                                                         |
+| `sync-design`                 | Audit `src/styles/` and `src/components/` against `docs/DESIGN.md` (the design source of truth); propose patches, apply on confirmation                                                                                               |
+| `sync-cross-browser`          | Audit `src/styles/` for cross-browser CSS drift with Safari as the master; propose patches to bring Chrome and Firefox into line                                                                                                      |
+| `debug-visual`                | Diagnose a failing Visual workflow, decide whether the snapshot drift is intentional, re-record baselines if so, and commit the pixels                                                                                                |
+| `verify-wcag`                 | Walk the manual WCAG 2.2 checklist for everything axe-core can't catch (keyboard, focus order, screen-reader semantics, motion, reflow, target size, label/alt-text quality); ships the spec under `.agent/skills/verify-wcag/specs/` |
+| `maintenance`                 | Umbrella skill — routes to every `update-*` and `sync-*`                                                                                                                                                                              |
 
 Invoke `maintenance` when you've landed a batch of changes and want a
 single pass that brings drift-prone artifacts back in sync. Invoke a
