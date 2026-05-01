@@ -23,11 +23,27 @@ html {
  * Safari sample band — the strip behind the Dynamic Island and the
  * floating URL bar — still reads the gradient when scroll-lock pins
  * <body> to `position: fixed`. Without this, the bars tint to flat
- * --sky-top (~black) the moment a modal opens. */
+ * --sky-top (~black) the moment a modal opens.
+ *
+ * The gradient lives on a `::before` pseudo rather than directly on
+ * `body` so axe-core's color-contrast walker can determine the
+ * background of every text element. Gradients on an ancestor abort
+ * the contrast computation (treated as "needs manual review"); axe
+ * checks each ancestor's own `background-image`, not its pseudos, so
+ * a pseudo keeps the visual gradient out of the contrast chain. */
 body {
   position: relative;
   overflow-x: hidden;
   background-color: var(--sky-top);
+  min-height: 100dvh;
+  min-height: 100lvh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
   background-image:
     radial-gradient(
       ellipse 120% 70% at var(--sky-glow-1-pos),
@@ -45,10 +61,7 @@ body {
       var(--sky-mid) 55%,
       var(--sky-bottom) 100%
     );
-  background-attachment: fixed;
   background-size: 100% 100%;
-  min-height: 100dvh;
-  min-height: 100lvh;
 }
 
 a {

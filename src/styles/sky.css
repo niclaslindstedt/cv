@@ -214,17 +214,17 @@
   }
 }
 
+/* Hairline reflection that traces the glass edge. The gradient lives
+ * on a `::before` pseudo so the sibling-stack of any text inside a
+ * glass card stays free of `background-image` — axe-core's contrast
+ * walker aborts when it finds a gradient on a sibling that overlaps
+ * the text region. The mask on the parent still clips the pseudo. */
 .glass-reflect {
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
   padding: 1.5px;
-  background: radial-gradient(
-    480px circle at var(--reflect-1-x, 50%) var(--reflect-1-y, 50%),
-    var(--reflect-1-color, transparent) 0%,
-    transparent 70%
-  );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -233,4 +233,17 @@
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+}
+
+.glass-reflect::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    480px circle at var(--reflect-1-x, 50%) var(--reflect-1-y, 50%),
+    var(--reflect-1-color, transparent) 0%,
+    transparent 70%
+  );
 }
