@@ -34,6 +34,7 @@
   --fg: #e6e9ef;
   --fg-muted: #8a93a1;
   --accent: #7ab7ff;
+  --accent-rgb: 122, 183, 255;
   --accent-soft: rgba(122, 183, 255, 0.12);
   --pulse: rgba(122, 183, 255, 0.85);
   --pulse-soft: rgba(122, 183, 255, 0.45);
@@ -99,6 +100,7 @@
   --fg: #11161e;
   --fg-muted: #4b5462;
   --accent: #1c2230;
+  --accent-rgb: 28, 34, 48;
   --accent-soft: rgba(28, 34, 48, 0.08);
   --pulse: var(--border);
   --pulse-soft: var(--border);
