@@ -4,6 +4,7 @@ import type { LocalizedString, SkillDetail } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
+import { skillGroupStyle } from "../utils/skillGroup";
 import {
   yearsOfExperience,
   type SkillUsage,
@@ -12,6 +13,7 @@ import {
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
+import { SkillGroupGlyph } from "./SkillGroupGlyph";
 
 function isLocalized(
   value: string | LocalizedString,
@@ -21,6 +23,7 @@ function isLocalized(
 
 type Props = {
   skill: string | null;
+  groupKey?: string;
   usages: SkillUsage[];
   unusedAt: UnusedStackLocation[];
   detail?: SkillDetail;
@@ -61,6 +64,7 @@ function groupByKind(
 
 export function SkillModal({
   skill,
+  groupKey,
   usages,
   unusedAt,
   detail,
@@ -115,6 +119,11 @@ export function SkillModal({
 
   const visibleGroups = GROUP_ORDER.filter((k) => groups[k].length > 0);
 
+  const groupStyle = groupKey ? skillGroupStyle(groupKey) : undefined;
+  const modalClassName = groupStyle
+    ? "skill-modal skill-modal--cat"
+    : "skill-modal";
+
   return (
     <div
       className="skill-modal-overlay"
@@ -125,10 +134,17 @@ export function SkillModal({
     >
       <div
         ref={modalRef}
-        className="skill-modal"
+        className={modalClassName}
+        data-category={groupKey}
+        style={groupStyle}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="skill-modal-head">
+          {groupKey && (
+            <span className="skill-modal-glyph" aria-hidden="true">
+              <SkillGroupGlyph group={groupKey} size={20} />
+            </span>
+          )}
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{skill}</span>
             {years > 0 && (

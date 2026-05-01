@@ -965,6 +965,22 @@ remains the only chromatic vocabulary that travels across surfaces.
   and the usage-count chip on each pill borrows the same colour at
   18% alpha. Default state stays neutral Mist so the page only
   ignites under interaction.
+- **Pill indent.** The pill list inside a group is left-padded by
+  `30px` (the 22px glyph chip + the 8px gap between glyph and
+  label) so pills line up with the **label text** rather than the
+  glyph edge. The glyph then reads as the visual hierarchy anchor
+  for the items it owns, and the extra whitespace breaks up what
+  would otherwise be nine flush-left pill walls in a row.
+- **SkillModal header.** When a single skill is opened in the
+  Skills modal, the modal header borrows the per-group recipe: the
+  group's `--cat-rgb` / `--cat-fg` pair are set on the modal root
+  via `skillGroupStyle`, the `.skill-modal--cat` class redefines
+  `--accent` so the year pill, action links, focus ring, and close
+  hover ring all pick the group hue up automatically, and the
+  group's `SkillGroupGlyph` sits in a 36px square chip on the left
+  of the title — the same recipe the four-category modals use
+  (§10.5). Mapping the modal's chrome to the same hue the user
+  just clicked from keeps the page → modal transition continuous.
 - **Group → hue mapping.**
 
   | Group      | Token         | Glyph                       |
@@ -1292,14 +1308,14 @@ table. **Update this whenever the implementation moves**.
 
 ### 15.3 Pattern map
 
-| Pattern (§10)                      | Source file(s)                                                                                                                           |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Promotion arrow + role chain       | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                                           |
-| Active / Present indicator         | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                                           |
-| Timeline visualization             | `src/components/Timeline.tsx` + `src/styles/timeline-vis.css`.                                                                           |
-| Wrapping with separator characters | `src/components/Education.tsx` (`<p class="education-meta-trail">` + `.education-meta-trail > span` rule in `src/styles/education.css`). |
-| Skill-group glyph                  | `src/components/SkillGroupGlyph.tsx` + `src/components/Skills.tsx` + `src/styles/skills.css` + tokens in `src/styles/tokens.css`.        |
-| Icon-in-text alignment             | `src/styles/experience.css`, `src/styles/section.css`, etc.                                                                              |
+| Pattern (§10)                      | Source file(s)                                                                                                                                                                                                            |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Promotion arrow + role chain       | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                                                                                                                            |
+| Active / Present indicator         | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                                                                                                                            |
+| Timeline visualization             | `src/components/Timeline.tsx` + `src/styles/timeline-vis.css`.                                                                                                                                                            |
+| Wrapping with separator characters | `src/components/Education.tsx` (`<p class="education-meta-trail">` + `.education-meta-trail > span` rule in `src/styles/education.css`).                                                                                  |
+| Skill-group glyph                  | `src/components/SkillGroupGlyph.tsx` + `src/components/Skills.tsx` + `src/components/SkillModal.tsx` + `src/utils/skillGroup.ts` + `src/styles/skills.css` + `src/styles/modals.css` + tokens in `src/styles/tokens.css`. |
+| Icon-in-text alignment             | `src/styles/experience.css`, `src/styles/section.css`, etc.                                                                                                                                                               |
 
 ### 15.4 Print map
 

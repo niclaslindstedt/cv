@@ -4,6 +4,13 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 // computations stay deterministic across CI runs.
 const FIXED_TIME = "2026-04-27T12:00:00Z";
 
+// `backdrop-filter: blur(...)` takes a different rendering path under CI's
+// headless compositor than under a desktop GPU, producing 2–12% pixel drift
+// on modal snapshots even when the underlying layout is pixel-identical.
+// Disable it during snapshots so the captured image is deterministic across
+// the local Linux + CI ubuntu-latest pair. Visual regression of the blur
+// itself is not what these tests are checking — they're checking modal
+// content, layout, and category tinting.
 const STABILIZE_CSS = `
   *, *::before, *::after {
     transition-duration: 0ms !important;
@@ -11,6 +18,8 @@ const STABILIZE_CSS = `
     animation-delay: 0ms !important;
     scroll-behavior: auto !important;
     caret-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
   /* The CelestialSky canvas paints on RAF — hide it for stable pixels. */
   .celestial-sky, canvas { visibility: hidden !important; }
