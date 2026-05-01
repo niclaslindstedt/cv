@@ -15,13 +15,6 @@ type Props = {
   onSkillClick: (skill: string) => void;
 };
 
-function splitLede(text: string): { lede: string; rest: string } {
-  const trimmed = text.trim();
-  const match = trimmed.match(/^(.+?[.!?])(\s+)(.*)$/s);
-  if (!match) return { lede: trimmed, rest: "" };
-  return { lede: match[1], rest: match[3] };
-}
-
 export function FocusModal({ focus, onClose, onSkillClick }: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -42,7 +35,8 @@ export function FocusModal({ focus, onClose, onSkillClick }: Props) {
 
   const area = t(focus.area);
   const months = monthsSince(focus.since);
-  const { lede, rest } = splitLede(t(focus.description));
+  const tagline = t(focus.tagline);
+  const description = t(focus.description);
   const skills = focus.skills ?? [];
 
   return (
@@ -80,10 +74,10 @@ export function FocusModal({ focus, onClose, onSkillClick }: Props) {
         </header>
         <div className="skill-modal-body">
           <section className="skill-modal-detail">
-            <p className="focus-modal-lede">{renderInlineCode(lede)}</p>
-            {rest && (
+            <p className="focus-modal-lede">{renderInlineCode(tagline)}</p>
+            {description && (
               <p className="skill-modal-description">
-                {renderInlineCode(rest)}
+                {renderInlineCode(description)}
               </p>
             )}
           </section>

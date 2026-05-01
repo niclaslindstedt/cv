@@ -11,14 +11,6 @@ type Props = {
   onFocusClick: (focus: FocusArea) => void;
 };
 
-// First sentence of the description, used as the tile lede. Falls back to
-// the whole string when there is no clean sentence break.
-function lede(text: string): string {
-  const trimmed = text.trim();
-  const match = trimmed.match(/^(.+?[.!?])(\s|$)/);
-  return match ? match[1] : trimmed;
-}
-
 export function Focus({ title, focus, onFocusClick }: Props) {
   const { lang, t, ui } = useLang();
   return (
@@ -47,7 +39,7 @@ export function Focus({ title, focus, onFocusClick }: Props) {
                   )}
                 </span>
                 <span className="focus-lede">
-                  {renderInlineCode(lede(t(item.description)))}
+                  {renderInlineCode(t(item.tagline))}
                 </span>
                 <span className="focus-meta">
                   <span className="focus-since">

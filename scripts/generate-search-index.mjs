@@ -141,12 +141,14 @@ function buildRecords(cv) {
       kind: "focus",
       openerKey: focus.area.en,
       title: focus.area,
+      secondary: focus.tagline,
       fieldsByLang: (lang) => ({
         title: pickLang(focus.area, lang),
-        description: pickLang(focus.description, lang),
+        description: `${pickLang(focus.tagline, lang)} ${pickLang(focus.description, lang)}`,
         aliases: focus.aliases ?? [],
       }),
       localizedTitle: focus.area,
+      localizedSecondary: focus.tagline,
     });
   });
 
