@@ -302,6 +302,7 @@ function findBusiestRepoForYear(year, cv, projectStats) {
           name: project.name,
           commits,
           repoUrl: `https://github.com/${gh.owner}/${gh.repo}`,
+          openSource: project.openSource === true,
         };
       }
     }

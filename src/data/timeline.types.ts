@@ -20,6 +20,7 @@ export type BusiestRepo = {
   name: string;
   commits: number;
   repoUrl: string;
+  openSource: boolean;
 };
 
 export type GitHubPayload = {
