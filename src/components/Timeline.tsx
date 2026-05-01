@@ -297,8 +297,7 @@ export function Timeline() {
         ? Math.max(0, Math.min(viewport.clientWidth, clientX - rect.left))
         : viewport.clientWidth / 2;
     const currentMonthPx = BASE_MONTH_PX * scaleRef.current;
-    const monthAtPixel =
-      (viewport.scrollLeft + pixelOffset) / currentMonthPx;
+    const monthAtPixel = (viewport.scrollLeft + pixelOffset) / currentMonthPx;
     zoomAnchorRef.current = { pixelOffset, monthAtPixel };
   }, []);
 
