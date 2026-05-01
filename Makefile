@@ -1,4 +1,4 @@
-.PHONY: install build test test-coverage test-visual test-visual-update lighthouse lint typecheck fmt fmt-check validate clean dev preview generate og print-html pdf sitemap local
+.PHONY: install build test test-coverage test-visual test-visual-update test-a11y lighthouse lint typecheck fmt fmt-check validate clean dev preview generate og print-html pdf sitemap local
 
 install:
 	npm ci
@@ -20,6 +20,9 @@ test-visual:
 
 test-visual-update:
 	npm run test:visual:update
+
+test-a11y:
+	npm run test:a11y
 
 lighthouse:
 	npm run lighthouse

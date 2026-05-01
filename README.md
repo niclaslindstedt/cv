@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/niclaslindstedt/cv/actions/workflows/ci.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/ci.yml)
 [![Visual](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml)
+[![Accessibility](https://github.com/niclaslindstedt/cv/actions/workflows/a11y.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/a11y.yml)
 [![Lighthouse](https://github.com/niclaslindstedt/cv/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/lighthouse.yml)
 [![Pages](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml)
 [![Dependabot](https://github.com/niclaslindstedt/cv/actions/workflows/dependabot.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/dependabot.yml)
@@ -141,6 +142,11 @@ its own one-word status badge:
   regression on Chromium, desktop and mobile viewports. Baselines live
   under `tests/visual/__screenshots__/` and were recorded on Linux; CI
   runs on `ubuntu-latest` to keep pixels stable.
+- **Accessibility** (`.github/workflows/a11y.yml`) — Playwright +
+  axe-core scan of the built site against WCAG 2.1 Level A and AA, on
+  Chromium desktop and mobile viewports, for both languages and both
+  themes. Fails on any axe violation tagged `wcag2a` / `wcag2aa` /
+  `wcag21a` / `wcag21aa`.
 - **Lighthouse** (`.github/workflows/lighthouse.yml`) — `lhci autorun`
   against the built `dist/` with hard budgets in `.lighthouserc.json`:
   LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤ 300 ms, plus accessibility and SEO

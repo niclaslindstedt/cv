@@ -3,3 +3,7 @@ dist
 package-lock.json
 OSS_SPEC.md
 CHANGELOG.md
+playwright-report
+a11y-report
+test-results
+coverage

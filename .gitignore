@@ -36,5 +36,6 @@ src/data/cv.local.json
 # Test artifacts
 coverage/
 playwright-report/
+a11y-report/
 test-results/
 .lighthouseci/

@@ -33,6 +33,7 @@ in sync:
 | `make test-coverage`      | Vitest with v8 coverage                                                                          |
 | `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                    |
 | `make test-visual-update` | Re-record visual baselines after an intentional UI change                                        |
+| `make test-a11y`          | Playwright + axe-core WCAG 2.1 AA scan of the built site (`playwright.a11y.config.ts`)           |
 | `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                  |
 | `make clean`              | Remove `dist/` and Vite cache                                                                    |
 
@@ -43,6 +44,9 @@ one-word status badge. They run on every push and pull request:
   `make lint`, `make build`, `make test`.
 - **Visual** (`.github/workflows/visual.yml`) — `make build`, then
   `make test-visual` (Playwright on Chromium, desktop + mobile viewports).
+- **Accessibility** (`.github/workflows/a11y.yml`) — `make build`, then
+  `make test-a11y` (Playwright + axe-core, Chromium desktop + mobile,
+  both languages and themes; fails on any WCAG 2.1 A/AA violation).
 - **Lighthouse** (`.github/workflows/lighthouse.yml`) — `make build`,
   then `make lighthouse` to assert Web-Vitals + category-score budgets.
 - **Dependabot** (`.github/workflows/dependabot.yml`) — fails when any
@@ -171,12 +175,16 @@ Tests live under `tests/` at the repo root (`OSS_SPEC.md` §20.3):
   Linux; CI runs on `ubuntu-latest` for the same reason. Re-record with
   `make test-visual-update` only after an intentional UI change, and
   commit the new pixels in the same PR.
+- `tests/a11y/` — Playwright + axe-core WCAG 2.1 AA scan of the built
+  site, driven by `playwright.a11y.config.ts`. Asserts zero violations
+  tagged `wcag2a` / `wcag2aa` / `wcag21a` / `wcag21aa` for both
+  languages × both themes × desktop + mobile viewports.
 
 All test files end in `.test.ts` / `.test.mts` / `.tests.ts` per
 `OSS_SPEC.md` §20.2 (regex `_?[Tt]ests?$` on the stem). Vitest picks
-them up via `vitest.config.ts`; visual specs under `tests/visual/` are
-excluded from the Vitest `include` so Playwright owns them. Don't
-import test code from `src/`.
+them up via `vitest.config.ts`; visual and a11y specs under
+`tests/visual/` and `tests/a11y/` are excluded from the Vitest
+`include` so Playwright owns them. Don't import test code from `src/`.
 
 When adding a new top-level test domain (e.g. integration tests),
 extend `vitest.config.ts` `include` rather than scattering test

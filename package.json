@@ -19,6 +19,7 @@
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "test:visual:ui": "playwright test --ui",
+    "test:a11y": "playwright test --config=playwright.a11y.config.ts",
     "validate:cv": "node scripts/validate-cv.mjs",
     "validate:skill-tags": "node scripts/validate-skill-tags.mjs",
     "validate:timeline-json": "node scripts/validate-timeline-json.mjs",
@@ -45,6 +46,7 @@
     "react-dom": "^19.2.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
     "@eslint/js": "^10.0.1",
     "@fontsource-variable/eb-garamond": "^5.2.7",
     "@fontsource/inter": "^5.2.8",
