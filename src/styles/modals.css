@@ -333,6 +333,10 @@
   font-size: 0.9rem;
 }
 
+.skill-modal-unused {
+  padding: 12px 20px 16px;
+}
+
 .skill-modal-unused-hint {
   margin: 0 0 8px;
   color: var(--fg-muted);

@@ -205,10 +205,7 @@ export function SkillModal({
                 </section>
               ))}
             </div>
-          ) : unusedAt.length === 0 ? (
-            <p className="skill-modal-empty">{ui.skillModal.empty}</p>
-          ) : null}
-          {unusedAt.length > 0 && (
+          ) : unusedAt.length > 0 ? (
             <section className="skill-modal-group skill-modal-unused">
               <h3 className="skill-modal-group-heading">
                 {ui.skillModal.unusedHeading}
@@ -240,6 +237,8 @@ export function SkillModal({
                 })}
               </ul>
             </section>
+          ) : (
+            <p className="skill-modal-empty">{ui.skillModal.empty}</p>
           )}
         </div>
       </div>
