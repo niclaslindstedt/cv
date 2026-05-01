@@ -123,6 +123,7 @@ export type Assignment = {
   stack?: StackItem[];
   skills?: string[];
   notes?: LocalizedString;
+  jobDescription?: LocalizedString;
   printDescription?: LocalizedString;
   aliases?: string[];
 };
@@ -137,6 +138,7 @@ export type Experience = {
   stack?: StackItem[];
   skills?: string[];
   notes?: LocalizedString;
+  jobDescription?: LocalizedString;
   printDescription?: LocalizedString;
   assignments?: Assignment[];
   aliases?: string[];

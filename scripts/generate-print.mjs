@@ -144,8 +144,8 @@ function buildAssignment(assignment, companies) {
     tags: mergeTags(assignment.stack, assignment.skills),
     roleHistory: buildRoleHistory(sortedRoles),
   };
-  if (assignment.printDescription)
-    baked.description = assignment.printDescription;
+  const description = assignment.printDescription ?? assignment.jobDescription;
+  if (description) baked.description = description;
   if (assignment.notes) baked.notes = assignment.notes;
   return baked;
 }
@@ -167,7 +167,8 @@ function buildExperience(item, companies) {
       .map((a) => buildAssignment(a, companies)),
   };
   if (item.engagement) baked.engagement = item.engagement;
-  if (item.printDescription) baked.description = item.printDescription;
+  const description = item.printDescription ?? item.jobDescription;
+  if (description) baked.description = description;
   if (item.notes) baked.notes = item.notes;
   return baked;
 }
