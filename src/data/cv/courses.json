@@ -14,7 +14,7 @@
     "completedDate": "2015-08",
     "engagement": 0.5,
     "remote": true,
-    "moments": [
+    "modules": [
       {
         "name": {
           "en": "Written Exam",
@@ -69,7 +69,7 @@
     "engagement": 0.5,
     "remote": true,
     "completed": false,
-    "moments": [
+    "modules": [
       {
         "name": {
           "en": "Written Exam",
@@ -114,7 +114,7 @@
     "startDate": "2015-06",
     "completedDate": "2015-07",
     "engagement": 1,
-    "moments": [
+    "modules": [
       {
         "name": {
           "en": "Labs / Seminars",
@@ -141,7 +141,7 @@
     "completedDate": "2015-06",
     "engagement": 0.5,
     "remote": true,
-    "moments": [
+    "modules": [
       {
         "name": {
           "en": "Written Exam",

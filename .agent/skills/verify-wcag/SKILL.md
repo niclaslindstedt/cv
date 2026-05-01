@@ -213,7 +213,7 @@ horizontal scroll container and is documented as such.
    `.timeline-vis-viewport` may scroll horizontally; the document body
    may not.
 4. Confirm modals (`SearchModal`, `ProjectModal`, `FocusModal`,
-   `SkillModal`, `CourseMomentsModal`, `ExperienceModal`,
+   `SkillModal`, `CourseModulesModal`, `ExperienceModal`,
    `CompanyModal`, `ProgramCoursesModal`, `SummaryModal`) fit and are
    dismissible at this width.
 

@@ -72,15 +72,15 @@ function parseCredits(credits) {
 
 function deriveCourseEnd(course) {
   if (course.completedDate) return course.completedDate;
-  const momentDates = (course.moments ?? [])
+  const moduleDates = (course.modules ?? [])
     .map((m) => m.completedDate)
     .filter(Boolean);
-  if (momentDates.length === 0) {
+  if (moduleDates.length === 0) {
     throw new Error(
-      `Course ${course.code}: cannot derive end date — needs completedDate or at least one moment with completedDate.`,
+      `Course ${course.code}: cannot derive end date — needs completedDate or at least one module with completedDate.`,
     );
   }
-  return momentDates.reduce((latest, d) => (d > latest ? d : latest));
+  return moduleDates.reduce((latest, d) => (d > latest ? d : latest));
 }
 
 function deriveCourseStart(course) {

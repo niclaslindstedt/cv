@@ -607,7 +607,7 @@ distinct by purpose:
 
 - **Standard modal** — opens over the page (skill detail, focus
   detail, summary, project, company, program courses, course
-  moments). Uses the **Veil** backdrop (lightly dimmed, frosted) so
+  modules). Uses the **Veil** backdrop (lightly dimmed, frosted) so
   the page is visibly hinted at as glass beneath, not blacked out.
   Inner panel is a Glass card (`max-width: 560px`) with the standard
   close button at top-right.
@@ -1158,7 +1158,7 @@ table. **Update this whenever the implementation moves**.
 | Button                 | `src/components/Controls.tsx`; styles in `src/styles/toggles.css` and per-component CSS.                                                 |
 | Inline link            | `src/styles/base.css` and per-component CSS.                                                                                             |
 | Section                | `src/components/Section.tsx` + `src/styles/section.css`.                                                                                 |
-| Modal — standard       | `src/components/{Skill,Focus,Summary,Project,Company,ProgramCourses,CourseMoments}Modal.tsx` + `src/styles/modals.css`.                  |
+| Modal — standard       | `src/components/{Skill,Focus,Summary,Project,Company,ProgramCourses,CourseModules}Modal.tsx` + `src/styles/modals.css`.                  |
 | Modal — Timeline       | `src/components/Timeline.tsx` + `src/styles/timeline-vis.css`.                                                                           |
 | Floating control bar   | `src/components/FloatingControls.tsx` + `src/styles/floating-controls.css`.                                                              |
 | Search trigger         | `src/components/SearchTrigger.tsx` + `src/components/SearchModal.tsx` + `src/styles/search.css`.                                         |

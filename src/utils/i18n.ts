@@ -128,8 +128,8 @@ type UiStrings = {
     completed: string;
     inProgress: string;
     close: string;
-    moments: string;
-    momentNotCompleted: string;
+    modules: string;
+    moduleNotCompleted: string;
     courseProgress: (earned: string, total: string) => string;
     incomplete: string;
     skills: string;
@@ -145,9 +145,9 @@ type UiStrings = {
     unusedStack: string;
   };
   courses: {
-    viewMomentsAria: (course: string) => string;
-    momentsAria: (course: string) => string;
-    momentsCount: (count: number) => string;
+    viewModulesAria: (course: string) => string;
+    modulesAria: (course: string) => string;
+    modulesCount: (count: number) => string;
   };
   section: {
     expand: (title: string) => string;
@@ -316,8 +316,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       completed: "Completed",
       inProgress: "In progress",
       close: "Close",
-      moments: "Modules",
-      momentNotCompleted: "Not completed",
+      modules: "Modules",
+      moduleNotCompleted: "Not completed",
       courseProgress: (earned, total) => `${earned} of ${total} earned`,
       incomplete: "Incomplete",
       skills: "Skills",
@@ -334,9 +334,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       unusedStack: "Part of the stack but not personally practiced",
     },
     courses: {
-      viewMomentsAria: (course) => `View modules for ${course}`,
-      momentsAria: (course) => `${course} modules`,
-      momentsCount: (n) => `${n} module${n === 1 ? "" : "s"}`,
+      viewModulesAria: (course) => `View modules for ${course}`,
+      modulesAria: (course) => `${course} modules`,
+      modulesCount: (n) => `${n} module${n === 1 ? "" : "s"}`,
     },
     section: {
       expand: (title) => `Expand ${title} section`,
@@ -515,8 +515,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       completed: "Avklarad",
       inProgress: "Pågående",
       close: "Stäng",
-      moments: "Moment",
-      momentNotCompleted: "Ej avklarat",
+      modules: "Moment",
+      moduleNotCompleted: "Ej avklarat",
       courseProgress: (earned, total) => `${earned} av ${total} avklarat`,
       incomplete: "Ej avklarad",
       skills: "Kompetenser",
@@ -533,9 +533,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       unusedStack: "Ingick i stacken men inte personligt utövad",
     },
     courses: {
-      viewMomentsAria: (course) => `Visa moment för ${course}`,
-      momentsAria: (course) => `Moment i ${course}`,
-      momentsCount: (n) => (n === 1 ? "1 moment" : `${n} moment`),
+      viewModulesAria: (course) => `Visa moment för ${course}`,
+      modulesAria: (course) => `Moment i ${course}`,
+      modulesCount: (n) => (n === 1 ? "1 moment" : `${n} moment`),
     },
     section: {
       expand: (title) => `Expandera ${title.toLowerCase()}`,

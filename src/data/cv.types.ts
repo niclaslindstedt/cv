@@ -142,7 +142,7 @@ export type Experience = {
   aliases?: string[];
 };
 
-export type CourseMoment = {
+export type CourseModule = {
   name: LocalizedString;
   code?: string;
   credits: string;
@@ -156,7 +156,7 @@ export type ProgramCourse = {
   completedDate?: string;
   grade?: string;
   completed?: boolean;
-  moments?: CourseMoment[];
+  modules?: CourseModule[];
   skills?: string[];
 };
 
@@ -183,7 +183,7 @@ export type Course = {
   engagement?: number;
   remote?: boolean;
   completed?: boolean;
-  moments?: CourseMoment[];
+  modules?: CourseModule[];
   skills?: string[];
   aliases?: string[];
 };

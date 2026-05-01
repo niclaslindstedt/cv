@@ -239,7 +239,7 @@ function buildEducation(item) {
 function buildCourseRange(item) {
   const endDate =
     item.completedDate ??
-    (item.moments ?? [])
+    (item.modules ?? [])
       .map((m) => m.completedDate)
       .filter(Boolean)
       .reduce((latest, d) => (latest && latest > d ? latest : d), null);

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { CompanyModal } from "./components/CompanyModal";
-import { CourseMomentsModal } from "./components/CourseMomentsModal";
+import { CourseModulesModal } from "./components/CourseModulesModal";
 import { Courses } from "./components/Courses";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
@@ -324,7 +324,7 @@ export function App() {
           setSelectedSkill(skill);
         }}
       />
-      <CourseMomentsModal
+      <CourseModulesModal
         course={selectedCourse}
         onClose={() => setSelectedCourse(null)}
         onSkillClick={(skill) => {
