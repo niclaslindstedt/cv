@@ -380,11 +380,17 @@ export function Timeline() {
 
   const closeDetails = useCallback(() => setSelectedId(null), []);
   const detailsKind = selectedItem?.kind ?? null;
-  useSwipeClose(githubDetailsRef, detailsKind === "github", closeDetails);
+  useSwipeClose(
+    githubDetailsRef,
+    detailsKind === "github",
+    closeDetails,
+    false,
+  );
   useSwipeClose(
     sideProjectDetailsRef,
     detailsKind === "sideProject",
     closeDetails,
+    false,
   );
   useSwipeClose(
     otherDetailsRef,
@@ -392,6 +398,7 @@ export function Timeline() {
       detailsKind !== "github" &&
       detailsKind !== "sideProject",
     closeDetails,
+    false,
   );
 
   const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
