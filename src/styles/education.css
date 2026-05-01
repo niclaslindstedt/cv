@@ -8,10 +8,12 @@
 
 #education .education-list > li {
   --cat-rgb: var(--tl-mint);
+  --cat-fg: var(--tl-mint-fg);
 }
 
 #courses .education-list > li {
   --cat-rgb: var(--tl-amber);
+  --cat-fg: var(--tl-amber-fg);
 }
 
 .education-list > li {

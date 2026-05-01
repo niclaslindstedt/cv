@@ -5,6 +5,7 @@
 
 .project {
   --cat-rgb: var(--tl-violet);
+  --cat-fg: var(--tl-violet-fg);
   position: relative;
   min-width: 0;
   padding: 20px 20px 20px 56px;

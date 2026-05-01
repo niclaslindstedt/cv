@@ -8,6 +8,7 @@
 
 .timeline-item {
   --cat-rgb: var(--tl-blue);
+  --cat-fg: var(--tl-blue-fg);
   position: relative;
   padding: 20px 20px 20px 56px;
   border: 1px solid rgba(var(--cat-rgb), 0.45);
