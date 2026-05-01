@@ -18,8 +18,17 @@ const STABILIZE_CSS = `
 // Element-screenshots of tall sections force Playwright to scroll and stitch;
 // fixed-position UI then appears in different positions between stability
 // re-shots. Hide it for section snapshots so the comparison stays stable.
+// Also neutralise UI that depends on the project-stats / github-activity
+// caches — those are rebuilt from live GitHub data when a token is present
+// (CI) but stay empty otherwise (local sandbox without a token), so anything
+// they drive would diverge between environments.
 const SECTION_OVERLAY_CSS = `
   .skip-link, .floating-controls { display: none !important; }
+  .project-dates { display: none !important; }
+  .project.is-active {
+    border-color: var(--card-border) !important;
+    box-shadow: none !important;
+  }
 `;
 
 async function preparePage(page: Page) {
