@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import type { FocusArea } from "../data/cv.types";
-import { formatMonth, monthsSince } from "../utils/date";
+import { monthsSince } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function FocusModal({ focus, onClose, onSkillClick }: Props) {
-  const { lang, t, ui } = useLang();
+  const { t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
   useModalSwipe(modalRef, !!focus, onClose);
   useModalFocus(modalRef, !!focus);
@@ -59,8 +59,7 @@ export function FocusModal({ focus, onClose, onSkillClick }: Props) {
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{area}</span>
             <span className="skill-modal-years">
-              {ui.focus.since} {formatMonth(focus.since, lang)}
-              {months > 0 ? ` · ${ui.focus.duration(months)}` : ""}
+              {ui.focus.duration(months)}
             </span>
           </h2>
           <button
