@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import projectStatsData from "../data/project-stats.json";
 import type { Project, ProjectStatsFile } from "../data/cv.types";
+import { categoryStyle } from "../utils/categoryStyle";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
 import { aggregateProjectStats } from "../utils/projectStats";
@@ -9,6 +10,7 @@ import { stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
+import { CategoryGlyph } from "./CategoryGlyph";
 import { ProjectDateChip } from "./ProjectDateChip";
 
 const projectStats = projectStatsData as ProjectStatsFile;
@@ -82,10 +84,15 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
     >
       <div
         ref={modalRef}
-        className="skill-modal"
+        className="skill-modal skill-modal--cat"
+        data-category="project"
+        style={categoryStyle("project")}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="skill-modal-head">
+          <span className="skill-modal-glyph" aria-hidden="true">
+            <CategoryGlyph category="project" size={20} />
+          </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{project.name}</span>
           </h2>

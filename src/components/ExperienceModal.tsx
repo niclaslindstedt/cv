@@ -6,6 +6,7 @@ import type {
   Experience as ExperienceItem,
   RoleTenure,
 } from "../data/cv.types";
+import { categoryStyle } from "../utils/categoryStyle";
 import { formatRange } from "../utils/date";
 import { useLang, type LanguageContextValue } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
@@ -13,6 +14,7 @@ import { stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
+import { CategoryGlyph } from "./CategoryGlyph";
 import { NoteIcon } from "./NoteIcon";
 
 export type ExperienceModalData =
@@ -172,10 +174,15 @@ export function ExperienceModal({
     >
       <div
         ref={modalRef}
-        className="skill-modal experience-modal"
+        className="skill-modal skill-modal--cat experience-modal"
+        data-category="experience"
+        style={categoryStyle("experience")}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="skill-modal-head">
+          <span className="skill-modal-glyph" aria-hidden="true">
+            <CategoryGlyph category="experience" size={20} />
+          </span>
           <h2 className="skill-modal-title experience-modal-title">
             <span className="experience-modal-role-line">
               <span className="role">{t(newestRole.title)}</span>

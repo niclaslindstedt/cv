@@ -1,12 +1,14 @@
 import { useEffect, useRef } from "react";
 
 import type { Company } from "../data/cv.types";
+import { categoryStyle } from "../utils/categoryStyle";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
 import type { CompanyStackEntry } from "../utils/skills";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
+import { CategoryGlyph } from "./CategoryGlyph";
 
 type Props = {
   company: Company | null;
@@ -43,10 +45,15 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
     >
       <div
         ref={modalRef}
-        className="skill-modal"
+        className="skill-modal skill-modal--cat"
+        data-category="experience"
+        style={categoryStyle("experience")}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="skill-modal-head">
+          <span className="skill-modal-glyph" aria-hidden="true">
+            <CategoryGlyph category="experience" size={20} />
+          </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{company.name}</span>
             {company.terminated && (

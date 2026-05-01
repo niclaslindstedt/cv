@@ -229,6 +229,68 @@
   gap: 10px;
   font-size: 1.05rem;
   font-weight: 600;
+  /* Eat the leftover space in the header so the close button stays
+   * pinned right when a leading category glyph is present. */
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Category-tinted modal — opt in by setting `data-category` and
+ * `--cat-rgb` / `--cat-fg` (via `categoryStyle`) on the .skill-modal.
+ *
+ * The modal then borrows the same Sapphire / Iris / Mint / Ember
+ * language used by the section title glyph (§10.5), so the panel reads
+ * as part of its parent section rather than a generic Aurora overlay.
+ *
+ * Mechanism: locally redefine --accent and --accent-soft so all the
+ * existing accent-coloured leaves (year pill, action links, close-hover
+ * ring, focus-visible outline) pick the category tone up automatically.
+ */
+.skill-modal--cat {
+  --accent: rgb(var(--cat-fg, var(--cat-rgb)));
+  --accent-soft: rgba(var(--cat-rgb), 0.16);
+}
+
+:root[data-theme="light"] .skill-modal--cat {
+  --accent-soft: rgba(var(--cat-rgb), 0.18);
+}
+
+.skill-modal--cat .skill-modal-head {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--cat-rgb), 0.18),
+    rgba(var(--cat-rgb), 0.06)
+  );
+  border-bottom-color: rgba(var(--cat-rgb), 0.45);
+}
+
+:root[data-theme="light"] .skill-modal--cat .skill-modal-head {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--cat-rgb), 0.22),
+    rgba(var(--cat-rgb), 0.08)
+  );
+}
+
+/* Glyph chip in the modal header — same visual recipe as the card glyph
+ * bar (§10.5): low-alpha tint fill, 1px border at 45% alpha for the
+ * 3:1 non-text contrast WCAG 1.4.11 wants, glyph painted in the
+ * deeper --cat-fg foreground variant so it reads on the tint. */
+.skill-modal-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  color: rgb(var(--cat-fg, var(--cat-rgb, var(--tl-blue))));
+  background: rgba(var(--cat-rgb, var(--tl-blue)), 0.16);
+  border: 1px solid rgba(var(--cat-rgb, var(--tl-blue)), 0.45);
+}
+
+:root[data-theme="light"] .skill-modal-glyph {
+  background: rgba(var(--cat-rgb, var(--tl-blue)), 0.22);
 }
 
 .skill-modal-name {
