@@ -447,8 +447,10 @@ export function Timeline() {
     let initialScale = 1;
     if (latestExpStart !== null && nowIdx > latestExpStart) {
       const monthsSpan = nowIdx - latestExpStart + 2;
-      const required = clientWidth / monthsSpan / BASE_MONTH_PX;
-      initialScale = clamp(required, 0.8, 1);
+      const fitScale = clientWidth / monthsSpan / BASE_MONTH_PX;
+      const minCoverageScale = 0.25 * fitScale;
+      const upper = Math.min(MAX_SCALE, Math.max(1, minCoverageScale));
+      initialScale = clamp(fitScale, 0.8, upper);
     }
 
     setScale(initialScale);
