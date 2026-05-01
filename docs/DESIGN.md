@@ -381,15 +381,21 @@ overdraw against every glass card on screen.
 
 ### 6.3 Borders and shadows
 
-- Glass cards use **Vapor Edge** as a 1px border at rest.
+- Glass cards use **Vapor Edge** as a 1px border at rest, except
+  cards in the four sections that carry a category glyph bar
+  (§10.5) — Experience, Side projects, Education, Courses — whose
+  border picks up the section's category token at 45% alpha at rest
+  so the outline matches the glyph and the glyph-bar's right edge.
 - Solid surfaces (modals in print, `Slate`-backed contexts) use
   **Hairline** at 1px.
 - Drop shadow (**Float Shadow**) is reserved for floating panels —
   modals, popovers, the floating control bar. In-flow content cards
   do not get a shadow; the page would look quilted.
-- Active or current cards (see §10.2) use a brighter Aurora-derived
-  border plus a 1px outer glow. This is the only place a card border
-  carries colour information at rest.
+- Active or current cards (see §10.2) saturate the same category
+  token to full alpha for the border and add a 1px outer glow at
+  45% alpha of the token. Glass cards that don't carry a category
+  bar fall back to a brighter Aurora-derived (Pulse) border plus
+  the same 1px outer glow.
 
 ---
 
@@ -492,13 +498,21 @@ a card so the page reads as a stack of weighted units.
   (timeline rows that need more rows visible at once).
 - **Corner radius.** `radius-md` (10px). Universal — every card and
   button uses the same value so the page reads as one family.
-- **Border.** Vapor Edge at rest. Aurora on hover for cards that
-  are themselves clickable. Pulse for currently active cards.
+- **Border.** For cards that carry a category glyph bar (§10.5),
+  the border picks up the section's category token: a desaturated
+  tint at rest (45% alpha) and the same token at full saturation
+  when the card is active (§10.2). All other glass cards use Vapor
+  Edge at rest. Aurora on hover for whole-card-clickable cards
+  without a category bar; cards with a category bar use the full
+  category token on hover so the resting tint snaps to its
+  saturated form.
 - **Shadow.** None for in-flow cards. Float Shadow for floating
   panels.
-- **Hover.** A single change: border colour to Aurora. _Never_ fill
-  the body with Aurora Mist on hover — Aurora Mist is reserved for
-  pill and button shapes (§9.2, §9.4).
+- **Hover.** A single change: border colour snaps to its saturated
+  form — Aurora for plain glass cards, the full category token for
+  cards with a category glyph bar (§10.5). _Never_ fill the body
+  with Aurora Mist on hover — Aurora Mist is reserved for pill and
+  button shapes (§9.2, §9.4).
 - **Cards that are not whole-card-clickable** (Experience, where
   only the company title opens a modal) get **no** card-level hover.
   Only the interactive sub-element gets feedback.
@@ -776,7 +790,11 @@ inside a single card as a `roles[]` array.
 Cards whose underlying record has `endDate === null` (currently
 active) get an `is-active` modifier. Visual treatment:
 
-- **Border.** Pulse (brightened Aurora) + 1px outer glow.
+- **Border.** Cards with a category glyph bar (§10.5) saturate their
+  resting tinted border to the full category token (`rgb(--cat-rgb)`)
+  and add a 1px outer glow at 45% alpha of the same token. Cards
+  without a category bar use Pulse (brightened Aurora) + the same
+  glow. Light theme drops the outer glow in both cases.
 - **PRESENT badge** pinned to the top-right corner (Experience and
   Assignment cards only) — see §9.3.
 
@@ -838,9 +856,11 @@ beginning with `·` reads as a bullet, not a continuation.
 
 Cards in the four scrolled sections — **Experience**, **Side
 projects**, **Education**, **Courses** — carry a coloured left bar
-that doubles as the card's identity badge. The bar is the only
-non-Aurora colour applied to a card surface, so it must be used
-consistently and only for these four section types.
+that doubles as the card's identity badge, and a matching tinted
+outline picks the same colour up around the rest of the card (§6.3,
+§10.2). The bar and outline together are the only place
+non-Aurora colour is applied to a card surface, so the pattern must
+be used consistently and only for these four section types.
 
 - **Surface.** A 36px-wide column flush to the card's left edge,
   rendered as the card's `::before`/inner span and rounded to match
