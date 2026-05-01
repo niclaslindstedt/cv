@@ -191,6 +191,16 @@ Timeline category tokens are stored as RGB triplets so they can be
 combined with arbitrary alpha values inside the timeline component
 (bar fill, hover ring, marker line, ramp legend).
 
+Each chromatic timeline token also carries a paired **foreground
+variant** (`--tl-blue-fg`, `--tl-mint-fg`, `--tl-amber-fg`,
+`--tl-violet-fg`) used wherever the colour is rendered at full opacity
+as a glyph or marker. Dark theme keeps the variant equal to the tint
+triplet — the pastels read fine on Nightfield. Light theme deepens
+the variant to the same hue at a lower lightness so glyphs stay
+readable on the pearl-grey surface. The 16–22% alpha tint and 45%
+alpha border continue to use the base triplet so card chrome stays
+calibrated.
+
 ### 3.5 Usage rules
 
 - **Reach for the closest semantic token first.** Aurora is for
@@ -870,10 +880,12 @@ be used consistently and only for these four section types.
   token; 22% in light theme. A 1px right edge at 45% alpha provides
   the 3:1 non-text contrast that WCAG 1.4.11 requires.
 - **Glyph.** A 1.75px-stroke outlined SVG at `medium` (16–18px),
-  painted in the same category token at full opacity. The glyph sits
-  pinned to the **top** of the bar with `lg` (16px) of breathing room
-  so it remains anchored as the card grows downward — it's a marker,
-  not a centerpiece.
+  painted in the section's category foreground token (`--tl-*-fg`) at
+  full opacity. Dark theme uses the same pastel as the tint; light
+  theme deepens the hue so the glyph reads on the pearl Nightfield.
+  The glyph sits pinned to the **top** of the bar with `lg` (16px) of
+  breathing room so it remains anchored as the card grows downward —
+  it's a marker, not a centerpiece.
 - **Category mapping.**
 
   | Section       | Token         | Glyph               |
@@ -1148,9 +1160,13 @@ table. **Update this whenever the implementation moves**.
 | Orb             | `--orb-color`            | `src/styles/tokens.css`         |
 | Orb Soft        | `--orb-color-soft`       | `src/styles/tokens.css`         |
 | Sapphire        | `--tl-blue`              | `src/styles/tokens.css`         |
+| Sapphire Fg     | `--tl-blue-fg`           | `src/styles/tokens.css`         |
 | Mint            | `--tl-mint`              | `src/styles/tokens.css`         |
+| Mint Fg         | `--tl-mint-fg`           | `src/styles/tokens.css`         |
 | Ember           | `--tl-amber`             | `src/styles/tokens.css`         |
+| Ember Fg        | `--tl-amber-fg`          | `src/styles/tokens.css`         |
 | Iris            | `--tl-violet`            | `src/styles/tokens.css`         |
+| Iris Fg         | `--tl-violet-fg`         | `src/styles/tokens.css`         |
 | Bloom           | `--tl-pink`              | `src/styles/tokens.css`         |
 | Bloom Text      | `--tl-green-fg`          | `src/styles/tokens.css`         |
 | Verdant         | `--tl-green`             | `src/styles/tokens.css`         |

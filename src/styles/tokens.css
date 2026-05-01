@@ -48,6 +48,14 @@
   --tl-pink: 244, 114, 182;
   --tl-green: 34, 197, 94;
   --tl-green-fg: #4ade80;
+  /* Foreground variants for direct color use (glyphs, markers). The pastel
+   * triplets above are tuned for dark surfaces; on the light Nightfield the
+   * same hue must be deeper to keep glyphs readable. Defaults match the tint
+   * triplet so dark theme is unaffected; the light theme overrides below. */
+  --tl-blue-fg: var(--tl-blue);
+  --tl-mint-fg: var(--tl-mint);
+  --tl-amber-fg: var(--tl-amber);
+  --tl-violet-fg: var(--tl-violet);
   --modal-overlay: rgba(8, 10, 13, 0.18);
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
   --radius: 10px;
@@ -96,6 +104,14 @@
   --halt: #c62828;
   --halt-fg: #ffffff;
   --tl-green-fg: #15803d;
+  /* Same hue as Sapphire / Mint / Ember / Iris but deep enough to read on
+   * the pearl-grey Nightfield. Used by category glyphs (section titles and
+   * card glyph bars). Tints and borders keep using --tl-* so the alpha
+   * fills stay calibrated. */
+  --tl-blue-fg: 28, 78, 174;
+  --tl-mint-fg: 14, 110, 86;
+  --tl-amber-fg: 144, 84, 18;
+  --tl-violet-fg: 96, 56, 168;
   --modal-overlay: rgba(240, 243, 247, 0.18);
   --shadow: 0 12px 40px rgba(11, 13, 16, 0.12);
   color-scheme: light;

@@ -5,7 +5,9 @@
  * in docs/DESIGN.md §6.1.
  *
  * The owning card type (project / timeline-item / education-list > li)
- * sets `--cat-rgb` to one of the --tl-* triplets defined in tokens.css.
+ * sets `--cat-rgb` to one of the --tl-* triplets defined in tokens.css
+ * (used for tints and borders) and `--cat-fg` to the matching --tl-*-fg
+ * triplet (used for the glyph color so it reads on the light surface).
  * The bar paints a flat tint at low alpha plus a 1px right edge for
  * the 3:1 non-text contrast required by WCAG 1.4.11. */
 
@@ -17,7 +19,7 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: 16px;
-  color: rgb(var(--cat-rgb));
+  color: rgb(var(--cat-fg, var(--cat-rgb)));
   background: rgba(var(--cat-rgb), 0.16);
   border-right: 1px solid rgba(var(--cat-rgb), 0.45);
   border-radius: var(--radius) 0 0 var(--radius);
@@ -26,7 +28,6 @@
 
 :root[data-theme="light"] .card-glyph-bar {
   background: rgba(var(--cat-rgb), 0.22);
-  color: rgb(var(--cat-rgb));
 }
 
 /* Wrap the glyph in a circular Mist disc so it reads on the bar tint
@@ -45,7 +46,7 @@
   width: 18px;
   height: 18px;
   margin-right: 4px;
-  color: rgb(var(--cat-rgb, var(--tl-blue)));
+  color: rgb(var(--cat-fg, var(--cat-rgb, var(--tl-blue-fg))));
   vertical-align: -3px;
 }
 
