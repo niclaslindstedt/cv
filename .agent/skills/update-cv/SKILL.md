@@ -217,9 +217,16 @@ true` renders the link as a pill (used for the blog link). The
 - `printDescription` (optional, on both `experience[]` and
   `experience[].assignments[]`) — paper-CV blurb describing what
   the holder actually did at the company/client. Falls back to
-  the company/client `tagline` when omitted, which is fine for
-  short listings but rarely as good as a role-specific blurb.
-  See "Print descriptions" below for the writing rules.
+  `jobDescription`, then to the company/client `tagline` when
+  omitted. See "Print descriptions" below for the writing rules.
+- `jobDescription` (optional, on both `experience[]` and
+  `experience[].assignments[]`) — blurb shown on the experience
+  card on the web in place of the company/client `tagline`, and
+  used as the print fallback when `printDescription` is omitted.
+  Most useful in `cv.local.json` overrides where the public site
+  keeps the neutral company tagline while a private build can
+  describe the actual work. The company `description` is still
+  shown in the company modal regardless.
 
 ### `education[]`
 

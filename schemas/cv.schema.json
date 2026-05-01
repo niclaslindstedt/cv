@@ -380,9 +380,13 @@
         "stack": { "$ref": "#/$defs/stackList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "notes": { "$ref": "#/$defs/localizedString" },
+        "jobDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Optional 1–2 sentence blurb describing what the holder did in this role. When set, replaces the company `tagline` on the experience card on the web and also acts as the print fallback when `printDescription` is omitted. Most useful in `cv.local.json` overrides where the public site keeps the neutral company tagline while a private build can describe the actual work."
+        },
         "printDescription": {
           "$ref": "#/$defs/localizedString",
-          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this role. Describes what the holder actually did at the company — paper-optimized: concrete, impact-oriented, no links to click. Falls back to the company's `tagline` when omitted."
+          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this role. Describes what the holder actually did at the company — paper-optimized: concrete, impact-oriented, no links to click. Falls back to `jobDescription`, then to the company's `tagline`, when omitted."
         },
         "assignments": {
           "type": "array",
@@ -417,9 +421,13 @@
         "stack": { "$ref": "#/$defs/stackList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "notes": { "$ref": "#/$defs/localizedString" },
+        "jobDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Optional 1–2 sentence blurb describing what the holder did in this assignment. When set, replaces the client `tagline` on the assignment card on the web and also acts as the print fallback when `printDescription` is omitted. Most useful in `cv.local.json` overrides where the public site keeps the neutral client tagline while a private build can describe the actual work."
+        },
         "printDescription": {
           "$ref": "#/$defs/localizedString",
-          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this assignment. Describes what the holder actually did at the client — paper-optimized: concrete, impact-oriented, no links to click. Falls back to the client's `tagline` when omitted."
+          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this assignment. Describes what the holder actually did at the client — paper-optimized: concrete, impact-oriented, no links to click. Falls back to `jobDescription`, then to the client's `tagline`, when omitted."
         },
         "aliases": { "$ref": "#/$defs/aliasList" }
       }

@@ -206,7 +206,7 @@ function ExperienceItemView({
           )}
         </div>
         {hasPromotion && <RoleChain roles={sortedRoles} />}
-        <p>{t(company.tagline)}</p>
+        <p>{t(item.jobDescription ?? company.tagline)}</p>
         {stack.length > 0 && (
           <ul className="entry-stack">
             {stack.map((tech) => (
@@ -330,7 +330,7 @@ function AssignmentItemView({
           <span>{formatRange(a.startDate, a.endDate, lang)}</span>
         </div>
         {hasPromotion && <RoleChain roles={sortedRoles} />}
-        <p>{t(client.tagline)}</p>
+        <p>{t(a.jobDescription ?? client.tagline)}</p>
         {stack.length > 0 && (
           <ul className="entry-stack">
             {stack.map((tech) => (

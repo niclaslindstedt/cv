@@ -10,6 +10,10 @@
   },
   "experience": [
     {
+      "jobDescription": {
+        "en": "What I actually did at the company, shown on the experience card on the web in place of the company tagline.",
+        "sv": "Vad jag faktiskt gjorde på företaget, visas på erfarenhetskortet på webben istället för företagets tagline."
+      },
       "printDescription": {
         "en": "Private details about the most recent role that should not appear on the public site.",
         "sv": "Privata detaljer om den senaste rollen som inte ska synas på den publika sajten."
