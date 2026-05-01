@@ -150,14 +150,80 @@ imports from `components/`. Keep it that way.
   described there, **update `docs/DESIGN.md` first in the same PR**.
   PR descriptions for visual changes should reference the section(s)
   they conform to.
-- **Always run `make test-visual` after pushing a UI-affecting PR.**
-  The Visual check is the slowest signal in CI and the diff threshold
-  (`maxDiffPixelRatio: 0.01` in `playwright.config.ts`) is tight enough
-  that a local `make test-visual` can pass while CI still fails on
-  sub-pixel font drift. As soon as the PR is open, watch the `visual`
-  check; if it fails, regenerate the affected baselines (delete the
-  PNG, then `make test-visual-update`) and push the fix in the same
-  branch instead of waiting for review. Saves a review round-trip.
+- **Visual snapshots.** Any change that alters rendered pixels — text
+  in a snapshotted view, styles, layout, fonts, component shape —
+  needs the affected baselines re-recorded in the same branch. See
+  § Visual snapshots below for the workflow. Run it proactively;
+  don't wait for CI to flag the drift.
+
+## Visual snapshots
+
+The Visual workflow (`tests/visual/`) does strict pixel comparison
+against PNGs committed under `tests/visual/__screenshots__/`.
+Threshold is `maxDiffPixelRatio: 0.01` in `playwright.config.ts`.
+Baselines were recorded on Linux and CI runs on `ubuntu-latest` —
+re-recording on macOS or Windows produces sub-pixel font drift that
+fails CI on the next run.
+
+### When to expect baselines need updating
+
+Treat any of these as a guaranteed rebaseline before pushing:
+
+- **Text edits to rendered copy** in `src/data/cv.json` or
+  `src/data/cv/*.json` — `tagline`, `description`, `summary`,
+  `area`, `name`, project copy, anything that ends up inside a
+  snapshotted view. Reflow alone trips the threshold.
+- **Style changes** under `src/styles/` (tokens, layout, typography,
+  color, spacing, motion, component CSS).
+- **Component changes** — adding, removing, reordering, or
+  restructuring sections, cards, or fields.
+- **Dependency bumps** that ship glyphs or rendering (`@fontsource/*`,
+  `playwright` — Playwright updates can bring a new bundled
+  Chromium).
+
+Snapshot → source quick map (the `debug-visual` skill has the full
+table and diagnostic procedure):
+
+| Snapshot family                                  | Driven by                                                                 |
+| ------------------------------------------------ | ------------------------------------------------------------------------- |
+| `hero-{en,sv}-{dark,light}`                      | `Hero.tsx`, `hero.css`, `cv.json` (`name`, `summary`, `tagline`, `links`) |
+| `focus-{en,sv}-{dark,light}` (section card grid) | `Focus.tsx`, `focus.css`, `cv/focus.json` (`tagline`, `since`, `area`)    |
+| `modal-focus-*` (skill modal body)               | `cv/focus.json` `description` text in particular                          |
+| `homepage-*` (full above-fold page)              | Anything above the fold — collateral from hero / focus / token changes    |
+
+### Workflow
+
+When you make a change that the list above flags as visual:
+
+1. `make build && CI=1 npm run test:visual` — use `CI=1` so retries
+   and worker count match GitHub Actions.
+2. If failures match the change's intent and **only those**
+   snapshots failed, regenerate:
+   `CI=1 npm run test:visual:update` (alias of `make test-visual-update`).
+3. Re-run `CI=1 npm run test:visual` to confirm a clean pass.
+4. `git status --short` must show **only** modified `*.png` files
+   under `tests/visual/__screenshots__/`. Anything else means the
+   tree was dirty — revert the noise before committing.
+5. Commit the rebaseline as its own `test(visual): …` commit
+   referencing the change that drove it (don't fold it into the
+   feature commit — keeps the diff legible). Push and let CI
+   confirm.
+
+For predictable changes (text rewrites, isolated CSS retunes), do
+this proactively before pushing the feature commit. For ambiguous
+or cascading failures, invoke the `debug-visual` skill instead of
+re-recording blind.
+
+### Guardrails
+
+- **Linux only for re-recording.** Other OSes will fail CI.
+- **Never re-record on a dirty tree.** The rebaseline commit must
+  contain only `*.png` modifications under `tests/visual/__screenshots__/`.
+- **Never re-record to silence a regression.** If a snapshot the
+  change shouldn't affect is failing, inspect the diff PNGs in
+  `test-results/` and fix the code.
+- **Don't widen `maxDiffPixelRatio`** or disable retries to make CI
+  green. The 0.01 tolerance is calibrated for sub-pixel font noise.
 
 ## Documentation sync points
 
