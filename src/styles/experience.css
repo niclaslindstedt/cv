@@ -40,8 +40,8 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--bg);
-  background: var(--accent);
+  color: rgb(var(--cat-fg, var(--cat-rgb)));
+  background: rgba(var(--cat-rgb), 0.16);
   border: 0;
   border-top-right-radius: var(--radius);
   border-bottom-left-radius: var(--radius);
@@ -50,8 +50,7 @@
 }
 
 :root[data-theme="light"] .active-badge {
-  color: var(--halt-fg);
-  background: var(--fg-muted);
+  background: rgba(var(--cat-rgb), 0.22);
 }
 
 .assignment-item > .active-badge {
