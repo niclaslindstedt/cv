@@ -95,13 +95,17 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--accent);
-  background: var(--accent-soft);
+  color: rgb(var(--cat-fg, var(--cat-rgb)));
+  background: rgba(var(--cat-rgb), 0.16);
   border: 0;
   border-top-right-radius: var(--radius);
   border-bottom-left-radius: var(--radius);
   line-height: 1.4;
   pointer-events: none;
+}
+
+:root[data-theme="light"] .project-oss-badge {
+  background: rgba(var(--cat-rgb), 0.22);
 }
 
 .project:has(.project-oss-badge) .project-head h3 {
