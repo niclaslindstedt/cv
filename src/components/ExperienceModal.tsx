@@ -12,7 +12,7 @@ import { renderInlineCode } from "../utils/inlineCode";
 import { stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { useModalSwipe } from "../utils/useModalSwipe";
 import { NoteIcon } from "./NoteIcon";
 
 export type ExperienceModalData =
@@ -129,7 +129,7 @@ export function ExperienceModal({
 }: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, !!data, onClose);
+  useModalSwipe(modalRef, !!data, onClose);
   useModalFocus(modalRef, !!data);
   useBodyScrollLock(!!data);
 

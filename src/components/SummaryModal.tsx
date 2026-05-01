@@ -5,7 +5,7 @@ import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { useModalSwipe } from "../utils/useModalSwipe";
 
 type Props = {
   open: boolean;
@@ -24,7 +24,7 @@ export function SummaryModal({
 }: Props) {
   const { t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, open, onClose);
+  useModalSwipe(modalRef, open, onClose);
   useModalFocus(modalRef, open);
   useBodyScrollLock(open);
 

@@ -11,7 +11,7 @@ import {
 } from "../utils/skills";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { useModalSwipe } from "../utils/useModalSwipe";
 
 function isLocalized(
   value: string | LocalizedString,
@@ -68,7 +68,7 @@ export function SkillModal({
 }: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, !!skill, onClose);
+  useModalSwipe(modalRef, !!skill, onClose);
   useModalFocus(modalRef, !!skill);
   useBodyScrollLock(!!skill);
 
