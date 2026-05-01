@@ -30,6 +30,19 @@
   background: rgba(var(--cat-rgb), 0.22);
 }
 
+/* Active / Present marker (docs/DESIGN.md §10.2): the left bar is the
+ * only perimeter affordance — the rest of the card outline stays at
+ * its resting 45%-alpha tint. Brighten the bar tint and saturate the
+ * right edge to the full category token. */
+.is-active > .card-glyph-bar {
+  background: rgba(var(--cat-rgb), 0.32);
+  border-right-color: rgb(var(--cat-rgb));
+}
+
+:root[data-theme="light"] .is-active > .card-glyph-bar {
+  background: rgba(var(--cat-rgb), 0.4);
+}
+
 /* Wrap the glyph in a circular Mist disc so it reads on the bar tint
  * without depending on stroke contrast alone. */
 .category-glyph {

@@ -32,15 +32,6 @@
   outline-offset: 2px;
 }
 
-.project.is-active {
-  border-color: rgb(var(--cat-rgb));
-  box-shadow: 0 0 0 1px rgba(var(--cat-rgb), 0.45);
-}
-
-:root[data-theme="light"] .project.is-active {
-  box-shadow: none;
-}
-
 .project-head {
   margin-bottom: 8px;
 }

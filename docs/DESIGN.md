@@ -811,11 +811,13 @@ inside a single card as a `roles[]` array.
 Cards whose underlying record has `endDate === null` (currently
 active) get an `is-active` modifier. Visual treatment:
 
-- **Border.** Cards with a category glyph bar (§10.5) saturate their
-  resting tinted border to the full category token (`rgb(--cat-rgb)`)
-  and add a 1px outer glow at 45% alpha of the same token. Cards
-  without a category bar use Pulse (brightened Aurora) + the same
-  glow. Light theme drops the outer glow in both cases.
+- **Glyph bar.** Cards with a category glyph bar (§10.5) brighten the
+  bar's tint and saturate its right edge to the full category token
+  (`rgb(--cat-rgb)`), leaving the rest of the card outline at its
+  resting 45%-alpha tint. The active marker is therefore a single
+  vertical accent on the left, not a full-perimeter halo. Cards
+  without a category bar (Assignment items) keep the existing 2px
+  Pulse left-border on the body — the same "lit left edge" grammar.
 - **PRESENT badge** pinned to the top-right corner (Experience and
   Assignment cards only) — see §9.3.
 

@@ -21,15 +21,6 @@
     box-shadow 120ms ease;
 }
 
-.timeline-item.is-active {
-  border-color: rgb(var(--cat-rgb));
-  box-shadow: 0 0 0 1px rgba(var(--cat-rgb), 0.45);
-}
-
-:root[data-theme="light"] .timeline-item.is-active {
-  box-shadow: none;
-}
-
 .active-badge {
   position: absolute;
   top: -1px;
