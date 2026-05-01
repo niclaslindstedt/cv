@@ -23,6 +23,11 @@ when a real user reports an a11y bug, or when the WCAG 2.2 spec is
 updated) and **interactive** (audit → report → propose → apply on
 confirmation; never auto-rewrites markup, ARIA, or motion budgets).
 
+> **Working the run?** Skip to the [run checklist](#run-checklist)
+> first. It enumerates every pre-flight, hazard, post-patch, and
+> wrap-up step in one place, so nothing gets dropped between reading
+> the catalogue and reporting findings.
+
 ## Mental model
 
 > "axe verifies that the building blocks are spelled right; this skill
@@ -614,6 +619,77 @@ After every applied batch, and once at the end of the run:
 All seven commands must pass before the run is considered successful.
 On success, write the new `HEAD` hash to
 `.agent/skills/verify-wcag/.last-updated`.
+
+## Run checklist
+
+A single-screen recap of every step of a run. Tick each box only when
+the work behind it is actually done. If a box can't be ticked, surface
+why before declaring the run complete — half-walked audits are worse
+than no audit because they imply false confidence.
+
+### Pre-flight
+
+- [ ] Working tree clean (`git status --short` empty, or only the
+      changes you intend to land).
+- [ ] `make build` ran successfully, `dist/` is current.
+- [ ] Preview server running on a known port.
+- [ ] Real keyboard at hand (mouse-only invalidates the keyboard rows).
+- [ ] Screen reader available, **or** explicitly noted as skipped for
+      this run (rows H1, H2, H16 degrade to best-effort without one).
+- [ ] DevTools accessibility / Rendering panes open; emulators ready
+      (320×800 viewport, prefers-reduced-motion, vision deficiencies).
+
+### Hazard catalogue walk
+
+| Box     | Hazard                                                                | Key SC        |
+| ------- | --------------------------------------------------------------------- | ------------- |
+| [ ] H1  | Alt text and accessible name **quality**                              | 1.1.1, 2.5.3  |
+| [ ] H2  | Reading order / meaningful sequence                                   | 1.3.2         |
+| [ ] H3  | Use of color (color is not the _sole_ differentiator)                 | 1.4.1         |
+| [ ] H4  | Reflow at 320 CSS px                                                  | 1.4.10        |
+| [ ] H5  | Resize text to 200 % + text spacing                                   | 1.4.4, 1.4.12 |
+| [ ] H6  | Content on hover/focus — dismissible, hoverable, persistent           | 1.4.13        |
+| [ ] H7  | Keyboard operability of every interactive element                     | 2.1.1, 2.1.2  |
+| [ ] H8  | Tab / focus order matches visual order                                | 2.4.3         |
+| [ ] H9  | Link / button purpose from text alone                                 | 2.4.4, 2.4.6  |
+| [ ] H10 | Focus visible on every focusable element                              | 2.4.7         |
+| [ ] H11 | Focus not obscured by sticky / floating UI ★ WCAG 2.2                 | 2.4.11        |
+| [ ] H12 | Pause / stop / hide moving content; `prefers-reduced-motion` honoured | 2.2.2         |
+| [ ] H13 | Pointer gestures and dragging movements have non-drag alts ★ WCAG 2.2 | 2.5.1, 2.5.7  |
+| [ ] H14 | Pointer cancellation — activate on up-event                           | 2.5.2         |
+| [ ] H15 | Target size ≥ 24×24 CSS px ★ WCAG 2.2                                 | 2.5.8         |
+| [ ] H16 | Status messages announced to assistive tech                           | 4.1.3         |
+| [ ] H17 | On-focus / on-input do not change context                             | 3.2.1, 3.2.2  |
+| [ ] H18 | Consistent help mechanism location ★ WCAG 2.2                         | 3.2.6         |
+| [ ] H19 | Language of parts                                                     | 3.1.2         |
+
+### After applying any patch batch
+
+- [ ] User explicitly approved the batch before it was applied.
+- [ ] Re-ran the audit for every hazard the patch touched; residual
+      drift recorded.
+- [ ] `make fmt` written through.
+- [ ] `make fmt-check` clean.
+- [ ] `make lint` clean (ESLint + tsc).
+- [ ] `make build` succeeds.
+- [ ] `make test` passes (Vitest schema / unit).
+- [ ] `make test-a11y` passes — axe gate is still green.
+- [ ] `make test-visual` passes, **or** the diff was triaged through
+      `debug-visual` and re-recorded with intent.
+
+### Wrap-up
+
+- [ ] Findings report grouped by hazard, citing `file:line` and the
+      relevant SC number.
+- [ ] Commit messages follow Conventional Commits and reference the
+      SC(s) addressed (e.g. `fix(a11y): focus trap for SearchModal
+(SC 2.1.2, 2.4.3)`).
+- [ ] PR description maps each commit to the hazard rows it
+      satisfies.
+- [ ] `.agent/skills/verify-wcag/.last-updated` bumped to the new
+      `HEAD` hash on success.
+- [ ] Skill catalogue extended (see _Skill self-improvement_ below)
+      if a hazard class surfaced that the catalogue did not cover.
 
 ## Skill self-improvement
 
