@@ -86,7 +86,9 @@
       "Bash/Shell",
       "Mentoring",
       "Project management",
-      "Integrations"
+      "Integrations",
+      "Prompt engineering",
+      "ChatGPT"
     ],
     "printDescription": {
       "en": "CTO of IBNQ, a software platform for family offices, on a .NET/TypeScript stack on Azure.",
