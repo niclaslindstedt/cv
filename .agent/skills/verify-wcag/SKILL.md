@@ -1,6 +1,6 @@
 ---
 name: verify-wcag
-description: "Use to verify WCAG 2.2 conformance for the things axe-core can't catch. The Accessibility workflow (`.github/workflows/a11y.yml`) covers the machine-checkable rules; this skill walks the manual checklist for keyboard operability, focus order, screen-reader semantics, motion, reflow, target size, and label/alt-text quality. Interactive: audit → propose patch → apply on confirmation. Reads the WCAG 2.2 spec from `specs/wcag22.html` and the criteria index from `specs/criteria.md`."
+description: "Use to verify WCAG 2.2 conformance for the things axe-core can't catch. The Accessibility workflow (`.github/workflows/a11y.yml`) covers the machine-checkable rules; this skill walks the manual checklist for keyboard operability, focus order, screen-reader semantics, motion, reflow, target size, and label/alt-text quality. Interactive: audit → propose patch → apply on confirmation. Reads the WCAG 2.2 spec from `specs/wcag22.md` and the criteria index from `specs/criteria.md`."
 ---
 
 # verify-wcag
@@ -47,20 +47,26 @@ Movements`, `2.5.8 Target Size (Minimum)`, `3.2.6 Consistent Help`)
 The skill ships the canonical W3C documents in `specs/` so audits can
 run offline and stay reproducible across runs:
 
-- [`specs/wcag22.html`](./specs/wcag22.html) — full WCAG 2.2
-  Recommendation. Anchors match the SC slugs (e.g. `#focus-visible`,
-  `#dragging-movements`).
-- [`specs/wcag22-quickref.html`](./specs/wcag22-quickref.html) —
+- [`specs/wcag22.md`](./specs/wcag22.md) — full WCAG 2.2
+  Recommendation. Each SC is a `#### Success Criterion X.Y.Z Title`
+  heading; grep the file for the SC number to jump there.
+- [`specs/wcag22-quickref.md`](./specs/wcag22-quickref.md) —
   "How to Meet WCAG 2.2" with sufficient & advisory techniques per SC.
-- [`specs/wcag22-techniques-index.html`](./specs/wcag22-techniques-index.html)
+- [`specs/wcag22-techniques-index.md`](./specs/wcag22-techniques-index.md)
   — index of every numbered Technique / Failure for cross-reference.
 - [`specs/criteria.md`](./specs/criteria.md) — condensed routing table:
-  every SC, its level, whether axe auto-checks it, and the anchor in
-  `wcag22.html` to jump to.
+  every SC, its level, and whether axe auto-checks it.
 
-When the catalogue below references an SC by number, open
-`specs/criteria.md` first to confirm the anchor, then open
-`specs/wcag22.html#<anchor>` for the normative wording.
+When the catalogue below references an SC by number, jump straight to
+the wording in `wcag22.md`:
+
+```sh
+grep -n "^#### Success Criterion 2.4.11" \
+  .agent/skills/verify-wcag/specs/wcag22.md
+# → 1193:#### Success Criterion 2.4.11 Focus Not Obscured (Minimum)
+```
+
+then `Read` the file from that offset.
 
 ## Tracking mechanism
 
@@ -106,7 +112,7 @@ check, scoped to a specific component / file pair. Rows are numbered
 `H1`, `H2`, … so findings can cite them. Order is principle → SC.
 
 > Citations refer to the SC by number; jump via
-> `specs/criteria.md` → `specs/wcag22.html#<anchor>`.
+> `specs/criteria.md` → grep `wcag22.md` for the heading.
 
 ### H1 — Alt text and accessible name _quality_ (SC 1.1.1, 2.5.3)
 
@@ -618,9 +624,22 @@ pointer. The catalogue is the long-lived memory of this skill;
 without the append, the next run misses the class entirely.
 
 When WCAG is updated (e.g. the W3C publishes WCAG 2.3 or amends a 2.2
-SC), refresh `specs/` from
-[`https://www.w3.org/TR/WCAG22/`](https://www.w3.org/TR/WCAG22/),
-[`https://www.w3.org/WAI/WCAG22/quickref/`](https://www.w3.org/WAI/WCAG22/quickref/),
-and [`https://www.w3.org/TR/WCAG22/all.html`](https://www.w3.org/TR/WCAG22/all.html).
-Update `criteria.md` to reflect any added / removed / renumbered SC,
-and adjust the catalogue rows that referenced changed criteria.
+SC), refresh `specs/` by re-fetching the source documents and
+re-running `pandoc -f html -t commonmark-raw_html` on each to land
+clean markdown:
+
+```sh
+cd .agent/skills/verify-wcag/specs
+for src in \
+  "wcag22|https://www.w3.org/TR/WCAG22/" \
+  "wcag22-quickref|https://www.w3.org/WAI/WCAG22/quickref/" \
+  "wcag22-techniques-index|https://www.w3.org/TR/WCAG22/all.html"; do
+  IFS='|' read name url <<< "$src"
+  curl -sL "$url" | pandoc -f html -t commonmark-raw_html --wrap=preserve -o "$name.md"
+done
+```
+
+Then strip the residual W3C masthead noise (empty self-link anchors,
+logo image links, padding blank lines) the same way the initial import
+did. Update `criteria.md` to reflect any added / removed / renumbered
+SC, and adjust the catalogue rows that referenced changed criteria.
