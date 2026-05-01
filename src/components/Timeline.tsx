@@ -1159,11 +1159,8 @@ export function Timeline() {
         (() => {
           const hasMultipleRoles =
             !!selectedItem.roles && selectedItem.roles.length >= 2;
-          const headingText = hasMultipleRoles
-            ? t(selectedItem.subtitle)
-            : t(selectedItem.title);
-          const showSubtitle =
-            !hasMultipleRoles && t(selectedItem.subtitle).length > 0;
+          const headingText = t(selectedItem.title);
+          const showSubtitle = t(selectedItem.subtitle).length > 0;
           const roleRanges = hasMultipleRoles
             ? selectedItem.roles!.map((role, i) => {
                 const roles = selectedItem.roles!;

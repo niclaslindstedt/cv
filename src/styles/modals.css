@@ -258,7 +258,7 @@
   color: var(--fg);
   background: transparent;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius);
   cursor: pointer;
   line-height: 1.2;
 }

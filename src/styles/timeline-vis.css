@@ -514,6 +514,7 @@
   height: 28px;
   font-size: 0.9rem;
   line-height: 1;
+  border-radius: var(--radius);
 }
 
 .timeline-vis-pill {
@@ -529,25 +530,25 @@
 }
 
 .timeline-vis-pill.timeline-vis-assignment {
-  color: rgb(var(--tl-mint));
+  color: rgb(var(--tl-mint-fg));
   background: rgba(var(--tl-mint), 0.12);
   border-color: rgba(var(--tl-mint), 0.35);
 }
 
 .timeline-vis-pill.timeline-vis-education {
-  color: rgb(var(--tl-amber));
+  color: rgb(var(--tl-amber-fg));
   background: rgba(var(--tl-amber), 0.12);
   border-color: rgba(var(--tl-amber), 0.35);
 }
 
 .timeline-vis-pill.timeline-vis-course {
-  color: rgb(var(--tl-violet));
+  color: rgb(var(--tl-violet-fg));
   background: rgba(var(--tl-violet), 0.12);
   border-color: rgba(var(--tl-violet), 0.35);
 }
 
 .timeline-vis-pill.timeline-vis-sideProject {
-  color: rgb(var(--tl-pink));
+  color: rgb(var(--tl-pink-fg));
   background: rgba(var(--tl-pink), 0.12);
   border-color: rgba(var(--tl-pink), 0.35);
 }
