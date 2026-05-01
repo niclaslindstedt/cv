@@ -474,10 +474,12 @@
 
 .timeline-vis-details-side-prev {
   border-right: 1px solid var(--glass-border);
+  border-radius: var(--radius) 0 0 var(--radius);
 }
 
 .timeline-vis-details-side-next {
   border-left: 1px solid var(--glass-border);
+  border-radius: 0 var(--radius) var(--radius) 0;
 }
 
 .timeline-vis-details-side:hover:not(:disabled),
