@@ -30,6 +30,7 @@ export function useSwipeClose(
   ref: RefObject<HTMLElement | null>,
   enabled: boolean,
   onClose: () => void,
+  fadeOverlay = true,
 ): void {
   const onCloseRef = useRef(onClose);
   useEffect(() => {
@@ -40,7 +41,7 @@ export function useSwipeClose(
     if (!enabled) return;
     const el = ref.current;
     if (!el) return;
-    const overlay = el.parentElement;
+    const overlay = fadeOverlay ? el.parentElement : null;
 
     let startX = 0;
     let startY = 0;
@@ -241,5 +242,5 @@ export function useSwipeClose(
       el.removeEventListener("touchcancel", handleCancel);
       clearStyles();
     };
-  }, [enabled, ref]);
+  }, [enabled, ref, fadeOverlay]);
 }
