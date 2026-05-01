@@ -150,10 +150,18 @@ true` renders the link as a pill (used for the blog link). The
 
 ### `focus[]`
 
-- **Add** — append `{ "area": "...", "since": "YYYY-MM" }`. Move to
+- **Add** — append `{ "area", "since": "YYYY-MM", "tagline",
+"description" }`, plus optional `skills` and `aliases`. Move to
   top if the user says it's the primary focus now.
-- **Update** — find by `area`; change `since` if the user says they
-  started earlier/later.
+  - `tagline` — one sentence, ~80–100 characters, that says what the
+    focus area IS. Rendered on the focus index card and as the
+    pull-quote lede in the modal. Do not exceed ~110 characters or it
+    will clamp on mobile.
+  - `description` — the longer body copy shown under the tagline in
+    the modal. Don't restate the tagline; pick up where it leaves off.
+- **Update** — find by `area`. Typical edits: tagline, description,
+  `since`, `skills`. When the description changes meaningfully,
+  re-evaluate the tagline too — it is independent copy.
 - **Remove** — delete the object. Ask the user to confirm if the
   focus area is referenced in any `projects[].description`.
 

@@ -35,6 +35,7 @@ export type Sections = {
 export type FocusArea = {
   area: LocalizedString;
   since: string;
+  tagline: LocalizedString;
   description: LocalizedString;
   skills?: string[];
   aliases?: string[];
