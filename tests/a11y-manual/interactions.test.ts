@@ -192,6 +192,40 @@ test.describe("reduced motion (SC 2.2.2)", () => {
   });
 });
 
+test.describe("toggle button label matches action (SC 2.5.3, 4.1.2)", () => {
+  // The hero ThemeToggle is a "two-button radio" pattern: each button
+  // represents a destination mode (light or dark). A click on the
+  // already-pressed button must be idempotent — otherwise its
+  // aria-label "Switch to <mode>" lies about activation, which voice-
+  // control users (Label in Name) and screen-reader users (Name, Role,
+  // Value) hit head-on.
+  for (const start of ["dark", "light"] as const) {
+    test(`pressing the active button in ${start} mode keeps the theme on ${start}`, async ({
+      page,
+    }) => {
+      await page.goto("/?lang=en");
+      await settle(page);
+      await page.evaluate((t) => {
+        document.documentElement.dataset.theme = t;
+        localStorage.setItem("theme", t);
+      }, start);
+      await page.reload();
+      await settle(page);
+
+      const active = page
+        .locator('.hero .theme-toggle-btn[aria-pressed="true"]')
+        .first();
+      await active.scrollIntoViewIfNeeded();
+      await active.click();
+
+      const themeAfter = await page.evaluate(
+        () => document.documentElement.dataset.theme,
+      );
+      expect(themeAfter).toBe(start);
+    });
+  }
+});
+
 test.describe("hover-revealed content dismissible (SC 1.4.13)", () => {
   test("project stack chip tooltip closes on Escape", async ({ page }) => {
     await page.goto("/?lang=en");

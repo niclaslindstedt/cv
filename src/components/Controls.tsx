@@ -63,10 +63,10 @@ export function SearchButton({
 
 export function ThemeToggle({
   theme,
-  onToggleTheme,
+  setTheme,
 }: {
   theme: Theme;
-  onToggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
 }) {
   const { ui } = useLang();
   const isDark = theme === "dark";
@@ -78,7 +78,7 @@ export function ThemeToggle({
         aria-pressed={!isDark}
         aria-label={ui.theme.switchToLight}
         title={ui.theme.light}
-        onClick={onToggleTheme}
+        onClick={() => setTheme("light")}
       >
         <SunIcon />
       </button>
@@ -88,7 +88,7 @@ export function ThemeToggle({
         aria-pressed={isDark}
         aria-label={ui.theme.switchToDark}
         title={ui.theme.dark}
-        onClick={onToggleTheme}
+        onClick={() => setTheme("dark")}
       >
         <MoonIcon />
       </button>
