@@ -5,10 +5,40 @@
 }
 
 .skills-group h3 {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--fg);
+}
+
+/* Skill-group title — small inline glyph chip + label, tinted by the group's
+ * --cat-rgb / --cat-fg pair (set inline by Skills.tsx). Mirrors the
+ * §10.5 section-title-glyph language but lives inside the Skills section
+ * so the per-group hue stays scoped (docs/DESIGN.md §10.6). */
+.skills-group-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skills-group-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: rgb(var(--cat-fg, var(--cat-rgb, var(--accent-rgb))));
+  background: rgba(var(--cat-rgb, var(--accent-rgb)), 0.16);
+  border: 1px solid rgba(var(--cat-rgb, var(--accent-rgb)), 0.45);
+  border-radius: 6px;
+}
+
+:root[data-theme="light"] .skills-group-glyph {
+  background: rgba(var(--cat-rgb, var(--accent-rgb)), 0.22);
+}
+
+.skill-group-glyph {
+  display: block;
 }
 
 .skills-group > ul {
@@ -87,11 +117,24 @@ button.skill-pill-btn {
     border-color: var(--accent);
     background: var(--accent-soft);
   }
+
+  /* Within a skill-group with a category tint, hover and the usage count
+   * adopt the group's hue. Keeps each group's pills visually anchored to
+   * its glyph. (docs/DESIGN.md §10.6) */
+  .skills-group[data-group] button.skill-pill-btn:hover {
+    color: rgb(var(--cat-fg, var(--cat-rgb)));
+    border-color: rgba(var(--cat-rgb), 0.6);
+    background: rgba(var(--cat-rgb), 0.16);
+  }
 }
 
 button.skill-pill-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.skills-group[data-group] button.skill-pill-btn:focus-visible {
+  outline-color: rgb(var(--cat-fg, var(--cat-rgb)));
 }
 
 .skill-usage-count {
@@ -105,6 +148,11 @@ button.skill-pill-btn:focus-visible {
   color: var(--accent);
   background: var(--accent-soft);
   border-radius: 999px;
+}
+
+.skills-group[data-group] .skill-usage-count {
+  color: rgb(var(--cat-fg, var(--cat-rgb)));
+  background: rgba(var(--cat-rgb), 0.18);
 }
 
 .entry-stack,

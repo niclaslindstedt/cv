@@ -445,7 +445,7 @@ illustration.
 
 ### 7.3 Alignment
 
-See §10.6 — icon-in-text alignment is a recurring pattern with two
+See §10.7 — icon-in-text alignment is a recurring pattern with two
 canonical solutions (inline and grid/flex row).
 
 ---
@@ -797,7 +797,7 @@ inside a single card as a `roles[]` array.
   anchors the progression.
 - Title type in the chain uses Code Mono (matching the heading role)
   at Meta size.
-- Alignment follows §10.6.
+- Alignment follows §10.7.
 - **Assignment subject line.** When an Assignment modal renders the
   subject (client company), the consultancy is labelled with a
   small accent pill (§9.2) reading `via <Consultancy>`. The pill is
@@ -938,7 +938,56 @@ be used consistently and only for these four section types.
   and title glyph hidden if the SPA components are ever printed
   directly.
 
-### 10.6 Icon-in-text alignment
+### 10.6 Skill-group glyph
+
+The Skills section is a single page section but a long one, broken
+into nine groups (AI, Languages, Frameworks, Cloud, Databases,
+DevOps, Practices, Leadership, Compliance). Without per-group
+identity it reads as one undifferentiated wall of pills, so each
+group carries its own small glyph chip and a hue that tints the
+pills inside it on hover.
+
+This pattern is **scoped to the Skills section** — it intentionally
+does not bleed onto card surfaces, modal headers, or the Timeline.
+The four-category language in §10.5 (Sapphire / Iris / Mint / Ember)
+remains the only chromatic vocabulary that travels across surfaces.
+
+- **Glyph chip.** A 22px square sitting inline before each group
+  heading, rounded to `6px` (smaller than the §10.5 card-bar radius
+  to read as a label, not a section badge). Flat fill at 16% alpha
+  of the group's RGB triplet (22% in light theme), 1px border at 45%
+  alpha for the WCAG 1.4.11 3:1 non-text contrast, glyph painted in
+  the matching `--*-fg` token at full opacity.
+- **Glyph.** A 1.75px-stroke outlined SVG at 16px on a 24×24
+  viewBox, rendered by `src/components/SkillGroupGlyph.tsx`.
+- **Pill tint.** Pills inside a tinted group hover to that group's
+  hue (foreground colour, 60%-alpha border, 16%-alpha background)
+  and the usage-count chip on each pill borrows the same colour at
+  18% alpha. Default state stays neutral Mist so the page only
+  ignites under interaction.
+- **Group → hue mapping.**
+
+  | Group      | Token         | Glyph                       |
+  | ---------- | ------------- | --------------------------- |
+  | AI         | `--tl-pink`   | Sparkle (4-pt star + spark) |
+  | Languages  | `--tl-blue`   | Terminal box `>_`           |
+  | Frameworks | `--tl-violet` | Stacked layers (×3)         |
+  | Cloud      | `--tl-cyan`   | Cloud silhouette            |
+  | Databases  | `--tl-mint`   | Database cylinder           |
+  | DevOps     | `--tl-amber`  | Gear                        |
+  | Practices  | `--tl-green`  | Compass                     |
+  | Leadership | `--tl-coral`  | Flag                        |
+  | Compliance | `--tl-steel`  | Shield with check           |
+
+  Sapphire / Iris / Mint / Ember are reused here intentionally — the
+  Skills context (small heading inside one section) is far enough
+  from the §10.5 card-surface usage that no confusion arises, and it
+  keeps the palette small.
+
+- **Print.** Skill-group glyphs and tints are excluded from
+  PrintView; Skills prints as a flat list to keep the PDF compact.
+
+### 10.7 Icon-in-text alignment
 
 Small inline SVG icons must read as visually centered with the text
 beside them. Two cases:
@@ -1201,6 +1250,12 @@ table. **Update this whenever the implementation moves**.
 | Bloom           | `--tl-pink`              | `src/styles/tokens.css`         |
 | Bloom Text      | `--tl-green-fg`          | `src/styles/tokens.css`         |
 | Verdant         | `--tl-green`             | `src/styles/tokens.css`         |
+| Cyan            | `--tl-cyan`              | `src/styles/tokens.css`         |
+| Cyan Fg         | `--tl-cyan-fg`           | `src/styles/tokens.css`         |
+| Coral           | `--tl-coral`             | `src/styles/tokens.css`         |
+| Coral Fg        | `--tl-coral-fg`          | `src/styles/tokens.css`         |
+| Steel           | `--tl-steel`             | `src/styles/tokens.css`         |
+| Steel Fg        | `--tl-steel-fg`          | `src/styles/tokens.css`         |
 | Pulse           | `--pulse`                | `src/styles/tokens.css`         |
 | Pulse Soft      | `--pulse-soft`           | `src/styles/tokens.css`         |
 | Pulse Glow      | `--pulse-glow`           | `src/styles/tokens.css`         |
@@ -1231,6 +1286,7 @@ table. **Update this whenever the implementation moves**.
 | Search trigger         | `src/components/SearchTrigger.tsx` + `src/components/SearchModal.tsx` + `src/styles/search.css`.                                         |
 | Project date chip      | `src/components/ProjectDateChip.tsx` + `src/styles/projects.css`.                                                                        |
 | Empty state            | `src/components/Skills.tsx` + `src/styles/skills.css`.                                                                                   |
+| Skill-group glyph      | `src/components/SkillGroupGlyph.tsx` + `src/components/Skills.tsx` + `src/styles/skills.css`.                                            |
 | Languages              | `src/components/Languages.tsx` + `src/styles/languages.css`.                                                                             |
 | Page chrome (Sky)      | `src/components/CelestialSky.tsx` + `src/styles/sky.css`; page column + footer in `src/styles/layout.css` and `src/styles/base.css`.     |
 
@@ -1242,6 +1298,7 @@ table. **Update this whenever the implementation moves**.
 | Active / Present indicator         | `src/components/Experience.tsx` + `src/styles/experience.css`.                                                                           |
 | Timeline visualization             | `src/components/Timeline.tsx` + `src/styles/timeline-vis.css`.                                                                           |
 | Wrapping with separator characters | `src/components/Education.tsx` (`<p class="education-meta-trail">` + `.education-meta-trail > span` rule in `src/styles/education.css`). |
+| Skill-group glyph                  | `src/components/SkillGroupGlyph.tsx` + `src/components/Skills.tsx` + `src/styles/skills.css` + tokens in `src/styles/tokens.css`.        |
 | Icon-in-text alignment             | `src/styles/experience.css`, `src/styles/section.css`, etc.                                                                              |
 
 ### 15.4 Print map
