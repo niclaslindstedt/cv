@@ -11,7 +11,7 @@ import {
 type Props = {
   cv: CV;
   theme: Theme;
-  onToggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
   onOpenSummary: () => void;
   onOpenSearch: () => void;
 };
@@ -19,7 +19,7 @@ type Props = {
 export function Hero({
   cv,
   theme,
-  onToggleTheme,
+  setTheme,
   onOpenSummary,
   onOpenSearch,
 }: Props) {
@@ -79,7 +79,7 @@ export function Hero({
               <span>{ui.hero.pdf}</span>
             </a>
             <LanguageToggle lang={lang} setLang={setLang} />
-            <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
+            <ThemeToggle theme={theme} setTheme={setTheme} />
             <SearchButton onClick={onOpenSearch} />
           </div>
         </div>

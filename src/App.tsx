@@ -114,7 +114,7 @@ export function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedExperience, setSelectedExperience] =
     useState<ExperienceModalData | null>(null);
-  const { theme, toggle: toggleTheme } = useTheme();
+  const { theme, toggle: toggleTheme, setTheme } = useTheme();
   const { t, ui } = useLang();
   useGlassReflections();
 
@@ -222,7 +222,7 @@ export function App() {
         <Hero
           cv={cv}
           theme={theme}
-          onToggleTheme={toggleTheme}
+          setTheme={setTheme}
           onOpenSummary={() => setSummaryOpen(true)}
           onOpenSearch={() => setSearchOpen(true)}
         />
