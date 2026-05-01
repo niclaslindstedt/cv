@@ -208,7 +208,7 @@ export function ExperienceModal({
             ✕
           </button>
         </header>
-        <div className="skill-modal-body">
+        <div className="skill-modal-body" tabIndex={0}>
           <section className="skill-modal-detail">
             <div className="timeline-meta experience-modal-meta">
               <span>{formatRange(item.startDate, item.endDate, lang)}</span>

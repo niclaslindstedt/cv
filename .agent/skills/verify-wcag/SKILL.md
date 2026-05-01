@@ -28,6 +28,39 @@ confirmation; never auto-rewrites markup, ARIA, or motion budgets).
 > wrap-up step in one place, so nothing gets dropped between reading
 > the catalogue and reporting findings.
 
+## Run the local accessibility tests first
+
+Before walking the catalogue, run the full local a11y suite. The
+machine-checkable layer must be green so the manual walk only spends
+attention on judgement-only findings:
+
+```sh
+make build              # produce dist/ for the preview server
+make test-a11y          # axe-core + interaction tests (per-PR gate)
+make test-a11y-manual   # local-only Playwright (reflow, resize-text,
+                        # focus-not-obscured, timeline interaction,
+                        # focus-return on every modal,
+                        # reduced-motion canvas check)
+```
+
+Both suites must pass. Their coverage map:
+
+| Suite                                          | What it covers                                                                                                                                                                                                                                                                        |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tests/a11y/site.test.ts`                      | axe-core scan of `/`, `/timeline`, and the pre-rendered `print-en.html` / `print-sv.html` across en + sv × dark + light × desktop + mobile. Toggles theme and language via the real `FloatingControls` buttons (no `dataset.theme` mutation).                                         |
+| `tests/a11y/interactions.test.ts`              | Opens every modal (Hero summary, Search, Focus, Project, Skill, Company, Education program, Course modules, plus the search-via-keyboard flow), runs axe inside the open modal, asserts Tab cycles inside, asserts Escape closes. Also exercises `<details>` expansion in Experience. |
+| `tests/a11y-manual/reflow.test.ts`             | SC 1.4.10 — document does not horizontally scroll at 320 CSS px.                                                                                                                                                                                                                      |
+| `tests/a11y-manual/resize-text.test.ts`        | SC 1.4.4 — no clipping at 200% root font; SC 1.4.12 spacing under stress.                                                                                                                                                                                                             |
+| `tests/a11y-manual/focus-not-obscured.test.ts` | SC 2.4.11 — sample 9 points around each focused element; reject fully-obscured.                                                                                                                                                                                                       |
+| `tests/a11y-manual/timeline.test.ts`           | Timeline keyboard operability (zoom, reset, track-label scroll-to), focus-trap inside the GitHub details panel, reduced-motion gate on the zoom tween, reflow at 320 px.                                                                                                              |
+| `tests/a11y-manual/interactions.test.ts`       | Focus _returns_ to the invoking trigger after every modal closes; `CelestialSky` canvas does not paint under `prefers-reduced-motion`; hover popovers dismiss on Escape.                                                                                                              |
+
+If a row in the hazard catalogue below is already covered by one of
+the above, the skill walk is for visual / judgement-only confirmation
+— not re-coverage. If a finding surfaces a hazard the suite does not
+cover, follow [_Promote untestable findings to local automation_](#promote-untestable-findings-to-local-automation):
+add a test in the matching suite **in the same run**.
+
 ## Mental model
 
 > "axe verifies that the building blocks are spelled right; this skill
@@ -660,12 +693,15 @@ After every applied batch, and once at the end of the run:
 - `make lint` — TypeScript + ESLint pass.
 - `make build` — production build succeeds.
 - `make test` — Vitest schema / unit tests still pass.
-- `make test-a11y` — axe scan still green; the patch did not
-  regress automated A/AA conformance.
-- `make test-a11y-manual` — local-only Playwright suite that
-  encodes the catalogue findings axe cannot express (reflow at
-  320 CSS px, resize-text 200%, focus-not-obscured, etc.). Must
-  be green before declaring the run done.
+- `make test-a11y` — axe-core scan + interaction suite still green.
+  Covers `/`, `/timeline`, and the print views for the static AA
+  matrix, plus every modal opened and re-scanned.
+- `make test-a11y-manual` — local-only Playwright suite that encodes
+  the catalogue findings axe cannot express (reflow at 320 CSS px,
+  resize-text 200%, focus-not-obscured, timeline keyboard
+  operability + reduced-motion zoom, focus-return on every modal,
+  CelestialSky reduced-motion gate). Must be green before declaring
+  the run done.
 - `make test-visual` — visual snapshots still match (a11y fixes that
   add `aria-*` attributes are invisible to Playwright, but ones that
   change layout — e.g. raising a target's `min-height` — will move
@@ -688,6 +724,10 @@ than no audit because they imply false confidence.
       changes you intend to land).
 - [ ] `make build` ran successfully, `dist/` is current.
 - [ ] Preview server running on a known port.
+- [ ] `make test-a11y` passes locally (axe + interaction suite).
+- [ ] `make test-a11y-manual` passes locally (reflow, resize-text,
+      focus-not-obscured, timeline, modal focus-return,
+      reduced-motion canvas).
 - [ ] Real keyboard at hand (mouse-only invalidates the keyboard rows).
 - [ ] Screen reader available, **or** explicitly noted as skipped for
       this run (rows H1, H2, H16 degrade to best-effort without one).

@@ -146,7 +146,7 @@ export function SkillModal({
             ✕
           </button>
         </header>
-        <div className="skill-modal-body">
+        <div className="skill-modal-body" tabIndex={0}>
           {detail && (
             <section className="skill-modal-detail">
               <p className="skill-modal-description">
