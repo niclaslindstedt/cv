@@ -6,6 +6,7 @@ import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { aggregateProjectStats } from "../utils/projectStats";
 import { stackEntries } from "../utils/stack";
+import { CategoryGlyph } from "./CategoryGlyph";
 import { Section } from "./Section";
 
 const projectStats = projectStatsData as ProjectStatsFile;
@@ -49,7 +50,7 @@ export function Projects({
       .sort((a, b) => b.lastMs - a.lastMs);
   }, [projects]);
   return (
-    <Section id="projects" title={title}>
+    <Section id="projects" title={title} category="project">
       <div className="projects">
         {decoratedProjects.map(({ project, stats, isActive }) => {
           const hasDateRange = !!(
@@ -63,6 +64,9 @@ export function Projects({
               className={classes.join(" ")}
               onClick={() => onProjectClick(project)}
             >
+              <span className="card-glyph-bar" aria-hidden="true">
+                <CategoryGlyph category="project" />
+              </span>
               {project.openSource && (
                 <span className="project-oss-badge">open source</span>
               )}

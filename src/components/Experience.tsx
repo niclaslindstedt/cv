@@ -7,6 +7,7 @@ import type {
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { stackEntries } from "../utils/stack";
+import { CategoryGlyph } from "./CategoryGlyph";
 import { NoteIcon } from "./NoteIcon";
 import { Section } from "./Section";
 
@@ -149,7 +150,7 @@ export function Experience({
   onCompanyClick,
 }: Props) {
   return (
-    <Section id="experience" title={title}>
+    <Section id="experience" title={title} category="experience">
       <ol className="timeline">
         {experience.map((item) => (
           <ExperienceItemView
@@ -187,6 +188,9 @@ function ExperienceItemView({
   if (isActive) classes.push("is-active");
   return (
     <li className={classes.join(" ")}>
+      <span className="card-glyph-bar" aria-hidden="true">
+        <CategoryGlyph category="experience" />
+      </span>
       {isActive && <span className="active-badge">{ui.present}</span>}
       <div className="timeline-body">
         <h3 className="timeline-title">

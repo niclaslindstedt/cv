@@ -1,6 +1,7 @@
 import type { Course, CourseMoment } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { CategoryGlyph } from "./CategoryGlyph";
 import { Section } from "./Section";
 
 type Props = {
@@ -40,7 +41,7 @@ export function Courses({
   const { lang, t, ui } = useLang();
   if (courses.length === 0) return null;
   return (
-    <Section id="courses" title={title}>
+    <Section id="courses" title={title} category="course">
       <ul className="education-list">
         {courses.map((item) => {
           const moments = item.moments ?? [];
@@ -111,6 +112,9 @@ export function Courses({
           );
           return (
             <li key={`${item.code}-${endDate ?? item.startDate ?? "x"}`}>
+              <span className="card-glyph-bar" aria-hidden="true">
+                <CategoryGlyph category="course" />
+              </span>
               {hasMoments ? (
                 <button
                   type="button"

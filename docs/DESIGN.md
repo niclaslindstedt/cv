@@ -429,7 +429,7 @@ illustration.
 
 ### 7.3 Alignment
 
-See §10.5 — icon-in-text alignment is a recurring pattern with two
+See §10.6 — icon-in-text alignment is a recurring pattern with two
 canonical solutions (inline and grid/flex row).
 
 ---
@@ -762,7 +762,7 @@ inside a single card as a `roles[]` array.
   anchors the progression.
 - Title type in the chain uses Code Mono (matching the heading role)
   at Meta size.
-- Alignment follows §10.5.
+- Alignment follows §10.6.
 - **Assignment subject line.** When an Assignment modal renders the
   subject (client company), the consultancy is labelled with a
   small accent pill (§9.2) reading `via <Consultancy>`. The pill is
@@ -834,7 +834,48 @@ dot and the segment travel together to the next line.
 This is a typography hygiene rule, not a styling preference. A line
 beginning with `·` reads as a bullet, not a continuation.
 
-### 10.5 Icon-in-text alignment
+### 10.5 Category glyph bar
+
+Cards in the four scrolled sections — **Experience**, **Side
+projects**, **Education**, **Courses** — carry a coloured left bar
+that doubles as the card's identity badge. The bar is the only
+non-Aurora colour applied to a card surface, so it must be used
+consistently and only for these four section types.
+
+- **Surface.** A 36px-wide column flush to the card's left edge,
+  rendered as the card's `::before`/inner span and rounded to match
+  the card's left corners (`radius-md`). It sits inside the existing
+  card border so the card outline stays unbroken.
+- **Tint.** Flat fill at 16% alpha of the section's timeline category
+  token; 22% in light theme. A 1px right edge at 45% alpha provides
+  the 3:1 non-text contrast that WCAG 1.4.11 requires.
+- **Glyph.** A 1.75px-stroke outlined SVG at `medium` (16–18px),
+  painted in the same category token at full opacity. The glyph sits
+  pinned to the **top** of the bar with `lg` (16px) of breathing room
+  so it remains anchored as the card grows downward — it's a marker,
+  not a centerpiece.
+- **Category mapping.**
+
+  | Section       | Token         | Glyph               |
+  | ------------- | ------------- | ------------------- |
+  | Experience    | `--tl-blue`   | Briefcase           |
+  | Side projects | `--tl-violet` | Code brackets `</>` |
+  | Education     | `--tl-mint`   | Mortarboard         |
+  | Courses       | `--tl-amber`  | Open book           |
+
+  The mapping mirrors the Timeline's category palette (§10.3) so the
+  same Sapphire/Iris/Mint/Ember language reads the same in both views.
+
+- **Section title.** The matching glyph also appears inline before the
+  section eyebrow (Mist tier), tinted in the section's category token.
+  This is the only place the eyebrow gets a chromatic accent, and it
+  ties the title visually to the cards underneath.
+- **Print.** The bar and the title glyph are hidden in print — the PDF
+  pipeline runs through `PrintView` (§6) which doesn't include either.
+  A defensive `@media print` rule keeps them hidden if the SPA
+  components are ever printed directly.
+
+### 10.6 Icon-in-text alignment
 
 Small inline SVG icons must read as visually centered with the text
 beside them. Two cases:
