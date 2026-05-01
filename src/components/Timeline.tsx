@@ -482,7 +482,6 @@ export function Timeline() {
           onClick={() => setSelectedId(bar.id)}
           title={ghTitle}
           aria-label={ghTitle}
-          tabIndex={-1}
         >
           {cells.map((cell, i) => {
             const opacity = ghOpacity(

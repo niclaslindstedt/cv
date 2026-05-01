@@ -35,7 +35,6 @@
     rgba(170, 188, 210, 0.008) 70%,
     transparent 92%
   );
-  animation: orb-pulse 11s ease-in-out infinite alternate;
 }
 
 .orb-body {
@@ -50,18 +49,6 @@
     rgba(190, 205, 225, 0.012) 72%,
     transparent 100%
   );
-  animation: orb-pulse 13s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes orb-pulse {
-  0% {
-    opacity: 0.88;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.04);
-  }
 }
 
 .atmosphere {
@@ -122,19 +109,7 @@
     45% 42%
   );
   opacity: var(--star-alpha);
-  animation: star-twinkle var(--star-duration) ease-in-out infinite alternate;
-  animation-delay: var(--star-delay);
   transform: translate(-50%, -50%);
-  will-change: opacity;
-}
-
-@keyframes star-twinkle {
-  0% {
-    opacity: calc(var(--star-alpha) * 0.4);
-  }
-  100% {
-    opacity: var(--star-alpha);
-  }
 }
 
 .orbfield {
@@ -156,18 +131,6 @@
     transparent 100%
   );
   transform: translate(-50%, -50%);
-  animation: ambient-orb-pulse var(--orb-duration, 14s) ease-in-out infinite
-    alternate;
-  animation-delay: var(--orb-delay, 0s);
-}
-
-@keyframes ambient-orb-pulse {
-  0% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 .cloudfield {
@@ -188,30 +151,6 @@
     rgba(255, 255, 255, 0) 100%
   );
   transform: translate(-50%, -50%);
-  animation: cloud-drift var(--cloud-drift, 240s) ease-in-out infinite alternate;
-  animation-delay: var(--cloud-delay, 0s);
-}
-
-@keyframes cloud-drift {
-  0% {
-    transform: translate(-58%, -50%) scale(0.95);
-  }
-  100% {
-    transform: translate(-42%, -52%) scale(1.08);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .orb-halo,
-  .orb-body,
-  .star,
-  .cloud,
-  .ambient-orb {
-    animation: none !important;
-  }
-  .celestial {
-    transition: none;
-  }
 }
 
 /* Hairline reflection that traces the glass edge. The gradient lives
