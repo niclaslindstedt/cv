@@ -343,11 +343,39 @@ export function Timeline() {
     const viewport = viewportRef.current;
     if (!viewport) return;
     didInitialScrollRef.current = true;
+
+    let latestExpStart: number | null = null;
+    for (const track of tracks) {
+      for (const bar of track.bars) {
+        if (bar.kind !== "experience") continue;
+        const start = bar.segments[0].startMonth;
+        if (latestExpStart === null || start > latestExpStart) {
+          latestExpStart = start;
+        }
+      }
+    }
+
     const nowIdx = nowMonthIndex();
-    const targetX = (nowIdx - minMonth) * monthPx;
-    const left = Math.max(0, targetX - viewport.clientWidth / 2);
-    viewport.scrollTo({ left, top: 0, behavior: "auto" });
-  }, [minMonth, monthPx]);
+    const clientWidth = viewport.clientWidth;
+
+    let initialScale = 1;
+    if (latestExpStart !== null && nowIdx > latestExpStart) {
+      const monthsSpan = nowIdx - latestExpStart + 2;
+      const required = clientWidth / monthsSpan / BASE_MONTH_PX;
+      initialScale = clamp(required, 0.8, 1);
+    }
+
+    setScale(initialScale);
+
+    const newMonthPx = BASE_MONTH_PX * initialScale;
+    const targetX = (nowIdx - minMonth) * newMonthPx;
+    const left = Math.max(0, targetX - clientWidth + 24);
+
+    requestAnimationFrame(() => {
+      const v = viewportRef.current;
+      if (v) v.scrollTo({ left, top: 0, behavior: "auto" });
+    });
+  }, [minMonth, tracks]);
 
   useEffect(() => {
     const el = viewportRef.current;
