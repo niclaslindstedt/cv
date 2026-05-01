@@ -28,7 +28,8 @@
     color: #111111;
   }
 
-  body::before {
+  body::before,
+  .page::before {
     display: none;
   }
 
