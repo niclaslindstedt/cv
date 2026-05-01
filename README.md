@@ -150,6 +150,13 @@ its own one-word status badge:
   AAA pass (`wcag2aaa` / `wcag21aaa` / `wcag22aaa`) runs as advisory
   only — findings are logged and attached to the report but never
   fail the build.
+- **Accessibility (deep)** (`.github/workflows/a11y-deep.yml`) —
+  scheduled daily at 06:00 UTC (and manually dispatchable). Runs
+  pa11y-ci (HTML CodeSniffer, a different rule engine from axe-core)
+  at WCAG 2.2 AAA against both languages plus the print views.
+  Always advisory; findings are printed in the workflow log so they
+  never block PRs but stay visible. Off the per-PR critical path
+  because WCAG 2.2 AAA against four URLs is slow.
 - **Lighthouse** (`.github/workflows/lighthouse.yml`) — `lhci autorun`
   against the built `dist/` with hard budgets in `.lighthouserc.json`:
   LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤ 300 ms, plus accessibility and SEO

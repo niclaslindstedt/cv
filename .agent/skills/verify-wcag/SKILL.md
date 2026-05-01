@@ -11,9 +11,12 @@ the automated CI scan does **not** cover.
 The `Accessibility` workflow (`.github/workflows/a11y.yml`) runs
 `@axe-core/playwright` against the built site and gates pull requests
 on every machine-checkable WCAG 2.0 / 2.1 / 2.2 Level A and AA rule.
-That catches roughly 30–50% of conformance issues in practice — the
-rest require human judgement, a real keyboard, and (where available) a
-screen reader. This skill is that "rest".
+The sister `Accessibility (deep)` workflow
+(`.github/workflows/a11y-deep.yml`) runs `pa11y-ci` (HTML CodeSniffer,
+a different rule engine) at WCAG 2.2 AAA on a daily cron — advisory
+only. Together they catch roughly 30–50% of conformance issues in
+practice — the rest require human judgement, a real keyboard, and
+(where available) a screen reader. This skill is that "rest".
 
 It is **drift-reactive** (run before a release, after a UI overhaul,
 when a real user reports an a11y bug, or when the WCAG 2.2 spec is
