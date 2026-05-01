@@ -17,26 +17,27 @@ CLI; tests live under `tests/` (Vitest + Playwright).
 Prefer `make` targets over raw `npm run` commands so local and CI stay
 in sync:
 
-| Command                   | What it does                                                                                                                                                                                                 |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `make install`            | `npm ci`                                                                                                                                                                                                     |
-| `make dev`                | Start Vite dev server                                                                                                                                                                                        |
-| `make build`              | Type-check and produce production build                                                                                                                                                                      |
-| `make preview`            | Preview the production build                                                                                                                                                                                 |
-| `make lint`               | ESLint + TypeScript type-check                                                                                                                                                                               |
-| `make typecheck`          | `tsc -b --noEmit` only                                                                                                                                                                                       |
-| `make fmt`                | Prettier rewrite in place                                                                                                                                                                                    |
-| `make fmt-check`          | Prettier check without writing                                                                                                                                                                               |
-| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json`                                                                                                             |
-| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in                                                                                                                     |
-| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                                                                                                                                          |
-| `make test-coverage`      | Vitest with v8 coverage                                                                                                                                                                                      |
-| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                                                                                                                                |
-| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                                                                                                                                    |
-| `make test-a11y`          | Playwright + axe-core WCAG 2.2 AA scan of the built site, plus an advisory AAA pass that logs but never fails (`playwright.a11y.config.ts`)                                                                  |
-| `make test-pa11y`         | pa11y-ci (HTML CodeSniffer) WCAG 2.2 AAA scan against the preview server. Slow; run locally before launches or via the daily `Accessibility (deep)` workflow. Set `PA11Y_ADVISORY=1` to log without failing. |
-| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                                                                                                                              |
-| `make clean`              | Remove `dist/` and Vite cache                                                                                                                                                                                |
+| Command                   | What it does                                                                                                                                                                                                                                                                     |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `make install`            | `npm ci`                                                                                                                                                                                                                                                                         |
+| `make dev`                | Start Vite dev server                                                                                                                                                                                                                                                            |
+| `make build`              | Type-check and produce production build                                                                                                                                                                                                                                          |
+| `make preview`            | Preview the production build                                                                                                                                                                                                                                                     |
+| `make lint`               | ESLint + TypeScript type-check                                                                                                                                                                                                                                                   |
+| `make typecheck`          | `tsc -b --noEmit` only                                                                                                                                                                                                                                                           |
+| `make fmt`                | Prettier rewrite in place                                                                                                                                                                                                                                                        |
+| `make fmt-check`          | Prettier check without writing                                                                                                                                                                                                                                                   |
+| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json`                                                                                                                                                                                 |
+| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in                                                                                                                                                                                         |
+| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                                                                                                                                                                                                              |
+| `make test-coverage`      | Vitest with v8 coverage                                                                                                                                                                                                                                                          |
+| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                                                                                                                                                                                                    |
+| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                                                                                                                                                                                                        |
+| `make test-a11y`          | Playwright + axe-core WCAG 2.2 AA scan of the built site, plus an advisory AAA pass that logs but never fails (`playwright.a11y.config.ts`)                                                                                                                                      |
+| `make test-a11y-manual`   | Local-only Playwright suite encoding the WCAG checks axe can't express — reflow at 320 CSS px (1.4.10), resize-text at 200% (1.4.4), focus-not-obscured (2.4.11). Driven by `playwright.a11y-manual.config.ts`. Not gated in CI; run before launches and after big UI overhauls. |
+| `make test-pa11y`         | pa11y-ci (HTML CodeSniffer) WCAG 2.2 AAA scan against the preview server. Slow; run locally before launches or via the daily `Accessibility (deep)` workflow. Set `PA11Y_ADVISORY=1` to log without failing.                                                                     |
+| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                                                                                                                                                                                                  |
+| `make clean`              | Remove `dist/` and Vite cache                                                                                                                                                                                                                                                    |
 
 CI is split into independent workflows. The per-PR ones each carry a
 one-word status badge and run on every push and pull request; the
@@ -196,12 +197,21 @@ Tests live under `tests/` at the repo root (`OSS_SPEC.md` §20.3):
   viewports. A second pass collects AAA-tier findings (`wcag2aaa` /
   `wcag21aaa` / `wcag22aaa`) and surfaces them as console output and
   attached JSON on the test report; AAA findings never fail the test.
+- `tests/a11y-manual/` — Playwright specs for the WCAG checks axe
+  cannot express: reflow at 320 CSS px (SC 1.4.10), resize-text at
+  200% (SC 1.4.4), focus-not-obscured (SC 2.4.11). Driven by
+  `playwright.a11y-manual.config.ts` and run via
+  `make test-a11y-manual`. **Not gated in CI** — they need a real
+  browser and some are slightly noisy under heavy load — but they
+  must be green locally before any launch. The `verify-wcag` skill
+  promotes new untestable findings into this directory.
 
 All test files end in `.test.ts` / `.test.mts` / `.tests.ts` per
 `OSS_SPEC.md` §20.2 (regex `_?[Tt]ests?$` on the stem). Vitest picks
 them up via `vitest.config.ts`; visual and a11y specs under
-`tests/visual/` and `tests/a11y/` are excluded from the Vitest
-`include` so Playwright owns them. Don't import test code from `src/`.
+`tests/visual/`, `tests/a11y/`, and `tests/a11y-manual/` are excluded
+from the Vitest `include` so Playwright owns them. Don't import test
+code from `src/`.
 
 When adding a new top-level test domain (e.g. integration tests),
 extend `vitest.config.ts` `include` rather than scattering test

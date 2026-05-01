@@ -578,11 +578,62 @@ Mirrors `sync-cross-browser`. Never auto-applies invasive changes.
 5. **Re-audit.** After applying any batch, re-run the audit for the
    touched hazards and report residual findings. Run `make test-a11y`
    to confirm the patch did not regress the automated gate.
+   Then capture the new finding shape as a regression test — see the
+   _Promote untestable findings to local automation_ rule below — so
+   the next run that introduces the same drift trips a real assertion
+   instead of relying on the catalogue walk.
 6. **Stop on judgment calls.** Do not invent ARIA — wrong ARIA is
    worse than no ARIA. Do not collapse hover-only affordances into
    click-only "fixes" without confirming the visual design intent.
    Do not bypass `prefers-reduced-motion` to "make the animation work
    for everyone". Surface the trade-off and ask.
+
+## Promote untestable findings to local automation
+
+Any finding the catalogue surfaces that **cannot** be expressed as an
+axe rule — because it depends on a real layout engine, real keyboard
+focus, viewport-specific reflow, or per-frame paint behaviour — must
+be added to the local-only Playwright suite at `tests/a11y-manual/`
+in the same run, not deferred. The suite is wired through
+`playwright.a11y-manual.config.ts` and runs via
+`make test-a11y-manual`. It is intentionally **not** part of CI:
+some of these checks are slow or judgement-sensitive, so they live
+where a contributor can run them before a launch without slowing
+every PR.
+
+Rules of thumb for what belongs there:
+
+- The check needs a real browser to render layout (reflow at
+  320 CSS px, text resize at 200%, computed widths after font
+  zoom).
+- The check needs real keyboard / focus traversal (focus order,
+  focus not obscured, focus-visible after Tab).
+- The check needs paint or animation timing
+  (`prefers-reduced-motion` honoured, no movement past 5 s).
+- The check is too noisy or environment-dependent to gate every PR
+  but is still expressible as code.
+
+Workflow when a run surfaces a new gap of this kind:
+
+1. Add a new spec under `tests/a11y-manual/` named after the
+   hazard (`reflow.test.ts`, `focus-not-obscured.test.ts`,
+   `motion-reduced.test.ts`, …).
+2. Cite the SC in a top-of-file comment so a future reader knows
+   which rule the test encodes.
+3. Run `make test-a11y-manual` locally. The test must pass on the
+   current build before the run can be declared successful — the
+   point is to lock the fixed behaviour in, not to ship a failing
+   test as a TODO.
+4. Mention the new spec in the PR description so reviewers know
+   the regression is now machine-checkable.
+
+If the hazard is genuinely impossible to encode in code (a
+screen-reader transcript check, a manual judgement on whether an
+alt text is meaningful, a contact-method consistency check across
+locales), document the decision in the PR body and leave a comment
+in the catalogue row pointing to that PR. Do **not** invent flaky
+heuristics to satisfy this rule — a missing test is honest; a
+green-but-meaningless test is worse than no coverage.
 
 ## What this skill must NOT do
 
@@ -611,6 +662,10 @@ After every applied batch, and once at the end of the run:
 - `make test` — Vitest schema / unit tests still pass.
 - `make test-a11y` — axe scan still green; the patch did not
   regress automated A/AA conformance.
+- `make test-a11y-manual` — local-only Playwright suite that
+  encodes the catalogue findings axe cannot express (reflow at
+  320 CSS px, resize-text 200%, focus-not-obscured, etc.). Must
+  be green before declaring the run done.
 - `make test-visual` — visual snapshots still match (a11y fixes that
   add `aria-*` attributes are invisible to Playwright, but ones that
   change layout — e.g. raising a target's `min-height` — will move
@@ -674,6 +729,9 @@ than no audit because they imply false confidence.
 - [ ] `make build` succeeds.
 - [ ] `make test` passes (Vitest schema / unit).
 - [ ] `make test-a11y` passes — axe gate is still green.
+- [ ] `make test-a11y-manual` passes locally — every untestable
+      finding from this run was promoted to a Playwright spec under
+      `tests/a11y-manual/` and the suite is green.
 - [ ] `make test-visual` passes, **or** the diff was triaged through
       `debug-visual` and re-recorded with intent.
 

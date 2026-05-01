@@ -626,8 +626,15 @@ export function Timeline() {
     );
   };
 
+  const detailsAnnouncement = selectedItem
+    ? ui.timeline.detailsOpened(t(selectedItem.title))
+    : "";
+
   return (
     <div className="timeline-vis-page" aria-label={ui.timeline.title}>
+      <div className="sr-only" role="status" aria-live="polite">
+        {detailsAnnouncement}
+      </div>
       <div className="timeline-vis-toolbar">
         <div className="timeline-vis-title">
           <strong>{ui.timeline.title}</strong>
@@ -802,7 +809,12 @@ export function Timeline() {
       {selectedItem &&
         selectedItem.kind === "github" &&
         selectedItem.github && (
-          <aside ref={githubDetailsRef} className="timeline-vis-details">
+          <aside
+            ref={githubDetailsRef}
+            className="timeline-vis-details"
+            role="region"
+            aria-labelledby="timeline-vis-details-title"
+          >
             <div className="timeline-vis-details-head">
               <span className="timeline-vis-pill timeline-vis-github">
                 GitHub
@@ -840,7 +852,10 @@ export function Timeline() {
                 </button>
               </div>
             </div>
-            <h3 className="timeline-vis-details-title">
+            <h3
+              id="timeline-vis-details-title"
+              className="timeline-vis-details-title"
+            >
               {t(selectedItem.title)}
             </h3>
             <p className="timeline-vis-details-sub">
@@ -909,7 +924,12 @@ export function Timeline() {
       {selectedItem &&
         selectedItem.kind === "sideProject" &&
         selectedItem.sideProject && (
-          <aside ref={sideProjectDetailsRef} className="timeline-vis-details">
+          <aside
+            ref={sideProjectDetailsRef}
+            className="timeline-vis-details"
+            role="region"
+            aria-labelledby="timeline-vis-details-title"
+          >
             <div className="timeline-vis-details-head">
               <span className="timeline-vis-pill timeline-vis-sideProject">
                 {ui.timeline.sideProject}
@@ -947,7 +967,10 @@ export function Timeline() {
                 </button>
               </div>
             </div>
-            <h3 className="timeline-vis-details-title">
+            <h3
+              id="timeline-vis-details-title"
+              className="timeline-vis-details-title"
+            >
               {t(selectedItem.title)}
             </h3>
             <p className="timeline-vis-details-sub">
@@ -1051,7 +1074,12 @@ export function Timeline() {
               })
             : [];
           return (
-            <aside ref={otherDetailsRef} className="timeline-vis-details">
+            <aside
+              ref={otherDetailsRef}
+              className="timeline-vis-details"
+              role="region"
+              aria-labelledby="timeline-vis-details-title"
+            >
               <div className="timeline-vis-details-head">
                 <span
                   className={`timeline-vis-pill timeline-vis-${selectedItem.kind}`}
@@ -1097,7 +1125,12 @@ export function Timeline() {
                   </button>
                 </div>
               </div>
-              <h3 className="timeline-vis-details-title">{headingText}</h3>
+              <h3
+                id="timeline-vis-details-title"
+                className="timeline-vis-details-title"
+              >
+                {headingText}
+              </h3>
               {showSubtitle && (
                 <p className="timeline-vis-details-sub">
                   {t(selectedItem.subtitle)}

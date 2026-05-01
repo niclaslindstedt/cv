@@ -234,6 +234,11 @@
   transform: translateX(-50%) translateY(0);
 }
 
+.project-date[data-tooltip-dismissed="true"] .project-date-tooltip {
+  opacity: 0;
+  transform: translateX(-50%) translateY(2px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project-date-tooltip {
     transition: none;
