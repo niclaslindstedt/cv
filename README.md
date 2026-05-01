@@ -143,10 +143,13 @@ its own one-word status badge:
   under `tests/visual/__screenshots__/` and were recorded on Linux; CI
   runs on `ubuntu-latest` to keep pixels stable.
 - **Accessibility** (`.github/workflows/a11y.yml`) — Playwright +
-  axe-core scan of the built site against WCAG 2.1 Level A and AA, on
-  Chromium desktop and mobile viewports, for both languages and both
-  themes. Fails on any axe violation tagged `wcag2a` / `wcag2aa` /
-  `wcag21a` / `wcag21aa`.
+  axe-core scan of the built site against WCAG 2.0 / 2.1 / 2.2 Level A
+  and AA, on Chromium desktop and mobile viewports, for both languages
+  and both themes. Fails on any axe violation tagged `wcag2a` /
+  `wcag2aa` / `wcag21a` / `wcag21aa` / `wcag22a` / `wcag22aa`. A second
+  AAA pass (`wcag2aaa` / `wcag21aaa` / `wcag22aaa`) runs as advisory
+  only — findings are logged and attached to the report but never
+  fail the build.
 - **Lighthouse** (`.github/workflows/lighthouse.yml`) — `lhci autorun`
   against the built `dist/` with hard budgets in `.lighthouserc.json`:
   LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤ 300 ms, plus accessibility and SEO

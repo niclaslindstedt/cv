@@ -17,25 +17,25 @@ CLI; tests live under `tests/` (Vitest + Playwright).
 Prefer `make` targets over raw `npm run` commands so local and CI stay
 in sync:
 
-| Command                   | What it does                                                                                     |
-| ------------------------- | ------------------------------------------------------------------------------------------------ |
-| `make install`            | `npm ci`                                                                                         |
-| `make dev`                | Start Vite dev server                                                                            |
-| `make build`              | Type-check and produce production build                                                          |
-| `make preview`            | Preview the production build                                                                     |
-| `make lint`               | ESLint + TypeScript type-check                                                                   |
-| `make typecheck`          | `tsc -b --noEmit` only                                                                           |
-| `make fmt`                | Prettier rewrite in place                                                                        |
-| `make fmt-check`          | Prettier check without writing                                                                   |
-| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json` |
-| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in         |
-| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                              |
-| `make test-coverage`      | Vitest with v8 coverage                                                                          |
-| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                    |
-| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                        |
-| `make test-a11y`          | Playwright + axe-core WCAG 2.1 AA scan of the built site (`playwright.a11y.config.ts`)           |
-| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                  |
-| `make clean`              | Remove `dist/` and Vite cache                                                                    |
+| Command                   | What it does                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `make install`            | `npm ci`                                                                                                                                    |
+| `make dev`                | Start Vite dev server                                                                                                                       |
+| `make build`              | Type-check and produce production build                                                                                                     |
+| `make preview`            | Preview the production build                                                                                                                |
+| `make lint`               | ESLint + TypeScript type-check                                                                                                              |
+| `make typecheck`          | `tsc -b --noEmit` only                                                                                                                      |
+| `make fmt`                | Prettier rewrite in place                                                                                                                   |
+| `make fmt-check`          | Prettier check without writing                                                                                                              |
+| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json`                                            |
+| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in                                                    |
+| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                                                                         |
+| `make test-coverage`      | Vitest with v8 coverage                                                                                                                     |
+| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                                                               |
+| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                                                                   |
+| `make test-a11y`          | Playwright + axe-core WCAG 2.2 AA scan of the built site, plus an advisory AAA pass that logs but never fails (`playwright.a11y.config.ts`) |
+| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                                                             |
+| `make clean`              | Remove `dist/` and Vite cache                                                                                                               |
 
 CI is split into independent workflows, each with its own
 one-word status badge. They run on every push and pull request:
@@ -46,7 +46,11 @@ one-word status badge. They run on every push and pull request:
   `make test-visual` (Playwright on Chromium, desktop + mobile viewports).
 - **Accessibility** (`.github/workflows/a11y.yml`) — `make build`, then
   `make test-a11y` (Playwright + axe-core, Chromium desktop + mobile,
-  both languages and themes; fails on any WCAG 2.1 A/AA violation).
+  both languages and themes). Fails on any WCAG 2.0 / 2.1 / 2.2 Level A
+  or AA violation. A second AAA pass (`wcag2aaa` / `wcag21aaa` /
+  `wcag22aaa`) runs alongside as advisory only — its findings are
+  printed to the workflow log and attached to the test report, but do
+  not fail the build, so the badge stays green when AA passes.
 - **Lighthouse** (`.github/workflows/lighthouse.yml`) — `make build`,
   then `make lighthouse` to assert Web-Vitals + category-score budgets.
 - **Dependabot** (`.github/workflows/dependabot.yml`) — fails when any
@@ -175,10 +179,13 @@ Tests live under `tests/` at the repo root (`OSS_SPEC.md` §20.3):
   Linux; CI runs on `ubuntu-latest` for the same reason. Re-record with
   `make test-visual-update` only after an intentional UI change, and
   commit the new pixels in the same PR.
-- `tests/a11y/` — Playwright + axe-core WCAG 2.1 AA scan of the built
+- `tests/a11y/` — Playwright + axe-core WCAG 2.2 AA scan of the built
   site, driven by `playwright.a11y.config.ts`. Asserts zero violations
-  tagged `wcag2a` / `wcag2aa` / `wcag21a` / `wcag21aa` for both
-  languages × both themes × desktop + mobile viewports.
+  tagged `wcag2a` / `wcag2aa` / `wcag21a` / `wcag21aa` / `wcag22a` /
+  `wcag22aa` for both languages × both themes × desktop + mobile
+  viewports. A second pass collects AAA-tier findings (`wcag2aaa` /
+  `wcag21aaa` / `wcag22aaa`) and surfaces them as console output and
+  attached JSON on the test report; AAA findings never fail the test.
 
 All test files end in `.test.ts` / `.test.mts` / `.tests.ts` per
 `OSS_SPEC.md` §20.2 (regex `_?[Tt]ests?$` on the stem). Vitest picks
