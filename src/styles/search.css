@@ -12,8 +12,6 @@
   place-items: start center;
   padding: 64px 24px 24px;
   background: var(--modal-overlay);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 /* Stays visible behind the destination modal so a swipe-close on top reveals
@@ -43,9 +41,7 @@
   max-height: min(640px, calc(100dvh - 96px));
   display: flex;
   flex-direction: column;
-  background: var(--glass-bg-modal);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  background: var(--modal-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);

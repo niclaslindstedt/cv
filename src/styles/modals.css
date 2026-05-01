@@ -1,3 +1,21 @@
+/* Unified modal system.
+ *
+ * Every modal shares the same outer container (.skill-modal — kept under
+ * the legacy "skill-modal" name to avoid renames across components),
+ * the same overlay, the same head, and the same body grid:
+ *
+ *   .skill-modal-body
+ *     gap: var(--modal-section-gap)        // between top-level sections
+ *     padding: var(--modal-pad-y) var(--modal-pad-x)
+ *
+ * Per-section padding is handled by .skill-modal-body alone — direct
+ * children of the body never set their own outer padding. They only set
+ * their inner gap (heading → list) via var(--modal-stack-gap).
+ *
+ * Surfaces are SOLID — no backdrop-filter on overlay or panel — so the
+ * page underneath never bleeds through.
+ */
+
 .skill-modal-overlay {
   position: fixed;
   inset: 0;
@@ -6,8 +24,6 @@
   place-items: center;
   padding: 24px;
   background: var(--modal-overlay);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .skill-modal {
@@ -16,9 +32,7 @@
   max-height: min(720px, calc(100dvh - 48px));
   display: flex;
   flex-direction: column;
-  background: var(--glass-bg-modal);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  background: var(--modal-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -29,19 +43,51 @@
 .skill-modal-body {
   display: flex;
   flex-direction: column;
+  gap: var(--modal-section-gap);
   min-height: 0;
+  padding: var(--modal-pad-y) var(--modal-pad-x);
   overflow: auto;
+}
+
+/* Top-level sections inside the body — they all share the same spacing,
+ * so individual sections never set their own padding. The body's gap and
+ * padding are the single source of truth. */
+.skill-modal-detail,
+.skill-modal-groups,
+.program-modal-summary,
+.program-courses-list,
+.skill-modal-empty,
+.skill-modal-unused,
+.course-modal-modules,
+.course-modal-skills,
+.focus-modal-skills {
+  margin: 0;
+  padding: 0;
 }
 
 .skill-modal-detail {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 14px 20px 4px;
+  gap: var(--modal-section-gap);
 }
 
-.skill-modal-detail:last-child {
-  padding-bottom: 16px;
+.skill-modal-groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-section-gap);
+}
+
+.program-modal-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
+}
+
+.program-courses-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
 }
 
 .skill-modal-description {
@@ -53,8 +99,9 @@
 
 .skill-modal-pros-cons {
   margin: 0;
-  display: grid;
-  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
 }
 
 .skill-modal-pros,
@@ -178,13 +225,21 @@
   margin: 0;
 }
 
-.company-modal-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.skill-modal-detail .entry-notes {
+  margin: 0;
 }
 
-.company-modal-stack-title {
+/* Stacked label-and-content blocks (stack list, skills list, etc.) — the
+ * gap between heading and content is the same in every modal. */
+.company-modal-stack,
+.skill-modal-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
+}
+
+.company-modal-stack-title,
+.skill-modal-group-heading {
   margin: 0;
   font-size: 0.7rem;
   font-weight: 600;
@@ -194,7 +249,9 @@
 }
 
 .company-modal-stack .entry-stack,
-.company-modal-stack .entry-skills {
+.company-modal-stack .entry-skills,
+.skill-modal-group .entry-stack,
+.skill-modal-group .entry-skills {
   margin: 0;
 }
 
@@ -216,7 +273,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 20px;
+  padding: 14px var(--modal-pad-x);
   border-bottom: 1px solid var(--glass-border);
   background: var(--glass-highlight);
 }
@@ -336,32 +393,6 @@
   outline-offset: 2px;
 }
 
-.skill-modal-groups {
-  display: grid;
-  gap: 14px;
-  padding: 12px 20px 16px;
-  overflow: auto;
-}
-
-.skill-modal-group {
-  display: grid;
-  gap: 6px;
-}
-
-.skill-modal-group .entry-skills,
-.skill-modal-group .entry-stack {
-  margin: 0;
-}
-
-.skill-modal-group-heading {
-  margin: 0;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-}
-
 .skill-modal-pills {
   list-style: none;
   margin: 0;
@@ -389,18 +420,18 @@
 }
 
 .skill-modal-empty {
-  margin: 0;
-  padding: 16px 20px 20px;
   color: var(--fg-muted);
   font-size: 0.9rem;
 }
 
 .skill-modal-unused {
-  padding: 12px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
 }
 
 .skill-modal-unused-hint {
-  margin: 0 0 8px;
+  margin: 0;
   color: var(--fg-muted);
   font-size: 0.85rem;
   line-height: 1.4;
@@ -449,15 +480,8 @@
   color: var(--accent);
 }
 
-.program-modal-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 14px 20px 12px;
-}
-
 .program-modal-count {
-  margin: 12px 0 0;
+  margin: 0;
   font-size: 0.8rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -468,7 +492,7 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin: 10px 0 6px;
+  margin: 0;
   padding: 14px 16px;
   border-left: 2px solid var(--accent-soft);
   border-radius: 0 6px 6px 0;
@@ -479,18 +503,10 @@
   white-space: pre-line;
 }
 
-.program-courses-list {
-  list-style: none;
-  margin: 0;
-  padding: 8px 20px 16px;
-  display: grid;
-  gap: 8px;
-}
-
 .program-course-item {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--modal-stack-gap);
   padding: 10px 12px;
   background: var(--bg);
   border: 1px solid var(--border);
@@ -599,7 +615,8 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 4px;
 }
 
@@ -646,14 +663,6 @@
 
 .program-module-date {
   white-space: nowrap;
-}
-
-.course-modal-modules {
-  padding: 8px 20px 16px;
-}
-
-.course-modal-skills {
-  padding: 0 20px 16px;
 }
 
 @media (max-width: 520px) {

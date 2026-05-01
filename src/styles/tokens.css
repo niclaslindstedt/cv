@@ -68,7 +68,12 @@
   --tl-cyan-fg: var(--tl-cyan);
   --tl-coral-fg: var(--tl-coral);
   --tl-steel-fg: var(--tl-steel);
-  --modal-overlay: rgba(8, 10, 13, 0.18);
+  --modal-overlay: rgba(2, 4, 8, 0.72);
+  --modal-bg: var(--bg-elev);
+  --modal-pad-x: 20px;
+  --modal-pad-y: 16px;
+  --modal-section-gap: 16px;
+  --modal-stack-gap: 8px;
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
   --radius: 10px;
   --max-width: 860px;
@@ -129,7 +134,8 @@
   --tl-cyan-fg: 14, 100, 130;
   --tl-coral-fg: 168, 56, 36;
   --tl-steel-fg: 60, 80, 120;
-  --modal-overlay: rgba(240, 243, 247, 0.18);
+  --modal-overlay: rgba(20, 26, 36, 0.42);
+  --modal-bg: var(--bg-elev);
   --shadow: 0 12px 40px rgba(11, 13, 16, 0.12);
   color-scheme: light;
 }
