@@ -593,9 +593,11 @@ placement, not from making one button thicker than another.
   Mist.
 - **Disabled.** Reduce opacity to ~0.55 and block pointer events.
   The control should still look like itself, just dimmer.
-- **Modal close exception.** The `×` on a modal is rendered as a
-  `target`-sized circle (32px) with the same border treatment and no
-  fill. Same family, special geometry.
+- **Modal close exception.** The `×` on a modal uses the same border
+  treatment and no fill, but its corners follow the host panel's
+  `--radius` instead of the pill family's full pill — a perfect circle
+  reads as out-of-place against a softly-rounded square panel. Same
+  family, special geometry.
 
 ### 9.5 Inline link
 
