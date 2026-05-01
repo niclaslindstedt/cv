@@ -72,7 +72,7 @@ export function FocusModal({ focus, onClose, onSkillClick }: Props) {
             ✕
           </button>
         </header>
-        <div className="skill-modal-body">
+        <div className="skill-modal-body" tabIndex={0}>
           <section className="skill-modal-detail">
             <p className="focus-modal-lede">{renderInlineCode(tagline)}</p>
             {description && (

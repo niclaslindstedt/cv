@@ -81,7 +81,7 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
             ✕
           </button>
         </header>
-        <div className="skill-modal-body">
+        <div className="skill-modal-body" tabIndex={0}>
           <section className="program-modal-summary">
             <p className="skill-modal-description">
               {t(program.institution)} · {t(program.level)} ·{" "}

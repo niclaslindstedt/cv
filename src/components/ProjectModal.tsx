@@ -98,7 +98,7 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
             ✕
           </button>
         </header>
-        <div className="skill-modal-body">
+        <div className="skill-modal-body" tabIndex={0}>
           <section className="skill-modal-detail">
             <p className="skill-modal-description">
               {renderInlineCode(t(project.description))}
