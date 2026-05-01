@@ -4,11 +4,13 @@ import type {
   CourseModule,
   Education as EducationItem,
 } from "../data/cv.types";
+import { categoryStyle } from "../utils/categoryStyle";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
+import { CategoryGlyph } from "./CategoryGlyph";
 import { NoteIcon } from "./NoteIcon";
 
 function sumCredits(modules: CourseModule[], reference: string): string | null {
@@ -62,10 +64,15 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
     >
       <div
         ref={modalRef}
-        className="skill-modal"
+        className="skill-modal skill-modal--cat"
+        data-category="education"
+        style={categoryStyle("education")}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="skill-modal-head">
+          <span className="skill-modal-glyph" aria-hidden="true">
+            <CategoryGlyph category="education" size={20} />
+          </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{field}</span>
             <span className="skill-modal-years">

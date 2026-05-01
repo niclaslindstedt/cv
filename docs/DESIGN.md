@@ -637,6 +637,15 @@ distinct by purpose:
   the page is visibly hinted at as glass beneath, not blacked out.
   Inner panel is a Glass card (`max-width: 560px`) with the standard
   close button at top-right.
+- **Category accent.** Modals that open from one of the four
+  categorised sections (Experience, Side projects, Education,
+  Courses — and Companies, which sit under Experience) borrow that
+  section's Sapphire/Iris/Mint/Ember palette: a glyph chip in the
+  header, a soft category-tinted header gradient, and the accent
+  token retuned so the year pill and action-link pills inherit the
+  same hue. See §10.5 for the full recipe. Skill, summary, focus,
+  and search modals stay Aurora — they aren't bound to one of the
+  four categories.
 
 The timeline is **not** a modal. It is a separate page at `/timeline`
 (see §9.10) — a navigation, not an overlay — so iOS Safari can keep
@@ -904,10 +913,30 @@ be used consistently and only for these four section types.
   section eyebrow (Mist tier), tinted in the section's category token.
   This is the only place the eyebrow gets a chromatic accent, and it
   ties the title visually to the cards underneath.
+- **Modal header.** When a modal opens from one of the four categorised
+  surfaces (project card, company chip in Experience, experience or
+  assignment card, education program, course), the panel borrows the
+  same category language so the overlay reads as part of its parent
+  section rather than a generic Aurora popover. Two pieces:
+  1. A **glyph chip** before the title, identical in recipe to the card
+     bar — 36px square, low-alpha tint fill, 1px border at 45% alpha,
+     glyph painted in `--tl-*-fg`.
+  2. A **soft category gradient** on the header background plus a
+     border-bottom in the same hue, so the eye carries the colour from
+     the chip across the whole header row.
+
+  The accent token (`--accent` / `--accent-soft`) is locally redefined
+  on the modal so the year pill, action-link pills, the close-hover
+  ring, and the focus-visible outline all pick the category tone up
+  automatically. The body remains neutral Glass — colour is reserved
+  for the header strip and the small accent leaves below it, never the
+  description prose.
+
 - **Print.** The bar and the title glyph are hidden in print — the PDF
   pipeline runs through `PrintView` (§6) which doesn't include either.
-  A defensive `@media print` rule keeps them hidden if the SPA
-  components are ever printed directly.
+  Modals never print. A defensive `@media print` rule keeps the bar
+  and title glyph hidden if the SPA components are ever printed
+  directly.
 
 ### 10.6 Icon-in-text alignment
 

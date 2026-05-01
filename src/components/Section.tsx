@@ -1,28 +1,13 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 
+import { categoryStyle, type ModalCategory } from "../utils/categoryStyle";
 import { useLang } from "../utils/i18n";
 import { CategoryGlyph } from "./CategoryGlyph";
-
-type CategoryKind = "experience" | "project" | "education" | "course";
-
-const CATEGORY_RGB: Record<CategoryKind, string> = {
-  experience: "var(--tl-blue)",
-  project: "var(--tl-violet)",
-  education: "var(--tl-mint)",
-  course: "var(--tl-amber)",
-};
-
-const CATEGORY_FG: Record<CategoryKind, string> = {
-  experience: "var(--tl-blue-fg)",
-  project: "var(--tl-violet-fg)",
-  education: "var(--tl-mint-fg)",
-  course: "var(--tl-amber-fg)",
-};
 
 type Props = {
   id: string;
   title: string;
-  category?: CategoryKind;
+  category?: ModalCategory;
   collapsible?: boolean;
   defaultCollapsed?: boolean;
   children: ReactNode;
@@ -58,12 +43,7 @@ export function Section({
 
   const toggle = useCallback(() => setCollapsed((c) => !c), []);
 
-  const titleStyle = category
-    ? ({
-        "--cat-rgb": CATEGORY_RGB[category],
-        "--cat-fg": CATEGORY_FG[category],
-      } as React.CSSProperties)
-    : undefined;
+  const titleStyle = category ? categoryStyle(category) : undefined;
   const glyph = category ? (
     <span className="section-title-glyph" style={titleStyle} aria-hidden="true">
       <CategoryGlyph category={category} size={18} />
