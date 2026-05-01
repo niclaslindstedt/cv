@@ -214,6 +214,36 @@ this proactively before pushing the feature commit. For ambiguous
 or cascading failures, invoke the `debug-visual` skill instead of
 re-recording blind.
 
+### Scoping a run
+
+`test:visual` and `test:visual:update` pass extra arguments straight
+through to `playwright test`, so when you know which snapshots a
+change touches you can run (and rebaseline) just those instead of
+the full suite. Three filters, combinable:
+
+- **By file** — `npm run test:visual -- tests/visual/modals.test.ts`
+  runs only the modals spec.
+- **By test title** (`-g` / `--grep`) — `npm run test:visual -- -g "hero"`
+  matches the strings inside `test("…")`. Examples of titles in the
+  current suite: `hero — en / dark`, `skill modal — en / dark`,
+  `search modal (results) — en / dark`, `experience section — en / dark`,
+  `full page — en / dark (above the fold)`.
+- **By project** — `--project chromium-desktop` or
+  `--project chromium-mobile` limits the viewport.
+
+The same flags work for updating: e.g.
+`CI=1 npm run test:visual:update -- tests/visual/modals.test.ts -g "skill" --project chromium-desktop`
+rebaselines just `skill modal — en / dark` on desktop. After a
+scoped update, still run the full `CI=1 npm run test:visual` once
+before pushing to confirm nothing else drifted, and keep the
+`git status --short` guardrail — only the intended `*.png` files
+should appear.
+
+Use scoping when you're confident the change is local (a single
+modal's copy, one section's CSS). For ambiguous or cascading
+changes, run the full suite — partial rebaselines hide drift in
+snapshots you didn't think to include.
+
 ### Guardrails
 
 - **Linux only for re-recording.** Other OSes will fail CI.
