@@ -2,7 +2,9 @@ import { useEffect, useRef } from "react";
 
 import type { DegreeType, Education as EducationItem } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
+import { useModalFocus } from "../utils/useModalFocus";
+import { useModalSwipe } from "../utils/useModalSwipe";
 import type { EctsContext } from "./EctsPill";
 
 const DEGREE_DEFAULT_TOTAL: Record<DegreeType, number> = {
@@ -48,7 +50,9 @@ type Props = {
 export function EctsModal({ context, onClose }: Props) {
   const { ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, !!context, onClose);
+  useModalSwipe(modalRef, !!context, onClose);
+  useModalFocus(modalRef, !!context);
+  useBodyScrollLock(!!context);
 
   useEffect(() => {
     if (!context) return;
@@ -58,15 +62,6 @@ export function EctsModal({ context, onClose }: Props) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [context, onClose]);
-
-  useEffect(() => {
-    if (!context) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [context]);
 
   if (!context) return null;
 

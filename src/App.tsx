@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { CompanyModal } from "./components/CompanyModal";
 import { CourseModulesModal } from "./components/CourseModulesModal";
 import { Courses } from "./components/Courses";
+import { EctsModal } from "./components/EctsModal";
+import type { EctsContext } from "./components/EctsPill";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
 import type { ExperienceModalData } from "./components/ExperienceModal";
@@ -119,6 +121,7 @@ export function App() {
     useState<ExperienceModalData | null>(null);
   const [selectedLanguage, setSelectedLanguage] =
     useState<SpokenLanguage | null>(null);
+  const [ectsContext, setEctsContext] = useState<EctsContext | null>(null);
   const { theme, toggle: toggleTheme, setTheme } = useTheme();
   const { t, ui } = useLang();
   useGlassReflections();
@@ -257,12 +260,14 @@ export function App() {
             education={cv.education}
             onSkillClick={setSelectedSkill}
             onProgramClick={setSelectedProgram}
+            onEctsClick={setEctsContext}
           />
           <Courses
             title={t(cv.sections.courses)}
             courses={cv.courses}
             onSkillClick={setSelectedSkill}
             onCourseClick={setSelectedCourse}
+            onEctsClick={setEctsContext}
           />
           <Skills
             title={t(cv.sections.skills)}
@@ -336,6 +341,7 @@ export function App() {
           setSelectedProgram(null);
           setSelectedSkill(skill);
         }}
+        onEctsClick={setEctsContext}
       />
       <CourseModulesModal
         course={selectedCourse}
@@ -344,7 +350,9 @@ export function App() {
           setSelectedCourse(null);
           setSelectedSkill(skill);
         }}
+        onEctsClick={setEctsContext}
       />
+      <EctsModal context={ectsContext} onClose={() => setEctsContext(null)} />
       <CompanyModal
         company={selectedCompany}
         stack={

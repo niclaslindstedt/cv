@@ -1,7 +1,10 @@
+import type { KeyboardEvent } from "react";
+
 import type { Education as EducationItem } from "../data/cv.types";
 import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { CategoryGlyph } from "./CategoryGlyph";
+import { EctsPill, type EctsContext } from "./EctsPill";
 import { Section } from "./Section";
 
 type Props = {
@@ -9,6 +12,7 @@ type Props = {
   education: EducationItem[];
   onSkillClick: (skill: string) => void;
   onProgramClick: (program: EducationItem) => void;
+  onEctsClick: (context: EctsContext) => void;
 };
 
 function roundCredits(credits: string): string {
@@ -18,11 +22,21 @@ function roundCredits(credits: string): string {
   });
 }
 
+function activateOnKey(handler: () => void) {
+  return (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handler();
+    }
+  };
+}
+
 export function Education({
   title,
   education,
   onSkillClick,
   onProgramClick,
+  onEctsClick,
 }: Props) {
   const { lang, t, ui } = useLang();
   return (
@@ -34,51 +48,47 @@ export function Education({
           const hasNotes = !!item.notes;
           const isClickable = hasCourses || hasNotes;
           const field = t(item.field);
+          const creditsPill = (
+            <EctsPill
+              credits={roundCredits(item.credits)}
+              context={{ kind: "program", program: item }}
+              onOpen={onEctsClick}
+            />
+          );
+          const body = (
+            <>
+              <div className="education-head">
+                <h3>{field}</h3>
+                <span>{formatRange(item.startDate, item.endDate, lang)}</span>
+              </div>
+              <p className="education-meta-trail">
+                {t(item.institution)} · {t(item.level)} · {creditsPill}
+                {hasCourses && (
+                  <span className="education-courses-count">
+                    {ui.education.coursesCount(courseCount)}
+                  </span>
+                )}
+              </p>
+            </>
+          );
           return (
             <li key={`${item.institution.en}-${item.startDate}`}>
               <span className="card-glyph-bar" aria-hidden="true">
                 <CategoryGlyph category="education" />
               </span>
               {isClickable ? (
-                <button
-                  type="button"
+                <div
+                  role="button"
+                  tabIndex={0}
                   className="education-program-btn"
                   onClick={() => onProgramClick(item)}
+                  onKeyDown={activateOnKey(() => onProgramClick(item))}
                   aria-label={ui.education.viewCoursesAria(field)}
                 >
-                  <div className="education-head">
-                    <h3>{field}</h3>
-                    <span>
-                      {formatRange(item.startDate, item.endDate, lang)}
-                    </span>
-                  </div>
-                  <p className="education-meta-trail">
-                    {t(item.institution)} · {t(item.level)} ·{" "}
-                    <span className="education-credits">
-                      {roundCredits(item.credits)}
-                    </span>
-                    {hasCourses && (
-                      <span className="education-courses-count">
-                        {ui.education.coursesCount(courseCount)}
-                      </span>
-                    )}
-                  </p>
-                </button>
+                  {body}
+                </div>
               ) : (
-                <>
-                  <div className="education-head">
-                    <h3>{field}</h3>
-                    <span>
-                      {formatRange(item.startDate, item.endDate, lang)}
-                    </span>
-                  </div>
-                  <p className="education-meta-trail">
-                    {t(item.institution)} · {t(item.level)} ·{" "}
-                    <span className="education-credits">
-                      {roundCredits(item.credits)}
-                    </span>
-                  </p>
-                </>
+                body
               )}
               {item.skills && item.skills.length > 0 && (
                 <ul className="entry-skills">

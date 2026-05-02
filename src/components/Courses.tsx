@@ -1,7 +1,10 @@
+import type { KeyboardEvent } from "react";
+
 import type { Course, CourseModule } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { CategoryGlyph } from "./CategoryGlyph";
+import { EctsPill, type EctsContext } from "./EctsPill";
 import { Section } from "./Section";
 
 type Props = {
@@ -9,6 +12,7 @@ type Props = {
   courses: Course[];
   onSkillClick: (skill: string) => void;
   onCourseClick: (course: Course) => void;
+  onEctsClick: (context: EctsContext) => void;
 };
 
 function latestModuleDate(modules: CourseModule[]): string | undefined {
@@ -17,11 +21,21 @@ function latestModuleDate(modules: CourseModule[]): string | undefined {
   return dates.reduce((latest, d) => (d > latest ? d : latest));
 }
 
+function activateOnKey(handler: () => void) {
+  return (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handler();
+    }
+  };
+}
+
 export function Courses({
   title,
   courses,
   onSkillClick,
   onCourseClick,
+  onEctsClick,
 }: Props) {
   const { lang, t, ui } = useLang();
   if (courses.length === 0) return null;
@@ -33,6 +47,13 @@ export function Courses({
           const endDate = item.completedDate ?? latestModuleDate(modules);
           const hasModules = modules.length > 0;
           const courseName = t(item.name);
+          const creditsPill = (
+            <EctsPill
+              credits={item.credits}
+              context={{ kind: "course", credits: item.credits }}
+              onOpen={onEctsClick}
+            />
+          );
           const headBody = (
             <>
               <div className="education-head">
@@ -46,8 +67,7 @@ export function Courses({
                 </span>
               </div>
               <p>
-                {t(item.institution)} ·{" "}
-                <span className="education-credits">{item.credits}</span>
+                {t(item.institution)} · {creditsPill}
                 {item.remote && (
                   <>
                     {" · "}
@@ -65,14 +85,16 @@ export function Courses({
                 <CategoryGlyph category="course" />
               </span>
               {hasModules ? (
-                <button
-                  type="button"
+                <div
+                  role="button"
+                  tabIndex={0}
                   className="education-program-btn"
                   onClick={() => onCourseClick(item)}
+                  onKeyDown={activateOnKey(() => onCourseClick(item))}
                   aria-label={ui.courses.viewModulesAria(courseName)}
                 >
                   {headBody}
-                </button>
+                </div>
               ) : (
                 headBody
               )}
