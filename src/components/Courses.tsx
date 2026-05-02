@@ -1,9 +1,7 @@
-import type { KeyboardEvent } from "react";
-
-import type { Course, CourseMoment } from "../data/cv.types";
+import type { Course, CourseModule } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
-import { EctsPill, type EctsContext } from "./EctsPill";
+import { CategoryGlyph } from "./CategoryGlyph";
 import { Section } from "./Section";
 
 type Props = {
@@ -11,37 +9,12 @@ type Props = {
   courses: Course[];
   onSkillClick: (skill: string) => void;
   onCourseClick: (course: Course) => void;
-  onEctsClick: (context: EctsContext) => void;
 };
 
-function parseCredits(credits: string): number | null {
-  const parsed = parseFloat(credits.replace(",", "."));
-  return Number.isFinite(parsed) ? parsed : null;
-}
-
-function sumMomentCredits(moments: CourseMoment[]): number | null {
-  let total = 0;
-  for (const moment of moments) {
-    const value = parseCredits(moment.credits);
-    if (value === null) return null;
-    total += value;
-  }
-  return Math.round(total * 10) / 10;
-}
-
-function latestMomentDate(moments: CourseMoment[]): string | undefined {
-  const dates = moments.map((m) => m.completedDate).filter(Boolean) as string[];
+function latestModuleDate(modules: CourseModule[]): string | undefined {
+  const dates = modules.map((m) => m.completedDate).filter(Boolean) as string[];
   if (dates.length === 0) return undefined;
   return dates.reduce((latest, d) => (d > latest ? d : latest));
-}
-
-function activateOnKey(handler: () => void) {
-  return (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handler();
-    }
-  };
 }
 
 export function Courses({
@@ -49,36 +22,17 @@ export function Courses({
   courses,
   onSkillClick,
   onCourseClick,
-  onEctsClick,
 }: Props) {
   const { lang, t, ui } = useLang();
   if (courses.length === 0) return null;
   return (
-    <Section id="courses" title={title}>
+    <Section id="courses" title={title} category="course">
       <ul className="education-list">
         {courses.map((item) => {
-          const moments = item.moments ?? [];
-          const completedMoments = moments.filter((m) => m.completedDate);
-          const endDate = item.completedDate ?? latestMomentDate(moments);
-          const fullCredits = parseCredits(item.credits);
-          const earned =
-            moments.length > 0 ? sumMomentCredits(completedMoments) : null;
-          const incomplete = item.completed === false;
-          const partial =
-            incomplete ||
-            (!item.completedDate &&
-              earned !== null &&
-              fullCredits !== null &&
-              earned < fullCredits);
-          const hasMoments = moments.length > 0;
+          const modules = item.modules ?? [];
+          const endDate = item.completedDate ?? latestModuleDate(modules);
+          const hasModules = modules.length > 0;
           const courseName = t(item.name);
-          const creditsPill = (
-            <EctsPill
-              credits={item.credits}
-              context={{ kind: "course", credits: item.credits }}
-              onOpen={onEctsClick}
-            />
-          );
           const headBody = (
             <>
               <div className="education-head">
@@ -93,35 +47,7 @@ export function Courses({
               </div>
               <p>
                 {t(item.institution)} ·{" "}
-                <span className="education-credits">{item.code}</span> ·{" "}
-                {creditsPill}
-                {incomplete && (
-                  <>
-                    {" · "}
-                    <span className="course-incomplete-pill">
-                      {ui.programModal.incomplete}
-                    </span>
-                  </>
-                )}
-                {partial && earned !== null && (
-                  <>
-                    {" · "}
-                    <span className="education-credits">
-                      {ui.programModal.courseProgress(
-                        `${earned}`,
-                        item.credits,
-                      )}
-                    </span>
-                  </>
-                )}
-                {item.engagement !== undefined && (
-                  <>
-                    {" · "}
-                    <span className="education-credits">
-                      {Math.round(item.engagement * 100)}%
-                    </span>
-                  </>
-                )}
+                <span className="education-credits">{item.credits}</span>
                 {item.remote && (
                   <>
                     {" · "}
@@ -130,27 +56,23 @@ export function Courses({
                     </span>
                   </>
                 )}
-                {hasMoments && (
-                  <span className="education-courses-count">
-                    {ui.courses.momentsCount(moments.length)}
-                  </span>
-                )}
               </p>
             </>
           );
           return (
             <li key={`${item.code}-${endDate ?? item.startDate ?? "x"}`}>
-              {hasMoments ? (
-                <div
-                  role="button"
-                  tabIndex={0}
+              <span className="card-glyph-bar" aria-hidden="true">
+                <CategoryGlyph category="course" />
+              </span>
+              {hasModules ? (
+                <button
+                  type="button"
                   className="education-program-btn"
                   onClick={() => onCourseClick(item)}
-                  onKeyDown={activateOnKey(() => onCourseClick(item))}
-                  aria-label={ui.courses.viewMomentsAria(courseName)}
+                  aria-label={ui.courses.viewModulesAria(courseName)}
                 >
                   {headBody}
-                </div>
+                </button>
               ) : (
                 headBody
               )}

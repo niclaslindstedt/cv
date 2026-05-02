@@ -22,7 +22,8 @@
         "url": "https://sv.wikipedia.org/wiki/Bookbeat",
         "description": "Swedish Wikipedia article covering Bookbeat's history, ownership, and reach."
       }
-    ]
+    ],
+    "aliases": ["book beat", "bookbeat ab"]
   },
   {
     "id": "ibnq",
@@ -35,7 +36,8 @@
       "en": "Wealth-management platform for family offices and private banks: aggregating personal and asset information, AI-assisted decision-making, and data administration for high-net-worth clients.",
       "sv": "Plattform för förmögenhetsförvaltning åt family offices och privatbanker: aggregering av person- och tillgångsdata, AI-stödd beslutsfattning och dataadministration för förmögna klienter."
     },
-    "terminated": true
+    "terminated": true,
+    "aliases": ["ibnq ab", "family office platform"]
   },
   {
     "id": "etimo",
@@ -55,7 +57,8 @@
         "url": "https://etimo.se/om-oss",
         "description": "Etimo's own Swedish-language about page describing the team, location, and the company's social and pro-bono commitments."
       }
-    ]
+    ],
+    "aliases": ["etimo ab"]
   },
   {
     "id": "seb",
@@ -75,7 +78,29 @@
         "url": "https://seb.se/om-seb",
         "description": "SEB's own Swedish-language about page describing the bank's business, scale, and history."
       }
-    ]
+    ],
+    "aliases": ["skandinaviska enskilda banken", "seb bank"]
+  },
+  {
+    "id": "timewave",
+    "name": "TimeWave AB",
+    "tagline": {
+      "en": "Business management system for cleaning and home-service companies.",
+      "sv": "Affärssystem för städ- och hemservicebolag."
+    },
+    "description": {
+      "en": "Swedish vendor of a business management system for cleaning and home-service companies — scheduling, time tracking, invoicing, and customer management with built-in support for the RUT household-services tax deduction. Used by more than 300 companies.",
+      "sv": "Svensk leverantör av ett affärssystem för städ- och hemservicebolag — schemaläggning, tidrapportering, fakturering och kundhantering med inbyggt stöd för RUT-avdraget. Används av fler än 300 bolag."
+    },
+    "url": "https://www.timewave.se",
+    "sourceUrls": [
+      {
+        "title": "TimeWave website",
+        "url": "https://www.timewave.se",
+        "description": "TimeWave's own Swedish-language website describing the cleaning-industry business system."
+      }
+    ],
+    "aliases": ["timewave ab", "time wave"]
   },
   {
     "id": "mitt-skolval",
@@ -95,6 +120,12 @@
         "url": "https://swedutech.se/about",
         "description": "About page of Swedutech (Svensk Utbildningsteknologi AB), the company behind the Mitt Skolval product."
       }
+    ],
+    "aliases": [
+      "mittskolval",
+      "mitt skolval",
+      "svensk utbildningsteknologi",
+      "svut"
     ]
   },
   {
@@ -115,7 +146,8 @@
         "url": "https://www.symptoms.se/om-symptoms",
         "description": "Symptoms' own Swedish-language about page covering the platform and its purpose."
       }
-    ]
+    ],
+    "aliases": ["symptoms europe", "symptoms ab"]
   },
   {
     "id": "indicio",
@@ -135,7 +167,8 @@
         "url": "https://www.indicio.com/about",
         "description": "Indicio's own about page describing the company and its forecasting platform."
       }
-    ]
+    ],
+    "aliases": ["indicio technologies", "indicio ab"]
   },
   {
     "id": "agilator",
@@ -147,6 +180,7 @@
     "description": {
       "en": "Niclas's own Swedish aktiebolag, used as the legal entity for solo consulting engagements taken on alongside his other roles.",
       "sv": "Niclas eget aktiebolag, som används som juridisk enhet för solokonsultuppdrag vid sidan av övriga roller."
-    }
+    },
+    "aliases": ["agilator ab"]
   }
 ]

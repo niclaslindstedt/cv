@@ -1,37 +1,72 @@
+import type { MouseEvent } from "react";
+
 import type { Language } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
+import { navigate } from "../utils/route";
 import type { Theme } from "../utils/theme";
 
-export function TimelineButton({
+export function TimelineLink({
   label,
-  onClick,
   className = "hero-timeline-btn",
   iconOnly = false,
 }: {
   label: string;
-  onClick: () => void;
   className?: string;
   iconOnly?: boolean;
 }) {
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      e.defaultPrevented ||
+      e.button !== 0 ||
+      e.metaKey ||
+      e.ctrlKey ||
+      e.shiftKey ||
+      e.altKey
+    )
+      return;
+    e.preventDefault();
+    navigate("/timeline");
+  };
   return (
-    <button
-      type="button"
+    <a
+      href="/timeline"
       className={className}
       onClick={onClick}
       aria-label={iconOnly ? label : undefined}
       title={iconOnly ? label : undefined}
     >
       {iconOnly ? <TimelineIcon /> : <span>{label}</span>}
+    </a>
+  );
+}
+
+export function SearchButton({
+  onClick,
+  className,
+}: {
+  onClick: () => void;
+  className?: string;
+}) {
+  const { ui } = useLang();
+  return (
+    <button
+      type="button"
+      className={className ?? "hero-search-btn"}
+      onClick={onClick}
+      aria-label={ui.search.open}
+      title={ui.search.open}
+    >
+      <SearchIcon />
     </button>
   );
 }
 
 export function ThemeToggle({
   theme,
-  onToggleTheme,
+  setTheme,
 }: {
   theme: Theme;
-  onToggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
 }) {
   const { ui } = useLang();
   const isDark = theme === "dark";
@@ -43,7 +78,7 @@ export function ThemeToggle({
         aria-pressed={!isDark}
         aria-label={ui.theme.switchToLight}
         title={ui.theme.light}
-        onClick={isDark ? onToggleTheme : undefined}
+        onClick={() => setTheme("light")}
       >
         <SunIcon />
       </button>
@@ -53,7 +88,7 @@ export function ThemeToggle({
         aria-pressed={isDark}
         aria-label={ui.theme.switchToDark}
         title={ui.theme.dark}
-        onClick={isDark ? undefined : onToggleTheme}
+        onClick={() => setTheme("dark")}
       >
         <MoonIcon />
       </button>
@@ -70,7 +105,11 @@ export function LanguageToggle({
 }) {
   const { ui } = useLang();
   return (
-    <div className="lang-toggle" role="group" aria-label="Language">
+    <div
+      className="lang-toggle"
+      role="group"
+      aria-label={ui.hero.languageLabel}
+    >
       <button
         type="button"
         className="lang-toggle-btn"
@@ -139,6 +178,23 @@ export function LanguageToggleCompact({
     >
       {target === "en" ? <FlagEN /> : <FlagSV />}
     </button>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="7" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
   );
 }
 

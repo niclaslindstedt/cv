@@ -40,24 +40,14 @@
       "featured": true
     }
   ],
-  "actions": {
-    "timeline": {
-      "en": "Timeline",
-      "sv": "Tidslinje"
-    },
-    "downloadPdf": {
-      "en": "Download PDF ↓",
-      "sv": "Ladda ner PDF ↓"
-    }
-  },
   "sections": {
     "focus": {
       "en": "Current focus",
       "sv": "Nuvarande fokus"
     },
     "projects": {
-      "en": "Open-source projects",
-      "sv": "Open source-projekt"
+      "en": "Side projects",
+      "sv": "Sidoprojekt"
     },
     "experience": {
       "en": "Experience",

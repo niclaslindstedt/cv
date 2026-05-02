@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 
 import type { Language, LocalizedString } from "../data/cv.types";
+import type { SearchKind } from "../data/search-index.types";
 
 export type { Language, LocalizedString };
 
@@ -8,6 +9,7 @@ export const LANG_STORAGE_KEY = "lang";
 
 type UiStrings = {
   present: string;
+  skipToContent: string;
   months: string[];
   theme: {
     label: string;
@@ -18,7 +20,10 @@ type UiStrings = {
   };
   hero: {
     eyebrow: string;
+    timeline: string;
+    pdf: string;
     downloadAria: string;
+    languageLabel: string;
     languageEnglish: string;
     languageSwedish: string;
   };
@@ -28,9 +33,11 @@ type UiStrings = {
     zoomIn: string;
     zoomOut: string;
     resetZoom: string;
-    reset: string;
     close: string;
     closeDetails: string;
+    previousDetails: string;
+    nextDetails: string;
+    detailsOpened: (title: string) => string;
     viewOnGitHub: string;
     viewRepository: string;
     job: string;
@@ -39,7 +46,6 @@ type UiStrings = {
     course: string;
     sideProject: string;
     skillsUsed: string;
-    starts: string;
     yUnit: string;
     mUnit: string;
     commits: (n: number) => string;
@@ -50,13 +56,17 @@ type UiStrings = {
     busiestRepo: string;
     yearRange: (year: string) => string;
     promotedTo: (title: string, date: string) => string;
+    seeInTimeline: string;
   };
   skillModal: {
-    project: string;
-    role: string;
-    assignment: string;
-    education: string;
-    course: string;
+    projectsHeading: string;
+    jobsHeading: string;
+    assignmentsHeading: string;
+    educationHeading: string;
+    coursesHeading: string;
+    unusedHeading: string;
+    unusedHint: string;
+    via: string;
     usageAria: (skill: string) => string;
     close: string;
     empty: string;
@@ -68,16 +78,30 @@ type UiStrings = {
   experience: {
     assignmentsSummary: (count: number) => string;
     assignmentsHeading: string;
+    promoted: string;
+    startingRole: string;
   };
   focus: {
     since: string;
     detailAria: (area: string) => string;
+    duration: (months: number) => string;
+    skillsHeading: string;
+    skillCount: (count: number) => string;
   };
   companyModal: {
     detailAria: (company: string) => string;
     visitWebsite: string;
     stack: string;
     terminated: string;
+  };
+  experienceModal: {
+    detailAria: (title: string) => string;
+    assignmentAria: (title: string) => string;
+    via: (company: string) => string;
+    aboutCompany: (company: string) => string;
+    aboutClient: (company: string) => string;
+    visitCompanyWebsite: (company: string) => string;
+    skills: string;
   };
   summaryModal: {
     detailAria: (name: string) => string;
@@ -95,6 +119,7 @@ type UiStrings = {
     active: string;
     commits: string;
     stack: string;
+    skills: string;
   };
   programModal: {
     coursesHeading: string;
@@ -104,10 +129,11 @@ type UiStrings = {
     completed: string;
     inProgress: string;
     close: string;
-    moments: string;
-    momentNotCompleted: string;
+    modules: string;
+    moduleNotCompleted: string;
     courseProgress: (earned: string, total: string) => string;
     incomplete: string;
+    skills: string;
   };
   education: {
     viewCoursesAria: (program: string) => string;
@@ -117,46 +143,44 @@ type UiStrings = {
     emptyTooltip: string;
     personalInterest: string;
     personalInterestTooltip: string;
+    unusedStack: string;
   };
   courses: {
-    viewMomentsAria: (course: string) => string;
-    momentsAria: (course: string) => string;
-    momentsCount: (count: number) => string;
+    viewModulesAria: (course: string) => string;
+    modulesAria: (course: string) => string;
+    modulesCount: (count: number) => string;
   };
   section: {
     expand: (title: string) => string;
     collapse: (title: string) => string;
   };
-  ects: {
-    title: string;
-    pillAria: (credits: string) => string;
-    intro: string;
-    programHeading: (program: string) => string;
-    earnedOfTotal: (earned: string, total: string) => string;
-    segmentMain: string;
-    segmentMinor: string;
-    segmentThesis: string;
-    notCompleted: string;
-    programExplainer: string;
-    conversionHeading: string;
-    tableEcts: string;
-    tableWeeks: string;
-    tableSemesters: string;
-    thisCourseLine: (ects: string, weeks: string, hours: string) => string;
-    courseExplainer: string;
-    milestones: {
-      magister: string;
-      master: string;
-      bachelor: string;
-      masterAfterBachelor: string;
-      twoYearMaster: string;
-    };
+  languages: {
+    detailAria: (language: string) => string;
+    proficiencyAria: (step: number, total: number) => string;
+    scaleHeading: string;
+    levels: Record<
+      "basic" | "conversational" | "working" | "professional" | "native",
+      { label: string; description: string }
+    >;
+  };
+  search: {
+    open: string;
+    shortcutHint: string;
+    placeholder: string;
+    close: string;
+    dialogAria: string;
+    inputAria: string;
+    emptyHint: string;
+    noResults: (query: string) => string;
+    resultCountAria: (count: number) => string;
+    kindLabels: Record<SearchKind, string>;
   };
 };
 
 export const UI_STRINGS: Record<Language, UiStrings> = {
   en: {
     present: "Present",
+    skipToContent: "Skip to main content",
     months: [
       "Jan",
       "Feb",
@@ -180,19 +204,24 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     hero: {
       eyebrow: "Resume",
+      timeline: "Timeline",
+      pdf: "PDF",
       downloadAria: "Download CV as PDF",
+      languageLabel: "Language",
       languageEnglish: "Switch to English",
       languageSwedish: "Switch to Swedish",
     },
     timeline: {
       title: "Career timeline",
-      hint: "Ctrl+scroll to zoom · pinch on touch · drag to pan",
+      hint: "Drag to pan · use −/+ or pinch to zoom",
       zoomIn: "Zoom in",
       zoomOut: "Zoom out",
       resetZoom: "Reset zoom",
-      reset: "Reset",
       close: "Close timeline",
       closeDetails: "Close details",
+      previousDetails: "Previous",
+      nextDetails: "Next",
+      detailsOpened: (title) => `Details opened: ${title}`,
       viewOnGitHub: "View on GitHub →",
       viewRepository: "View repository →",
       job: "Job",
@@ -201,7 +230,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       course: "Course",
       sideProject: "Side project",
       skillsUsed: "Skills used",
-      starts: "Starts",
       yUnit: "y",
       mUnit: "m",
       commits: (n) => `${n} commit${n === 1 ? "" : "s"}`,
@@ -212,13 +240,18 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       busiestRepo: "Busiest repo",
       yearRange: (year) => `Jan ${year} – Dec ${year}`,
       promotedTo: (title, date) => `Promoted to ${title} · ${date}`,
+      seeInTimeline: "See in timeline →",
     },
     skillModal: {
-      project: "Project",
-      role: "Role",
-      assignment: "Assignment",
-      education: "Education",
-      course: "Course",
+      projectsHeading: "Projects",
+      jobsHeading: "Jobs",
+      assignmentsHeading: "Assignments",
+      educationHeading: "Education",
+      coursesHeading: "Courses",
+      unusedHeading: "On the stack but not personally practiced",
+      unusedHint:
+        "Listed in the stack at these places but never personally practiced.",
+      via: "via",
       usageAria: (skill) => `${skill} usage`,
       close: "Close",
       empty:
@@ -236,16 +269,43 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     experience: {
       assignmentsSummary: (n) => `${n} assignment${n === 1 ? "" : "s"}`,
       assignmentsHeading: "Assignments",
+      promoted: "Promoted",
+      startingRole: "Starting role",
     },
     focus: {
       since: "since",
       detailAria: (area) => `${area} details`,
+      duration: (months) => {
+        if (months < 1) return "this month";
+        if (months < 12) return months === 1 ? "1 month" : `${months} months`;
+        if (months >= 36) {
+          const rounded = Math.round(months / 12);
+          return rounded === 1 ? "1 year" : `${rounded} years`;
+        }
+        const years = Math.floor(months / 12);
+        const rem = months % 12;
+        const yearStr = years === 1 ? "1 year" : `${years} years`;
+        if (rem === 0) return yearStr;
+        const monthStr = rem === 1 ? "1 month" : `${rem} months`;
+        return `${yearStr}, ${monthStr}`;
+      },
+      skillsHeading: "Skills",
+      skillCount: (n) => (n === 1 ? "1 skill" : `${n} skills`),
     },
     companyModal: {
       detailAria: (company) => `${company} details`,
       visitWebsite: "Visit website ↗",
       stack: "Stack",
-      terminated: "Terminated",
+      terminated: "Discontinued",
+    },
+    experienceModal: {
+      detailAria: (title) => `${title} — experience details`,
+      assignmentAria: (title) => `${title} — assignment details`,
+      via: (company) => `via ${company}`,
+      aboutCompany: (company) => `About ${company}`,
+      aboutClient: (company) => `About ${company}`,
+      visitCompanyWebsite: (company) => `Visit ${company} ↗`,
+      skills: "Skills used",
     },
     summaryModal: {
       detailAria: (name) => `${name} — full summary`,
@@ -263,6 +323,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       active: "Active",
       commits: "Commits",
       stack: "Stack",
+      skills: "Skills used",
     },
     programModal: {
       coursesHeading: "Courses",
@@ -272,10 +333,11 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       completed: "Completed",
       inProgress: "In progress",
       close: "Close",
-      moments: "Components",
-      momentNotCompleted: "Not completed",
+      modules: "Modules",
+      moduleNotCompleted: "Not completed",
       courseProgress: (earned, total) => `${earned} of ${total} earned`,
       incomplete: "Incomplete",
+      skills: "Skills used",
     },
     education: {
       viewCoursesAria: (program) => `View courses for ${program}`,
@@ -286,48 +348,76 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       personalInterest: "Personal interest",
       personalInterestTooltip:
         "Self-directed: not yet used in a job, assignment, or project.",
+      unusedStack: "Part of the stack but not personally practiced",
     },
     courses: {
-      viewMomentsAria: (course) => `View components for ${course}`,
-      momentsAria: (course) => `${course} components`,
-      momentsCount: (n) => `${n} component${n === 1 ? "" : "s"}`,
+      viewModulesAria: (course) => `View modules for ${course}`,
+      modulesAria: (course) => `${course} modules`,
+      modulesCount: (n) => `${n} module${n === 1 ? "" : "s"}`,
     },
     section: {
       expand: (title) => `Expand ${title} section`,
       collapse: (title) => `Collapse ${title} section`,
     },
-    ects: {
-      title: "ECTS credits",
-      pillAria: (credits) => `Explain ${credits}`,
-      intro:
-        "ECTS is the European Credit Transfer System. One full-time year of study earns 60 ECTS — about 1,500–1,800 hours of work. A standard semester is 30 ECTS.",
-      programHeading: (program) => `Progress in ${program}`,
-      earnedOfTotal: (earned, total) => `${earned} of ${total} ECTS earned`,
-      segmentMain: "Main coursework",
-      segmentMinor: "Minor subject",
-      segmentThesis: "Thesis",
-      notCompleted: "skipped",
-      programExplainer:
-        "Filled segments were completed; outlined segments were skipped or not reached. The minor subject and thesis are the last hurdles before a degree is awarded.",
-      conversionHeading: "ECTS conversion",
-      tableEcts: "ECTS",
-      tableWeeks: "Full-time weeks",
-      tableSemesters: "Semesters",
-      thisCourseLine: (ects, weeks, hours) =>
-        `This course is ${ects} ECTS — roughly ${weeks} weeks of full-time study (~${hours} hours of work).`,
-      courseExplainer:
-        "ECTS is calibrated so 1 credit ≈ 25–30 hours of work. Swedish higher-education credits (högskolepoäng) map 1:1 to ECTS.",
-      milestones: {
-        magister: "1-yr Magister",
-        master: "2-yr Master coursework",
-        bachelor: "Bachelor's",
-        masterAfterBachelor: "1-yr Master",
-        twoYearMaster: "2-yr Master",
+    languages: {
+      detailAria: (language) => `${language} proficiency details`,
+      proficiencyAria: (step, total) => `Level ${step} of ${total}`,
+      scaleHeading: "Proficiency scale",
+      levels: {
+        basic: {
+          label: "Basic",
+          description:
+            "Can hold simple, prepared exchanges on familiar everyday topics.",
+        },
+        conversational: {
+          label: "Conversational",
+          description:
+            "Can communicate comfortably in most everyday situations, given a friendly listener.",
+        },
+        working: {
+          label: "Working",
+          description:
+            "Handles routine workplace conversation, meetings, and reading without serious effort.",
+        },
+        professional: {
+          label: "Professional",
+          description:
+            "Fluent in business and technical contexts; comfortable presenting, writing, and negotiating with nuance.",
+        },
+        native: {
+          label: "Native",
+          description:
+            "Native-tier mastery — idiomatic, culturally fluent, and effortless across every register.",
+        },
+      },
+    },
+    search: {
+      open: "Search",
+      shortcutHint: "⌘K",
+      placeholder: "Search the CV…",
+      close: "Close search",
+      dialogAria: "Search the CV",
+      inputAria: "Search query",
+      emptyHint: "Type to search across roles, projects, skills, and more.",
+      noResults: (query) => `No matches for “${query}”.`,
+      resultCountAria: (n) =>
+        n === 1 ? "1 search result" : `${n} search results`,
+      kindLabels: {
+        project: "Project",
+        company: "Company",
+        experience: "Experience",
+        assignment: "Assignment",
+        education: "Education",
+        course: "Course",
+        skill: "Skill",
+        focus: "Focus",
+        summary: "About",
       },
     },
   },
   sv: {
     present: "Pågående",
+    skipToContent: "Hoppa till huvudinnehåll",
     months: [
       "Jan",
       "Feb",
@@ -351,19 +441,24 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     hero: {
       eyebrow: "CV",
+      timeline: "Tidslinje",
+      pdf: "PDF",
       downloadAria: "Ladda ner CV som PDF",
+      languageLabel: "Språk",
       languageEnglish: "Byt till engelska",
       languageSwedish: "Byt till svenska",
     },
     timeline: {
       title: "Karriärtidslinje",
-      hint: "Ctrl+skroll för att zooma · nyp på pekskärm · dra för att panorera",
+      hint: "Dra för att panorera · använd −/+ eller nyp för att zooma",
       zoomIn: "Zooma in",
       zoomOut: "Zooma ut",
       resetZoom: "Återställ zoom",
-      reset: "Återställ",
       close: "Stäng tidslinje",
       closeDetails: "Stäng detaljer",
+      previousDetails: "Föregående",
+      nextDetails: "Nästa",
+      detailsOpened: (title) => `Detaljer öppnade: ${title}`,
       viewOnGitHub: "Visa på GitHub →",
       viewRepository: "Visa repo →",
       job: "Anställning",
@@ -372,7 +467,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       course: "Kurs",
       sideProject: "Sidoprojekt",
       skillsUsed: "Använda kompetenser",
-      starts: "Startar",
       yUnit: "år",
       mUnit: "mån",
       commits: (n) => `${n} commit${n === 1 ? "" : "s"}`,
@@ -384,13 +478,18 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       busiestRepo: "Mest aktiva repo",
       yearRange: (year) => `Jan ${year} – Dec ${year}`,
       promotedTo: (title, date) => `Befordrad till ${title} · ${date}`,
+      seeInTimeline: "Visa på tidslinje →",
     },
     skillModal: {
-      project: "Projekt",
-      role: "Roll",
-      assignment: "Uppdrag",
-      education: "Utbildning",
-      course: "Kurs",
+      projectsHeading: "Projekt",
+      jobsHeading: "Anställningar",
+      assignmentsHeading: "Uppdrag",
+      educationHeading: "Utbildning",
+      coursesHeading: "Kurser",
+      unusedHeading: "Ingick i stacken men inte personligt utövad",
+      unusedHint:
+        "Fanns i stacken på dessa ställen men har aldrig utövats personligen.",
+      via: "via",
       usageAria: (skill) => `Användning av ${skill}`,
       close: "Stäng",
       empty:
@@ -408,16 +507,42 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     experience: {
       assignmentsSummary: (n) => `${n} uppdrag`,
       assignmentsHeading: "Uppdrag",
+      promoted: "Befordrad",
+      startingRole: "Startroll",
     },
     focus: {
       since: "sedan",
       detailAria: (area) => `Detaljer för ${area}`,
+      duration: (months) => {
+        if (months < 1) return "denna månad";
+        if (months < 12) return months === 1 ? "1 månad" : `${months} månader`;
+        if (months >= 36) {
+          const rounded = Math.round(months / 12);
+          return `${rounded} år`;
+        }
+        const years = Math.floor(months / 12);
+        const rem = months % 12;
+        if (rem === 0) return `${years} år`;
+        const monthStr = rem === 1 ? "1 månad" : `${rem} månader`;
+        return `${years} år, ${monthStr}`;
+      },
+      skillsHeading: "Kompetenser",
+      skillCount: (n) => (n === 1 ? "1 kompetens" : `${n} kompetenser`),
     },
     companyModal: {
       detailAria: (company) => `Detaljer för ${company}`,
       visitWebsite: "Besök webbplats ↗",
       stack: "Stack",
       terminated: "Avvecklat",
+    },
+    experienceModal: {
+      detailAria: (title) => `${title} — anställningsdetaljer`,
+      assignmentAria: (title) => `${title} — uppdragsdetaljer`,
+      via: (company) => `via ${company}`,
+      aboutCompany: (company) => `Om ${company}`,
+      aboutClient: (company) => `Om ${company}`,
+      visitCompanyWebsite: (company) => `Besök ${company} ↗`,
+      skills: "Använda kompetenser",
     },
     summaryModal: {
       detailAria: (name) => `${name} — fullständig sammanfattning`,
@@ -435,6 +560,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       active: "Aktiv",
       commits: "Commits",
       stack: "Stack",
+      skills: "Använda kompetenser",
     },
     programModal: {
       coursesHeading: "Kurser",
@@ -444,10 +570,11 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       completed: "Avklarad",
       inProgress: "Pågående",
       close: "Stäng",
-      moments: "Moment",
-      momentNotCompleted: "Ej avklarat",
+      modules: "Moment",
+      moduleNotCompleted: "Ej avklarat",
       courseProgress: (earned, total) => `${earned} av ${total} avklarat`,
       incomplete: "Ej avklarad",
+      skills: "Använda kompetenser",
     },
     education: {
       viewCoursesAria: (program) => `Visa kurser för ${program}`,
@@ -458,43 +585,68 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       personalInterest: "Personligt intresse",
       personalInterestTooltip:
         "Eget intresse: ännu inte använt i ett jobb, uppdrag eller projekt.",
+      unusedStack: "Ingick i stacken men inte personligt utövad",
     },
     courses: {
-      viewMomentsAria: (course) => `Visa moment för ${course}`,
-      momentsAria: (course) => `Moment i ${course}`,
-      momentsCount: (n) => (n === 1 ? "1 moment" : `${n} moment`),
+      viewModulesAria: (course) => `Visa moment för ${course}`,
+      modulesAria: (course) => `Moment i ${course}`,
+      modulesCount: (n) => (n === 1 ? "1 moment" : `${n} moment`),
     },
     section: {
       expand: (title) => `Expandera ${title.toLowerCase()}`,
       collapse: (title) => `Fäll ihop ${title.toLowerCase()}`,
     },
-    ects: {
-      title: "ECTS-poäng",
-      pillAria: (credits) => `Förklara ${credits}`,
-      intro:
-        "ECTS är det europeiska systemet för överföring av studiepoäng. Ett heltidsår motsvarar 60 ECTS — ungefär 1 500–1 800 timmars arbete. En vanlig termin är 30 ECTS.",
-      programHeading: (program) => `Progression i ${program}`,
-      earnedOfTotal: (earned, total) => `${earned} av ${total} ECTS avklarade`,
-      segmentMain: "Huvudkurser",
-      segmentMinor: "Biämne",
-      segmentThesis: "Examensarbete",
-      notCompleted: "ej avklarat",
-      programExplainer:
-        "Fyllda segment är avklarade; konturerade segment hoppades över eller hanns inte med. Biämnet och examensarbetet är de sista stegen innan examen utfärdas.",
-      conversionHeading: "Omräkning av ECTS",
-      tableEcts: "ECTS",
-      tableWeeks: "Heltidsveckor",
-      tableSemesters: "Terminer",
-      thisCourseLine: (ects, weeks, hours) =>
-        `Den här kursen är ${ects} ECTS — ungefär ${weeks} veckor på heltid (~${hours} timmars arbete).`,
-      courseExplainer:
-        "ECTS är kalibrerat så att 1 poäng ≈ 25–30 timmars arbete. Svenska högskolepoäng motsvarar ECTS 1:1.",
-      milestones: {
-        magister: "Magisterexamen",
-        master: "Masterkurser",
-        bachelor: "Kandidatexamen",
-        masterAfterBachelor: "1-årig master",
-        twoYearMaster: "2-årig master",
+    languages: {
+      detailAria: (language) => `Språknivå för ${language}`,
+      proficiencyAria: (step, total) => `Nivå ${step} av ${total}`,
+      scaleHeading: "Färdighetsskala",
+      levels: {
+        basic: {
+          label: "Grundläggande",
+          description: "Klarar enkla, förberedda utbyten i vardagliga ämnen.",
+        },
+        conversational: {
+          label: "Konversation",
+          description:
+            "Klarar de flesta vardagssituationer bekvämt, med en välvillig samtalspartner.",
+        },
+        working: {
+          label: "Arbetsförmåga",
+          description:
+            "Hanterar arbetsplatsens möten, samtal och läsning utan större ansträngning.",
+        },
+        professional: {
+          label: "Professionell",
+          description:
+            "Flytande i affärs- och teknikkontexter; presenterar, skriver och förhandlar med nyans.",
+        },
+        native: {
+          label: "Modersmål",
+          description:
+            "Modersmålsnivå — idiomatisk, kulturellt orienterad och obesvärad i alla register.",
+        },
+      },
+    },
+    search: {
+      open: "Sök",
+      shortcutHint: "⌘K",
+      placeholder: "Sök i CV:n…",
+      close: "Stäng sökning",
+      dialogAria: "Sök i CV:n",
+      inputAria: "Sökfråga",
+      emptyHint: "Skriv för att söka i roller, projekt, kompetenser med mera.",
+      noResults: (query) => `Inga träffar för ”${query}”.`,
+      resultCountAria: (n) => (n === 1 ? "1 sökträff" : `${n} sökträffar`),
+      kindLabels: {
+        project: "Projekt",
+        company: "Företag",
+        experience: "Erfarenhet",
+        assignment: "Uppdrag",
+        education: "Utbildning",
+        course: "Kurs",
+        skill: "Kompetens",
+        focus: "Fokus",
+        summary: "Om",
       },
     },
   },

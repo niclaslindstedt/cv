@@ -9,31 +9,67 @@ files (e.g. `CLAUDE.md`) are symlinks pointing here (see
 
 `niclaslindstedt.se` — a personal site / CV built with Vite, React 18,
 and TypeScript. The built output is a static site deployed to GitHub
-Pages via `.github/workflows/pages.yml`. There is no backend, no tests
-yet, and no CLI.
+Pages via `.github/workflows/pages.yml`. There is no backend and no
+CLI; tests live under `tests/` (Vitest + Playwright).
 
 ## Build and test commands
 
 Prefer `make` targets over raw `npm run` commands so local and CI stay
 in sync:
 
-| Command          | What it does                                                                                     |
-| ---------------- | ------------------------------------------------------------------------------------------------ |
-| `make install`   | `npm ci`                                                                                         |
-| `make dev`       | Start Vite dev server                                                                            |
-| `make build`     | Type-check and produce production build                                                          |
-| `make preview`   | Preview the production build                                                                     |
-| `make lint`      | ESLint + TypeScript type-check                                                                   |
-| `make typecheck` | `tsc -b --noEmit` only                                                                           |
-| `make fmt`       | Prettier rewrite in place                                                                        |
-| `make fmt-check` | Prettier check without writing                                                                   |
-| `make validate`  | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json` |
-| `make local`     | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in         |
-| `make test`      | Placeholder — no tests yet                                                                       |
-| `make clean`     | Remove `dist/` and Vite cache                                                                    |
+| Command                   | What it does                                                                                                                                                                                                                                                                     |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `make install`            | `npm ci`                                                                                                                                                                                                                                                                         |
+| `make dev`                | Start Vite dev server                                                                                                                                                                                                                                                            |
+| `make build`              | Type-check and produce production build                                                                                                                                                                                                                                          |
+| `make preview`            | Preview the production build                                                                                                                                                                                                                                                     |
+| `make lint`               | ESLint + TypeScript type-check                                                                                                                                                                                                                                                   |
+| `make typecheck`          | `tsc -b --noEmit` only                                                                                                                                                                                                                                                           |
+| `make fmt`                | Prettier rewrite in place                                                                                                                                                                                                                                                        |
+| `make fmt-check`          | Prettier check without writing                                                                                                                                                                                                                                                   |
+| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json`                                                                                                                                                                                 |
+| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in                                                                                                                                                                                         |
+| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                                                                                                                                                                                                              |
+| `make test-coverage`      | Vitest with v8 coverage                                                                                                                                                                                                                                                          |
+| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                                                                                                                                                                                                    |
+| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                                                                                                                                                                                                        |
+| `make test-a11y`          | Playwright + axe-core WCAG 2.2 AA scan of the built site, plus an advisory AAA pass that logs but never fails (`playwright.a11y.config.ts`)                                                                                                                                      |
+| `make test-a11y-manual`   | Local-only Playwright suite encoding the WCAG checks axe can't express — reflow at 320 CSS px (1.4.10), resize-text at 200% (1.4.4), focus-not-obscured (2.4.11). Driven by `playwright.a11y-manual.config.ts`. Not gated in CI; run before launches and after big UI overhauls. |
+| `make test-pa11y`         | pa11y-ci (HTML CodeSniffer) WCAG 2.2 AAA scan against the preview server. Slow; run locally before launches or via the daily `Accessibility (deep)` workflow. Set `PA11Y_ADVISORY=1` to log without failing.                                                                     |
+| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                                                                                                                                                                                                  |
+| `make clean`              | Remove `dist/` and Vite cache                                                                                                                                                                                                                                                    |
 
-CI (`.github/workflows/ci.yml`) runs `make fmt-check`, `make validate`,
-`make lint`, and `make build` on every push and pull request.
+CI is split into independent workflows. The per-PR ones each carry a
+one-word status badge and run on every push and pull request; the
+scheduled ones run on cron and are advisory:
+
+- **CI** (`.github/workflows/ci.yml`) — `make fmt-check`, `make validate`,
+  `make lint`, `make build`, `make test`.
+- **Visual** (`.github/workflows/visual.yml`) — `make build`, then
+  `make test-visual` (Playwright on Chromium, desktop + mobile viewports).
+- **Accessibility** (`.github/workflows/a11y.yml`) — `make build`, then
+  `make test-a11y` (Playwright + axe-core, Chromium desktop + mobile,
+  both languages and themes). Fails on any WCAG 2.0 / 2.1 / 2.2 Level A
+  or AA violation. A second AAA pass (`wcag2aaa` / `wcag21aaa` /
+  `wcag22aaa`) runs alongside as advisory only — its findings are
+  printed to the workflow log and attached to the test report, but do
+  not fail the build, so the badge stays green when AA passes.
+- **Accessibility (deep)** (`.github/workflows/a11y-deep.yml`) — runs
+  `make test-pa11y` (pa11y-ci / HTML CodeSniffer at WCAG 2.2 AAA)
+  against the homepage in both languages plus the print views. Uses a
+  different rule engine from axe-core, so it surfaces findings the
+  per-PR job misses — a "second opinion" on conformance. Scheduled
+  daily at 06:00 UTC and manually dispatchable; never runs on push or
+  PR. Always advisory (`continue-on-error: true` + the runner exits 0
+  with `PA11Y_ADVISORY=1`).
+- **Lighthouse** (`.github/workflows/lighthouse.yml`) — `make build`,
+  then `make lighthouse` to assert Web-Vitals + category-score budgets.
+- **Dependabot** (`.github/workflows/dependabot.yml`) — fails when any
+  Dependabot PR is open so the README badge turns red until the queue is
+  cleared. Re-runs hourly via cron and on PR open/close events.
+
+Deployment runs separately in **Pages** (`.github/workflows/pages.yml`)
+on every push to `main`.
 
 ## Architecture summary
 
@@ -68,26 +104,27 @@ imports from `components/`. Keep it that way.
 
 ## Where new code goes
 
-| Change                                            | Location                                                                                                                                                                                                                                                                     |
-| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| New CV section (e.g. Talks, Awards)               | `src/components/<Name>.tsx` + slot into `src/App.tsx`                                                                                                                                                                                                                        |
-| New field on existing section                     | Extend `schemas/cv.schema.json` and `src/data/cv.types.ts`, then the component                                                                                                                                                                                               |
-| Content-only edits (roles, projects, skills)      | `src/data/cv/<category>.json` (focus, projects, companies, …) — prefer the `update-cv` skill. Top-level scalar fields stay in `src/data/cv.json`.                                                                                                                            |
-| Date formatting / parsing                         | `src/utils/date.ts`                                                                                                                                                                                                                                                          |
-| Global styles, layout, typography                 | `src/styles/<domain>.css` (e.g. `hero.css`, `projects.css`, `print.css`); `src/styles.css` only `@import`s them                                                                                                                                                              |
-| Timeline tracks, layout, zoom behaviour           | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                                                                                                                                                                                                              |
-| Print / PDF rendering                             | `scripts/generate-print.mjs` bakes `src/data/print.json` (incl. `settings` from `cv.print` / `src/data/cv/print.json`); `src/components/PrintView.tsx` renders it and emits an inline `<style>` for `@page` + CSS variables; `src/styles/print.css` consumes those variables |
-| Print font, sizes, margins, page-break rules      | `src/data/cv/print.json` — see `docs/DESIGN.md` §6.1                                                                                                                                                                                                                         |
-| Per-entry print copy (project / job / assignment) | `printDescription` field on `projects[]`, `experience[]`, `experience[].assignments[]` in `src/data/cv/*.json` — see `update-cv` skill ("Print descriptions"). Falls back to the company/client/project `tagline` when omitted.                                              |
-| GitHub commit activity fetch                      | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time)                                                                                                                                                                                               |
-| Per-project repo commit stats fetch               | `scripts/generate-project-stats.mjs` (uses `PROJECT_STATS_TOKEN` if set, else `GITHUB_TOKEN`; needs `repo` scope to read private project repos)                                                                                                                              |
-| `<head>` meta, OG, Twitter, JSON-LD               | `vite.config.ts` (`cvMetaHtmlPlugin`) — derived from `cv.meta` + `cv.links` + `cv.skills` + `cv.education`                                                                                                                                                                   |
-| Social-share OG image                             | `scripts/generate-og-image.mjs` (satori → `public/og-image.png`); runs in `prebuild`                                                                                                                                                                                         |
-| Downloadable PDF resume                           | `scripts/generate-pdf.mjs` (puppeteer → `dist/<cv.print.pdfFilename ?? "cv.pdf">`); runs as part of `npm run build` after `vite build`                                                                                                                                       |
-| Local CV override (private contact / copy)        | `src/data/cv.local.json` (gitignored, deep-merged by `src/data/load-cv.mjs` when `CV_LOCAL=1`); see `cv.local.example.json` for the starter shape. Drives `make local`. The `update-cv` skill must keep sensitive content out of `src/data/cv*.json` and route it here.      |
-| Sitemap                                           | `scripts/generate-sitemap.mjs` (writes `dist/sitemap.xml` post-build)                                                                                                                                                                                                        |
-| `robots.txt`, `404.html`                          | Static files in `public/`                                                                                                                                                                                                                                                    |
-| Analytics (GoatCounter)                           | Snippet injected by `cvMetaHtmlPlugin` only when `VITE_GOATCOUNTER_ENDPOINT` env var is set at build time                                                                                                                                                                    |
+| Change                                            | Location                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| New CV section (e.g. Talks, Awards)               | `src/components/<Name>.tsx` + slot into `src/App.tsx`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| New field on existing section                     | Extend `schemas/cv.schema.json` and `src/data/cv.types.ts`, then the component                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Content-only edits (roles, projects, skills)      | `src/data/cv/<category>.json` (focus, projects, companies, …) — prefer the `update-cv` skill. Top-level scalar fields stay in `src/data/cv.json`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Date formatting / parsing                         | `src/utils/date.ts`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Global styles, layout, typography                 | `src/styles/<domain>.css` (e.g. `hero.css`, `projects.css`, `print.css`); `src/styles.css` only `@import`s them                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Timeline tracks, layout, zoom behaviour           | `scripts/generate-timeline.mjs` + `src/components/Timeline.tsx`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Print / PDF rendering                             | `scripts/generate-print.mjs` bakes `src/data/print.json` (incl. `settings` from `cv.print` / `src/data/cv/print.json`); `src/components/PrintView.tsx` renders it and emits an inline `<style>` for `@page` + CSS variables; `src/styles/print.css` consumes those variables; `scripts/generate-print-html.mjs` SSRs PrintView per language into `dist/print-<lang>.html` so generate-pdf can skip booting the SPA                                                                                                                                                                                                                               |
+| Print font, sizes, margins, page-break rules      | `src/data/cv/print.json` — see `docs/DESIGN.md` §6.1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Per-entry print copy (project / job / assignment) | `printDescription` field on `projects[]`, `experience[]`, `experience[].assignments[]` in `src/data/cv/*.json` — see `update-cv` skill ("Print descriptions"). Falls back to the company/client/project `tagline` when omitted.                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| GitHub commit activity fetch                      | `scripts/generate-github-activity.mjs` (requires `GITHUB_TOKEN` at build time)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Per-project repo commit stats fetch               | `scripts/generate-project-stats.mjs` (uses `PROJECT_STATS_TOKEN` if set, else `GITHUB_TOKEN`; needs `repo` scope to read private project repos)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `<head>` meta, OG, Twitter, JSON-LD               | `vite.config.ts` (`cvMetaHtmlPlugin`) — derived from `cv.meta` + `cv.links` + `cv.skills` + `cv.education`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Social-share OG image                             | `scripts/generate-og-image.mjs` (satori → `public/og-image.png`); runs in `prebuild`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Downloadable PDF resume                           | `scripts/generate-pdf.mjs` (puppeteer → `dist/<cv.print.pdfFilename ?? "cv.pdf">`); loads `dist/print-<lang>.html` (no SPA boot); runs as part of `npm run build` after `vite build` and `generate:print-html`                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Local CV override (private contact / copy)        | `src/data/cv.local.json` (gitignored, deep-merged by `src/data/load-cv.mjs` when `CV_LOCAL=1`); see `cv.local.example.json` for the starter shape. Drives `make local`. The `update-cv` skill must keep sensitive content out of `src/data/cv*.json` and route it here.                                                                                                                                                                                                                                                                                                                                                                          |
+| Sitemap                                           | `scripts/generate-sitemap.mjs` (writes `dist/sitemap.xml` post-build)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| Search trigger / modal / ranker                   | Trigger button is part of `src/components/FloatingControls.tsx` + `src/styles/floating-controls.css`; modal in `src/components/SearchModal.tsx` + `src/styles/search.css`; ranker + fuzzy logic in `src/utils/search.ts` (no third-party search dep). Index baked by `scripts/generate-search-index.mjs` into gitignored `src/data/search-index.json` (schema `schemas/search-index.schema.json`). Hidden alternative names (`aliases` arrays) live on the source records under `skillDetails`, `projects`, `companies`, `focus`, `education`, `courses`, `experience`, and `assignments`. Full reference in [`docs/SEARCH.md`](docs/SEARCH.md). |
+| `robots.txt`, `404.html`                          | Static files in `public/`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Analytics (GoatCounter)                           | Snippet injected by `cvMetaHtmlPlugin` only when `VITE_GOATCOUNTER_ENDPOINT` env var is set at build time                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 ## Conventions
 
@@ -113,47 +150,185 @@ imports from `components/`. Keep it that way.
   described there, **update `docs/DESIGN.md` first in the same PR**.
   PR descriptions for visual changes should reference the section(s)
   they conform to.
+- **Visual snapshots.** Any change that alters rendered pixels — text
+  in a snapshotted view, styles, layout, fonts, component shape —
+  needs the affected baselines re-recorded in the same branch. See
+  § Visual snapshots below for the workflow. Run it proactively;
+  don't wait for CI to flag the drift.
+
+## Visual snapshots
+
+The Visual workflow (`tests/visual/`) does strict pixel comparison
+against PNGs committed under `tests/visual/__screenshots__/`.
+Threshold is `maxDiffPixelRatio: 0.01` in `playwright.config.ts`.
+Baselines were recorded on Linux and CI runs on `ubuntu-latest` —
+re-recording on macOS or Windows produces sub-pixel font drift that
+fails CI on the next run.
+
+### When to expect baselines need updating
+
+Treat any of these as a guaranteed rebaseline before pushing:
+
+- **Text edits to rendered copy** in `src/data/cv.json` or
+  `src/data/cv/*.json` — `tagline`, `description`, `summary`,
+  `area`, `name`, project copy, anything that ends up inside a
+  snapshotted view. Reflow alone trips the threshold.
+- **Style changes** under `src/styles/` (tokens, layout, typography,
+  color, spacing, motion, component CSS).
+- **Component changes** — adding, removing, reordering, or
+  restructuring sections, cards, or fields.
+- **Dependency bumps** that ship glyphs or rendering (`@fontsource/*`,
+  `playwright` — Playwright updates can bring a new bundled
+  Chromium).
+
+Snapshot → source quick map (the `debug-visual` skill has the full
+table and diagnostic procedure):
+
+| Snapshot family                                  | Driven by                                                                 |
+| ------------------------------------------------ | ------------------------------------------------------------------------- |
+| `hero-{en,sv}-{dark,light}`                      | `Hero.tsx`, `hero.css`, `cv.json` (`name`, `summary`, `tagline`, `links`) |
+| `focus-{en,sv}-{dark,light}` (section card grid) | `Focus.tsx`, `focus.css`, `cv/focus.json` (`tagline`, `since`, `area`)    |
+| `modal-focus-*` (skill modal body)               | `cv/focus.json` `description` text in particular                          |
+| `homepage-*` (full above-fold page)              | Anything above the fold — collateral from hero / focus / token changes    |
+
+### Workflow
+
+When you make a change that the list above flags as visual:
+
+1. `make build && CI=1 npm run test:visual` — use `CI=1` so retries
+   and worker count match GitHub Actions.
+2. If failures match the change's intent and **only those**
+   snapshots failed, regenerate:
+   `CI=1 npm run test:visual:update` (alias of `make test-visual-update`).
+3. Re-run `CI=1 npm run test:visual` to confirm a clean pass.
+4. `git status --short` must show **only** modified `*.png` files
+   under `tests/visual/__screenshots__/`. Anything else means the
+   tree was dirty — revert the noise before committing.
+5. Commit the rebaseline as its own `test(visual): …` commit
+   referencing the change that drove it (don't fold it into the
+   feature commit — keeps the diff legible). Push and let CI
+   confirm.
+
+For predictable changes (text rewrites, isolated CSS retunes), do
+this proactively before pushing the feature commit. For ambiguous
+or cascading failures, invoke the `debug-visual` skill instead of
+re-recording blind.
+
+### Scoping a run
+
+`test:visual` and `test:visual:update` pass extra arguments straight
+through to `playwright test`, so when you know which snapshots a
+change touches you can run (and rebaseline) just those instead of
+the full suite. Three filters, combinable:
+
+- **By file** — `npm run test:visual -- tests/visual/modals.test.ts`
+  runs only the modals spec.
+- **By test title** (`-g` / `--grep`) — `npm run test:visual -- -g "hero"`
+  matches the strings inside `test("…")`. Examples of titles in the
+  current suite: `hero — en / dark`, `skill modal — en / dark`,
+  `search modal (results) — en / dark`, `experience section — en / dark`,
+  `full page — en / dark (above the fold)`.
+- **By project** — `--project chromium-desktop` or
+  `--project chromium-mobile` limits the viewport.
+
+The same flags work for updating: e.g.
+`CI=1 npm run test:visual:update -- tests/visual/modals.test.ts -g "skill" --project chromium-desktop`
+rebaselines just `skill modal — en / dark` on desktop. After a
+scoped update, still run the full `CI=1 npm run test:visual` once
+before pushing to confirm nothing else drifted, and keep the
+`git status --short` guardrail — only the intended `*.png` files
+should appear.
+
+Use scoping when you're confident the change is local (a single
+modal's copy, one section's CSS). For ambiguous or cascading
+changes, run the full suite — partial rebaselines hide drift in
+snapshots you didn't think to include.
+
+### Guardrails
+
+- **Linux only for re-recording.** Other OSes will fail CI.
+- **Never re-record on a dirty tree.** The rebaseline commit must
+  contain only `*.png` modifications under `tests/visual/__screenshots__/`.
+- **Never re-record to silence a regression.** If a snapshot the
+  change shouldn't affect is failing, inspect the diff PNGs in
+  `test-results/` and fix the code.
+- **Don't widen `maxDiffPixelRatio`** or disable retries to make CI
+  green. The 0.01 tolerance is calibrated for sub-pixel font noise.
 
 ## Documentation sync points
 
 When you change X, update Y:
 
-| If you change …                                   | Also update …                                                          |
-| ------------------------------------------------- | ---------------------------------------------------------------------- |
-| `package.json` scripts                            | `Makefile`, `README.md` Scripts section                                |
-| `Makefile` targets                                | `README.md` Scripts section, `.github/workflows/ci.yml`                |
-| `src/` top-level layout                           | `README.md` Structure section                                          |
-| `schemas/cv.schema.json`                          | `src/data/cv.types.ts` + any component consuming the changed field     |
-| `src/data/cv.types.ts`                            | `schemas/cv.schema.json` + any component consuming the changed field   |
-| `schemas/timeline.schema.json`                    | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`         |
-| `schemas/print.schema.json`                       | `src/data/print.types.ts` + `scripts/generate-print.mjs` + `PrintView` |
-| `cv.meta` (siteUrl / seo)                         | `vite.config.ts` `cvMetaHtmlPlugin` reads these directly               |
-| Node version in CI                                | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)                 |
-| `src/styles/tokens.css` or any new visual pattern | `docs/DESIGN.md` (in the **same** PR)                                  |
+| If you change …                                     | Also update …                                                                                              |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `package.json` scripts                              | `Makefile`, `README.md` Scripts section                                                                    |
+| `Makefile` targets                                  | `README.md` Scripts section, `.github/workflows/ci.yml`                                                    |
+| Visual snapshots in `tests/visual/__screenshots__/` | Same PR — re-record only when the UI intentionally changed                                                 |
+| Lighthouse budgets in `.lighthouserc.json`          | Mention in `README.md` Quality gates section                                                               |
+| `src/` top-level layout                             | `README.md` Structure section                                                                              |
+| `schemas/cv.schema.json`                            | `src/data/cv.types.ts` + any component consuming the changed field                                         |
+| `src/data/cv.types.ts`                              | `schemas/cv.schema.json` + any component consuming the changed field                                       |
+| `schemas/timeline.schema.json`                      | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`                                             |
+| `schemas/print.schema.json`                         | `src/data/print.types.ts` + `scripts/generate-print.mjs` + `PrintView` + `scripts/generate-print-html.mjs` |
+| `schemas/search-index.schema.json`                  | `src/data/search-index.types.ts` + `scripts/generate-search-index.mjs` + `src/utils/search.ts`             |
+| `cv.meta` (siteUrl / seo)                           | `vite.config.ts` `cvMetaHtmlPlugin` reads these directly                                                   |
+| Node version in CI                                  | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)                                                     |
+| `src/styles/tokens.css` or any new visual pattern   | `docs/DESIGN.md` (in the **same** PR)                                                                      |
 
 ## Test conventions
 
-The repo has **no tests yet**. When tests are added:
+Tests live under `tests/` at the repo root (`OSS_SPEC.md` §20.3):
 
-- Keep them in dedicated files, not inline (`OSS_SPEC.md` §20).
-- Use the suffix convention `_test.ts` / `_tests.ts` or `*Test.ts`
-  (§20.2).
-- Place them under `tests/` at the repo root (§20.3).
-- Add a real `test` step to `package.json` and wire `make test` to it.
-- Add a `test` step to `.github/workflows/ci.yml`.
+- `tests/data/` — schema roundtrip + the `load-cv` deep-merge contract.
+- `tests/unit/` — pure-function unit tests (currently `utils/date`).
+- `tests/visual/` — Playwright visual regression. Baseline PNGs are
+  committed under `tests/visual/__screenshots__/` and were recorded on
+  Linux; CI runs on `ubuntu-latest` for the same reason. Re-record with
+  `make test-visual-update` only after an intentional UI change, and
+  commit the new pixels in the same PR.
+- `tests/a11y/` — Playwright + axe-core WCAG 2.2 AA scan of the built
+  site, driven by `playwright.a11y.config.ts`. Asserts zero violations
+  tagged `wcag2a` / `wcag2aa` / `wcag21a` / `wcag21aa` / `wcag22a` /
+  `wcag22aa` for both languages × both themes × desktop + mobile
+  viewports. A second pass collects AAA-tier findings (`wcag2aaa` /
+  `wcag21aaa` / `wcag22aaa`) and surfaces them as console output and
+  attached JSON on the test report; AAA findings never fail the test.
+- `tests/a11y-manual/` — Playwright specs for the WCAG checks axe
+  cannot express: reflow at 320 CSS px (SC 1.4.10), resize-text at
+  200% (SC 1.4.4), focus-not-obscured (SC 2.4.11). Driven by
+  `playwright.a11y-manual.config.ts` and run via
+  `make test-a11y-manual`. **Not gated in CI** — they need a real
+  browser and some are slightly noisy under heavy load — but they
+  must be green locally before any launch. The `verify-wcag` skill
+  promotes new untestable findings into this directory.
+
+All test files end in `.test.ts` / `.test.mts` / `.tests.ts` per
+`OSS_SPEC.md` §20.2 (regex `_?[Tt]ests?$` on the stem). Vitest picks
+them up via `vitest.config.ts`; visual and a11y specs under
+`tests/visual/`, `tests/a11y/`, and `tests/a11y-manual/` are excluded
+from the Vitest `include` so Playwright owns them. Don't import test
+code from `src/`.
+
+When adding a new top-level test domain (e.g. integration tests),
+extend `vitest.config.ts` `include` rather than scattering test
+discovery across multiple configs.
 
 ## Maintenance skills
 
 The repo ships Claude skills under `.agent/skills/` (with
 `.claude/skills` symlinked to it — `OSS_SPEC.md` §21.2):
 
-| Skill                         | Purpose                                                                                                                 |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `update-cv`                   | Add/update/remove entries in `src/data/cv.json` and the per-category files in `src/data/cv/`; recommends what to change |
-| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field)                                    |
-| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV                                    |
-| `update-readme`               | Resync `README.md` with the code it describes                                                                           |
-| `maintenance`                 | Umbrella skill — routes to every `update-*`                                                                             |
+| Skill                         | Purpose                                                                                                                                                                                                                               |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `update-cv`                   | Add/update/remove entries in `src/data/cv.json` and the per-category files in `src/data/cv/`; recommends what to change                                                                                                               |
+| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field)                                                                                                                                                  |
+| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV                                                                                                                                                  |
+| `update-readme`               | Resync `README.md` with the code it describes                                                                                                                                                                                         |
+| `sync-design`                 | Audit `src/styles/` and `src/components/` against `docs/DESIGN.md` (the design source of truth); propose patches, apply on confirmation                                                                                               |
+| `sync-cross-browser`          | Audit `src/styles/` for cross-browser CSS drift with Safari as the master; propose patches to bring Chrome and Firefox into line                                                                                                      |
+| `debug-visual`                | Diagnose a failing Visual workflow, decide whether the snapshot drift is intentional, re-record baselines if so, and commit the pixels                                                                                                |
+| `verify-wcag`                 | Walk the manual WCAG 2.2 checklist for everything axe-core can't catch (keyboard, focus order, screen-reader semantics, motion, reflow, target size, label/alt-text quality); ships the spec under `.agent/skills/verify-wcag/specs/` |
+| `maintenance`                 | Umbrella skill — routes to every `update-*` and `sync-*`                                                                                                                                                                              |
 
 Invoke `maintenance` when you've landed a batch of changes and want a
 single pass that brings drift-prone artifacts back in sync. Invoke a

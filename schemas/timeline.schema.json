@@ -187,13 +187,14 @@
     "busiestRepo": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["owner", "repo", "name", "commits", "repoUrl"],
+      "required": ["owner", "repo", "name", "commits", "repoUrl", "openSource"],
       "properties": {
         "owner": { "type": "string", "minLength": 1 },
         "repo": { "type": "string", "minLength": 1 },
         "name": { "type": "string", "minLength": 1 },
         "commits": { "type": "integer", "minimum": 1 },
-        "repoUrl": { "type": "string", "minLength": 1 }
+        "repoUrl": { "type": "string", "minLength": 1 },
+        "openSource": { "type": "boolean" }
       }
     },
     "segment": {

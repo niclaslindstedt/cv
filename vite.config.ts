@@ -62,10 +62,50 @@ function buildAlumniOf(): Array<{ "@type": string; name: string }> {
   return result;
 }
 
+function buildWorksFor():
+  | { "@type": "Organization"; name: string; url?: string }
+  | undefined {
+  const current = cv.experience.find(
+    (e) => e.endDate === null && !e.engagement,
+  );
+  if (!current) return undefined;
+  const company = cv.companies.find((c) => c.id === current.companyId);
+  if (!company) return undefined;
+  const org: { "@type": "Organization"; name: string; url?: string } = {
+    "@type": "Organization",
+    name: company.name,
+  };
+  if (company.url) org.url = company.url;
+  return org;
+}
+
+function buildProjectGraph(): Record<string, unknown>[] {
+  return cv.projects
+    .filter((p) => p.openSource)
+    .map((p) => {
+      const primaryRepo = p.github[0];
+      const repoUrl = `https://github.com/${primaryRepo.owner}/${primaryRepo.repo}`;
+      const node: Record<string, unknown> = {
+        "@type": "SoftwareSourceCode",
+        "@id": `${SITE_URL}/#project-${p.name}`,
+        name: p.name,
+        description: p.description.en,
+        codeRepository: repoUrl,
+        url: p.homepage ?? repoUrl,
+        author: { "@id": `${SITE_URL}/#person` },
+      };
+      if (p.stack && p.stack.length > 0) {
+        node.programmingLanguage = p.stack;
+      }
+      return node;
+    });
+}
+
 function buildJsonLd(): string {
   const { firstName, lastName } = buildPersonName();
   const sameAs = cv.links.map((l) => l.url);
-  const person = {
+  const worksFor = buildWorksFor();
+  const person: Record<string, unknown> = {
     "@type": "Person",
     "@id": `${SITE_URL}/#person`,
     name: cv.name,
@@ -80,6 +120,7 @@ function buildJsonLd(): string {
     knowsAbout: buildKnowsAbout(),
     alumniOf: buildAlumniOf(),
   };
+  if (worksFor) person.worksFor = worksFor;
   const website = {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
@@ -92,7 +133,7 @@ function buildJsonLd(): string {
   };
   return jsonLdSafe({
     "@context": "https://schema.org",
-    "@graph": [person, website],
+    "@graph": [person, website, ...buildProjectGraph()],
   });
 }
 
@@ -101,8 +142,12 @@ function buildHeadInjection(goatcounterEndpoint: string | undefined): string {
   const { firstName, lastName } = buildPersonName();
   const tags: string[] = [
     `<link rel="canonical" href="${attr(CANONICAL_URL)}" />`,
+    `<link rel="alternate" hreflang="en" href="${attr(CANONICAL_URL)}" />`,
+    `<link rel="alternate" hreflang="sv" href="${attr(CANONICAL_URL)}" />`,
+    `<link rel="alternate" hreflang="x-default" href="${attr(CANONICAL_URL)}" />`,
     `<meta name="author" content="${attr(cv.name)}" />`,
     `<meta name="keywords" content="${attr(seo.keywords.join(", "))}" />`,
+    `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`,
     `<meta property="og:type" content="profile" />`,
     `<meta property="og:site_name" content="${attr(TITLE_EN)}" />`,
     `<meta property="og:title" content="${attr(TITLE_EN)}" />`,

@@ -110,8 +110,12 @@ function mergeTags(...lists) {
   const seen = new Set();
   const out = [];
   for (const list of lists) {
-    for (const item of list ?? []) {
-      if (!seen.has(item)) {
+    for (const raw of list ?? []) {
+      // Skip unused stack entries — the printed CV only lists tech the
+      // holder personally practiced.
+      if (raw && typeof raw === "object" && raw.unused === true) continue;
+      const item = typeof raw === "string" ? raw : raw?.name;
+      if (item && !seen.has(item)) {
         seen.add(item);
         out.push(item);
       }
@@ -140,8 +144,8 @@ function buildAssignment(assignment, companies) {
     tags: mergeTags(assignment.stack, assignment.skills),
     roleHistory: buildRoleHistory(sortedRoles),
   };
-  if (assignment.printDescription)
-    baked.description = assignment.printDescription;
+  const description = assignment.printDescription ?? assignment.jobDescription;
+  if (description) baked.description = description;
   if (assignment.notes) baked.notes = assignment.notes;
   return baked;
 }
@@ -158,12 +162,13 @@ function buildExperience(item, companies) {
     tagline: company.tagline,
     tags: mergeTags(stack, item.skills),
     roleHistory: buildRoleHistory(sortedRoles),
-    assignments: (item.assignments ?? []).map((a) =>
-      buildAssignment(a, companies),
-    ),
+    assignments: [...(item.assignments ?? [])]
+      .sort((a, b) => b.startDate.localeCompare(a.startDate))
+      .map((a) => buildAssignment(a, companies)),
   };
   if (item.engagement) baked.engagement = item.engagement;
-  if (item.printDescription) baked.description = item.printDescription;
+  const description = item.printDescription ?? item.jobDescription;
+  if (description) baked.description = description;
   if (item.notes) baked.notes = item.notes;
   return baked;
 }
@@ -173,16 +178,30 @@ function buildProject(project, projectStats) {
     name: project.name,
     tagline: project.tagline,
   };
-  const stats =
-    projectStats?.enabled && project.github
-      ? projectStats.projects?.[
-          `${project.github.owner}/${project.github.repo}`
-        ]
-      : null;
-  if (stats?.firstCommitDate && stats?.lastCommitDate) {
+  let firstCommitDate = null;
+  let lastCommitDate = null;
+  if (projectStats?.enabled) {
+    for (const gh of project.github ?? []) {
+      const stats = projectStats.projects?.[`${gh.owner}/${gh.repo}`];
+      if (!stats) continue;
+      if (
+        stats.firstCommitDate &&
+        (!firstCommitDate || stats.firstCommitDate < firstCommitDate)
+      ) {
+        firstCommitDate = stats.firstCommitDate;
+      }
+      if (
+        stats.lastCommitDate &&
+        (!lastCommitDate || stats.lastCommitDate > lastCommitDate)
+      ) {
+        lastCommitDate = stats.lastCommitDate;
+      }
+    }
+  }
+  if (firstCommitDate && lastCommitDate) {
     baked.range = formatRange(
-      stats.firstCommitDate.slice(0, 7),
-      stats.lastCommitDate.slice(0, 7),
+      firstCommitDate.slice(0, 7),
+      lastCommitDate.slice(0, 7),
     );
   }
   if (project.printDescription) baked.description = project.printDescription;
@@ -221,7 +240,7 @@ function buildEducation(item) {
 function buildCourseRange(item) {
   const endDate =
     item.completedDate ??
-    (item.moments ?? [])
+    (item.modules ?? [])
       .map((m) => m.completedDate)
       .filter(Boolean)
       .reduce((latest, d) => (latest && latest > d ? latest : d), null);

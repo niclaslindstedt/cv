@@ -1,10 +1,16 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 
+import {
+  categoryStyle,
+  type SectionTitleCategory,
+} from "../utils/categoryStyle";
 import { useLang } from "../utils/i18n";
+import { CategoryGlyph } from "./CategoryGlyph";
 
 type Props = {
   id: string;
   title: string;
+  category?: SectionTitleCategory;
   collapsible?: boolean;
   defaultCollapsed?: boolean;
   children: ReactNode;
@@ -23,6 +29,7 @@ function readInitialCollapsed(id: string, defaultCollapsed: boolean): boolean {
 export function Section({
   id,
   title,
+  category,
   collapsible = true,
   defaultCollapsed = false,
   children,
@@ -39,10 +46,20 @@ export function Section({
 
   const toggle = useCallback(() => setCollapsed((c) => !c), []);
 
+  const titleStyle = category ? categoryStyle(category) : undefined;
+  const glyph = category ? (
+    <span className="section-title-glyph" style={titleStyle} aria-hidden="true">
+      <CategoryGlyph category={category} size={18} />
+    </span>
+  ) : null;
+
   if (!collapsible) {
     return (
       <section id={id} className="section">
-        <h2 className="section-title">{title}</h2>
+        <h2 className="section-title">
+          {glyph}
+          {title}
+        </h2>
         {children}
       </section>
     );
@@ -63,6 +80,7 @@ export function Section({
           }
           onClick={toggle}
         >
+          {glyph}
           <span className="section-toggle-label">{title}</span>
           <svg
             className="section-toggle-chevron"

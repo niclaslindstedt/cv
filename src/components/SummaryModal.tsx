@@ -2,7 +2,10 @@ import { useEffect, useRef } from "react";
 
 import type { LocalizedString } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { renderInlineCode } from "../utils/inlineCode";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
+import { useModalFocus } from "../utils/useModalFocus";
+import { useModalSwipe } from "../utils/useModalSwipe";
 
 type Props = {
   open: boolean;
@@ -21,7 +24,9 @@ export function SummaryModal({
 }: Props) {
   const { t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, open, onClose);
+  useModalSwipe(modalRef, open, onClose);
+  useModalFocus(modalRef, open);
+  useBodyScrollLock(open);
 
   useEffect(() => {
     if (!open) return;
@@ -31,15 +36,6 @@ export function SummaryModal({
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
 
   if (!open) return null;
 
@@ -70,9 +66,11 @@ export function SummaryModal({
             ✕
           </button>
         </header>
-        <div className="skill-modal-body">
+        <div className="skill-modal-body" tabIndex={0}>
           <section className="skill-modal-detail">
-            <p className="skill-modal-description">{t(longSummary)}</p>
+            <p className="skill-modal-description">
+              {renderInlineCode(t(longSummary))}
+            </p>
           </section>
         </div>
       </div>

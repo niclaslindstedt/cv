@@ -22,11 +22,6 @@ export type Link = {
   featured?: boolean;
 };
 
-export type Actions = {
-  timeline: LocalizedString;
-  downloadPdf: LocalizedString;
-};
-
 export type Sections = {
   focus: LocalizedString;
   projects: LocalizedString;
@@ -40,7 +35,10 @@ export type Sections = {
 export type FocusArea = {
   area: LocalizedString;
   since: string;
+  tagline: LocalizedString;
   description: LocalizedString;
+  skills?: string[];
+  aliases?: string[];
 };
 
 export type SkillDetail = {
@@ -48,6 +46,7 @@ export type SkillDetail = {
   benefits?: LocalizedString;
   drawbacks?: LocalizedString;
   url?: string;
+  aliases?: string[];
 };
 
 export type GithubRepoRef = {
@@ -55,14 +54,16 @@ export type GithubRepoRef = {
   repo: string;
 };
 
+export type StackItem = string | { name: string; unused?: boolean };
+
 export type Project = {
   name: string;
   tagline: LocalizedString;
   description: LocalizedString;
   printDescription?: LocalizedString;
-  stack?: string[];
+  stack?: StackItem[];
   skills: string[];
-  github: GithubRepoRef;
+  github: GithubRepoRef[];
   openSource: boolean;
   homepage?: string;
   dockerHub?: string;
@@ -70,6 +71,7 @@ export type Project = {
   pypi?: string;
   npm?: string;
   nuget?: string;
+  aliases?: string[];
 };
 
 export type ProjectStats = {
@@ -101,8 +103,9 @@ export type Company = {
   description: LocalizedString;
   url?: string;
   terminated?: boolean;
-  stack?: string[];
+  stack?: StackItem[];
   sourceUrls?: SourceUrl[];
+  aliases?: string[];
 };
 
 export type RoleTenure = {
@@ -116,10 +119,13 @@ export type Assignment = {
   clientId: string;
   startDate: string;
   endDate: string | null;
-  stack?: string[];
+  fte?: number;
+  stack?: StackItem[];
   skills?: string[];
   notes?: LocalizedString;
+  jobDescription?: LocalizedString;
   printDescription?: LocalizedString;
+  aliases?: string[];
 };
 
 export type Experience = {
@@ -128,14 +134,17 @@ export type Experience = {
   startDate: string;
   endDate: string | null;
   engagement?: LocalizedString;
-  stack?: string[];
+  fte?: number;
+  stack?: StackItem[];
   skills?: string[];
   notes?: LocalizedString;
+  jobDescription?: LocalizedString;
   printDescription?: LocalizedString;
   assignments?: Assignment[];
+  aliases?: string[];
 };
 
-export type CourseMoment = {
+export type CourseModule = {
   name: LocalizedString;
   code?: string;
   credits: string;
@@ -149,7 +158,7 @@ export type ProgramCourse = {
   completedDate?: string;
   grade?: string;
   completed?: boolean;
-  moments?: CourseMoment[];
+  modules?: CourseModule[];
   skills?: string[];
 };
 
@@ -179,6 +188,7 @@ export type Education = {
   skills?: string[];
   notes?: LocalizedString;
   courses?: ProgramCourse[];
+  aliases?: string[];
 };
 
 export type Course = {
@@ -191,8 +201,9 @@ export type Course = {
   engagement?: number;
   remote?: boolean;
   completed?: boolean;
-  moments?: CourseMoment[];
+  modules?: CourseModule[];
   skills?: string[];
+  aliases?: string[];
 };
 
 export type SkillGroup = {
@@ -201,9 +212,20 @@ export type SkillGroup = {
   items: string[];
 };
 
+export type LanguageCode = "en" | "sv";
+
+export type LanguageProficiency =
+  | "basic"
+  | "conversational"
+  | "working"
+  | "professional"
+  | "native";
+
 export type SpokenLanguage = {
   name: LocalizedString;
+  code: LanguageCode;
   level: LocalizedString;
+  proficiency: LanguageProficiency;
 };
 
 export type PrintPage = {
@@ -262,7 +284,6 @@ export type CV = {
   summary: LocalizedString;
   longSummary: LocalizedString;
   links: Link[];
-  actions: Actions;
   sections: Sections;
   focus: FocusArea[];
   projects: Project[];

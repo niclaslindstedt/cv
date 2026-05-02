@@ -1,3 +1,21 @@
+/* Unified modal system.
+ *
+ * Every modal shares the same outer container (.skill-modal — kept under
+ * the legacy "skill-modal" name to avoid renames across components),
+ * the same overlay, the same head, and the same body grid:
+ *
+ *   .skill-modal-body
+ *     gap: var(--modal-section-gap)        // between top-level sections
+ *     padding: var(--modal-pad-y) var(--modal-pad-x)
+ *
+ * Per-section padding is handled by .skill-modal-body alone — direct
+ * children of the body never set their own outer padding. They only set
+ * their inner gap (heading → list) via var(--modal-stack-gap).
+ *
+ * Surfaces are SOLID — no backdrop-filter on overlay or panel — so the
+ * page underneath never bleeds through.
+ */
+
 .skill-modal-overlay {
   position: fixed;
   inset: 0;
@@ -6,8 +24,6 @@
   place-items: center;
   padding: 24px;
   background: var(--modal-overlay);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .skill-modal {
@@ -16,9 +32,7 @@
   max-height: min(720px, calc(100dvh - 48px));
   display: flex;
   flex-direction: column;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(170%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  background: var(--modal-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -29,32 +43,65 @@
 .skill-modal-body {
   display: flex;
   flex-direction: column;
+  gap: var(--modal-section-gap);
   min-height: 0;
+  padding: var(--modal-pad-y) var(--modal-pad-x);
   overflow: auto;
+}
+
+/* Top-level sections inside the body — they all share the same spacing,
+ * so individual sections never set their own padding. The body's gap and
+ * padding are the single source of truth. */
+.skill-modal-detail,
+.skill-modal-groups,
+.program-modal-summary,
+.program-courses-list,
+.skill-modal-empty,
+.skill-modal-unused,
+.course-modal-modules,
+.course-modal-skills,
+.focus-modal-skills {
+  margin: 0;
+  padding: 0;
 }
 
 .skill-modal-detail {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 14px 20px 4px;
+  gap: var(--modal-section-gap);
 }
 
-.skill-modal-detail:last-child {
-  padding-bottom: 16px;
+.skill-modal-groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-section-gap);
+}
+
+.program-modal-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
+}
+
+.program-courses-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
 }
 
 .skill-modal-description {
   margin: 0;
   font-size: 0.95rem;
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--fg);
 }
 
 .skill-modal-pros-cons {
   margin: 0;
-  display: grid;
-  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
 }
 
 .skill-modal-pros,
@@ -86,35 +133,122 @@
 .skill-modal-pros dd,
 .skill-modal-cons dd {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
 .skill-modal-link {
   align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
   padding: 4px 12px;
+  font: inherit;
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--accent);
   background: var(--accent-soft);
-  border: 1px solid var(--accent-soft);
+  /* Solid accent so the pill clears WCAG 1.4.11 3:1 — accent-soft
+   * border alone is invisible (~1.18:1) against the modal surface. */
+  border: 1px solid var(--accent);
   border-radius: 999px;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.project-modal-actions {
+.skill-modal-link-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.project-modal-actions,
+.skill-modal-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.company-modal-stack {
+.experience-modal .skill-modal-title {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+  flex: 1 1 0;
 }
 
-.company-modal-stack-title {
+.experience-modal .skill-modal-title .role {
+  font-family: var(--font-mono);
+}
+
+.experience-modal-role-line {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.experience-modal-subject {
+  color: var(--fg-muted);
+  font-weight: 400;
+  font-size: 0.9em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.experience-modal-subject .company-btn {
+  font-weight: 400;
+}
+
+/* Render the consultancy ("via X") as a pill so it stays a single
+ * unbreakable token: when the subject line is too long, the pill wraps
+ * to its own row instead of breaking mid-name. */
+.experience-modal-via {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  border-radius: 999px;
+}
+
+.experience-modal-meta {
+  margin: 0;
+}
+
+.experience-modal .role-chain {
+  margin: 0;
+}
+
+.skill-modal-detail .entry-notes {
+  margin: 0;
+}
+
+/* Stacked label-and-content blocks (stack list, skills list, etc.) — the
+ * gap between heading and content is the same in every modal. */
+.company-modal-stack,
+.skill-modal-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
+}
+
+.company-modal-stack-title,
+.skill-modal-group-heading {
   margin: 0;
   font-size: 0.7rem;
   font-weight: 600;
@@ -123,7 +257,10 @@
   color: var(--fg-muted);
 }
 
-.company-modal-stack .entry-stack {
+.company-modal-stack .entry-stack,
+.company-modal-stack .entry-skills,
+.skill-modal-group .entry-stack,
+.skill-modal-group .entry-skills {
   margin: 0;
 }
 
@@ -145,7 +282,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 20px;
+  padding: 14px var(--modal-pad-x);
   border-bottom: 1px solid var(--glass-border);
   background: var(--glass-highlight);
 }
@@ -158,6 +295,68 @@
   gap: 10px;
   font-size: 1.05rem;
   font-weight: 600;
+  /* Eat the leftover space in the header so the close button stays
+   * pinned right when a leading category glyph is present. */
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Category-tinted modal — opt in by setting `data-category` and
+ * `--cat-rgb` / `--cat-fg` (via `categoryStyle`) on the .skill-modal.
+ *
+ * The modal then borrows the same Sapphire / Iris / Mint / Ember
+ * language used by the section title glyph (§10.5), so the panel reads
+ * as part of its parent section rather than a generic Aurora overlay.
+ *
+ * Mechanism: locally redefine --accent and --accent-soft so all the
+ * existing accent-coloured leaves (year pill, action links, close-hover
+ * ring, focus-visible outline) pick the category tone up automatically.
+ */
+.skill-modal--cat {
+  --accent: rgb(var(--cat-fg, var(--cat-rgb)));
+  --accent-soft: rgba(var(--cat-rgb), 0.16);
+}
+
+:root[data-theme="light"] .skill-modal--cat {
+  --accent-soft: rgba(var(--cat-rgb), 0.18);
+}
+
+.skill-modal--cat .skill-modal-head {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--cat-rgb), 0.18),
+    rgba(var(--cat-rgb), 0.06)
+  );
+  border-bottom-color: rgba(var(--cat-rgb), 0.45);
+}
+
+:root[data-theme="light"] .skill-modal--cat .skill-modal-head {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--cat-rgb), 0.22),
+    rgba(var(--cat-rgb), 0.08)
+  );
+}
+
+/* Glyph chip in the modal header — same visual recipe as the card glyph
+ * bar (§10.5): low-alpha tint fill, 1px border at 45% alpha for the
+ * 3:1 non-text contrast WCAG 1.4.11 wants, glyph painted in the
+ * deeper --cat-fg foreground variant so it reads on the tint. */
+.skill-modal-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  color: rgb(var(--cat-fg, var(--cat-rgb, var(--tl-blue))));
+  background: rgba(var(--cat-rgb, var(--tl-blue)), 0.16);
+  border: 1px solid rgba(var(--cat-rgb, var(--tl-blue)), 0.45);
+}
+
+:root[data-theme="light"] .skill-modal-glyph {
+  background: rgba(var(--cat-rgb, var(--tl-blue)), 0.22);
 }
 
 .skill-modal-name {
@@ -176,13 +375,18 @@
 
 .skill-modal-close {
   appearance: none;
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 12px;
   font: inherit;
   font-weight: 700;
   color: var(--fg);
   background: transparent;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius);
   cursor: pointer;
   line-height: 1.2;
 }
@@ -193,78 +397,62 @@
   background: var(--accent-soft);
 }
 
-.skill-modal-list {
+.skill-modal-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.skill-modal-pills {
   list-style: none;
-  padding: 12px 20px 16px;
   margin: 0;
-  display: grid;
-  gap: 8px;
-  overflow: auto;
-}
-
-.skill-modal-item {
-  display: grid;
-  grid-template-columns: 90px 1fr auto;
-  gap: 10px;
-  align-items: baseline;
-  padding: 8px 12px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.9rem;
-}
-
-.skill-modal-kind {
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-}
-
-.skill-modal-label {
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  color: var(--fg);
-  word-break: break-word;
-  min-width: 0;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.skill-modal-role {
-  color: var(--fg);
+.skill-modal-pills > li {
+  display: inline-flex;
 }
 
-.skill-modal-sublabel {
-  color: var(--fg-muted);
+.skill-modal-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
-}
-
-.skill-modal-range {
-  color: var(--fg-muted);
-  font-size: 0.8rem;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+  line-height: 1.3;
+  color: var(--fg);
+  background: var(--glass-highlight);
+  border: 1px solid var(--border);
+  border-radius: 999px;
 }
 
 .skill-modal-empty {
-  margin: 0;
-  padding: 16px 20px 20px;
   color: var(--fg-muted);
   font-size: 0.9rem;
+}
+
+.skill-modal-unused {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
+}
+
+.skill-modal-unused-hint {
+  margin: 0;
+  color: var(--fg-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.skill-modal-pill-unused {
+  color: var(--fg-muted);
 }
 
 @media (max-width: 520px) {
   .skill-modal-overlay {
     padding: 12px;
-  }
-
-  .skill-modal-item {
-    grid-template-columns: 1fr;
-    gap: 2px;
-  }
-
-  .skill-modal-range {
-    white-space: normal;
   }
 }
 
@@ -297,30 +485,15 @@
 
 .education-courses-count {
   margin-left: 8px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--accent);
-}
-
-.program-modal-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 14px 20px 8px;
-}
-
-.program-modal-count {
-  margin: 0;
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
 }
 
 .program-modal-notes {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin: 10px 0 6px;
+  margin: 0;
   padding: 14px 16px;
   border-left: 2px solid var(--accent-soft);
   border-radius: 0 6px 6px 0;
@@ -331,18 +504,10 @@
   white-space: pre-line;
 }
 
-.program-courses-list {
-  list-style: none;
-  margin: 0;
-  padding: 4px 20px 16px;
-  display: grid;
-  gap: 8px;
-}
-
 .program-course-item {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--modal-stack-gap);
   padding: 10px 12px;
   background: var(--bg);
   border: 1px solid var(--border);
@@ -381,7 +546,7 @@
 
 .program-course-code {
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--fg);
   padding: 1px 8px;
   background: var(--bg);
@@ -394,7 +559,7 @@
   align-items: baseline;
   gap: 6px;
   padding: 1px 10px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   border: 1px solid var(--accent);
   border-radius: 999px;
   color: var(--accent);
@@ -402,7 +567,7 @@
 }
 
 .program-course-grade-label {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -413,7 +578,7 @@
 }
 
 .program-course-progress {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   letter-spacing: 0.04em;
   color: var(--fg-muted);
 }
@@ -422,40 +587,91 @@
   display: inline-flex;
   align-items: center;
   padding: 1px 10px;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  border: 1px solid #c62828;
+  border: 1px solid var(--border);
   border-radius: 999px;
-  color: #fff;
-  background: #c62828;
+  color: var(--fg-muted);
+  background: var(--accent-soft);
 }
 
-.program-course-moments {
+.course-modules-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.course-modules-progress-value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted);
+  letter-spacing: 0.02em;
+}
+
+.course-modules-progress-earned {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.course-modules-progress-sep {
+  opacity: 0.6;
+}
+
+.course-modules-progress-unit {
+  margin-left: 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.course-modules-progress-bar {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(var(--cat-rgb, var(--tl-amber)), 0.14);
+  overflow: hidden;
+}
+
+.course-modules-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 240ms ease;
+}
+
+.program-course-modules {
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding-top: 4px;
 }
 
-.program-course-moments-label {
+.program-course-modules-label {
   margin: 0;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-muted);
 }
 
-.program-moment-list {
+.program-module-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 4px;
 }
 
-.program-moment-item {
+.program-module-item {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -468,44 +684,36 @@
   font-size: 0.85rem;
 }
 
-.program-moment-item--pending {
+.program-module-item--pending {
   border-left-color: var(--border);
   color: var(--fg-muted);
 }
 
-.program-moment-name {
+.program-module-name {
   font-weight: 500;
 }
 
-.program-moment-meta {
+.program-module-meta {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 6px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--fg-muted);
   font-variant-numeric: tabular-nums;
 }
 
-.program-moment-code {
+.program-module-code {
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   padding: 0 6px;
   border: 1px solid var(--border);
   border-radius: 4px;
   color: var(--fg);
 }
 
-.program-moment-date {
+.program-module-date {
   white-space: nowrap;
-}
-
-.course-modal-moments {
-  padding: 4px 20px 16px;
-}
-
-.course-modal-skills {
-  padding: 0 20px 16px;
 }
 
 @media (max-width: 520px) {

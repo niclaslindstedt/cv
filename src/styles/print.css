@@ -28,11 +28,13 @@
     color: #111111;
   }
 
-  body::before {
+  body::before,
+  .page::before {
     display: none;
   }
 
   .celestial-sky,
+  .page-glow,
   .glass-reflect,
   .footer,
   .timeline-vis-overlay,
@@ -42,7 +44,7 @@
   }
 
   /* Hide every screen-only section. Only PrintView prints. */
-  .page > main.container > .hero,
+  .page > .hero,
   .page > main.container > .section,
   .page > footer.footer {
     display: none !important;
@@ -142,23 +144,19 @@
     margin: 0;
   }
 
+  /* Jobs may span a page break — the inner .print-job-header keeps the
+     title/meta/role-history/tagline glued together as one atomic block,
+     and tags/notes/assignments are siblings that can flow to the next
+     page if the rest of the job won't fit. Forcing the entire job to
+     stay together via break-inside: avoid on .print-job caused large
+     blanks at the bottom of page 1 when the first job's tag list was
+     long. */
   .print-job {
     margin-bottom: var(--print-spacing-entry, 12pt);
-    break-inside: avoid;
-    page-break-inside: avoid;
   }
 
   .print-job:last-child {
     margin-bottom: 0;
-  }
-
-  /* Consultancy jobs (with assignments) may span a page break, but only
-     between assignments — never within an assignment, and never within the
-     parent job header (title, role-history, tags, notes, "Assignments"
-     heading). The header block stays glued to the first assignment. */
-  .print-job--with-assignments {
-    break-inside: auto;
-    page-break-inside: auto;
   }
 
   .print-job-header {
@@ -204,6 +202,8 @@
     margin: 0 0 var(--print-spacing-paragraph, 4pt);
     font-size: 9.5pt;
     color: #444;
+    break-before: avoid;
+    page-break-before: avoid;
   }
 
   .print-tags::before {
@@ -215,6 +215,8 @@
     font-size: 9.5pt;
     color: #333;
     font-style: italic;
+    break-before: avoid;
+    page-break-before: avoid;
   }
 
   /* Role-history list (older roles, shown indented under the newest). */
@@ -409,5 +411,20 @@
   a {
     color: #111;
     text-decoration: none;
+  }
+
+  /* Inline code in printed copy — readable on paper, no glassy background.
+   * Sized down well below 1em because the body uses Garamond (small x-height)
+   * while the monospace fallback has a much taller x-height; matching visual
+   * weight requires the type size to drop by ~25%, not just trim a hair. */
+  .print-view code {
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Consolas, "Roboto Mono", monospace;
+    font-size: 0.78em;
+    padding: 0 2pt;
+    background: #f0f0f0;
+    border: 1px solid #d6d6d6;
+    border-radius: 2pt;
+    white-space: nowrap;
   }
 }

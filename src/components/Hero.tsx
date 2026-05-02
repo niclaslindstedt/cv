@@ -1,22 +1,27 @@
 import type { CV } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
 import type { Theme } from "../utils/theme";
-import { LanguageToggle, ThemeToggle } from "./Controls";
+import {
+  LanguageToggle,
+  SearchButton,
+  ThemeToggle,
+  TimelineLink,
+} from "./Controls";
 
 type Props = {
   cv: CV;
   theme: Theme;
-  onToggleTheme: () => void;
-  onOpenTimeline: () => void;
+  setTheme: (theme: Theme) => void;
   onOpenSummary: () => void;
+  onOpenSearch: () => void;
 };
 
 export function Hero({
   cv,
   theme,
-  onToggleTheme,
-  onOpenTimeline,
+  setTheme,
   onOpenSummary,
+  onOpenSearch,
 }: Props) {
   const { lang, setLang, t, ui } = useLang();
   const pdfBase = cv.print.pdfFilename ?? "cv.pdf";
@@ -27,52 +32,76 @@ export function Hero({
   const pdfDownloadName = `niclas-lindstedt-cv-${lang}${pdfExt}`;
   return (
     <header className="hero">
-      <p className="hero-eyebrow">{ui.hero.eyebrow}</p>
-      <h1 className="hero-name">{cv.name}</h1>
-      <button
-        type="button"
-        className="hero-summary"
-        onClick={onOpenSummary}
-        aria-label={ui.summaryModal.detailAria(cv.name)}
-      >
-        <span className="hero-summary-text">{t(cv.summary)}</span>
-        <span className="hero-summary-hint" aria-hidden="true">
-          {ui.summaryModal.readMore}
-        </span>
-      </button>
-      <p className="hero-long-summary" aria-hidden="true">
-        {t(cv.longSummary)}
-      </p>
-      <div className="hero-meta">
-        {cv.links.map((link) => (
-          <a
-            key={link.url}
-            className={link.featured ? "hero-link-pill" : undefined}
-            href={link.url}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {t(link.label)}
-          </a>
-        ))}
+      <div className="hero-inner">
+        <p className="hero-eyebrow">
+          <span className="hero-eyebrow-dot" aria-hidden="true" />
+          {ui.hero.eyebrow}
+        </p>
+        <h1 className="hero-name">{cv.name}</h1>
+        <p className="hero-title">{t(cv.title)}</p>
         <button
           type="button"
-          className="hero-timeline-btn"
-          onClick={onOpenTimeline}
+          className="hero-summary"
+          onClick={onOpenSummary}
+          aria-label={ui.summaryModal.detailAria(cv.name)}
         >
-          {t(cv.actions.timeline)}
+          <span className="hero-summary-text">{t(cv.summary)}</span>
+          <span className="hero-summary-hint" aria-hidden="true">
+            {ui.summaryModal.readMore}
+          </span>
         </button>
-        <a
-          className="hero-download"
-          href={pdfHref}
-          download={pdfDownloadName}
-          aria-label={ui.hero.downloadAria}
-        >
-          {t(cv.actions.downloadPdf)}
-        </a>
-        <LanguageToggle lang={lang} setLang={setLang} />
-        <ThemeToggle theme={theme} onToggleTheme={onToggleTheme} />
+        <p className="hero-long-summary" aria-hidden="true">
+          {t(cv.longSummary)}
+        </p>
+        <div className="hero-meta">
+          <div className="hero-meta-group hero-meta-links">
+            {cv.links.map((link) => (
+              <a
+                key={link.url}
+                className={link.featured ? "hero-link-pill" : undefined}
+                href={link.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t(link.label)}
+              </a>
+            ))}
+          </div>
+          <div className="hero-meta-group hero-meta-controls">
+            <TimelineLink label={ui.hero.timeline} />
+            <a
+              className="hero-download"
+              href={pdfHref}
+              download={pdfDownloadName}
+              aria-label={ui.hero.downloadAria}
+            >
+              <PdfIcon />
+              <span>{ui.hero.pdf}</span>
+            </a>
+            <LanguageToggle lang={lang} setLang={setLang} />
+            <ThemeToggle theme={theme} setTheme={setTheme} />
+            <SearchButton onClick={onOpenSearch} />
+          </div>
+        </div>
       </div>
+      <span className="glass-reflect" aria-hidden="true" />
     </header>
+  );
+}
+
+function PdfIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+      <path d="M14 3v5h5" />
+    </svg>
   );
 }

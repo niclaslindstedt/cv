@@ -1,0 +1,37 @@
+name: Visual
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      # Build without GitHub tokens so generate-github-activity and
+      # generate-project-stats fall back to their committed `enabled: false`
+      # caches. With tokens present they refetch live data, which makes the
+      # projects section sort order and active-state classes drift between
+      # runs and against locally recorded baselines. Visual regression tests
+      # the UI structure; stats freshness is exercised by Pages on deploy.
+      - run: make build
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - run: npm run test:visual
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7

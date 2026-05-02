@@ -1,6 +1,17 @@
-import type { Project } from "../data/cv.types";
+import { useMemo } from "react";
+
+import projectStatsData from "../data/project-stats.json";
+import type { Project, ProjectStats, ProjectStatsFile } from "../data/cv.types";
+import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { aggregateProjectStats } from "../utils/projectStats";
+import { stackEntries } from "../utils/stack";
+import { CategoryGlyph } from "./CategoryGlyph";
 import { Section } from "./Section";
+
+const projectStats = projectStatsData as ProjectStatsFile;
+
+const ACTIVE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 
 type Props = {
   title: string;
@@ -9,32 +20,56 @@ type Props = {
   onProjectClick: (project: Project) => void;
 };
 
+function lastCommitMs(stats: ProjectStats | undefined): number {
+  if (!stats?.lastCommitDate) return -Infinity;
+  const ms = Date.parse(stats.lastCommitDate);
+  return Number.isFinite(ms) ? ms : -Infinity;
+}
+
+function nowMs(): number {
+  return new Date().getTime();
+}
+
 export function Projects({
   title,
   projects,
   onSkillClick,
   onProjectClick,
 }: Props) {
-  const { t, ui } = useLang();
+  const { t, lang, ui } = useLang();
+  const decoratedProjects = useMemo(() => {
+    const now = nowMs();
+    return [...projects]
+      .map((project) => {
+        const stats = aggregateProjectStats(project.github, projectStats);
+        const lastMs = lastCommitMs(stats);
+        const isActive =
+          Number.isFinite(lastMs) && now - lastMs <= ACTIVE_WINDOW_MS;
+        return { project, stats, lastMs, isActive };
+      })
+      .sort((a, b) => b.lastMs - a.lastMs);
+  }, [projects]);
   return (
-    <Section id="projects" title={title}>
+    <Section id="projects" title={title} category="project">
       <div className="projects">
-        {projects.map((project) => {
+        {decoratedProjects.map(({ project, stats, isActive }) => {
+          const hasDateRange = !!(
+            stats?.firstCommitDate && stats?.lastCommitDate
+          );
+          const classes = ["project"];
+          if (isActive) classes.push("is-active");
           return (
             <article
               key={project.name}
-              className="project"
-              role="button"
-              tabIndex={0}
-              aria-label={ui.projectModal.detailAria(project.name)}
+              className={classes.join(" ")}
               onClick={() => onProjectClick(project)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  onProjectClick(project);
-                }
-              }}
             >
+              <span className="card-glyph-bar" aria-hidden="true">
+                <CategoryGlyph category="project" />
+              </span>
+              {project.openSource && (
+                <span className="project-oss-badge">open source</span>
+              )}
               <header className="project-head">
                 <h3>
                   <button
@@ -48,48 +83,41 @@ export function Projects({
                   >
                     {project.name}
                   </button>
-                  {project.openSource && (
-                    <span className="project-pill project-pill-oss">
-                      open source
-                    </span>
-                  )}
                 </h3>
+                {hasDateRange && (
+                  <p className="project-dates">
+                    {formatRange(
+                      stats!.firstCommitDate!.slice(0, 7),
+                      stats!.lastCommitDate!.slice(0, 7),
+                      lang,
+                    )}
+                  </p>
+                )}
                 <p className="project-tagline">{t(project.tagline)}</p>
               </header>
               {project.stack && project.stack.length > 0 && (
                 <ul className="project-stack">
-                  {project.stack.map((tech) => (
-                    <li key={tech}>
+                  {stackEntries(project.stack).map((tech) => (
+                    <li key={tech.name}>
                       <button
                         type="button"
-                        className="project-stack-btn"
+                        className={
+                          tech.unused
+                            ? "project-stack-btn project-stack-btn-unused"
+                            : "project-stack-btn"
+                        }
                         onClick={(e) => {
                           e.stopPropagation();
-                          onSkillClick(tech);
+                          onSkillClick(tech.name);
                         }}
+                        title={tech.unused ? ui.skills.unusedStack : undefined}
                       >
-                        {tech}
+                        {tech.name}
                       </button>
                     </li>
                   ))}
                 </ul>
               )}
-              <ul className="project-skills">
-                {project.skills.map((skill) => (
-                  <li key={skill}>
-                    <button
-                      type="button"
-                      className="project-skill-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onSkillClick(skill);
-                      }}
-                    >
-                      {skill}
-                    </button>
-                  </li>
-                ))}
-              </ul>
               <span className="glass-reflect" aria-hidden="true" />
             </article>
           );

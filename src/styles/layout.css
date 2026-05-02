@@ -1,8 +1,50 @@
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 8px 16px;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--accent);
+  border-radius: 6px;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 120ms ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+/* The page-tier gradient (sky-top → sky-mid → sky-bottom plus the two
+ * glow ellipses) lives on a `::before` pseudo rather than directly on
+ * `.page` so axe-core's color-contrast walker can determine the
+ * background of every text element nested below. Axe aborts contrast
+ * computation when an ancestor declares a `background-image`; it
+ * checks each ancestor's own style, not its pseudos, so moving the
+ * paint to a pseudo keeps the visual gradient out of the contrast
+ * chain while the rendering is unchanged. */
 .page {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  padding: 48px 24px 64px;
+  padding: 0 0 64px;
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(
       ellipse 120% 70% at var(--sky-glow-1-pos),
@@ -22,9 +64,54 @@
     );
 }
 
+/* Aurora glow that lives on the Sky tier (behind every glass card).
+ * Anchored to the top-right corner where the hero sits, then bleeds
+ * downward as a softer reflected echo so its colour is sampled by the
+ * backdrop-filter of the cards below — the glow diffuses through the
+ * glass cards instead of being trapped inside the hero box. The glow
+ * itself sits on a `::before` pseudo for the same axe-core reason as
+ * `.page` above. */
+.page-glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(1100px, 100vw);
+  height: 120vh;
+  max-height: 1500px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* Primary aurora bloom — anchored in the hero's upper-right. */
+    radial-gradient(
+      ellipse 50% 35% at 82% 10%,
+      var(--accent-soft) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 42% at 76% 16%,
+      var(--accent-soft) 0%,
+      transparent 70%
+    ),
+    /* Reflected echo — softer, lower, mirrored toward the column to
+     * keep the glow alive through the first cards below the hero. */
+    radial-gradient(
+        ellipse 55% 35% at 38% 48%,
+        var(--accent-soft) 0%,
+        transparent 75%
+      );
+}
+
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0 24px;
 }
 
 .footer {

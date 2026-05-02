@@ -14,28 +14,36 @@
     "startDate": "2024-04",
     "endDate": null,
     "stack": [
-      "TypeScript",
-      "React",
+      { "name": "TypeScript", "unused": true },
+      { "name": "React", "unused": true },
       "C#/.NET",
       "Microservices",
       "Azure",
       "Kubernetes",
       "Terraform",
       "GitHub actions",
+      "Octopus Deploy",
       "gRPC/Protobuf",
-      "Vector Databases",
+      "Vector databases",
       "CosmosDB",
-      "Redis"
+      "Redis",
+      "MSSQL",
+      "PostgreSQL"
     ],
     "skills": [
+      "AI agents",
       "Agentic workflows",
-      "AI Agents",
       "RAG",
       "Chatbots",
       "MCP",
+      "Prompt engineering",
+      "Claude Code",
+      "GitHub Copilot",
+      "Codex CLI",
       "Cybersecurity",
-      "Software Architecture",
+      "Architecture",
       "Observability",
+      "CI/CD",
       "Bash/Shell",
       "Mentoring"
     ],
@@ -61,24 +69,26 @@
     "stack": [
       "C#/.NET",
       "PostgreSQL",
+      "CosmosDB",
+      "Redis",
       "Azure",
       "React",
-      "React Native",
+      { "name": "React Native", "unused": true },
       "TypeScript",
       "GitHub actions"
     ],
     "skills": [
-      "Software Architecture",
-      "IT Strategy",
-      "Team Management",
+      "Architecture",
+      "Database design",
+      "IT strategy",
+      "Leadership",
       "Cybersecurity",
-      "GDPR",
-      "Regulatory Compliance",
-      "Risk Management",
-      "Technology Roadmapping",
       "Bash/Shell",
       "Mentoring",
-      "Project Management"
+      "Project management",
+      "Integrations",
+      "Prompt engineering",
+      "ChatGPT"
     ],
     "printDescription": {
       "en": "CTO of IBNQ, a software platform for family offices, on a .NET/TypeScript stack on Azure.",
@@ -115,12 +125,32 @@
     "companyId": "etimo",
     "startDate": "2020-01",
     "endDate": "2023-09",
-    "skills": ["Mentoring"],
+    "skills": ["Mentoring", "Technical interviews"],
     "printDescription": {
       "en": "Consulting tenure at Etimo, a .NET and JavaScript consultancy; promoted from Senior Consultant to Senior Manager.",
       "sv": "Konsultanställning på Etimo, ett .NET- och JavaScript-konsultbolag; befordrad från Seniorkonsult till Senior Manager."
     },
     "assignments": [
+      {
+        "roles": [
+          {
+            "title": {
+              "en": "Software Engineer",
+              "sv": "Mjukvaruingenjör"
+            },
+            "startDate": "2020-01",
+            "endDate": "2020-02"
+          }
+        ],
+        "clientId": "timewave",
+        "startDate": "2020-01",
+        "endDate": "2020-02",
+        "stack": ["TypeScript", "Vue"],
+        "printDescription": {
+          "en": "Short engagement at TimeWave, building a customer-facing communication frontend in Vue against existing APIs.",
+          "sv": "Kort uppdrag på TimeWave med att bygga ett kundvänt kommunikationsgränssnitt i Vue mot befintliga API:er."
+        }
+      },
       {
         "roles": [
           {
@@ -135,16 +165,18 @@
         "clientId": "seb",
         "startDate": "2020-02",
         "endDate": "2020-12",
-        "stack": ["C#/.NET", "Azure", "React", "TypeScript", "Miniservices"],
-        "skills": [
-          "Scrum",
-          "SQL",
-          "CI/CD",
-          "Software Architecture",
-          "Agile Methodologies",
-          "Azure DevOps",
-          "Bash/Shell"
+        "stack": [
+          "C#/.NET",
+          "Azure",
+          "React",
+          "TypeScript",
+          "Miniservices",
+          "MSSQL",
+          "Docker Swarm",
+          "Jenkins",
+          "Azure DevOps"
         ],
+        "skills": ["Scrum", "CI/CD", "Docker", "PowerShell"],
         "printDescription": {
           "en": "Senior developer at SEB on a C#/.NET miniservices stack on Azure, with React/TypeScript and Azure DevOps.",
           "sv": "Seniorutvecklare på SEB i en C#/.NET-miniservicestack på Azure, med React/TypeScript och Azure DevOps."
@@ -178,6 +210,7 @@
           "TypeScript",
           "AWS",
           "Kubernetes",
+          "Terraform",
           "Linux",
           "GitHub actions",
           "MySQL",
@@ -185,24 +218,25 @@
         ],
         "skills": [
           "CI/CD",
+          "Cloud migration",
+          "Prompt engineering",
+          "ChatGPT",
           "Cybersecurity",
-          "Software Architecture",
+          "Architecture",
           "Leadership",
-          "IT Strategy",
-          "Engineering Management",
-          "Agile Methodologies",
-          "Team Management",
+          "IT strategy",
           "Observability",
           "Bash/Shell",
+          "Docker",
           "GDPR",
-          "Regulatory Compliance",
-          "Technology Roadmapping",
-          "Mentoring"
+          "Mentoring",
+          "Integrations"
         ],
         "printDescription": {
           "en": "Joined Mitt Skolval, a school-selection platform, as senior developer and became CTO. TypeScript/Node.js on AWS Kubernetes.",
           "sv": "Anslöt till Mitt Skolval, en plattform för skolval, som seniorutvecklare och blev CTO. TypeScript/Node.js på AWS Kubernetes."
-        }
+        },
+        "aliases": ["Mitt Skolval"]
       }
     ]
   },
@@ -224,30 +258,29 @@
       "en": "half-time",
       "sv": "halvtid"
     },
+    "fte": 0.5,
     "stack": [
-      "TypeScript",
-      "Vue",
+      { "name": "TypeScript", "unused": true },
+      { "name": "Vue", "unused": true },
       "C#/.NET",
       "Azure",
-      "Microsoft SQL Server",
-      "Docker"
+      "MSSQL",
+      "Docker",
+      "TeamCity",
+      "Octopus Deploy"
     ],
     "skills": [
       "CI/CD",
       "Cybersecurity",
-      "Software Architecture",
+      "Architecture",
+      "Database design",
       "Leadership",
-      "IT Strategy",
-      "Engineering Management",
-      "Agile Methodologies",
-      "Team Management",
+      "IT strategy",
       "PowerShell",
       "GDPR",
       "CE marking",
-      "Regulatory Compliance",
-      "Risk Management",
-      "Technology Roadmapping",
-      "Project Management"
+      "Risk management",
+      "Project management"
     ],
     "printDescription": {
       "en": "Co-founder and CTO of Symptoms Europe, an eHealth platform for patient-reported outcomes, on a Vue/.NET stack on Azure.",
@@ -272,17 +305,23 @@
       "en": "half-time",
       "sv": "halvtid"
     },
+    "fte": 0.5,
     "stack": [
-      "TypeScript",
-      "Angular",
+      { "name": "TypeScript", "unused": true },
+      { "name": "Angular", "unused": true },
       "C#/.NET",
       "Python",
-      "Microsoft SQL Server"
+      { "name": "R", "unused": true },
+      "MSSQL",
+      "Linux",
+      "TeamCity",
+      "Octopus Deploy"
     ],
     "skills": [
       "CI/CD",
       "Cybersecurity",
-      "Software Architecture",
+      "Architecture",
+      "Database design",
       "Integrations",
       "Bash/Shell"
     ],

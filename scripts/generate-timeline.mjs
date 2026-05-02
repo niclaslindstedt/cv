@@ -72,15 +72,15 @@ function parseCredits(credits) {
 
 function deriveCourseEnd(course) {
   if (course.completedDate) return course.completedDate;
-  const momentDates = (course.moments ?? [])
+  const moduleDates = (course.modules ?? [])
     .map((m) => m.completedDate)
     .filter(Boolean);
-  if (momentDates.length === 0) {
+  if (moduleDates.length === 0) {
     throw new Error(
-      `Course ${course.code}: cannot derive end date — needs completedDate or at least one moment with completedDate.`,
+      `Course ${course.code}: cannot derive end date — needs completedDate or at least one module with completedDate.`,
     );
   }
-  return momentDates.reduce((latest, d) => (d > latest ? d : latest));
+  return moduleDates.reduce((latest, d) => (d > latest ? d : latest));
 }
 
 function deriveCourseStart(course) {
@@ -116,8 +116,9 @@ function mergeTags(...lists) {
   const seen = new Set();
   const out = [];
   for (const list of lists) {
-    for (const item of list ?? []) {
-      if (!seen.has(item)) {
+    for (const raw of list ?? []) {
+      const item = typeof raw === "string" ? raw : raw?.name;
+      if (item && !seen.has(item)) {
         seen.add(item);
         out.push(item);
       }
@@ -224,21 +225,47 @@ function buildItems(cv) {
   return items;
 }
 
+function aggregateRepoStats(repos, projects) {
+  let firstCommitDate = null;
+  let lastCommitDate = null;
+  let totalCommits = 0;
+  for (const gh of repos ?? []) {
+    if (!gh?.owner || !gh?.repo) continue;
+    const stats = projects[`${gh.owner}/${gh.repo}`];
+    if (!stats) continue;
+    if (
+      stats.firstCommitDate &&
+      (!firstCommitDate || stats.firstCommitDate < firstCommitDate)
+    ) {
+      firstCommitDate = stats.firstCommitDate;
+    }
+    if (
+      stats.lastCommitDate &&
+      (!lastCommitDate || stats.lastCommitDate > lastCommitDate)
+    ) {
+      lastCommitDate = stats.lastCommitDate;
+    }
+    totalCommits += stats.totalCommits ?? 0;
+  }
+  return { firstCommitDate, lastCommitDate, totalCommits };
+}
+
 function buildSideProjectItems(cv, projectStats) {
   if (!projectStats?.enabled) return [];
   const projects = projectStats.projects ?? {};
   const items = [];
   for (const project of cv.projects ?? []) {
-    const gh = project.github;
-    if (!gh?.owner || !gh?.repo) continue;
-    const stats = projects[`${gh.owner}/${gh.repo}`];
-    if (!stats?.firstCommitDate || !stats?.lastCommitDate) continue;
-    const firstCommitDate = stats.firstCommitDate.slice(0, 10);
-    const lastCommitDate = stats.lastCommitDate.slice(0, 10);
+    const repos = project.github ?? [];
+    if (repos.length === 0) continue;
+    const aggregated = aggregateRepoStats(repos, projects);
+    if (!aggregated.firstCommitDate || !aggregated.lastCommitDate) continue;
+    const primary = repos[0];
+    const firstCommitDate = aggregated.firstCommitDate.slice(0, 10);
+    const lastCommitDate = aggregated.lastCommitDate.slice(0, 10);
     const startDate = firstCommitDate.slice(0, 7);
     const endDate = lastCommitDate.slice(0, 7);
     items.push({
-      id: `proj-${gh.owner}-${gh.repo}`,
+      id: `proj-${primary.owner}-${primary.repo}`,
       kind: "sideProject",
       title: localize(project.name),
       subtitle: localize(project.tagline),
@@ -247,9 +274,9 @@ function buildSideProjectItems(cv, projectStats) {
       endDate,
       skills: mergeTags(project.stack, project.skills),
       sideProject: {
-        totalCommits: stats.totalCommits ?? 0,
+        totalCommits: aggregated.totalCommits,
         openSource: project.openSource === true,
-        repoUrl: `https://github.com/${gh.owner}/${gh.repo}`,
+        repoUrl: `https://github.com/${primary.owner}/${primary.repo}`,
         firstCommitDate,
         lastCommitDate,
       },
@@ -263,19 +290,21 @@ function findBusiestRepoForYear(year, cv, projectStats) {
   const yearKey = String(year);
   let winner = null;
   for (const project of cv.projects ?? []) {
-    const gh = project.github;
-    if (!gh?.owner || !gh?.repo) continue;
-    const stats = projectStats.projects?.[`${gh.owner}/${gh.repo}`];
-    const commits = stats?.commitsByYear?.[yearKey] ?? 0;
-    if (commits <= 0) continue;
-    if (!winner || commits > winner.commits) {
-      winner = {
-        owner: gh.owner,
-        repo: gh.repo,
-        name: project.name,
-        commits,
-        repoUrl: `https://github.com/${gh.owner}/${gh.repo}`,
-      };
+    for (const gh of project.github ?? []) {
+      if (!gh?.owner || !gh?.repo) continue;
+      const stats = projectStats.projects?.[`${gh.owner}/${gh.repo}`];
+      const commits = stats?.commitsByYear?.[yearKey] ?? 0;
+      if (commits <= 0) continue;
+      if (!winner || commits > winner.commits) {
+        winner = {
+          owner: gh.owner,
+          repo: gh.repo,
+          name: project.name,
+          commits,
+          repoUrl: `https://github.com/${gh.owner}/${gh.repo}`,
+          openSource: project.openSource === true,
+        };
+      }
     }
   }
   return winner;

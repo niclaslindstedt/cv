@@ -7,6 +7,7 @@
 @import "./styles/layout.css";
 @import "./styles/hero.css";
 @import "./styles/section.css";
+@import "./styles/category-glyph.css";
 @import "./styles/focus.css";
 @import "./styles/languages.css";
 @import "./styles/projects.css";
@@ -15,6 +16,7 @@
 @import "./styles/skills.css";
 @import "./styles/toggles.css";
 @import "./styles/floating-controls.css";
+@import "./styles/search.css";
 @import "./styles/timeline-vis.css";
 @import "./styles/modals.css";
 @import "./styles/ects.css";

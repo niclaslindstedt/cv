@@ -17,6 +17,18 @@ export function formatRange(
   return `${formatMonth(start, lang)} – ${endLabel}`;
 }
 
+// Whole months between an inclusive YYYY-MM start and `now`. Negative or
+// zero results clamp to 0 — a focus area starting "this month" reads as 0.
+export function monthsSince(
+  startYearMonth: string,
+  now: Date = new Date(),
+): number {
+  const [y, m] = startYearMonth.split("-").map(Number);
+  if (!y || !m) return 0;
+  const months = (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m);
+  return months > 0 ? months : 0;
+}
+
 export function formatFullDate(iso: string, lang: Language): string {
   const [y, m, d] = iso.slice(0, 10).split("-").map(Number);
   if (!y || !m || !d) return iso;

@@ -9,20 +9,21 @@
       "Spec-driven development",
       "Agent orchestration",
       "Agentic workflows",
-      "AI Agents",
+      "AI agents",
       "Agent sandboxing",
       "Agent security",
       "Agentic testing",
       "RAG",
       "Chatbots",
-      "Prompt engineering",
       "AI evaluations",
+      "Prompt engineering",
       "Claude Code",
       "Agent skills",
       "MCP",
       "Codex CLI",
       "Gemini CLI",
       "GitHub Copilot",
+      "ChatGPT",
       "Ollama"
     ]
   },
@@ -40,7 +41,6 @@
       "Swift",
       "Java",
       "Kotlin",
-      "SQL",
       "C++",
       "Bash/Shell",
       "PowerShell"
@@ -52,7 +52,7 @@
       "en": "Frameworks",
       "sv": "Ramverk"
     },
-    "items": ["React", "React Native", "Vue", "Angular", "Node.js"]
+    "items": ["React", "React Native", "Vue", "Angular", "Svelte", "Node.js"]
   },
   {
     "key": "cloud",
@@ -70,12 +70,11 @@
     },
     "items": [
       "PostgreSQL",
-      "Microsoft SQL Server",
+      "MSSQL",
       "MySQL",
-      "MongoDB",
       "Redis",
       "CosmosDB",
-      "Vector Databases"
+      "Vector databases"
     ]
   },
   {
@@ -87,12 +86,15 @@
     "items": [
       "Linux",
       "Docker",
+      "Docker Swarm",
       "Kubernetes",
       "Terraform",
       "CI/CD",
       "GitHub actions",
-      "Observability",
-      "Networking"
+      "Jenkins",
+      "TeamCity",
+      "Octopus Deploy",
+      "Observability"
     ]
   },
   {
@@ -102,13 +104,15 @@
       "sv": "Arbetssätt"
     },
     "items": [
-      "Software Architecture",
+      "Architecture",
+      "Database design",
+      "Cloud migration",
       "Microservices",
       "Miniservices",
       "gRPC/Protobuf",
-      "RFC Implementation",
+      "RFC implementation",
       "Integrations",
-      "Agile Methodologies",
+      "SEO",
       "Scrum"
     ]
   },
@@ -119,13 +123,11 @@
       "sv": "Ledarskap"
     },
     "items": [
-      "Engineering Management",
-      "Team Management",
       "Leadership",
       "Mentoring",
-      "IT Strategy",
-      "Technology Roadmapping",
-      "Project Management"
+      "Technical interviews",
+      "IT strategy",
+      "Project management"
     ]
   },
   {
@@ -134,12 +136,6 @@
       "en": "Compliance",
       "sv": "Regelefterlevnad"
     },
-    "items": [
-      "Cybersecurity",
-      "Regulatory Compliance",
-      "Risk Management",
-      "GDPR",
-      "CE marking"
-    ]
+    "items": ["Cybersecurity", "Risk management", "GDPR", "CE marking", "WCAG"]
   }
 ]

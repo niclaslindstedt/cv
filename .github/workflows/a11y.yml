@@ -1,0 +1,37 @@
+name: Accessibility
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
+      - run: make build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - run: make test-a11y
+      - name: Upload axe report on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: a11y-report
+          path: a11y-report
+          retention-days: 7

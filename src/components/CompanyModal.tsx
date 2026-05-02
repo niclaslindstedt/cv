@@ -1,12 +1,19 @@
 import { useEffect, useRef } from "react";
 
 import type { Company } from "../data/cv.types";
+import { categoryStyle } from "../utils/categoryStyle";
 import { useLang } from "../utils/i18n";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { renderInlineCode } from "../utils/inlineCode";
+import type { CompanyStackEntry } from "../utils/skills";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
+import { useModalFocus } from "../utils/useModalFocus";
+import { useModalSwipe } from "../utils/useModalSwipe";
+import { CategoryGlyph } from "./CategoryGlyph";
+import { ModalLink } from "./ModalLink";
 
 type Props = {
   company: Company | null;
-  stack: string[];
+  stack: CompanyStackEntry[];
   onClose: () => void;
   onSkillClick: (skill: string) => void;
 };
@@ -14,7 +21,9 @@ type Props = {
 export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
   const { t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, !!company, onClose);
+  useModalSwipe(modalRef, !!company, onClose);
+  useModalFocus(modalRef, !!company);
+  useBodyScrollLock(!!company);
 
   useEffect(() => {
     if (!company) return;
@@ -24,15 +33,6 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [company, onClose]);
-
-  useEffect(() => {
-    if (!company) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [company]);
 
   if (!company) return null;
 
@@ -46,10 +46,15 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
     >
       <div
         ref={modalRef}
-        className="skill-modal"
+        className="skill-modal skill-modal--cat"
+        data-category="experience"
+        style={categoryStyle("experience")}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="skill-modal-head">
+          <span className="skill-modal-glyph" aria-hidden="true">
+            <CategoryGlyph category="experience" size={20} />
+          </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{company.name}</span>
             {company.terminated && (
@@ -67,18 +72,15 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
             ✕
           </button>
         </header>
-        <div className="skill-modal-body">
+        <div className="skill-modal-body" tabIndex={0}>
           <section className="skill-modal-detail">
-            <p className="skill-modal-description">{t(company.description)}</p>
+            <p className="skill-modal-description">
+              {renderInlineCode(t(company.description))}
+            </p>
             {company.url && (
-              <a
-                className="skill-modal-link"
-                href={company.url}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
+              <ModalLink href={company.url}>
                 {ui.companyModal.visitWebsite}
-              </a>
+              </ModalLink>
             )}
             {stack.length > 0 && (
               <div className="company-modal-stack">
@@ -87,13 +89,18 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
                 </h3>
                 <ul className="entry-stack">
                   {stack.map((tech) => (
-                    <li key={tech}>
+                    <li key={tech.name}>
                       <button
                         type="button"
-                        className="entry-stack-btn"
-                        onClick={() => onSkillClick(tech)}
+                        className={
+                          tech.unused
+                            ? "entry-stack-btn entry-stack-btn-unused"
+                            : "entry-stack-btn"
+                        }
+                        onClick={() => onSkillClick(tech.name)}
+                        title={tech.unused ? ui.skills.unusedStack : undefined}
                       >
-                        {tech}
+                        {tech.name}
                       </button>
                     </li>
                   ))}

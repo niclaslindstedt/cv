@@ -104,7 +104,7 @@ const COMMIT_HISTORY_QUERY = `
   }
 `;
 
-async function fetchProjectStats(token, owner, repo, username) {
+async function fetchProjectStats(token, owner, repo, username, openSource) {
   const lowerUser = username.toLowerCase();
   let cursor = null;
   let totalCommits = 0;
@@ -132,8 +132,10 @@ async function fetchProjectStats(token, owner, repo, username) {
       throw new Error(`No commit history for ${owner}/${repo}`);
     }
     for (const node of history.nodes ?? []) {
-      const login = node.author?.user?.login?.toLowerCase() ?? null;
-      if (login !== lowerUser) continue;
+      if (openSource) {
+        const login = node.author?.user?.login?.toLowerCase() ?? null;
+        if (login !== lowerUser) continue;
+      }
       totalCommits += 1;
       const date = node.committedDate;
       if (date) {
@@ -166,12 +168,17 @@ function collectProjectRefs(cv) {
   const refs = [];
   const seen = new Set();
   for (const project of cv.projects ?? []) {
-    const gh = project.github;
-    if (!gh?.owner || !gh?.repo) continue;
-    const key = projectKey(gh.owner, gh.repo);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    refs.push({ owner: gh.owner, repo: gh.repo });
+    for (const gh of project.github ?? []) {
+      if (!gh?.owner || !gh?.repo) continue;
+      const key = projectKey(gh.owner, gh.repo);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      refs.push({
+        owner: gh.owner,
+        repo: gh.repo,
+        openSource: project.openSource === true,
+      });
+    }
   }
   return refs;
 }
@@ -198,6 +205,11 @@ async function main() {
     return;
   }
 
+  const tokenSource = process.env.PROJECT_STATS_TOKEN
+    ? "PROJECT_STATS_TOKEN"
+    : process.env.GITHUB_TOKEN
+      ? "GITHUB_TOKEN"
+      : null;
   const token = process.env.PROJECT_STATS_TOKEN || process.env.GITHUB_TOKEN;
   if (!token) {
     if (!toStdout && existsSync(outPath)) {
@@ -215,6 +227,27 @@ async function main() {
     return;
   }
 
+  if (!toStdout) {
+    let viewerLogin = null;
+    try {
+      const data = await fetchGraphQL(token, `query { viewer { login } }`, {});
+      viewerLogin = data?.viewer?.login ?? null;
+    } catch (err) {
+      console.warn(
+        `Project stats: ${tokenSource} viewer probe failed — ${err.message}`,
+      );
+    }
+    if (viewerLogin) {
+      console.log(
+        `Project stats: using ${tokenSource} (authenticated as @${viewerLogin}); ${refs.length} repo(s) to fetch.`,
+      );
+    } else {
+      console.log(
+        `Project stats: using ${tokenSource} (viewer login unknown); ${refs.length} repo(s) to fetch.`,
+      );
+    }
+  }
+
   const projects = {};
   const failed = [];
   for (const ref of refs) {
@@ -224,10 +257,16 @@ async function main() {
         ref.owner,
         ref.repo,
         username,
+        ref.openSource,
       );
       projects[projectKey(ref.owner, ref.repo)] = stats;
     } catch (err) {
       failed.push({ ref, message: err.message });
+      if (!toStdout) {
+        console.warn(
+          `Project stats: ${ref.owner}/${ref.repo} failed — ${err.message}`,
+        );
+      }
     }
   }
 

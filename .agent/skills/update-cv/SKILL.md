@@ -150,10 +150,18 @@ true` renders the link as a pill (used for the blog link). The
 
 ### `focus[]`
 
-- **Add** — append `{ "area": "...", "since": "YYYY-MM" }`. Move to
+- **Add** — append `{ "area", "since": "YYYY-MM", "tagline",
+"description" }`, plus optional `skills` and `aliases`. Move to
   top if the user says it's the primary focus now.
-- **Update** — find by `area`; change `since` if the user says they
-  started earlier/later.
+  - `tagline` — one sentence, ~80–100 characters, that says what the
+    focus area IS. Rendered on the focus index card and as the
+    pull-quote lede in the modal. Do not exceed ~110 characters or it
+    will clamp on mobile.
+  - `description` — the longer body copy shown under the tagline in
+    the modal. Don't restate the tagline; pick up where it leaves off.
+- **Update** — find by `area`. Typical edits: tagline, description,
+  `since`, `skills`. When the description changes meaningfully,
+  re-evaluate the tagline too — it is independent copy.
 - **Remove** — delete the object. Ask the user to confirm if the
   focus area is referenced in any `projects[].description`.
 
@@ -209,9 +217,16 @@ true` renders the link as a pill (used for the blog link). The
 - `printDescription` (optional, on both `experience[]` and
   `experience[].assignments[]`) — paper-CV blurb describing what
   the holder actually did at the company/client. Falls back to
-  the company/client `tagline` when omitted, which is fine for
-  short listings but rarely as good as a role-specific blurb.
-  See "Print descriptions" below for the writing rules.
+  `jobDescription`, then to the company/client `tagline` when
+  omitted. See "Print descriptions" below for the writing rules.
+- `jobDescription` (optional, on both `experience[]` and
+  `experience[].assignments[]`) — blurb shown on the experience
+  card on the web in place of the company/client `tagline`, and
+  used as the print fallback when `printDescription` is omitted.
+  Most useful in `cv.local.json` overrides where the public site
+  keeps the neutral company tagline while a private build can
+  describe the actual work. The company `description` is still
+  shown in the company modal regardless.
 
 ### `education[]`
 

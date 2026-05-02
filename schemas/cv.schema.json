@@ -12,7 +12,6 @@
     "summary",
     "longSummary",
     "links",
-    "actions",
     "sections",
     "focus",
     "projects",
@@ -43,7 +42,6 @@
       "minItems": 1,
       "items": { "$ref": "#/$defs/link" }
     },
-    "actions": { "$ref": "#/$defs/actions" },
     "sections": { "$ref": "#/$defs/sections" },
     "focus": {
       "type": "array",
@@ -162,15 +160,6 @@
         "featured": { "type": "boolean" }
       }
     },
-    "actions": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["timeline", "downloadPdf"],
-      "properties": {
-        "timeline": { "$ref": "#/$defs/localizedString" },
-        "downloadPdf": { "$ref": "#/$defs/localizedString" }
-      }
-    },
     "sections": {
       "type": "object",
       "additionalProperties": false,
@@ -196,11 +185,23 @@
     "focusArea": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["area", "since", "description"],
+      "required": ["area", "since", "tagline", "description"],
       "properties": {
         "area": { "$ref": "#/$defs/localizedString" },
         "since": { "$ref": "#/$defs/yearMonth" },
-        "description": { "$ref": "#/$defs/localizedString" }
+        "tagline": {
+          "$ref": "#/$defs/localizedString",
+          "description": "One-sentence summary of what this focus area IS. Rendered on the focus index card and as the pull-quote lede in the modal. Aim for ~80–100 characters so it fits the card without truncation."
+        },
+        "description": { "$ref": "#/$defs/localizedString" },
+        "skills": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Skill names (must match strings used in skills/items) that this focus area expresses. Rendered as clickable chips on the focus tile and modal."
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "skillDetail": {
@@ -211,8 +212,16 @@
         "description": { "$ref": "#/$defs/localizedString" },
         "benefits": { "$ref": "#/$defs/localizedString" },
         "drawbacks": { "$ref": "#/$defs/localizedString" },
-        "url": { "type": "string", "format": "uri" }
+        "url": { "type": "string", "format": "uri" },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
+    },
+    "aliasList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Hidden alternative names, abbreviations, or spellings used to surface this entry from search. Never rendered on the site."
     },
     "project": {
       "type": "object",
@@ -233,31 +242,36 @@
           "$ref": "#/$defs/localizedString",
           "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV in place of the tagline. Optimized for paper — concrete and impact-oriented, no links to click and no hidden detail to expand. Falls back to `tagline` when omitted."
         },
-        "stack": { "$ref": "#/$defs/stringList" },
+        "stack": { "$ref": "#/$defs/stackList" },
         "skills": {
           "type": "array",
           "minItems": 1,
           "items": { "type": "string", "minLength": 1 }
         },
         "github": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["owner", "repo"],
-          "properties": {
-            "owner": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*$"
-            },
-            "repo": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9._-]+$"
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["owner", "repo"],
+            "properties": {
+              "owner": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*$"
+              },
+              "repo": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9._-]+$"
+              }
             }
           },
-          "description": "Identifies the GitHub repository used to fetch commit stats at build time. The owner/repo pair is also used to derive the public link when openSource is true."
+          "description": "GitHub repositories backing this project. Commit stats are fetched for each repo at build time and aggregated (earliest/latest commit, summed totals). The first entry is the canonical repo — its owner/repo pair derives the public link when openSource is true."
         },
         "openSource": {
           "type": "boolean",
-          "description": "Whether the repository is publicly accessible. When true, the project renders an open-source pill and a link to github.com/{owner}/{repo}; when false, only description, dates, and commit stats are shown."
+          "description": "Whether the repositories are publicly accessible. When true, the project renders an open-source pill and a link to github.com/{owner}/{repo} for the first repo in `github`; when false, only description, dates, and commit stats are shown."
         },
         "homepage": {
           "type": "string",
@@ -288,7 +302,8 @@
           "type": "string",
           "pattern": "^[A-Za-z][A-Za-z0-9_.-]*$",
           "description": "NuGet package id. When set, the project modal renders a 'View on NuGet' link to https://www.nuget.org/packages/{name}/."
-        }
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "company": {
@@ -306,13 +321,14 @@
         "description": { "$ref": "#/$defs/localizedString" },
         "url": { "type": "string", "format": "uri" },
         "terminated": { "type": "boolean" },
-        "stack": { "$ref": "#/$defs/stringList" },
+        "stack": { "$ref": "#/$defs/stackList" },
         "sourceUrls": {
           "type": "array",
           "minItems": 1,
           "description": "Reference URLs the `update-company-descriptions` skill consults when rewriting `tagline` and `description`. Not rendered on the site.",
           "items": { "$ref": "#/$defs/sourceUrl" }
-        }
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "sourceUrl": {
@@ -355,18 +371,29 @@
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
         "engagement": { "$ref": "#/$defs/localizedString" },
-        "stack": { "$ref": "#/$defs/stringList" },
+        "fte": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "description": "Effort as a fraction of full-time (e.g. 1 = full-time, 0.5 = half-time). Defaults to 1 when omitted. Used to weight skill-experience year totals so overlapping part-time roles don't inflate `yearsOfExperience`."
+        },
+        "stack": { "$ref": "#/$defs/stackList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "notes": { "$ref": "#/$defs/localizedString" },
+        "jobDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Optional 1–2 sentence blurb describing what the holder did in this role. When set, replaces the company `tagline` on the experience card on the web and also acts as the print fallback when `printDescription` is omitted. Most useful in `cv.local.json` overrides where the public site keeps the neutral company tagline while a private build can describe the actual work."
+        },
         "printDescription": {
           "$ref": "#/$defs/localizedString",
-          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this role. Describes what the holder actually did at the company — paper-optimized: concrete, impact-oriented, no links to click. Falls back to the company's `tagline` when omitted."
+          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this role. Describes what the holder actually did at the company — paper-optimized: concrete, impact-oriented, no links to click. Falls back to `jobDescription`, then to the company's `tagline`, when omitted."
         },
         "assignments": {
           "type": "array",
           "minItems": 1,
           "items": { "$ref": "#/$defs/assignment" }
-        }
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "assignment": {
@@ -385,13 +412,24 @@
         "endDate": {
           "oneOf": [{ "$ref": "#/$defs/yearMonth" }, { "type": "null" }]
         },
-        "stack": { "$ref": "#/$defs/stringList" },
+        "fte": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "description": "Effort as a fraction of full-time for this assignment (e.g. 1 = full-time, 0.5 = half-time). Inherits the parent experience's `fte` when omitted; falls back to 1 if neither is set."
+        },
+        "stack": { "$ref": "#/$defs/stackList" },
         "skills": { "$ref": "#/$defs/stringList" },
         "notes": { "$ref": "#/$defs/localizedString" },
+        "jobDescription": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Optional 1–2 sentence blurb describing what the holder did in this assignment. When set, replaces the client `tagline` on the assignment card on the web and also acts as the print fallback when `printDescription` is omitted. Most useful in `cv.local.json` overrides where the public site keeps the neutral client tagline while a private build can describe the actual work."
+        },
         "printDescription": {
           "$ref": "#/$defs/localizedString",
-          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this assignment. Describes what the holder actually did at the client — paper-optimized: concrete, impact-oriented, no links to click. Falls back to the client's `tagline` when omitted."
-        }
+          "description": "Self-contained 1–2 sentence blurb shown in the printed/PDF CV for this assignment. Describes what the holder actually did at the client — paper-optimized: concrete, impact-oriented, no links to click. Falls back to `jobDescription`, then to the client's `tagline`, when omitted."
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "education": {
@@ -452,14 +490,15 @@
           "type": "array",
           "minItems": 1,
           "items": { "$ref": "#/$defs/programCourse" }
-        }
+        },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "programCourse": {
       "type": "object",
       "additionalProperties": false,
       "required": ["name", "code", "credits"],
-      "description": "A course in a program. Status semantics: (1) `completedDate` set ⇒ fully completed; (2) `completed: false` ⇒ not fully completed (renders an 'Incomplete' pill) — individual `moments[].completedDate` may still be set to record partial completion; (3) neither ⇒ in progress.",
+      "description": "A course in a program. Status semantics: (1) `completedDate` set ⇒ fully completed; (2) `completed: false` ⇒ not fully completed (renders an 'Incomplete' pill) — individual `modules[].completedDate` may still be set to record partial completion; (3) neither ⇒ in progress.",
       "properties": {
         "name": { "$ref": "#/$defs/localizedString" },
         "code": { "type": "string", "minLength": 1 },
@@ -471,18 +510,18 @@
         "grade": { "type": "string", "minLength": 1 },
         "completed": {
           "type": "boolean",
-          "description": "Whether the course was fully completed. Defaults to true. Set to false when the course was abandoned; partially-completed `moments[]` may still carry `completedDate`."
+          "description": "Whether the course was fully completed. Defaults to true. Set to false when the course was abandoned; partially-completed `modules[]` may still carry `completedDate`."
         },
-        "moments": {
+        "modules": {
           "type": "array",
           "minItems": 1,
           "description": "Sub-parts (Swedish: \"moment\") that make up the course. Use to break down vague course names or to record partial completion when `completed: false`.",
-          "items": { "$ref": "#/$defs/courseMoment" }
+          "items": { "$ref": "#/$defs/courseModule" }
         },
         "skills": { "$ref": "#/$defs/stringList" }
       }
     },
-    "courseMoment": {
+    "courseModule": {
       "type": "object",
       "additionalProperties": false,
       "required": ["name", "credits"],
@@ -492,7 +531,7 @@
         "credits": { "type": "string", "minLength": 1 },
         "completedDate": {
           "$ref": "#/$defs/yearMonth",
-          "description": "Date the moment was passed. Omit if the moment was not completed."
+          "description": "Date the module was passed. Omit if the module was not completed."
         }
       }
     },
@@ -508,7 +547,7 @@
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "completedDate": {
           "$ref": "#/$defs/yearMonth",
-          "description": "Date the course was passed. Omit when the course was only partially completed; the latest `moments[].completedDate` is used in its place for layout/timeline purposes."
+          "description": "Date the course was passed. Omit when the course was only partially completed; the latest `modules[].completedDate` is used in its place for layout/timeline purposes."
         },
         "engagement": {
           "type": "number",
@@ -524,13 +563,14 @@
           "type": "boolean",
           "description": "Whether the course was fully completed. Defaults to true. Set to false to render an 'Incomplete' pill."
         },
-        "moments": {
+        "modules": {
           "type": "array",
           "minItems": 1,
           "description": "Sub-parts (Swedish: \"moment\") that make up the course. Use to break down vague course names or to record courses that were only partially completed.",
-          "items": { "$ref": "#/$defs/courseMoment" }
+          "items": { "$ref": "#/$defs/courseModule" }
         },
-        "skills": { "$ref": "#/$defs/stringList" }
+        "skills": { "$ref": "#/$defs/stringList" },
+        "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
     "skillGroup": {
@@ -547,13 +587,54 @@
       "type": "array",
       "items": { "type": "string", "minLength": 1 }
     },
+    "stackList": {
+      "type": "array",
+      "description": "Technologies in the stack. Use the object form `{ \"name\": \"…\", \"unused\": true }` to mark a tech that was part of the company/project stack but never personally practiced. Unused entries render as muted pills inline and are excluded from the skills section and from skill-usage aggregation.",
+      "items": { "$ref": "#/$defs/stackItem" }
+    },
+    "stackItem": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "unused": {
+              "type": "boolean",
+              "description": "When true, the tech was part of the stack but the holder never personally practiced it."
+            }
+          }
+        }
+      ]
+    },
     "spokenLanguage": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "level"],
+      "required": ["name", "code", "level", "proficiency"],
       "properties": {
         "name": { "$ref": "#/$defs/localizedString" },
-        "level": { "$ref": "#/$defs/localizedString" }
+        "code": {
+          "type": "string",
+          "description": "ISO 639-1 language code used to pick the flag glyph in the language list and modal.",
+          "enum": ["en", "sv"]
+        },
+        "level": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Free-text human-readable label rendered in the list (e.g. \"Native\")."
+        },
+        "proficiency": {
+          "type": "string",
+          "description": "Discrete proficiency rung used to highlight a row of the language modal's power bar.",
+          "enum": [
+            "basic",
+            "conversational",
+            "working",
+            "professional",
+            "native"
+          ]
+        }
       }
     },
     "cssLength": {

@@ -1,0 +1,42 @@
+name: Accessibility (deep)
+
+# Second-engine pass — pa11y-ci uses HTML CodeSniffer, which is a
+# different rule engine from axe-core (the per-PR Accessibility job).
+# It runs at WCAG 2.2 AAA so it surfaces findings axe doesn't and
+# acts as a "second opinion" on conformance. The WCAG2AAA scan is
+# slow against 4 URLs, so this workflow runs on a daily cron rather
+# than on every push / PR. PRs are still gated by the fast per-PR
+# axe scan in `.github/workflows/a11y.yml`.
+
+on:
+  schedule:
+    # 06:00 UTC every day. Off-peak so it doesn't compete with PR CI.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pa11y:
+    runs-on: ubuntu-latest
+    # Advisory: never fails the workflow.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
+      - run: make build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
+      - name: pa11y-ci (advisory, WCAG2AAA)
+        env:
+          PA11Y_ADVISORY: "1"
+        run: make test-pa11y

@@ -2,13 +2,45 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
+    />
     <meta name="color-scheme" content="dark light" />
+    <meta
+      name="theme-color"
+      content="#050810"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content="#ebeef3"
+      media="(prefers-color-scheme: light)"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta
       name="description"
       content="Niclas Lindstedt — IT Architect building open-source tools for agentic coding."
     />
     <title>Niclas Lindstedt — IT Architect</title>
+    <script>
+      // Restore the deep link saved by 404.html before React mounts so the
+      // app's router sees the original path rather than "/".
+      try {
+        var redirect = sessionStorage.getItem("cv:redirect");
+        if (redirect) {
+          sessionStorage.removeItem("cv:redirect");
+          if (
+            redirect !==
+            window.location.pathname +
+              window.location.search +
+              window.location.hash
+          ) {
+            window.history.replaceState(null, "", redirect);
+          }
+        }
+      } catch (_e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,12 +1,10 @@
-.timeline-vis-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
+.timeline-vis-page {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-rows: auto 1fr;
-  background: var(--overlay);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  height: 100vh;
+  height: 100svh;
   color: var(--fg);
 }
 
@@ -20,7 +18,7 @@
 .timeline-vis-labels {
   position: relative;
   flex: 0 0 136px;
-  background: var(--bg-elev);
+  background: var(--sky-top);
   border-right: 1px solid var(--border);
   overflow: hidden;
   z-index: 6;
@@ -45,7 +43,7 @@
   border: 0;
   border-radius: 6px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -98,9 +96,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 20px;
+  padding: calc(20px + env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right)) 12px
+    max(20px, env(safe-area-inset-left));
   border-bottom: 1px solid var(--border);
-  background: var(--bg-elev);
+  background: var(--sky-top);
 }
 
 .timeline-vis-title {
@@ -146,7 +146,12 @@
 
 .timeline-vis-btn {
   appearance: none;
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 12px;
   font: inherit;
   font-size: 0.85rem;
   color: var(--fg);
@@ -155,6 +160,15 @@
   border-radius: 999px;
   cursor: pointer;
   line-height: 1.2;
+}
+
+.timeline-vis-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 10px;
 }
 
 .timeline-vis-btn:hover {
@@ -166,40 +180,20 @@
   border-color: transparent;
 }
 
-.timeline-vis-close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  font: inherit;
-  font-size: 0.9rem;
-  line-height: 1;
-  color: var(--fg-muted);
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-.timeline-vis-close:hover {
-  color: var(--fg);
-  border-color: var(--fg-muted);
-}
-
 .timeline-vis-viewport {
   position: relative;
+  flex: 1 1 0;
+  height: 100%;
   overflow: auto;
   touch-action: pan-x pan-y;
   overscroll-behavior: none;
   background:
     radial-gradient(
       circle at 20% 0%,
-      rgba(122, 183, 255, 0.06),
+      rgba(var(--tl-blue), 0.06),
       transparent 40%
     ),
-    var(--bg);
+    var(--sky-top);
 }
 
 .timeline-vis-content {
@@ -210,7 +204,7 @@
   position: sticky;
   top: 0;
   border-bottom: 1px solid var(--border);
-  background: var(--bg-elev);
+  background: var(--sky-top);
   z-index: 5;
 }
 
@@ -260,17 +254,18 @@
 }
 
 .timeline-vis-item {
+  --tl-rgb: var(--tl-blue);
   position: absolute;
   display: flex;
   align-items: center;
   padding: 10px 12px;
   font: inherit;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--fg);
   background: var(--accent-soft);
-  border: 1px solid rgba(122, 183, 255, 0.35);
-  border-radius: 10px;
+  border: 1px solid rgba(var(--tl-rgb), 0.35);
+  border-radius: var(--radius);
   cursor: pointer;
   overflow: hidden;
   text-align: left;
@@ -281,39 +276,76 @@
 }
 
 .timeline-vis-item:hover {
-  border-color: var(--accent);
-  background: rgba(var(--tl-blue), 0.22);
+  border-color: rgba(var(--tl-rgb), 0.75);
+  background: rgba(var(--tl-rgb), 0.32);
   z-index: 3;
 }
 
+.timeline-vis-item:focus-visible {
+  outline: 2px solid rgb(var(--tl-rgb));
+  outline-offset: 2px;
+  z-index: 5;
+}
+
 .timeline-vis-item.is-selected {
-  border-color: var(--accent);
-  background: rgba(var(--tl-blue), 0.35);
-  box-shadow: 0 0 0 2px rgba(var(--tl-blue), 0.35);
+  border-color: rgba(var(--tl-rgb), 0.75);
+  background: rgba(var(--tl-rgb), 0.4);
+  box-shadow: 0 0 0 2px rgba(var(--tl-rgb), 0.45);
   z-index: 4;
 }
 
+.timeline-vis-item.is-highlighted {
+  border-color: rgba(var(--tl-rgb), 0.9);
+  background: rgba(var(--tl-rgb), 0.4);
+  z-index: 4;
+  animation: tl-highlight-pulse 900ms ease-out 3;
+}
+
+@keyframes tl-highlight-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--tl-rgb), 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(var(--tl-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--tl-rgb), 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-vis-item.is-highlighted {
+    animation: none;
+    box-shadow: 0 0 0 2px rgba(var(--tl-rgb), 0.7);
+  }
+}
+
 .timeline-vis-experience {
+  --tl-rgb: var(--tl-blue);
   background: rgba(var(--tl-blue), 0.22);
   border-color: rgba(var(--tl-blue), 0.45);
 }
 
 .timeline-vis-assignment {
+  --tl-rgb: var(--tl-mint);
   background: rgba(var(--tl-mint), 0.18);
   border-color: rgba(var(--tl-mint), 0.45);
 }
 
 .timeline-vis-education {
+  --tl-rgb: var(--tl-amber);
   background: rgba(var(--tl-amber), 0.18);
   border-color: rgba(var(--tl-amber), 0.45);
 }
 
 .timeline-vis-course {
+  --tl-rgb: var(--tl-violet);
   background: rgba(var(--tl-violet), 0.18);
   border-color: rgba(var(--tl-violet), 0.45);
 }
 
 .timeline-vis-sideProject {
+  --tl-rgb: var(--tl-pink);
   background: rgba(var(--tl-pink), 0.18);
   border-color: rgba(var(--tl-pink), 0.45);
 }
@@ -372,7 +404,7 @@
   flex-direction: column;
   gap: 1px;
   min-width: 0;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .timeline-vis-item.has-roles {
@@ -384,7 +416,7 @@
   top: 0;
   bottom: 0;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 4px;
   padding: 10px 12px;
   min-width: 0;
@@ -400,14 +432,14 @@
   flex-direction: column;
   gap: 1px;
   min-width: 0;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .timeline-vis-promo-arrow {
   flex: 0 0 auto;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--fg-muted);
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .timeline-vis-item-title {
@@ -419,7 +451,7 @@
 
 .timeline-vis-item-sub {
   color: var(--fg-muted);
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: clip;
@@ -430,23 +462,93 @@
   right: 16px;
   bottom: 16px;
   width: min(360px, calc(100vw - 32px));
+  height: 60vh;
   max-height: 60vh;
-  overflow: auto;
-  padding: 16px 18px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  display: flex;
+  align-items: stretch;
+  /* Solid surface — matches the unified modal system. Pinned height (not
+   * just max-height) so the prev/next side buttons stay vertically still
+   * when content size changes between selections, which is what makes
+   * "click next, next, next" reliable. */
+  background: var(--modal-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   z-index: 10;
+  overflow: hidden;
+}
+
+.timeline-vis-details-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--modal-pad-y) var(--modal-pad-x);
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
+  overflow: auto;
+}
+
+.timeline-vis-details-side {
+  flex: 0 0 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  color: var(--fg-muted);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.timeline-vis-details-side-prev {
+  border-right: 1px solid var(--glass-border);
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.timeline-vis-details-side-next {
+  border-left: 1px solid var(--glass-border);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.timeline-vis-details-side:hover:not(:disabled),
+.timeline-vis-details-side:focus-visible:not(:disabled) {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.timeline-vis-details-side:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.timeline-vis-details-side:disabled {
+  opacity: 0.25;
+  cursor: default;
 }
 
 .timeline-vis-details-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  gap: 8px;
+  margin: 0;
+}
+
+.timeline-vis-details-close {
+  padding: 0;
+  min-width: 28px;
+  min-height: 28px;
+  width: 28px;
+  height: 28px;
+  font-size: 0.9rem;
+  line-height: 1;
+  border-radius: var(--radius);
 }
 
 .timeline-vis-pill {
@@ -462,42 +564,43 @@
 }
 
 .timeline-vis-pill.timeline-vis-assignment {
-  color: #a8e6cf;
+  color: rgb(var(--tl-mint-fg));
   background: rgba(var(--tl-mint), 0.12);
   border-color: rgba(var(--tl-mint), 0.35);
 }
 
 .timeline-vis-pill.timeline-vis-education {
-  color: #ffc878;
+  color: rgb(var(--tl-amber-fg));
   background: rgba(var(--tl-amber), 0.12);
   border-color: rgba(var(--tl-amber), 0.35);
 }
 
 .timeline-vis-pill.timeline-vis-course {
-  color: #d6a8ff;
+  color: rgb(var(--tl-violet-fg));
   background: rgba(var(--tl-violet), 0.12);
   border-color: rgba(var(--tl-violet), 0.35);
 }
 
 .timeline-vis-pill.timeline-vis-sideProject {
-  color: #f472b6;
+  color: rgb(var(--tl-pink-fg));
   background: rgba(var(--tl-pink), 0.12);
   border-color: rgba(var(--tl-pink), 0.35);
 }
 
 .timeline-vis-pill.timeline-vis-github {
-  color: #4ade80;
+  color: var(--tl-green-fg);
   background: rgba(var(--tl-green), 0.12);
   border-color: rgba(var(--tl-green), 0.35);
 }
 
 .timeline-vis-details-link {
+  align-self: flex-start;
   display: inline-block;
-  margin: 0 0 10px;
+  margin: 0;
   padding: 6px 12px;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #4ade80;
+  color: var(--tl-green-fg);
   background: rgba(var(--tl-green), 0.12);
   border: 1px solid rgba(var(--tl-green), 0.35);
   border-radius: 999px;
@@ -508,9 +611,9 @@
   display: inline-block;
   padding: 1px 8px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #4ade80;
+  color: var(--tl-green-fg);
   background: rgba(var(--tl-green), 0.12);
   border: 1px solid rgba(var(--tl-green), 0.35);
   border-radius: 999px;
@@ -520,7 +623,7 @@
   display: inline-block;
   padding: 1px 8px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--accent);
   background: var(--accent-soft);
@@ -534,18 +637,18 @@
 }
 
 .timeline-vis-details-title {
-  margin: 0 0 2px;
+  margin: 0;
   font-size: 1.05rem;
 }
 
 .timeline-vis-details-sub {
-  margin: 0 0 6px;
+  margin: 0;
   color: var(--fg-muted);
   font-size: 0.9rem;
 }
 
 .timeline-vis-details-dates {
-  margin: 0 0 10px;
+  margin: 0;
   font-family: var(--font-mono);
   color: var(--fg-muted);
   font-size: 0.85rem;
@@ -556,7 +659,7 @@
 }
 
 .timeline-vis-details-desc {
-  margin: 0 0 12px;
+  margin: 0;
   line-height: 1.5;
   font-size: 0.9rem;
 }
@@ -564,7 +667,7 @@
 .timeline-vis-details-roles {
   list-style: none;
   padding: 0;
-  margin: 0 0 12px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -581,14 +684,14 @@
 }
 
 .timeline-vis-details-role-title {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--fg);
 }
 
 .timeline-vis-details-role-meta {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--fg-muted);
 }
 
@@ -596,20 +699,20 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  margin: 0 0 12px;
+  margin: 0;
   padding: 8px 12px;
   border-left: 2px solid var(--accent-soft);
   border-radius: 0 6px 6px 0;
   background: var(--accent-soft);
   color: var(--fg);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   white-space: pre-line;
 }
 
 .timeline-vis-details-skills-title {
-  margin: 0 0 6px;
-  font-size: 0.75rem;
+  margin: 0;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -619,7 +722,7 @@
 .timeline-vis-details-skills {
   list-style: none;
   padding: 0;
-  margin: 0 0 8px;
+  margin: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -641,15 +744,6 @@
 @media (max-width: 640px) {
   .timeline-vis-toolbar {
     padding: 10px 12px;
-    padding-right: 56px;
-    position: relative;
-  }
-
-  .timeline-vis-close {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    z-index: 1;
   }
 
   .timeline-vis-details {

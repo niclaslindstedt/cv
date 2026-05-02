@@ -1,25 +1,20 @@
 [
   {
     "area": {
-      "en": "Agentic coding",
-      "sv": "Agentisk kodning"
+      "en": "Agentic CLI tooling",
+      "sv": "Agentiska CLI-verktyg"
     },
-    "since": "2025-05",
-    "description": {
-      "en": "Treating AI coding agents as primary collaborators: the developer steers, reviews, and shapes the system while the agent does the typing. Most of the craft is in setting up the loop — context, guardrails, and feedback — so the agent stays useful as the codebase grows.",
-      "sv": "Att behandla AI-kodningsagenter som primära medarbetare: utvecklaren styr, granskar och formar systemet medan agenten skriver koden. Hantverket ligger i att sätta upp loopen — kontext, skyddsräcken och återkoppling — så att agenten förblir användbar när kodbasen växer."
-    }
-  },
-  {
-    "area": {
-      "en": "Spec-driven agentic coding",
-      "sv": "Spec-driven agentisk kodning"
+    "since": "2025-11",
+    "tagline": {
+      "en": "Making AI agents behave like proper Unix tools — predictable, scriptable, pipeable.",
+      "sv": "Att få AI-agenter att bete sig som riktiga Unix-verktyg — förutsägbara, skriptbara, pipeable."
     },
-    "since": "2025-07",
     "description": {
-      "en": "Anchoring every change to a written specification that both human and agent treat as the source of truth. Specs replace tribal knowledge, give the agent a stable target to converge on, and turn drift into something you can detect and fix automatically.",
-      "sv": "Att förankra varje ändring i en skriven specifikation som både människa och agent behandlar som sanning. Specifikationer ersätter tyst kunskap, ger agenten ett stabilt mål att konvergera mot och gör avdrift till något som kan upptäckas och åtgärdas automatiskt."
-    }
+      "en": "The terminal is where AI agents have to coexist with everything that was already there — git, CI, package managers, oncall rotations. The work is in the layer between them: predictable flags, machine-readable output, sandbox boundaries that don't lie, session logs you can replay. Get the cross-cutting concerns right once and an agent becomes another Unix tool you can pipe.",
+      "sv": "Terminalen är där AI-agenter måste samexistera med allt som redan fanns där — git, CI, paketsystem, oncall-rotationer. Arbetet ligger i lagret emellan: förutsägbara flaggor, maskinläsbar utdata, sandbox-gränser som inte ljuger, sessionsloggar man kan spela upp. Får man det som spänner över leverantörerna rätt en gång blir agenten ytterligare ett Unix-verktyg som går att pipea."
+    },
+    "skills": ["Claude Code", "Codex CLI", "Gemini CLI", "MCP", "Agent skills"],
+    "aliases": ["agent cli", "cli agents", "command line agents"]
   },
   {
     "area": {
@@ -27,20 +22,93 @@
       "sv": "Agentisk orkestrering"
     },
     "since": "2025-10",
+    "tagline": {
+      "en": "End-to-end agent workflows that don't need per-step babysitting.",
+      "sv": "Heltäckande agentflöden som inte kräver handhållning i varje steg."
+    },
     "description": {
-      "en": "Coordinating multiple agents, providers, and tools into workflows that run end-to-end without per-step babysitting. The hard part is making the orchestration deterministic enough to debug, share, and replay while keeping the agents flexible enough to be useful.",
-      "sv": "Att koordinera flera agenter, leverantörer och verktyg till arbetsflöden som körs från början till slut utan att man behöver hålla i handen i varje steg. Det svåra är att göra orkestreringen tillräckligt deterministisk för att felsöka, dela och spela upp samtidigt som agenterna förblir tillräckligt flexibla för att vara användbara."
-    }
+      "en": "Stitching multiple agents, providers, and tools into workflows that run from start to finish on their own. The hard part is making them deterministic enough to debug, share, and replay across machines while keeping the agents flexible enough to still be useful in the middle. Capture the workflow, not the conversation.",
+      "sv": "Att sy ihop flera agenter, leverantörer och verktyg till arbetsflöden som körs från början till slut på egen hand. Det svåra är att göra dem tillräckligt deterministiska för att felsöka, dela och spela upp mellan maskiner samtidigt som agenterna förblir tillräckligt flexibla för att vara användbara däremellan. Fånga arbetsflödet, inte konversationen."
+    },
+    "skills": [
+      "Agent orchestration",
+      "Agentic workflows",
+      "MCP",
+      "AI evaluations"
+    ],
+    "aliases": ["multi-agent orchestration", "agent orchestration"]
   },
   {
     "area": {
-      "en": "Agentic CLI tooling",
-      "sv": "Agentiska CLI-verktyg"
+      "en": "Spec-driven development",
+      "sv": "Spec-driven utveckling"
     },
-    "since": "2025-11",
+    "since": "2025-07",
+    "tagline": {
+      "en": "Every change anchored to a written spec — both human and agent treat it as the source of truth.",
+      "sv": "Varje ändring förankrad i en skriven spec — både människa och agent behandlar den som sanning."
+    },
     "description": {
-      "en": "Building the command-line scaffolding that makes agents observable, sandboxable, scriptable, and composable from the shell. The CLI is where agents meet existing engineering workflows — git, CI, package managers, oncall — so it has to be boring, fast, and unsurprising.",
-      "sv": "Att bygga den kommandoradsstruktur som gör agenter observerbara, sandboxbara, skriptbara och komponerbara från skalet. CLI:t är där agenterna möter befintliga arbetsflöden — git, CI, paketsystem, oncall — så det måste vara tråkigt, snabbt och förutsägbart."
-    }
+      "en": "Specs replace tribal knowledge, give the agent a stable target to converge on, and turn drift into something you can detect and auto-fix instead of arguing about in review. Treat the spec as a contract; everything downstream becomes mechanical.",
+      "sv": "Specifikationer ersätter tyst kunskap, ger agenten ett stabilt mål att konvergera mot och gör avdrift till något som kan upptäckas och åtgärdas automatiskt istället för att argumenteras kring i granskningen. Behandla specifikationen som ett kontrakt; allt nedströms blir mekaniskt."
+    },
+    "skills": ["Spec-driven development"],
+    "aliases": ["spec-driven coding", "specifications", "spec driven"]
+  },
+  {
+    "area": {
+      "en": "Agentic coding",
+      "sv": "Agentisk kodning"
+    },
+    "since": "2025-05",
+    "tagline": {
+      "en": "AI coding agents as primary collaborators — the developer steers and shapes, the agent types.",
+      "sv": "AI-kodningsagenter som primära medarbetare — utvecklaren styr och formar, agenten skriver."
+    },
+    "description": {
+      "en": "Most of the craft is in the loop around them — context selection, guardrails, structured feedback, scoped permissions — so the agent stays useful as the codebase grows past what fits in any single prompt. The developer reviews and shapes the system; the agent does the typing.",
+      "sv": "Hantverket ligger i loopen runt dem — val av kontext, skyddsräcken, strukturerad återkoppling, avgränsade behörigheter — så att agenten förblir användbar när kodbasen växer förbi det som får plats i en enskild prompt. Utvecklaren granskar och formar systemet; agenten skriver koden."
+    },
+    "skills": [
+      "AI agents",
+      "Agentic testing",
+      "Prompt engineering",
+      "Claude Code",
+      "GitHub Copilot",
+      "Agent sandboxing"
+    ],
+    "aliases": ["ai coding", "agent coding", "ai pair programming"]
+  },
+  {
+    "area": {
+      "en": "Cybersecurity",
+      "sv": "Cybersäkerhet"
+    },
+    "since": "2016-01",
+    "tagline": {
+      "en": "Keeping security intact in the era of vibe coding, with agents landing the work that used to slip the backlog.",
+      "sv": "Att hålla säkerheten intakt i vibe-kodningens tidsålder, med agenter som levererar det som annars hamnar i backloggen."
+    },
+    "description": {
+      "en": "Agents make both bad and good defaults cheap — they ship insecure code faster, but they also make MFA, encryption, secret rotation, and least-privilege small enough to actually do. The craft is wiring review and hardening into the loop so they ship with the feature, not as a follow-up ticket.",
+      "sv": "Agenter gör både dåliga och bra standardvärden billiga — de skickar ut osäker kod snabbare, men de gör också MFA, kryptering, hemlighetsrotation och minsta behörighet små nog att faktiskt genomföra. Hantverket är att koppla in granskning och härdning i loopen så att de levereras med funktionen, inte som en uppföljningsbiljett."
+    },
+    "skills": [
+      "Cybersecurity",
+      "Risk management",
+      "Agent security",
+      "Agent sandboxing",
+      "GDPR"
+    ],
+    "aliases": [
+      "cybersecurity",
+      "security",
+      "appsec",
+      "infosec",
+      "secure coding",
+      "mfa",
+      "encryption",
+      "hardening"
+    ]
   }
 ]

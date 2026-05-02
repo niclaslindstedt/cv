@@ -1,0 +1,74 @@
+/* Category glyph bar — a thicker colored left edge on each card that
+ * embeds a small outlined SVG. The bar replaces the card's own left
+ * border (the card sets border-left-color: transparent on cards that
+ * carry a bar) so the corner radius keeps the unified look described
+ * in docs/DESIGN.md §6.1.
+ *
+ * The owning card type (project / timeline-item / education-list > li)
+ * sets `--cat-rgb` to one of the --tl-* triplets defined in tokens.css
+ * (used for tints and borders) and `--cat-fg` to the matching --tl-*-fg
+ * triplet (used for the glyph color so it reads on the light surface).
+ * The bar paints a flat tint at low alpha plus a 1px right edge for
+ * the 3:1 non-text contrast required by WCAG 1.4.11. */
+
+.card-glyph-bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 36px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 16px;
+  color: rgb(var(--cat-fg, var(--cat-rgb)));
+  background: rgba(var(--cat-rgb), 0.16);
+  border-right: 1px solid rgba(var(--cat-rgb), 0.45);
+  border-radius: var(--radius) 0 0 var(--radius);
+  pointer-events: none;
+}
+
+:root[data-theme="light"] .card-glyph-bar {
+  background: rgba(var(--cat-rgb), 0.22);
+}
+
+/* Active / Present marker (docs/DESIGN.md §10.2): the left bar is the
+ * only perimeter affordance — the rest of the card outline stays at
+ * its resting 45%-alpha tint. Brighten the bar tint and saturate the
+ * right edge to the full category token. */
+.is-active > .card-glyph-bar {
+  background: rgba(var(--cat-rgb), 0.32);
+  border-right-color: rgb(var(--cat-rgb));
+}
+
+:root[data-theme="light"] .is-active > .card-glyph-bar {
+  background: rgba(var(--cat-rgb), 0.4);
+}
+
+/* Wrap the glyph in a circular Mist disc so it reads on the bar tint
+ * without depending on stroke contrast alone. */
+.category-glyph {
+  display: block;
+}
+
+/* Section title glyph — sits inline with the small uppercase title.
+ * Uses the same currentColor convention so the section-toggle hover
+ * rule already lifts it from Mist to Aurora. */
+.section-title-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+  color: rgb(var(--cat-fg, var(--cat-rgb, var(--tl-blue-fg))));
+  vertical-align: -3px;
+}
+
+/* Print and PDF: the print pipeline renders PrintView in its own SSR
+ * doc, so these classes never appear there. Still, hide defensively
+ * if anyone ever inlines the regular components into print. */
+@media print {
+  .card-glyph-bar,
+  .section-title-glyph {
+    display: none;
+  }
+}

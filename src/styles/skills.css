@@ -5,15 +5,49 @@
 }
 
 .skills-group h3 {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--fg);
 }
 
+/* Skill-group title — small inline glyph chip + label, tinted by the group's
+ * --cat-rgb / --cat-fg pair (set inline by Skills.tsx). Mirrors the
+ * §10.5 section-title-glyph language but lives inside the Skills section
+ * so the per-group hue stays scoped (docs/DESIGN.md §10.6). */
+.skills-group-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skills-group-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: rgb(var(--cat-fg, var(--cat-rgb, var(--accent-rgb))));
+  background: rgba(var(--cat-rgb, var(--accent-rgb)), 0.16);
+  border: 1px solid rgba(var(--cat-rgb, var(--accent-rgb)), 0.45);
+  border-radius: 6px;
+}
+
+:root[data-theme="light"] .skills-group-glyph {
+  background: rgba(var(--cat-rgb, var(--accent-rgb)), 0.22);
+}
+
+.skill-group-glyph {
+  display: block;
+}
+
+/* Indent the pills under the group glyph so the glyph reads as the
+ * hierarchy anchor for the items inside it. The padding equals the
+ * 22px glyph chip + the 8px gap defined on .skills-group-title, so
+ * pills line up with the label text rather than the glyph edge. */
 .skills-group > ul {
   list-style: none;
-  padding: 0;
+  padding: 0 0 0 30px;
   margin: 0;
   display: flex;
   flex-wrap: wrap;
@@ -29,9 +63,13 @@
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--fg);
-  background: var(--glass-highlight);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
   border-radius: 999px;
+}
+
+:root[data-theme="light"] .skill-pill {
+  background: rgba(20, 28, 40, 0.06);
 }
 
 .skill-pill-empty {
@@ -47,7 +85,7 @@
   align-items: center;
   padding: 1px 8px;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -61,6 +99,11 @@ button.skill-pill-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  /* WCAG 2.5.8 minimum target size — siblings (.entry-stack-btn,
+   * .project-stack-btn, .project-date) all set this; without it the
+   * pill computes to ~22.6 px tall and only the spacing exception
+   * keeps it conformant. Bumping the target itself is the safer fix. */
+  min-height: 24px;
   font: inherit;
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -78,11 +121,24 @@ button.skill-pill-btn {
     border-color: var(--accent);
     background: var(--accent-soft);
   }
+
+  /* Within a skill-group with a category tint, hover and the usage count
+   * adopt the group's hue. Keeps each group's pills visually anchored to
+   * its glyph. (docs/DESIGN.md §10.6) */
+  .skills-group[data-group] button.skill-pill-btn:hover {
+    color: rgb(var(--cat-fg, var(--cat-rgb)));
+    border-color: rgba(var(--cat-rgb), 0.6);
+    background: rgba(var(--cat-rgb), 0.16);
+  }
 }
 
 button.skill-pill-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.skills-group[data-group] button.skill-pill-btn:focus-visible {
+  outline-color: rgb(var(--cat-fg, var(--cat-rgb)));
 }
 
 .skill-usage-count {
@@ -98,6 +154,11 @@ button.skill-pill-btn:focus-visible {
   border-radius: 999px;
 }
 
+.skills-group[data-group] .skill-usage-count {
+  color: rgb(var(--cat-fg, var(--cat-rgb)));
+  background: rgba(var(--cat-rgb), 0.18);
+}
+
 .entry-stack,
 .entry-skills {
   list-style: none;
@@ -105,11 +166,11 @@ button.skill-pill-btn:focus-visible {
   margin: 10px 0 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 
 .entry-stack + .entry-skills {
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .entry-stack li,
@@ -120,10 +181,11 @@ button.skill-pill-btn:focus-visible {
 .entry-stack-btn,
 .entry-skill-btn {
   appearance: none;
-  padding: 1px 8px;
+  min-height: 24px;
+  padding: 3px 10px;
   font: inherit;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--accent);
   background: var(--accent-soft);
   border: 1px solid transparent;
@@ -138,8 +200,12 @@ button.skill-pill-btn:focus-visible {
 
 .entry-skill-btn {
   color: var(--fg-muted);
-  background: transparent;
-  border-color: var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: transparent;
+}
+
+:root[data-theme="light"] .entry-skill-btn {
+  background: rgba(20, 28, 40, 0.05);
 }
 
 @media (hover: hover) {
@@ -154,4 +220,10 @@ button.skill-pill-btn:focus-visible {
 .entry-skill-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.entry-stack-btn-unused {
+  color: var(--fg-muted);
+  background: transparent;
+  border-color: var(--accent-soft);
 }

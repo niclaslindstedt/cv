@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://niclaslindstedt.se/schemas/search-index.schema.json",
+  "title": "Search index",
+  "description": "Flat denormalised list of searchable CV records, baked at build time and consumed by the in-page fuzzy search. Each record splits its searchable text into per-field buckets so the runtime can rank matches by where they were found.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["generatedAt", "records"],
+  "properties": {
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/record" }
+    }
+  },
+  "$defs": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "project",
+        "company",
+        "experience",
+        "assignment",
+        "education",
+        "course",
+        "skill",
+        "focus",
+        "summary"
+      ]
+    },
+    "lang": {
+      "type": "string",
+      "enum": ["en", "sv"]
+    },
+    "localizedString": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "sv"],
+      "properties": {
+        "en": { "type": "string" },
+        "sv": { "type": "string" }
+      }
+    },
+    "stringList": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title"],
+      "description": "Per-field searchable text. Field weights at runtime: title > alias > stack > skill > secondary > description.",
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "secondary": { "type": "string" },
+        "description": { "type": "string" },
+        "stack": { "$ref": "#/$defs/stringList" },
+        "skills": { "$ref": "#/$defs/stringList" },
+        "aliases": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "openerKey", "title", "lang", "fields"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "$ref": "#/$defs/kind" },
+        "openerKey": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "secondary": { "type": "string" },
+        "lang": { "$ref": "#/$defs/lang" },
+        "fields": { "$ref": "#/$defs/fields" },
+        "localizedTitle": { "$ref": "#/$defs/localizedString" },
+        "localizedSecondary": { "$ref": "#/$defs/localizedString" }
+      }
+    }
+  }
+}

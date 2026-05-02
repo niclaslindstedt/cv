@@ -1,20 +1,26 @@
 import { useEffect, useRef } from "react";
 
 import type {
-  CourseMoment,
+  CourseModule,
   Education as EducationItem,
 } from "../data/cv.types";
+import { educationTimelineId } from "../data/timeline-ids";
+import { categoryStyle } from "../utils/categoryStyle";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
-import { useSwipeClose } from "../utils/useSwipeClose";
-import { EctsPill, type EctsContext } from "./EctsPill";
+import { navigate } from "../utils/route";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
+import { useModalFocus } from "../utils/useModalFocus";
+import { useModalSwipe } from "../utils/useModalSwipe";
+import { CategoryGlyph } from "./CategoryGlyph";
+import { ModalLink } from "./ModalLink";
 import { NoteIcon } from "./NoteIcon";
 
-function sumCredits(moments: CourseMoment[], reference: string): string | null {
-  if (moments.length === 0) return null;
+function sumCredits(modules: CourseModule[], reference: string): string | null {
+  if (modules.length === 0) return null;
   let total = 0;
-  for (const moment of moments) {
-    const parsed = parseFloat(moment.credits.replace(",", "."));
+  for (const mod of modules) {
+    const parsed = parseFloat(mod.credits.replace(",", "."));
     if (Number.isNaN(parsed)) return null;
     total += parsed;
   }
@@ -28,18 +34,14 @@ type Props = {
   program: EducationItem | null;
   onClose: () => void;
   onSkillClick: (skill: string) => void;
-  onEctsClick: (context: EctsContext) => void;
 };
 
-export function ProgramCoursesModal({
-  program,
-  onClose,
-  onSkillClick,
-  onEctsClick,
-}: Props) {
+export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, !!program, onClose);
+  useModalSwipe(modalRef, !!program, onClose);
+  useModalFocus(modalRef, !!program);
+  useBodyScrollLock(!!program);
 
   useEffect(() => {
     if (!program) return;
@@ -50,19 +52,11 @@ export function ProgramCoursesModal({
     return () => document.removeEventListener("keydown", onKey);
   }, [program, onClose]);
 
-  useEffect(() => {
-    if (!program) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [program]);
-
   if (!program) return null;
 
   const field = t(program.field);
   const courses = program.courses ?? [];
+  const timelineId = educationTimelineId(program);
 
   return (
     <div
@@ -74,10 +68,15 @@ export function ProgramCoursesModal({
     >
       <div
         ref={modalRef}
-        className="skill-modal"
+        className="skill-modal skill-modal--cat"
+        data-category="education"
+        style={categoryStyle("education")}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="skill-modal-head">
+          <span className="skill-modal-glyph" aria-hidden="true">
+            <CategoryGlyph category="education" size={20} />
+          </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{field}</span>
             <span className="skill-modal-years">
@@ -93,15 +92,11 @@ export function ProgramCoursesModal({
             ✕
           </button>
         </header>
-        <div className="skill-modal-body">
+        <div className="skill-modal-body" tabIndex={0}>
           <section className="program-modal-summary">
             <p className="skill-modal-description">
               {t(program.institution)} · {t(program.level)} ·{" "}
-              <EctsPill
-                credits={program.credits}
-                context={{ kind: "program", program }}
-                onOpen={onEctsClick}
-              />
+              <span className="education-credits">{program.credits}</span>
             </p>
             {program.notes && (
               <p className="program-modal-notes">
@@ -109,134 +104,148 @@ export function ProgramCoursesModal({
                 <span>{t(program.notes)}</span>
               </p>
             )}
-            {courses.length > 0 && (
-              <p className="program-modal-count">
-                {ui.programModal.coursesSummary(courses.length)}
-              </p>
+            {timelineId && (
+              <div className="skill-modal-actions">
+                <ModalLink
+                  onClick={() => {
+                    onClose();
+                    navigate(`/timeline#${timelineId}`);
+                  }}
+                >
+                  {ui.timeline.seeInTimeline}
+                </ModalLink>
+              </div>
             )}
           </section>
           {courses.length > 0 && (
-            <ul className="program-courses-list">
-              {courses.map((course) => {
-                const moments = course.moments ?? [];
-                const hasMoments = moments.length > 0;
-                const incomplete = course.completed === false;
-                const partial =
-                  incomplete ||
-                  (hasMoments &&
-                    !course.completedDate &&
-                    moments.some((m) => !m.completedDate));
-                const earned = hasMoments
-                  ? sumCredits(
-                      moments.filter((m) => m.completedDate),
-                      course.credits,
-                    )
-                  : null;
-                return (
-                  <li key={course.code} className="program-course-item">
-                    <div className="program-course-head">
-                      <h3 className="program-course-name">{t(course.name)}</h3>
-                      <span className="program-course-date">
-                        {course.completedDate
-                          ? formatMonth(course.completedDate, lang)
-                          : partial
-                            ? ui.programModal.momentNotCompleted
-                            : ui.programModal.inProgress}
-                      </span>
-                    </div>
-                    <div className="program-course-meta">
-                      <span className="program-course-code">{course.code}</span>
-                      <EctsPill
-                        credits={course.credits}
-                        context={{ kind: "course", credits: course.credits }}
-                        onOpen={onEctsClick}
-                      />
-                      {incomplete && (
-                        <span className="course-incomplete-pill">
-                          {ui.programModal.incomplete}
+            <section className="company-modal-stack program-courses-section">
+              <h3 className="company-modal-stack-title">
+                {ui.programModal.coursesSummary(courses.length)}
+              </h3>
+              <ul className="program-courses-list">
+                {courses.map((course) => {
+                  const modules = course.modules ?? [];
+                  const hasModules = modules.length > 0;
+                  const incomplete = course.completed === false;
+                  const partial =
+                    incomplete ||
+                    (hasModules &&
+                      !course.completedDate &&
+                      modules.some((m) => !m.completedDate));
+                  const earned = hasModules
+                    ? sumCredits(
+                        modules.filter((m) => m.completedDate),
+                        course.credits,
+                      )
+                    : null;
+                  return (
+                    <li key={course.code} className="program-course-item">
+                      <div className="program-course-head">
+                        <h3 className="program-course-name">
+                          {t(course.name)}
+                        </h3>
+                        <span className="program-course-date">
+                          {course.completedDate
+                            ? formatMonth(course.completedDate, lang)
+                            : partial
+                              ? ui.programModal.moduleNotCompleted
+                              : ui.programModal.inProgress}
                         </span>
-                      )}
-                      {partial && earned && (
-                        <span className="program-course-progress">
-                          {ui.programModal.courseProgress(
-                            earned,
-                            course.credits,
-                          )}
-                        </span>
-                      )}
-                      {course.grade && (
-                        <span className="program-course-grade">
-                          <span className="program-course-grade-label">
-                            {ui.programModal.grade}
-                          </span>
-                          <span className="program-course-grade-value">
-                            {course.grade}
-                          </span>
-                        </span>
-                      )}
-                    </div>
-                    {hasMoments && (
-                      <div className="program-course-moments">
-                        <p className="program-course-moments-label">
-                          {ui.programModal.moments}
-                        </p>
-                        <ul className="program-moment-list">
-                          {moments.map((moment, index) => (
-                            <li
-                              key={moment.code ?? `${course.code}-${index}`}
-                              className={
-                                moment.completedDate
-                                  ? "program-moment-item"
-                                  : "program-moment-item program-moment-item--pending"
-                              }
-                            >
-                              <span className="program-moment-name">
-                                {t(moment.name)}
-                              </span>
-                              <span className="program-moment-meta">
-                                {moment.code && (
-                                  <span className="program-moment-code">
-                                    {moment.code}
-                                  </span>
-                                )}
-                                <EctsPill
-                                  credits={moment.credits}
-                                  context={{
-                                    kind: "course",
-                                    credits: moment.credits,
-                                  }}
-                                  onOpen={onEctsClick}
-                                />
-                                <span className="program-moment-date">
-                                  {moment.completedDate
-                                    ? formatMonth(moment.completedDate, lang)
-                                    : ui.programModal.momentNotCompleted}
-                                </span>
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
                       </div>
-                    )}
-                    {course.skills && course.skills.length > 0 && (
-                      <ul className="entry-skills">
-                        {course.skills.map((skill) => (
-                          <li key={skill}>
-                            <button
-                              type="button"
-                              className="entry-skill-btn"
-                              onClick={() => onSkillClick(skill)}
-                            >
-                              {skill}
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+                      <div className="program-course-meta">
+                        <span className="program-course-code">
+                          {course.code}
+                        </span>
+                        <span className="education-credits">
+                          {course.credits}
+                        </span>
+                        {incomplete && (
+                          <span className="course-incomplete-pill">
+                            {ui.programModal.incomplete}
+                          </span>
+                        )}
+                        {partial && earned && (
+                          <span className="program-course-progress">
+                            {ui.programModal.courseProgress(
+                              earned,
+                              course.credits,
+                            )}
+                          </span>
+                        )}
+                        {course.grade && (
+                          <span className="program-course-grade">
+                            <span className="program-course-grade-label">
+                              {ui.programModal.grade}
+                            </span>
+                            <span className="program-course-grade-value">
+                              {course.grade}
+                            </span>
+                          </span>
+                        )}
+                      </div>
+                      {hasModules && (
+                        <div className="program-course-modules">
+                          <p className="program-course-modules-label">
+                            {ui.programModal.modules}
+                          </p>
+                          <ul className="program-module-list">
+                            {modules.map((mod, index) => (
+                              <li
+                                key={mod.code ?? `${course.code}-${index}`}
+                                className={
+                                  mod.completedDate
+                                    ? "program-module-item"
+                                    : "program-module-item program-module-item--pending"
+                                }
+                              >
+                                <span className="program-module-name">
+                                  {t(mod.name)}
+                                </span>
+                                <span className="program-module-meta">
+                                  {mod.code && (
+                                    <span className="program-module-code">
+                                      {mod.code}
+                                    </span>
+                                  )}
+                                  <span className="education-credits">
+                                    {mod.credits}
+                                  </span>
+                                  <span className="program-module-date">
+                                    {mod.completedDate
+                                      ? formatMonth(mod.completedDate, lang)
+                                      : ui.programModal.moduleNotCompleted}
+                                  </span>
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {course.skills && course.skills.length > 0 && (
+                        <section className="skill-modal-group program-course-skills">
+                          <h3 className="skill-modal-group-heading">
+                            {ui.programModal.skills}
+                          </h3>
+                          <ul className="entry-skills">
+                            {course.skills.map((skill) => (
+                              <li key={skill}>
+                                <button
+                                  type="button"
+                                  className="entry-skill-btn"
+                                  onClick={() => onSkillClick(skill)}
+                                >
+                                  {skill}
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        </section>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
           )}
         </div>
       </div>

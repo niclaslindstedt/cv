@@ -1,14 +1,19 @@
 import { useEffect, useRef } from "react";
 
 import projectStatsData from "../data/project-stats.json";
-import type {
-  GithubRepoRef,
-  Project,
-  ProjectStats,
-  ProjectStatsFile,
-} from "../data/cv.types";
+import type { Project, ProjectStatsFile } from "../data/cv.types";
+import { projectTimelineId } from "../data/timeline-ids";
+import { categoryStyle } from "../utils/categoryStyle";
 import { useLang } from "../utils/i18n";
-import { useSwipeClose } from "../utils/useSwipeClose";
+import { renderInlineCode } from "../utils/inlineCode";
+import { aggregateProjectStats } from "../utils/projectStats";
+import { navigate } from "../utils/route";
+import { stackEntries } from "../utils/stack";
+import { useBodyScrollLock } from "../utils/useBodyScrollLock";
+import { useModalFocus } from "../utils/useModalFocus";
+import { useModalSwipe } from "../utils/useModalSwipe";
+import { CategoryGlyph } from "./CategoryGlyph";
+import { ModalLink } from "./ModalLink";
 import { ProjectDateChip } from "./ProjectDateChip";
 
 const projectStats = projectStatsData as ProjectStatsFile;
@@ -19,19 +24,12 @@ type Props = {
   onSkillClick: (skill: string) => void;
 };
 
-function statsKey(github: GithubRepoRef): string {
-  return `${github.owner}/${github.repo}`;
-}
-
-function lookupStats(github: GithubRepoRef): ProjectStats | undefined {
-  if (!projectStats?.enabled) return undefined;
-  return projectStats.projects?.[statsKey(github)];
-}
-
 export function ProjectModal({ project, onClose, onSkillClick }: Props) {
   const { t, lang, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useSwipeClose(modalRef, !!project, onClose);
+  useModalSwipe(modalRef, !!project, onClose);
+  useModalFocus(modalRef, !!project);
+  useBodyScrollLock(!!project);
 
   useEffect(() => {
     if (!project) return;
@@ -42,18 +40,10 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [project, onClose]);
 
-  useEffect(() => {
-    if (!project) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [project]);
-
   if (!project) return null;
 
-  const repoUrl = `https://github.com/${project.github.owner}/${project.github.repo}`;
+  const primaryRepo = project.github[0];
+  const repoUrl = `https://github.com/${primaryRepo.owner}/${primaryRepo.repo}`;
   const dockerHubUrl = project.dockerHub
     ? project.dockerHub.includes("/")
       ? `https://hub.docker.com/r/${project.dockerHub}`
@@ -78,13 +68,15 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
     npmUrl ||
     nugetUrl
   );
-  const stats = lookupStats(project.github);
+  const stats = aggregateProjectStats(project.github, projectStats);
   const hasDateRange = !!(
     stats &&
     stats.firstCommitDate &&
     stats.lastCommitDate
   );
   const hasCommits = !!stats && stats.totalCommits > 0;
+  const stack = stackEntries(project.stack);
+  const timelineId = projectTimelineId(project);
 
   return (
     <div
@@ -96,10 +88,15 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
     >
       <div
         ref={modalRef}
-        className="skill-modal"
+        className="skill-modal skill-modal--cat"
+        data-category="project"
+        style={categoryStyle("project")}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="skill-modal-head">
+          <span className="skill-modal-glyph" aria-hidden="true">
+            <CategoryGlyph category="project" size={20} />
+          </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{project.name}</span>
           </h2>
@@ -112,9 +109,11 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
             ✕
           </button>
         </header>
-        <div className="skill-modal-body">
+        <div className="skill-modal-body" tabIndex={0}>
           <section className="skill-modal-detail">
-            <p className="skill-modal-description">{t(project.description)}</p>
+            <p className="skill-modal-description">
+              {renderInlineCode(t(project.description))}
+            </p>
             {(hasDateRange || hasCommits) && (
               <dl className="project-meta">
                 {hasDateRange && (
@@ -147,94 +146,97 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                 )}
               </dl>
             )}
-            {(project.homepage || project.openSource || hasRegistryLinks) && (
+            {(project.homepage ||
+              project.openSource ||
+              hasRegistryLinks ||
+              timelineId) && (
               <div className="project-modal-actions">
-                {project.homepage && (
-                  <a
-                    className="skill-modal-link"
-                    href={project.homepage}
-                    target="_blank"
-                    rel="noreferrer noopener"
+                {timelineId && (
+                  <ModalLink
+                    onClick={() => {
+                      onClose();
+                      navigate(`/timeline#${timelineId}`);
+                    }}
                   >
+                    {ui.timeline.seeInTimeline}
+                  </ModalLink>
+                )}
+                {project.homepage && (
+                  <ModalLink href={project.homepage}>
                     {ui.projectModal.visitSite}
-                  </a>
+                  </ModalLink>
                 )}
                 {project.openSource && (
-                  <a
-                    className="skill-modal-link"
-                    href={repoUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={repoUrl}>
                     {ui.projectModal.viewOnGitHub}
-                  </a>
+                  </ModalLink>
                 )}
                 {dockerHubUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={dockerHubUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={dockerHubUrl}>
                     {ui.projectModal.viewOnDockerHub}
-                  </a>
+                  </ModalLink>
                 )}
                 {cratesIoUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={cratesIoUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={cratesIoUrl}>
                     {ui.projectModal.viewOnCratesIo}
-                  </a>
+                  </ModalLink>
                 )}
                 {pypiUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={pypiUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={pypiUrl}>
                     {ui.projectModal.viewOnPyPI}
-                  </a>
+                  </ModalLink>
                 )}
                 {npmUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={npmUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={npmUrl}>
                     {ui.projectModal.viewOnNpm}
-                  </a>
+                  </ModalLink>
                 )}
                 {nugetUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={nugetUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={nugetUrl}>
                     {ui.projectModal.viewOnNuGet}
-                  </a>
+                  </ModalLink>
                 )}
               </div>
             )}
-            {project.stack && project.stack.length > 0 && (
+            {stack.length > 0 && (
               <div className="company-modal-stack">
                 <h3 className="company-modal-stack-title">
                   {ui.projectModal.stack}
                 </h3>
                 <ul className="entry-stack">
-                  {project.stack.map((tech) => (
-                    <li key={tech}>
+                  {stack.map((tech) => (
+                    <li key={tech.name}>
                       <button
                         type="button"
-                        className="entry-stack-btn"
-                        onClick={() => onSkillClick(tech)}
+                        className={
+                          tech.unused
+                            ? "entry-stack-btn entry-stack-btn-unused"
+                            : "entry-stack-btn"
+                        }
+                        onClick={() => onSkillClick(tech.name)}
+                        title={tech.unused ? ui.skills.unusedStack : undefined}
                       >
-                        {tech}
+                        {tech.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {project.skills.length > 0 && (
+              <div className="company-modal-stack">
+                <h3 className="company-modal-stack-title">
+                  {ui.projectModal.skills}
+                </h3>
+                <ul className="entry-skills">
+                  {project.skills.map((skill) => (
+                    <li key={skill}>
+                      <button
+                        type="button"
+                        className="entry-skill-btn"
+                        onClick={() => onSkillClick(skill)}
+                      >
+                        {skill}
                       </button>
                     </li>
                   ))}

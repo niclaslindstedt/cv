@@ -183,7 +183,8 @@
         "credits": "7.5 ECTS",
         "completed": false
       }
-    ]
+    ],
+    "aliases": ["informatics", "is", "informationssystem"]
   },
   {
     "field": {
@@ -229,7 +230,7 @@
         "code": "3AN200",
         "credits": "8 ECTS",
         "completedDate": "2011-11",
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Practical Exam – Dissection",
@@ -285,7 +286,7 @@
         "code": "3NR137",
         "credits": "19.5 ECTS",
         "completedDate": "2012-01",
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Neuroanatomy",
@@ -332,7 +333,7 @@
         "code": "3KR093",
         "credits": "30 ECTS",
         "completedDate": "2013-11",
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Integration II",
@@ -406,7 +407,7 @@
         "code": "3ME040",
         "credits": "28.5 ECTS",
         "completedDate": "2014-04",
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Integration – Biological Aging",
@@ -507,7 +508,7 @@
         "code": "3AM009",
         "credits": "4 ECTS",
         "completed": false,
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Leadership Training I",
@@ -527,7 +528,7 @@
         "code": "3ME033",
         "credits": "30 ECTS",
         "completed": false,
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Integration IV – Pharmacology",
@@ -557,7 +558,8 @@
           }
         ]
       }
-    ]
+    ],
+    "aliases": ["med", "medicin", "läkarprogrammet", "medical school"]
   },
   {
     "field": {
@@ -603,7 +605,7 @@
         "code": "3ME040",
         "credits": "0.8 ECTS",
         "completedDate": "2010-02",
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Being a Patient or a Doctor",
@@ -632,7 +634,7 @@
         "code": "3BM013",
         "credits": "45 ECTS",
         "completed": false,
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Term 2 – Structure and Function of Organ Systems",
@@ -660,7 +662,7 @@
         "code": "3ME041",
         "credits": "1.5 ECTS",
         "completedDate": "2010-11",
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Professional Development – Being a Patient or a Doctor",
@@ -680,7 +682,7 @@
         "code": "3ME042",
         "credits": "0.8 ECTS",
         "completedDate": "2011-04",
-        "moments": [
+        "modules": [
           {
             "name": {
               "en": "Professional Development – Being a Patient or a Doctor",
@@ -692,6 +694,7 @@
           }
         ]
       }
-    ]
+    ],
+    "aliases": ["med", "medicin", "läkarprogrammet", "medical school"]
   }
 ]
