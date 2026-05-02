@@ -13,6 +13,7 @@ import {
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
+import { ModalLink } from "./ModalLink";
 import { SkillGroupGlyph } from "./SkillGroupGlyph";
 
 function isLocalized(
@@ -185,14 +186,9 @@ export function SkillModal({
                 </dl>
               )}
               {detail.url && (
-                <a
-                  className="skill-modal-link"
-                  href={detail.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
+                <ModalLink href={detail.url}>
                   {ui.skillModal.learnMore}
-                </a>
+                </ModalLink>
               )}
             </section>
           )}

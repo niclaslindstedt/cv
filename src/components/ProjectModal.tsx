@@ -13,6 +13,7 @@ import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
 import { CategoryGlyph } from "./CategoryGlyph";
+import { ModalLink } from "./ModalLink";
 import { ProjectDateChip } from "./ProjectDateChip";
 
 const projectStats = projectStatsData as ProjectStatsFile;
@@ -151,86 +152,49 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
               timelineId) && (
               <div className="project-modal-actions">
                 {timelineId && (
-                  <button
-                    type="button"
-                    className="skill-modal-link"
+                  <ModalLink
                     onClick={() => {
                       onClose();
                       navigate(`/timeline#${timelineId}`);
                     }}
                   >
                     {ui.timeline.seeInTimeline}
-                  </button>
+                  </ModalLink>
                 )}
                 {project.homepage && (
-                  <a
-                    className="skill-modal-link"
-                    href={project.homepage}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={project.homepage}>
                     {ui.projectModal.visitSite}
-                  </a>
+                  </ModalLink>
                 )}
                 {project.openSource && (
-                  <a
-                    className="skill-modal-link"
-                    href={repoUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={repoUrl}>
                     {ui.projectModal.viewOnGitHub}
-                  </a>
+                  </ModalLink>
                 )}
                 {dockerHubUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={dockerHubUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={dockerHubUrl}>
                     {ui.projectModal.viewOnDockerHub}
-                  </a>
+                  </ModalLink>
                 )}
                 {cratesIoUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={cratesIoUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={cratesIoUrl}>
                     {ui.projectModal.viewOnCratesIo}
-                  </a>
+                  </ModalLink>
                 )}
                 {pypiUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={pypiUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={pypiUrl}>
                     {ui.projectModal.viewOnPyPI}
-                  </a>
+                  </ModalLink>
                 )}
                 {npmUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={npmUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={npmUrl}>
                     {ui.projectModal.viewOnNpm}
-                  </a>
+                  </ModalLink>
                 )}
                 {nugetUrl && (
-                  <a
-                    className="skill-modal-link"
-                    href={nugetUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <ModalLink href={nugetUrl}>
                     {ui.projectModal.viewOnNuGet}
-                  </a>
+                  </ModalLink>
                 )}
               </div>
             )}
