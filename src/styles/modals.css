@@ -226,7 +226,9 @@
   border-radius: 999px;
 }
 
-.experience-modal-meta {
+.experience-modal-meta,
+.program-modal-meta,
+.course-modal-meta {
   margin: 0;
 }
 

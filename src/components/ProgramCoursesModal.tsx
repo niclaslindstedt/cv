@@ -86,9 +86,6 @@ export function ProgramCoursesModal({
           </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{field}</span>
-            <span className="skill-modal-years">
-              {formatRange(program.startDate, program.endDate, lang)}
-            </span>
           </h2>
           <button
             type="button"
@@ -100,6 +97,9 @@ export function ProgramCoursesModal({
           </button>
         </header>
         <div className="skill-modal-body" tabIndex={0}>
+          <div className="timeline-meta program-modal-meta">
+            <span>{formatRange(program.startDate, program.endDate, lang)}</span>
+          </div>
           <section className="program-modal-summary">
             <p className="skill-modal-description">
               {t(program.institution)} · {t(program.level)} ·{" "}
@@ -115,19 +115,19 @@ export function ProgramCoursesModal({
                 <span>{t(program.notes)}</span>
               </p>
             )}
-            {timelineId && (
-              <div className="skill-modal-actions">
-                <ModalLink
-                  onClick={() => {
-                    onClose();
-                    navigate(`/timeline#${timelineId}`);
-                  }}
-                >
-                  {ui.timeline.seeInTimeline}
-                </ModalLink>
-              </div>
-            )}
           </section>
+          {timelineId && (
+            <div className="skill-modal-actions">
+              <ModalLink
+                onClick={() => {
+                  onClose();
+                  navigate(`/timeline#${timelineId}`);
+                }}
+              >
+                {ui.timeline.seeInTimeline}
+              </ModalLink>
+            </div>
+          )}
           {courses.length > 0 && (
             <section className="company-modal-stack program-courses-section">
               <h3 className="company-modal-stack-title">
