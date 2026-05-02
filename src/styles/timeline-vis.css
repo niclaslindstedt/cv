@@ -294,6 +294,32 @@
   z-index: 4;
 }
 
+.timeline-vis-item.is-highlighted {
+  border-color: rgba(var(--tl-rgb), 0.9);
+  background: rgba(var(--tl-rgb), 0.4);
+  z-index: 4;
+  animation: tl-highlight-pulse 900ms ease-out 3;
+}
+
+@keyframes tl-highlight-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--tl-rgb), 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(var(--tl-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--tl-rgb), 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-vis-item.is-highlighted {
+    animation: none;
+    box-shadow: 0 0 0 2px rgba(var(--tl-rgb), 0.7);
+  }
+}
+
 .timeline-vis-experience {
   --tl-rgb: var(--tl-blue);
   background: rgba(var(--tl-blue), 0.22);

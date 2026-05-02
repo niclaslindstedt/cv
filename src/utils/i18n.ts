@@ -56,6 +56,7 @@ type UiStrings = {
     busiestRepo: string;
     yearRange: (year: string) => string;
     promotedTo: (title: string, date: string) => string;
+    seeInTimeline: string;
   };
   skillModal: {
     projectsHeading: string;
@@ -230,6 +231,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       busiestRepo: "Busiest repo",
       yearRange: (year) => `Jan ${year} – Dec ${year}`,
       promotedTo: (title, date) => `Promoted to ${title} · ${date}`,
+      seeInTimeline: "See in timeline →",
     },
     skillModal: {
       projectsHeading: "Projects",
@@ -435,6 +437,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       busiestRepo: "Mest aktiva repo",
       yearRange: (year) => `Jan ${year} – Dec ${year}`,
       promotedTo: (title, date) => `Befordrad till ${title} · ${date}`,
+      seeInTimeline: "Visa på tidslinje →",
     },
     skillModal: {
       projectsHeading: "Projekt",

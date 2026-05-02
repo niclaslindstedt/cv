@@ -6,10 +6,15 @@ import type {
   Experience as ExperienceItem,
   RoleTenure,
 } from "../data/cv.types";
+import {
+  assignmentTimelineId,
+  experienceTimelineId,
+} from "../data/timeline-ids";
 import { categoryStyle } from "../utils/categoryStyle";
 import { formatRange } from "../utils/date";
 import { useLang, type LanguageContextValue } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
+import { navigate } from "../utils/route";
 import { stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
@@ -149,6 +154,9 @@ export function ExperienceModal({
   const isAssignment = data.kind === "assignment";
   const subject = isAssignment ? data.client : data.company;
   const item = data.item;
+  const timelineId = isAssignment
+    ? assignmentTimelineId(data.item)
+    : experienceTimelineId(data.item);
   const sortedRoles = sortRolesAsc(item.roles);
   const newestRole = sortedRoles[sortedRoles.length - 1];
   const hasPromotion = sortedRoles.length > 1;
@@ -270,6 +278,20 @@ export function ExperienceModal({
                 <NoteIcon />
                 <span>{t(item.notes)}</span>
               </p>
+            )}
+            {timelineId && (
+              <div className="skill-modal-actions">
+                <button
+                  type="button"
+                  className="skill-modal-link"
+                  onClick={() => {
+                    onClose();
+                    navigate(`/timeline#${timelineId}`);
+                  }}
+                >
+                  {ui.timeline.seeInTimeline}
+                </button>
+              </div>
             )}
           </section>
         </div>

@@ -154,7 +154,8 @@
   text-decoration: none;
 }
 
-.project-modal-actions {
+.project-modal-actions,
+.skill-modal-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;

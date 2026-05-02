@@ -16,7 +16,12 @@ export function getCurrentRoute(): Route {
 }
 
 export function navigate(path: string): void {
-  if (window.location.pathname === path) return;
+  const target = new URL(path, window.location.origin);
+  const same =
+    window.location.pathname === target.pathname &&
+    window.location.search === target.search &&
+    window.location.hash === target.hash;
+  if (same) return;
   window.history.pushState({}, "", path);
   window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT));
   window.scrollTo({ top: 0, left: 0 });

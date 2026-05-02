@@ -4,9 +4,11 @@ import type {
   CourseModule,
   Education as EducationItem,
 } from "../data/cv.types";
+import { educationTimelineId } from "../data/timeline-ids";
 import { categoryStyle } from "../utils/categoryStyle";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { navigate } from "../utils/route";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
@@ -53,6 +55,7 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
 
   const field = t(program.field);
   const courses = program.courses ?? [];
+  const timelineId = educationTimelineId(program);
 
   return (
     <div
@@ -99,6 +102,20 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
                 <NoteIcon />
                 <span>{t(program.notes)}</span>
               </p>
+            )}
+            {timelineId && (
+              <div className="skill-modal-actions">
+                <button
+                  type="button"
+                  className="skill-modal-link"
+                  onClick={() => {
+                    onClose();
+                    navigate(`/timeline#${timelineId}`);
+                  }}
+                >
+                  {ui.timeline.seeInTimeline}
+                </button>
+              </div>
             )}
           </section>
           {courses.length > 0 && (

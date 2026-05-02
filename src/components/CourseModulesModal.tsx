@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 
 import type { Course, CourseModule } from "../data/cv.types";
+import { courseTimelineId } from "../data/timeline-ids";
 import { categoryStyle } from "../utils/categoryStyle";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { navigate } from "../utils/route";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
@@ -54,6 +56,7 @@ export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
   if (!course) return null;
 
   const name = t(course.name);
+  const timelineId = courseTimelineId(course);
   const modules = course.modules ?? [];
   const completedModules = modules.filter((m) => m.completedDate);
   const endDate = course.completedDate ?? latestModuleDate(modules);
@@ -131,6 +134,20 @@ export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
                 </span>
               )}
             </div>
+            {timelineId && (
+              <div className="skill-modal-actions">
+                <button
+                  type="button"
+                  className="skill-modal-link"
+                  onClick={() => {
+                    onClose();
+                    navigate(`/timeline#${timelineId}`);
+                  }}
+                >
+                  {ui.timeline.seeInTimeline}
+                </button>
+              </div>
+            )}
           </section>
           {modules.length > 0 && (
             <section className="company-modal-stack course-modules-section">
