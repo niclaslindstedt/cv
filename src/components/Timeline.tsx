@@ -498,8 +498,7 @@ export function Timeline() {
 
       const newMonthPx = BASE_MONTH_PX * initialScale;
       const barLeft = (startMonth - minMonth) * newMonthPx;
-      const barWidth = Math.max(1, (endMonth - startMonth) * newMonthPx);
-      const left = Math.max(0, barLeft + barWidth / 2 - clientWidth / 2);
+      const left = Math.max(0, barLeft - 24);
 
       const lane = targetBar.segments[0].activeLane;
       const barTop =
