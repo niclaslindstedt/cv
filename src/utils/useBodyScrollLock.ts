@@ -73,3 +73,13 @@ export function useBodyScrollLock(enabled: boolean): void {
     return unlock;
   }, [enabled]);
 }
+
+/**
+ * Returns the page scroll position the user perceives. While a modal is
+ * locking the body via `position: fixed`, `window.scrollY` reads as 0,
+ * so callers (e.g. route navigation) need the saved value instead.
+ */
+export function getEffectiveScrollY(): number {
+  if (lockCount > 0) return savedScrollY;
+  return window.scrollY;
+}

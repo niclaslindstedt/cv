@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { getEffectiveScrollY } from "./useBodyScrollLock";
+
 export type Route = "home" | "timeline";
 
 const ROUTE_CHANGE_EVENT = "cv:routechange";
@@ -27,7 +29,7 @@ export function navigate(path: string): void {
     window.location.hash === target.hash;
   if (same) return;
   window.history.replaceState(
-    { ...(window.history.state ?? {}), scrollY: window.scrollY },
+    { ...(window.history.state ?? {}), scrollY: getEffectiveScrollY() },
     "",
   );
   window.history.pushState({}, "", path);
