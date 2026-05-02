@@ -14,7 +14,7 @@
     "startDate": "2024-04",
     "endDate": null,
     "stack": [
-      "TypeScript",
+      { "name": "TypeScript", "unused": true },
       { "name": "React", "unused": true },
       "C#/.NET",
       "Microservices",
