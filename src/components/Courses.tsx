@@ -11,21 +11,6 @@ type Props = {
   onCourseClick: (course: Course) => void;
 };
 
-function parseCredits(credits: string): number | null {
-  const parsed = parseFloat(credits.replace(",", "."));
-  return Number.isFinite(parsed) ? parsed : null;
-}
-
-function sumModuleCredits(modules: CourseModule[]): number | null {
-  let total = 0;
-  for (const mod of modules) {
-    const value = parseCredits(mod.credits);
-    if (value === null) return null;
-    total += value;
-  }
-  return Math.round(total * 10) / 10;
-}
-
 function latestModuleDate(modules: CourseModule[]): string | undefined {
   const dates = modules.map((m) => m.completedDate).filter(Boolean) as string[];
   if (dates.length === 0) return undefined;
@@ -45,18 +30,7 @@ export function Courses({
       <ul className="education-list">
         {courses.map((item) => {
           const modules = item.modules ?? [];
-          const completedModules = modules.filter((m) => m.completedDate);
           const endDate = item.completedDate ?? latestModuleDate(modules);
-          const fullCredits = parseCredits(item.credits);
-          const earned =
-            modules.length > 0 ? sumModuleCredits(completedModules) : null;
-          const incomplete = item.completed === false;
-          const partial =
-            incomplete ||
-            (!item.completedDate &&
-              earned !== null &&
-              fullCredits !== null &&
-              earned < fullCredits);
           const hasModules = modules.length > 0;
           const courseName = t(item.name);
           const headBody = (
@@ -73,27 +47,7 @@ export function Courses({
               </div>
               <p>
                 {t(item.institution)} ·{" "}
-                <span className="education-credits">{item.code}</span> ·{" "}
                 <span className="education-credits">{item.credits}</span>
-                {partial && earned !== null && (
-                  <>
-                    {" · "}
-                    <span className="education-credits">
-                      {ui.programModal.courseProgress(
-                        `${earned}`,
-                        item.credits,
-                      )}
-                    </span>
-                  </>
-                )}
-                {item.engagement !== undefined && (
-                  <>
-                    {" · "}
-                    <span className="education-credits">
-                      {Math.round(item.engagement * 100)}%
-                    </span>
-                  </>
-                )}
                 {item.remote && (
                   <>
                     {" · "}
