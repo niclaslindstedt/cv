@@ -125,13 +125,6 @@ export function CourseModulesModal({
           </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{name}</span>
-            <span className="skill-modal-years">
-              {course.startDate && endDate
-                ? formatRange(course.startDate, endDate, lang)
-                : endDate
-                  ? formatMonth(endDate, lang)
-                  : ""}
-            </span>
           </h2>
           <button
             type="button"
@@ -143,6 +136,19 @@ export function CourseModulesModal({
           </button>
         </header>
         <div className="skill-modal-body" tabIndex={0}>
+          {(course.startDate || endDate) && (
+            <div className="timeline-meta course-modal-meta">
+              <span>
+                {course.startDate && endDate
+                  ? formatRange(course.startDate, endDate, lang)
+                  : endDate
+                    ? formatMonth(endDate, lang)
+                    : course.startDate
+                      ? formatMonth(course.startDate, lang)
+                      : ""}
+              </span>
+            </div>
+          )}
           <section className="program-modal-summary">
             <p className="skill-modal-description">
               {t(course.institution)} ·{" "}
@@ -170,19 +176,19 @@ export function CourseModulesModal({
                 </span>
               )}
             </div>
-            {timelineId && (
-              <div className="skill-modal-actions">
-                <ModalLink
-                  onClick={() => {
-                    onClose();
-                    navigate(`/timeline#${timelineId}`);
-                  }}
-                >
-                  {ui.timeline.seeInTimeline}
-                </ModalLink>
-              </div>
-            )}
           </section>
+          {timelineId && (
+            <div className="skill-modal-actions">
+              <ModalLink
+                onClick={() => {
+                  onClose();
+                  navigate(`/timeline#${timelineId}`);
+                }}
+              >
+                {ui.timeline.seeInTimeline}
+              </ModalLink>
+            </div>
+          )}
           {modules.length > 0 && (
             <section className="company-modal-stack course-modules-section">
               <div className="course-modules-head">

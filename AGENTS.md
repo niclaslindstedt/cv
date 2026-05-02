@@ -142,7 +142,10 @@ imports from `components/`. Keep it that way.
 - **PR conventions**: PR titles must follow Conventional Commits format
   because the title becomes the squash-merge commit on `main`. Individual
   in-branch commits are not changelog-relevant. Squash-merge is the only
-  permitted merge strategy.
+  permitted merge strategy. **Always rebase the branch on the latest
+  `main` before opening a pull request** so the PR diff is clean and
+  CI runs against the current trunk:
+  `git fetch origin main && git rebase origin/main`.
 - **Visual changes** (anything affecting CSS, layout, color, type,
   spacing, motion, or component shape) must conform to
   [`docs/DESIGN.md`](docs/DESIGN.md). Read the relevant section
