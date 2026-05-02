@@ -8,6 +8,7 @@ import { formatRange } from "../utils/date";
 import { useLang, type LanguageContextValue } from "../utils/i18n";
 import { stackEntries } from "../utils/stack";
 import { CategoryGlyph } from "./CategoryGlyph";
+import type { ExperienceModalData } from "./ExperienceModal";
 import { NoteIcon } from "./NoteIcon";
 import { Section } from "./Section";
 
@@ -17,6 +18,7 @@ type Props = {
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
+  onCardClick: (data: ExperienceModalData) => void;
 };
 
 function PromotionArrow({ ui }: { ui: LanguageContextValue["ui"] }) {
@@ -85,16 +87,21 @@ function TerminatedIcon({ ui }: { ui: LanguageContextValue["ui"] }) {
 function CompanyButton({
   company,
   onClick,
+  stopPropagation,
 }: {
   company: Company;
   onClick: (company: Company) => void;
+  stopPropagation?: boolean;
 }) {
   const { ui } = useLang();
   return (
     <button
       type="button"
       className="company company-btn"
-      onClick={() => onClick(company)}
+      onClick={(e) => {
+        if (stopPropagation) e.stopPropagation();
+        onClick(company);
+      }}
     >
       {company.name}
       {company.terminated && <TerminatedIcon ui={ui} />}
@@ -148,6 +155,7 @@ export function Experience({
   companies,
   onSkillClick,
   onCompanyClick,
+  onCardClick,
 }: Props) {
   return (
     <Section id="experience" title={title} category="experience">
@@ -159,6 +167,7 @@ export function Experience({
             companies={companies}
             onSkillClick={onSkillClick}
             onCompanyClick={onCompanyClick}
+            onCardClick={onCardClick}
           />
         ))}
       </ol>
@@ -171,11 +180,13 @@ function ExperienceItemView({
   companies,
   onSkillClick,
   onCompanyClick,
+  onCardClick,
 }: {
   item: ExperienceItem;
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
+  onCardClick: (data: ExperienceModalData) => void;
 }) {
   const { lang, t, ui } = useLang();
   const company = resolveCompany(companies, item.companyId);
@@ -186,8 +197,10 @@ function ExperienceItemView({
   const hasPromotion = sortedRoles.length > 1;
   const classes = ["timeline-item"];
   if (isActive) classes.push("is-active");
+  const open = () => onCardClick({ kind: "experience", item, company });
+  const titleText = sortedRoles.map((r) => t(r.title)).join(" → ");
   return (
-    <li className={classes.join(" ")}>
+    <li className={classes.join(" ")} onClick={open}>
       <span className="card-glyph-bar" aria-hidden="true">
         <CategoryGlyph category="experience" />
       </span>
@@ -195,9 +208,23 @@ function ExperienceItemView({
       <div className="timeline-body">
         <h3 className="timeline-title">
           {hasPromotion && <PromotionArrow ui={ui} />}
-          <span className="role">{t(newestRole.title)}</span>
+          <button
+            type="button"
+            className="timeline-role-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              open();
+            }}
+            aria-label={ui.experienceModal.detailAria(titleText)}
+          >
+            <span className="role">{t(newestRole.title)}</span>
+          </button>
           {" · "}
-          <CompanyButton company={company} onClick={onCompanyClick} />
+          <CompanyButton
+            company={company}
+            onClick={(c) => onCompanyClick(c)}
+            stopPropagation
+          />
         </h3>
         <div className="timeline-meta">
           <span>{formatRange(item.startDate, item.endDate, lang)}</span>
@@ -218,25 +245,13 @@ function ExperienceItemView({
                       ? "entry-stack-btn entry-stack-btn-unused"
                       : "entry-stack-btn"
                   }
-                  onClick={() => onSkillClick(tech.name)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSkillClick(tech.name);
+                  }}
                   title={tech.unused ? ui.skills.unusedStack : undefined}
                 >
                   {tech.name}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-        {item.skills && item.skills.length > 0 && (
-          <ul className="entry-skills">
-            {item.skills.map((skill) => (
-              <li key={skill}>
-                <button
-                  type="button"
-                  className="entry-skill-btn"
-                  onClick={() => onSkillClick(skill)}
-                >
-                  {skill}
                 </button>
               </li>
             ))}
@@ -249,15 +264,17 @@ function ExperienceItemView({
           </p>
         )}
         {item.assignments && item.assignments.length > 0 && (
-          <details className="assignments">
+          <details className="assignments" onClick={(e) => e.stopPropagation()}>
             <summary>
               {ui.experience.assignmentsSummary(item.assignments.length)}
             </summary>
             <AssignmentList
               assignments={item.assignments}
+              parentCompany={company}
               companies={companies}
               onSkillClick={onSkillClick}
               onCompanyClick={onCompanyClick}
+              onCardClick={onCardClick}
             />
           </details>
         )}
@@ -269,14 +286,18 @@ function ExperienceItemView({
 
 function AssignmentList({
   assignments,
+  parentCompany,
   companies,
   onSkillClick,
   onCompanyClick,
+  onCardClick,
 }: {
   assignments: Assignment[];
+  parentCompany: Company;
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
+  onCardClick: (data: ExperienceModalData) => void;
 }) {
   const sorted = [...assignments].sort((a, b) =>
     b.startDate.localeCompare(a.startDate),
@@ -287,9 +308,11 @@ function AssignmentList({
         <AssignmentItemView
           key={`${a.clientId}-${a.startDate}`}
           assignment={a}
+          parentCompany={parentCompany}
           companies={companies}
           onSkillClick={onSkillClick}
           onCompanyClick={onCompanyClick}
+          onCardClick={onCardClick}
         />
       ))}
     </ol>
@@ -298,14 +321,18 @@ function AssignmentList({
 
 function AssignmentItemView({
   assignment: a,
+  parentCompany,
   companies,
   onSkillClick,
   onCompanyClick,
+  onCardClick,
 }: {
   assignment: Assignment;
+  parentCompany: Company;
   companies: Map<string, Company>;
   onSkillClick: (skill: string) => void;
   onCompanyClick: (company: Company) => void;
+  onCardClick: (data: ExperienceModalData) => void;
 }) {
   const { lang, t, ui } = useLang();
   const client = resolveCompany(companies, a.clientId);
@@ -316,15 +343,38 @@ function AssignmentItemView({
   const hasPromotion = sortedRoles.length > 1;
   const classes = ["assignment-item"];
   if (isActive) classes.push("is-active");
+  const open = () =>
+    onCardClick({ kind: "assignment", item: a, client, via: parentCompany });
+  const titleText = sortedRoles.map((r) => t(r.title)).join(" → ");
   return (
-    <li className={classes.join(" ")}>
+    <li
+      className={classes.join(" ")}
+      onClick={(e) => {
+        e.stopPropagation();
+        open();
+      }}
+    >
       {isActive && <span className="active-badge">{ui.present}</span>}
       <div className="assignment-body">
         <h4 className="assignment-title">
           {hasPromotion && <PromotionArrow ui={ui} />}
-          <span className="role">{t(newestRole.title)}</span>
+          <button
+            type="button"
+            className="timeline-role-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              open();
+            }}
+            aria-label={ui.experienceModal.assignmentAria(titleText)}
+          >
+            <span className="role">{t(newestRole.title)}</span>
+          </button>
           {" · "}
-          <CompanyButton company={client} onClick={onCompanyClick} />
+          <CompanyButton
+            company={client}
+            onClick={(c) => onCompanyClick(c)}
+            stopPropagation
+          />
         </h4>
         <div className="assignment-meta">
           <span>{formatRange(a.startDate, a.endDate, lang)}</span>
@@ -342,25 +392,13 @@ function AssignmentItemView({
                       ? "entry-stack-btn entry-stack-btn-unused"
                       : "entry-stack-btn"
                   }
-                  onClick={() => onSkillClick(tech.name)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSkillClick(tech.name);
+                  }}
                   title={tech.unused ? ui.skills.unusedStack : undefined}
                 >
                   {tech.name}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-        {a.skills && a.skills.length > 0 && (
-          <ul className="entry-skills">
-            {a.skills.map((skill) => (
-              <li key={skill}>
-                <button
-                  type="button"
-                  className="entry-skill-btn"
-                  onClick={() => onSkillClick(skill)}
-                >
-                  {skill}
                 </button>
               </li>
             ))}
