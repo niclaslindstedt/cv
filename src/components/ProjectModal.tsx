@@ -2,10 +2,12 @@ import { useEffect, useRef } from "react";
 
 import projectStatsData from "../data/project-stats.json";
 import type { Project, ProjectStatsFile } from "../data/cv.types";
+import { projectTimelineId } from "../data/timeline-ids";
 import { categoryStyle } from "../utils/categoryStyle";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
 import { aggregateProjectStats } from "../utils/projectStats";
+import { navigate } from "../utils/route";
 import { stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
@@ -73,6 +75,7 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
   );
   const hasCommits = !!stats && stats.totalCommits > 0;
   const stack = stackEntries(project.stack);
+  const timelineId = projectTimelineId(project);
 
   return (
     <div
@@ -142,8 +145,23 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                 )}
               </dl>
             )}
-            {(project.homepage || project.openSource || hasRegistryLinks) && (
+            {(project.homepage ||
+              project.openSource ||
+              hasRegistryLinks ||
+              timelineId) && (
               <div className="project-modal-actions">
+                {timelineId && (
+                  <button
+                    type="button"
+                    className="skill-modal-link"
+                    onClick={() => {
+                      onClose();
+                      navigate(`/timeline#${timelineId}`);
+                    }}
+                  >
+                    {ui.timeline.seeInTimeline}
+                  </button>
+                )}
                 {project.homepage && (
                   <a
                     className="skill-modal-link"

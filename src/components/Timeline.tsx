@@ -169,6 +169,7 @@ export function Timeline() {
   const { lang, t, ui } = useLang();
   const [scale, setScale] = useState(1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const labelsInnerRef = useRef<HTMLDivElement>(null);
@@ -419,6 +420,7 @@ export function Timeline() {
     (bar: TimelineBar | null) => {
       if (!bar) return;
       setSelectedId(bar.id);
+      setHighlightedId(null);
       scrollToBar(bar);
     },
     [scrollToBar],
@@ -429,6 +431,57 @@ export function Timeline() {
     const viewport = viewportRef.current;
     if (!viewport) return;
     didInitialScrollRef.current = true;
+
+    const scrollBehavior: ScrollBehavior = prefersReducedMotion()
+      ? "auto"
+      : "smooth";
+
+    const targetId =
+      typeof window !== "undefined" && window.location.hash
+        ? decodeURIComponent(window.location.hash.replace(/^#/, ""))
+        : "";
+
+    let targetBar: TimelineBar | null = null;
+    let targetTrackIdx = -1;
+    if (targetId) {
+      for (let t = 0; t < tracks.length; t++) {
+        const found = tracks[t].bars.find((b) => b.id === targetId);
+        if (found) {
+          targetBar = found;
+          targetTrackIdx = t;
+          break;
+        }
+      }
+    }
+
+    if (targetBar && targetTrackIdx >= 0) {
+      const initialScale = 1;
+      setScale(initialScale);
+      scaleRef.current = initialScale;
+      setHighlightedId(targetBar.id);
+
+      const newMonthPx = BASE_MONTH_PX * initialScale;
+      const clientWidth = viewport.clientWidth;
+      const startMonth = targetBar.segments[0].startMonth;
+      const lastSeg = targetBar.segments[targetBar.segments.length - 1];
+      const endMonth = targetBar.isOngoing
+        ? Math.max(lastSeg.endMonth, nowMonthIndex() + 1)
+        : lastSeg.endMonth;
+      const barLeft = (startMonth - minMonth) * newMonthPx;
+      const barWidth = Math.max(1, (endMonth - startMonth) * newMonthPx);
+      const left = Math.max(0, barLeft + barWidth / 2 - clientWidth / 2);
+
+      const lane = targetBar.segments[0].activeLane;
+      const barTop =
+        AXIS_SIZE + trackTop[targetTrackIdx] + TRACK_HEADER + lane * LANE_SIZE;
+      const top = Math.max(0, barTop - AXIS_SIZE - 16);
+
+      requestAnimationFrame(() => {
+        const v = viewportRef.current;
+        if (v) v.scrollTo({ left, top, behavior: scrollBehavior });
+      });
+      return;
+    }
 
     let latestExpStart: number | null = null;
     for (const track of tracks) {
@@ -460,14 +513,11 @@ export function Timeline() {
     const targetX = (nowIdx - minMonth) * newMonthPx;
     const left = Math.max(0, targetX - clientWidth + 24);
 
-    const scrollBehavior: ScrollBehavior = prefersReducedMotion()
-      ? "auto"
-      : "smooth";
     requestAnimationFrame(() => {
       const v = viewportRef.current;
       if (v) v.scrollTo({ left, top: 0, behavior: scrollBehavior });
     });
-  }, [minMonth, tracks]);
+  }, [minMonth, tracks, trackTop]);
 
   useEffect(() => {
     const el = viewportRef.current;
@@ -499,6 +549,7 @@ export function Timeline() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (selectedId) setSelectedId(null);
+        else if (highlightedId) setHighlightedId(null);
         else window.history.back();
         return;
       }
@@ -513,7 +564,7 @@ export function Timeline() {
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [selectedId, prevBar, nextBar, navigateTo]);
+  }, [selectedId, highlightedId, prevBar, nextBar, navigateTo]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -633,6 +684,7 @@ export function Timeline() {
       `timeline-vis-${bar.kind}`,
       bar.isOngoing ? "is-ongoing" : "",
       selectedId === bar.id ? "is-selected" : "",
+      highlightedId === bar.id ? "is-highlighted" : "",
     ]
       .filter(Boolean)
       .join(" ");
@@ -673,7 +725,10 @@ export function Timeline() {
           className={classes}
           style={style}
           data-bar-id={bar.id}
-          onClick={() => setSelectedId(bar.id)}
+          onClick={() => {
+            setSelectedId(bar.id);
+            setHighlightedId(null);
+          }}
           title={ghTitle}
           aria-label={ghTitle}
         >
@@ -883,6 +938,7 @@ export function Timeline() {
             const target = e.target as HTMLElement;
             if (!target.closest(".timeline-vis-item")) {
               setSelectedId(null);
+              setHighlightedId(null);
             }
           }}
         >
