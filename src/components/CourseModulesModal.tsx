@@ -25,6 +25,18 @@ function sumCredits(modules: CourseModule[], reference: string): string | null {
   return `${rounded}${unit}`;
 }
 
+function parseCreditValue(s: string): number | null {
+  const numMatch = s.replace(",", ".").match(/[\d.]+/);
+  if (!numMatch) return null;
+  const value = parseFloat(numMatch[0]);
+  return Number.isNaN(value) ? null : value;
+}
+
+function creditUnit(s: string): string {
+  const unitMatch = s.match(/[a-zA-Z]+/);
+  return unitMatch ? unitMatch[0] : "";
+}
+
 function latestModuleDate(modules: CourseModule[]): string | undefined {
   const dates = modules.map((m) => m.completedDate).filter(Boolean) as string[];
   if (dates.length === 0) return undefined;
@@ -66,6 +78,23 @@ export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
   const partial =
     incomplete ||
     (!course.completedDate && modules.some((m) => !m.completedDate));
+  const earnedValue = completedModules.reduce((sum, m) => {
+    const v = parseCreditValue(m.credits);
+    return v === null ? sum : sum + v;
+  }, 0);
+  const totalValue = parseCreditValue(course.credits);
+  const unit = creditUnit(course.credits);
+  const showProgress =
+    partial &&
+    earned !== null &&
+    totalValue !== null &&
+    totalValue > 0 &&
+    earnedValue > 0;
+  const progressPct = showProgress
+    ? Math.min(100, (earnedValue / (totalValue as number)) * 100)
+    : 0;
+  const progressEarnedLabel = `${Math.round(earnedValue * 10) / 10}`;
+  const progressTotalLabel = `${Math.round((totalValue ?? 0) * 10) / 10}`;
 
   return (
     <div
@@ -128,11 +157,6 @@ export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
                   {ui.programModal.incomplete}
                 </span>
               )}
-              {partial && earned && (
-                <span className="program-course-progress">
-                  {ui.programModal.courseProgress(earned, course.credits)}
-                </span>
-              )}
             </div>
             {timelineId && (
               <div className="skill-modal-actions">
@@ -151,9 +175,45 @@ export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
           </section>
           {modules.length > 0 && (
             <section className="company-modal-stack course-modules-section">
-              <h3 className="company-modal-stack-title">
-                {ui.courses.modulesCount(modules.length)}
-              </h3>
+              <div className="course-modules-head">
+                <h3 className="company-modal-stack-title">
+                  {ui.courses.modulesCount(modules.length)}
+                </h3>
+                {showProgress && (
+                  <span className="course-modules-progress-value">
+                    <span className="course-modules-progress-earned">
+                      {progressEarnedLabel}
+                    </span>
+                    <span className="course-modules-progress-sep">/</span>
+                    <span className="course-modules-progress-total">
+                      {progressTotalLabel}
+                    </span>
+                    {unit && (
+                      <span className="course-modules-progress-unit">
+                        {unit}
+                      </span>
+                    )}
+                  </span>
+                )}
+              </div>
+              {showProgress && (
+                <div
+                  className="course-modules-progress-bar"
+                  role="progressbar"
+                  aria-valuemin={0}
+                  aria-valuemax={totalValue ?? 0}
+                  aria-valuenow={earnedValue}
+                  aria-label={ui.programModal.courseProgress(
+                    earned as string,
+                    course.credits,
+                  )}
+                >
+                  <span
+                    className="course-modules-progress-fill"
+                    style={{ width: `${progressPct}%` }}
+                  />
+                </div>
+              )}
               <ul className="program-module-list course-modal-modules">
                 {modules.map((mod, index) => (
                   <li
