@@ -131,38 +131,38 @@ export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
                 </span>
               )}
             </div>
-            {modules.length > 0 && (
-              <p className="program-modal-count">
-                {ui.courses.modulesCount(modules.length)}
-              </p>
-            )}
           </section>
           {modules.length > 0 && (
-            <ul className="program-module-list course-modal-modules">
-              {modules.map((mod, index) => (
-                <li
-                  key={mod.code ?? `${course.code}-${index}`}
-                  className={
-                    mod.completedDate
-                      ? "program-module-item"
-                      : "program-module-item program-module-item--pending"
-                  }
-                >
-                  <span className="program-module-name">{t(mod.name)}</span>
-                  <span className="program-module-meta">
-                    {mod.code && (
-                      <span className="program-module-code">{mod.code}</span>
-                    )}
-                    <span className="education-credits">{mod.credits}</span>
-                    <span className="program-module-date">
-                      {mod.completedDate
-                        ? formatMonth(mod.completedDate, lang)
-                        : ui.programModal.moduleNotCompleted}
+            <section className="company-modal-stack course-modules-section">
+              <h3 className="company-modal-stack-title">
+                {ui.courses.modulesCount(modules.length)}
+              </h3>
+              <ul className="program-module-list course-modal-modules">
+                {modules.map((mod, index) => (
+                  <li
+                    key={mod.code ?? `${course.code}-${index}`}
+                    className={
+                      mod.completedDate
+                        ? "program-module-item"
+                        : "program-module-item program-module-item--pending"
+                    }
+                  >
+                    <span className="program-module-name">{t(mod.name)}</span>
+                    <span className="program-module-meta">
+                      {mod.code && (
+                        <span className="program-module-code">{mod.code}</span>
+                      )}
+                      <span className="education-credits">{mod.credits}</span>
+                      <span className="program-module-date">
+                        {mod.completedDate
+                          ? formatMonth(mod.completedDate, lang)
+                          : ui.programModal.moduleNotCompleted}
+                      </span>
                     </span>
-                  </span>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            </section>
           )}
           {course.skills && course.skills.length > 0 && (
             <section className="skill-modal-group course-modal-skills">

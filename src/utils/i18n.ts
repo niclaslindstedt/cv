@@ -294,7 +294,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       aboutCompany: (company) => `About ${company}`,
       aboutClient: (company) => `About ${company}`,
       visitCompanyWebsite: (company) => `Visit ${company} ↗`,
-      skills: "Skills",
+      skills: "Skills used",
     },
     summaryModal: {
       detailAria: (name) => `${name} — full summary`,
@@ -312,7 +312,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       active: "Active",
       commits: "Commits",
       stack: "Stack",
-      skills: "Skills",
+      skills: "Skills used",
     },
     programModal: {
       coursesHeading: "Courses",
@@ -326,7 +326,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       moduleNotCompleted: "Not completed",
       courseProgress: (earned, total) => `${earned} of ${total} earned`,
       incomplete: "Incomplete",
-      skills: "Skills",
+      skills: "Skills used",
     },
     education: {
       viewCoursesAria: (program) => `View courses for ${program}`,
@@ -498,7 +498,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       aboutCompany: (company) => `Om ${company}`,
       aboutClient: (company) => `Om ${company}`,
       visitCompanyWebsite: (company) => `Besök ${company} ↗`,
-      skills: "Kompetenser",
+      skills: "Använda kompetenser",
     },
     summaryModal: {
       detailAria: (name) => `${name} — fullständig sammanfattning`,
@@ -516,7 +516,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       active: "Aktiv",
       commits: "Commits",
       stack: "Stack",
-      skills: "Kompetenser",
+      skills: "Använda kompetenser",
     },
     programModal: {
       coursesHeading: "Kurser",
@@ -530,7 +530,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       moduleNotCompleted: "Ej avklarat",
       courseProgress: (earned, total) => `${earned} av ${total} avklarat`,
       incomplete: "Ej avklarad",
-      skills: "Kompetenser",
+      skills: "Använda kompetenser",
     },
     education: {
       viewCoursesAria: (program) => `Visa kurser för ${program}`,

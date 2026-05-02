@@ -152,11 +152,10 @@ export function ExperienceModal({
   const sortedRoles = sortRolesAsc(item.roles);
   const newestRole = sortedRoles[sortedRoles.length - 1];
   const hasPromotion = sortedRoles.length > 1;
-  const isActive = item.endDate === null;
   const stack = stackEntries(
     item.stack ??
       (data.kind === "experience" ? data.company.stack : data.client.stack),
-  );
+  ).filter((tech) => !tech.unused);
   const skills = item.skills ?? [];
   const titleText = sortedRoles.map((r) => t(r.title)).join(" → ");
 
@@ -186,9 +185,6 @@ export function ExperienceModal({
           <h2 className="skill-modal-title experience-modal-title">
             <span className="experience-modal-role-line">
               <span className="role">{t(newestRole.title)}</span>
-              {isActive && (
-                <span className="skill-modal-years">{ui.present}</span>
-              )}
             </span>
             <span className="experience-modal-subject">
               <button
@@ -229,16 +225,6 @@ export function ExperienceModal({
             <p className="skill-modal-description">
               {renderInlineCode(t(subject.description))}
             </p>
-            {subject.url && (
-              <a
-                className="skill-modal-link"
-                href={subject.url}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                {ui.experienceModal.visitCompanyWebsite(subject.name)}
-              </a>
-            )}
             {stack.length > 0 && (
               <div className="company-modal-stack">
                 <h3 className="company-modal-stack-title">
@@ -249,13 +235,8 @@ export function ExperienceModal({
                     <li key={tech.name}>
                       <button
                         type="button"
-                        className={
-                          tech.unused
-                            ? "entry-stack-btn entry-stack-btn-unused"
-                            : "entry-stack-btn"
-                        }
+                        className="entry-stack-btn"
                         onClick={() => onSkillClick(tech.name)}
-                        title={tech.unused ? ui.skills.unusedStack : undefined}
                       >
                         {tech.name}
                       </button>

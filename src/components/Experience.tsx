@@ -190,7 +190,9 @@ function ExperienceItemView({
 }) {
   const { lang, t, ui } = useLang();
   const company = resolveCompany(companies, item.companyId);
-  const stack = stackEntries(item.stack ?? company.stack);
+  const stack = stackEntries(item.stack ?? company.stack).filter(
+    (tech) => !tech.unused,
+  );
   const isActive = item.endDate === null;
   const sortedRoles = sortRolesAsc(item.roles);
   const newestRole = sortedRoles[sortedRoles.length - 1];
@@ -240,16 +242,11 @@ function ExperienceItemView({
               <li key={tech.name}>
                 <button
                   type="button"
-                  className={
-                    tech.unused
-                      ? "entry-stack-btn entry-stack-btn-unused"
-                      : "entry-stack-btn"
-                  }
+                  className="entry-stack-btn"
                   onClick={(e) => {
                     e.stopPropagation();
                     onSkillClick(tech.name);
                   }}
-                  title={tech.unused ? ui.skills.unusedStack : undefined}
                 >
                   {tech.name}
                 </button>
@@ -336,7 +333,7 @@ function AssignmentItemView({
 }) {
   const { lang, t, ui } = useLang();
   const client = resolveCompany(companies, a.clientId);
-  const stack = stackEntries(a.stack);
+  const stack = stackEntries(a.stack).filter((tech) => !tech.unused);
   const isActive = a.endDate === null;
   const sortedRoles = sortRolesAsc(a.roles);
   const newestRole = sortedRoles[sortedRoles.length - 1];
@@ -387,16 +384,11 @@ function AssignmentItemView({
               <li key={tech.name}>
                 <button
                   type="button"
-                  className={
-                    tech.unused
-                      ? "entry-stack-btn entry-stack-btn-unused"
-                      : "entry-stack-btn"
-                  }
+                  className="entry-stack-btn"
                   onClick={(e) => {
                     e.stopPropagation();
                     onSkillClick(tech.name);
                   }}
-                  title={tech.unused ? ui.skills.unusedStack : undefined}
                 >
                   {tech.name}
                 </button>

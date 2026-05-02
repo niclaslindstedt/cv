@@ -480,14 +480,6 @@
   color: var(--accent);
 }
 
-.program-modal-count {
-  margin: 0;
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-}
-
 .program-modal-notes {
   display: flex;
   align-items: flex-start;
