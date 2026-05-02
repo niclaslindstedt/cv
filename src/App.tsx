@@ -260,14 +260,12 @@ export function App() {
             education={cv.education}
             onSkillClick={setSelectedSkill}
             onProgramClick={setSelectedProgram}
-            onEctsClick={setEctsContext}
           />
           <Courses
             title={t(cv.sections.courses)}
             courses={cv.courses}
             onSkillClick={setSelectedSkill}
             onCourseClick={setSelectedCourse}
-            onEctsClick={setEctsContext}
           />
           <Skills
             title={t(cv.sections.skills)}
