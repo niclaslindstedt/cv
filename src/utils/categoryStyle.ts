@@ -6,18 +6,36 @@ import type { CSSProperties } from "react";
 // same in every surface that opts into a category.
 export type ModalCategory = "experience" | "project" | "education" | "course";
 
-const CATEGORY_RGB: Record<ModalCategory, string> = {
+// Section-title-only categories — Focus, Skills, Languages don't carry
+// card-glyph bars or category-tinted modal headers, but their section
+// eyebrow gets a coloured glyph so the page's section list reads as a
+// labelled index rather than a stack of grey headings. Kept distinct
+// from `ModalCategory` so the §10.5 four-category language is not
+// diluted on card surfaces.
+export type SectionTitleCategory =
+  | ModalCategory
+  | "focus"
+  | "skills"
+  | "languages";
+
+const CATEGORY_RGB: Record<SectionTitleCategory, string> = {
   experience: "var(--tl-blue)",
   project: "var(--tl-violet)",
   education: "var(--tl-mint)",
   course: "var(--tl-amber)",
+  focus: "var(--accent-rgb)",
+  skills: "var(--tl-pink)",
+  languages: "var(--tl-cyan)",
 };
 
-const CATEGORY_FG: Record<ModalCategory, string> = {
+const CATEGORY_FG: Record<SectionTitleCategory, string> = {
   experience: "var(--tl-blue-fg)",
   project: "var(--tl-violet-fg)",
   education: "var(--tl-mint-fg)",
   course: "var(--tl-amber-fg)",
+  focus: "var(--accent-rgb)",
+  skills: "var(--tl-pink-fg)",
+  languages: "var(--tl-cyan-fg)",
 };
 
 // Inline-style helper that exposes the chosen category as `--cat-rgb` /
@@ -25,7 +43,7 @@ const CATEGORY_FG: Record<ModalCategory, string> = {
 // vars via `rgba(var(--cat-rgb), a)` (tints, borders) and `rgb(var(--cat-fg))`
 // (glyph stroke, accent text). Returning a CSSProperties cast keeps the
 // custom-property keys past the React typings.
-export function categoryStyle(category: ModalCategory): CSSProperties {
+export function categoryStyle(category: SectionTitleCategory): CSSProperties {
   return {
     "--cat-rgb": CATEGORY_RGB[category],
     "--cat-fg": CATEGORY_FG[category],

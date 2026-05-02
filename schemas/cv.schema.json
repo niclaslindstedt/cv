@@ -578,10 +578,29 @@
     "spokenLanguage": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "level"],
+      "required": ["name", "code", "level", "proficiency"],
       "properties": {
         "name": { "$ref": "#/$defs/localizedString" },
-        "level": { "$ref": "#/$defs/localizedString" }
+        "code": {
+          "type": "string",
+          "description": "ISO 639-1 language code used to pick the flag glyph in the language list and modal.",
+          "enum": ["en", "sv"]
+        },
+        "level": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Free-text human-readable label rendered in the list (e.g. \"Native\")."
+        },
+        "proficiency": {
+          "type": "string",
+          "description": "Discrete proficiency rung used to highlight a row of the language modal's power bar.",
+          "enum": [
+            "basic",
+            "conversational",
+            "working",
+            "professional",
+            "native"
+          ]
+        }
       }
     },
     "cssLength": {

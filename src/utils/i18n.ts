@@ -153,6 +153,15 @@ type UiStrings = {
     expand: (title: string) => string;
     collapse: (title: string) => string;
   };
+  languages: {
+    detailAria: (language: string) => string;
+    proficiencyAria: (step: number, total: number) => string;
+    scaleHeading: string;
+    levels: Record<
+      "basic" | "conversational" | "working" | "professional" | "native",
+      { label: string; description: string }
+    >;
+  };
   search: {
     open: string;
     shortcutHint: string;
@@ -347,6 +356,38 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     section: {
       expand: (title) => `Expand ${title} section`,
       collapse: (title) => `Collapse ${title} section`,
+    },
+    languages: {
+      detailAria: (language) => `${language} proficiency details`,
+      proficiencyAria: (step, total) => `Level ${step} of ${total}`,
+      scaleHeading: "Proficiency scale",
+      levels: {
+        basic: {
+          label: "Basic",
+          description:
+            "Can hold simple, prepared exchanges on familiar everyday topics.",
+        },
+        conversational: {
+          label: "Conversational",
+          description:
+            "Can communicate comfortably in most everyday situations, given a friendly listener.",
+        },
+        working: {
+          label: "Working",
+          description:
+            "Handles routine workplace conversation, meetings, and reading without serious effort.",
+        },
+        professional: {
+          label: "Professional",
+          description:
+            "Fluent in business and technical contexts; comfortable presenting, writing, and negotiating with nuance.",
+        },
+        native: {
+          label: "Native",
+          description:
+            "Native-tier mastery — idiomatic, culturally fluent, and effortless across every register.",
+        },
+      },
     },
     search: {
       open: "Search",
@@ -551,6 +592,37 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     section: {
       expand: (title) => `Expandera ${title.toLowerCase()}`,
       collapse: (title) => `Fäll ihop ${title.toLowerCase()}`,
+    },
+    languages: {
+      detailAria: (language) => `Språknivå för ${language}`,
+      proficiencyAria: (step, total) => `Nivå ${step} av ${total}`,
+      scaleHeading: "Färdighetsskala",
+      levels: {
+        basic: {
+          label: "Grundläggande",
+          description: "Klarar enkla, förberedda utbyten i vardagliga ämnen.",
+        },
+        conversational: {
+          label: "Konversation",
+          description:
+            "Klarar de flesta vardagssituationer bekvämt, med en välvillig samtalspartner.",
+        },
+        working: {
+          label: "Arbetsförmåga",
+          description:
+            "Hanterar arbetsplatsens möten, samtal och läsning utan större ansträngning.",
+        },
+        professional: {
+          label: "Professionell",
+          description:
+            "Flytande i affärs- och teknikkontexter; presenterar, skriver och förhandlar med nyans.",
+        },
+        native: {
+          label: "Modersmål",
+          description:
+            "Modersmålsnivå — idiomatisk, kulturellt orienterad och obesvärad i alla register.",
+        },
+      },
     },
     search: {
       open: "Sök",

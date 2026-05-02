@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 
-import { categoryStyle, type ModalCategory } from "../utils/categoryStyle";
+import {
+  categoryStyle,
+  type SectionTitleCategory,
+} from "../utils/categoryStyle";
 import { useLang } from "../utils/i18n";
 import { CategoryGlyph } from "./CategoryGlyph";
 
 type Props = {
   id: string;
   title: string;
-  category?: ModalCategory;
+  category?: SectionTitleCategory;
   collapsible?: boolean;
   defaultCollapsed?: boolean;
   children: ReactNode;

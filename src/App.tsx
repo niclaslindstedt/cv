@@ -11,6 +11,7 @@ import { FloatingControls } from "./components/FloatingControls";
 import { Focus } from "./components/Focus";
 import { FocusModal } from "./components/FocusModal";
 import { Hero } from "./components/Hero";
+import { LanguageModal } from "./components/LanguageModal";
 import { Languages } from "./components/Languages";
 import { PrintView } from "./components/PrintView";
 import { ProgramCoursesModal } from "./components/ProgramCoursesModal";
@@ -29,6 +30,7 @@ import type {
   FocusArea,
   Project,
   SkillDetail,
+  SpokenLanguage,
 } from "./data/cv.types";
 import {
   assignmentOpenerKey,
@@ -115,6 +117,8 @@ export function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedExperience, setSelectedExperience] =
     useState<ExperienceModalData | null>(null);
+  const [selectedLanguage, setSelectedLanguage] =
+    useState<SpokenLanguage | null>(null);
   const { theme, toggle: toggleTheme, setTheme } = useTheme();
   const { t, ui } = useLang();
   useGlassReflections();
@@ -173,7 +177,8 @@ export function App() {
     selectedCourse !== null ||
     selectedCompany !== null ||
     selectedProject !== null ||
-    selectedExperience !== null;
+    selectedExperience !== null ||
+    selectedLanguage !== null;
 
   useEffect(() => {
     const base = t(cv.meta.documentTitle);
@@ -269,6 +274,7 @@ export function App() {
           <Languages
             title={t(cv.sections.languages)}
             languages={cv.languages}
+            onLanguageClick={setSelectedLanguage}
           />
           <PrintView />
         </main>
@@ -369,6 +375,10 @@ export function App() {
           setSelectedExperience(null);
           setSelectedCompany(company);
         }}
+      />
+      <LanguageModal
+        language={selectedLanguage}
+        onClose={() => setSelectedLanguage(null)}
       />
     </>
   );

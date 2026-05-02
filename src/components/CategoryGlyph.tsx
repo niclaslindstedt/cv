@@ -1,7 +1,7 @@
-type Category = "experience" | "project" | "education" | "course";
+import type { SectionTitleCategory } from "../utils/categoryStyle";
 
 type Props = {
-  category: Category;
+  category: SectionTitleCategory;
   size?: number;
 };
 
@@ -27,7 +27,7 @@ export function CategoryGlyph({ category, size = 18 }: Props) {
   );
 }
 
-function renderPaths(category: Category) {
+function renderPaths(category: SectionTitleCategory) {
   switch (category) {
     case "experience":
       // Briefcase — handle on top, latch on the front.
@@ -62,6 +62,32 @@ function renderPaths(category: Category) {
         <>
           <path d="M3 5h6a3 3 0 0 1 3 3v11a2.5 2.5 0 0 0-2.5-2.5H3z" />
           <path d="M21 5h-6a3 3 0 0 0-3 3v11a2.5 2.5 0 0 1 2.5-2.5H21z" />
+        </>
+      );
+    case "focus":
+      // Bullseye / target — concentric rings with a filled centre dot.
+      return (
+        <>
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="5" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+        </>
+      );
+    case "skills":
+      // Award medal — disc on a ribbon.
+      return (
+        <>
+          <circle cx="12" cy="9" r="6" />
+          <path d="M9 14 L7 22 L12 19 L17 22 L15 14" />
+        </>
+      );
+    case "languages":
+      // Globe — circle plus longitude curves.
+      return (
+        <>
+          <circle cx="12" cy="12" r="9" />
+          <ellipse cx="12" cy="12" rx="4" ry="9" />
+          <path d="M3 12 H21" />
         </>
       );
   }

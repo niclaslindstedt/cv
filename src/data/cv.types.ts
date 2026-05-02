@@ -196,9 +196,20 @@ export type SkillGroup = {
   items: string[];
 };
 
+export type LanguageCode = "en" | "sv";
+
+export type LanguageProficiency =
+  | "basic"
+  | "conversational"
+  | "working"
+  | "professional"
+  | "native";
+
 export type SpokenLanguage = {
   name: LocalizedString;
+  code: LanguageCode;
   level: LocalizedString;
+  proficiency: LanguageProficiency;
 };
 
 export type PrintPage = {
