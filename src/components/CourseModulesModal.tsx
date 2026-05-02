@@ -10,6 +10,7 @@ import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
 import { CategoryGlyph } from "./CategoryGlyph";
+import { ModalLink } from "./ModalLink";
 
 function sumCredits(modules: CourseModule[], reference: string): string | null {
   if (modules.length === 0) return null;
@@ -136,16 +137,14 @@ export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
             </div>
             {timelineId && (
               <div className="skill-modal-actions">
-                <button
-                  type="button"
-                  className="skill-modal-link"
+                <ModalLink
                   onClick={() => {
                     onClose();
                     navigate(`/timeline#${timelineId}`);
                   }}
                 >
                   {ui.timeline.seeInTimeline}
-                </button>
+                </ModalLink>
               </div>
             )}
           </section>

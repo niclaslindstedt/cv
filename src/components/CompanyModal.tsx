@@ -9,6 +9,7 @@ import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
 import { CategoryGlyph } from "./CategoryGlyph";
+import { ModalLink } from "./ModalLink";
 
 type Props = {
   company: Company | null;
@@ -77,14 +78,9 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
               {renderInlineCode(t(company.description))}
             </p>
             {company.url && (
-              <a
-                className="skill-modal-link"
-                href={company.url}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
+              <ModalLink href={company.url}>
                 {ui.companyModal.visitWebsite}
-              </a>
+              </ModalLink>
             )}
             {stack.length > 0 && (
               <div className="company-modal-stack">

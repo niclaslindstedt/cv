@@ -141,8 +141,10 @@
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   min-height: 24px;
   padding: 4px 12px;
+  font: inherit;
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--accent);
@@ -152,6 +154,12 @@
   border: 1px solid var(--accent);
   border-radius: 999px;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.skill-modal-link-icon {
+  display: inline-flex;
+  align-items: center;
 }
 
 .project-modal-actions,
