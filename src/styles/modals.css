@@ -597,6 +597,56 @@
   background: var(--accent-soft);
 }
 
+.course-modules-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.course-modules-progress-value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted);
+  letter-spacing: 0.02em;
+}
+
+.course-modules-progress-earned {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.course-modules-progress-sep {
+  opacity: 0.6;
+}
+
+.course-modules-progress-unit {
+  margin-left: 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.course-modules-progress-bar {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(var(--cat-rgb, var(--tl-amber)), 0.14);
+  overflow: hidden;
+}
+
+.course-modules-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 240ms ease;
+}
+
 .program-course-modules {
   display: flex;
   flex-direction: column;
