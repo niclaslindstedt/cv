@@ -176,7 +176,15 @@ export function Timeline() {
   const sideProjectDetailsRef = useRef<HTMLElement>(null);
   const otherDetailsRef = useRef<HTMLElement>(null);
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
-  const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
+  const pinchRef = useRef<{ dist: number } | null>(null);
+  const pendingPinchRef = useRef<{ dist: number; midpoint: number } | null>(
+    null,
+  );
+  const pinchRafRef = useRef<number | null>(null);
+  const pendingWheelRef = useRef<{ deltaY: number; clientX: number } | null>(
+    null,
+  );
+  const wheelRafRef = useRef<number | null>(null);
   const didInitialScrollRef = useRef(false);
   const scaleRef = useRef(1);
   const scaleTweenRef = useRef<number | null>(null);
@@ -273,7 +281,22 @@ export function Timeline() {
         cancelAnimationFrame(scaleTweenRef.current);
         scaleTweenRef.current = null;
       }
+      if (pinchRafRef.current !== null) {
+        cancelAnimationFrame(pinchRafRef.current);
+        pinchRafRef.current = null;
+      }
+      if (wheelRafRef.current !== null) {
+        cancelAnimationFrame(wheelRafRef.current);
+        wheelRafRef.current = null;
+      }
     };
+  }, []);
+
+  const cancelScaleTween = useCallback(() => {
+    if (scaleTweenRef.current !== null) {
+      cancelAnimationFrame(scaleTweenRef.current);
+      scaleTweenRef.current = null;
+    }
   }, []);
 
   useLayoutEffect(() => {
@@ -472,16 +495,32 @@ export function Timeline() {
   useEffect(() => {
     const el = viewportRef.current;
     if (!el) return;
+    const flushWheel = () => {
+      wheelRafRef.current = null;
+      const pending = pendingWheelRef.current;
+      pendingWheelRef.current = null;
+      if (!pending) return;
+      captureZoomAnchor(pending.clientX);
+      const factor = Math.exp(-pending.deltaY * 0.0018);
+      setScale((s) => clamp(s * factor, MIN_SCALE, MAX_SCALE));
+    };
     const onWheel = (e: WheelEvent) => {
       if (!(e.ctrlKey || e.metaKey)) return;
       e.preventDefault();
-      captureZoomAnchor(e.clientX);
-      const factor = Math.exp(-e.deltaY * 0.0018);
-      setScale((s) => clamp(s * factor, MIN_SCALE, MAX_SCALE));
+      cancelScaleTween();
+      if (pendingWheelRef.current) {
+        pendingWheelRef.current.deltaY += e.deltaY;
+        pendingWheelRef.current.clientX = e.clientX;
+      } else {
+        pendingWheelRef.current = { deltaY: e.deltaY, clientX: e.clientX };
+      }
+      if (wheelRafRef.current === null) {
+        wheelRafRef.current = requestAnimationFrame(flushWheel);
+      }
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
-  }, [captureZoomAnchor]);
+  }, [captureZoomAnchor, cancelScaleTween]);
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -567,15 +606,37 @@ export function Timeline() {
   useModalFocus(sideProjectDetailsRef, detailsKind === "sideProject");
   useModalFocus(otherDetailsRef, otherDetailsActive);
 
+  const syncPinchBaseline = () => {
+    const pts = Array.from(pointersRef.current.values());
+    if (pts.length < 2) {
+      pinchRef.current = null;
+      pendingPinchRef.current = null;
+      return;
+    }
+    const dx = pts[1].x - pts[0].x;
+    const dy = pts[1].y - pts[0].y;
+    pinchRef.current = { dist: Math.hypot(dx, dy) || 1 };
+    pendingPinchRef.current = null;
+  };
+
+  const flushPinch = () => {
+    pinchRafRef.current = null;
+    const pending = pendingPinchRef.current;
+    pendingPinchRef.current = null;
+    if (!pending || !pinchRef.current) return;
+    const ratio = pending.dist / pinchRef.current.dist;
+    if (Math.abs(ratio - 1) < 0.0005) return;
+    pinchRef.current.dist = pending.dist;
+    captureZoomAnchor(pending.midpoint);
+    setScale((s) => clamp(s * ratio, MIN_SCALE, MAX_SCALE));
+  };
+
   const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "touch") return;
     pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    if (pointersRef.current.size === 2) {
-      const pts = Array.from(pointersRef.current.values());
-      const dx = pts[1].x - pts[0].x;
-      const dy = pts[1].y - pts[0].y;
-      pinchRef.current = { dist: Math.hypot(dx, dy) || 1, scale };
-      captureZoomAnchor((pts[0].x + pts[1].x) / 2);
+    if (pointersRef.current.size >= 2) {
+      cancelScaleTween();
+      syncPinchBaseline();
     }
   };
 
@@ -583,19 +644,30 @@ export function Timeline() {
     if (e.pointerType !== "touch") return;
     if (!pointersRef.current.has(e.pointerId)) return;
     pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    if (pointersRef.current.size >= 2 && pinchRef.current) {
-      const pts = Array.from(pointersRef.current.values());
-      const dx = pts[1].x - pts[0].x;
-      const dy = pts[1].y - pts[0].y;
-      const dist = Math.hypot(dx, dy) || 1;
-      const ratio = dist / pinchRef.current.dist;
-      setScale(clamp(pinchRef.current.scale * ratio, MIN_SCALE, MAX_SCALE));
+    if (!pinchRef.current || pointersRef.current.size < 2) return;
+    const pts = Array.from(pointersRef.current.values());
+    const dx = pts[1].x - pts[0].x;
+    const dy = pts[1].y - pts[0].y;
+    const dist = Math.hypot(dx, dy) || 1;
+    const midpoint = (pts[0].x + pts[1].x) / 2;
+    pendingPinchRef.current = { dist, midpoint };
+    if (pinchRafRef.current === null) {
+      pinchRafRef.current = requestAnimationFrame(flushPinch);
     }
   };
 
   const handlePointerEnd = (e: ReactPointerEvent<HTMLDivElement>) => {
     pointersRef.current.delete(e.pointerId);
-    if (pointersRef.current.size < 2) pinchRef.current = null;
+    if (pointersRef.current.size < 2) {
+      pinchRef.current = null;
+      pendingPinchRef.current = null;
+      if (pinchRafRef.current !== null) {
+        cancelAnimationFrame(pinchRafRef.current);
+        pinchRafRef.current = null;
+      }
+    } else {
+      syncPinchBaseline();
+    }
   };
 
   const monthNames = ui.months;
