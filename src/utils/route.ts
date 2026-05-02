@@ -4,6 +4,10 @@ export type Route = "home" | "timeline";
 
 const ROUTE_CHANGE_EVENT = "cv:routechange";
 
+if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+  window.history.scrollRestoration = "manual";
+}
+
 function pathnameToRoute(pathname: string): Route {
   const stripped = pathname.replace(/\/+$/, "");
   if (stripped.endsWith("/timeline")) return "timeline";
@@ -22,20 +26,38 @@ export function navigate(path: string): void {
     window.location.search === target.search &&
     window.location.hash === target.hash;
   if (same) return;
+  window.history.replaceState(
+    { ...(window.history.state ?? {}), scrollY: window.scrollY },
+    "",
+  );
   window.history.pushState({}, "", path);
   window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT));
   window.scrollTo({ top: 0, left: 0 });
 }
 
+function restoreScrollFromHistory(): void {
+  const scrollY = (window.history.state as { scrollY?: unknown } | null)
+    ?.scrollY;
+  if (typeof scrollY !== "number") return;
+  // Wait for the new route's content to mount before scrolling.
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: scrollY, left: 0 });
+  });
+}
+
 export function useRoute(): Route {
   const [route, setRoute] = useState<Route>(() => getCurrentRoute());
   useEffect(() => {
-    const update = () => setRoute(getCurrentRoute());
-    window.addEventListener("popstate", update);
-    window.addEventListener(ROUTE_CHANGE_EVENT, update);
+    const onPop = () => {
+      setRoute(getCurrentRoute());
+      restoreScrollFromHistory();
+    };
+    const onRouteChange = () => setRoute(getCurrentRoute());
+    window.addEventListener("popstate", onPop);
+    window.addEventListener(ROUTE_CHANGE_EVENT, onRouteChange);
     return () => {
-      window.removeEventListener("popstate", update);
-      window.removeEventListener(ROUTE_CHANGE_EVENT, update);
+      window.removeEventListener("popstate", onPop);
+      window.removeEventListener(ROUTE_CHANGE_EVENT, onRouteChange);
     };
   }, []);
   return route;
