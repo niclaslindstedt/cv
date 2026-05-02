@@ -478,18 +478,25 @@ export function Timeline() {
     }
 
     if (targetBar && targetTrackIdx >= 0) {
-      const initialScale = 1;
-      setScale(initialScale);
-      scaleRef.current = initialScale;
-      setHighlightedId(targetBar.id);
-
-      const newMonthPx = BASE_MONTH_PX * initialScale;
       const clientWidth = viewport.clientWidth;
       const startMonth = targetBar.segments[0].startMonth;
       const lastSeg = targetBar.segments[targetBar.segments.length - 1];
       const endMonth = targetBar.isOngoing
         ? Math.max(lastSeg.endMonth, nowMonthIndex() + 1)
         : lastSeg.endMonth;
+      const monthSpan = Math.max(1, endMonth - startMonth);
+      const minCoverageScale =
+        (0.25 * clientWidth) / (monthSpan * BASE_MONTH_PX);
+      const initialScale = clamp(
+        Math.max(1, minCoverageScale),
+        MIN_SCALE,
+        MAX_SCALE,
+      );
+      setScale(initialScale);
+      scaleRef.current = initialScale;
+      setHighlightedId(targetBar.id);
+
+      const newMonthPx = BASE_MONTH_PX * initialScale;
       const barLeft = (startMonth - minMonth) * newMonthPx;
       const barWidth = Math.max(1, (endMonth - startMonth) * newMonthPx);
       const left = Math.max(0, barLeft + barWidth / 2 - clientWidth / 2);
