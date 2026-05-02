@@ -1005,6 +1005,44 @@ remains the only chromatic vocabulary that travels across surfaces.
 - **Print.** Skill-group glyphs and tints are excluded from
   PrintView; Skills prints as a flat list to keep the PDF compact.
 
+### 10.6.1 Section title glyphs (Focus, Skills, Languages)
+
+The four scrolled categorised sections (§10.5) carry a coloured
+section-title glyph that ties the eyebrow to the matching cards
+underneath. The three remaining top-level sections — **Current
+focus**, **Skills**, and **Languages** — also get a coloured
+section-title glyph each so the page's section list reads as a
+labelled index rather than a stack of grey eyebrows.
+
+This is **section-title only** — these sections do not carry card
+glyph bars or category-tinted modal headers (the §10.5 four-category
+language stays scoped to its four sections), so the per-section hue
+appears just once, on the eyebrow itself. The hues are picked from
+the broader §10.6 palette so the §10.5 quartet stays uncontested.
+
+| Section       | Token          | Glyph                  |
+| ------------- | -------------- | ---------------------- |
+| Current focus | `--accent-rgb` | Bullseye (target)      |
+| Skills        | `--tl-pink`    | Award medal (ribbon)   |
+| Languages     | `--tl-cyan`    | Globe (longitude grid) |
+
+The Languages section repurposes its `--tl-cyan` hue inside the
+language modal as the §10.5 modal-recipe `--cat-rgb`/`--cat-fg`,
+so the modal header gradient, glyph chip, and proficiency power bar
+all read in the same cyan. Languages list items get a small
+flag-chip on the left, the language name in the middle, a 5-pip
+proficiency meter, and the level label on the right; clicking a
+row opens the modal.
+
+The language modal renders the proficiency scale as a vertical
+power bar, Native at the top, Basic at the bottom. Each rung
+carries a label, an X/5 step counter, a horizontal fill bar
+showing the rung's relative position on the scale (Basic = 20% …
+Native = 100%), and a one-sentence description. The user's actual
+rung row is highlighted with the cyan tint and a fully-saturated
+fill bar; the others stay dimmed so the eye lands on the user's
+position first and reads the surrounding rungs as context.
+
 ### 10.7 Icon-in-text alignment
 
 Small inline SVG icons must read as visually centered with the text

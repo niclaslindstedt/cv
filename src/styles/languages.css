@@ -4,27 +4,249 @@
   margin: 0;
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
-.language-item {
+.languages-list > li {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+}
+
+button.language-item {
+  appearance: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
   gap: 12px;
   padding: 10px 14px;
+  font: inherit;
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   background: var(--glass-bg);
   backdrop-filter: blur(14px) saturate(150%);
   -webkit-backdrop-filter: blur(14px) saturate(150%);
+  transition:
+    border-color 120ms ease,
+    background 120ms ease,
+    color 120ms ease;
+}
+
+@media (hover: hover) {
+  button.language-item:hover {
+    border-color: rgb(var(--tl-cyan-fg));
+    background: rgba(var(--tl-cyan), 0.1);
+  }
+}
+
+button.language-item:focus-visible {
+  outline: 2px solid rgb(var(--tl-cyan-fg));
+  outline-offset: 2px;
+}
+
+.language-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+/* Soft 1px outline so the flag chip carries a UI boundary against any
+ * nearby surface (WCAG 1.4.11 — the internal flag colours alone do not
+ * encode "this is an interactive chip"). */
+.flag-icon {
+  display: block;
+  border-radius: 2px;
+  outline: 1px solid rgba(var(--accent-rgb), 0.35);
+  outline-offset: 0;
 }
 
 .language-name {
   font-weight: 500;
+  min-width: 0;
+}
+
+.language-meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex: 0 0 auto;
+}
+
+.language-meter-pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(var(--tl-cyan), 0.18);
+  border: 1px solid rgba(var(--tl-cyan), 0.45);
+}
+
+.language-meter-pip.is-on {
+  background: rgb(var(--tl-cyan-fg));
+  border-color: rgb(var(--tl-cyan-fg));
 }
 
 .language-level {
   font-size: 0.85rem;
   color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+/* Language modal — power bar + level descriptions.
+ *
+ * The modal borrows the same recipe as the §10.5 category modals: the
+ * Languages section's --cat-rgb (cyan) is set on .language-modal so
+ * --accent locally resolves to the cyan tone, the header gradient and
+ * border pick the same hue up, and the glyph chip mirrors the
+ * .skill-modal-glyph dimensions. */
+.language-modal {
+  --cat-rgb: var(--tl-cyan);
+  --cat-fg: var(--tl-cyan-fg);
+  --accent: rgb(var(--cat-fg));
+  --accent-soft: rgba(var(--cat-rgb), 0.16);
+}
+
+:root[data-theme="light"] .language-modal {
+  --accent-soft: rgba(var(--cat-rgb), 0.2);
+}
+
+.language-modal-head {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--cat-rgb), 0.18),
+    rgba(var(--cat-rgb), 0.06)
+  );
+  border-bottom-color: rgba(var(--cat-rgb), 0.45);
+}
+
+:root[data-theme="light"] .language-modal-head {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--cat-rgb), 0.22),
+    rgba(var(--cat-rgb), 0.08)
+  );
+}
+
+.language-modal-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: rgba(var(--cat-rgb), 0.16);
+  border: 1px solid rgba(var(--cat-rgb), 0.45);
+  padding: 4px 6px;
+}
+
+:root[data-theme="light"] .language-modal-flag {
+  background: rgba(var(--cat-rgb), 0.22);
+}
+
+.language-scale {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.language-scale-row {
+  padding: 10px 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.02);
+  opacity: 0.65;
+  transition: opacity 120ms ease;
+}
+
+:root[data-theme="light"] .language-scale-row {
+  background: rgba(20, 28, 40, 0.02);
+}
+
+.language-scale-row.is-current {
+  opacity: 1;
+  border-color: rgba(var(--cat-rgb), 0.6);
+  background: rgba(var(--cat-rgb), 0.08);
+}
+
+:root[data-theme="light"] .language-scale-row.is-current {
+  background: rgba(var(--cat-rgb), 0.12);
+}
+
+.language-scale-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.language-scale-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.language-scale-row.is-current .language-scale-label {
+  color: rgb(var(--cat-fg));
+}
+
+.language-scale-step {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.language-scale-row.is-current .language-scale-step {
+  color: rgb(var(--cat-fg));
+}
+
+.language-scale-bar {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(var(--cat-rgb), 0.12);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.language-scale-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(var(--cat-rgb), 0.45);
+}
+
+.language-scale-row.is-current .language-scale-bar-fill {
+  background: rgb(var(--cat-fg));
+}
+
+.language-scale-description {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+.language-scale-row.is-current .language-scale-description {
+  color: var(--fg);
+}
+
+@media print {
+  /* Languages modal never prints — defensive only. */
+  .language-modal,
+  .language-modal-head,
+  .language-modal-flag,
+  .language-meter,
+  .language-flag {
+    display: none;
+  }
 }

@@ -39,7 +39,7 @@ export function Skills({
 }: Props) {
   const { t, ui } = useLang();
   return (
-    <Section id="skills" title={title}>
+    <Section id="skills" title={title} category="skills">
       <div className="skills">
         {skills.map((group) => {
           const visibleItems = group.items.filter((s) => !hiddenSkills.has(s));

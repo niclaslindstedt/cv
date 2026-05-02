@@ -4,19 +4,23 @@
       "en": "Swedish",
       "sv": "Svenska"
     },
+    "code": "sv",
     "level": {
       "en": "Native",
       "sv": "Modersmål"
-    }
+    },
+    "proficiency": "native"
   },
   {
     "name": {
       "en": "English",
       "sv": "Engelska"
     },
+    "code": "en",
     "level": {
       "en": "Professional",
       "sv": "Professionell"
-    }
+    },
+    "proficiency": "professional"
   }
 ]

@@ -14,7 +14,7 @@ type Props = {
 export function Focus({ title, focus, onFocusClick }: Props) {
   const { lang, t, ui } = useLang();
   return (
-    <Section id="focus" title={title}>
+    <Section id="focus" title={title} category="focus">
       <ul className="focus-list">
         {focus.map((item) => {
           const months = monthsSince(item.since);
