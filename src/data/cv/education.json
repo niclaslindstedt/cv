@@ -13,6 +13,16 @@
       "sv": "Kandidatprogram"
     },
     "credits": "127.5 ECTS",
+    "degreeType": "bachelor",
+    "totalCredits": "180 ECTS",
+    "minor": {
+      "credits": "30 ECTS",
+      "completed": false
+    },
+    "thesis": {
+      "credits": "15 ECTS",
+      "completed": false
+    },
     "startDate": "2014-08",
     "endDate": "2017-06",
     "notes": {
@@ -190,6 +200,12 @@
       "sv": "Masterprogram"
     },
     "credits": "144 ECTS",
+    "degreeType": "medical",
+    "totalCredits": "330 ECTS",
+    "thesis": {
+      "credits": "30 ECTS",
+      "completed": false
+    },
     "startDate": "2011-08",
     "endDate": "2014-04",
     "notes": {
@@ -559,6 +575,12 @@
       "sv": "Masterprogram"
     },
     "credits": "60.8 ECTS",
+    "degreeType": "medical",
+    "totalCredits": "330 ECTS",
+    "thesis": {
+      "credits": "30 ECTS",
+      "completed": false
+    },
     "startDate": "2010-01",
     "endDate": "2011-04",
     "notes": {

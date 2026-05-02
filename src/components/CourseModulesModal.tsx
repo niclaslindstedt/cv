@@ -10,6 +10,7 @@ import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
 import { CategoryGlyph } from "./CategoryGlyph";
+import { EctsPill, type EctsContext } from "./EctsPill";
 import { ModalLink } from "./ModalLink";
 
 function sumCredits(modules: CourseModule[], reference: string): string | null {
@@ -48,9 +49,15 @@ type Props = {
   course: Course | null;
   onClose: () => void;
   onSkillClick: (skill: string) => void;
+  onEctsClick: (context: EctsContext) => void;
 };
 
-export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
+export function CourseModulesModal({
+  course,
+  onClose,
+  onSkillClick,
+  onEctsClick,
+}: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
   useModalSwipe(modalRef, !!course, onClose);
@@ -139,7 +146,11 @@ export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
           <section className="program-modal-summary">
             <p className="skill-modal-description">
               {t(course.institution)} ·{" "}
-              <span className="education-credits">{course.credits}</span>
+              <EctsPill
+                credits={course.credits}
+                context={{ kind: "course", credits: course.credits }}
+                onOpen={onEctsClick}
+              />
             </p>
             <div className="program-course-meta">
               <span className="program-course-code">{course.code}</span>
@@ -228,7 +239,11 @@ export function CourseModulesModal({ course, onClose, onSkillClick }: Props) {
                       {mod.code && (
                         <span className="program-module-code">{mod.code}</span>
                       )}
-                      <span className="education-credits">{mod.credits}</span>
+                      <EctsPill
+                        credits={mod.credits}
+                        context={{ kind: "course", credits: mod.credits }}
+                        onOpen={onEctsClick}
+                      />
                       <span className="program-module-date">
                         {mod.completedDate
                           ? formatMonth(mod.completedDate, lang)

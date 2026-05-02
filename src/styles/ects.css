@@ -1,0 +1,339 @@
+.ects-pill {
+  appearance: none;
+  display: inline-block;
+  padding: 2px 10px;
+  margin: 0;
+  font: inherit;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft);
+  border-radius: 999px;
+  line-height: 1.4;
+  cursor: pointer;
+  vertical-align: baseline;
+  transition:
+    border-color 120ms ease,
+    color 120ms ease,
+    background 120ms ease;
+}
+
+.ects-pill:hover,
+.ects-pill:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.ects-pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ects-modal {
+  max-width: 640px;
+}
+
+.ects-modal-intro {
+  padding: 14px 20px 4px;
+}
+
+.ects-section-heading {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.ects-program {
+  padding: 14px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ects-program-meta {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.ects-program-pct {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ects-bar-wrap {
+  position: relative;
+  margin: 28px 0 24px;
+  padding: 0 8px;
+}
+
+.ects-bar-milestones {
+  position: relative;
+  height: 28px;
+}
+
+.ects-bar-milestone {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.ects-bar-milestone-label {
+  padding: 0 4px;
+}
+
+.ects-bar-milestone-tick {
+  width: 1px;
+  height: 8px;
+  margin-top: 2px;
+  background: var(--fg-muted);
+  opacity: 0.6;
+}
+
+.ects-bar {
+  position: relative;
+  height: 24px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.ects-bar-segment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-right: 1px dashed rgba(var(--tl-blue), 0.35);
+}
+
+.ects-bar-segment:last-child {
+  border-right: none;
+}
+
+.ects-bar-segment--main {
+  background: rgba(var(--tl-blue), 0.18);
+}
+
+.ects-bar-segment--minor {
+  background: rgba(var(--tl-violet), 0.22);
+}
+
+.ects-bar-segment--thesis {
+  background: rgba(var(--tl-amber), 0.22);
+}
+
+.ects-bar-segment--missing {
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: 0;
+}
+
+.ects-bar-segment--missing.ects-bar-segment--minor {
+  border-color: rgba(var(--tl-violet), 0.5);
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 4px,
+    rgba(var(--tl-violet), 0.18) 4px,
+    rgba(var(--tl-violet), 0.18) 8px
+  );
+}
+
+.ects-bar-segment--missing.ects-bar-segment--thesis {
+  border-color: rgba(var(--tl-amber), 0.5);
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 4px,
+    rgba(var(--tl-amber), 0.18) 4px,
+    rgba(var(--tl-amber), 0.18) 8px
+  );
+}
+
+.ects-bar-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(var(--tl-blue), 0.45) 60%,
+    rgba(var(--tl-blue), 0.7) 100%
+  );
+  border-right: 2px solid rgba(var(--tl-blue), 0.95);
+  box-shadow:
+    0 0 12px rgba(var(--tl-blue), 0.45),
+    inset 0 0 6px rgba(255, 255, 255, 0.15);
+  border-radius: 999px 0 0 999px;
+  pointer-events: none;
+  transition: width 320ms ease;
+}
+
+.ects-bar-points {
+  position: relative;
+  height: 18px;
+  margin-top: 6px;
+}
+
+.ects-bar-point {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+.ects-bar-point--total {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ects-segment-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ects-segment-legend-item {
+  display: grid;
+  grid-template-columns: 14px 1fr auto auto;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.ects-segment-legend-item--incomplete {
+  color: var(--fg-muted);
+}
+
+.ects-segment-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.ects-segment-swatch--main {
+  background: rgba(var(--tl-blue), 0.55);
+}
+
+.ects-segment-swatch--minor {
+  background: rgba(var(--tl-violet), 0.55);
+}
+
+.ects-segment-swatch--thesis {
+  background: rgba(var(--tl-amber), 0.55);
+}
+
+.ects-segment-legend-item--incomplete .ects-segment-swatch {
+  background: transparent;
+  border: 1px dashed currentColor;
+}
+
+.ects-segment-legend-credits {
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted);
+}
+
+.ects-segment-legend-status {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.ects-program-explainer {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--fg-muted);
+}
+
+.ects-course {
+  padding: 14px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ects-course-line {
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--accent-soft);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.ects-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.ects-table th,
+.ects-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.ects-table th {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  font-weight: 600;
+}
+
+.ects-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 520px) {
+  .ects-bar-milestone-label {
+    font-size: 0.55rem;
+  }
+
+  .ects-bar-point {
+    font-size: 0.62rem;
+  }
+
+  .ects-segment-legend-item {
+    grid-template-columns: 14px 1fr;
+    row-gap: 2px;
+  }
+
+  .ects-segment-legend-credits,
+  .ects-segment-legend-status {
+    grid-column: 2;
+  }
+}
