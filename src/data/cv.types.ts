@@ -153,11 +153,27 @@ export type ProgramCourse = {
   skills?: string[];
 };
 
+export type DegreeType =
+  | "bachelor"
+  | "magister"
+  | "master"
+  | "medical"
+  | "other";
+
+export type ProgramSegment = {
+  credits: string;
+  completed: boolean;
+};
+
 export type Education = {
   field: LocalizedString;
   institution: LocalizedString;
   level: LocalizedString;
   credits: string;
+  degreeType?: DegreeType;
+  totalCredits?: string;
+  minor?: ProgramSegment;
+  thesis?: ProgramSegment;
   startDate: string;
   endDate: string;
   skills?: string[];

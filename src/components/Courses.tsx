@@ -1,6 +1,9 @@
+import type { KeyboardEvent } from "react";
+
 import type { Course, CourseMoment } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { EctsPill, type EctsContext } from "./EctsPill";
 import { Section } from "./Section";
 
 type Props = {
@@ -8,6 +11,7 @@ type Props = {
   courses: Course[];
   onSkillClick: (skill: string) => void;
   onCourseClick: (course: Course) => void;
+  onEctsClick: (context: EctsContext) => void;
 };
 
 function parseCredits(credits: string): number | null {
@@ -31,11 +35,21 @@ function latestMomentDate(moments: CourseMoment[]): string | undefined {
   return dates.reduce((latest, d) => (d > latest ? d : latest));
 }
 
+function activateOnKey(handler: () => void) {
+  return (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handler();
+    }
+  };
+}
+
 export function Courses({
   title,
   courses,
   onSkillClick,
   onCourseClick,
+  onEctsClick,
 }: Props) {
   const { lang, t, ui } = useLang();
   if (courses.length === 0) return null;
@@ -58,6 +72,13 @@ export function Courses({
               earned < fullCredits);
           const hasMoments = moments.length > 0;
           const courseName = t(item.name);
+          const creditsPill = (
+            <EctsPill
+              credits={item.credits}
+              context={{ kind: "course", credits: item.credits }}
+              onOpen={onEctsClick}
+            />
+          );
           const headBody = (
             <>
               <div className="education-head">
@@ -73,7 +94,7 @@ export function Courses({
               <p>
                 {t(item.institution)} ·{" "}
                 <span className="education-credits">{item.code}</span> ·{" "}
-                <span className="education-credits">{item.credits}</span>
+                {creditsPill}
                 {incomplete && (
                   <>
                     {" · "}
@@ -120,14 +141,16 @@ export function Courses({
           return (
             <li key={`${item.code}-${endDate ?? item.startDate ?? "x"}`}>
               {hasMoments ? (
-                <button
-                  type="button"
+                <div
+                  role="button"
+                  tabIndex={0}
                   className="education-program-btn"
                   onClick={() => onCourseClick(item)}
+                  onKeyDown={activateOnKey(() => onCourseClick(item))}
                   aria-label={ui.courses.viewMomentsAria(courseName)}
                 >
                   {headBody}
-                </button>
+                </div>
               ) : (
                 headBody
               )}

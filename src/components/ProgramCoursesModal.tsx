@@ -7,6 +7,7 @@ import type {
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { useSwipeClose } from "../utils/useSwipeClose";
+import { EctsPill, type EctsContext } from "./EctsPill";
 import { NoteIcon } from "./NoteIcon";
 
 function sumCredits(moments: CourseMoment[], reference: string): string | null {
@@ -27,9 +28,15 @@ type Props = {
   program: EducationItem | null;
   onClose: () => void;
   onSkillClick: (skill: string) => void;
+  onEctsClick: (context: EctsContext) => void;
 };
 
-export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
+export function ProgramCoursesModal({
+  program,
+  onClose,
+  onSkillClick,
+  onEctsClick,
+}: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!program, onClose);
@@ -90,7 +97,11 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
           <section className="program-modal-summary">
             <p className="skill-modal-description">
               {t(program.institution)} · {t(program.level)} ·{" "}
-              <span className="education-credits">{program.credits}</span>
+              <EctsPill
+                credits={program.credits}
+                context={{ kind: "program", program }}
+                onOpen={onEctsClick}
+              />
             </p>
             {program.notes && (
               <p className="program-modal-notes">
@@ -135,9 +146,11 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
                     </div>
                     <div className="program-course-meta">
                       <span className="program-course-code">{course.code}</span>
-                      <span className="education-credits">
-                        {course.credits}
-                      </span>
+                      <EctsPill
+                        credits={course.credits}
+                        context={{ kind: "course", credits: course.credits }}
+                        onOpen={onEctsClick}
+                      />
                       {incomplete && (
                         <span className="course-incomplete-pill">
                           {ui.programModal.incomplete}
@@ -186,9 +199,14 @@ export function ProgramCoursesModal({ program, onClose, onSkillClick }: Props) {
                                     {moment.code}
                                   </span>
                                 )}
-                                <span className="education-credits">
-                                  {moment.credits}
-                                </span>
+                                <EctsPill
+                                  credits={moment.credits}
+                                  context={{
+                                    kind: "course",
+                                    credits: moment.credits,
+                                  }}
+                                  onOpen={onEctsClick}
+                                />
                                 <span className="program-moment-date">
                                   {moment.completedDate
                                     ? formatMonth(moment.completedDate, lang)

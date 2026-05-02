@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { CompanyModal } from "./components/CompanyModal";
 import { CourseMomentsModal } from "./components/CourseMomentsModal";
 import { Courses } from "./components/Courses";
+import type { EctsContext } from "./components/EctsPill";
+import { EctsModal } from "./components/EctsModal";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
 import { FloatingControls } from "./components/FloatingControls";
@@ -52,6 +54,7 @@ export function App() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [ectsContext, setEctsContext] = useState<EctsContext | null>(null);
   const { theme, toggle: toggleTheme } = useTheme();
   const { t } = useLang();
   useGlassReflections();
@@ -103,12 +106,14 @@ export function App() {
             education={cv.education}
             onSkillClick={setSelectedSkill}
             onProgramClick={setSelectedProgram}
+            onEctsClick={setEctsContext}
           />
           <Courses
             title={t(cv.sections.courses)}
             courses={cv.courses}
             onSkillClick={setSelectedSkill}
             onCourseClick={setSelectedCourse}
+            onEctsClick={setEctsContext}
           />
           <Skills
             title={t(cv.sections.skills)}
@@ -163,6 +168,7 @@ export function App() {
           setSelectedProgram(null);
           setSelectedSkill(skill);
         }}
+        onEctsClick={setEctsContext}
       />
       <CourseMomentsModal
         course={selectedCourse}
@@ -171,7 +177,9 @@ export function App() {
           setSelectedCourse(null);
           setSelectedSkill(skill);
         }}
+        onEctsClick={setEctsContext}
       />
+      <EctsModal context={ectsContext} onClose={() => setEctsContext(null)} />
       <CompanyModal
         company={selectedCompany}
         stack={

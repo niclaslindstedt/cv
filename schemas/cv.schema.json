@@ -409,7 +409,41 @@
         "field": { "$ref": "#/$defs/localizedString" },
         "institution": { "$ref": "#/$defs/localizedString" },
         "level": { "$ref": "#/$defs/localizedString" },
-        "credits": { "type": "string", "minLength": 1 },
+        "credits": {
+          "type": "string",
+          "minLength": 1,
+          "description": "ECTS credits the holder actually earned in this program. May be less than `totalCredits` for partial / abandoned programs."
+        },
+        "degreeType": {
+          "type": "string",
+          "enum": ["bachelor", "magister", "master", "medical", "other"],
+          "description": "Drives the ECTS power bar in the EctsModal: which standard milestone (Bachelor's = 180, Magister = 60-on-top, Master's = 120-on-top, Medical Doctor = 330, …) this program corresponds to. Omit for non-degree-tracking programs."
+        },
+        "totalCredits": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Total ECTS credits the program would award if fully completed (e.g. '180 ECTS' for a bachelor's). When omitted, the EctsModal falls back to the degreeType default."
+        },
+        "minor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["credits", "completed"],
+          "description": "Minor-subject segment of the program. Set when the program structure includes a minor subject; the EctsModal renders this as a labeled segment on the power bar.",
+          "properties": {
+            "credits": { "type": "string", "minLength": 1 },
+            "completed": { "type": "boolean" }
+          }
+        },
+        "thesis": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["credits", "completed"],
+          "description": "Thesis segment of the program. Set when the program structure includes a thesis; the EctsModal renders this as a labeled segment on the power bar.",
+          "properties": {
+            "credits": { "type": "string", "minLength": 1 },
+            "completed": { "type": "boolean" }
+          }
+        },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": { "$ref": "#/$defs/yearMonth" },
         "skills": { "$ref": "#/$defs/stringList" },

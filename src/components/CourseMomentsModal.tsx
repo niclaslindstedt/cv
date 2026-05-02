@@ -4,6 +4,7 @@ import type { Course, CourseMoment } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { useSwipeClose } from "../utils/useSwipeClose";
+import { EctsPill, type EctsContext } from "./EctsPill";
 
 function sumCredits(moments: CourseMoment[], reference: string): string | null {
   if (moments.length === 0) return null;
@@ -29,9 +30,15 @@ type Props = {
   course: Course | null;
   onClose: () => void;
   onSkillClick: (skill: string) => void;
+  onEctsClick: (context: EctsContext) => void;
 };
 
-export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
+export function CourseMomentsModal({
+  course,
+  onClose,
+  onSkillClick,
+  onEctsClick,
+}: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
   useSwipeClose(modalRef, !!course, onClose);
@@ -104,7 +111,11 @@ export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
           <section className="program-modal-summary">
             <p className="skill-modal-description">
               {t(course.institution)} ·{" "}
-              <span className="education-credits">{course.credits}</span>
+              <EctsPill
+                credits={course.credits}
+                context={{ kind: "course", credits: course.credits }}
+                onOpen={onEctsClick}
+              />
             </p>
             <div className="program-course-meta">
               <span className="program-course-code">{course.code}</span>
@@ -151,7 +162,11 @@ export function CourseMomentsModal({ course, onClose, onSkillClick }: Props) {
                     {moment.code && (
                       <span className="program-moment-code">{moment.code}</span>
                     )}
-                    <span className="education-credits">{moment.credits}</span>
+                    <EctsPill
+                      credits={moment.credits}
+                      context={{ kind: "course", credits: moment.credits }}
+                      onOpen={onEctsClick}
+                    />
                     <span className="program-moment-date">
                       {moment.completedDate
                         ? formatMonth(moment.completedDate, lang)

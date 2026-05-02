@@ -127,6 +127,31 @@ type UiStrings = {
     expand: (title: string) => string;
     collapse: (title: string) => string;
   };
+  ects: {
+    title: string;
+    pillAria: (credits: string) => string;
+    intro: string;
+    programHeading: (program: string) => string;
+    earnedOfTotal: (earned: string, total: string) => string;
+    segmentMain: string;
+    segmentMinor: string;
+    segmentThesis: string;
+    notCompleted: string;
+    programExplainer: string;
+    conversionHeading: string;
+    tableEcts: string;
+    tableWeeks: string;
+    tableSemesters: string;
+    thisCourseLine: (ects: string, weeks: string, hours: string) => string;
+    courseExplainer: string;
+    milestones: {
+      magister: string;
+      master: string;
+      bachelor: string;
+      masterAfterBachelor: string;
+      twoYearMaster: string;
+    };
+  };
 };
 
 export const UI_STRINGS: Record<Language, UiStrings> = {
@@ -271,6 +296,35 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       expand: (title) => `Expand ${title} section`,
       collapse: (title) => `Collapse ${title} section`,
     },
+    ects: {
+      title: "ECTS credits",
+      pillAria: (credits) => `Explain ${credits}`,
+      intro:
+        "ECTS is the European Credit Transfer System. One full-time year of study earns 60 ECTS — about 1,500–1,800 hours of work. A standard semester is 30 ECTS.",
+      programHeading: (program) => `Progress in ${program}`,
+      earnedOfTotal: (earned, total) => `${earned} of ${total} ECTS earned`,
+      segmentMain: "Main coursework",
+      segmentMinor: "Minor subject",
+      segmentThesis: "Thesis",
+      notCompleted: "skipped",
+      programExplainer:
+        "Filled segments were completed; outlined segments were skipped or not reached. The minor subject and thesis are the last hurdles before a degree is awarded.",
+      conversionHeading: "ECTS conversion",
+      tableEcts: "ECTS",
+      tableWeeks: "Full-time weeks",
+      tableSemesters: "Semesters",
+      thisCourseLine: (ects, weeks, hours) =>
+        `This course is ${ects} ECTS — roughly ${weeks} weeks of full-time study (~${hours} hours of work).`,
+      courseExplainer:
+        "ECTS is calibrated so 1 credit ≈ 25–30 hours of work. Swedish higher-education credits (högskolepoäng) map 1:1 to ECTS.",
+      milestones: {
+        magister: "1-yr Magister",
+        master: "2-yr Master coursework",
+        bachelor: "Bachelor's",
+        masterAfterBachelor: "1-yr Master",
+        twoYearMaster: "2-yr Master",
+      },
+    },
   },
   sv: {
     present: "Pågående",
@@ -413,6 +467,35 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     section: {
       expand: (title) => `Expandera ${title.toLowerCase()}`,
       collapse: (title) => `Fäll ihop ${title.toLowerCase()}`,
+    },
+    ects: {
+      title: "ECTS-poäng",
+      pillAria: (credits) => `Förklara ${credits}`,
+      intro:
+        "ECTS är det europeiska systemet för överföring av studiepoäng. Ett heltidsår motsvarar 60 ECTS — ungefär 1 500–1 800 timmars arbete. En vanlig termin är 30 ECTS.",
+      programHeading: (program) => `Progression i ${program}`,
+      earnedOfTotal: (earned, total) => `${earned} av ${total} ECTS avklarade`,
+      segmentMain: "Huvudkurser",
+      segmentMinor: "Biämne",
+      segmentThesis: "Examensarbete",
+      notCompleted: "ej avklarat",
+      programExplainer:
+        "Fyllda segment är avklarade; konturerade segment hoppades över eller hanns inte med. Biämnet och examensarbetet är de sista stegen innan examen utfärdas.",
+      conversionHeading: "Omräkning av ECTS",
+      tableEcts: "ECTS",
+      tableWeeks: "Heltidsveckor",
+      tableSemesters: "Terminer",
+      thisCourseLine: (ects, weeks, hours) =>
+        `Den här kursen är ${ects} ECTS — ungefär ${weeks} veckor på heltid (~${hours} timmars arbete).`,
+      courseExplainer:
+        "ECTS är kalibrerat så att 1 poäng ≈ 25–30 timmars arbete. Svenska högskolepoäng motsvarar ECTS 1:1.",
+      milestones: {
+        magister: "Magisterexamen",
+        master: "Masterkurser",
+        bachelor: "Kandidatexamen",
+        masterAfterBachelor: "1-årig master",
+        twoYearMaster: "2-årig master",
+      },
     },
   },
 };
