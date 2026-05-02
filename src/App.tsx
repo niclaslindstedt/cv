@@ -245,6 +245,7 @@ export function App() {
             companies={companies}
             onSkillClick={setSelectedSkill}
             onCompanyClick={setSelectedCompany}
+            onCardClick={setSelectedExperience}
           />
           <Education
             title={t(cv.sections.education)}
