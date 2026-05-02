@@ -6,10 +6,7 @@ type Common = {
 };
 
 type Props = Common &
-  (
-    | { href: string; onClick?: never }
-    | { onClick: () => void; href?: never }
-  );
+  ({ href: string; onClick?: never } | { onClick: () => void; href?: never });
 
 export function ModalLink(props: Props) {
   const content = (
