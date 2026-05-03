@@ -96,20 +96,14 @@ button.language-item:focus-visible {
 
 /* Language modal — power bar + level descriptions.
  *
- * The modal borrows the same recipe as the §10.5 category modals: the
- * Languages section's --cat-rgb (cyan) is set on .language-modal so
- * --accent locally resolves to the cyan tone, the header gradient and
- * border pick the same hue up, and the glyph chip mirrors the
- * .skill-modal-glyph dimensions. */
+ * Same recipe as the §10.5 category modals: the Languages section's
+ * --cat-rgb (cyan) is set on .language-modal so the header gradient,
+ * border, and flag chip pick the cyan hue up via --cat-rgb directly.
+ * The body keeps the regular Aurora accent — only the header surface
+ * is category-tinted. */
 .language-modal {
   --cat-rgb: var(--tl-cyan);
   --cat-fg: var(--tl-cyan-fg);
-  --accent: rgb(var(--cat-fg));
-  --accent-soft: rgba(var(--cat-rgb), 0.16);
-}
-
-:root[data-theme="light"] .language-modal {
-  --accent-soft: rgba(var(--cat-rgb), 0.2);
 }
 
 .language-modal-head {

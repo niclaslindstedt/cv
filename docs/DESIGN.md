@@ -640,10 +640,13 @@ distinct by purpose:
 - **Category accent.** Modals that open from one of the four
   categorised sections (Experience, Side projects, Education,
   Courses — and Companies, which sit under Experience) borrow that
-  section's Sapphire/Iris/Mint/Ember palette: a glyph chip in the
-  header, a soft category-tinted header gradient, and the accent
-  token retuned so the year pill and action-link pills inherit the
-  same hue. See §10.5 for the full recipe. Skill, summary, focus,
+  section's Sapphire/Iris/Mint/Ember palette **on the header surface
+  only**: a glyph chip in the header and a soft category-tinted
+  header gradient. The body keeps the regular Aurora accent so the
+  year pill, action-link pills, ECTS pill, "via" pill, focus
+  outlines, and the close-hover ring read as part of the same
+  site-wide accent system as the index page rather than recoloured
+  per section. See §10.5 for the full recipe. Skill, summary, focus,
   and search modals stay Aurora — they aren't bound to one of the
   four categories.
 
@@ -927,12 +930,14 @@ be used consistently and only for these four section types.
      border-bottom in the same hue, so the eye carries the colour from
      the chip across the whole header row.
 
-  The accent token (`--accent` / `--accent-soft`) is locally redefined
-  on the modal so the year pill, action-link pills, the close-hover
-  ring, and the focus-visible outline all pick the category tone up
-  automatically. The body remains neutral Glass — colour is reserved
-  for the header strip and the small accent leaves below it, never the
-  description prose.
+  The accent token (`--accent` / `--accent-soft`) is **not** rebound
+  on the modal — the year pill, action-link pills, ECTS pill, "via"
+  pill, close-hover ring, and the focus-visible outline keep the
+  regular Aurora accent so they read as part of the same site-wide
+  accent system as the index page rather than recoloured per
+  section. Category colour is scoped to the header surface (glyph
+  chip + header gradient + border-bottom); the body stays neutral
+  Glass with the standard accent.
 
 - **Print.** The bar and the title glyph are hidden in print — the PDF
   pipeline runs through `PrintView` (§6) which doesn't include either.
