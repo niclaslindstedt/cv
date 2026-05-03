@@ -307,22 +307,14 @@
  * `--cat-rgb` / `--cat-fg` (via `categoryStyle`) on the .skill-modal.
  *
  * The modal then borrows the same Sapphire / Iris / Mint / Ember
- * language used by the section title glyph (§10.5), so the panel reads
- * as part of its parent section rather than a generic Aurora overlay.
- *
- * Mechanism: locally redefine --accent and --accent-soft so all the
- * existing accent-coloured leaves (year pill, action links, close-hover
- * ring, focus-visible outline) pick the category tone up automatically.
+ * language used by the section title glyph (§10.5) on the header
+ * surface only: the header gradient and the glyph chip inherit the
+ * category hue, while every accent-coloured leaf inside the body
+ * (year pill, action links, ECTS pill, "via" pill, close-hover ring,
+ * focus outlines, …) keeps the regular Aurora accent so the body
+ * reads as part of the same site-wide accent system as the index
+ * page rather than a fully recoloured panel.
  */
-.skill-modal--cat {
-  --accent: rgb(var(--cat-fg, var(--cat-rgb)));
-  --accent-soft: rgba(var(--cat-rgb), 0.16);
-}
-
-:root[data-theme="light"] .skill-modal--cat {
-  --accent-soft: rgba(var(--cat-rgb), 0.18);
-}
-
 .skill-modal--cat .skill-modal-head {
   background: linear-gradient(
     180deg,
