@@ -87,7 +87,7 @@ export function EctsModal({ context, onClose }: Props) {
           {context.kind === "program" ? (
             <ProgramView program={context.program} />
           ) : (
-            <CourseView credits={context.credits} />
+            <CourseView credits={context.credits} kind={context.kind} />
           )}
         </div>
       </div>
@@ -325,15 +325,25 @@ function CreditedList({ credited }: { credited: ProgramCredit[] }) {
   );
 }
 
-function CourseView({ credits }: { credits: string }) {
+function CourseView({
+  credits,
+  kind,
+}: {
+  credits: string;
+  kind: "course" | "institution";
+}) {
   const { ui } = useLang();
   const ects = parseEcts(credits);
   const rows = buildCourseRows(ects);
+  const headline =
+    kind === "institution"
+      ? ui.ects.thisInstitutionLine
+      : ui.ects.thisCourseLine;
   return (
     <section className="ects-course">
       {ects !== null && ects > 0 && (
         <p className="ects-course-line">
-          {ui.ects.thisCourseLine(
+          {headline(
             formatEcts(ects),
             formatEcts((ects * 40) / 60),
             String(Math.round(((ects * 40) / 60) * 40)),

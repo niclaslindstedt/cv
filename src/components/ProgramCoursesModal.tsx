@@ -192,7 +192,7 @@ function CourseGroup({
             {" · "}
             <EctsPill
               credits={segment.credits}
-              context={{ kind: "course", credits: segment.credits }}
+              context={{ kind: "institution", credits: segment.credits }}
               onOpen={onEctsClick}
             />
           </p>

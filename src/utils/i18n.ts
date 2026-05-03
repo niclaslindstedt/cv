@@ -191,6 +191,7 @@ type UiStrings = {
     tableWeeks: string;
     tableSemesters: string;
     thisCourseLine: (ects: string, weeks: string, hours: string) => string;
+    thisInstitutionLine: (ects: string, weeks: string, hours: string) => string;
     courseExplainer: string;
     degreeNames: {
       bachelor: string;
@@ -461,6 +462,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       tableSemesters: "Semesters",
       thisCourseLine: (ects, weeks, hours) =>
         `This course is ${ects} ECTS — roughly ${weeks} weeks of full-time study (~${hours} hours of work).`,
+      thisInstitutionLine: (ects, weeks, hours) =>
+        `These courses combined are ${ects} ECTS — roughly ${weeks} weeks of full-time study (~${hours} hours of work).`,
       courseExplainer:
         "ECTS is calibrated so 1 credit ≈ 25–30 hours of work. Swedish higher-education credits (högskolepoäng) map 1:1 to ECTS.",
       degreeNames: {
@@ -728,6 +731,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       tableSemesters: "Terminer",
       thisCourseLine: (ects, weeks, hours) =>
         `Den här kursen är ${ects} ECTS — ungefär ${weeks} veckor på heltid (~${hours} timmars arbete).`,
+      thisInstitutionLine: (ects, weeks, hours) =>
+        `De här kurserna är tillsammans ${ects} ECTS — ungefär ${weeks} veckor på heltid (~${hours} timmars arbete).`,
       courseExplainer:
         "ECTS är kalibrerat så att 1 poäng ≈ 25–30 timmars arbete. Svenska högskolepoäng motsvarar ECTS 1:1.",
       degreeNames: {
