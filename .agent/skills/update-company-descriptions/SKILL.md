@@ -15,11 +15,12 @@ sources", …). Never mutate `cv.json` without an explicit ask.
 
 ## Inputs
 
-| File                     | Role                                                         |
-| ------------------------ | ------------------------------------------------------------ |
-| `src/data/cv.json`       | Source of company entries; the file you edit.                |
-| `schemas/cv.schema.json` | Contract — `companies[].sourceUrls[]` shape lives here.      |
-| `src/data/cv.types.ts`   | TS mirror of the schema (`SourceUrl`, `Company.sourceUrls`). |
+| File                        | Role                                                                                                                                                                                             |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `src/data/cv.json`          | Source of company entries; the file you edit.                                                                                                                                                    |
+| `schemas/cv.schema.json`    | Contract — `companies[].sourceUrls[]` shape lives here.                                                                                                                                          |
+| `src/data/cv.types.ts`      | TS mirror of the schema (`SourceUrl`, `Company.sourceUrls`).                                                                                                                                     |
+| `src/data/facts.local.json` | **Optional, gitignored** free-form scratch pad of background context the user maintains. Read on every run; used to ground tone, NDA boundaries, and per-company notes. See "Local facts" below. |
 
 `sourceUrls` is **data only** — no component renders it. Its sole
 purpose is to feed this skill.
@@ -46,6 +47,36 @@ Each `sourceUrl` entry has:
 If the user names a company that has no `sourceUrls`, stop and ask
 whether to add some via the `update-cv` skill instead — don't invent
 sources.
+
+## Local facts (read every run)
+
+Before fetching anything, read `src/data/facts.local.json` if it
+exists. The file is free-form JSON the user maintains as background
+context — there is no schema. A starter template lives at
+`src/data/facts.local.example.json`.
+
+Use it to:
+
+- Honour `_rules` / `do_not_say` / NDA flags. If the facts file says
+  "never name client X" or "don't mention exact revenue numbers", that
+  takes precedence over what the public sources happen to say.
+- Pick up per-company notes (`companies.<id>` is a likely shape, but
+  the user may organise it differently — scan the whole file). These
+  notes reflect what the user actually did or knows about the
+  company beyond the marketing surface; let them inform emphasis and
+  factual accuracy.
+- Match the user's tone preferences (e.g. neutral Swedish register,
+  "shipped over delivered") when phrasing the new tagline /
+  description.
+
+Treat the contents as **private by default**. Never copy a fact
+verbatim into the committed CV unless either (a) the user explicitly
+marks it safe to mention, or (b) at least one fetched `sourceUrl`
+already states it publicly. The facts file's job here is to keep you
+accurate and on-voice, not to expand what the public CV reveals.
+
+If the file is missing, continue silently. If it is malformed JSON,
+warn the user in one line and continue without it.
 
 ## Run procedure
 

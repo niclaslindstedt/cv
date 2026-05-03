@@ -26,6 +26,13 @@ src/data/search-index.json
 # cv.local.example.json is a starter template.
 src/data/cv.local.json
 
+# Local facts scratch pad. Free-form JSON consumed by the update-cv and
+# update-company-descriptions skills as background context when writing
+# taglines, descriptions, and skill suggestions. Never bundled, never
+# rendered, never committed. The committed facts.local.example.json
+# shows the kind of shape that works.
+src/data/facts.local.json
+
 # Generated PDF resumes — both the public dist/cv.pdf and any private
 # variants from `make local` should never end up committed.
 *.pdf
