@@ -433,6 +433,17 @@ type PowerBarProps = {
   fillSpans: FillSpan[];
 };
 
+const SEMESTER_ECTS = 30;
+
+function computeSemesterTicks(total: number): number[] {
+  if (total <= SEMESTER_ECTS) return [];
+  const ticks: number[] = [];
+  for (let pos = SEMESTER_ECTS; pos < total; pos += SEMESTER_ECTS) {
+    ticks.push(pos);
+  }
+  return ticks;
+}
+
 function PowerBar({ slices, total, fillPct, fillSpans }: PowerBarProps) {
   if (total <= 0) return null;
   const pct = (n: number) => `${(n / total) * 100}%`;
@@ -442,6 +453,7 @@ function PowerBar({ slices, total, fillPct, fillSpans }: PowerBarProps) {
     cumulative.push(acc);
     acc += slice.credits;
   }
+  const semesterTicks = computeSemesterTicks(total);
   return (
     <div className="ects-bar-wrap">
       <div
@@ -469,6 +481,14 @@ function PowerBar({ slices, total, fillPct, fillSpans }: PowerBarProps) {
               left: pct(span.start),
               width: pct(span.end - span.start),
             }}
+            aria-hidden="true"
+          />
+        ))}
+        {semesterTicks.map((pos) => (
+          <div
+            key={`tick-${pos}`}
+            className="ects-bar-tick"
+            style={{ left: pct(pos) }}
             aria-hidden="true"
           />
         ))}
