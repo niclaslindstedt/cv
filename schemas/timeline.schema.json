@@ -120,6 +120,11 @@
           "type": "array",
           "minItems": 2,
           "items": { "$ref": "#/$defs/role" }
+        },
+        "institutions": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/institution" }
         }
       }
     },
@@ -130,6 +135,15 @@
       "properties": {
         "startDate": { "$ref": "#/$defs/isoMonth" },
         "title": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "institution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["startDate", "name"],
+      "properties": {
+        "startDate": { "$ref": "#/$defs/isoMonth" },
+        "name": { "$ref": "#/$defs/localizedString" }
       }
     },
     "sideProject": {
