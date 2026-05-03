@@ -169,9 +169,11 @@ export type DegreeType =
   | "medical"
   | "other";
 
+export type ProgramSegmentStatus = "completed" | "skipped" | "credited";
+
 export type ProgramSegment = {
   credits: string;
-  completed: boolean;
+  status: ProgramSegmentStatus;
   after?: string;
 };
 

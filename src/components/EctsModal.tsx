@@ -1,6 +1,10 @@
 import { useEffect, useRef } from "react";
 
-import type { DegreeType, Education as EducationItem } from "../data/cv.types";
+import type {
+  DegreeType,
+  Education as EducationItem,
+  ProgramSegmentStatus,
+} from "../data/cv.types";
 import { useLang } from "../utils/i18n";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
@@ -95,14 +99,14 @@ type SegmentKey = "main" | "minor" | "thesis";
 type BarSlice = {
   key: SegmentKey;
   credits: number;
-  completed: boolean;
+  status: ProgramSegmentStatus;
 };
 
 type LegendEntry = {
   key: SegmentKey;
   label: string;
   credits: number;
-  completed: boolean;
+  status: ProgramSegmentStatus;
 };
 
 function buildSegments(
@@ -113,8 +117,9 @@ function buildSegments(
   const minorSize = parseEcts(program.minor?.credits) ?? 0;
   const thesisSize = parseEcts(program.thesis?.credits) ?? 0;
   const mainSize = Math.max(0, total - minorSize - thesisSize);
-  const minorCompleted = program.minor?.completed ?? false;
-  const thesisCompleted = program.thesis?.completed ?? false;
+  const minorStatus: ProgramSegmentStatus = program.minor?.status ?? "skipped";
+  const thesisStatus: ProgramSegmentStatus =
+    program.thesis?.status ?? "skipped";
 
   const slices: BarSlice[] = [];
   if (program.degreeType === "bachelor" && minorSize > 0 && mainSize > 0) {
@@ -123,39 +128,47 @@ function buildSegments(
     const mainBeforeMinor = Math.max(0, Math.min(requestedAfter, mainSize));
     const mainAfterMinor = mainSize - mainBeforeMinor;
     if (mainBeforeMinor > 0) {
-      slices.push({ key: "main", credits: mainBeforeMinor, completed: true });
+      slices.push({
+        key: "main",
+        credits: mainBeforeMinor,
+        status: "completed",
+      });
     }
     slices.push({
       key: "minor",
       credits: minorSize,
-      completed: minorCompleted,
+      status: minorStatus,
     });
     if (mainAfterMinor > 0) {
-      slices.push({ key: "main", credits: mainAfterMinor, completed: true });
+      slices.push({
+        key: "main",
+        credits: mainAfterMinor,
+        status: "completed",
+      });
     }
     if (thesisSize > 0) {
       slices.push({
         key: "thesis",
         credits: thesisSize,
-        completed: thesisCompleted,
+        status: thesisStatus,
       });
     }
   } else {
     if (mainSize > 0) {
-      slices.push({ key: "main", credits: mainSize, completed: true });
+      slices.push({ key: "main", credits: mainSize, status: "completed" });
     }
     if (minorSize > 0) {
       slices.push({
         key: "minor",
         credits: minorSize,
-        completed: minorCompleted,
+        status: minorStatus,
       });
     }
     if (thesisSize > 0) {
       slices.push({
         key: "thesis",
         credits: thesisSize,
-        completed: thesisCompleted,
+        status: thesisStatus,
       });
     }
   }
@@ -166,7 +179,7 @@ function buildSegments(
       key: "main",
       label: labels.main,
       credits: mainSize,
-      completed: true,
+      status: "completed",
     });
   }
   if (minorSize > 0) {
@@ -174,7 +187,7 @@ function buildSegments(
       key: "minor",
       label: labels.minor,
       credits: minorSize,
-      completed: minorCompleted,
+      status: minorStatus,
     });
   }
   if (thesisSize > 0) {
@@ -182,7 +195,7 @@ function buildSegments(
       key: "thesis",
       label: labels.thesis,
       credits: thesisSize,
-      completed: thesisCompleted,
+      status: thesisStatus,
     });
   }
 
@@ -205,6 +218,7 @@ function ProgramView({ program }: { program: EducationItem }) {
   });
 
   const fillPct = total > 0 ? Math.min(100, (earned / total) * 100) : 0;
+  const fillSpans = computeFillSpans(slices, earned, total);
 
   const fieldName = t(program.field);
   const degreeName = program.degreeType
@@ -227,16 +241,17 @@ function ProgramView({ program }: { program: EducationItem }) {
           </span>
         )}
       </p>
-      <PowerBar slices={slices} total={total} fillPct={fillPct} />
+      <PowerBar
+        slices={slices}
+        total={total}
+        fillPct={fillPct}
+        fillSpans={fillSpans}
+      />
       <ul className="ects-segment-legend">
         {entries.map((seg) => (
           <li
             key={seg.key}
-            className={
-              seg.completed
-                ? "ects-segment-legend-item"
-                : "ects-segment-legend-item ects-segment-legend-item--incomplete"
-            }
+            className={`ects-segment-legend-item ects-segment-legend-item--${seg.status}`}
           >
             <span
               className={`ects-segment-swatch ects-segment-swatch--${seg.key}`}
@@ -246,9 +261,9 @@ function ProgramView({ program }: { program: EducationItem }) {
             <span className="ects-segment-legend-credits">
               {formatEcts(seg.credits)} ECTS
             </span>
-            {!seg.completed && seg.key !== "main" && (
+            {seg.status !== "completed" && seg.key !== "main" && (
               <span className="ects-segment-legend-status">
-                {ui.ects.notCompleted}
+                {ui.ects.statusLabels[seg.status]}
               </span>
             )}
           </li>
@@ -329,13 +344,45 @@ function formatSemester(ects: number): string {
   return sem % 1 === 0 ? String(sem) : sem.toFixed(1);
 }
 
+type FillSpan = { start: number; end: number; isLast: boolean };
+
+function computeFillSpans(
+  slices: BarSlice[],
+  earned: number,
+  total: number,
+): FillSpan[] {
+  if (total <= 0 || earned <= 0) return [];
+  let remaining = Math.min(earned, total);
+  let cursor = 0;
+  const spans: FillSpan[] = [];
+  for (const slice of slices) {
+    const sliceStart = cursor;
+    const sliceEnd = cursor + slice.credits;
+    cursor = sliceEnd;
+    if (slice.status === "skipped") continue;
+    if (remaining <= 0) break;
+    const fillEnd = Math.min(sliceEnd, sliceStart + remaining);
+    const prev = spans[spans.length - 1];
+    if (prev && prev.end === sliceStart) {
+      prev.end = fillEnd;
+    } else {
+      spans.push({ start: sliceStart, end: fillEnd, isLast: false });
+    }
+    remaining -= fillEnd - sliceStart;
+    if (fillEnd < sliceEnd) break;
+  }
+  if (spans.length > 0) spans[spans.length - 1].isLast = true;
+  return spans;
+}
+
 type PowerBarProps = {
   slices: BarSlice[];
   total: number;
   fillPct: number;
+  fillSpans: FillSpan[];
 };
 
-function PowerBar({ slices, total, fillPct }: PowerBarProps) {
+function PowerBar({ slices, total, fillPct, fillSpans }: PowerBarProps) {
   if (total <= 0) return null;
   const pct = (n: number) => `${(n / total) * 100}%`;
   const cumulative: number[] = [];
@@ -354,22 +401,26 @@ function PowerBar({ slices, total, fillPct }: PowerBarProps) {
         {slices.map((slice, i) => (
           <div
             key={i}
-            className={`ects-bar-segment ects-bar-segment--${slice.key} ${
-              slice.completed
-                ? "ects-bar-segment--done"
-                : "ects-bar-segment--missing"
-            }`}
+            className={`ects-bar-segment ects-bar-segment--${slice.key} ects-bar-segment--${slice.status}`}
             style={{
               left: pct(cumulative[i]),
               width: pct(slice.credits),
             }}
           />
         ))}
-        <div
-          className="ects-bar-fill"
-          style={{ width: `${fillPct}%` }}
-          aria-hidden="true"
-        />
+        {fillSpans.map((span, i) => (
+          <div
+            key={i}
+            className={`ects-bar-fill ${
+              span.start === 0 ? "ects-bar-fill--head" : ""
+            } ${span.isLast ? "ects-bar-fill--tail" : ""}`}
+            style={{
+              left: pct(span.start),
+              width: pct(span.end - span.start),
+            }}
+            aria-hidden="true"
+          />
+        ))}
       </div>
       <div className="ects-bar-points" aria-hidden="true">
         <span
