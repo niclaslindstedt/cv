@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import type {
   DegreeType,
   Education as EducationItem,
+  ProgramCredit,
   ProgramSegmentStatus,
 } from "../data/cv.types";
 import { useLang } from "../utils/i18n";
@@ -270,6 +271,52 @@ function ProgramView({ program }: { program: EducationItem }) {
         ))}
       </ul>
       <p className="ects-program-explainer">{ui.ects.programExplainer}</p>
+      {program.credited && program.credited.length > 0 && (
+        <CreditedList credited={program.credited} />
+      )}
+    </section>
+  );
+}
+
+function CreditedList({ credited }: { credited: ProgramCredit[] }) {
+  const { t, ui } = useLang();
+  return (
+    <section className="ects-credited">
+      <h3 className="ects-section-heading">{ui.ects.creditedHeading}</h3>
+      <ul className="ects-credited-list">
+        {credited.map((entry, i) => {
+          const name = t(entry.name);
+          const sourceName = entry.from ? t(entry.from) : null;
+          const sourceParts: string[] = [];
+          if (entry.fromCode) sourceParts.push(entry.fromCode);
+          if (entry.fromCredits) sourceParts.push(entry.fromCredits);
+          const sourceSuffix = sourceParts.length
+            ? ` (${sourceParts.join(", ")})`
+            : "";
+          return (
+            <li
+              key={entry.code ?? `${name}-${i}`}
+              className="ects-credited-item"
+            >
+              <div className="ects-credited-head">
+                <span className="ects-credited-name">{name}</span>
+                {entry.code && (
+                  <span className="ects-credited-code">{entry.code}</span>
+                )}
+                <span className="ects-credited-credits">{entry.credits}</span>
+              </div>
+              {sourceName && (
+                <p className="ects-credited-source">
+                  {ui.ects.creditedFrom(`${sourceName}${sourceSuffix}`)}
+                </p>
+              )}
+              {entry.note && (
+                <p className="ects-credited-note">{t(entry.note)}</p>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 }

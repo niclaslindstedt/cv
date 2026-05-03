@@ -493,6 +493,12 @@
             }
           }
         },
+        "credited": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Course-level credit transfers (Swedish: tillgodoräkningar) that count toward the program from prior learning. Each entry contributes its `credits` to the program's earned total via `credits`. Rendered below the power bar in the EctsModal as a list of credit transfers.",
+          "items": { "$ref": "#/$defs/programCredit" }
+        },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": { "$ref": "#/$defs/yearMonth" },
         "skills": { "$ref": "#/$defs/stringList" },
@@ -531,6 +537,46 @@
           "type": "array",
           "minItems": 1,
           "items": { "$ref": "#/$defs/programCourse" }
+        }
+      }
+    },
+    "programCredit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "credits"],
+      "description": "A course or block of credits transferred into the program from prior learning. Counts toward the program's earned ECTS but isn't a course actually taken inside the program. Rendered as a credit-transfer entry in the EctsModal.",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/localizedString",
+          "description": "What's credited inside the program (e.g. the course slot the credit replaces, like \"IT Law\")."
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Course code of the credited slot, when applicable."
+        },
+        "credits": {
+          "type": "string",
+          "minLength": 1,
+          "description": "ECTS amount being credited toward the program (e.g. \"7.5 ECTS\"). Counts toward the program's earned credits."
+        },
+        "from": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Display name of the prior course or program the credit comes from."
+        },
+        "fromCode": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Course code of the source course, when applicable."
+        },
+        "fromCredits": {
+          "type": "string",
+          "minLength": 1,
+          "description": "ECTS amount of the source course, when relevant (e.g. a 15 ECTS source course used to credit a 7.5 ECTS slot)."
+        },
+        "note": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Optional free-form note about the credit transfer."
         }
       }
     },
