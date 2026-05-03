@@ -30,6 +30,7 @@ export function Languages({ title, languages, onLanguageClick }: Props) {
                   <FlagIcon code={language.code} />
                 </span>
                 <span className="language-name">{name}</span>
+                <span className="language-level">{t(language.level)}</span>
                 <span
                   className="language-meter"
                   role="img"
@@ -49,7 +50,6 @@ export function Languages({ title, languages, onLanguageClick }: Props) {
                     />
                   ))}
                 </span>
-                <span className="language-level">{t(language.level)}</span>
               </button>
             </li>
           );
