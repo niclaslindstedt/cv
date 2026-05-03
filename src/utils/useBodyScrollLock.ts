@@ -20,6 +20,7 @@ import { useEffect } from "react";
 
 let lockCount = 0;
 let savedScrollY = 0;
+let savedPathname = "";
 let savedHtmlOverflow = "";
 let savedBodyOverflow = "";
 let savedBodyPosition = "";
@@ -34,6 +35,7 @@ function lock(): void {
   const html = document.documentElement;
   const body = document.body;
   savedScrollY = window.scrollY;
+  savedPathname = window.location.pathname;
   savedHtmlOverflow = html.style.overflow;
   savedBodyOverflow = body.style.overflow;
   savedBodyPosition = body.style.position;
@@ -63,7 +65,14 @@ function unlock(): void {
   body.style.left = savedBodyLeft;
   body.style.right = savedBodyRight;
   body.style.width = savedBodyWidth;
-  window.scrollTo(0, savedScrollY);
+  // Only restore scroll if we're still on the same route. If the modal
+  // close coincided with a route change (e.g. "See in timeline"), scrolling
+  // to the previous page's offset on the new route briefly triggers iOS
+  // Safari's URL-bar animation and lands the new page rendered under the
+  // status bar / dynamic island.
+  if (window.location.pathname === savedPathname) {
+    window.scrollTo(0, savedScrollY);
+  }
 }
 
 export function useBodyScrollLock(enabled: boolean): void {
