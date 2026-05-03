@@ -37,11 +37,12 @@
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "generate:search-index": "node scripts/generate-search-index.mjs",
     "generate:data": "node scripts/generate-github-activity.mjs && node scripts/generate-project-stats.mjs && node scripts/generate-timeline.mjs && node scripts/generate-print.mjs && node scripts/generate-search-index.mjs",
-    "postinstall": "npm run generate:data",
+    "ensure:data": "node scripts/ensure-generated-data.mjs",
+    "postinstall": "npm run ensure:data",
     "prebuild": "npm run generate:data && npm run generate:og",
     "predev": "npm run generate:data",
-    "pretypecheck": "npm run generate:data",
-    "prelint": "npm run generate:data"
+    "pretypecheck": "npm run ensure:data",
+    "prelint": "npm run ensure:data"
   },
   "dependencies": {
     "react": "^19.2.5",
