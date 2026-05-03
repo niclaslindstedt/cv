@@ -27,6 +27,11 @@ const STABILIZE_CSS = `
 
 async function preparePage(page: Page) {
   await page.clock.install({ time: new Date(FIXED_TIME) });
+  // Emulate reduced motion so JS-driven entry animations (e.g. the ECTS
+  // power-bar count-up) snap to their final state instead of rendering
+  // mid-tween — the page.clock above freezes RAF, which would otherwise
+  // capture the pre-animation frame.
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.addStyleTag({ content: STABILIZE_CSS });
   await page.evaluate(() => document.fonts?.ready);
   await page.waitForTimeout(50);

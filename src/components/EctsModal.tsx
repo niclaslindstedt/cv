@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type {
   DegreeType,
@@ -203,6 +203,8 @@ function buildSegments(
   return { slices, entries };
 }
 
+const FILL_TWEEN_MS = 1400;
+
 function ProgramView({ program }: { program: EducationItem }) {
   const { t, ui } = useLang();
   const earned = parseEcts(program.credits) ?? 0;
@@ -212,14 +214,16 @@ function ProgramView({ program }: { program: EducationItem }) {
     : 0;
   const total = explicitTotal ?? degreeDefault ?? earned;
 
+  const animatedEarned = useCountUp(earned, FILL_TWEEN_MS);
+
   const { slices, entries } = buildSegments(program, total, {
     main: ui.ects.segmentMain,
     minor: ui.ects.segmentMinor,
     thesis: ui.ects.segmentThesis,
   });
 
-  const fillPct = total > 0 ? Math.min(100, (earned / total) * 100) : 0;
-  const fillSpans = computeFillSpans(slices, earned, total);
+  const fillPct = total > 0 ? Math.min(100, (animatedEarned / total) * 100) : 0;
+  const fillSpans = computeFillSpans(slices, animatedEarned, total);
 
   const fieldName = t(program.field);
   const degreeName = program.degreeType
@@ -234,11 +238,11 @@ function ProgramView({ program }: { program: EducationItem }) {
       {degreeName && <p className="ects-program-subtitle">{degreeName}</p>}
       <p className="ects-program-meta">
         <span>
-          {ui.ects.earnedOfTotal(formatEcts(earned), formatEcts(total))}
+          {ui.ects.earnedOfTotal(formatEcts(animatedEarned), formatEcts(total))}
         </span>
         {total > 0 && (
           <span className="ects-program-pct">
-            {Math.round((earned / total) * 100)}%
+            {Math.round((animatedEarned / total) * 100)}%
           </span>
         )}
       </p>
@@ -479,4 +483,29 @@ function PowerBar({ slices, total, fillPct, fillSpans }: PowerBarProps) {
       </div>
     </div>
   );
+}
+
+function prefersReducedMotion(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function useCountUp(target: number, durationMs: number): number {
+  const [value, setValue] = useState(() =>
+    prefersReducedMotion() ? target : 0,
+  );
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / durationMs);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setValue(target * eased);
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, durationMs]);
+  return value;
 }
