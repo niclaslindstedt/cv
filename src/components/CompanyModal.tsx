@@ -57,9 +57,9 @@ export function CompanyModal({ company, stack, onClose, onSkillClick }: Props) {
           </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{company.name}</span>
-            {company.terminated && (
+            {company.discontinued && (
               <span className="skill-modal-years">
-                {ui.companyModal.terminated}
+                {ui.companyModal.discontinued}
               </span>
             )}
           </h2>

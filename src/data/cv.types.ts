@@ -102,7 +102,7 @@ export type Company = {
   tagline: LocalizedString;
   description: LocalizedString;
   url?: string;
-  terminated?: boolean;
+  discontinued?: boolean;
   stack?: StackItem[];
   sourceUrls?: SourceUrl[];
   aliases?: string[];

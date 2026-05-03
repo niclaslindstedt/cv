@@ -80,10 +80,10 @@ function RoleStartIcon({ ui }: { ui: LanguageContextValue["ui"] }) {
   );
 }
 
-function TerminatedIcon({ ui }: { ui: LanguageContextValue["ui"] }) {
+function DiscontinuedIcon({ ui }: { ui: LanguageContextValue["ui"] }) {
   return (
     <svg
-      className="company-terminated"
+      className="company-discontinued"
       viewBox="0 0 24 24"
       width="14"
       height="14"
@@ -92,7 +92,7 @@ function TerminatedIcon({ ui }: { ui: LanguageContextValue["ui"] }) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      aria-label={ui.companyModal.terminated}
+      aria-label={ui.companyModal.discontinued}
       role="img"
     >
       <path d="M6 20 V9 a6 6 0 0 1 12 0 V20 Z" />
@@ -202,7 +202,7 @@ export function ExperienceModal({
                 onClick={() => onCompanyClick(subject)}
               >
                 {subject.name}
-                {subject.terminated && <TerminatedIcon ui={ui} />}
+                {subject.discontinued && <DiscontinuedIcon ui={ui} />}
               </button>
               {isAssignment && (
                 <span className="experience-modal-via">
