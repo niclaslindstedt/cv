@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getEffectiveScrollY } from "./useBodyScrollLock";
+import { getEffectiveScrollY, isBodyLocked } from "./useBodyScrollLock";
 
 export type Route = "home" | "timeline";
 
@@ -34,7 +34,14 @@ export function navigate(path: string): void {
   );
   window.history.pushState({}, "", path);
   window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT));
-  window.scrollTo({ top: 0, left: 0 });
+  // Skip the scroll reset while a modal is freezing the body. The body
+  // is `position: fixed`, so window.scrollY is already 0 and the call
+  // would be a visual no-op — but iOS Safari still treats it as a real
+  // scroll event and kicks the URL-bar visibility transition, leaving
+  // the new route rendered against a stale safe-area-inset-top.
+  if (!isBodyLocked()) {
+    window.scrollTo({ top: 0, left: 0 });
+  }
 }
 
 function restoreScrollFromHistory(): void {

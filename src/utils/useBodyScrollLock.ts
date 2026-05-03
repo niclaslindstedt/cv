@@ -92,3 +92,15 @@ export function getEffectiveScrollY(): number {
   if (lockCount > 0) return savedScrollY;
   return window.scrollY;
 }
+
+/**
+ * Whether a modal is currently holding the body in `position: fixed`.
+ * Route navigation needs this so it can skip a `window.scrollTo` while
+ * the body is frozen — on iOS Safari that call still kicks the URL-bar
+ * visibility transition, which can leave the next route rendered with a
+ * stale `safe-area-inset-top` and the page tucked under the dynamic
+ * island until the user manually reloads.
+ */
+export function isBodyLocked(): boolean {
+  return lockCount > 0;
+}
