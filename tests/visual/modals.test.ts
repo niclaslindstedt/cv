@@ -134,13 +134,23 @@ test.describe("modals", () => {
     );
   });
 
-  test("program courses modal — en / dark", async ({ page }) => {
+  test("program courses modal (bachelor) — en / dark", async ({ page }) => {
     await openHome(page);
     await page.locator("#education .education-program-btn").first().click();
     await snapshotModal(
       page,
       page.locator(".skill-modal-overlay"),
-      "modal-program-en-dark.png",
+      "modal-program-bachelor-en-dark.png",
+    );
+  });
+
+  test("program courses modal (medicine) — en / dark", async ({ page }) => {
+    await openHome(page);
+    await page.locator("#education .education-program-btn").nth(1).click();
+    await snapshotModal(
+      page,
+      page.locator(".skill-modal-overlay"),
+      "modal-program-medicine-en-dark.png",
     );
   });
 
@@ -154,11 +164,9 @@ test.describe("modals", () => {
     );
   });
 
-  test("ects modal (program) — en / dark", async ({ page }) => {
+  test("ects modal (bachelor program) — en / dark", async ({ page }) => {
     await openHome(page);
-    // Pick the medical program — its degreeType has no Bachelor/Magister/
-    // Master ladder milestones, so it exercises the empty-milestones path.
-    await page.locator("#education .education-program-btn").nth(1).click();
+    await page.locator("#education .education-program-btn").first().click();
     // First pill in the program modal is the program-level ECTS pill,
     // which opens the EctsModal with kind: "program".
     await page.locator(".skill-modal-overlay .ects-pill").first().click();
@@ -167,7 +175,21 @@ test.describe("modals", () => {
       page.locator(".skill-modal-overlay", {
         has: page.locator(".ects-modal"),
       }),
-      "modal-ects-program-en-dark.png",
+      "modal-ects-program-bachelor-en-dark.png",
+    );
+  });
+
+  test("ects modal (medical program) — en / dark", async ({ page }) => {
+    await openHome(page);
+    // The medical program exercises the 11-semester power bar (330 ECTS).
+    await page.locator("#education .education-program-btn").nth(1).click();
+    await page.locator(".skill-modal-overlay .ects-pill").first().click();
+    await snapshotModal(
+      page,
+      page.locator(".skill-modal-overlay", {
+        has: page.locator(".ects-modal"),
+      }),
+      "modal-ects-program-medicine-en-dark.png",
     );
   });
 
