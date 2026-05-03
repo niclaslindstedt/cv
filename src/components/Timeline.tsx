@@ -408,16 +408,8 @@ export function Timeline() {
       }
       if (trackIdx < 0) return;
       const startMonth = bar.segments[0].startMonth;
-      const lastSeg = bar.segments[bar.segments.length - 1];
-      const endMonth = bar.isOngoing
-        ? Math.max(lastSeg.endMonth, nowMonthIndex() + 1)
-        : lastSeg.endMonth;
       const barLeft = (startMonth - minMonth) * monthPx;
-      const barWidth = Math.max(1, (endMonth - startMonth) * monthPx);
-      const targetLeft = Math.max(
-        0,
-        barLeft + barWidth / 2 - viewport.clientWidth / 2,
-      );
+      const targetLeft = Math.max(0, barLeft - 24);
       const lane = bar.segments[0].activeLane;
       const barTop =
         AXIS_SIZE + trackTop[trackIdx] + TRACK_HEADER + lane * LANE_SIZE;
@@ -478,7 +470,6 @@ export function Timeline() {
     }
 
     if (targetBar && targetTrackIdx >= 0) {
-      const clientWidth = viewport.clientWidth;
       const clientHeight = viewport.clientHeight;
       const startMonth = targetBar.segments[0].startMonth;
       const lastSeg = targetBar.segments[targetBar.segments.length - 1];
@@ -499,8 +490,7 @@ export function Timeline() {
 
       const newMonthPx = BASE_MONTH_PX * initialScale;
       const barLeft = (startMonth - minMonth) * newMonthPx;
-      const barWidth = Math.max(1, monthSpan * newMonthPx);
-      const left = Math.max(0, barLeft + barWidth / 2 - clientWidth / 2);
+      const left = Math.max(0, barLeft - 24);
 
       const lane = targetBar.segments[0].activeLane;
       const barTop =
