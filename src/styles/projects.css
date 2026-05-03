@@ -115,52 +115,6 @@
   font-size: 0.95rem;
 }
 
-.project-meta {
-  margin: 0;
-  padding: 10px 12px;
-  border: 1px solid var(--glass-border);
-  border-radius: calc(var(--radius) - 4px);
-  background: var(--glass-highlight);
-  display: grid;
-  grid-template-columns: max-content auto;
-  column-gap: 12px;
-  row-gap: 8px;
-  align-items: center;
-  justify-content: start;
-}
-
-.project-meta-row {
-  display: contents;
-}
-
-.project-meta-row dt {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--fg-muted);
-}
-
-.project-meta-row dd {
-  justify-self: start;
-  margin: 0;
-  font-size: 0.9rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0;
-  flex-wrap: wrap;
-}
-
-.project-commit-total {
-  padding-left: 8px;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--fg);
-}
-
 .project-date {
   appearance: none;
   position: relative;
