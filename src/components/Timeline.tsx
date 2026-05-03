@@ -479,31 +479,36 @@ export function Timeline() {
 
     if (targetBar && targetTrackIdx >= 0) {
       const clientWidth = viewport.clientWidth;
+      const clientHeight = viewport.clientHeight;
       const startMonth = targetBar.segments[0].startMonth;
       const lastSeg = targetBar.segments[targetBar.segments.length - 1];
       const endMonth = targetBar.isOngoing
         ? Math.max(lastSeg.endMonth, nowMonthIndex() + 1)
         : lastSeg.endMonth;
       const monthSpan = Math.max(1, endMonth - startMonth);
-      const minCoverageScale =
-        (0.25 * clientWidth) / (monthSpan * BASE_MONTH_PX);
-      const initialScale = clamp(
-        Math.max(1, minCoverageScale),
-        MIN_SCALE,
-        MAX_SCALE,
-      );
+      // Zoom in just enough that the bar is comfortably tappable, but cap
+      // at 2x so surrounding context stays visible. The previous formula
+      // (25% of viewport width) drove narrow bars to 3-8x on mobile,
+      // landing the user on an apparently empty viewport.
+      const minBarWidthPx = 40;
+      const fitBarScale = minBarWidthPx / (monthSpan * BASE_MONTH_PX);
+      const initialScale = clamp(Math.max(1, fitBarScale), MIN_SCALE, 2);
       setScale(initialScale);
       scaleRef.current = initialScale;
       setHighlightedId(targetBar.id);
 
       const newMonthPx = BASE_MONTH_PX * initialScale;
       const barLeft = (startMonth - minMonth) * newMonthPx;
-      const left = Math.max(0, barLeft - 24);
+      const barWidth = Math.max(1, monthSpan * newMonthPx);
+      const left = Math.max(0, barLeft + barWidth / 2 - clientWidth / 2);
 
       const lane = targetBar.segments[0].activeLane;
       const barTop =
         AXIS_SIZE + trackTop[targetTrackIdx] + TRACK_HEADER + lane * LANE_SIZE;
-      const top = Math.max(0, barTop - AXIS_SIZE - 16);
+      const top = Math.max(
+        0,
+        barTop + LANE_SIZE / 2 - (AXIS_SIZE + clientHeight) / 2,
+      );
 
       requestAnimationFrame(() => {
         const v = viewportRef.current;
