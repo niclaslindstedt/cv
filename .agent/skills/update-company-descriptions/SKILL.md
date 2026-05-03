@@ -1,26 +1,32 @@
 ---
 name: update-company-descriptions
-description: "Use when the user wants to refresh the `tagline` and/or `description` of one or more companies in `src/data/cv.json` using their declared `sourceUrls`. Fetches each source, synthesizes a tight bilingual tagline + description pair, and validates the result."
+description: "Use when the user wants to refresh the `tagline` and/or `description` of one or more companies in `src/data/cv.json` using their declared `sourceUrls`. Fetches each source, synthesizes a tight bilingual tagline + description pair, propagates the change into any matching `experience[].printDescription` (and assignment `printDescription` when the assignment's `clientId` resolves to a company being refreshed), and validates the result."
 ---
 
 # update-company-descriptions
 
 Rewrite `companies[].tagline` and `companies[].description` (English +
 Swedish) for entries that declare `sourceUrls`, using the linked sources
-as ground truth. The two fields are kept in sync — every run that
-touches one re-evaluates the other so they don't drift apart. This
-skill is **intent-driven** — only run when the user explicitly asks
-("refresh the company descriptions", "update BookBeat from its
-sources", …). Never mutate `cv.json` without an explicit ask.
+as ground truth. After updating a company, propagate the change into
+the matching `experience[].printDescription` (and into
+`experience[].assignments[].printDescription` when an assignment's
+`clientId` resolves to a refreshed company) so the print/PDF copy
+doesn't keep stale phrasing from the old tagline. The fields are kept
+in sync — every run that touches one re-evaluates the others so they
+don't drift apart. This skill is **intent-driven** — only run when the
+user explicitly asks ("refresh the company descriptions", "update
+BookBeat from its sources", …). Never mutate `cv.json` without an
+explicit ask.
 
 ## Inputs
 
-| File                        | Role                                                                                                                                                                                             |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `src/data/cv.json`          | Source of company entries; the file you edit.                                                                                                                                                    |
-| `schemas/cv.schema.json`    | Contract — `companies[].sourceUrls[]` shape lives here.                                                                                                                                          |
-| `src/data/cv.types.ts`      | TS mirror of the schema (`SourceUrl`, `Company.sourceUrls`).                                                                                                                                     |
-| `src/data/facts.local.json` | **Optional, gitignored** free-form scratch pad of background context the user maintains. Read on every run; used to ground tone, NDA boundaries, and per-company notes. See "Local facts" below. |
+| File                          | Role                                                                                                                                                                                             |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `src/data/cv/companies.json`  | Source of company entries; where `tagline`, `description`, and `sourceUrls` live.                                                                                                                |
+| `src/data/cv/experience.json` | Where `experience[].printDescription` and `experience[].assignments[].printDescription` live. Re-checked for every refreshed company so print copy doesn't drift away from the new tagline.      |
+| `schemas/cv.schema.json`      | Contract — `companies[].sourceUrls[]` and the two `printDescription` shapes live here.                                                                                                           |
+| `src/data/cv.types.ts`        | TS mirror of the schema (`SourceUrl`, `Company.sourceUrls`, `Experience.printDescription`, `Assignment.printDescription`).                                                                       |
+| `src/data/facts.local.json`   | **Optional, gitignored** free-form scratch pad of background context the user maintains. Read on every run; used to ground tone, NDA boundaries, and per-company notes. See "Local facts" below. |
 
 `sourceUrls` is **data only** — no component renders it. Its sole
 purpose is to feed this skill.
@@ -126,13 +132,40 @@ For each in-scope company:
    punctuation), keep the existing copy for that field. Only emit edits
    that add information or improve accuracy. The two fields are
    evaluated independently — it's fine to update only one of them.
+7. **Propagate to `printDescription`** in `src/data/cv/experience.json`:
+   - Find every `experience[]` entry whose `companyId` equals the
+     refreshed company's `id`. If it has a `printDescription`, check
+     whether the English or Swedish copy embeds phrasing from the
+     **old** tagline (e.g. "a .NET and JavaScript consultancy" when
+     the new tagline is "a software development and architecture
+     consultancy"). If so, rewrite the affected fragment using the
+     **new** tagline's phrasing while preserving the rest of the
+     sentence (typically the promotion arc, tenure summary, or
+     scope-of-work clause). Keep both languages in sync — both
+     `en` and `sv` are re-evaluated together.
+   - Find every `experience[].assignments[]` entry whose `clientId`
+     equals the refreshed company's `id` (a company can act as a
+     client on someone else's tenure). Apply the same propagation to
+     its `printDescription`.
+   - If a `printDescription` does **not** quote the old tagline
+     verbatim and reads correctly under the new one, leave it
+     untouched. The goal is to fix stale phrasing, not to rewrite
+     hand-tuned print copy.
+   - Never invent a `printDescription` that wasn't there. If the
+     entry omits the field, it falls back to the company / client
+     `tagline` at render time — the fallback handles the update for
+     free.
 
 ## Conventions
 
 - Don't add fields the schema doesn't allow. `sourceUrls` already
   exists; do not invent siblings (`lastUpdated`, `verifiedAt`, …).
 - Don't edit `name`, `url`, `terminated`, `stack`, `id`, or any other
-  company field. This skill only owns `tagline` and `description`.
+  company field. This skill only owns `tagline`, `description`, and
+  the `printDescription` propagation in `experience.json`.
+- Don't touch other fields on the experience entry — `companyId`,
+  `clientId`, `roles`, `startDate`, `endDate`, `assignments`, `skills`,
+  `stack` — only the bilingual `printDescription` text.
 - Don't touch companies whose `terminated: true` is set unless the
   user explicitly says so — their tagline and description are
   intentionally historical.
@@ -159,8 +192,11 @@ in — re-read the schema's `sourceUrl` definition.
 End the run with a short report containing, for each in-scope company:
 
 - `id` and `name`.
-- Per-field status — `tagline: updated|unchanged` and
-  `description: updated|unchanged` — or `skipped (all sources failed)`.
+- Per-field status — `tagline: updated|unchanged`,
+  `description: updated|unchanged`, and
+  `printDescription: updated|unchanged|n/a` (where `n/a` means no
+  matching `experience[]` or assignment carried a `printDescription`
+  for this company) — or `skipped (all sources failed)`.
 - For `updated` fields, a one-line preview of the new English copy.
 - For `skipped` entries, the failing URL(s).
 

@@ -43,19 +43,19 @@
     "id": "etimo",
     "name": "Etimo AB",
     "tagline": {
-      "en": ".NET and JavaScript consultancy.",
-      "sv": ".NET- och JavaScript-konsultbolag."
+      "en": "Software development and architecture consultancy.",
+      "sv": "Konsultbolag inom systemutveckling och systemarkitektur."
     },
     "description": {
-      "en": "Stockholm-based .NET and JavaScript consultancy. Selectively turns down clients whose work doesn't contribute positively to society, and reinvests time and profits into pro-bono engagements and open-source contributions.",
-      "sv": "Stockholmsbaserat .NET- och JavaScript-konsultbolag. Väljer aktivt bort kunder vars verksamhet inte bidrar positivt till samhället, och investerar tid och vinst i pro bono-uppdrag och bidrag till öppen källkod."
+      "en": "Stockholm-based software consultancy offering system architecture, custom system development, and team augmentation, plus leadership and organizational advisory from former CTOs and team leads. Engagements span TypeScript, C#, Java, Python, and microservice architectures on Azure and AWS, with TDD and CI/CD as standard practice.",
+      "sv": "Stockholmsbaserat mjukvarukonsultbolag som erbjuder systemarkitektur, skräddarsydd systemutveckling och teamförstärkning, samt ledarskaps- och organisationsrådgivning från tidigare CTO:er och teamleads. Uppdragen spänner över TypeScript, C#, Java, Python och mikrotjänstarkitekturer på Azure och AWS, med TDD och CI/CD som standard."
     },
     "url": "https://www.etimo.se",
     "sourceUrls": [
       {
-        "title": "Official about page",
-        "url": "https://etimo.se/om-oss",
-        "description": "Etimo's own Swedish-language about page describing the team, location, and the company's social and pro-bono commitments."
+        "title": "Services overview",
+        "url": "https://etimo.se/tjanster",
+        "description": "Etimo's own Swedish-language services page describing what the consultancy actually does for clients."
       }
     ],
     "aliases": ["etimo ab"]
