@@ -158,6 +158,16 @@
   border-right: 2px solid rgba(var(--tl-blue), 0.95);
 }
 
+.ects-bar-tick {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  width: 0;
+  border-left: 1px dotted var(--fg-muted);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
 .ects-bar-points {
   position: relative;
   height: 18px;
