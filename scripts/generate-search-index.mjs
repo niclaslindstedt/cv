@@ -265,8 +265,18 @@ function buildRecords(cv) {
 
   // Education programs.
   cv.education.forEach((ed, i) => {
-    const subtitleEn = `${pickLang(ed.institution, "en")} · ${pickLang(ed.level, "en")}`;
-    const subtitleSv = `${pickLang(ed.institution, "sv")} · ${pickLang(ed.level, "sv")}`;
+    const segmentInstitutions = (ed.segments ?? []).map((s) => s.institution);
+    const institutionLabel = (lang) =>
+      ed.institution
+        ? pickLang(ed.institution, lang)
+        : segmentInstitutions.map((inst) => pickLang(inst, lang)).join(" · ");
+    const subtitleEn = `${institutionLabel("en")} · ${pickLang(ed.level, "en")}`;
+    const subtitleSv = `${institutionLabel("sv")} · ${pickLang(ed.level, "sv")}`;
+    const segmentNotesByLang = (lang) =>
+      (ed.segments ?? [])
+        .map((s) => (s.notes ? pickLang(s.notes, lang) : ""))
+        .filter(Boolean)
+        .join(" ");
     emit({
       id: `edu-${i}`,
       kind: "education",
@@ -275,11 +285,17 @@ function buildRecords(cv) {
       secondary: { en: subtitleEn, sv: subtitleSv },
       fieldsByLang: (lang) => ({
         title: pickLang(ed.field, lang),
-        description: pickLang(ed.notes ?? { en: "", sv: "" }, lang),
+        description: [
+          pickLang(ed.notes ?? { en: "", sv: "" }, lang),
+          segmentNotesByLang(lang),
+        ]
+          .filter(Boolean)
+          .join(" "),
         skills: ed.skills ?? [],
         aliases: [
           ...(ed.aliases ?? []),
-          pickLang(ed.institution, lang),
+          institutionLabel(lang),
+          ...segmentInstitutions.map((inst) => pickLang(inst, lang)),
           pickLang(ed.level, lang),
         ],
       }),

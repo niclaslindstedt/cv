@@ -435,22 +435,20 @@
     "education": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "field",
-        "institution",
-        "level",
-        "credits",
-        "startDate",
-        "endDate"
-      ],
+      "required": ["field", "level", "credits", "startDate", "endDate"],
+      "anyOf": [{ "required": ["institution"] }, { "required": ["segments"] }],
+      "description": "An education program. For programs studied at a single institution, set `institution` and (optionally) `courses` directly. For programs whose credits are aggregated across multiple institutions toward one degree (e.g. medicine completed partly at Umeå and partly at Uppsala), omit `institution` and list each per-institution slice under `segments[]` instead.",
       "properties": {
         "field": { "$ref": "#/$defs/localizedString" },
-        "institution": { "$ref": "#/$defs/localizedString" },
+        "institution": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Single institution that awarded the credits. Omit when the program spans multiple institutions — list them under `segments[]` instead."
+        },
         "level": { "$ref": "#/$defs/localizedString" },
         "credits": {
           "type": "string",
           "minLength": 1,
-          "description": "ECTS credits the holder actually earned in this program. May be less than `totalCredits` for partial / abandoned programs."
+          "description": "ECTS credits the holder actually earned in this program. Aggregates credits across `segments[]` when present. May be less than `totalCredits` for partial / abandoned programs."
         },
         "degreeType": {
           "type": "string",
@@ -489,9 +487,38 @@
         "courses": {
           "type": "array",
           "minItems": 1,
+          "description": "Courses taken under the program's single institution. When the program is split across multiple institutions, attach courses to their `segments[]` entries instead.",
           "items": { "$ref": "#/$defs/programCourse" }
         },
+        "segments": {
+          "type": "array",
+          "minItems": 2,
+          "description": "Per-institution slices of a program whose credits are aggregated toward one degree. Use when the holder studied the same program at more than one institution and the credits transfer to a single degree (e.g. medicine started at Umeå, continued at Uppsala). Render order is preserved.",
+          "items": { "$ref": "#/$defs/educationSegment" }
+        },
         "aliases": { "$ref": "#/$defs/aliasList" }
+      }
+    },
+    "educationSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["institution", "credits", "startDate", "endDate"],
+      "description": "One per-institution slice of a multi-institution program. Carries the institution that awarded the slice, its date span, the credits earned within it, optional notes, and the course list studied there.",
+      "properties": {
+        "institution": { "$ref": "#/$defs/localizedString" },
+        "credits": {
+          "type": "string",
+          "minLength": 1,
+          "description": "ECTS credits earned at this institution within the program."
+        },
+        "startDate": { "$ref": "#/$defs/yearMonth" },
+        "endDate": { "$ref": "#/$defs/yearMonth" },
+        "notes": { "$ref": "#/$defs/localizedString" },
+        "courses": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/programCourse" }
+        }
       }
     },
     "programCourse": {

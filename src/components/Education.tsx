@@ -1,5 +1,9 @@
 import type { Education as EducationItem } from "../data/cv.types";
 import { formatRange } from "../utils/date";
+import {
+  educationCourseCount,
+  educationInstitutions,
+} from "../utils/education";
 import { useLang } from "../utils/i18n";
 import { CategoryGlyph } from "./CategoryGlyph";
 import { Section } from "./Section";
@@ -29,13 +33,17 @@ export function Education({
     <Section id="education" title={title} category="education">
       <ul className="education-list">
         {education.map((item) => {
-          const courseCount = item.courses?.length ?? 0;
+          const courseCount = educationCourseCount(item);
           const hasCourses = courseCount > 0;
-          const hasNotes = !!item.notes;
+          const hasNotes =
+            !!item.notes || (item.segments ?? []).some((s) => s.notes);
           const isClickable = hasCourses || hasNotes;
           const field = t(item.field);
+          const institutionLabel = educationInstitutions(item)
+            .map((inst) => t(inst))
+            .join(" · ");
           return (
-            <li key={`${item.institution.en}-${item.startDate}`}>
+            <li key={`${institutionLabel}-${item.startDate}`}>
               <span className="card-glyph-bar" aria-hidden="true">
                 <CategoryGlyph category="education" />
               </span>
@@ -53,7 +61,7 @@ export function Education({
                     </span>
                   </div>
                   <p className="education-meta-trail">
-                    {t(item.institution)} · {t(item.level)} ·{" "}
+                    {institutionLabel} · {t(item.level)} ·{" "}
                     <span className="education-credits">
                       {roundCredits(item.credits)}
                     </span>
@@ -73,7 +81,7 @@ export function Education({
                     </span>
                   </div>
                   <p className="education-meta-trail">
-                    {t(item.institution)} · {t(item.level)} ·{" "}
+                    {institutionLabel} · {t(item.level)} ·{" "}
                     <span className="education-credits">
                       {roundCredits(item.credits)}
                     </span>

@@ -233,6 +233,17 @@ true` renders the link as a pill (used for the blog link). The
 - Same add/update/remove pattern as `experience[]`, but `endDate` is
   required (no "present" support — if in progress today, say so in
   a top-level `summary` addition instead).
+- **Multi-institution programs.** When the same program (one degree
+  goal, transferable credits) was studied at more than one
+  institution, model it as a single `education` entry with
+  `segments[]` instead of one entry per institution. Omit the
+  parent's `institution` and list each institution under
+  `segments[]` with its own `institution`, `credits`, `startDate`,
+  `endDate`, optional `notes`, and optional `courses[]`. The parent
+  keeps the aggregated `credits`, the overall `startDate`/`endDate`
+  span, and any `degreeType`/`totalCredits`/`thesis`/`minor` that
+  apply to the whole degree. The card renders the joined
+  institutions and the modal renders one sub-section per segment.
 
 ### `skills[]`
 

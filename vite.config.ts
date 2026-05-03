@@ -53,10 +53,14 @@ function buildAlumniOf(): Array<{ "@type": string; name: string }> {
   const seen = new Set<string>();
   const result: Array<{ "@type": string; name: string }> = [];
   for (const edu of cv.education) {
-    const name = edu.institution.en;
-    if (!seen.has(name)) {
-      seen.add(name);
-      result.push({ "@type": "EducationalOrganization", name });
+    const names = edu.institution
+      ? [edu.institution.en]
+      : (edu.segments ?? []).map((s) => s.institution.en);
+    for (const name of names) {
+      if (!seen.has(name)) {
+        seen.add(name);
+        result.push({ "@type": "EducationalOrganization", name });
+      }
     }
   }
   return result;

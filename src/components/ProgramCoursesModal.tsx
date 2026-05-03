@@ -3,10 +3,16 @@ import { useEffect, useRef } from "react";
 import type {
   CourseModule,
   Education as EducationItem,
+  EducationSegment,
+  ProgramCourse,
 } from "../data/cv.types";
 import { educationTimelineId } from "../data/timeline-ids";
 import { categoryStyle } from "../utils/categoryStyle";
 import { formatMonth, formatRange } from "../utils/date";
+import {
+  educationCourseGroups,
+  educationInstitutions,
+} from "../utils/education";
 import { useLang } from "../utils/i18n";
 import { navigate } from "../utils/route";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
@@ -62,7 +68,13 @@ export function ProgramCoursesModal({
   if (!program) return null;
 
   const field = t(program.field);
-  const courses = program.courses ?? [];
+  const courseGroups = educationCourseGroups(program);
+  const totalCourseCount = courseGroups.reduce(
+    (sum, g) => sum + g.courses.length,
+    0,
+  );
+  const institutions = educationInstitutions(program);
+  const institutionLabel = institutions.map((inst) => t(inst)).join(" · ");
   const timelineId = educationTimelineId(program);
 
   return (
@@ -102,7 +114,7 @@ export function ProgramCoursesModal({
           </div>
           <section className="program-modal-summary">
             <p className="skill-modal-description">
-              {t(program.institution)} · {t(program.level)} ·{" "}
+              {institutionLabel} · {t(program.level)} ·{" "}
               <EctsPill
                 credits={program.credits}
                 context={{ kind: "program", program }}
@@ -128,145 +140,193 @@ export function ProgramCoursesModal({
               </ModalLink>
             </div>
           )}
-          {courses.length > 0 && (
+          {courseGroups.length > 0 && (
             <section className="company-modal-stack program-courses-section">
               <h3 className="company-modal-stack-title">
-                {ui.programModal.coursesSummary(courses.length)}
+                {ui.programModal.coursesSummary(totalCourseCount)}
               </h3>
-              <ul className="program-courses-list">
-                {courses.map((course) => {
-                  const modules = course.modules ?? [];
-                  const hasModules = modules.length > 0;
-                  const incomplete = course.completed === false;
-                  const partial =
-                    incomplete ||
-                    (hasModules &&
-                      !course.completedDate &&
-                      modules.some((m) => !m.completedDate));
-                  const earned = hasModules
-                    ? sumCredits(
-                        modules.filter((m) => m.completedDate),
-                        course.credits,
-                      )
-                    : null;
-                  return (
-                    <li key={course.code} className="program-course-item">
-                      <div className="program-course-head">
-                        <h3 className="program-course-name">
-                          {t(course.name)}
-                        </h3>
-                        <span className="program-course-date">
-                          {course.completedDate
-                            ? formatMonth(course.completedDate, lang)
-                            : partial
-                              ? ui.programModal.moduleNotCompleted
-                              : ui.programModal.inProgress}
-                        </span>
-                      </div>
-                      <div className="program-course-meta">
-                        <span className="program-course-code">
-                          {course.code}
-                        </span>
-                        <EctsPill
-                          credits={course.credits}
-                          context={{ kind: "course", credits: course.credits }}
-                          onOpen={onEctsClick}
-                        />
-                        {incomplete && (
-                          <span className="course-incomplete-pill">
-                            {ui.programModal.incomplete}
-                          </span>
-                        )}
-                        {partial && earned && (
-                          <span className="program-course-progress">
-                            {ui.programModal.courseProgress(
-                              earned,
-                              course.credits,
-                            )}
-                          </span>
-                        )}
-                        {course.grade && (
-                          <span className="program-course-grade">
-                            <span className="program-course-grade-label">
-                              {ui.programModal.grade}
-                            </span>
-                            <span className="program-course-grade-value">
-                              {course.grade}
-                            </span>
-                          </span>
-                        )}
-                      </div>
-                      {hasModules && (
-                        <div className="program-course-modules">
-                          <p className="program-course-modules-label">
-                            {ui.programModal.modules}
-                          </p>
-                          <ul className="program-module-list">
-                            {modules.map((mod, index) => (
-                              <li
-                                key={mod.code ?? `${course.code}-${index}`}
-                                className={
-                                  mod.completedDate
-                                    ? "program-module-item"
-                                    : "program-module-item program-module-item--pending"
-                                }
-                              >
-                                <span className="program-module-name">
-                                  {t(mod.name)}
-                                </span>
-                                <span className="program-module-meta">
-                                  {mod.code && (
-                                    <span className="program-module-code">
-                                      {mod.code}
-                                    </span>
-                                  )}
-                                  <EctsPill
-                                    credits={mod.credits}
-                                    context={{
-                                      kind: "course",
-                                      credits: mod.credits,
-                                    }}
-                                    onOpen={onEctsClick}
-                                  />
-                                  <span className="program-module-date">
-                                    {mod.completedDate
-                                      ? formatMonth(mod.completedDate, lang)
-                                      : ui.programModal.moduleNotCompleted}
-                                  </span>
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {course.skills && course.skills.length > 0 && (
-                        <section className="skill-modal-group program-course-skills">
-                          <h3 className="skill-modal-group-heading">
-                            {ui.programModal.skills}
-                          </h3>
-                          <ul className="entry-skills">
-                            {course.skills.map((skill) => (
-                              <li key={skill}>
-                                <button
-                                  type="button"
-                                  className="entry-skill-btn"
-                                  onClick={() => onSkillClick(skill)}
-                                >
-                                  {skill}
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
-                        </section>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
+              {courseGroups.map((group, groupIndex) => (
+                <CourseGroup
+                  key={
+                    group.segment
+                      ? `${group.segment.institution.en}-${group.segment.startDate}`
+                      : `group-${groupIndex}`
+                  }
+                  segment={group.segment}
+                  courses={group.courses}
+                  onSkillClick={onSkillClick}
+                  onEctsClick={onEctsClick}
+                />
+              ))}
             </section>
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+type CourseGroupProps = {
+  segment: EducationSegment | null;
+  courses: ProgramCourse[];
+  onSkillClick: (skill: string) => void;
+  onEctsClick: (context: EctsContext) => void;
+};
+
+function CourseGroup({
+  segment,
+  courses,
+  onSkillClick,
+  onEctsClick,
+}: CourseGroupProps) {
+  const { lang, t, ui } = useLang();
+  return (
+    <div className="program-segment">
+      {segment && (
+        <header className="program-segment-head">
+          <h4 className="program-segment-institution">
+            {t(segment.institution)}
+          </h4>
+          <p className="program-segment-meta">
+            <span>{formatRange(segment.startDate, segment.endDate, lang)}</span>
+            {" · "}
+            <EctsPill
+              credits={segment.credits}
+              context={{ kind: "course", credits: segment.credits }}
+              onOpen={onEctsClick}
+            />
+          </p>
+          {segment.notes && (
+            <p className="program-modal-notes program-segment-notes">
+              <NoteIcon />
+              <span>{t(segment.notes)}</span>
+            </p>
+          )}
+        </header>
+      )}
+      <ul className="program-courses-list">
+        {courses.map((course) => {
+          const modules = course.modules ?? [];
+          const hasModules = modules.length > 0;
+          const incomplete = course.completed === false;
+          const partial =
+            incomplete ||
+            (hasModules &&
+              !course.completedDate &&
+              modules.some((m) => !m.completedDate));
+          const earned = hasModules
+            ? sumCredits(
+                modules.filter((m) => m.completedDate),
+                course.credits,
+              )
+            : null;
+          return (
+            <li key={course.code} className="program-course-item">
+              <div className="program-course-head">
+                <h3 className="program-course-name">{t(course.name)}</h3>
+                <span className="program-course-date">
+                  {course.completedDate
+                    ? formatMonth(course.completedDate, lang)
+                    : partial
+                      ? ui.programModal.moduleNotCompleted
+                      : ui.programModal.inProgress}
+                </span>
+              </div>
+              <div className="program-course-meta">
+                <span className="program-course-code">{course.code}</span>
+                <EctsPill
+                  credits={course.credits}
+                  context={{ kind: "course", credits: course.credits }}
+                  onOpen={onEctsClick}
+                />
+                {incomplete && (
+                  <span className="course-incomplete-pill">
+                    {ui.programModal.incomplete}
+                  </span>
+                )}
+                {partial && earned && (
+                  <span className="program-course-progress">
+                    {ui.programModal.courseProgress(earned, course.credits)}
+                  </span>
+                )}
+                {course.grade && (
+                  <span className="program-course-grade">
+                    <span className="program-course-grade-label">
+                      {ui.programModal.grade}
+                    </span>
+                    <span className="program-course-grade-value">
+                      {course.grade}
+                    </span>
+                  </span>
+                )}
+              </div>
+              {hasModules && (
+                <div className="program-course-modules">
+                  <p className="program-course-modules-label">
+                    {ui.programModal.modules}
+                  </p>
+                  <ul className="program-module-list">
+                    {modules.map((mod, index) => (
+                      <li
+                        key={mod.code ?? `${course.code}-${index}`}
+                        className={
+                          mod.completedDate
+                            ? "program-module-item"
+                            : "program-module-item program-module-item--pending"
+                        }
+                      >
+                        <span className="program-module-name">
+                          {t(mod.name)}
+                        </span>
+                        <span className="program-module-meta">
+                          {mod.code && (
+                            <span className="program-module-code">
+                              {mod.code}
+                            </span>
+                          )}
+                          <EctsPill
+                            credits={mod.credits}
+                            context={{
+                              kind: "course",
+                              credits: mod.credits,
+                            }}
+                            onOpen={onEctsClick}
+                          />
+                          <span className="program-module-date">
+                            {mod.completedDate
+                              ? formatMonth(mod.completedDate, lang)
+                              : ui.programModal.moduleNotCompleted}
+                          </span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {course.skills && course.skills.length > 0 && (
+                <section className="skill-modal-group program-course-skills">
+                  <h3 className="skill-modal-group-heading">
+                    {ui.programModal.skills}
+                  </h3>
+                  <ul className="entry-skills">
+                    {course.skills.map((skill) => (
+                      <li key={skill}>
+                        <button
+                          type="button"
+                          className="entry-skill-btn"
+                          onClick={() => onSkillClick(skill)}
+                        >
+                          {skill}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

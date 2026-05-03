@@ -98,10 +98,14 @@ export function buildSkillUsageMap(
   }
 
   for (const ed of cv.education) {
+    const educationLabel: LocalizedString = ed.institution ?? {
+      en: (ed.segments ?? []).map((s) => s.institution.en).join(" · "),
+      sv: (ed.segments ?? []).map((s) => s.institution.sv).join(" · "),
+    };
     for (const skill of ed.skills ?? []) {
       push(skill, {
         kind: "education",
-        label: ed.institution,
+        label: educationLabel,
         startDate: ed.startDate,
         endDate: ed.endDate,
       });

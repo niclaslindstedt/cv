@@ -76,9 +76,13 @@ cv.experience.forEach((e, i) => {
     checkStack(`experience[${i}].assignments[${j}] (${clientLabel})`, a.stack);
   });
 });
-(cv.education ?? []).forEach((ed, i) =>
-  check(`education[${i}] (${ed.institution.en})`, ed.skills),
-);
+(cv.education ?? []).forEach((ed, i) => {
+  const label =
+    ed.institution?.en ??
+    (ed.segments ?? []).map((s) => s.institution.en).join(" + ") ??
+    ed.field.en;
+  check(`education[${i}] (${label})`, ed.skills);
+});
 
 const detailKeys = Object.keys(cv.skillDetails ?? {});
 for (const key of detailKeys) {
