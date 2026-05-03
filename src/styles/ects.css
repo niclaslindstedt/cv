@@ -33,10 +33,6 @@
   max-width: 640px;
 }
 
-.ects-modal-intro {
-  padding: 14px 20px 4px;
-}
-
 .ects-section-heading {
   margin: 0 0 8px;
   font-size: 0.78rem;
@@ -46,10 +42,9 @@
 }
 
 .ects-program {
-  padding: 14px 20px 18px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--modal-stack-gap);
 }
 
 .ects-program-meta {
@@ -70,7 +65,7 @@
 
 .ects-bar-wrap {
   position: relative;
-  margin: 28px 0 24px;
+  margin: 4px 0;
   padding: 0 8px;
 }
 
@@ -283,10 +278,9 @@
 }
 
 .ects-course {
-  padding: 14px 20px 18px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--modal-stack-gap);
 }
 
 .ects-course-line {
@@ -342,11 +336,6 @@
 }
 
 @media (max-width: 520px) {
-  .ects-program {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   .ects-bar-wrap {
     padding: 0;
   }

@@ -96,9 +96,7 @@ export function EctsModal({ context, onClose }: Props) {
           </button>
         </header>
         <div className="skill-modal-body">
-          <section className="ects-modal-intro">
-            <p className="skill-modal-description">{ui.ects.intro}</p>
-          </section>
+          <p className="skill-modal-description">{ui.ects.intro}</p>
           {context.kind === "program" ? (
             <ProgramView program={context.program} />
           ) : (
@@ -376,18 +374,20 @@ function PowerBar({ slices, total, fillPct, milestones }: PowerBarProps) {
   }
   return (
     <div className="ects-bar-wrap">
-      <div className="ects-bar-milestones" aria-hidden="true">
-        {milestones.map((m) => (
-          <span
-            key={m.value}
-            className="ects-bar-milestone"
-            style={{ left: pct(m.value) }}
-          >
-            <span className="ects-bar-milestone-label">{m.label}</span>
-            <span className="ects-bar-milestone-tick" />
-          </span>
-        ))}
-      </div>
+      {milestones.length > 0 && (
+        <div className="ects-bar-milestones" aria-hidden="true">
+          {milestones.map((m) => (
+            <span
+              key={m.value}
+              className="ects-bar-milestone"
+              style={{ left: pct(m.value) }}
+            >
+              <span className="ects-bar-milestone-label">{m.label}</span>
+              <span className="ects-bar-milestone-tick" />
+            </span>
+          ))}
+        </div>
+      )}
       <div
         className="ects-bar"
         role="img"
