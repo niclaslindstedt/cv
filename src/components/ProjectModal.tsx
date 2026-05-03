@@ -111,9 +111,6 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
         </header>
         <div className="skill-modal-body" tabIndex={0}>
           <section className="skill-modal-detail">
-            <p className="skill-modal-description">
-              {renderInlineCode(t(project.description))}
-            </p>
             {(hasDateRange || hasCommits) && (
               <div className="timeline-meta experience-modal-meta">
                 {hasDateRange && (
@@ -132,6 +129,9 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                 )}
               </div>
             )}
+            <p className="skill-modal-description">
+              {renderInlineCode(t(project.description))}
+            </p>
             {(project.homepage || project.openSource || hasRegistryLinks) && (
               <div className="project-modal-actions">
                 {project.homepage && (
