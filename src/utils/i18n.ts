@@ -452,7 +452,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         credited: "credited",
       },
       programExplainer:
-        "Filled segments were completed or credited from prior learning; outlined segments were skipped or not reached. The minor subject and thesis are the last hurdles before a degree is awarded.",
+        "Filled segments were completed or credited from prior learning; outlined segments were skipped or not reached.",
       creditedHeading: "Credit transfers",
       creditedFrom: (source) => `credited from ${source}`,
       conversionHeading: "ECTS conversion",
@@ -719,7 +719,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         credited: "tillgodoräknat",
       },
       programExplainer:
-        "Fyllda segment är avklarade eller tillgodoräknade från tidigare studier; konturerade segment hoppades över eller hanns inte med. Biämnet och examensarbetet är de sista stegen innan examen utfärdas.",
+        "Fyllda segment är avklarade eller tillgodoräknade från tidigare studier; konturerade segment hoppades över eller hanns inte med.",
       creditedHeading: "Tillgodoräknat",
       creditedFrom: (source) => `tillgodoräknat från ${source}`,
       conversionHeading: "Omräkning av ECTS",
