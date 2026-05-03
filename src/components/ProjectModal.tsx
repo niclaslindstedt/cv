@@ -146,21 +146,8 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                 )}
               </dl>
             )}
-            {(project.homepage ||
-              project.openSource ||
-              hasRegistryLinks ||
-              timelineId) && (
+            {(project.homepage || project.openSource || hasRegistryLinks) && (
               <div className="project-modal-actions">
-                {timelineId && (
-                  <ModalLink
-                    onClick={() => {
-                      onClose();
-                      navigate(`/timeline#${timelineId}`);
-                    }}
-                  >
-                    {ui.timeline.seeInTimeline}
-                  </ModalLink>
-                )}
                 {project.homepage && (
                   <ModalLink href={project.homepage}>
                     {ui.projectModal.visitSite}
@@ -241,6 +228,18 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                     </li>
                   ))}
                 </ul>
+              </div>
+            )}
+            {timelineId && (
+              <div className="skill-modal-actions">
+                <ModalLink
+                  onClick={() => {
+                    onClose();
+                    navigate(`/timeline#${timelineId}`);
+                  }}
+                >
+                  {ui.timeline.seeInTimeline}
+                </ModalLink>
               </div>
             )}
           </section>
