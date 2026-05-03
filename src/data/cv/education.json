@@ -12,7 +12,7 @@
       "en": "Bachelor's program",
       "sv": "Kandidatprogram"
     },
-    "credits": "157.5 ECTS",
+    "credits": "165 ECTS",
     "degreeType": "bachelor",
     "totalCredits": "180 ECTS",
     "minor": {
@@ -24,6 +24,26 @@
       "credits": "15 ECTS",
       "status": "skipped"
     },
+    "credited": [
+      {
+        "name": {
+          "en": "IT Law",
+          "sv": "IT-rätt"
+        },
+        "code": "2HR118",
+        "credits": "7.5 ECTS",
+        "from": {
+          "en": "Online Introduction to Law",
+          "sv": "Nätbaserad juridisk översiktskurs"
+        },
+        "fromCode": "2JF068",
+        "fromCredits": "15 ECTS",
+        "note": {
+          "en": "Took the 15 ECTS online Introduction to Law course alongside the program; 7.5 ECTS were transferred to cover the IT Law course slot.",
+          "sv": "Läste den nätbaserade juridiska översiktskursen (15 ECTS) parallellt med programmet; 7,5 ECTS tillgodoräknades och täckte kursen IT-rätt."
+        }
+      }
+    ],
     "startDate": "2014-08",
     "endDate": "2017-06",
     "notes": {
@@ -174,15 +194,6 @@
         "code": "2IS033",
         "credits": "7.5 ECTS",
         "completedDate": "2017-03"
-      },
-      {
-        "name": {
-          "en": "IT Law",
-          "sv": "IT-rätt"
-        },
-        "code": "2HR118",
-        "credits": "7.5 ECTS",
-        "completed": false
       }
     ],
     "aliases": ["informatics", "is", "informationssystem"]
