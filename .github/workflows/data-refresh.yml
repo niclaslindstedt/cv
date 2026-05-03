@@ -1,0 +1,105 @@
+name: Data refresh
+
+# Sole writer to the `data-cache` branch. Runs once a day to refresh the
+# GitHub-derived JSONs (github-activity.json, project-stats.json), then
+# commits them to data-cache. pages.yml and ci.yml read from that branch
+# instead of calling the GraphQL API on every push, which is what was
+# burning the rate-limit budget and corrupting earlier deploys' data.
+#
+# In steady state this job is cheap: the generators (see #399) reuse cached
+# years and skip repos whose head SHA hasn't changed. Use the `full` input
+# (or workflow_dispatch with full=true) to force a full backfill — useful
+# if the cache ever gets corrupted.
+
+on:
+  schedule:
+    # 05:17 UTC — odd minute to dodge top-of-hour cron contention.
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+    inputs:
+      full:
+        description: "Bypass incremental cache (full backfill)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Seed src/data with previous data-cache snapshot
+        # Lets the generators run incrementally (only refetching volatile
+        # years and repos with changed head SHAs).
+        run: |
+          set -e
+          if git fetch origin data-cache --depth 1 2>/dev/null; then
+            mkdir -p src/data
+            git show origin/data-cache:src/data/github-activity.json \
+              > src/data/github-activity.json 2>/dev/null || true
+            git show origin/data-cache:src/data/project-stats.json \
+              > src/data/project-stats.json 2>/dev/null || true
+            echo "Seeded with previous data-cache JSONs."
+          else
+            echo "data-cache branch not found — first run, full backfill."
+          fi
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Refresh GitHub-derived JSONs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
+          FULL_REFRESH: ${{ inputs.full && '1' || '0' }}
+        run: |
+          node scripts/generate-github-activity.mjs
+          node scripts/generate-project-stats.mjs
+
+      - name: Publish to data-cache branch
+        run: |
+          set -e
+          ACTIVITY=src/data/github-activity.json
+          STATS=src/data/project-stats.json
+          if [ ! -f "$ACTIVITY" ] && [ ! -f "$STATS" ]; then
+            echo "Both generators failed — nothing to publish."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/data-cache-payload
+          [ -f "$ACTIVITY" ] && cp "$ACTIVITY" /tmp/data-cache-payload/
+          [ -f "$STATS" ]    && cp "$STATS"    /tmp/data-cache-payload/
+          if git ls-remote --exit-code --heads origin data-cache >/dev/null 2>&1; then
+            git fetch origin data-cache --depth 1
+            git worktree add /tmp/data-cache-wt data-cache
+          else
+            git worktree add --orphan -b data-cache /tmp/data-cache-wt
+            (cd /tmp/data-cache-wt && git rm -rf . >/dev/null 2>&1 || true)
+          fi
+          mkdir -p /tmp/data-cache-wt/src/data
+          [ -f /tmp/data-cache-payload/github-activity.json ] && \
+            cp /tmp/data-cache-payload/github-activity.json /tmp/data-cache-wt/src/data/
+          [ -f /tmp/data-cache-payload/project-stats.json ] && \
+            cp /tmp/data-cache-payload/project-stats.json /tmp/data-cache-wt/src/data/
+          cd /tmp/data-cache-wt
+          git add src/data/github-activity.json src/data/project-stats.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+          else
+            git commit -m "chore(data-cache): refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push origin data-cache
+          fi

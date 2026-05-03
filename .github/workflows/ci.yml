@@ -13,19 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - name: Restore data-cache JSONs
+        # See pages.yml for rationale. CI must not call the GraphQL API on
+        # every PR push — that's where the rate-limit budget gets burned.
+        # The daily data-refresh.yml job is the sole writer to `data-cache`.
+        run: |
+          set -e
+          if git fetch origin data-cache --depth 1 2>/dev/null; then
+            mkdir -p src/data
+            git show origin/data-cache:src/data/github-activity.json \
+              > src/data/github-activity.json 2>/dev/null || true
+            git show origin/data-cache:src/data/project-stats.json \
+              > src/data/project-stats.json 2>/dev/null || true
+            echo "Restored data-cache JSONs:"
+            ls -la src/data/github-activity.json src/data/project-stats.json \
+              2>/dev/null || echo "  (none restored)"
+          else
+            echo "data-cache branch not found — proceeding without prefetch."
+          fi
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
       - run: make fmt-check
       - run: make validate
       - run: make lint
       - run: make build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
       - run: make test
