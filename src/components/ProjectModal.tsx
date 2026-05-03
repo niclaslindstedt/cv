@@ -4,6 +4,7 @@ import projectStatsData from "../data/project-stats.json";
 import type { Project, ProjectStatsFile } from "../data/cv.types";
 import { projectTimelineId } from "../data/timeline-ids";
 import { categoryStyle } from "../utils/categoryStyle";
+import { formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
 import { aggregateProjectStats } from "../utils/projectStats";
@@ -14,7 +15,6 @@ import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
 import { CategoryGlyph } from "./CategoryGlyph";
 import { ModalLink } from "./ModalLink";
-import { ProjectDateChip } from "./ProjectDateChip";
 
 const projectStats = projectStatsData as ProjectStatsFile;
 
@@ -115,36 +115,22 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
               {renderInlineCode(t(project.description))}
             </p>
             {(hasDateRange || hasCommits) && (
-              <dl className="project-meta">
+              <div className="timeline-meta experience-modal-meta">
                 {hasDateRange && (
-                  <div className="project-meta-row">
-                    <dt>{ui.projectModal.active}</dt>
-                    <dd>
-                      <ProjectDateChip
-                        iso={stats!.firstCommitDate!}
-                        lang={lang}
-                      />
-                      <span className="project-date-sep" aria-hidden="true">
-                        –
-                      </span>
-                      <ProjectDateChip
-                        iso={stats!.lastCommitDate!}
-                        lang={lang}
-                      />
-                    </dd>
-                  </div>
+                  <span>
+                    {formatRange(
+                      stats!.firstCommitDate!.slice(0, 7),
+                      stats!.lastCommitDate!.slice(0, 7),
+                      lang,
+                    )}
+                  </span>
                 )}
                 {hasCommits && (
-                  <div className="project-meta-row">
-                    <dt>{ui.projectModal.commits}</dt>
-                    <dd>
-                      <span className="project-commit-total">
-                        {stats!.totalCommits}
-                      </span>
-                    </dd>
-                  </div>
+                  <span className="timeline-engagement">
+                    {ui.timeline.commits(stats!.totalCommits)}
+                  </span>
                 )}
-              </dl>
+              </div>
             )}
             {(project.homepage || project.openSource || hasRegistryLinks) && (
               <div className="project-modal-actions">

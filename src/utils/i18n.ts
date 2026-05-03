@@ -116,8 +116,6 @@ type UiStrings = {
     viewOnNpm: string;
     viewOnNuGet: string;
     visitSite: string;
-    active: string;
-    commits: string;
     stack: string;
     skills: string;
   };
@@ -347,8 +345,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewOnNpm: "View on npm ↗",
       viewOnNuGet: "View on NuGet ↗",
       visitSite: "Visit site ↗",
-      active: "Active",
-      commits: "Commits",
       stack: "Stack",
       skills: "Skills used",
     },
@@ -618,8 +614,6 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewOnNpm: "Visa på npm ↗",
       viewOnNuGet: "Visa på NuGet ↗",
       visitSite: "Besök sajten ↗",
-      active: "Aktiv",
-      commits: "Commits",
       stack: "Stack",
       skills: "Använda kompetenser",
     },
