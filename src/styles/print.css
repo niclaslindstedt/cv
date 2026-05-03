@@ -253,8 +253,6 @@
     letter-spacing: 0.06em;
     color: #555;
     margin: 0 0 4pt;
-    break-after: avoid;
-    page-break-after: avoid;
   }
 
   .print-assignments {
@@ -264,6 +262,9 @@
     border-left: 1px solid #ccc;
   }
 
+  /* Each assignment stays whole on one page; the list itself is allowed to
+     split between assignments so the parent role isn't followed by a large
+     blank when the next assignment doesn't fit. */
   .print-assignment {
     padding: 0 0 0 10pt;
     margin: 0 0 var(--print-spacing-subentry, 8pt);

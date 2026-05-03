@@ -52,7 +52,7 @@ function buildSettingsCss(s: PrintSettings): string {
   }
   if (!pb.keepHeadingWithNext) {
     overrides.push(
-      ".print-section-title, .print-assignments-heading, .print-job-header { break-after: auto !important; page-break-after: auto !important; }",
+      ".print-section-title, .print-job-header { break-after: auto !important; page-break-after: auto !important; }",
     );
   }
   return `
