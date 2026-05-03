@@ -10,6 +10,7 @@ import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
 import { CategoryGlyph } from "./CategoryGlyph";
+import { CourseCode } from "./CourseCode";
 import { EctsPill, type EctsContext } from "./EctsPill";
 import { ModalLink } from "./ModalLink";
 
@@ -159,7 +160,10 @@ export function CourseModulesModal({
               />
             </p>
             <div className="program-course-meta">
-              <span className="program-course-code">{course.code}</span>
+              <CourseCode
+                code={course.code}
+                university={t(course.institution)}
+              />
               {course.engagement !== undefined && (
                 <span className="education-credits">
                   {Math.round(course.engagement * 100)}%
@@ -243,7 +247,11 @@ export function CourseModulesModal({
                     <span className="program-module-name">{t(mod.name)}</span>
                     <span className="program-module-meta">
                       {mod.code && (
-                        <span className="program-module-code">{mod.code}</span>
+                        <CourseCode
+                          code={mod.code}
+                          university={t(course.institution)}
+                          variant="module"
+                        />
                       )}
                       <EctsPill
                         credits={mod.credits}
