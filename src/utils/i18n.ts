@@ -92,7 +92,7 @@ type UiStrings = {
     detailAria: (company: string) => string;
     visitWebsite: string;
     stack: string;
-    terminated: string;
+    discontinued: string;
   };
   experienceModal: {
     detailAria: (title: string) => string;
@@ -323,7 +323,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       detailAria: (company) => `${company} details`,
       visitWebsite: "Visit website ↗",
       stack: "Stack",
-      terminated: "Discontinued",
+      discontinued: "Discontinued",
     },
     experienceModal: {
       detailAria: (title) => `${title} — experience details`,
@@ -596,7 +596,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       detailAria: (company) => `Detaljer för ${company}`,
       visitWebsite: "Besök webbplats ↗",
       stack: "Stack",
-      terminated: "Avvecklat",
+      discontinued: "Avvecklat",
     },
     experienceModal: {
       detailAria: (title) => `${title} — anställningsdetaljer`,

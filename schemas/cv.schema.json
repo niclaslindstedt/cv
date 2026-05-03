@@ -320,7 +320,10 @@
         "tagline": { "$ref": "#/$defs/localizedString" },
         "description": { "$ref": "#/$defs/localizedString" },
         "url": { "type": "string", "format": "uri" },
-        "terminated": { "type": "boolean" },
+        "discontinued": {
+          "type": "boolean",
+          "description": "True if the company has been shut down and discontinued (i.e. no longer exists as a going concern). Not a statement about the employment relationship."
+        },
         "stack": { "$ref": "#/$defs/stackList" },
         "sourceUrls": {
           "type": "array",
