@@ -48,6 +48,8 @@ import {
   buildSkillUsageMap,
   buildUnusedStackOnlySet,
   buildUnusedStackUsageMap,
+  type SkillUsage,
+  type UnusedStackLocation,
 } from "./utils/skills";
 import { useTheme } from "./utils/theme";
 
@@ -171,6 +173,50 @@ export function App() {
       }
     }
   };
+
+  // Routes a "Used in" pill click in the SkillModal to the corresponding
+  // destination modal without closing the skill modal — closing the
+  // destination then restores the skill modal underneath, so a recruiter
+  // can navigate back-and-forth across projects/jobs that share a skill.
+  const handleSkillUsageClick = (
+    kind: SkillUsage["kind"] | UnusedStackLocation["kind"],
+    openerKey: string,
+  ) => {
+    switch (kind) {
+      case "project": {
+        const project = projectsByName.get(openerKey);
+        if (project) setSelectedProject(project);
+        return;
+      }
+      case "experience":
+      case "assignment": {
+        const experience = experienceByKey.get(openerKey);
+        if (experience) setSelectedExperience(experience);
+        return;
+      }
+      case "education": {
+        const program = educationByFieldEn.get(openerKey);
+        if (program) setSelectedProgram(program);
+        return;
+      }
+      case "course": {
+        const course = courseByNameEn.get(openerKey);
+        if (course) setSelectedCourse(course);
+        return;
+      }
+    }
+  };
+
+  const skillModalInert =
+    summaryOpen ||
+    selectedFocus !== null ||
+    selectedProgram !== null ||
+    selectedCourse !== null ||
+    selectedCompany !== null ||
+    selectedProject !== null ||
+    selectedExperience !== null ||
+    selectedLanguage !== null ||
+    ectsContext !== null;
 
   const anyDestinationModalOpen =
     summaryOpen ||
@@ -322,7 +368,9 @@ export function App() {
             ? (cv.skillDetails as Record<string, SkillDetail>)[selectedSkill]
             : undefined
         }
+        inert={skillModalInert}
         onClose={() => setSelectedSkill(null)}
+        onUsageClick={handleSkillUsageClick}
       />
       <FocusModal
         focus={selectedFocus}

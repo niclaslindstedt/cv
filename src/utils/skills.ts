@@ -5,6 +5,10 @@ import type {
   RoleTenure,
   StackItem,
 } from "../data/cv.types";
+import {
+  assignmentOpenerKey,
+  experienceOpenerKey,
+} from "../data/opener-keys.mjs";
 import { stackEntries, usedStackNames } from "./stack";
 
 function joinRoleTitles(roles: RoleTenure[]): LocalizedString {
@@ -17,9 +21,25 @@ function joinRoleTitles(roles: RoleTenure[]): LocalizedString {
   };
 }
 
+export type SkillUsageKind =
+  | "project"
+  | "experience"
+  | "assignment"
+  | "education"
+  | "course";
+
 export type SkillUsage = {
-  kind: "project" | "experience" | "assignment" | "education" | "course";
+  kind: SkillUsageKind;
   label: string | LocalizedString;
+  // Stable key identifying the source entity so the skill modal can open
+  // the matching destination modal. Format matches the values used by
+  // `App.handleSearchSelect`:
+  //   project    → project.name
+  //   experience → experienceOpenerKey(exp)
+  //   assignment → assignmentOpenerKey(exp, asg)
+  //   education  → ed.field.en
+  //   course     → course.name.en
+  openerKey: string;
   role?: LocalizedString;
   via?: string;
   startDate?: string;
@@ -27,9 +47,12 @@ export type SkillUsage = {
   fte?: number;
 };
 
+export type UnusedStackKind = "project" | "experience" | "assignment";
+
 export type UnusedStackLocation = {
-  kind: "project" | "experience" | "assignment";
+  kind: UnusedStackKind;
   label: string | LocalizedString;
+  openerKey: string;
   role?: LocalizedString;
   via?: string;
   startDate?: string;
@@ -64,15 +87,21 @@ export function buildSkillUsageMap(
 
   for (const project of cv.projects) {
     for (const tag of uniq(usedStackNames(project.stack), project.skills)) {
-      push(tag, { kind: "project", label: project.name });
+      push(tag, {
+        kind: "project",
+        label: project.name,
+        openerKey: project.name,
+      });
     }
   }
 
   for (const exp of cv.experience) {
+    const expKey = experienceOpenerKey(exp);
     for (const tag of uniq(usedStackNames(exp.stack), exp.skills)) {
       push(tag, {
         kind: "experience",
         label: companyName(exp.companyId),
+        openerKey: expKey,
         role: joinRoleTitles(exp.roles),
         startDate: exp.startDate,
         endDate: exp.endDate,
@@ -80,6 +109,7 @@ export function buildSkillUsageMap(
       });
     }
     for (const assignment of exp.assignments ?? []) {
+      const asgKey = assignmentOpenerKey(exp, assignment);
       for (const tag of uniq(
         usedStackNames(assignment.stack),
         assignment.skills,
@@ -87,6 +117,7 @@ export function buildSkillUsageMap(
         push(tag, {
           kind: "assignment",
           label: companyName(assignment.clientId),
+          openerKey: asgKey,
           via: companyName(exp.companyId),
           role: joinRoleTitles(assignment.roles),
           startDate: assignment.startDate,
@@ -106,6 +137,7 @@ export function buildSkillUsageMap(
       push(skill, {
         kind: "education",
         label: educationLabel,
+        openerKey: ed.field.en,
         startDate: ed.startDate,
         endDate: ed.endDate,
       });
@@ -117,6 +149,7 @@ export function buildSkillUsageMap(
       push(skill, {
         kind: "course",
         label: course.institution,
+        openerKey: course.name.en,
         role: course.name,
         startDate: course.startDate,
         endDate: course.completedDate ?? null,
@@ -208,25 +241,33 @@ export function buildUnusedStackUsageMap(
 
   for (const project of cv.projects) {
     for (const name of unusedNames(project.stack)) {
-      push(name, { kind: "project", label: project.name });
+      push(name, {
+        kind: "project",
+        label: project.name,
+        openerKey: project.name,
+      });
     }
   }
 
   for (const exp of cv.experience) {
+    const expKey = experienceOpenerKey(exp);
     for (const name of unusedNames(exp.stack)) {
       push(name, {
         kind: "experience",
         label: companyName(exp.companyId),
+        openerKey: expKey,
         role: joinRoleTitles(exp.roles),
         startDate: exp.startDate,
         endDate: exp.endDate,
       });
     }
     for (const a of exp.assignments ?? []) {
+      const asgKey = assignmentOpenerKey(exp, a);
       for (const name of unusedNames(a.stack)) {
         push(name, {
           kind: "assignment",
           label: companyName(a.clientId),
+          openerKey: asgKey,
           via: companyName(exp.companyId),
           role: joinRoleTitles(a.roles),
           startDate: a.startDate,
