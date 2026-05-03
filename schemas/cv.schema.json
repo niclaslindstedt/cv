@@ -463,11 +463,15 @@
         "minor": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["credits", "completed"],
+          "required": ["credits", "status"],
           "description": "Minor-subject segment of the program. Set when the program structure includes a minor subject; the EctsModal renders this as a labeled slot on the power bar between the first stretch of main coursework and the rest.",
           "properties": {
             "credits": { "type": "string", "minLength": 1 },
-            "completed": { "type": "boolean" },
+            "status": {
+              "type": "string",
+              "enum": ["completed", "skipped", "credited"],
+              "description": "Whether the segment was `completed` normally, `skipped` (not done — the blue fill jumps over it), or `credited` (Swedish: tillgodoräknad — counted toward the degree from prior learning, so the blue fill covers it like `completed`)."
+            },
             "after": {
               "type": "string",
               "minLength": 1,
@@ -478,11 +482,15 @@
         "thesis": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["credits", "completed"],
+          "required": ["credits", "status"],
           "description": "Thesis segment of the program. Set when the program structure includes a thesis; the EctsModal renders this as a labeled segment on the power bar.",
           "properties": {
             "credits": { "type": "string", "minLength": 1 },
-            "completed": { "type": "boolean" }
+            "status": {
+              "type": "string",
+              "enum": ["completed", "skipped", "credited"],
+              "description": "Whether the segment was `completed` normally, `skipped` (not done — the blue fill jumps over it), or `credited` (Swedish: tillgodoräknad — counted toward the degree from prior learning, so the blue fill covers it like `completed`)."
+            }
           }
         },
         "startDate": { "$ref": "#/$defs/yearMonth" },

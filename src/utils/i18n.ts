@@ -184,7 +184,7 @@ type UiStrings = {
     segmentMain: string;
     segmentMinor: string;
     segmentThesis: string;
-    notCompleted: string;
+    statusLabels: Record<"skipped" | "credited", string>;
     programExplainer: string;
     conversionHeading: string;
     tableEcts: string;
@@ -449,9 +449,12 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       segmentMain: "Main coursework",
       segmentMinor: "Minor subject",
       segmentThesis: "Thesis",
-      notCompleted: "skipped",
+      statusLabels: {
+        skipped: "skipped",
+        credited: "credited",
+      },
       programExplainer:
-        "Filled segments were completed; outlined segments were skipped or not reached. The minor subject and thesis are the last hurdles before a degree is awarded.",
+        "Filled segments were completed or credited from prior learning; outlined segments were skipped or not reached. The minor subject and thesis are the last hurdles before a degree is awarded.",
       conversionHeading: "ECTS conversion",
       tableEcts: "ECTS",
       tableWeeks: "Full-time weeks",
@@ -713,9 +716,12 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       segmentMain: "Huvudkurser",
       segmentMinor: "Biämne",
       segmentThesis: "Examensarbete",
-      notCompleted: "ej avklarat",
+      statusLabels: {
+        skipped: "ej avklarat",
+        credited: "tillgodoräknat",
+      },
       programExplainer:
-        "Fyllda segment är avklarade; konturerade segment hoppades över eller hanns inte med. Biämnet och examensarbetet är de sista stegen innan examen utfärdas.",
+        "Fyllda segment är avklarade eller tillgodoräknade från tidigare studier; konturerade segment hoppades över eller hanns inte med. Biämnet och examensarbetet är de sista stegen innan examen utfärdas.",
       conversionHeading: "Omräkning av ECTS",
       tableEcts: "ECTS",
       tableWeeks: "Heltidsveckor",

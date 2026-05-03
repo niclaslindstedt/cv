@@ -107,13 +107,13 @@
   background: rgba(var(--tl-amber), 0.22);
 }
 
-.ects-bar-segment--missing {
+.ects-bar-segment--skipped {
   background: transparent;
   border: 1px dashed var(--border);
   border-radius: 0;
 }
 
-.ects-bar-segment--missing.ects-bar-segment--minor {
+.ects-bar-segment--skipped.ects-bar-segment--minor {
   border-color: rgba(var(--tl-violet), 0.5);
   background: repeating-linear-gradient(
     -45deg,
@@ -124,7 +124,7 @@
   );
 }
 
-.ects-bar-segment--missing.ects-bar-segment--thesis {
+.ects-bar-segment--skipped.ects-bar-segment--thesis {
   border-color: rgba(var(--tl-amber), 0.5);
   background: repeating-linear-gradient(
     -45deg,
@@ -139,20 +139,26 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.18) 0%,
     rgba(var(--tl-blue), 0.45) 60%,
     rgba(var(--tl-blue), 0.7) 100%
   );
-  border-right: 2px solid rgba(var(--tl-blue), 0.95);
   box-shadow:
     0 0 12px rgba(var(--tl-blue), 0.45),
     inset 0 0 6px rgba(255, 255, 255, 0.15);
-  border-radius: 999px 0 0 999px;
+  border-radius: 999px;
   pointer-events: none;
-  transition: width 320ms ease;
+  transition:
+    width 320ms ease,
+    left 320ms ease;
+}
+
+.ects-bar-fill--tail {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 2px solid rgba(var(--tl-blue), 0.95);
 }
 
 .ects-bar-points {
@@ -197,7 +203,7 @@
   font-size: 0.85rem;
 }
 
-.ects-segment-legend-item--incomplete {
+.ects-segment-legend-item--skipped {
   color: var(--fg-muted);
 }
 
@@ -220,7 +226,7 @@
   background: rgba(var(--tl-amber), 0.55);
 }
 
-.ects-segment-legend-item--incomplete .ects-segment-swatch {
+.ects-segment-legend-item--skipped .ects-segment-swatch {
   background: transparent;
   border: 1px dashed currentColor;
 }
