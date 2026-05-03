@@ -21,18 +21,33 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+      - name: Restore data-cache JSONs
+        # Pulls github-activity.json + project-stats.json from the data-cache
+        # branch (refreshed daily by data-refresh.yml). Deploys must NOT call
+        # the GraphQL API directly — that's how earlier deploys' good data
+        # gets overwritten when GitHub rate-limits us. If the branch doesn't
+        # exist yet, this step is a no-op and the cold-start path runs.
+        run: |
+          set -e
+          if git fetch origin data-cache --depth 1 2>/dev/null; then
+            mkdir -p src/data
+            git show origin/data-cache:src/data/github-activity.json \
+              > src/data/github-activity.json 2>/dev/null || true
+            git show origin/data-cache:src/data/project-stats.json \
+              > src/data/project-stats.json 2>/dev/null || true
+            echo "Restored data-cache JSONs:"
+            ls -la src/data/github-activity.json src/data/project-stats.json \
+              2>/dev/null || echo "  (none restored)"
+          else
+            echo "data-cache branch not found — proceeding without prefetch."
+          fi
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
       - run: make build
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
           VITE_GOATCOUNTER_ENDPOINT: ${{ secrets.VITE_GOATCOUNTER_ENDPOINT }}
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
