@@ -76,7 +76,7 @@
 
 .ects-bar-milestones {
   position: relative;
-  height: 28px;
+  height: 32px;
 }
 
 .ects-bar-milestone {
@@ -99,15 +99,16 @@
   padding: 0 4px;
   white-space: nowrap;
   text-align: center;
+  line-height: 1;
 }
 
 .ects-bar-milestone-tick {
   position: absolute;
-  bottom: 8px;
+  top: 14px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 1px;
-  height: 8px;
   background: var(--fg-muted);
   opacity: 0.6;
 }
@@ -362,8 +363,16 @@
     top: 18px;
   }
 
+  .ects-bar-milestone:nth-child(3n + 2) .ects-bar-milestone-tick {
+    top: 32px;
+  }
+
   .ects-bar-milestone:nth-child(3n) .ects-bar-milestone-label {
     top: 36px;
+  }
+
+  .ects-bar-milestone:nth-child(3n) .ects-bar-milestone-tick {
+    top: 50px;
   }
 
   .ects-bar-milestone:first-child .ects-bar-milestone-label {

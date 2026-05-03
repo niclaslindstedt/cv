@@ -193,11 +193,9 @@ type UiStrings = {
     thisCourseLine: (ects: string, weeks: string, hours: string) => string;
     courseExplainer: string;
     milestones: {
+      bachelor: string;
       magister: string;
       master: string;
-      bachelor: string;
-      masterAfterBachelor: string;
-      twoYearMaster: string;
     };
   };
 };
@@ -461,11 +459,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       courseExplainer:
         "ECTS is calibrated so 1 credit ≈ 25–30 hours of work. Swedish higher-education credits (högskolepoäng) map 1:1 to ECTS.",
       milestones: {
-        magister: "1-yr Magister",
-        master: "2-yr Master coursework",
         bachelor: "Bachelor's",
-        masterAfterBachelor: "1-yr Master",
-        twoYearMaster: "2-yr Master",
+        magister: "Magister",
+        master: "Master",
       },
     },
   },
@@ -725,11 +721,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       courseExplainer:
         "ECTS är kalibrerat så att 1 poäng ≈ 25–30 timmars arbete. Svenska högskolepoäng motsvarar ECTS 1:1.",
       milestones: {
-        magister: "Magisterexamen",
-        master: "Masterkurser",
         bachelor: "Kandidatexamen",
-        masterAfterBachelor: "1-årig master",
-        twoYearMaster: "2-årig master",
+        magister: "Magisterexamen",
+        master: "Masterexamen",
       },
     },
   },

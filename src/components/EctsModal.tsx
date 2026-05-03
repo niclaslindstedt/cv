@@ -9,26 +9,30 @@ import type { EctsContext } from "./EctsPill";
 
 const DEGREE_DEFAULT_TOTAL: Record<DegreeType, number> = {
   bachelor: 180,
-  magister: 60,
-  master: 120,
+  magister: 240,
+  master: 300,
   medical: 330,
   other: 0,
 };
 
 const LADDER_MILESTONES: { value: number; key: keyof MilestoneStrings }[] = [
-  { value: 60, key: "magister" },
-  { value: 120, key: "master" },
   { value: 180, key: "bachelor" },
-  { value: 240, key: "masterAfterBachelor" },
-  { value: 300, key: "twoYearMaster" },
+  { value: 240, key: "magister" },
+  { value: 300, key: "master" },
 ];
 
+const LADDER_DEGREE_TYPES: ReadonlySet<DegreeType> = new Set([
+  "bachelor",
+  "magister",
+  "master",
+]);
+
+const DEFAULT_MINOR_AFTER = 60;
+
 type MilestoneStrings = {
+  bachelor: string;
   magister: string;
   master: string;
-  bachelor: string;
-  masterAfterBachelor: string;
-  twoYearMaster: string;
 };
 
 function parseEcts(value: string | undefined): number | null {
@@ -106,6 +110,105 @@ export function EctsModal({ context, onClose }: Props) {
   );
 }
 
+type SegmentKey = "main" | "minor" | "thesis";
+
+type BarSlice = {
+  key: SegmentKey;
+  credits: number;
+  completed: boolean;
+};
+
+type LegendEntry = {
+  key: SegmentKey;
+  label: string;
+  credits: number;
+  completed: boolean;
+};
+
+function buildSegments(
+  program: EducationItem,
+  total: number,
+  labels: { main: string; minor: string; thesis: string },
+): { slices: BarSlice[]; entries: LegendEntry[] } {
+  const minorSize = parseEcts(program.minor?.credits) ?? 0;
+  const thesisSize = parseEcts(program.thesis?.credits) ?? 0;
+  const mainSize = Math.max(0, total - minorSize - thesisSize);
+  const minorCompleted = program.minor?.completed ?? false;
+  const thesisCompleted = program.thesis?.completed ?? false;
+
+  const slices: BarSlice[] = [];
+  if (program.degreeType === "bachelor" && minorSize > 0 && mainSize > 0) {
+    const requestedAfter =
+      parseEcts(program.minor?.after) ?? DEFAULT_MINOR_AFTER;
+    const mainBeforeMinor = Math.max(0, Math.min(requestedAfter, mainSize));
+    const mainAfterMinor = mainSize - mainBeforeMinor;
+    if (mainBeforeMinor > 0) {
+      slices.push({ key: "main", credits: mainBeforeMinor, completed: true });
+    }
+    slices.push({
+      key: "minor",
+      credits: minorSize,
+      completed: minorCompleted,
+    });
+    if (mainAfterMinor > 0) {
+      slices.push({ key: "main", credits: mainAfterMinor, completed: true });
+    }
+    if (thesisSize > 0) {
+      slices.push({
+        key: "thesis",
+        credits: thesisSize,
+        completed: thesisCompleted,
+      });
+    }
+  } else {
+    if (mainSize > 0) {
+      slices.push({ key: "main", credits: mainSize, completed: true });
+    }
+    if (minorSize > 0) {
+      slices.push({
+        key: "minor",
+        credits: minorSize,
+        completed: minorCompleted,
+      });
+    }
+    if (thesisSize > 0) {
+      slices.push({
+        key: "thesis",
+        credits: thesisSize,
+        completed: thesisCompleted,
+      });
+    }
+  }
+
+  const entries: LegendEntry[] = [];
+  if (mainSize > 0) {
+    entries.push({
+      key: "main",
+      label: labels.main,
+      credits: mainSize,
+      completed: true,
+    });
+  }
+  if (minorSize > 0) {
+    entries.push({
+      key: "minor",
+      label: labels.minor,
+      credits: minorSize,
+      completed: minorCompleted,
+    });
+  }
+  if (thesisSize > 0) {
+    entries.push({
+      key: "thesis",
+      label: labels.thesis,
+      credits: thesisSize,
+      completed: thesisCompleted,
+    });
+  }
+
+  return { slices, entries };
+}
+
 function ProgramView({ program }: { program: EducationItem }) {
   const { t, ui } = useLang();
   const earned = parseEcts(program.credits) ?? 0;
@@ -114,45 +217,19 @@ function ProgramView({ program }: { program: EducationItem }) {
     ? DEGREE_DEFAULT_TOTAL[program.degreeType]
     : 0;
   const total = explicitTotal ?? degreeDefault ?? earned;
-  const minorEcts = parseEcts(program.minor?.credits);
-  const thesisEcts = parseEcts(program.thesis?.credits);
 
-  const minorSize = minorEcts ?? 0;
-  const thesisSize = thesisEcts ?? 0;
-  const mainSize = Math.max(0, total - minorSize - thesisSize);
-
-  const segments: Array<{
-    key: "main" | "minor" | "thesis";
-    label: string;
-    credits: number;
-    completed: boolean;
-  }> = [];
-  segments.push({
-    key: "main",
-    label: ui.ects.segmentMain,
-    credits: mainSize,
-    completed: true,
+  const { slices, entries } = buildSegments(program, total, {
+    main: ui.ects.segmentMain,
+    minor: ui.ects.segmentMinor,
+    thesis: ui.ects.segmentThesis,
   });
-  if (minorSize > 0) {
-    segments.push({
-      key: "minor",
-      label: ui.ects.segmentMinor,
-      credits: minorSize,
-      completed: program.minor?.completed ?? false,
-    });
-  }
-  if (thesisSize > 0) {
-    segments.push({
-      key: "thesis",
-      label: ui.ects.segmentThesis,
-      credits: thesisSize,
-      completed: program.thesis?.completed ?? false,
-    });
-  }
 
   const fillPct = total > 0 ? Math.min(100, (earned / total) * 100) : 0;
 
-  const milestones = LADDER_MILESTONES.filter((m) => m.value <= total);
+  const milestones =
+    program.degreeType && LADDER_DEGREE_TYPES.has(program.degreeType)
+      ? LADDER_MILESTONES.filter((m) => m.value <= total)
+      : [];
 
   const fieldName = t(program.field);
 
@@ -172,7 +249,7 @@ function ProgramView({ program }: { program: EducationItem }) {
         )}
       </p>
       <PowerBar
-        segments={segments}
+        slices={slices}
         total={total}
         fillPct={fillPct}
         milestones={milestones.map((m) => ({
@@ -181,7 +258,7 @@ function ProgramView({ program }: { program: EducationItem }) {
         }))}
       />
       <ul className="ects-segment-legend">
-        {segments.map((seg) => (
+        {entries.map((seg) => (
           <li
             key={seg.key}
             className={
@@ -282,25 +359,20 @@ function formatSemester(ects: number): string {
 }
 
 type PowerBarProps = {
-  segments: Array<{
-    key: "main" | "minor" | "thesis";
-    credits: number;
-    completed: boolean;
-    label: string;
-  }>;
+  slices: BarSlice[];
   total: number;
   fillPct: number;
   milestones: Array<{ value: number; label: string }>;
 };
 
-function PowerBar({ segments, total, fillPct, milestones }: PowerBarProps) {
+function PowerBar({ slices, total, fillPct, milestones }: PowerBarProps) {
   if (total <= 0) return null;
   const pct = (n: number) => `${(n / total) * 100}%`;
   const cumulative: number[] = [];
   let acc = 0;
-  for (const seg of segments) {
+  for (const slice of slices) {
     cumulative.push(acc);
-    acc += seg.credits;
+    acc += slice.credits;
   }
   return (
     <div className="ects-bar-wrap">
@@ -321,19 +393,18 @@ function PowerBar({ segments, total, fillPct, milestones }: PowerBarProps) {
         role="img"
         aria-label={`${Math.round(fillPct)}% complete`}
       >
-        {segments.map((seg, i) => (
+        {slices.map((slice, i) => (
           <div
-            key={seg.key}
-            className={`ects-bar-segment ects-bar-segment--${seg.key} ${
-              seg.completed
+            key={i}
+            className={`ects-bar-segment ects-bar-segment--${slice.key} ${
+              slice.completed
                 ? "ects-bar-segment--done"
                 : "ects-bar-segment--missing"
             }`}
             style={{
               left: pct(cumulative[i]),
-              width: pct(seg.credits),
+              width: pct(slice.credits),
             }}
-            title={`${seg.label}: ${formatEcts(seg.credits)} ECTS`}
           />
         ))}
         <div
