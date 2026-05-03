@@ -184,12 +184,28 @@ function buildItems(cv) {
     });
   });
   (cv.education ?? []).forEach((ed, i) => {
-    const institution = localize(ed.institution);
+    const segments = ed.segments ?? [];
+    const hasSegments = segments.length >= 2;
+    const institution =
+      ed.institution !== undefined
+        ? localize(ed.institution)
+        : localizedJoin(
+            segments.map((s) => s.institution),
+            " · ",
+          );
     const level = localize(ed.level);
+    // For multi-institution programs, drop the institution from the subtitle —
+    // each per-institution slice is rendered as its own role-style segment on
+    // the bar, so repeating the joined names below would just be noise.
     const subtitle = {};
     for (const lang of LANGUAGES) {
-      subtitle[lang] = `${institution[lang]} · ${level[lang]}`;
+      subtitle[lang] = hasSegments
+        ? level[lang]
+        : `${institution[lang]} · ${level[lang]}`;
     }
+    const sortedSegments = hasSegments
+      ? [...segments].sort((a, b) => a.startDate.localeCompare(b.startDate))
+      : [];
     items.push({
       id: `edu-${i}`,
       kind: "education",
@@ -201,6 +217,12 @@ function buildItems(cv) {
       endDate: ed.endDate,
       skills: ed.skills ?? [],
       notes: ed.notes ? localize(ed.notes) : undefined,
+      roles: hasSegments
+        ? sortedSegments.map((s) => ({
+            startDate: s.startDate,
+            title: localize(s.institution),
+          }))
+        : undefined,
     });
   });
   (cv.courses ?? []).forEach((course, i) => {

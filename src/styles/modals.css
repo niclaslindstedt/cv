@@ -506,6 +506,47 @@
   white-space: pre-line;
 }
 
+.program-segment {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-stack-gap);
+}
+
+.program-segment + .program-segment {
+  margin-top: var(--modal-section-gap);
+}
+
+.program-segment-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-left: 2px solid rgba(var(--cat-rgb), 0.55);
+  background: rgba(var(--cat-rgb), 0.08);
+  border-radius: 0 8px 8px 0;
+}
+
+.program-segment-institution {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.program-segment-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.program-segment-notes {
+  margin-top: 4px;
+}
+
 .program-course-item {
   display: flex;
   flex-direction: column;

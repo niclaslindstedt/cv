@@ -174,9 +174,18 @@ export type ProgramSegment = {
   completed: boolean;
 };
 
+export type EducationSegment = {
+  institution: LocalizedString;
+  credits: string;
+  startDate: string;
+  endDate: string;
+  notes?: LocalizedString;
+  courses?: ProgramCourse[];
+};
+
 export type Education = {
   field: LocalizedString;
-  institution: LocalizedString;
+  institution?: LocalizedString;
   level: LocalizedString;
   credits: string;
   degreeType?: DegreeType;
@@ -188,6 +197,7 @@ export type Education = {
   skills?: string[];
   notes?: LocalizedString;
   courses?: ProgramCourse[];
+  segments?: EducationSegment[];
   aliases?: string[];
 };
 

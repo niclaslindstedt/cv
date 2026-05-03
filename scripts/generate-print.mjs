@@ -226,15 +226,25 @@ function roundCredits(credits) {
 }
 
 function buildEducation(item) {
+  const institution =
+    item.institution ?? joinSegmentInstitutions(item.segments);
   const baked = {
     field: item.field,
-    institution: item.institution,
+    institution,
     level: item.level,
     credits: roundCredits(item.credits),
     range: formatRange(item.startDate, item.endDate),
   };
   if (item.notes) baked.notes = item.notes;
   return baked;
+}
+
+function joinSegmentInstitutions(segments) {
+  const list = segments ?? [];
+  return {
+    en: list.map((s) => s.institution.en).join(" · "),
+    sv: list.map((s) => s.institution.sv).join(" · "),
+  };
 }
 
 function buildCourseRange(item) {
