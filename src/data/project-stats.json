@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "username": "niclaslindstedt",
-  "fetchedAt": "2026-05-03T14:21:32.244Z",
+  "fetchedAt": "2026-05-03T14:24:25.117Z",
   "projects": {
     "niclaslindstedt/zag": {
       "owner": "niclaslindstedt",
@@ -110,6 +110,30 @@
       "commitsByYear": {
         "2025": 676,
         "2026": 1464
+      }
+    },
+    "niclaslindstedt/swarm": {
+      "owner": "niclaslindstedt",
+      "repo": "swarm",
+      "username": "niclaslindstedt",
+      "headSha": "ab246c6c8f3b7d9aed9bf768817dd9649e3f399c",
+      "firstCommitDate": "2025-11-01",
+      "lastCommitDate": "2025-11-13",
+      "totalCommits": 70,
+      "commitsByYear": {
+        "2025": 70
+      }
+    },
+    "niclaslindstedt/swarmd": {
+      "owner": "niclaslindstedt",
+      "repo": "swarmd",
+      "username": "niclaslindstedt",
+      "headSha": "642e81eaa03de4cfe74ca9370d7c208d94547f2b",
+      "firstCommitDate": "2026-02-12",
+      "lastCommitDate": "2026-02-13",
+      "totalCommits": 28,
+      "commitsByYear": {
+        "2026": 28
       }
     },
     "niclaslindstedt/app-endix": {
