@@ -187,6 +187,11 @@ export function Timeline() {
   );
   const wheelRafRef = useRef<number | null>(null);
   const didInitialScrollRef = useRef(false);
+  const pendingInitialScrollRef = useRef<{
+    left: number;
+    top: number;
+    behavior: ScrollBehavior;
+  } | null>(null);
   const scaleRef = useRef(1);
   const scaleTweenRef = useRef<number | null>(null);
   const zoomAnchorRef = useRef<{
@@ -310,6 +315,18 @@ export function Timeline() {
     const target = anchor.monthAtPixel * newMonthPx - anchor.pixelOffset;
     const maxScroll = Math.max(0, newAxisLength - viewport.clientWidth);
     viewport.scrollLeft = Math.max(0, Math.min(maxScroll, target));
+  }, [scale, totalMonths]);
+
+  // Apply the deep-link scroll only after the scale-driven re-render has
+  // grown the viewport's scrollWidth; otherwise scrollTo is clamped to the
+  // (still narrow) old maximum and short bars land somewhere mid-timeline.
+  useLayoutEffect(() => {
+    const pending = pendingInitialScrollRef.current;
+    if (!pending) return;
+    pendingInitialScrollRef.current = null;
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    viewport.scrollTo(pending);
   }, [scale, totalMonths]);
 
   const captureZoomAnchor = useCallback((clientX: number | null) => {
@@ -484,8 +501,6 @@ export function Timeline() {
       const minBarWidthPx = 40;
       const fitBarScale = minBarWidthPx / (monthSpan * BASE_MONTH_PX);
       const initialScale = clamp(Math.max(1, fitBarScale), MIN_SCALE, 2);
-      setScale(initialScale);
-      scaleRef.current = initialScale;
       setHighlightedId(targetBar.id);
 
       const newMonthPx = BASE_MONTH_PX * initialScale;
@@ -500,10 +515,25 @@ export function Timeline() {
         barTop + LANE_SIZE / 2 - (AXIS_SIZE + clientHeight) / 2,
       );
 
-      requestAnimationFrame(() => {
-        const v = viewportRef.current;
-        if (v) v.scrollTo({ left, top, behavior: scrollBehavior });
-      });
+      const scaleChanged = initialScale !== scaleRef.current;
+      if (scaleChanged) {
+        // Defer the scroll until after the new scale has been laid out;
+        // otherwise scrollWidth is still based on the old scale and
+        // scrollTo gets clamped to the (smaller) old maximum, leaving
+        // short bars stranded near the right end of the old viewport.
+        pendingInitialScrollRef.current = {
+          left,
+          top,
+          behavior: scrollBehavior,
+        };
+        scaleRef.current = initialScale;
+        setScale(initialScale);
+      } else {
+        requestAnimationFrame(() => {
+          const v = viewportRef.current;
+          if (v) v.scrollTo({ left, top, behavior: scrollBehavior });
+        });
+      }
       return;
     }
 
