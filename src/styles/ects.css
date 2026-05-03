@@ -162,9 +162,15 @@
   position: absolute;
   top: 3px;
   bottom: 3px;
-  width: 0;
-  border-left: 1px dotted var(--fg);
-  opacity: 0.5;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--fg) 0,
+    var(--fg) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.7;
   pointer-events: none;
 }
 
