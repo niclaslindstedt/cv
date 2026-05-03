@@ -1280,11 +1280,13 @@ export function Timeline() {
                   )}
                 </span>
               </p>
-              <p className="timeline-vis-details-dates">
-                <span className="timeline-vis-commit-pill">
-                  {ui.timeline.commits(selectedItem.sideProject.totalCommits)}
-                </span>
-              </p>
+              {selectedItem.sideProject.totalCommits > 0 && (
+                <p className="timeline-vis-details-dates">
+                  <span className="timeline-vis-commit-pill">
+                    {ui.timeline.commits(selectedItem.sideProject.totalCommits)}
+                  </span>
+                </p>
+              )}
               {t(selectedItem.description) && (
                 <p className="timeline-vis-details-desc">
                   {renderInlineCode(t(selectedItem.description))}

@@ -162,15 +162,22 @@ async function fetchProjectStats(token, owner, repo, username, openSource) {
       throw new Error(`No commit history for ${owner}/${repo}`);
     }
     for (const node of history.nodes ?? []) {
+      const date = node.committedDate;
+      // Track the project's lifespan from every commit on the default branch,
+      // even ones the author filter below excludes (release bots, AI-tool
+      // commits with no linked GitHub user, etc.). Otherwise an open-source
+      // repo whose user-attributed commits all happen to be missing a login
+      // link drops out of the side-projects track entirely.
+      if (date) {
+        if (!lastCommitDate || date > lastCommitDate) lastCommitDate = date;
+        if (!firstCommitDate || date < firstCommitDate) firstCommitDate = date;
+      }
       if (openSource) {
         const login = node.author?.user?.login?.toLowerCase() ?? null;
         if (login !== lowerUser) continue;
       }
       totalCommits += 1;
-      const date = node.committedDate;
       if (date) {
-        if (!lastCommitDate || date > lastCommitDate) lastCommitDate = date;
-        if (!firstCommitDate || date < firstCommitDate) firstCommitDate = date;
         const year = date.slice(0, 4);
         commitsByYear[year] = (commitsByYear[year] ?? 0) + 1;
       }
@@ -298,7 +305,15 @@ async function main() {
     const key = projectKey(ref.owner, ref.repo);
     const cached = cachedProjects[key];
     try {
-      if (cached?.headSha && cached.username === username) {
+      // Cache entries from before the lifespan-tracking fix can have null
+      // commit dates for openSource repos whose attributable commits all
+      // lacked a linked GitHub login; force a re-fetch so they pick up the
+      // unfiltered date range.
+      const cacheUsable =
+        cached?.headSha &&
+        cached.username === username &&
+        (!ref.openSource || (cached.firstCommitDate && cached.lastCommitDate));
+      if (cacheUsable) {
         const headSha = await fetchHeadSha(token, ref.owner, ref.repo);
         if (headSha && headSha === cached.headSha) {
           projects[key] = cached;
