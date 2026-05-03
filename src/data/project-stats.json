@@ -1,0 +1,167 @@
+{
+  "enabled": true,
+  "username": "niclaslindstedt",
+  "fetchedAt": "2026-05-03T14:21:32.244Z",
+  "projects": {
+    "niclaslindstedt/zag": {
+      "owner": "niclaslindstedt",
+      "repo": "zag",
+      "username": "niclaslindstedt",
+      "headSha": "a954328dc6afb22d6678d00cba059deb8a2eb0c5",
+      "firstCommitDate": "2026-01-13",
+      "lastCommitDate": "2026-05-01",
+      "totalCommits": 338,
+      "commitsByYear": {
+        "2026": 338
+      }
+    },
+    "niclaslindstedt/zig": {
+      "owner": "niclaslindstedt",
+      "repo": "zig",
+      "username": "niclaslindstedt",
+      "headSha": "4b43d541e39363d2cc83d71772471ffcf69a5396",
+      "firstCommitDate": "2026-04-08",
+      "lastCommitDate": "2026-05-03",
+      "totalCommits": 99,
+      "commitsByYear": {
+        "2026": 99
+      }
+    },
+    "niclaslindstedt/zad": {
+      "owner": "niclaslindstedt",
+      "repo": "zad",
+      "username": "niclaslindstedt",
+      "headSha": "58c244ed25530cc4fc80cd71c2d0df279d16986b",
+      "firstCommitDate": "2026-04-17",
+      "lastCommitDate": "2026-04-20",
+      "totalCommits": 33,
+      "commitsByYear": {
+        "2026": 33
+      }
+    },
+    "niclaslindstedt/ztf": {
+      "owner": "niclaslindstedt",
+      "repo": "ztf",
+      "username": "niclaslindstedt",
+      "headSha": "7c1154f287c2bd7191d5e9e0b1500bf165793ea7",
+      "firstCommitDate": "2026-04-17",
+      "lastCommitDate": "2026-04-20",
+      "totalCommits": 9,
+      "commitsByYear": {
+        "2026": 9
+      }
+    },
+    "niclaslindstedt/oss-spec": {
+      "owner": "niclaslindstedt",
+      "repo": "oss-spec",
+      "username": "niclaslindstedt",
+      "headSha": "eac48c3a82850492b4662ba9f2aacaed0167537a",
+      "firstCommitDate": "2026-04-11",
+      "lastCommitDate": "2026-04-21",
+      "totalCommits": 43,
+      "commitsByYear": {
+        "2026": 43
+      }
+    },
+    "niclaslindstedt/blog": {
+      "owner": "niclaslindstedt",
+      "repo": "blog",
+      "username": "niclaslindstedt",
+      "headSha": "d2af3b7af4b75e090e5aec367e150e0e4302e2f0",
+      "firstCommitDate": "2026-04-20",
+      "lastCommitDate": "2026-05-02",
+      "totalCommits": 89,
+      "commitsByYear": {
+        "2026": 89
+      }
+    },
+    "niclaslindstedt/cv": {
+      "owner": "niclaslindstedt",
+      "repo": "cv",
+      "username": "niclaslindstedt",
+      "headSha": "aa7268ef112c2b3025dbf05f5b00487d62a2a646",
+      "firstCommitDate": "2026-04-20",
+      "lastCommitDate": "2026-05-03",
+      "totalCommits": 397,
+      "commitsByYear": {
+        "2026": 397
+      }
+    },
+    "niclaslindstedt/juris": {
+      "owner": "niclaslindstedt",
+      "repo": "juris",
+      "username": "niclaslindstedt",
+      "headSha": "2f581e8a431cc39ea1d6f1b869580c710c67e375",
+      "firstCommitDate": "2026-04-05",
+      "lastCommitDate": "2026-04-20",
+      "totalCommits": 77,
+      "commitsByYear": {
+        "2026": 77
+      }
+    },
+    "niclaslindstedt/swarm-cli": {
+      "owner": "niclaslindstedt",
+      "repo": "swarm-cli",
+      "username": "niclaslindstedt",
+      "headSha": "5030aad2663e53ee4816e310bb949b4092441b11",
+      "firstCommitDate": "2025-11-07",
+      "lastCommitDate": "2026-03-26",
+      "totalCommits": 2140,
+      "commitsByYear": {
+        "2025": 676,
+        "2026": 1464
+      }
+    },
+    "niclaslindstedt/app-endix": {
+      "owner": "niclaslindstedt",
+      "repo": "app-endix",
+      "username": "niclaslindstedt",
+      "headSha": "5cb6046cd1ee03bcb791943938091d1d78e076b1",
+      "firstCommitDate": "2025-07-25",
+      "lastCommitDate": "2025-07-30",
+      "totalCommits": 13,
+      "commitsByYear": {
+        "2025": 13
+      }
+    },
+    "Etimo/etimo-achievements": {
+      "owner": "Etimo",
+      "repo": "etimo-achievements",
+      "username": "niclaslindstedt",
+      "headSha": "af8b27dd62d548b4404e8b3f8b9118d8a02b7c30",
+      "firstCommitDate": "2021-10-13",
+      "lastCommitDate": "2023-02-17",
+      "totalCommits": 274,
+      "commitsByYear": {
+        "2021": 105,
+        "2022": 162,
+        "2023": 7
+      }
+    },
+    "niclaslindstedt/dotnet-oauth2-server": {
+      "owner": "niclaslindstedt",
+      "repo": "dotnet-oauth2-server",
+      "username": "niclaslindstedt",
+      "headSha": "30b3870c72421b8b49723b96ccccbe5f279b1a7e",
+      "firstCommitDate": "2020-11-17",
+      "lastCommitDate": "2021-05-20",
+      "totalCommits": 265,
+      "commitsByYear": {
+        "2020": 216,
+        "2021": 49
+      }
+    },
+    "niclaslindstedt/docker-backup": {
+      "owner": "niclaslindstedt",
+      "repo": "docker-backup",
+      "username": "niclaslindstedt",
+      "headSha": "f21aeacceb288b009c4e99b49d18e3c95d5829d2",
+      "firstCommitDate": "2021-04-08",
+      "lastCommitDate": "2021-05-21",
+      "totalCommits": 114,
+      "commitsByYear": {
+        "2021": 114
+      }
+    }
+  }
+}
