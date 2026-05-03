@@ -19,6 +19,7 @@ import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
 import { CategoryGlyph } from "./CategoryGlyph";
+import { CourseCode } from "./CourseCode";
 import { EctsPill, type EctsContext } from "./EctsPill";
 import { ModalLink } from "./ModalLink";
 import { NoteIcon } from "./NoteIcon";
@@ -145,19 +146,24 @@ export function ProgramCoursesModal({
               <h3 className="company-modal-stack-title">
                 {ui.programModal.coursesSummary(totalCourseCount)}
               </h3>
-              {courseGroups.map((group, groupIndex) => (
-                <CourseGroup
-                  key={
-                    group.segment
-                      ? `${group.segment.institution.en}-${group.segment.startDate}`
-                      : `group-${groupIndex}`
-                  }
-                  segment={group.segment}
-                  courses={group.courses}
-                  onSkillClick={onSkillClick}
-                  onEctsClick={onEctsClick}
-                />
-              ))}
+              {courseGroups.map((group, groupIndex) => {
+                const institution =
+                  group.segment?.institution ?? program.institution;
+                return (
+                  <CourseGroup
+                    key={
+                      group.segment
+                        ? `${group.segment.institution.en}-${group.segment.startDate}`
+                        : `group-${groupIndex}`
+                    }
+                    segment={group.segment}
+                    courses={group.courses}
+                    institution={institution ? t(institution) : ""}
+                    onSkillClick={onSkillClick}
+                    onEctsClick={onEctsClick}
+                  />
+                );
+              })}
             </section>
           )}
         </div>
@@ -169,6 +175,7 @@ export function ProgramCoursesModal({
 type CourseGroupProps = {
   segment: EducationSegment | null;
   courses: ProgramCourse[];
+  institution: string;
   onSkillClick: (skill: string) => void;
   onEctsClick: (context: EctsContext) => void;
 };
@@ -176,6 +183,7 @@ type CourseGroupProps = {
 function CourseGroup({
   segment,
   courses,
+  institution,
   onSkillClick,
   onEctsClick,
 }: CourseGroupProps) {
@@ -233,7 +241,7 @@ function CourseGroup({
                 </span>
               </div>
               <div className="program-course-meta">
-                <span className="program-course-code">{course.code}</span>
+                <CourseCode code={course.code} university={institution} />
                 <EctsPill
                   credits={course.credits}
                   context={{ kind: "course", credits: course.credits }}
@@ -280,9 +288,11 @@ function CourseGroup({
                         </span>
                         <span className="program-module-meta">
                           {mod.code && (
-                            <span className="program-module-code">
-                              {mod.code}
-                            </span>
+                            <CourseCode
+                              code={mod.code}
+                              university={institution}
+                              variant="module"
+                            />
                           )}
                           <EctsPill
                             credits={mod.credits}

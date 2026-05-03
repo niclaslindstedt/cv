@@ -147,6 +147,7 @@ type UiStrings = {
     viewModulesAria: (course: string) => string;
     modulesAria: (course: string) => string;
     modulesCount: (count: number) => string;
+    searchCodeAria: (code: string, university: string) => string;
   };
   section: {
     expand: (title: string) => string;
@@ -378,6 +379,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewModulesAria: (course) => `View modules for ${course}`,
       modulesAria: (course) => `${course} modules`,
       modulesCount: (n) => `${n} module${n === 1 ? "" : "s"}`,
+      searchCodeAria: (code, university) =>
+        `Search Google for ${university} course ${code}`,
     },
     section: {
       expand: (title) => `Expand ${title} section`,
@@ -649,6 +652,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       viewModulesAria: (course) => `Visa moment för ${course}`,
       modulesAria: (course) => `Moment i ${course}`,
       modulesCount: (n) => (n === 1 ? "1 moment" : `${n} moment`),
+      searchCodeAria: (code, university) =>
+        `Sök på Google efter ${university} kurs ${code}`,
     },
     section: {
       expand: (title) => `Expandera ${title.toLowerCase()}`,

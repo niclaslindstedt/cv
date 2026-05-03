@@ -586,6 +586,18 @@
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 4px;
+  text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+@media (hover: hover) {
+  a.program-course-code:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    text-decoration: none;
+  }
 }
 
 .program-course-grade {
@@ -744,6 +756,18 @@
   border: 1px solid var(--border);
   border-radius: 4px;
   color: var(--fg);
+  text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+@media (hover: hover) {
+  a.program-module-code:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    text-decoration: none;
+  }
 }
 
 .program-module-date {
