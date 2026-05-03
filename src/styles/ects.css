@@ -47,6 +47,12 @@
   gap: var(--modal-stack-gap);
 }
 
+.ects-program-subtitle {
+  margin: -4px 0 0;
+  font-size: 0.95rem;
+  color: var(--fg);
+}
+
 .ects-program-meta {
   margin: 0;
   display: flex;
@@ -67,45 +73,6 @@
   position: relative;
   margin: 4px 0;
   padding: 0 8px;
-}
-
-.ects-bar-milestones {
-  position: relative;
-  height: 32px;
-}
-
-.ects-bar-milestone {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 0;
-  font-size: 0.65rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-  pointer-events: none;
-}
-
-.ects-bar-milestone-label {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0 4px;
-  white-space: nowrap;
-  text-align: center;
-  line-height: 1;
-}
-
-.ects-bar-milestone-tick {
-  position: absolute;
-  top: 14px;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  background: var(--fg-muted);
-  opacity: 0.6;
 }
 
 .ects-bar {
@@ -337,45 +304,6 @@
 
 @media (max-width: 520px) {
   .ects-bar-wrap {
-    padding: 0;
-  }
-
-  .ects-bar-milestones {
-    height: 64px;
-  }
-
-  .ects-bar-milestone {
-    font-size: 0.55rem;
-  }
-
-  .ects-bar-milestone:nth-child(3n + 2) .ects-bar-milestone-label {
-    top: 18px;
-  }
-
-  .ects-bar-milestone:nth-child(3n + 2) .ects-bar-milestone-tick {
-    top: 32px;
-  }
-
-  .ects-bar-milestone:nth-child(3n) .ects-bar-milestone-label {
-    top: 36px;
-  }
-
-  .ects-bar-milestone:nth-child(3n) .ects-bar-milestone-tick {
-    top: 50px;
-  }
-
-  .ects-bar-milestone:first-child .ects-bar-milestone-label {
-    left: 0;
-    transform: none;
-    text-align: left;
-    padding: 0;
-  }
-
-  .ects-bar-milestone:last-child .ects-bar-milestone-label {
-    left: auto;
-    right: 0;
-    transform: none;
-    text-align: right;
     padding: 0;
   }
 
