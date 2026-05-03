@@ -299,7 +299,7 @@ function CourseView({ credits }: { credits: string }) {
           {ui.ects.thisCourseLine(
             formatEcts(ects),
             formatEcts((ects * 40) / 60),
-            String(Math.round(ects * 27)),
+            String(Math.round(((ects * 40) / 60) * 40)),
           )}
         </p>
       )}
