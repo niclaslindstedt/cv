@@ -89,8 +89,8 @@
       "sv": "Affärssystem för städ- och hemservicebolag."
     },
     "description": {
-      "en": "Swedish vendor of a business management system for cleaning and home-service companies — scheduling, time tracking, invoicing, and customer management with built-in support for the RUT household-services tax deduction. Used by more than 300 companies.",
-      "sv": "Svensk leverantör av ett affärssystem för städ- och hemservicebolag — schemaläggning, tidrapportering, fakturering och kundhantering med inbyggt stöd för RUT-avdraget. Används av fler än 300 bolag."
+      "en": "Swedish vendor of a business management system for cleaning and home-service companies — scheduling, time tracking, invoicing, and customer management with built-in support for the RUT household-services tax deduction. In operation for more than 20 years, with offices in Stockholm, Gothenburg, and Söderhamn, and majority-owned by Marathon Software, a long-term owner of niche software companies. Used by more than 300 companies.",
+      "sv": "Svensk leverantör av ett affärssystem för städ- och hemservicebolag — schemaläggning, tidrapportering, fakturering och kundhantering med inbyggt stöd för RUT-avdraget. Verksamt i mer än 20 år, med kontor i Stockholm, Göteborg och Söderhamn, och majoritetsägt av Marathon Software, en långsiktig ägare av nischmjukvarubolag. Används av fler än 300 bolag."
     },
     "url": "https://www.timewave.se",
     "sourceUrls": [
@@ -98,6 +98,11 @@
         "title": "TimeWave website",
         "url": "https://www.timewave.se",
         "description": "TimeWave's own Swedish-language website describing the cleaning-industry business system."
+      },
+      {
+        "title": "TimeWave — Om oss",
+        "url": "https://timewave.se/om-oss/",
+        "description": "TimeWave's about page describing the company, its history, and team."
       }
     ],
     "aliases": ["timewave ab", "time wave"]
