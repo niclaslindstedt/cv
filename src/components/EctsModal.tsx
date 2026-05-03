@@ -15,25 +15,7 @@ const DEGREE_DEFAULT_TOTAL: Record<DegreeType, number> = {
   other: 0,
 };
 
-const LADDER_MILESTONES: { value: number; key: keyof MilestoneStrings }[] = [
-  { value: 180, key: "bachelor" },
-  { value: 240, key: "magister" },
-  { value: 300, key: "master" },
-];
-
-const LADDER_DEGREE_TYPES: ReadonlySet<DegreeType> = new Set([
-  "bachelor",
-  "magister",
-  "master",
-]);
-
 const DEFAULT_MINOR_AFTER = 60;
-
-type MilestoneStrings = {
-  bachelor: string;
-  magister: string;
-  master: string;
-};
 
 function parseEcts(value: string | undefined): number | null {
   if (!value) return null;
@@ -224,18 +206,17 @@ function ProgramView({ program }: { program: EducationItem }) {
 
   const fillPct = total > 0 ? Math.min(100, (earned / total) * 100) : 0;
 
-  const milestones =
-    program.degreeType && LADDER_DEGREE_TYPES.has(program.degreeType)
-      ? LADDER_MILESTONES.filter((m) => m.value <= total)
-      : [];
-
   const fieldName = t(program.field);
+  const degreeName = program.degreeType
+    ? ui.ects.degreeNames[program.degreeType]
+    : null;
 
   return (
     <section className="ects-program">
       <h3 className="ects-section-heading">
         {ui.ects.programHeading(fieldName)}
       </h3>
+      {degreeName && <p className="ects-program-subtitle">{degreeName}</p>}
       <p className="ects-program-meta">
         <span>
           {ui.ects.earnedOfTotal(formatEcts(earned), formatEcts(total))}
@@ -246,15 +227,7 @@ function ProgramView({ program }: { program: EducationItem }) {
           </span>
         )}
       </p>
-      <PowerBar
-        slices={slices}
-        total={total}
-        fillPct={fillPct}
-        milestones={milestones.map((m) => ({
-          value: m.value,
-          label: ui.ects.milestones[m.key],
-        }))}
-      />
+      <PowerBar slices={slices} total={total} fillPct={fillPct} />
       <ul className="ects-segment-legend">
         {entries.map((seg) => (
           <li
@@ -360,10 +333,9 @@ type PowerBarProps = {
   slices: BarSlice[];
   total: number;
   fillPct: number;
-  milestones: Array<{ value: number; label: string }>;
 };
 
-function PowerBar({ slices, total, fillPct, milestones }: PowerBarProps) {
+function PowerBar({ slices, total, fillPct }: PowerBarProps) {
   if (total <= 0) return null;
   const pct = (n: number) => `${(n / total) * 100}%`;
   const cumulative: number[] = [];
@@ -374,20 +346,6 @@ function PowerBar({ slices, total, fillPct, milestones }: PowerBarProps) {
   }
   return (
     <div className="ects-bar-wrap">
-      {milestones.length > 0 && (
-        <div className="ects-bar-milestones" aria-hidden="true">
-          {milestones.map((m) => (
-            <span
-              key={m.value}
-              className="ects-bar-milestone"
-              style={{ left: pct(m.value) }}
-            >
-              <span className="ects-bar-milestone-label">{m.label}</span>
-              <span className="ects-bar-milestone-tick" />
-            </span>
-          ))}
-        </div>
-      )}
       <div
         className="ects-bar"
         role="img"
@@ -414,17 +372,6 @@ function PowerBar({ slices, total, fillPct, milestones }: PowerBarProps) {
         />
       </div>
       <div className="ects-bar-points" aria-hidden="true">
-        {milestones
-          .filter((m) => m.value !== total)
-          .map((m) => (
-            <span
-              key={m.value}
-              className="ects-bar-point"
-              style={{ left: pct(m.value) }}
-            >
-              {m.value}
-            </span>
-          ))}
         <span
           className="ects-bar-point ects-bar-point--total"
           style={{ left: "100%" }}
