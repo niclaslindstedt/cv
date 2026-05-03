@@ -2,16 +2,16 @@
   {
     "name": "zag",
     "tagline": {
-      "en": "One CLI for all your AI coding agents.",
-      "sv": "Ett CLI för alla dina AI-kodningsagenter."
+      "en": "A unified CLI and SDK for AI coding agents — change providers with a flag.",
+      "sv": "Ett enhetligt CLI och SDK för AI-kodningsagenter — byt leverantör med en flagga."
     },
     "description": {
-      "en": "A unified abstraction over AI coding agents — Claude Code, Codex, Gemini, Copilot, Ollama. Provider-specific quirks become runtime configuration, and the cross-cutting concerns the providers don't agree on (sandboxing, structured output, session logging) are layered on top. Distributed as a CLI, a Rust crate, and SDKs in six languages.",
-      "sv": "En enhetlig abstraktion över AI-kodningsagenter — Claude Code, Codex, Gemini, Copilot, Ollama. Leverantörsspecifika egenheter blir runtime-konfiguration, och det som spänner över leverantörerna och de ändå inte enas om (sandboxing, strukturerad utdata, sessionsloggning) läggs ovanpå. Distribueras som CLI, Rust-bibliotek och SDK:er för sex språk."
+      "en": "A multi-agent CLI wrapper that unifies input parameters, output formats, and session logs across Claude Code, Codex, Gemini, Copilot, and Ollama. On top of that it adds remote-connection support, authentication, and typed input/output data models, exposed as a Rust SDK with bindings in five other languages so callers can drive any agent programmatically without installing the zag binary. Switching providers is a single flag change.",
+      "sv": "En multi-agent-CLI-wrapper som enhetliggör indataparametrar, utdataformat och sessionsloggar över Claude Code, Codex, Gemini, Copilot och Ollama. Ovanpå det adderas stöd för fjärranslutning, autentisering och typade in- och utdatamodeller, exponerade som ett Rust-SDK med bindningar i fem andra språk så att anropare kan driva valfri agent programmatiskt utan att installera zag-binären. Att byta leverantör är en flaggändring."
     },
     "printDescription": {
-      "en": "Unified abstraction over AI coding agents (Claude Code, Codex, Gemini, Copilot, Ollama), with sandboxing, structured output, and session logging layered on top. Distributed as a CLI, a Rust crate, and SDKs in six languages.",
-      "sv": "Enhetlig abstraktion över AI-kodningsagenter (Claude Code, Codex, Gemini, Copilot, Ollama), med sandboxing, strukturerad utdata och sessionsloggning ovanpå. Distribueras som CLI, Rust-bibliotek och SDK:er för sex språk."
+      "en": "Multi-agent CLI wrapper that unifies inputs, outputs, and logs across Claude Code, Codex, Gemini, Copilot, and Ollama. Adds remote connections, authentication, and typed I/O models. Distributed as a CLI, a Rust SDK, and bindings in five other languages so callers can drive any agent without installing the binary. Switching providers is a flag change.",
+      "sv": "Multi-agent-CLI-wrapper som enhetliggör in- och utdata och loggar över Claude Code, Codex, Gemini, Copilot och Ollama. Adderar fjärranslutningar, autentisering och typade I/O-modeller. Distribueras som CLI, Rust-SDK och bindningar i fem andra språk så att anropare kan driva valfri agent utan att installera binären. Att byta leverantör är en flaggändring."
     },
     "stack": [
       "Rust",
@@ -54,16 +54,16 @@
   {
     "name": "zig",
     "tagline": {
-      "en": "Describe agent workflows in natural language, capture them as shareable files, and replay them anywhere.",
-      "sv": "Beskriv agentarbetsflöden i naturligt språk, fånga dem som delbara filer och spela upp dem var som helst."
+      "en": "An agent orchestration engine, insulated from the churn of agent CLIs.",
+      "sv": "En orkestreringsmotor för agenter, isolerad från snabba förändringar i agent-CLI:er."
     },
     "description": {
-      "en": "Captures agent workflows from natural-language descriptions into a portable `.zwf` file format that can be replayed deterministically across machines. Built on top of zag for the underlying provider abstraction, with an HTTP API and an embedded chat UI for designing workflows interactively.",
-      "sv": "Fångar agentarbetsflöden från beskrivningar i naturligt språk till ett portabelt `.zwf`-format som kan spelas upp deterministiskt mellan maskiner. Bygger på zag för den underliggande leverantörsabstraktionen, med ett HTTP-API och ett inbäddat chattgränssnitt för interaktiv design av arbetsflöden."
+      "en": "An orchestration engine for AI coding agents, built on top of zag for the underlying provider abstraction. Because zag handles the differences between Claude Code, Codex, Gemini, and the rest, orchestrations don't have to be rewritten every time an agent CLI changes its flags, output format, or session model. Workflows describe what should happen; zig and zag decide which agent runs it, where, and how.",
+      "sv": "En orkestreringsmotor för AI-kodningsagenter, byggd på zag för den underliggande leverantörsabstraktionen. Eftersom zag hanterar skillnaderna mellan Claude Code, Codex, Gemini och övriga behöver orkestreringar inte skrivas om varje gång ett agent-CLI ändrar flaggor, utdataformat eller sessionsmodell. Arbetsflöden beskriver vad som ska ske; zig och zag avgör vilken agent som kör det, var och hur."
     },
     "printDescription": {
-      "en": "Captures agent workflows as portable `.zwf` files, replayable deterministically across machines. Built on zag, with an HTTP API and an embedded chat UI for interactive workflow design.",
-      "sv": "Fångar agentarbetsflöden som portabla `.zwf`-filer, återspelbara deterministiskt mellan maskiner. Bygger på zag, med ett HTTP-API och ett inbäddat chattgränssnitt för interaktiv arbetsflödesdesign."
+      "en": "Orchestration engine for AI coding agents, built on zag's provider abstraction. Workflows survive churn in agent CLIs — when an agent changes its flags, output, or session model, the orchestration code doesn't have to.",
+      "sv": "Orkestreringsmotor för AI-kodningsagenter, byggd på zags leverantörsabstraktion. Arbetsflöden överlever förändringar i agent-CLI:er — när en agent byter flaggor, utdata eller sessionsmodell behöver orkestreringskoden inte ändras."
     },
     "stack": ["Rust", "React"],
     "skills": [
@@ -88,16 +88,16 @@
   {
     "name": "zad",
     "tagline": {
-      "en": "Connect AI agents to external services with signed, scoped permissions.",
-      "sv": "Koppla AI-agenter till externa tjänster med signerade, avgränsade behörigheter."
+      "en": "Signed, per-project service grants for AI agents — Discord, Slack, Gmail, Calendar, and more.",
+      "sv": "Signerade, projektavgränsade tjänstemandat för AI-agenter — Discord, Slack, Gmail, Kalender med flera."
     },
     "description": {
-      "en": "A permission layer for AI agents talking to external services. Each connection is a signed, scoped grant stored in the OS keychain, so an agent with filesystem access can't quietly widen its own scope — finer-grained than MCP and harder to bypass. New providers are a single Rust trait implementation.",
-      "sv": "Ett behörighetslager för AI-agenter som pratar med externa tjänster. Varje koppling är ett signerat, avgränsat mandat lagrat i operativsystemets nyckelring, så att en agent med filsystemsåtkomst inte i tysthet kan utöka sin egen omfattning — finkornigare än MCP och svårare att kringgå. Nya leverantörer är en enda Rust trait-implementation."
+      "en": "An integrations CLI that lets agents discover and call external services — Discord, Slack, Gmail, Google Calendar, and others — without ever holding the credentials themselves. Service credentials live in the OS keychain; access is scoped per project and the scope is signed with a private key, so an agent cannot widen its own permissions by editing a config file. Result: a blanket allow-rule like `Bash(zad:*)` is safe to grant, because the agent can only do what zad has already been told it may do.",
+      "sv": "Ett integrations-CLI som låter agenter upptäcka och anropa externa tjänster — Discord, Slack, Gmail, Google Kalender med flera — utan att någonsin hålla i credentials själva. Tjänstecredentials lagras i operativsystemets nyckelring; åtkomsten avgränsas per projekt och omfattningen signeras med en privat nyckel, så att en agent inte kan utöka sina egna behörigheter genom att skriva om en konfigurationsfil. Resultatet: en bred tillåt-regel som `Bash(zad:*)` är trygg att ge, eftersom agenten bara kan göra det zad redan blivit tillsagd att tillåta."
     },
     "printDescription": {
-      "en": "Permission layer for AI agents talking to external services. Connections are signed, scoped grants stored in the OS keychain, so an agent with filesystem access can't widen its own scope — a finer-grained alternative to MCP.",
-      "sv": "Behörighetslager för AI-agenter som pratar med externa tjänster. Kopplingar är signerade, avgränsade mandat lagrade i operativsystemets nyckelring, så att en agent med filsystemsåtkomst inte kan utöka sin egen omfattning — ett finkornigare alternativ till MCP."
+      "en": "Integrations CLI that lets agents call Discord, Slack, Gmail, Google Calendar, and other services without holding the credentials. Scopes live in the OS keychain, signed per project with a private key and unforgeable via config edits — so blanket rules like `Bash(zad:*)` are safe to grant.",
+      "sv": "Integrations-CLI som låter agenter anropa Discord, Slack, Gmail, Google Kalender och andra tjänster utan att hålla i credentials. Omfattningar lagras i operativsystemets nyckelring, signerade per projekt med en privat nyckel och kan inte förfalskas via konfigurationsändringar — så breda regler som `Bash(zad:*)` är trygga att ge."
     },
     "stack": ["Rust"],
     "skills": [
@@ -121,16 +121,16 @@
   {
     "name": "ztf",
     "tagline": {
-      "en": "Agent-assisted end-to-end testing for scenarios that regex assertions can't cleanly verify.",
-      "sv": "Agentassisterad end-to-end-testning för scenarier som regex-påståenden inte fångar rent."
+      "en": "Fuzzy AAA testing for agent and orchestration outputs.",
+      "sv": "Fuzzy AAA-testning för utdata från agenter och orkestreringar."
     },
     "description": {
-      "en": "End-to-end testing where TOML scenario files run deterministic arrange/act/assert checks, then defer to an AI reviewer for the verdicts regex assertions can't cleanly handle. Output is machine-readable so other tools can act on it.",
-      "sv": "End-to-end-testning där TOML-scenariofiler kör deterministiska arrange/act/assert-kontroller och sedan delegerar till en AI-granskare för de bedömningar som regex-påståenden inte fångar rent. Utdatan är maskinläsbar så att andra verktyg kan agera på den."
+      "en": "An agent testing framework for fuzzy AAA testing — the cases where the value being asserted isn't something a regex or schema can settle. Aimed at validating agent and orchestration outputs, it uses zag underneath so the validator can run on a different provider than the system under test. Validating a Claude run with Codex (or vice versa) keeps self-preference bias out of the verdict.",
+      "sv": "Ett ramverk för agenttestning för fuzzy AAA-testning — de fall där värdet som ska valideras inte är något ett regex eller ett schema kan avgöra. Inriktat på att validera utdata från agenter och orkestreringar, använder det zag i botten så att granskaren kan köras på en annan leverantör än systemet under test. Att validera en Claude-körning med Codex (eller tvärtom) håller självpreferens-bias borta från bedömningen."
     },
     "printDescription": {
-      "en": "End-to-end testing that runs deterministic arrange/act/assert checks first, then defers to an AI reviewer for verdicts regex assertions can't cleanly handle.",
-      "sv": "End-to-end-testning som först kör deterministiska arrange/act/assert-kontroller och sedan delegerar till en AI-granskare för bedömningar som regex-påståenden inte fångar rent."
+      "en": "Agent testing framework for fuzzy AAA testing — verdicts that regex or schema assertions can't settle. Built on zag so the validator can run on a different provider than the system under test, keeping self-preference bias out when an agent reviews its own kind.",
+      "sv": "Ramverk för agenttestning för fuzzy AAA-testning — bedömningar som regex eller schemavalidering inte kan avgöra. Bygger på zag så att granskaren kan köras på en annan leverantör än systemet under test, vilket håller självpreferens-bias borta när en agent granskar sin egen sort."
     },
     "stack": ["Rust"],
     "skills": [
@@ -154,16 +154,16 @@
   {
     "name": "oss-spec",
     "tagline": {
-      "en": "Keeps open source projects aligned with a shared spec.",
-      "sv": "Håller open source-projekt i linje med en gemensam specifikation."
+      "en": "A spec for how open source projects are built — and a CLI that keeps repos honest.",
+      "sv": "En specifikation för hur open source-projekt byggs — och ett CLI som håller repon i linje."
     },
     "description": {
-      "en": "Treats open source repository conventions as a contract. From a freeform prompt it generates a complete repo against a shared spec — license, docs, CI, release pipelines, agent conventions — and creates the GitHub remote. Pointed at an existing repo, it audits and auto-fixes drift or files an issue per violation.",
-      "sv": "Behandlar konventioner för open source-repon som ett kontrakt. Utifrån en friform-prompt genereras ett komplett repo mot en gemensam specifikation — licens, dokumentation, CI, release-pipelines, agentkonventioner — och GitHub-remoten skapas. Pekat mot ett befintligt repo revideras det och åtgärdas automatiskt, eller får ett issue per avvikelse."
+      "en": "A specification — and a CLI to enforce it — for how open source projects should be structured, developed, validated, and deployed. Bootstraps a fresh repo with documentation, GitHub Actions, Claude skills, release pipelines, and licensing already in place, so spinning up a new idea is friction-free. Pointed at an existing project it audits drift, auto-fixes what it can, and files an issue per remaining violation. A meta-take on spec-driven development: the spec defines how the application is built, not what it does.",
+      "sv": "En specifikation — och ett CLI som upprätthåller den — för hur open source-projekt ska struktureras, utvecklas, valideras och driftsättas. Startar ett färskt repo med dokumentation, GitHub Actions, Claude-skills, release-pipelines och licensiering redan på plats, så att det är friktionsfritt att starta upp en ny idé. Pekat mot ett befintligt projekt revideras avvikelser, det som går åtgärdas automatiskt och ett issue skapas per kvarvarande avvikelse. En meta-version av spec-driven utveckling: specen definierar hur applikationen byggs, inte vad den gör."
     },
     "printDescription": {
-      "en": "Treats open source repository conventions as a contract. Generates a complete repo from a freeform prompt; audits and auto-fixes drift on existing repos, or files one issue per violation.",
-      "sv": "Behandlar konventioner för open source-repon som ett kontrakt. Genererar ett komplett repo utifrån en friform-prompt; revidera och åtgärdar automatiskt avvikelser i befintliga repon, eller skapar ett issue per avvikelse."
+      "en": "A specification and CLI for how open source projects are structured, developed, validated, and deployed. Bootstraps a new repo end-to-end; on existing repos, audits drift and either auto-fixes it or files one issue per violation. Spec-driven development for the build, not the feature set.",
+      "sv": "En specifikation och ett CLI för hur open source-projekt struktureras, utvecklas, valideras och driftsätts. Startar ett nytt repo från ända till ända; på befintliga repon revideras avvikelser och åtgärdas automatiskt, annars skapas ett issue per avvikelse. Spec-driven utveckling — för bygget, inte funktionerna."
     },
     "stack": ["Rust"],
     "skills": [
@@ -185,16 +185,16 @@
   {
     "name": "blog",
     "tagline": {
-      "en": "Terminal-themed personal blog with dual-audience posts.",
-      "sv": "Terminal-tematiserad personlig blogg med läsarversioner för olika målgrupper."
+      "en": "An admin-free AI blog with a closeable terminal simulator — Claude ships every post.",
+      "sv": "En adminfri AI-blogg med en stängbar terminalsimulator — Claude publicerar varje inlägg."
     },
     "description": {
-      "en": "Personal blog where each post can ship a technical and a non-technical version under one slug. Markdown lives in the repo, a Vite extractor compiles it into a single JSON the React frontend reads, and posts are written, revised, and removed through Claude skills. No CMS, no runtime server.",
-      "sv": "Personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug. Markdown ligger i repot, en Vite-extractor kompilerar det till en enda JSON som React-frontenden läser, och inlägg skrivs, uppdateras och tas bort via Claude-skills. Ingen CMS, ingen runtime-server."
+      "en": "A nerdy personal blog about AI projects and unconventional ways to use AI. The site renders as a terminal simulator that can be closed to reveal a normal blog underneath. The innovation is that the entire administration layer is gone — there is no CMS, no admin UI, and no editor. Claude skills add, update, and delete posts: writing a non-technical companion version, handling tags and categories, fixing typos, and pushing the result to the repo, where a GitHub Pages deploy picks it up and the blog is live.",
+      "sv": "En nördig personlig blogg om AI-projekt och okonventionella sätt att använda AI. Sajten renderas som en terminalsimulator som kan stängas för att visa en vanlig blogg under. Det innovativa är att hela administrationslagret är borta — ingen CMS, inget adminläge, ingen editor. Claude-skills lägger till, uppdaterar och tar bort inlägg: skriver en icke-teknisk parallellversion, hanterar taggar och kategorier, rättar stavfel och pushar resultatet till repot, där en GitHub Pages-deploy plockar upp det och bloggen är uppe."
     },
     "printDescription": {
-      "en": "Static personal blog where each post can ship a technical and a non-technical version under one slug. Markdown is compiled at build time to a single JSON the React frontend reads; posts are managed through Claude skills.",
-      "sv": "Statisk personlig blogg där varje inlägg kan levereras i både teknisk och icke-teknisk version under samma slug. Markdown kompileras vid byggtid till en enda JSON som React-frontenden läser; inlägg hanteras via Claude-skills."
+      "en": "Personal blog about AI projects, presented as a closeable terminal simulator over a regular blog. No CMS, no admin UI — Claude skills handle the whole admin layer: writing the non-technical companion version, tagging, categorizing, fixing typos, and pushing the post to GitHub Pages.",
+      "sv": "Personlig blogg om AI-projekt, presenterad som en stängbar terminalsimulator över en vanlig blogg. Ingen CMS, inget adminläge — Claude-skills sköter hela administrationen: skriver den icke-tekniska parallellversionen, taggar, kategoriserar, rättar stavfel och pushar inlägget till GitHub Pages."
     },
     "stack": [
       "TypeScript",
@@ -218,16 +218,16 @@
   {
     "name": "cv",
     "tagline": {
-      "en": "The site you're on — a personal CV driven entirely by schema-validated JSON.",
-      "sv": "Sajten du befinner dig på — ett personligt CV drivet helt av schemavaliderad JSON."
+      "en": "The site you're on — a personal CV built from JSON, written from a phone.",
+      "sv": "Sajten du befinner dig på — ett personligt CV byggt från JSON, skrivet från en telefon."
     },
     "description": {
-      "en": "This site. Written in JSON, validated against a single schema, and used at build time to derive the React app, the search index, the SEO metadata, the OG image, the timeline, and a printable PDF. Maintained through Claude Code skills for content, design, and visual-regression drift.",
-      "sv": "Den här sajten. Skriven i JSON, validerad mot ett enda schema och använd vid byggtid för att härleda React-appen, sökindexet, SEO-metan, OG-bilden, tidslinjen och en utskrivbar PDF. Underhålls via Claude Code-skills för innehåll, design och visuell regressions-drift."
+      "en": "This site. The whole CV — content, structure, and most of the code — was written on an iPhone with the Claude Code App. The source is a set of schema-validated JSON documents that the build pipeline turns into the React site, an interactive timeline, a search index, and downloadable PDFs in English and Swedish. Adding a new role or project is one ask to Claude; GitHub Actions rebuilds and redeploys the site automatically.",
+      "sv": "Den här sajten. Hela CV:t — innehåll, struktur och större delen av koden — skrevs på en iPhone med Claude Code-appen. Källan är ett antal schemavaliderade JSON-dokument som byggpipen omvandlar till React-sajten, en interaktiv tidslinje, ett sökindex och nedladdningsbara PDF:er på engelska och svenska. Att lägga till en ny roll eller ett nytt projekt är en fråga till Claude; GitHub Actions bygger om och driftsätter sajten automatiskt."
     },
     "printDescription": {
-      "en": "Personal CV site written in JSON and validated against a single schema. The build derives the React app, search index, SEO metadata, OG image, timeline, and a printable PDF from the same source. Maintained through Claude Code skills.",
-      "sv": "Personlig CV-sajt skriven i JSON och validerad mot ett enda schema. Bygget härleder React-appen, sökindexet, SEO-metan, OG-bilden, tidslinjen och en utskrivbar PDF från samma källa. Underhålls via Claude Code-skills."
+      "en": "Personal CV built from a set of schema-validated JSON documents that the pipeline renders as the React site, an interactive timeline, a search index, and PDFs in English and Swedish. Written entirely on an iPhone with the Claude Code App; updates ship via GitHub Actions.",
+      "sv": "Personligt CV byggt från ett antal schemavaliderade JSON-dokument som pipen renderar till React-sajten, en interaktiv tidslinje, ett sökindex och PDF:er på engelska och svenska. Skrivet helt på en iPhone med Claude Code-appen; uppdateringar släpps via GitHub Actions."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
     "skills": ["Claude Code", "Agent skills", "SEO", "WCAG"],
@@ -243,16 +243,16 @@
   {
     "name": "juris",
     "tagline": {
-      "en": "Git-native open database for Swedish legal documents.",
-      "sv": "Git-baserad öppen databas för svenska rättsdokument."
+      "en": "A Python pipeline that turns Swedish legal documents into a clean, RAG-ready corpus.",
+      "sv": "En Python-pipeline som omvandlar svenska rättsdokument till ett städat, RAG-redo korpus."
     },
     "description": {
-      "en": "A CLI that pulls Swedish legal documents — parliament, government, courts, agencies, EU law — from their official sources and normalizes them into Markdown and JSON. Output is a git-friendly corpus where every amendment becomes a commit and a diff. Async I/O with rate limiting respects the source servers; PDF text extraction handles attachments. Published to PyPI.",
-      "sv": "Ett CLI som hämtar svenska rättsdokument — riksdag, regering, domstolar, myndigheter, EU-rätt — från deras officiella källor och normaliserar dem till Markdown och JSON. Utdatan är ett git-vänligt korpus där varje ändring blir en commit och en diff. Asynkron I/O med hastighetsbegränsning respekterar källservrarna; PDF-textextraktion hanterar bilagor. Publicerad på PyPI."
+      "en": "A Python project that collects Swedish legal documents from their official government sources — parliament, government, courts, agencies, EU law — and normalizes them into a clean, openly redistributable corpus. The output is shaped for downstream use: typically embedded with a model like Qwen3-Embedding, stored in a vector database, and served as ground-truth context inside a RAG pipeline. Async I/O with rate limiting respects the source servers; PDF text extraction handles attachments. Published to PyPI.",
+      "sv": "Ett Python-projekt som samlar in svenska rättsdokument från deras officiella myndighetskällor — riksdag, regering, domstolar, myndigheter, EU-rätt — och normaliserar dem till ett städat, fritt vidaredistribuerbart korpus. Utdatan är formad för vidareanvändning: typiskt embeddad med en modell som Qwen3-Embedding, lagrad i en vektordatabas och serverad som faktagrund i en RAG-pipeline. Asynkron I/O med hastighetsbegränsning respekterar källservrarna; PDF-textextraktion hanterar bilagor. Publicerad på PyPI."
     },
     "printDescription": {
-      "en": "Python CLI that normalizes Swedish legal documents — parliament, government, courts, agencies, EU law — into a git-friendly Markdown and JSON corpus. Async I/O with rate limiting; PDF text extraction. Published to PyPI.",
-      "sv": "Python-CLI som normaliserar svenska rättsdokument — riksdag, regering, domstolar, myndigheter, EU-rätt — till ett git-vänligt korpus i Markdown och JSON. Asynkron I/O med hastighetsbegränsning; PDF-textextraktion. Publicerad på PyPI."
+      "en": "Python pipeline that pulls Swedish legal documents — parliament, government, courts, agencies, EU law — from their official sources and normalizes them into a clean, openly redistributable corpus, shaped for embedding (e.g. Qwen3-Embedding), vector storage, and use as ground truth in RAG pipelines. Published to PyPI.",
+      "sv": "Python-pipeline som hämtar svenska rättsdokument — riksdag, regering, domstolar, myndigheter, EU-rätt — från deras officiella källor och normaliserar dem till ett städat, fritt vidaredistribuerbart korpus, format för embedding (t.ex. Qwen3-Embedding), vektorlagring och som faktagrund i RAG-pipelines. Publicerad på PyPI."
     },
     "stack": ["Python"],
     "skills": ["Integrations", "CI/CD"],
@@ -337,16 +337,16 @@
   {
     "name": "etimo-achievements",
     "tagline": {
-      "en": "Gamification platform for distributing achievements across a team via Slack.",
-      "sv": "Gamification-plattform som delar ut achievements i ett team via Slack."
+      "en": "A Slack-integrated achievements platform that turned office chores into a leaderboard.",
+      "sv": "En Slack-integrerad achievements-plattform som gjorde vardagssysslorna till en topplista."
     },
     "description": {
-      "en": "Web app where teams create, award, and track achievements that surface as Slack messages, encouraging balanced task distribution and recognition. TypeScript end-to-end with a Node.js/Express API on PostgreSQL, deployed on Kubernetes via GitHub Actions. Started as an Etimo open-source project and was later picked up by two of Etimo's client startups.",
-      "sv": "Webbapp där team skapar, delar ut och följer achievements som dyker upp som Slack-meddelanden, för att stötta balanserad uppgiftsfördelning och uppskattning. TypeScript hela vägen med ett Node.js/Express-API mot PostgreSQL, driftsatt på Kubernetes via GitHub Actions. Började som ett open source-projekt på Etimo och plockades sedan upp av två av Etimos kundstartups."
+      "en": "A platform for handing out and managing achievements with Slack at the centre. Anyone can define an achievement — \"Brewed coffee, 20 points\" — and award it to a colleague when they do something appreciated; the message lands in Slack and the receiver climbs the board. Top contestants take home a prize each month. It made the unglamorous parts of office life genuinely fun, and it stuck. Built as an Etimo open source project — TypeScript end-to-end on Node.js/Express, PostgreSQL, and Kubernetes.",
+      "sv": "En plattform för att dela ut och hantera achievements med Slack i centrum. Vem som helst kan definiera en achievement — \"Bryggde kaffe, 20 poäng\" — och dela ut den till en kollega som gjort något uppskattat; meddelandet hamnar i Slack och mottagaren klättrar på listan. Topplacerade får ett pris varje månad. Det gjorde de oglamorösa delarna av kontorslivet riktigt roliga, och det fastnade. Byggd som ett open source-projekt på Etimo — TypeScript hela vägen på Node.js/Express, PostgreSQL och Kubernetes."
     },
     "printDescription": {
-      "en": "Open-source gamification platform that surfaces team achievements as Slack messages. TypeScript end-to-end on Node.js/Express, PostgreSQL, and Kubernetes. Built at Etimo and reused at two client startups.",
-      "sv": "Open source-gamificationsplattform som lyfter teamets achievements som Slack-meddelanden. TypeScript hela vägen på Node.js/Express, PostgreSQL och Kubernetes. Byggd på Etimo och återanvänd på två kundstartups."
+      "en": "Slack-integrated achievements platform built at Etimo. Anyone can define an achievement — \"Brewed coffee, 20 points\" — and award it to a colleague; top contestants take home a prize each month. Open source, TypeScript end-to-end on Node.js/Express, PostgreSQL, and Kubernetes.",
+      "sv": "Slack-integrerad achievements-plattform byggd på Etimo. Vem som helst kan definiera en achievement — \"Bryggde kaffe, 20 poäng\" — och dela ut den till en kollega; topplacerade får ett pris varje månad. Open source, TypeScript hela vägen på Node.js/Express, PostgreSQL och Kubernetes."
     },
     "stack": [
       "TypeScript",
@@ -394,16 +394,16 @@
   {
     "name": "docker-backup",
     "tagline": {
-      "en": "Encrypted, scheduled backups for Docker volumes and host folders.",
-      "sv": "Krypterade, schemalagda säkerhetskopior för Docker-volymer och värdmappar."
+      "en": "Encrypted, compressed Docker and host backups, shipped as a 12 MB Bash image.",
+      "sv": "Krypterade, komprimerade säkerhetskopior för Docker och värd, levererade som en 12 MB Bash-image."
     },
     "description": {
-      "en": "Containerized backup tool for Docker volumes and host folders. Archives are encrypted, signed, and checksum-verified; a cron schedule moves them to long-term storage and prunes by retention rules. Sibling containers are paused around the backup window so volumes aren't captured mid-write. Distributed as multi-arch Docker Hub images.",
-      "sv": "Containeriserat säkerhetskopieringsverktyg för Docker-volymer och värdmappar. Arkiv krypteras, signeras och checksumverifieras; ett cronschema flyttar dem till långtidslagring och rensar enligt retentionsregler. Systerkontainrar pausas under säkerhetskopieringsfönstret så att volymer inte fångas mitt under skrivning. Distribueras som multi-arch-avbildningar på Docker Hub."
+      "en": "A backup system written entirely in Bash and packaged as a 12 MB Docker image. Backs up host folders or the contents of sibling containers, compresses and encrypts the archive, and uploads it to one or several remote destinations. Ships with its own end-to-end test framework — also Bash — that exercises the full backup-and-restore path against real targets so regressions surface before they reach production. Distributed as multi-arch images on Docker Hub.",
+      "sv": "Ett säkerhetskopieringssystem skrivet helt i Bash och paketerat som en 12 MB Docker-image. Säkerhetskopierar värdmappar eller innehållet i syskon-kontainrar, komprimerar och krypterar arkivet och laddar upp det till en eller flera fjärrvärdar. Levereras med ett eget end-to-end-testramverk — också i Bash — som kör hela backup-och-återställningsflödet mot riktiga mål så att regressioner upptäcks innan de når produktion. Distribueras som multi-arch-avbildningar på Docker Hub."
     },
     "printDescription": {
-      "en": "Containerized backup tool for Docker volumes and host folders. Encrypted, signed, checksum-verified archives on a cron schedule. Pauses sibling containers around the backup window. Multi-arch Docker Hub images.",
-      "sv": "Containeriserat säkerhetskopieringsverktyg för Docker-volymer och värdmappar. Krypterade, signerade och checksumverifierade arkiv på ett cronschema. Pausar systerkontainrar under säkerhetskopieringsfönstret. Multi-arch-avbildningar på Docker Hub."
+      "en": "Backup system written entirely in Bash and packaged as a 12 MB Docker image. Backs up host folders or sibling containers, compresses and encrypts the archive, and uploads to one or several remote destinations. Ships with a Bash end-to-end test framework that exercises the full backup-and-restore path. Multi-arch images on Docker Hub.",
+      "sv": "Säkerhetskopieringssystem skrivet helt i Bash och paketerat som en 12 MB Docker-image. Säkerhetskopierar värdmappar eller syskon-kontainrar, komprimerar och krypterar arkivet och laddar upp det till en eller flera fjärrvärdar. Levereras med ett end-to-end-testramverk i Bash som kör hela backup-och-återställningsflödet. Multi-arch-avbildningar på Docker Hub."
     },
     "stack": ["Bash/Shell", "Docker"],
     "skills": ["Cybersecurity"],
