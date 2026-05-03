@@ -214,6 +214,7 @@ function ProgramView({ program }: { program: EducationItem }) {
 function CourseView({ credits }: { credits: string }) {
   const { ui } = useLang();
   const ects = parseEcts(credits);
+  const rows = buildCourseRows(ects);
   return (
     <section className="ects-course">
       {ects !== null && ects > 0 && (
@@ -235,16 +236,17 @@ function CourseView({ credits }: { credits: string }) {
           </tr>
         </thead>
         <tbody>
-          {[
-            { ects: 1.5, weeks: 1 },
-            { ects: 7.5, weeks: 5 },
-            { ects: 15, weeks: 10 },
-            { ects: 30, weeks: 20 },
-            { ects: 60, weeks: 40 },
-          ].map((row) => (
-            <tr key={row.ects}>
+          {rows.map((row) => (
+            <tr
+              key={row.ects}
+              className={
+                row.isCourse
+                  ? "ects-table-row ects-table-row--current"
+                  : undefined
+              }
+            >
               <td>{formatEcts(row.ects)}</td>
-              <td>{row.weeks}</td>
+              <td>{formatEcts((row.ects * 40) / 60)}</td>
               <td>{formatSemester(row.ects)}</td>
             </tr>
           ))}
@@ -253,6 +255,21 @@ function CourseView({ credits }: { credits: string }) {
       <p className="ects-program-explainer">{ui.ects.courseExplainer}</p>
     </section>
   );
+}
+
+const ANCHOR_ROWS = [1.5, 30, 60];
+
+function buildCourseRows(
+  courseEcts: number | null,
+): Array<{ ects: number; isCourse: boolean }> {
+  const values = new Map<string, { ects: number; isCourse: boolean }>();
+  for (const v of ANCHOR_ROWS) {
+    values.set(v.toFixed(2), { ects: v, isCourse: false });
+  }
+  if (courseEcts !== null && courseEcts > 0) {
+    values.set(courseEcts.toFixed(2), { ects: courseEcts, isCourse: true });
+  }
+  return [...values.values()].sort((a, b) => a.ects - b.ects);
 }
 
 function formatSemester(ects: number): string {
