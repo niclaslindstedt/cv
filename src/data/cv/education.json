@@ -17,7 +17,8 @@
     "totalCredits": "180 ECTS",
     "minor": {
       "credits": "30 ECTS",
-      "completed": false
+      "completed": false,
+      "after": "60 ECTS"
     },
     "thesis": {
       "credits": "15 ECTS",

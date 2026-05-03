@@ -453,7 +453,7 @@
         "degreeType": {
           "type": "string",
           "enum": ["bachelor", "magister", "master", "medical", "other"],
-          "description": "Drives the ECTS power bar in the EctsModal: which standard milestone (Bachelor's = 180, Magister = 60-on-top, Master's = 120-on-top, Medical Doctor = 330, …) this program corresponds to. Omit for non-degree-tracking programs."
+          "description": "Drives the ECTS power bar in the EctsModal: which milestones to render along the bar (Bachelor's = 180, Magister = 240, Master = 300) and how to lay out main/minor/thesis segments. For `bachelor` the bar caps at the program's totalCredits and milestones beyond it are hidden. Medical and `other` programs render no ladder milestones. Omit for non-degree-tracking programs."
         },
         "totalCredits": {
           "type": "string",
@@ -464,10 +464,15 @@
           "type": "object",
           "additionalProperties": false,
           "required": ["credits", "completed"],
-          "description": "Minor-subject segment of the program. Set when the program structure includes a minor subject; the EctsModal renders this as a labeled segment on the power bar.",
+          "description": "Minor-subject segment of the program. Set when the program structure includes a minor subject; the EctsModal renders this as a labeled slot on the power bar between the first stretch of main coursework and the rest.",
           "properties": {
             "credits": { "type": "string", "minLength": 1 },
-            "completed": { "type": "boolean" }
+            "completed": { "type": "boolean" },
+            "after": {
+              "type": "string",
+              "minLength": 1,
+              "description": "ECTS position in the bar where the minor subject begins (e.g. '60 ECTS' to place it after the first year of main coursework). Defaults to 60 ECTS for bachelor programs."
+            }
           }
         },
         "thesis": {

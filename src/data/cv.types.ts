@@ -172,6 +172,7 @@ export type DegreeType =
 export type ProgramSegment = {
   credits: string;
   completed: boolean;
+  after?: string;
 };
 
 export type EducationSegment = {
