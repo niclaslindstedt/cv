@@ -51,6 +51,11 @@ export type TimelineRole = {
   title: LocalizedString;
 };
 
+export type TimelineInstitution = {
+  startDate: string;
+  name: LocalizedString;
+};
+
 export type TimelineBar = {
   id: string;
   kind: TimelineKind;
@@ -69,6 +74,7 @@ export type TimelineBar = {
   github?: GitHubPayload;
   sideProject?: SideProjectPayload;
   roles?: TimelineRole[];
+  institutions?: TimelineInstitution[];
 };
 
 export type TimelineTrack = {

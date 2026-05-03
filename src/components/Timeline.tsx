@@ -837,23 +837,35 @@ export function Timeline() {
 
     const span = endMonth - startMonth;
     const hasRoles = !!(bar.roles && bar.roles.length >= 2 && span > 0);
+    const hasInstitutions = !!(
+      bar.institutions &&
+      bar.institutions.length >= 2 &&
+      span > 0
+    );
+    const isSplit = hasRoles || hasInstitutions;
 
-    let roleSegments: ReactNode = null;
-    let promotionMarkers: ReactNode = null;
-    if (hasRoles) {
-      const roles = bar.roles!;
+    const computeBoundaries = (starts: string[]): number[] => {
       const boundaries: number[] = [startMonth];
-      for (let i = 1; i < roles.length; i++) {
-        const m = monthIndex(roles[i].startDate);
+      for (let i = 1; i < starts.length; i++) {
+        const m = monthIndex(starts[i]);
         boundaries.push(Math.min(Math.max(m, startMonth), endMonth));
       }
       boundaries.push(endMonth);
+      return boundaries;
+    };
 
-      roleSegments = roles.map((role, i) => {
-        const segStart = boundaries[i];
-        const segEnd = boundaries[i + 1];
-        const left = `${((segStart - startMonth) / span) * 100}%`;
-        const width = `${((segEnd - segStart) / span) * 100}%`;
+    const segmentStyle = (segStart: number, segEnd: number): CSSProperties => ({
+      left: `${((segStart - startMonth) / span) * 100}%`,
+      width: `${((segEnd - segStart) / span) * 100}%`,
+    });
+
+    let splitSegments: ReactNode = null;
+    let promotionMarkers: ReactNode = null;
+    if (hasRoles) {
+      const roles = bar.roles!;
+      const boundaries = computeBoundaries(roles.map((r) => r.startDate));
+
+      splitSegments = roles.map((role, i) => {
         const isPromoted = i > 0;
         return (
           <span
@@ -861,7 +873,7 @@ export function Timeline() {
             className={`timeline-vis-item-segment${
               isPromoted ? " is-promoted" : ""
             }`}
-            style={{ left, width }}
+            style={segmentStyle(boundaries[i], boundaries[i + 1])}
           >
             {isPromoted && (
               <span className="timeline-vis-promo-arrow" aria-hidden="true">
@@ -896,20 +908,52 @@ export function Timeline() {
           />
         );
       });
+    } else if (hasInstitutions) {
+      const institutions = bar.institutions!;
+      const boundaries = computeBoundaries(
+        institutions.map((s) => s.startDate),
+      );
+
+      splitSegments = institutions.map((segment, i) => {
+        const isTransfer = i > 0;
+        const institutionName = t(segment.name);
+        const subtitle = barSubtitle
+          ? `${institutionName} · ${barSubtitle}`
+          : institutionName;
+        return (
+          <span
+            key={`inst-${segment.startDate}`}
+            className={`timeline-vis-item-segment${
+              isTransfer ? " is-promoted" : ""
+            }`}
+            style={segmentStyle(boundaries[i], boundaries[i + 1])}
+          >
+            {isTransfer && (
+              <span className="timeline-vis-promo-arrow" aria-hidden="true">
+                →
+              </span>
+            )}
+            <span className="timeline-vis-item-segment-label">
+              <span className="timeline-vis-item-title">{barTitle}</span>
+              <span className="timeline-vis-item-sub">{subtitle}</span>
+            </span>
+          </span>
+        );
+      });
     }
 
     return (
       <button
         key={bar.id}
         type="button"
-        className={`${classes}${hasRoles ? " has-roles" : ""}`}
+        className={`${classes}${isSplit ? " has-roles" : ""}`}
         style={style}
         data-bar-id={bar.id}
         onClick={() => setSelectedId(bar.id)}
         title={title}
       >
-        {hasRoles ? (
-          roleSegments
+        {isSplit ? (
+          splitSegments
         ) : (
           <span className="timeline-vis-item-label">
             <span className="timeline-vis-item-title">{barTitle}</span>
@@ -1327,30 +1371,37 @@ export function Timeline() {
         (() => {
           const hasMultipleRoles =
             !!selectedItem.roles && selectedItem.roles.length >= 2;
+          const hasMultipleInstitutions =
+            !!selectedItem.institutions &&
+            selectedItem.institutions.length >= 2;
           const headingText = t(selectedItem.title);
           const showSubtitle = t(selectedItem.subtitle).length > 0;
+          const buildRanges = <T extends { startDate: string }>(entries: T[]) =>
+            entries.map((entry, i) => {
+              const isLast = i === entries.length - 1;
+              const startMonth = monthIndex(entry.startDate);
+              const endMonth = isLast
+                ? selectedItem.isOngoing
+                  ? now
+                  : monthIndex(selectedItem.endDate ?? selectedItem.startDate)
+                : monthIndex(entries[i + 1].startDate);
+              const endIso = isLast
+                ? selectedItem.endDate
+                : previousMonthIso(entries[i + 1].startDate);
+              return {
+                entry,
+                key: entry.startDate,
+                startDate: entry.startDate,
+                endIso,
+                startMonth,
+                endMonth,
+              };
+            });
           const roleRanges = hasMultipleRoles
-            ? selectedItem.roles!.map((role, i) => {
-                const roles = selectedItem.roles!;
-                const isLast = i === roles.length - 1;
-                const startMonth = monthIndex(role.startDate);
-                const endMonth = isLast
-                  ? selectedItem.isOngoing
-                    ? now
-                    : monthIndex(selectedItem.endDate ?? selectedItem.startDate)
-                  : monthIndex(roles[i + 1].startDate);
-                const endIso = isLast
-                  ? selectedItem.endDate
-                  : previousMonthIso(roles[i + 1].startDate);
-                return {
-                  key: role.startDate,
-                  title: role.title,
-                  startDate: role.startDate,
-                  endIso,
-                  startMonth,
-                  endMonth,
-                };
-              })
+            ? buildRanges(selectedItem.roles!)
+            : [];
+          const institutionRanges = hasMultipleInstitutions
+            ? buildRanges(selectedItem.institutions!)
             : [];
           return (
             <aside
@@ -1424,7 +1475,30 @@ export function Timeline() {
                     {[...roleRanges].reverse().map((r) => (
                       <li key={r.key} className="timeline-vis-details-role">
                         <span className="timeline-vis-details-role-title">
-                          {t(r.title)}
+                          {t(r.entry.title)}
+                        </span>
+                        <span className="timeline-vis-details-role-meta">
+                          {formatRange(r.startDate, r.endIso, lang)}
+                          {" · "}
+                          <span className="timeline-vis-details-duration">
+                            {formatDuration(
+                              r.startMonth,
+                              r.endMonth,
+                              ui.timeline.yUnit,
+                              ui.timeline.mUnit,
+                            )}
+                          </span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {hasMultipleInstitutions && (
+                  <ul className="timeline-vis-details-roles">
+                    {[...institutionRanges].reverse().map((r) => (
+                      <li key={r.key} className="timeline-vis-details-role">
+                        <span className="timeline-vis-details-role-title">
+                          {t(r.entry.name)}
                         </span>
                         <span className="timeline-vis-details-role-meta">
                           {formatRange(r.startDate, r.endIso, lang)}

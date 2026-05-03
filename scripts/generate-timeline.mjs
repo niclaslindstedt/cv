@@ -217,10 +217,10 @@ function buildItems(cv) {
       endDate: ed.endDate,
       skills: ed.skills ?? [],
       notes: ed.notes ? localize(ed.notes) : undefined,
-      roles: hasSegments
+      institutions: hasSegments
         ? sortedSegments.map((s) => ({
             startDate: s.startDate,
-            title: localize(s.institution),
+            name: localize(s.institution),
           }))
         : undefined,
     });
@@ -505,6 +505,7 @@ function buildLayout(cv, activity, projectStats) {
       if (p.github) bar.github = p.github;
       if (p.sideProject) bar.sideProject = p.sideProject;
       if (p.roles) bar.roles = p.roles;
+      if (p.institutions) bar.institutions = p.institutions;
       return bar;
     }),
   }));
