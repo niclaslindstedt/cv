@@ -849,12 +849,24 @@ export function Timeline() {
       }
       boundaries.push(endMonth);
 
+      const isEducationSegments = bar.kind === "education";
       roleSegments = roles.map((role, i) => {
         const segStart = boundaries[i];
         const segEnd = boundaries[i + 1];
         const left = `${((segStart - startMonth) / span) * 100}%`;
         const width = `${((segEnd - segStart) / span) * 100}%`;
         const isPromoted = i > 0;
+        // Education segments split a single program across institutions, so
+        // each slice should still announce the program (barTitle) and put the
+        // institution into the subtitle alongside the level. Experience role
+        // segments are promotions inside one company, so the role title leads
+        // and the company stays in the subtitle.
+        const segmentTitle = isEducationSegments ? barTitle : t(role.title);
+        const segmentSubtitle = isEducationSegments
+          ? barSubtitle
+            ? `${t(role.title)} · ${barSubtitle}`
+            : t(role.title)
+          : barSubtitle;
         return (
           <span
             key={`role-${role.startDate}`}
@@ -869,9 +881,9 @@ export function Timeline() {
               </span>
             )}
             <span className="timeline-vis-item-segment-label">
-              <span className="timeline-vis-item-title">{t(role.title)}</span>
-              {barSubtitle && (
-                <span className="timeline-vis-item-sub">{barSubtitle}</span>
+              <span className="timeline-vis-item-title">{segmentTitle}</span>
+              {segmentSubtitle && (
+                <span className="timeline-vis-item-sub">{segmentSubtitle}</span>
               )}
             </span>
           </span>
