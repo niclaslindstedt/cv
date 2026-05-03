@@ -326,15 +326,17 @@ function PowerBar({ segments, total, fillPct, milestones }: PowerBarProps) {
         />
       </div>
       <div className="ects-bar-points" aria-hidden="true">
-        {milestones.map((m) => (
-          <span
-            key={m.value}
-            className="ects-bar-point"
-            style={{ left: pct(m.value) }}
-          >
-            {m.value}
-          </span>
-        ))}
+        {milestones
+          .filter((m) => m.value !== total)
+          .map((m) => (
+            <span
+              key={m.value}
+              className="ects-bar-point"
+              style={{ left: pct(m.value) }}
+            >
+              {m.value}
+            </span>
+          ))}
         <span
           className="ects-bar-point ects-bar-point--total"
           style={{ left: "100%" }}
