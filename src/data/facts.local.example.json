@@ -1,0 +1,69 @@
+{
+  "_about": "Free-form scratch pad for the update-cv and update-company-descriptions skills. Nothing here is rendered, bundled, or committed — it's read only as background context so the agent can write more accurate descriptions and avoid hallucinating. Add, remove, or rename fields freely; the structure below is a suggestion, not a schema.",
+
+  "_rules": [
+    "Never put exact revenue, headcount, customer names, or contract values into the public CV.",
+    "Never mention the unreleased product codename 'Project Lighthouse' anywhere — public or local.",
+    "When in doubt about a number, round generously and prefix with 'roughly' or drop the figure.",
+    "Prefer 'a Nordic fintech' over naming the client unless the public sourceUrls already do."
+  ],
+
+  "career_narrative": {
+    "why_left_acme": "Restructure killed the platform team; product direction shifted away from infra. Public framing: 'team scope changed'.",
+    "current_motivation": "Want to spend more time on agentic systems and less on people management.",
+    "looking_for": "Staff/principal IC roles or small-team tech lead. Remote-first, Nordic time zones."
+  },
+
+  "companies": {
+    "acme-corp": {
+      "real_role": "De-facto tech lead for the platform team (8 engineers) even though the title was Senior Engineer.",
+      "what_i_actually_did": "Owned the migration from on-prem Kafka to MSK, ran the on-call rotation rewrite, mentored two juniors to mid.",
+      "scale_context": "Internal: ~3M DAU, ~400 services. Don't put the numbers in the public CV — use 'large-scale' instead.",
+      "nda_topics": [
+        "pricing model",
+        "the Q3 outage",
+        "the failed acquisition"
+      ],
+      "safe_to_mention": [
+        "Kafka → MSK migration",
+        "on-call tooling",
+        "platform mentorship"
+      ]
+    },
+    "bookbeat": {
+      "engagement_shape": "Embedded consultant, 3 days/week, reported to the CTO.",
+      "concrete_outcomes": "Cut p95 search latency from 1.2s to 180ms; introduced feature flags via Unleash.",
+      "phrase_to_avoid": "'Migrated to microservices' — it was already microservices; I consolidated two of them."
+    }
+  },
+
+  "projects": {
+    "claude-code-runner": {
+      "origin_story": "Started as a weekend hack to script CC across a monorepo; ~600 GitHub stars by April 2026.",
+      "users": "Used internally at two clients; one of them gave a public testimonial on the README.",
+      "tech_choices": "Bun over Node for startup time; SQLite for the run log because Postgres was overkill.",
+      "do_not_say": "'Production-ready' — it's still v0.x and the API is unstable."
+    }
+  },
+
+  "skills_context": {
+    "rust": "Side projects only, not production. Don't list above 'Go' which I've shipped.",
+    "kubernetes": "Operator-level, not just user. Wrote two custom controllers at Acme.",
+    "leadership": "Have led teams of up to 12 (Acme platform org). Comfortable with hiring, perf reviews, PIPs."
+  },
+
+  "preferences": {
+    "tagline_voice": "Plain, factual, slightly understated. No 'passionate', no 'world-class', no exclamation marks.",
+    "swedish_register": "Neutral professional — not the chummy 'du'-form some Swedish CVs use. Match the tone of the existing entries.",
+    "favorite_framings": [
+      "'shipped' over 'delivered'",
+      "'led' over 'managed' when it was technical leadership",
+      "'designed' over 'architected'"
+    ]
+  },
+
+  "open_questions": [
+    "Should the 2019 IBNQ role still lead with the CTO title or with 'co-founder'? Currently CTO; revisit if I get asked about founder experience.",
+    "Talks section — I have three conference talks worth listing but no slides hosted yet."
+  ]
+}

@@ -12,16 +12,18 @@ user's explicit ask or confirmation.
 
 ## Files
 
-| File                             | Role                                                                                                                                                                                                                                                 |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/data/cv.json`               | CV skeleton. Holds top-level scalar fields (`name`, `title`, `summary`, `links`, …) inline and uses the literal `"{...}"` sentinel for split categories. Don't replace a sentinel — edit the matching part file under `src/data/cv/<category>.json`. |
-| `src/data/cv/*.json`             | Per-category content: `meta`, `focus`, `projects`, `companies`, `experience`, `education`, `courses`, `skills`, `skillDetails`, `languages`. Edit here for any change inside one of these arrays/objects.                                            |
-| `src/data/cv.local.json`         | **Gitignored** override deep-merged into the assembled CV when `CV_LOCAL=1`. Holds private content (email, phone, fuller job descriptions, alternate `pdfFilename`). Treated as the public CV's private companion — see "Sensitive content" below.   |
-| `src/data/cv.local.example.json` | Starter template for the local override. Committed.                                                                                                                                                                                                  |
-| `src/data/load-cv.mjs`           | Assembles `cv.json` + `cv/*.json` and applies `cv.local.json` on top when `CV_LOCAL=1`. The Vite plugin, scripts, and `make validate` all go through it; the schema validates the assembled object.                                                  |
-| `schemas/cv.schema.json`         | JSON Schema. The contract the **assembled** CV must satisfy.                                                                                                                                                                                         |
-| `src/data/cv.types.ts`           | TypeScript mirror of the schema, consumed by UI.                                                                                                                                                                                                     |
-| `src/components/*.tsx`           | Renderers for each section.                                                                                                                                                                                                                          |
+| File                                | Role                                                                                                                                                                                                                                                     |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/data/cv.json`                  | CV skeleton. Holds top-level scalar fields (`name`, `title`, `summary`, `links`, …) inline and uses the literal `"{...}"` sentinel for split categories. Don't replace a sentinel — edit the matching part file under `src/data/cv/<category>.json`.     |
+| `src/data/cv/*.json`                | Per-category content: `meta`, `focus`, `projects`, `companies`, `experience`, `education`, `courses`, `skills`, `skillDetails`, `languages`. Edit here for any change inside one of these arrays/objects.                                                |
+| `src/data/cv.local.json`            | **Gitignored** override deep-merged into the assembled CV when `CV_LOCAL=1`. Holds private content (email, phone, fuller job descriptions, alternate `pdfFilename`). Treated as the public CV's private companion — see "Sensitive content" below.       |
+| `src/data/cv.local.example.json`    | Starter template for the local override. Committed.                                                                                                                                                                                                      |
+| `src/data/facts.local.json`         | **Gitignored** free-form scratch pad of background context — internal scope, real metrics, NDA boundaries, voice preferences, "what I actually did" notes. Read-only context for this skill; never copied into committed files. See "Local facts" below. |
+| `src/data/facts.local.example.json` | Starter template for the facts file. Committed.                                                                                                                                                                                                          |
+| `src/data/load-cv.mjs`              | Assembles `cv.json` + `cv/*.json` and applies `cv.local.json` on top when `CV_LOCAL=1`. The Vite plugin, scripts, and `make validate` all go through it; the schema validates the assembled object.                                                      |
+| `schemas/cv.schema.json`            | JSON Schema. The contract the **assembled** CV must satisfy.                                                                                                                                                                                             |
+| `src/data/cv.types.ts`              | TypeScript mirror of the schema, consumed by UI.                                                                                                                                                                                                         |
+| `src/components/*.tsx`              | Renderers for each section.                                                                                                                                                                                                                              |
 
 Read `schemas/cv.schema.json` first if you are unsure of a field's
 shape — it is the authoritative contract.
@@ -46,6 +48,52 @@ Choose one based on the user's message:
    editing files**, then wait for the user to pick what to apply.
 
 If the request is ambiguous, default to recommendation mode and ask.
+
+## Local facts (read every run)
+
+`src/data/facts.local.json` is a gitignored, free-form JSON scratch pad
+the user maintains as background context for this skill. It is **not a
+schema** — keys, nesting, and shape are whatever the user finds useful.
+A starter template lives at `src/data/facts.local.example.json`.
+
+**At the start of every run** (both Edit and Recommendation modes):
+
+1. Read `src/data/facts.local.json` if it exists. If it doesn't,
+   continue silently — the file is optional. Don't ask the user to
+   create one and don't fall back to the `*.example.json` template.
+2. Treat the contents as authoritative background — closer to "things
+   the user told me about themselves" than to source material. Use it
+   to:
+   - **Disambiguate** what to write. If a `_rules` / `rules` / `do_not_say`
+     list says "never put exact revenue numbers in the public CV",
+     respect it for every committed file you touch.
+   - **Ground** descriptions, taglines, `printDescription`s, and skill
+     suggestions in real context (real scope, real outcomes, what the
+     user actually did versus what the company sells) instead of
+     paraphrasing the public source material.
+   - **Match voice** — honour any tone, register, or word-choice
+     preferences the user encodes (e.g. "shipped over delivered",
+     "no exclamation marks", "neutral Swedish register").
+   - **Avoid hallucination** — if a number, claim, or framing isn't
+     supported by the CV or the facts file, leave it out rather than
+     invent it.
+3. Treat anything in the facts file as **private by default**. The
+   facts file exists precisely so the agent can know things the public
+   CV does not say. Never copy a fact verbatim into a committed file
+   unless it is clearly already public (e.g. the user explicitly marks
+   it "safe to mention" or it is corroborated by the existing public
+   `description`/`tagline`/`sourceUrls`). When in doubt, treat the
+   fact as scaffolding for tone and accuracy, not as copy.
+4. The Sensitive-content triage below still applies. The facts file
+   does **not** override it — if a fact is sensitive, route any edit
+   it informs through `cv.local.json` per the rules in that section.
+5. Never write to `facts.local.json`, never quote unbounded chunks of
+   it back to the user, and never include its contents in commit
+   messages, PR descriptions, or generated reports beyond the minimum
+   needed to explain a specific edit.
+
+If the file is malformed JSON, surface a one-line warning to the user
+and continue without it. Don't try to repair it.
 
 ## Sensitive content (mandatory triage step)
 
