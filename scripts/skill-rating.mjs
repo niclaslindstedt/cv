@@ -24,9 +24,9 @@ const TODAY = new Date("2026-05-03");
 // Weights — knobs to tune.
 // ---------------------------------------------------------------------------
 
-// How much each kind of usage counts. Real paid work weighs the most; focus
-// areas signal "this is what I'm leaning into right now"; side projects are
-// real but smaller in scope; courses are exposure, not mastery.
+// How much each kind of usage counts. Real paid work and current focus
+// areas weigh the same — both say "this is what I do". Side projects are
+// real but lighter in scope; courses are exposure, not mastery.
 const SOURCE_WEIGHTS = {
   experience: 1.0,
   assignment: 1.0,
@@ -35,13 +35,28 @@ const SOURCE_WEIGHTS = {
   education: 0.15,
 };
 
-// Focus areas are a stance, not a headcount. A "since: 2016" focus shouldn't
-// outweigh a decade of real jobs — cap the months it contributes.
-const FOCUS_MONTHS_CAP = 24;
+// A single job stops dominating after two effective years. Beyond that
+// you're not getting more skilled at TypeScript, you're just doing more
+// TypeScript.
+const SOURCE_MONTHS_CAP = 24;
+
+// Each current focus area says "I'm investing in this now" with equal
+// voice, regardless of how long it's been a focus. Stops a 2016 focus
+// area from outweighing a 2025 focus area on duration alone.
+const FOCUS_FLAT_MONTHS = 24;
 
 // Side projects don't carry dates, so we model them as recent, light-FTE work.
 const PROJECT_ASSUMED_MONTHS = 12;
 const PROJECT_ASSUMED_FTE = 0.35;
+
+// Identity adjustments. Niclas leads technically — he does, people follow —
+// so the soft people-management skills shouldn't compound to the top of the
+// sheet just because they appear on every senior role.
+const SKILL_MULTIPLIERS = {
+  Mentoring: 0.7,
+  Leadership: 0.7,
+  "Project management": 0.6,
+};
 
 // Recency curve — knowledge depreciates, but slowly.
 function recencyFactor(monthsAgo) {
@@ -52,12 +67,14 @@ function recencyFactor(monthsAgo) {
   return 0.15;
 }
 
-// 0–10 rating curve. sqrt compresses the top so the leaderboard isn't all
-// 9s and 10s, and so a single dominant skill doesn't crater everyone else.
-function rate(effective, max) {
-  if (max <= 0) return 0;
-  const ratio = Math.min(1, effective / max);
-  return Math.round(10 * Math.sqrt(ratio) * 10) / 10;
+// 0–10 rating from absolute effective months. Saturating so the curve
+// doesn't depend on whichever skill happens to top the chart, and so a
+// 30-month skill and a 300-month skill aren't both pinned at 10.
+const RATING_K = 40;
+function rate(effective) {
+  if (effective <= 0) return 0;
+  const r = 10 * (1 - Math.exp(-effective / RATING_K));
+  return Math.round(r * 10) / 10;
 }
 
 // ---------------------------------------------------------------------------
@@ -103,16 +120,28 @@ function collectSkills(node) {
   return [...stack, ...skills].filter((s) => !s.unused);
 }
 
-function pushUsage(usages, skill, source, sourceType, months, fte, weight, recency) {
+function pushUsage(
+  usages,
+  skill,
+  source,
+  sourceType,
+  months,
+  fte,
+  weight,
+  recency,
+) {
+  const cappedMonths = Math.min(months, SOURCE_MONTHS_CAP);
+  const skillMult = SKILL_MULTIPLIERS[skill] ?? 1.0;
   usages.push({
     skill,
     source,
     sourceType,
-    months,
+    months: cappedMonths,
     fte,
     weight,
     recency,
-    contribution: months * fte * weight * recency,
+    skillMult,
+    contribution: cappedMonths * fte * weight * recency * skillMult,
   });
 }
 
@@ -183,17 +212,16 @@ for (const project of cv.projects) {
   }
 }
 
-// Focus areas — current expertise; dated by `since`, ongoing today.
+// Focus areas — flat-weighted: each current focus says "I'm investing in
+// this now" with equal voice, regardless of when it started.
 for (const focus of cv.focus) {
-  const rawMonths = monthsBetween(focus.since, null);
-  const months = Math.min(rawMonths, FOCUS_MONTHS_CAP);
   for (const skill of focus.skills ?? []) {
     pushUsage(
       usages,
       skill,
       `focus:${focus.area.en}`,
       "focus",
-      months,
+      FOCUS_FLAT_MONTHS,
       1.0,
       SOURCE_WEIGHTS.focus,
       1.0,
@@ -212,13 +240,10 @@ for (const u of usages) {
   slot.usages.push(u);
 }
 
-// Anchor the 10/10 to the strongest skill.
-const maxEffective = Math.max(0, ...[...scoresMap.values()].map((s) => s.effective));
-
 const rated = [...scoresMap.entries()]
   .map(([name, slot]) => ({
     name,
-    rating: rate(slot.effective, maxEffective),
+    rating: rate(slot.effective),
     effective: Math.round(slot.effective * 10) / 10,
     category: skillToCategory[name]?.label ?? "Other",
     categoryKey: skillToCategory[name]?.key ?? "other",
@@ -231,7 +256,8 @@ const usedNames = new Set(rated.map((r) => r.name));
 const orphanSkills = [];
 for (const cat of cv.skills) {
   for (const item of cat.items) {
-    if (!usedNames.has(item)) orphanSkills.push({ name: item, category: cat.label.en });
+    if (!usedNames.has(item))
+      orphanSkills.push({ name: item, category: cat.label.en });
   }
 }
 
@@ -251,7 +277,9 @@ for (const r of rated) {
 const categories = [...categoryAgg.values()].map((c) => {
   const sorted = [...c.skills].sort((a, b) => b.rating - a.rating);
   const top3 = sorted.slice(0, 3).map((s) => s.rating);
-  const avgTop3 = top3.length ? top3.reduce((a, b) => a + b, 0) / top3.length : 0;
+  const avgTop3 = top3.length
+    ? top3.reduce((a, b) => a + b, 0) / top3.length
+    : 0;
   return {
     key: c.key,
     label: c.label,
@@ -280,18 +308,24 @@ const specialties = cv.focus.map((f) => {
 });
 specialties.sort((a, b) => b.rating - a.rating);
 
-// Pick a flavour "class" from the strongest categories.
+// Pick a flavour "class" from the strongest categories. The picker reads
+// the same signal a recruiter would: which two stat lines lead, and what
+// kind of engineer that combination describes.
 function pickClass(cats) {
-  const top = cats.slice(0, 2).map((c) => c.key);
-  if (top.includes("ai")) {
-    if (top.includes("languages")) return "AI Systems Engineer";
-    if (top.includes("practices")) return "AI Architect";
-    if (top.includes("leadership")) return "AI Tech Lead";
-    return "AI Engineer";
-  }
-  if (top.includes("practices") && top.includes("leadership")) return "Architect / Tech Lead";
-  if (top.includes("languages") && top.includes("frameworks")) return "Full-Stack Developer";
-  if (top.includes("cloud") && top.includes("devops")) return "Cloud / Platform Engineer";
+  const top = cats.slice(0, 3).map((c) => c.key);
+  const has = (k) => top.includes(k);
+
+  if (has("ai") && has("practices")) return "AI Architect";
+  if (has("ai") && has("compliance")) return "AI Security Architect";
+  if (has("ai") && has("devops")) return "AI Platform Engineer";
+  if (has("ai") && has("languages")) return "AI Systems Engineer";
+  if (has("ai")) return "AI Engineer";
+  if (has("practices") && has("compliance")) return "Security Architect";
+  if (has("practices") && has("devops")) return "Platform Architect";
+  if (has("practices") && has("languages")) return "Backend Architect";
+  if (has("devops") && has("compliance")) return "Security / Platform Engineer";
+  if (has("languages") && has("frameworks")) return "Full-Stack Developer";
+  if (has("cloud") && has("devops")) return "Cloud / Platform Engineer";
   return "Software Engineer";
 }
 
@@ -308,9 +342,20 @@ if (JSON_OUT) {
         class: characterClass,
         categories,
         specialties,
-        skills: rated.map(({ usages, ...rest }) => (DEBUG ? { ...rest, usages } : rest)),
+        skills: rated.map(({ usages, ...rest }) =>
+          DEBUG ? { ...rest, usages } : rest,
+        ),
         orphanSkills,
-        config: { SOURCE_WEIGHTS, PROJECT_ASSUMED_MONTHS, PROJECT_ASSUMED_FTE, today: TODAY.toISOString().slice(0, 10) },
+        config: {
+          SOURCE_WEIGHTS,
+          SOURCE_MONTHS_CAP,
+          FOCUS_FLAT_MONTHS,
+          PROJECT_ASSUMED_MONTHS,
+          PROJECT_ASSUMED_FTE,
+          SKILL_MULTIPLIERS,
+          RATING_K,
+          today: TODAY.toISOString().slice(0, 10),
+        },
       },
       null,
       2,
@@ -373,14 +418,18 @@ for (const c of categories) {
   console.log();
   console.log(`  ${c.label} — ${c.rating.toFixed(1)}`);
   for (const s of [...c.headline, ...c.bench]) {
-    console.log(`    ${s.name.padEnd(24)} ${bar(s.rating)} ${s.rating.toFixed(1)}`);
+    console.log(
+      `    ${s.name.padEnd(24)} ${bar(s.rating)} ${s.rating.toFixed(1)}`,
+    );
   }
 }
 
 if (orphanSkills.length) {
   console.log();
   console.log(line());
-  console.log("  DECLARED BUT UNATTRIBUTED  (in skills.json, not on any role/project/focus)");
+  console.log(
+    "  DECLARED BUT UNATTRIBUTED  (in skills.json, not on any role/project/focus)",
+  );
   console.log(line());
   for (const o of orphanSkills) {
     console.log(`    ${o.name.padEnd(24)} ${o.category}`);
