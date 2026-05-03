@@ -26,6 +26,15 @@
   background: var(--modal-overlay);
 }
 
+/* The skill modal stays mounted underneath when a destination modal is
+ * opened from a "Used in" pill, so closing the destination returns to
+ * the same skill modal instantly (no remount, no scroll-position loss).
+ * Hide it entirely while inert — the surfaces are solid, so two stacked
+ * overlays would just darken twice and waste paint. */
+.skill-modal-overlay--inert {
+  display: none;
+}
+
 .skill-modal {
   width: 100%;
   max-width: 560px;
@@ -420,6 +429,38 @@
   background: var(--glass-highlight);
   border: 1px solid var(--border);
   border-radius: 999px;
+}
+
+/* Clickable variant — pills become buttons when the skill modal is given
+ * an `onUsageClick` handler so a recruiter can navigate from a skill to
+ * each project / job / course it was used in. Visually identical to the
+ * static span pill so snapshots stay stable; only adds hover + focus
+ * affordances. */
+.skill-modal-pill-btn {
+  appearance: none;
+  margin: 0;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.3;
+  cursor: pointer;
+  text-align: inherit;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease;
+}
+
+@media (hover: hover) {
+  .skill-modal-pill-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+.skill-modal-pill-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .skill-modal-empty {

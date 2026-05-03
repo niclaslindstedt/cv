@@ -12,6 +12,7 @@ function exp(
   return {
     kind: "experience",
     label: "Co",
+    openerKey: `Co:${startDate}`,
     startDate,
     endDate,
     fte,
@@ -65,6 +66,7 @@ describe("yearsOfExperience", () => {
     const project: SkillUsage = {
       kind: "project",
       label: "p",
+      openerKey: "p",
       startDate: "2020-01",
       endDate: "2025-01",
     };

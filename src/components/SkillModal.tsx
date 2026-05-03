@@ -28,7 +28,12 @@ type Props = {
   usages: SkillUsage[];
   unusedAt: UnusedStackLocation[];
   detail?: SkillDetail;
+  inert?: boolean;
   onClose: () => void;
+  onUsageClick?: (
+    kind: SkillUsage["kind"] | UnusedStackLocation["kind"],
+    openerKey: string,
+  ) => void;
 };
 
 const GROUP_ORDER: SkillUsage["kind"][] = [
@@ -69,25 +74,28 @@ export function SkillModal({
   usages,
   unusedAt,
   detail,
+  inert = false,
   onClose,
+  onUsageClick,
 }: Props) {
   const { lang, t, ui } = useLang();
   const modalRef = useRef<HTMLDivElement>(null);
-  useModalSwipe(modalRef, !!skill, onClose);
-  useModalFocus(modalRef, !!skill);
+  const active = !!skill && !inert;
+  useModalSwipe(modalRef, active, onClose);
+  useModalFocus(modalRef, active);
   useBodyScrollLock(!!skill);
 
   const resolveLabel = (v: string | LocalizedString) =>
     isLocalized(v) ? t(v) : v;
 
   useEffect(() => {
-    if (!skill) return;
+    if (!active) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [skill, onClose]);
+  }, [active, onClose]);
 
   if (!skill) return null;
 
@@ -124,14 +132,18 @@ export function SkillModal({
   const modalClassName = groupStyle
     ? "skill-modal skill-modal--cat"
     : "skill-modal";
+  const overlayClassName = inert
+    ? "skill-modal-overlay skill-modal-overlay--inert"
+    : "skill-modal-overlay";
 
   return (
     <div
-      className="skill-modal-overlay"
+      className={overlayClassName}
       role="dialog"
       aria-modal="true"
       aria-label={ui.skillModal.usageAria(skill)}
-      onClick={onClose}
+      aria-hidden={inert ? "true" : undefined}
+      onClick={inert ? undefined : onClose}
     >
       <div
         ref={modalRef}
@@ -202,14 +214,26 @@ export function SkillModal({
                   <ul className="skill-modal-pills">
                     {groups[kind].map((u, i) => {
                       const tip = pillTooltip(u);
+                      const label = pillLabel(u);
                       return (
                         <li key={`${kind}-${i}`}>
-                          <span
-                            className="skill-modal-pill"
-                            title={tip || undefined}
-                          >
-                            {pillLabel(u)}
-                          </span>
+                          {onUsageClick ? (
+                            <button
+                              type="button"
+                              className="skill-modal-pill skill-modal-pill-btn"
+                              title={tip || undefined}
+                              onClick={() => onUsageClick(u.kind, u.openerKey)}
+                            >
+                              {label}
+                            </button>
+                          ) : (
+                            <span
+                              className="skill-modal-pill"
+                              title={tip || undefined}
+                            >
+                              {label}
+                            </span>
+                          )}
                         </li>
                       );
                     })}
@@ -236,14 +260,26 @@ export function SkillModal({
                     );
                   }
                   const tip = parts.join(" · ");
+                  const label = resolveLabel(u.label);
                   return (
                     <li key={`unused-${i}`}>
-                      <span
-                        className="skill-modal-pill skill-modal-pill-unused"
-                        title={tip || undefined}
-                      >
-                        {resolveLabel(u.label)}
-                      </span>
+                      {onUsageClick ? (
+                        <button
+                          type="button"
+                          className="skill-modal-pill skill-modal-pill-unused skill-modal-pill-btn"
+                          title={tip || undefined}
+                          onClick={() => onUsageClick(u.kind, u.openerKey)}
+                        >
+                          {label}
+                        </button>
+                      ) : (
+                        <span
+                          className="skill-modal-pill skill-modal-pill-unused"
+                          title={tip || undefined}
+                        >
+                          {label}
+                        </span>
+                      )}
                     </li>
                   );
                 })}
