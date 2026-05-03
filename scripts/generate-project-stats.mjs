@@ -11,6 +11,7 @@ const defaultOut = resolve(here, "..", "src", "data", "project-stats.json");
 const args = process.argv.slice(2);
 let outPath = defaultOut;
 let toStdout = false;
+let fullRefresh = process.env.FULL_REFRESH === "1";
 for (let i = 0; i < args.length; i++) {
   if (args[i] === "--out" && args[i + 1]) {
     outPath = resolve(args[++i]);
@@ -18,6 +19,8 @@ for (let i = 0; i < args.length; i++) {
     outPath = resolve(args[i].slice("--out=".length));
   } else if (args[i] === "--stdout") {
     toStdout = true;
+  } else if (args[i] === "--full") {
+    fullRefresh = true;
   } else {
     console.error(`Unknown argument: ${args[i]}`);
     process.exit(2);
@@ -84,12 +87,23 @@ async function fetchGraphQL(token, query, variables) {
   throw new Error("unreachable");
 }
 
+const HEAD_SHA_QUERY = `
+  query($owner: String!, $name: String!) {
+    repository(owner: $owner, name: $name) {
+      defaultBranchRef {
+        target { ... on Commit { oid } }
+      }
+    }
+  }
+`;
+
 const COMMIT_HISTORY_QUERY = `
   query($owner: String!, $name: String!, $cursor: String) {
     repository(owner: $owner, name: $name) {
       defaultBranchRef {
         target {
           ... on Commit {
+            oid
             history(first: 100, after: $cursor) {
               pageInfo { hasNextPage endCursor }
               nodes {
@@ -104,12 +118,27 @@ const COMMIT_HISTORY_QUERY = `
   }
 `;
 
+async function fetchHeadSha(token, owner, repo) {
+  const data = await fetchGraphQL(token, HEAD_SHA_QUERY, { owner, name: repo });
+  if (!data?.repository) {
+    throw new Error(
+      `Repository ${owner}/${repo} not visible to token (private repo without access?)`,
+    );
+  }
+  const ref = data.repository.defaultBranchRef;
+  if (!ref) {
+    throw new Error(`No default branch for ${owner}/${repo}`);
+  }
+  return ref.target?.oid ?? null;
+}
+
 async function fetchProjectStats(token, owner, repo, username, openSource) {
   const lowerUser = username.toLowerCase();
   let cursor = null;
   let totalCommits = 0;
   let firstCommitDate = null;
   let lastCommitDate = null;
+  let headSha = null;
   const commitsByYear = {};
 
   while (true) {
@@ -127,6 +156,7 @@ async function fetchProjectStats(token, owner, repo, username, openSource) {
     if (!ref) {
       throw new Error(`No default branch for ${owner}/${repo}`);
     }
+    if (!headSha) headSha = ref.target?.oid ?? null;
     const history = ref.target?.history;
     if (!history) {
       throw new Error(`No commit history for ${owner}/${repo}`);
@@ -153,6 +183,7 @@ async function fetchProjectStats(token, owner, repo, username, openSource) {
     owner,
     repo,
     username,
+    headSha,
     firstCommitDate: firstCommitDate ? firstCommitDate.slice(0, 10) : null,
     lastCommitDate: lastCommitDate ? lastCommitDate.slice(0, 10) : null,
     totalCommits,
@@ -248,10 +279,33 @@ async function main() {
     }
   }
 
+  let cachedProjects = {};
+  if (!fullRefresh && existsSync(outPath)) {
+    try {
+      const parsed = JSON.parse(readFileSync(outPath, "utf8"));
+      if (parsed?.enabled === true && parsed.projects) {
+        cachedProjects = parsed.projects;
+      }
+    } catch {
+      // ignore unreadable cache; treat as cold start
+    }
+  }
+
   const projects = {};
   const failed = [];
+  let reusedCount = 0;
   for (const ref of refs) {
+    const key = projectKey(ref.owner, ref.repo);
+    const cached = cachedProjects[key];
     try {
+      if (cached?.headSha && cached.username === username) {
+        const headSha = await fetchHeadSha(token, ref.owner, ref.repo);
+        if (headSha && headSha === cached.headSha) {
+          projects[key] = cached;
+          reusedCount += 1;
+          continue;
+        }
+      }
       const stats = await fetchProjectStats(
         token,
         ref.owner,
@@ -259,7 +313,7 @@ async function main() {
         username,
         ref.openSource,
       );
-      projects[projectKey(ref.owner, ref.repo)] = stats;
+      projects[key] = stats;
     } catch (err) {
       failed.push({ ref, message: err.message });
       if (!toStdout) {
@@ -308,14 +362,18 @@ async function main() {
   });
   if (!toStdout) {
     const total = Object.keys(projects).length;
+    const reuseSuffix =
+      reusedCount > 0 ? `; ${reusedCount} reused via HEAD SHA` : "";
     if (failed.length > 0) {
       console.warn(
-        `Project stats written to ${outPath} (${total}/${refs.length} repos; ${failed.length} failed: ${failed
+        `Project stats written to ${outPath} (${total}/${refs.length} repos${reuseSuffix}; ${failed.length} failed: ${failed
           .map((f) => `${f.ref.owner}/${f.ref.repo}`)
           .join(", ")}).`,
       );
     } else {
-      console.log(`Project stats written to ${outPath} (${total} repos).`);
+      console.log(
+        `Project stats written to ${outPath} (${total} repos${reuseSuffix}).`,
+      );
     }
   }
 }

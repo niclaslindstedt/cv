@@ -11,6 +11,7 @@ const defaultOut = resolve(here, "..", "src", "data", "github-activity.json");
 const args = process.argv.slice(2);
 let outPath = defaultOut;
 let toStdout = false;
+let fullRefresh = process.env.FULL_REFRESH === "1";
 for (let i = 0; i < args.length; i++) {
   if (args[i] === "--out" && args[i + 1]) {
     outPath = resolve(args[++i]);
@@ -18,6 +19,8 @@ for (let i = 0; i < args.length; i++) {
     outPath = resolve(args[i].slice("--out=".length));
   } else if (args[i] === "--stdout") {
     toStdout = true;
+  } else if (args[i] === "--full") {
+    fullRefresh = true;
   } else {
     console.error(`Unknown argument: ${args[i]}`);
     process.exit(2);
@@ -237,14 +240,55 @@ async function main() {
     return;
   }
 
+  let cached = null;
+  if (!fullRefresh && existsSync(outPath)) {
+    try {
+      const parsed = JSON.parse(readFileSync(outPath, "utf8"));
+      if (
+        parsed?.enabled === true &&
+        parsed.username === profile.username &&
+        Array.isArray(parsed.years) &&
+        parsed.years.length > 0
+      ) {
+        cached = parsed;
+      }
+    } catch {
+      // ignore unreadable cache; fall back to full refresh
+    }
+  }
+
   try {
-    const startYear = await fetchCreationYear(token, profile.username);
     const endYear = new Date().getUTCFullYear();
-    const years = [];
+    let startYear;
+    let yearsToFetch;
+    let reusedYears = [];
+    if (cached) {
+      startYear = cached.years.reduce(
+        (min, y) => (y.year < min ? y.year : min),
+        cached.years[0].year,
+      );
+      // The current year is always volatile; refetch the prior year too in
+      // January so end-of-year contributions in non-UTC timezones still land.
+      const refreshFrom =
+        new Date().getUTCMonth() === 0 ? endYear - 1 : endYear;
+      yearsToFetch = [];
+      for (let y = refreshFrom; y <= endYear; y++) yearsToFetch.push(y);
+      reusedYears = cached.years.filter((y) => y.year < refreshFrom);
+    } else {
+      startYear = await fetchCreationYear(token, profile.username);
+      yearsToFetch = [];
+      for (let y = startYear; y <= endYear; y++) yearsToFetch.push(y);
+    }
+
+    const refreshed = [];
+    for (const y of yearsToFetch) {
+      refreshed.push(await fetchYear(token, profile.username, y));
+    }
+    const years = [...reusedYears, ...refreshed].sort(
+      (a, b) => a.year - b.year,
+    );
     let maxDailyCommits = 0;
-    for (let y = startYear; y <= endYear; y++) {
-      const year = await fetchYear(token, profile.username, y);
-      years.push(year);
+    for (const year of years) {
       for (const count of year.dailyCommits) {
         if (count > maxDailyCommits) maxDailyCommits = count;
       }
@@ -259,8 +303,11 @@ async function main() {
     });
     if (!toStdout) {
       const totalCommits = years.reduce((n, y) => n + y.totalCommits, 0);
+      const mode = cached
+        ? `incremental, refreshed ${yearsToFetch.length} year(s)`
+        : "full";
       console.log(
-        `GitHub activity written to ${outPath} (${years.length} years, ${totalCommits} commits).`,
+        `GitHub activity written to ${outPath} (${mode}; ${years.length} years, ${totalCommits} commits).`,
       );
     }
   } catch (err) {
