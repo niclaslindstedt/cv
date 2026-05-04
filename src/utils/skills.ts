@@ -304,20 +304,20 @@ export function buildUnusedStackOnlySet(cv: CV): Set<string> {
 
   for (const project of cv.projects) {
     recordStack(project.stack);
-    addUsed(project.skills);
+    addUsed(skillNames(project.skills));
   }
 
   for (const exp of cv.experience) {
     recordStack(exp.stack);
-    addUsed(exp.skills);
+    addUsed(skillNames(exp.skills));
     for (const a of exp.assignments ?? []) {
       recordStack(a.stack);
-      addUsed(a.skills);
+      addUsed(skillNames(a.skills));
     }
   }
 
-  for (const ed of cv.education ?? []) addUsed(ed.skills);
-  for (const course of cv.courses ?? []) addUsed(course.skills);
+  for (const ed of cv.education ?? []) addUsed(skillNames(ed.skills));
+  for (const course of cv.courses ?? []) addUsed(skillNames(course.skills));
 
   const result = new Set<string>();
   for (const name of unusedStackSkills) {
