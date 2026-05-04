@@ -87,7 +87,7 @@
     "since": "2016-01",
     "tagline": {
       "en": "Keeping security intact in the era of vibe coding, when fixes and breakage both land faster than review.",
-      "sv": "Att hålla säkerheten intakt i vibe-kodningens tidsålder, när både åtgärder och brister levereras snabbare än granskning."
+      "sv": "Att hålla säkerheten intakt i vibe coding-eran, när både åtgärder och brister levereras snabbare än granskning."
     },
     "description": {
       "en": "Security used to be the part of a project that got cut for time. Rotating secrets, configuring MFA, tightening permissions, writing the boring hardening scripts: known work, never quite urgent enough to land. Agents make that work cheap enough to happen alongside the feature, instead of as the next ticket nobody picks up. They also ship insecure code faster than anyone can review it, so the loop has to assume both kinds of changes show up in the same diff.",
