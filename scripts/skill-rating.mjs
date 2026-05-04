@@ -132,14 +132,27 @@ function monthsSince(endYm) {
 // Skill extraction.
 // ---------------------------------------------------------------------------
 
-function normalizeStackEntry(entry) {
-  if (typeof entry === "string") return { name: entry, unused: false };
-  return { name: entry.name, unused: !!entry.unused };
+// Normalise a stack-or-skills entry. Both arrays accept either a bare
+// string ("TypeScript") or an object form ({ name, unused?, ratio? }).
+// `ratio` (default 1.0, range 0–1) lets the user say "I only used this
+// part of the time" — e.g. RAG at BookBeat is real but a few-months
+// slice of a 24-month role, not the whole thing. Set ratio: 0.2 there
+// and the contribution scales accordingly.
+function normalizeSkillEntry(entry) {
+  if (typeof entry === "string") {
+    return { name: entry, unused: false, ratio: 1.0 };
+  }
+  const ratio = typeof entry.ratio === "number" ? entry.ratio : 1.0;
+  return {
+    name: entry.name,
+    unused: !!entry.unused,
+    ratio: Math.max(0, Math.min(1, ratio)),
+  };
 }
 
 function collectSkills(node) {
-  const stack = (node.stack ?? []).map(normalizeStackEntry);
-  const skills = (node.skills ?? []).map((s) => ({ name: s, unused: false }));
+  const stack = (node.stack ?? []).map(normalizeSkillEntry);
+  const skills = (node.skills ?? []).map(normalizeSkillEntry);
   return [...stack, ...skills].filter((s) => !s.unused);
 }
 
@@ -152,6 +165,7 @@ function pushUsage(
   fte,
   weight,
   recency,
+  ratio = 1.0,
 ) {
   const cappedMonths = Math.min(months, SOURCE_MONTHS_CAP);
   const skillMult = SKILL_MULTIPLIERS[skill] ?? 1.0;
@@ -164,7 +178,8 @@ function pushUsage(
     weight,
     recency,
     skillMult,
-    contribution: cappedMonths * fte * weight * recency * skillMult,
+    ratio,
+    contribution: cappedMonths * fte * weight * recency * skillMult * ratio,
   });
 }
 
@@ -253,6 +268,7 @@ for (const exp of cv.experience) {
       fte,
       SOURCE_WEIGHTS.experience,
       recency,
+      s.ratio,
     );
   }
   for (const a of exp.assignments ?? []) {
@@ -269,6 +285,7 @@ for (const exp of cv.experience) {
         aFte,
         SOURCE_WEIGHTS.assignment,
         aRecency,
+        s.ratio,
       );
     }
   }
@@ -300,6 +317,7 @@ for (const project of cv.projects) {
       1.0,
       SOURCE_WEIGHTS.project,
       recency,
+      s.ratio,
     );
   }
 }
@@ -307,16 +325,19 @@ for (const project of cv.projects) {
 // Focus areas — flat-weighted: each current focus says "I'm investing in
 // this now" with equal voice, regardless of when it started.
 for (const focus of cv.focus) {
-  for (const skill of focus.skills ?? []) {
+  for (const entry of focus.skills ?? []) {
+    const s = normalizeSkillEntry(entry);
+    if (s.unused) continue;
     pushUsage(
       usages,
-      skill,
+      s.name,
       `focus:${focus.area.en}`,
       "focus",
       FOCUS_FLAT_MONTHS,
       1.0,
       SOURCE_WEIGHTS.focus,
       1.0,
+      s.ratio,
     );
   }
 }

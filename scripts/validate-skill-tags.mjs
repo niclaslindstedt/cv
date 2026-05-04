@@ -6,10 +6,15 @@ const cv = loadCv();
 const known = new Set(cv.skills.flatMap((group) => group.items));
 const errors = [];
 
+function skillName(item) {
+  return typeof item === "string" ? item : item?.name;
+}
+
 function check(path, tags) {
   if (!Array.isArray(tags)) return;
   for (const tag of tags) {
-    if (!known.has(tag)) errors.push(`${path}: unknown skill "${tag}"`);
+    const name = skillName(tag);
+    if (!known.has(name)) errors.push(`${path}: unknown skill "${name}"`);
   }
 }
 
@@ -46,7 +51,7 @@ cv.projects.forEach((p, i) => {
   check(`projects[${i}] (${p.name})`, p.skills);
   checkStack(`projects[${i}] (${p.name})`, p.stack);
   const stackNames = stackEntries(p.stack).map((e) => e.name);
-  const skills = Array.isArray(p.skills) ? p.skills : [];
+  const skills = Array.isArray(p.skills) ? p.skills.map(skillName) : [];
   const stackSet = new Set(stackNames);
   const overlap = skills.filter((s) => stackSet.has(s));
   if (overlap.length) {

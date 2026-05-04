@@ -281,7 +281,7 @@
       "en": "Workflow orchestration for Claude Code. Wraps the agent CLI with a rules-based process engine and persistent state, so projects survive across sessions and `swarm run` always picks up where it left off. A local dashboard streams progress and lets you steer the agent via chat.",
       "sv": "Arbetsflödesorkestrering för Claude Code. Lindar agent-CLI:t i en regelbaserad processmotor och beständigt tillstånd så att projekt överlever mellan sessioner och `swarm run` alltid plockar upp där den slutade. En lokal dashboard streamar förloppet och låter dig styra agenten via chatt."
     },
-    "stack": ["Rust", "PostgreSQL", "Svelte"],
+    "stack": ["Rust", "PostgreSQL", { "name": "Svelte", "ratio": 0.05 }],
     "skills": ["Agent orchestration", "Agentic workflows", "MCP"],
     "github": [
       {

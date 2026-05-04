@@ -54,7 +54,11 @@ export type GithubRepoRef = {
   repo: string;
 };
 
-export type StackItem = string | { name: string; unused?: boolean };
+export type StackItem =
+  | string
+  | { name: string; unused?: boolean; ratio?: number };
+
+export type SkillUsageItem = string | { name: string; ratio?: number };
 
 export type Project = {
   name: string;

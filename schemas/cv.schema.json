@@ -381,7 +381,7 @@
           "description": "Effort as a fraction of full-time (e.g. 1 = full-time, 0.5 = half-time). Defaults to 1 when omitted. Used to weight skill-experience year totals so overlapping part-time roles don't inflate `yearsOfExperience`."
         },
         "stack": { "$ref": "#/$defs/stackList" },
-        "skills": { "$ref": "#/$defs/stringList" },
+        "skills": { "$ref": "#/$defs/skillUsageList" },
         "notes": { "$ref": "#/$defs/localizedString" },
         "jobDescription": {
           "$ref": "#/$defs/localizedString",
@@ -422,7 +422,7 @@
           "description": "Effort as a fraction of full-time for this assignment (e.g. 1 = full-time, 0.5 = half-time). Inherits the parent experience's `fte` when omitted; falls back to 1 if neither is set."
         },
         "stack": { "$ref": "#/$defs/stackList" },
-        "skills": { "$ref": "#/$defs/stringList" },
+        "skills": { "$ref": "#/$defs/skillUsageList" },
         "notes": { "$ref": "#/$defs/localizedString" },
         "jobDescription": {
           "$ref": "#/$defs/localizedString",
@@ -504,7 +504,7 @@
         },
         "startDate": { "$ref": "#/$defs/yearMonth" },
         "endDate": { "$ref": "#/$defs/yearMonth" },
-        "skills": { "$ref": "#/$defs/stringList" },
+        "skills": { "$ref": "#/$defs/skillUsageList" },
         "notes": { "$ref": "#/$defs/localizedString" },
         "courses": {
           "type": "array",
@@ -607,7 +607,7 @@
           "description": "Sub-parts (Swedish: \"moment\") that make up the course. Use to break down vague course names or to record partial completion when `completed: false`.",
           "items": { "$ref": "#/$defs/courseModule" }
         },
-        "skills": { "$ref": "#/$defs/stringList" }
+        "skills": { "$ref": "#/$defs/skillUsageList" }
       }
     },
     "courseModule": {
@@ -658,7 +658,7 @@
           "description": "Sub-parts (Swedish: \"moment\") that make up the course. Use to break down vague course names or to record courses that were only partially completed.",
           "items": { "$ref": "#/$defs/courseModule" }
         },
-        "skills": { "$ref": "#/$defs/stringList" },
+        "skills": { "$ref": "#/$defs/skillUsageList" },
         "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
@@ -693,6 +693,37 @@
             "unused": {
               "type": "boolean",
               "description": "When true, the tech was part of the stack but the holder never personally practiced it."
+            },
+            "ratio": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Fraction of the role/project's effort actually spent on this tech, 0–1 (default 1.0). Use to mark a tech that was used some of the time but not throughout — e.g. Svelte on a mostly-Rust project, or RAG during a few months of a multi-year role."
+            }
+          }
+        }
+      ]
+    },
+    "skillUsageList": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/skillUsageItem" },
+      "description": "Skills exercised in this role/project. Strings work; the object form `{ \"name\": \"…\", \"ratio\": 0.2 }` lets you say \"this skill was real but only used part of the time\". Skill-rating aggregation multiplies each contribution by `ratio`."
+    },
+    "skillUsageItem": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "ratio": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Fraction of the role/project's effort actually spent on this skill, 0–1 (default 1.0)."
             }
           }
         }
