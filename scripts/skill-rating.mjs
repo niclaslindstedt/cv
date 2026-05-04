@@ -10,6 +10,11 @@
 //       node scripts/skill-rating.mjs --debug    # show contributing usages
 //       node scripts/skill-rating.mjs --top=20   # change leaderboard length
 
+import { existsSync, readFileSync } from "node:fs";
+import { execSync } from "node:child_process";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { loadCv } from "../src/data/load-cv.mjs";
 
 const ARGS = new Set(process.argv.slice(2));
@@ -45,9 +50,17 @@ const SOURCE_MONTHS_CAP = 24;
 // area from outweighing a 2025 focus area on duration alone.
 const FOCUS_FLAT_MONTHS = 24;
 
-// Side projects don't carry dates, so we model them as recent, light-FTE work.
-const PROJECT_ASSUMED_MONTHS = 12;
-const PROJECT_ASSUMED_FTE = 0.35;
+// Side-project effort is read from commit counts in project-stats.json
+// (the data-cache branch). Calibration: a top contributor at real work
+// produces 50–100 commits/week ≈ 200–430/month. Anchoring 1 effective
+// month at 100 commits treats the user as a "solid steady output"
+// contributor — generous enough to credit serious side work, strict
+// enough that drive-by repos don't masquerade as years of experience.
+const COMMITS_PER_EFFECTIVE_MONTH = 100;
+
+// Fallback used only if a project has no github stats at all (e.g. a
+// non-GitHub repo). Keeps the project from disappearing from the sheet.
+const PROJECT_NO_STATS_MONTHS = 3;
 
 // Identity adjustments. Niclas leads technically — he does, people follow —
 // so the soft people-management skills shouldn't compound to the top of the
@@ -159,7 +172,62 @@ function pushUsage(
 // Main.
 // ---------------------------------------------------------------------------
 
+// Project stats come from src/data/project-stats.json when present (CI
+// restores it from the data-cache branch before build); otherwise fall
+// back to reading the cache branch directly via git.
+function loadProjectStats() {
+  const here = dirname(fileURLToPath(import.meta.url));
+  const localPath = join(here, "..", "src", "data", "project-stats.json");
+  if (existsSync(localPath)) {
+    try {
+      const parsed = JSON.parse(readFileSync(localPath, "utf8"));
+      // The committed stub has enabled=false and an empty projects map;
+      // ignore it and fall through to the data-cache branch.
+      if (parsed?.projects && Object.keys(parsed.projects).length > 0) {
+        return parsed;
+      }
+    } catch {
+      // fall through
+    }
+  }
+  for (const ref of ["origin/data-cache", "data-cache"]) {
+    try {
+      const out = execSync(`git show ${ref}:src/data/project-stats.json`, {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      });
+      const parsed = JSON.parse(out);
+      if (parsed?.projects && Object.keys(parsed.projects).length > 0) {
+        return parsed;
+      }
+    } catch {
+      // try next
+    }
+  }
+  return null;
+}
+
+function statsForProject(project, projectStats) {
+  const repos = project.github ?? [];
+  let totalCommits = 0;
+  let lastCommitDate = null;
+  for (const r of repos) {
+    const key = `${r.owner}/${r.repo}`;
+    const s = projectStats?.projects?.[key];
+    if (!s) continue;
+    totalCommits += s.totalCommits ?? 0;
+    if (
+      s.lastCommitDate &&
+      (!lastCommitDate || s.lastCommitDate > lastCommitDate)
+    ) {
+      lastCommitDate = s.lastCommitDate;
+    }
+  }
+  return { totalCommits, lastCommitDate };
+}
+
 const cv = loadCv();
+const projectStats = loadProjectStats();
 
 const skillToCategory = {};
 for (const cat of cv.skills) {
@@ -206,18 +274,32 @@ for (const exp of cv.experience) {
   }
 }
 
-// Projects — undated; treat as recent and light-FTE.
+// Projects — duration and recency from commit stats. Each effective
+// month equals COMMITS_PER_EFFECTIVE_MONTH commits, so swarm's 2200+
+// commits weigh more than ztf's 9.
 for (const project of cv.projects) {
+  const { totalCommits, lastCommitDate } = statsForProject(
+    project,
+    projectStats,
+  );
+  const months =
+    totalCommits > 0
+      ? totalCommits / COMMITS_PER_EFFECTIVE_MONTH
+      : PROJECT_NO_STATS_MONTHS;
+  const recency = lastCommitDate
+    ? recencyFactor(monthsSince(lastCommitDate.slice(0, 7)))
+    : 1.0;
+  const tag = totalCommits > 0 ? `${totalCommits}c` : "no-stats";
   for (const s of collectSkills(project)) {
     pushUsage(
       usages,
       s.name,
-      `project:${project.name}`,
+      `project:${project.name} (${tag})`,
       "project",
-      PROJECT_ASSUMED_MONTHS,
-      PROJECT_ASSUMED_FTE,
-      SOURCE_WEIGHTS.project,
+      months,
       1.0,
+      SOURCE_WEIGHTS.project,
+      recency,
     );
   }
 }
@@ -369,8 +451,8 @@ if (JSON_OUT) {
           SOURCE_WEIGHTS,
           SOURCE_MONTHS_CAP,
           FOCUS_FLAT_MONTHS,
-          PROJECT_ASSUMED_MONTHS,
-          PROJECT_ASSUMED_FTE,
+          COMMITS_PER_EFFECTIVE_MONTH,
+          PROJECT_NO_STATS_MONTHS,
           SKILL_MULTIPLIERS,
           today: TODAY.toISOString().slice(0, 10),
         },
