@@ -160,6 +160,19 @@ imports from `components/`. Keep it that way.
   needs the affected baselines re-recorded in the same branch. See
   § Visual snapshots below for the workflow. Run it proactively;
   don't wait for CI to flag the drift.
+- **Bilingual copy (`en` / `sv`).** User-visible strings in
+  `src/data/cv.json` and `src/data/cv/*.json` are
+  `{ "en": "...", "sv": "..." }` pairs. Both must convey the same
+  thing at the same level of polish. **Do not translate technical
+  terms into Swedish** — Swedish developers use the English term in
+  conversation, so the English token stays verbatim inside the
+  Swedish sentence (`events`, not `händelser`; `lifecycle events`,
+  not `livscykelhändelser`; `pull request`, `commit`, `prompt`,
+  `guardrails`, `edge cases`, `rate limit`, `vibe coding`, etc.).
+  Ordinary words that happen to appear in technical sentences
+  (`tjänst`, `databas`, `körning`, `nätverk`, `arbetsflöde`) do
+  translate cleanly. The `update-cv` skill has the longer rationale
+  and term list under "Bilingual copy (`en` / `sv`)".
 
 ## Visual snapshots
 

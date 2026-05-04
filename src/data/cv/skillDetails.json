@@ -55,7 +55,7 @@
     },
     "drawbacks": {
       "en": "Non-determinism, cost, and the need for guardrails — an agent with broad tool access can do real damage if unsupervised.",
-      "sv": "Icke-determinism, kostnad och behov av skyddsräcken — en agent med bred verktygsåtkomst kan ställa till verklig skada om den är oövervakad."
+      "sv": "Icke-determinism, kostnad och behov av guardrails — en agent med bred verktygsåtkomst kan ställa till verklig skada om den är oövervakad."
     },
     "aliases": ["agents", "llm agents", "autonomous agents"]
   },
@@ -126,7 +126,7 @@
   "Chatbots": {
     "description": {
       "en": "Conversational interfaces backed by LLMs, typically with retrieval, tools, and guardrails so the bot can answer questions and take actions safely.",
-      "sv": "Konversationsgränssnitt drivna av LLM:er, vanligtvis med sökning, verktyg och skyddsräcken så att boten kan svara på frågor och utföra åtgärder säkert."
+      "sv": "Konversationsgränssnitt drivna av LLM:er, vanligtvis med sökning, verktyg och guardrails så att boten kan svara på frågor och utföra åtgärder säkert."
     },
     "benefits": {
       "en": "Natural-language entry point that scales support and self-service for users.",
@@ -134,7 +134,7 @@
     },
     "drawbacks": {
       "en": "Hallucinations, prompt injection, and the long tail of edge cases mean a chatbot is rarely 'finished'.",
-      "sv": "Hallucinationer, promptinjektion och den långa svansen av kantfall gör att en chattbot sällan är 'klar'."
+      "sv": "Hallucinationer, prompt injection och den långa svansen av edge cases gör att en chattbot sällan är 'klar'."
     },
     "aliases": ["chatbot", "conversational ai", "conversational interface"]
   },
@@ -840,7 +840,7 @@
     },
     "drawbacks": {
       "en": "Every integration adds a fault line — schema drift, rate limits, auth churn — that breaks at the worst time and is expensive to monitor.",
-      "sv": "Varje integration lägger till en brytlinje — schemadrift, hastighetsgränser, auth-byten — som spricker vid sämsta tillfället och är dyr att övervaka."
+      "sv": "Varje integration lägger till en brytlinje — schema drift, rate limits, auth-byten — som spricker vid sämsta tillfället och är dyr att övervaka."
     },
     "aliases": ["integration", "third-party integrations", "etl"]
   },

@@ -175,6 +175,57 @@ Shared conventions:
 - **Do not** add fields the schema doesn't allow. If the user asks
   for one, follow "Schema changes" below.
 
+### Bilingual copy (`en` / `sv`)
+
+Most user-visible strings are `{ "en": "...", "sv": "..." }` pairs.
+Both languages must convey the same meaning at the same level of
+polish — the Swedish version is what Swedish-speaking readers see
+and is not a second-class citizen.
+
+**Do not translate technical terms into Swedish.** Swedish developers
+use the English term in conversation and writing; translating it
+makes the copy read as machine-translated and less professional.
+Keep the English token verbatim and let it sit inside the Swedish
+sentence. Examples of terms that **stay English** even in the `sv`
+string:
+
+- `events`, `lifecycle events`, `event-based`, `event-driven` —
+  never `händelser` / `livscykelhändelser` / `händelsebaserad`.
+- `pull request`, `issues`, `commit`, `merge`, `branch`, `repo`,
+  `push`, `deploy` (verb form is fine either way; prefer the
+  English noun `deploy`/`deployment` over `driftsättning` when the
+  surrounding copy is technical).
+- `prompt`, `prompt injection`, `context window`, `tool use`,
+  `guardrails`, `hallucinations`, `edge cases`, `eval`/`evals`.
+- `hooks`, `skills`, `MCP`, `agent`, `worktree`, `sandbox`.
+- `rate limit`, `rate limiting`, `rate limiter`, `retry`, `backoff`,
+  `timeout`, `idempotent`.
+- `pipeline`, `release`, `rollback`, `feature flag`, `canary`.
+- `pull request`, `code review`, `linter`, `formatter`, `stack
+trace`, `breakpoint`.
+- Library / product / protocol names: `React`, `Node.js`,
+  `PostgreSQL`, `Kubernetes`, `Docker`, `gRPC`, `OAuth`, `JWT`,
+  `webhooks`, `Markdown`, etc.
+- Coined English phrases: `vibe coding`, `spec-driven development`,
+  `shift-left`, `lift-and-shift`.
+
+What **does** translate cleanly: ordinary words that happen to appear
+in technical sentences — `arbetsflöden` (workflows in the generic
+sense), `körning` (run), `körmiljö` (runtime), `tjänst` (service),
+`databas` (database), `nätverk` (network), `behörighet`
+(permission/authorization in the HR/access-control sense), `loggar`,
+`fel` (error). Use Swedish for these.
+
+Compound forms: when the English token sits inside a Swedish
+compound, hyphenate (`event-baserad`, `rate limit-fönster`,
+`prompt-design`). Don't fuse the English word into a Swedish stem
+(`händelsebaserad`, `hastighetsfönster`, `promptdesign`) — the
+hybrid spelling is harder to read and loses the technical signal.
+
+When in doubt, ask "would a Swedish senior engineer say this in a
+team Slack?" If the answer is "they'd say it in English", keep it
+in English.
+
 ### Top-level fields (`name`, `title`, `location`, `summary`, `links`, `actions`, `sections`, `contact`)
 
 - Path: root of `src/data/cv.json` (these stay inline, no split file).
