@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "username": "niclaslindstedt",
-  "fetchedAt": "2026-05-03T14:24:25.117Z",
+  "fetchedAt": "2026-05-04T06:22:52.223Z",
   "projects": {
     "niclaslindstedt/zag": {
       "owner": "niclaslindstedt",
@@ -79,24 +79,24 @@
       "owner": "niclaslindstedt",
       "repo": "cv",
       "username": "niclaslindstedt",
-      "headSha": "aa7268ef112c2b3025dbf05f5b00487d62a2a646",
+      "headSha": "89759903dcb3efafe65c9dcef8d3eb48a1ff704f",
       "firstCommitDate": "2026-04-20",
       "lastCommitDate": "2026-05-03",
-      "totalCommits": 397,
+      "totalCommits": 409,
       "commitsByYear": {
-        "2026": 397
+        "2026": 409
       }
     },
     "niclaslindstedt/juris": {
       "owner": "niclaslindstedt",
       "repo": "juris",
       "username": "niclaslindstedt",
-      "headSha": "2f581e8a431cc39ea1d6f1b869580c710c67e375",
+      "headSha": "542585e8adb30adec1cd83b007dd6f3163b228ee",
       "firstCommitDate": "2026-04-05",
-      "lastCommitDate": "2026-04-20",
-      "totalCommits": 77,
+      "lastCommitDate": "2026-05-03",
+      "totalCommits": 78,
       "commitsByYear": {
-        "2026": 77
+        "2026": 78
       }
     },
     "niclaslindstedt/swarm-cli": {
