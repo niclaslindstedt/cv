@@ -6,12 +6,12 @@
     },
     "since": "2025-11",
     "tagline": {
-      "en": "AI agents that play well with the rest of the terminal.",
-      "sv": "AI-agenter som fungerar i resten av terminalen."
+      "en": "Command-line tools built for agents to use without a human in the loop.",
+      "sv": "Kommandoradsverktyg byggda för agenter att använda utan människa i loopen."
     },
     "description": {
-      "en": "AI agents in the terminal still feel grafted on. Most of them don't accept the same flags as their neighbours, don't write the same kinds of output, and don't return useful exit codes. Their permissions are too broad and their session logs evaporate when the process ends. There's a year or two of unglamorous plumbing work to make the ecosystem genuinely usable: typed inputs and outputs, signed and scoped permissions, replayable sessions, predictable invocations across providers. That's most of what I work on now.",
-      "sv": "AI-agenter i terminalen känns fortfarande påklistrade. De flesta tar inte emot samma flaggor som sina grannar, skriver inte ut samma sorts utdata och returnerar inga användbara exit-koder. Deras behörigheter är för breda och deras sessionsloggar försvinner när processen tar slut. Det krävs ett par års oglamoröst rörmokeri för att göra ekosystemet riktigt användbart: typade in- och utdata, signerade och avgränsade behörigheter, återspelbara sessioner, förutsägbara anrop över leverantörer. Det är där jag tillbringar mest tid just nu."
+      "en": "A CLI built for an agent isn't a CLI built for a human. The primary consumer reads every byte of stdout into a context window, pays for it by the token, and is trying to figure out what to do next. Every line the CLI emits is a prompt: help text steers it toward the right command, output shapes the next invocation, errors steer it out of the failure. So introductions fit in a line or two, every command and flag is discoverable from a single invocation, output lands in the same predictable shape every time, and errors read as instructions rather than stack traces. Most CLIs weren't written that way. I'm building new ones and wrapping old ones so an agent can pick one up cold and run it without anyone in the loop.",
+      "sv": "En CLI byggd för en agent är inte en CLI byggd för en människa. Den primära konsumenten läser in varje byte av stdout i sitt kontextfönster, betalar för det per token och försöker lista ut nästa steg. Varje rad CLI:n skriver är en prompt: hjälptexten styr den mot rätt kommando, utdata formar nästa anrop, felmeddelanden styr den ut ur felet. Presentationen ryms på en rad eller två, varje kommando och flagga är upptäckbara från ett enda anrop, utdata landar i samma förutsägbara form varje gång och felmeddelanden läser sig som instruktioner snarare än stack traces. De flesta CLI:er är inte skrivna så. Jag bygger nya och bygger om gamla så att en agent kan plocka upp en kall och köra den utan någon i loopen."
     },
     "skills": ["Claude Code", "Codex CLI", "Gemini CLI", "MCP", "Agent skills"],
     "aliases": ["agent cli", "cli agents", "command line agents"]
