@@ -205,7 +205,23 @@ function buildProject(project, projectStats) {
     );
   }
   if (project.printDescription) baked.description = project.printDescription;
+  const url = pickProjectUrl(project);
+  if (url) baked.url = url;
   return baked;
+}
+
+// Pick the single most useful public URL for a project. Print is paper —
+// readers can't click a list of links, so we collapse to one. Priority: a
+// dedicated homepage (richest landing page), else the GitHub repo when the
+// project is open source. Closed-source projects without a homepage yield
+// no URL — there's nothing public to point at.
+function pickProjectUrl(project) {
+  if (project.homepage) return project.homepage;
+  if (project.openSource) {
+    const repo = project.github?.[0];
+    if (repo) return `https://github.com/${repo.owner}/${repo.repo}`;
+  }
+  return null;
 }
 
 function loadProjectStats() {

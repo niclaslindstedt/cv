@@ -241,8 +241,19 @@ function ProjectEntry({ item }: { item: PrintProject }) {
       <span className="print-project-tagline">
         {renderInlineCode(t(item.description ?? item.tagline))}
       </span>
+      {item.url && (
+        <span className="print-project-url">
+          <a href={item.url}>{displayUrl(item.url)}</a>
+        </span>
+      )}
     </li>
   );
+}
+
+// Strip the protocol and any trailing slash so the printed URL stays compact
+// while the underlying <a href> keeps the full clickable URL.
+function displayUrl(url: string): string {
+  return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 }
 
 function EducationSection() {
