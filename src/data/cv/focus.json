@@ -86,28 +86,28 @@
     },
     "since": "2016-01",
     "tagline": {
-      "en": "Keeping security intact in the era of vibe coding, when fixes and breakage both land faster than review.",
-      "sv": "Att hålla säkerheten intakt i vibe coding-eran, när både åtgärder och brister levereras snabbare än granskning."
+      "en": "A career-long discipline, more critical now that AI writes and reviews code without seeing the codebase around it.",
+      "sv": "En disciplin genom hela karriären, mer kritisk nu när AI skriver och granskar kod utan att se kodbasen runt omkring."
     },
     "description": {
-      "en": "Security used to be the part of a project that got cut for time. Rotating secrets, configuring MFA, tightening permissions, writing the boring hardening scripts: known work, never quite urgent enough to land. Agents make that work cheap enough to happen alongside the feature, instead of as the next ticket nobody picks up. They also ship insecure code faster than anyone can review it, so the loop has to assume both kinds of changes show up in the same diff.",
-      "sv": "Säkerhet brukade vara den del av ett projekt som ströks när tiden tröt. Rotera hemligheter, konfigurera MFA, strama åt behörigheter, skriva de tråkiga härdningsskripten: känt arbete, aldrig riktigt akut nog att hinnas med. Agenter gör det arbetet billigt nog att hända vid sidan av funktionen, i stället för att bli uppföljningsbiljetten ingen plockar upp. Samtidigt skickar de ut osäker kod snabbare än någon hinner granska, så loopen måste utgå från att båda sorters ändringar dyker upp i samma diff."
+      "en": "Security has been part of my work since I started writing code professionally. Early on I implemented OAuth2 as a side project to understand how most applications actually handle authentication, and that pattern — working through a primitive end-to-end — has carried into everything I've done since: encryption, signing, certificate management, and app integrity, all shipped to production. The discipline matters more now, not less. AI agents write code faster than anyone can review it, and increasingly review code with most of the surrounding context stripped out, so the assumptions security used to lean on — that a human read every line, that the reviewer remembered last week's threat model — no longer hold.",
+      "sv": "Säkerhet har varit en del av mitt arbete sedan jag började skriva kod professionellt. Tidigt i karriären implementerade jag OAuth2 som ett sidoprojekt för att förstå hur de flesta applikationer faktiskt hanterar autentisering, och det mönstret — att jobba igenom en primitiv end-to-end — har följt med i allt jag gjort sedan dess: encryption, signing, certifikathantering och app integrity, allt levererat i produktion. Disciplinen blir viktigare, inte mindre, nu. AI-agenter skriver kod snabbare än någon hinner granska, och granskar i allt högre grad kod med det mesta av den omgivande kontexten bortskuren, så antagandena som säkerhet vilade på — att en människa läste varje rad, att granskaren mindes förra veckans threat model — håller inte längre."
     },
-    "skills": [
-      "Cybersecurity",
-      "Risk management",
-      "Agent security",
-      "Agent sandboxing",
-      "GDPR"
-    ],
+    "skills": ["Cybersecurity", "RFC implementation"],
     "aliases": [
       "cybersecurity",
       "security",
       "appsec",
       "infosec",
       "secure coding",
-      "mfa",
+      "oauth",
+      "oauth2",
+      "authentication",
       "encryption",
+      "signing",
+      "certificates",
+      "app integrity",
+      "mfa",
       "hardening"
     ]
   }
