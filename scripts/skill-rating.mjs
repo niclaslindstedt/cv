@@ -67,13 +67,23 @@ function recencyFactor(monthsAgo) {
   return 0.15;
 }
 
-// 0–10 rating from absolute effective months. Saturating so the curve
-// doesn't depend on whichever skill happens to top the chart, and so a
-// 30-month skill and a 300-month skill aren't both pinned at 10.
-const RATING_K = 40;
+// 0–10 rating from absolute effective months. Piecewise so the user's
+// verbal scale lands where the user puts it:
+//   1  horrible           (5 effective months ≈ rating 3)
+//   3  pretty bad         (15 ≈ 5)
+//   5  could handle it    (40 ≈ 7)
+//   7  good               (80 ≈ 9)
+//   9  very good          (130+ ≈ 10)
+//   10 perfect
+// Anchored at boundaries so the function is continuous.
 function rate(effective) {
   if (effective <= 0) return 0;
-  const r = 10 * (1 - Math.exp(-effective / RATING_K));
+  let r;
+  if (effective < 5) r = effective * 0.6;
+  else if (effective < 15) r = 3 + (effective - 5) * 0.2;
+  else if (effective < 40) r = 5 + (effective - 15) * 0.08;
+  else if (effective < 80) r = 7 + (effective - 40) * 0.05;
+  else r = Math.min(10, 9 + (effective - 80) * 0.02);
   return Math.round(r * 10) / 10;
 }
 
@@ -276,14 +286,16 @@ for (const r of rated) {
 
 const categories = [...categoryAgg.values()].map((c) => {
   const sorted = [...c.skills].sort((a, b) => b.rating - a.rating);
-  const top3 = sorted.slice(0, 3).map((s) => s.rating);
-  const avgTop3 = top3.length
-    ? top3.reduce((a, b) => a + b, 0) / top3.length
-    : 0;
+  // Average the strongest skills, but only count ones above "pretty bad".
+  // A passing-mention tool (Azure DevOps for one assignment, Svelte on
+  // one project) shouldn't drag down a domain the engineer is competent in.
+  const meaningful = sorted.filter((s) => s.rating >= 3).slice(0, 3);
+  const sample = meaningful.length ? meaningful : sorted.slice(0, 1);
+  const avg = sample.reduce((a, b) => a + b.rating, 0) / sample.length;
   return {
     key: c.key,
     label: c.label,
-    rating: Math.round(avgTop3 * 10) / 10,
+    rating: Math.round(avg * 10) / 10,
     headline: sorted.slice(0, 3),
     bench: sorted.slice(3),
   };
@@ -353,7 +365,6 @@ if (JSON_OUT) {
           PROJECT_ASSUMED_MONTHS,
           PROJECT_ASSUMED_FTE,
           SKILL_MULTIPLIERS,
-          RATING_K,
           today: TODAY.toISOString().slice(0, 10),
         },
       },
@@ -377,7 +388,7 @@ console.log(`  Class: ${characterClass}`);
 console.log(`  As of: ${TODAY.toISOString().slice(0, 10)}`);
 console.log();
 console.log(line());
-console.log("  CATEGORY STATS  (avg of top 3 skills in category)");
+console.log("  CATEGORY STATS  (avg of top 3 meaningful skills, ≥ 3.0)");
 console.log(line());
 for (const c of categories) {
   console.log(
