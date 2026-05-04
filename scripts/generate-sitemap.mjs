@@ -28,6 +28,12 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <xhtml:link rel="alternate" hreflang="sv" href="${SITE_URL}/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/" />
   </url>
+  <url>
+    <loc>${SITE_URL}/cv.json</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
 `;
 
