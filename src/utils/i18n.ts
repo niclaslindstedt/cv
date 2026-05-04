@@ -192,6 +192,7 @@ type UiStrings = {
     tableWeeks: string;
     tableSemesters: string;
     thisCourseLine: (ects: string, weeks: string, hours: string) => string;
+    thisModuleLine: (ects: string, weeks: string, hours: string) => string;
     thisInstitutionLine: (ects: string, weeks: string, hours: string) => string;
     courseExplainer: string;
     degreeNames: {
@@ -465,6 +466,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       tableSemesters: "Semesters",
       thisCourseLine: (ects, weeks, hours) =>
         `This course is ${ects} ECTS — roughly ${weeks} weeks of full-time study (~${hours} hours of work).`,
+      thisModuleLine: (ects, weeks, hours) =>
+        `This module is ${ects} ECTS — roughly ${weeks} weeks of full-time study (~${hours} hours of work).`,
       thisInstitutionLine: (ects, weeks, hours) =>
         `These courses combined are ${ects} ECTS — roughly ${weeks} weeks of full-time study (~${hours} hours of work).`,
       courseExplainer:
@@ -736,6 +739,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       tableSemesters: "Terminer",
       thisCourseLine: (ects, weeks, hours) =>
         `Den här kursen är ${ects} ECTS — ungefär ${weeks} veckor på heltid (~${hours} timmars arbete).`,
+      thisModuleLine: (ects, weeks, hours) =>
+        `Den här modulen är ${ects} ECTS — ungefär ${weeks} veckor på heltid (~${hours} timmars arbete).`,
       thisInstitutionLine: (ects, weeks, hours) =>
         `De här kurserna är tillsammans ${ects} ECTS — ungefär ${weeks} veckor på heltid (~${hours} timmars arbete).`,
       courseExplainer:

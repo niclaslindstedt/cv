@@ -255,7 +255,7 @@ export function CourseModulesModal({
                       )}
                       <EctsPill
                         credits={mod.credits}
-                        context={{ kind: "course", credits: mod.credits }}
+                        context={{ kind: "module", credits: mod.credits }}
                         onOpen={onEctsClick}
                       />
                       <span className="program-module-date">

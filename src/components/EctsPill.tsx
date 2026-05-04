@@ -4,6 +4,7 @@ import { useLang } from "../utils/i18n";
 export type EctsContext =
   | { kind: "program"; program: EducationItem }
   | { kind: "course"; credits: string }
+  | { kind: "module"; credits: string }
   | { kind: "institution"; credits: string };
 
 type Props = {
