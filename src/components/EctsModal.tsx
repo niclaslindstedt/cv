@@ -330,7 +330,7 @@ function CourseView({
   kind,
 }: {
   credits: string;
-  kind: "course" | "institution";
+  kind: "course" | "module" | "institution";
 }) {
   const { ui } = useLang();
   const ects = parseEcts(credits);
@@ -338,7 +338,9 @@ function CourseView({
   const headline =
     kind === "institution"
       ? ui.ects.thisInstitutionLine
-      : ui.ects.thisCourseLine;
+      : kind === "module"
+        ? ui.ects.thisModuleLine
+        : ui.ects.thisCourseLine;
   return (
     <section className="ects-course">
       {ects !== null && ects > 0 && (

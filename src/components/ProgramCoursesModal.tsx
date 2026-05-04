@@ -297,7 +297,7 @@ function CourseGroup({
                           <EctsPill
                             credits={mod.credits}
                             context={{
-                              kind: "course",
+                              kind: "module",
                               credits: mod.credits,
                             }}
                             onOpen={onEctsClick}
