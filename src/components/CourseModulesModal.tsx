@@ -6,6 +6,7 @@ import { categoryStyle } from "../utils/categoryStyle";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
 import { navigate } from "../utils/route";
+import { skillName } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
@@ -275,17 +276,20 @@ export function CourseModulesModal({
                 {ui.programModal.skills}
               </h3>
               <ul className="entry-skills">
-                {course.skills.map((skill) => (
-                  <li key={skill}>
-                    <button
-                      type="button"
-                      className="entry-skill-btn"
-                      onClick={() => onSkillClick(skill)}
-                    >
-                      {skill}
-                    </button>
-                  </li>
-                ))}
+                {course.skills.map((entry) => {
+                  const skill = skillName(entry);
+                  return (
+                    <li key={skill}>
+                      <button
+                        type="button"
+                        className="entry-skill-btn"
+                        onClick={() => onSkillClick(skill)}
+                      >
+                        {skill}
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           )}

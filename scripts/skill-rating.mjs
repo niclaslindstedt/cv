@@ -323,21 +323,20 @@ for (const project of cv.projects) {
 }
 
 // Focus areas — flat-weighted: each current focus says "I'm investing in
-// this now" with equal voice, regardless of when it started.
+// this now" with equal voice, regardless of when it started. Focus
+// skills are plain strings (no ratio) by schema — focus is stance, not
+// time allocation.
 for (const focus of cv.focus) {
-  for (const entry of focus.skills ?? []) {
-    const s = normalizeSkillEntry(entry);
-    if (s.unused) continue;
+  for (const skill of focus.skills ?? []) {
     pushUsage(
       usages,
-      s.name,
+      skill,
       `focus:${focus.area.en}`,
       "focus",
       FOCUS_FLAT_MONTHS,
       1.0,
       SOURCE_WEIGHTS.focus,
       1.0,
-      s.ratio,
     );
   }
 }

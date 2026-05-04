@@ -1,6 +1,7 @@
 import type { Course, CourseModule } from "../data/cv.types";
 import { formatMonth, formatRange } from "../utils/date";
 import { useLang } from "../utils/i18n";
+import { skillName } from "../utils/stack";
 import { CategoryGlyph } from "./CategoryGlyph";
 import { Section } from "./Section";
 
@@ -78,17 +79,20 @@ export function Courses({
               )}
               {item.skills && item.skills.length > 0 && (
                 <ul className="entry-skills">
-                  {item.skills.map((skill) => (
-                    <li key={skill}>
-                      <button
-                        type="button"
-                        className="entry-skill-btn"
-                        onClick={() => onSkillClick(skill)}
-                      >
-                        {skill}
-                      </button>
-                    </li>
-                  ))}
+                  {item.skills.map((entry) => {
+                    const skill = skillName(entry);
+                    return (
+                      <li key={skill}>
+                        <button
+                          type="button"
+                          className="entry-skill-btn"
+                          onClick={() => onSkillClick(skill)}
+                        >
+                          {skill}
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
               <span className="glass-reflect" aria-hidden="true" />

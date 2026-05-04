@@ -9,7 +9,7 @@ import { useLang } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
 import { aggregateProjectStats } from "../utils/projectStats";
 import { navigate } from "../utils/route";
-import { stackEntries } from "../utils/stack";
+import { skillName, stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
@@ -202,17 +202,20 @@ export function ProjectModal({ project, onClose, onSkillClick }: Props) {
                   {ui.projectModal.skills}
                 </h3>
                 <ul className="entry-skills">
-                  {project.skills.map((skill) => (
-                    <li key={skill}>
-                      <button
-                        type="button"
-                        className="entry-skill-btn"
-                        onClick={() => onSkillClick(skill)}
-                      >
-                        {skill}
-                      </button>
-                    </li>
-                  ))}
+                  {project.skills.map((entry) => {
+                    const skill = skillName(entry);
+                    return (
+                      <li key={skill}>
+                        <button
+                          type="button"
+                          className="entry-skill-btn"
+                          onClick={() => onSkillClick(skill)}
+                        >
+                          {skill}
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             )}

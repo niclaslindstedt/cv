@@ -9,7 +9,7 @@ import {
   assignmentOpenerKey,
   experienceOpenerKey,
 } from "../data/opener-keys.mjs";
-import { stackEntries, usedStackNames } from "./stack";
+import { skillNames, stackEntries, usedStackNames } from "./stack";
 
 function joinRoleTitles(roles: RoleTenure[]): LocalizedString {
   const sorted = [...roles].sort((a, b) =>
@@ -86,7 +86,10 @@ export function buildSkillUsageMap(
   };
 
   for (const project of cv.projects) {
-    for (const tag of uniq(usedStackNames(project.stack), project.skills)) {
+    for (const tag of uniq(
+      usedStackNames(project.stack),
+      skillNames(project.skills),
+    )) {
       push(tag, {
         kind: "project",
         label: project.name,
@@ -97,7 +100,7 @@ export function buildSkillUsageMap(
 
   for (const exp of cv.experience) {
     const expKey = experienceOpenerKey(exp);
-    for (const tag of uniq(usedStackNames(exp.stack), exp.skills)) {
+    for (const tag of uniq(usedStackNames(exp.stack), skillNames(exp.skills))) {
       push(tag, {
         kind: "experience",
         label: companyName(exp.companyId),
@@ -112,7 +115,7 @@ export function buildSkillUsageMap(
       const asgKey = assignmentOpenerKey(exp, assignment);
       for (const tag of uniq(
         usedStackNames(assignment.stack),
-        assignment.skills,
+        skillNames(assignment.skills),
       )) {
         push(tag, {
           kind: "assignment",
@@ -133,7 +136,7 @@ export function buildSkillUsageMap(
       en: (ed.segments ?? []).map((s) => s.institution.en).join(" · "),
       sv: (ed.segments ?? []).map((s) => s.institution.sv).join(" · "),
     };
-    for (const skill of ed.skills ?? []) {
+    for (const skill of skillNames(ed.skills)) {
       push(skill, {
         kind: "education",
         label: educationLabel,
@@ -145,7 +148,7 @@ export function buildSkillUsageMap(
   }
 
   for (const course of cv.courses ?? []) {
-    for (const skill of course.skills ?? []) {
+    for (const skill of skillNames(course.skills)) {
       push(skill, {
         kind: "course",
         label: course.institution,

@@ -66,7 +66,7 @@ export type Project = {
   description: LocalizedString;
   printDescription?: LocalizedString;
   stack?: StackItem[];
-  skills: string[];
+  skills: SkillUsageItem[];
   github: GithubRepoRef[];
   openSource: boolean;
   homepage?: string;
@@ -125,7 +125,7 @@ export type Assignment = {
   endDate: string | null;
   fte?: number;
   stack?: StackItem[];
-  skills?: string[];
+  skills?: SkillUsageItem[];
   notes?: LocalizedString;
   jobDescription?: LocalizedString;
   printDescription?: LocalizedString;
@@ -140,7 +140,7 @@ export type Experience = {
   engagement?: LocalizedString;
   fte?: number;
   stack?: StackItem[];
-  skills?: string[];
+  skills?: SkillUsageItem[];
   notes?: LocalizedString;
   jobDescription?: LocalizedString;
   printDescription?: LocalizedString;
@@ -163,7 +163,7 @@ export type ProgramCourse = {
   grade?: string;
   completed?: boolean;
   modules?: CourseModule[];
-  skills?: string[];
+  skills?: SkillUsageItem[];
 };
 
 export type ProgramCredit = {
@@ -212,7 +212,7 @@ export type Education = {
   credited?: ProgramCredit[];
   startDate: string;
   endDate: string;
-  skills?: string[];
+  skills?: SkillUsageItem[];
   notes?: LocalizedString;
   courses?: ProgramCourse[];
   segments?: EducationSegment[];
@@ -230,7 +230,7 @@ export type Course = {
   remote?: boolean;
   completed?: boolean;
   modules?: CourseModule[];
-  skills?: string[];
+  skills?: SkillUsageItem[];
   aliases?: string[];
 };
 

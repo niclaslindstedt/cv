@@ -15,7 +15,7 @@ import { formatRange } from "../utils/date";
 import { useLang, type LanguageContextValue } from "../utils/i18n";
 import { renderInlineCode } from "../utils/inlineCode";
 import { navigate } from "../utils/route";
-import { stackEntries } from "../utils/stack";
+import { skillName, stackEntries } from "../utils/stack";
 import { useBodyScrollLock } from "../utils/useBodyScrollLock";
 import { useModalFocus } from "../utils/useModalFocus";
 import { useModalSwipe } from "../utils/useModalSwipe";
@@ -260,17 +260,20 @@ export function ExperienceModal({
                   {ui.experienceModal.skills}
                 </h3>
                 <ul className="entry-skills">
-                  {skills.map((skill) => (
-                    <li key={skill}>
-                      <button
-                        type="button"
-                        className="entry-skill-btn"
-                        onClick={() => onSkillClick(skill)}
-                      >
-                        {skill}
-                      </button>
-                    </li>
-                  ))}
+                  {skills.map((entry) => {
+                    const skill = skillName(entry);
+                    return (
+                      <li key={skill}>
+                        <button
+                          type="button"
+                          className="entry-skill-btn"
+                          onClick={() => onSkillClick(skill)}
+                        >
+                          {skill}
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             )}

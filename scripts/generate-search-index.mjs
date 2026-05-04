@@ -55,6 +55,14 @@ function stackNames(list) {
   );
 }
 
+// Skills arrays accept either bare strings or { name, ratio? } objects;
+// the search index just wants names.
+function skillNames(list) {
+  return (list ?? []).map((item) =>
+    typeof item === "string" ? item : item?.name,
+  );
+}
+
 function dedupe(list) {
   const out = [];
   const seen = new Set();
@@ -164,7 +172,7 @@ function buildRecords(cv) {
         title: project.name,
         description: `${pickLang(project.tagline, lang)} ${pickLang(project.description, lang)}`,
         stack: stackNames(project.stack),
-        skills: project.skills ?? [],
+        skills: skillNames(project.skills),
         aliases: project.aliases ?? [],
       }),
       localizedTitle: { en: project.name, sv: project.name },
@@ -210,7 +218,7 @@ function buildRecords(cv) {
         title: lang === "sv" ? titleSv : titleEn,
         description: pickLang(exp.notes ?? { en: "", sv: "" }, lang),
         stack: stackNames(exp.stack),
-        skills: exp.skills ?? [],
+        skills: skillNames(exp.skills),
         aliases: [
           ...(exp.aliases ?? []),
           company.name,
@@ -247,7 +255,7 @@ function buildRecords(cv) {
           title: lang === "sv" ? asgTitleSv : asgTitleEn,
           description: pickLang(assignment.notes ?? { en: "", sv: "" }, lang),
           stack: stackNames(assignment.stack),
-          skills: assignment.skills ?? [],
+          skills: skillNames(assignment.skills),
           aliases: [
             ...(assignment.aliases ?? []),
             client.name,
@@ -291,7 +299,7 @@ function buildRecords(cv) {
         ]
           .filter(Boolean)
           .join(" "),
-        skills: ed.skills ?? [],
+        skills: skillNames(ed.skills),
         aliases: [
           ...(ed.aliases ?? []),
           institutionLabel(lang),
@@ -316,7 +324,7 @@ function buildRecords(cv) {
       secondary: { en: subtitleEn, sv: subtitleSv },
       fieldsByLang: (lang) => ({
         title: pickLang(course.name, lang),
-        skills: course.skills ?? [],
+        skills: skillNames(course.skills),
         aliases: [
           ...(course.aliases ?? []),
           course.code,
