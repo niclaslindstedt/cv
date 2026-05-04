@@ -270,16 +270,16 @@
   {
     "name": "swarm",
     "tagline": {
-      "en": "Workflow orchestration for Claude Code.",
-      "sv": "Arbetsflödesorkestrering för Claude Code."
+      "en": "A CLI agent orchestrator for Claude Code — queen, rules-based, and event-based.",
+      "sv": "Ett CLI-baserat orkestreringsverktyg för Claude Code — queen, regelbaserat och händelsebaserat."
     },
     "description": {
-      "en": "Workflow orchestration for Claude Code. Wraps the agent CLI with a rules-based process engine and persistent state so long-running projects survive across sessions. Built-in workflows guide the agent from spec → plan → epics → tickets → code review, and `swarm run` always picks up exactly where it left off. A local dashboard streams progress, surfaces logs, and lets you steer the agent via chat without interrupting the loop.",
-      "sv": "Arbetsflödesorkestrering för Claude Code. Lindar agent-CLI:t i en regelbaserad processmotor och beständigt tillstånd så att långkörande projekt överlever mellan sessioner. Inbyggda arbetsflöden leder agenten från spec → plan → epics → ärenden → kodgranskning, och `swarm run` plockar alltid upp exakt där den slutade. En lokal dashboard streamar förloppet, visar loggar och låter dig styra agenten via chatt utan att avbryta loopen."
+      "en": "A CLI agent orchestrator for Claude Code. Everything happens through the CLI, which supports three orchestration styles — queen orchestration, where a director agent delegates to workers; rules-based orchestration, driven by declarative state transitions; and event-based orchestration, fired by triggers on lifecycle events. Clear, informative info and error messages steer the agent through the development lifecycle, and project state lives in a PostgreSQL database, replacing the common pattern of leaning on GitHub issues as the state store. The project eventually grew large enough that the wiser path turned out to be a rewrite split across several smaller, narrower-scoped projects rather than continued development in Swarm itself.",
+      "sv": "Ett CLI-baserat orkestreringsverktyg för agenter i Claude Code. Allt sker via CLI:t, som stödjer tre orkestreringsstilar — queen-orkestrering, där en dirigerande agent delegerar till arbetare; regelbaserad orkestrering, styrd av deklarativa tillståndsövergångar; och händelsebaserad orkestrering, som triggas av utlösare på livscykelhändelser. Tydliga, informativa info- och felmeddelanden styr agenten genom utvecklingscykeln, och projektets tillstånd lagras i en PostgreSQL-databas, vilket ersätter det vanliga mönstret att luta sig mot GitHub issues som tillståndslager. Projektet växte till slut till en sådan storlek att den klokare vägen visade sig vara att skriva om och dela upp det i flera mindre projekt med smalare scope, snarare än att fortsätta utvecklingen i Swarm självt."
     },
     "printDescription": {
-      "en": "Workflow orchestration for Claude Code. Wraps the agent CLI with a rules-based process engine and persistent state, so projects survive across sessions and `swarm run` always picks up where it left off. A local dashboard streams progress and lets you steer the agent via chat.",
-      "sv": "Arbetsflödesorkestrering för Claude Code. Lindar agent-CLI:t i en regelbaserad processmotor och beständigt tillstånd så att projekt överlever mellan sessioner och `swarm run` alltid plockar upp där den slutade. En lokal dashboard streamar förloppet och låter dig styra agenten via chatt."
+      "en": "CLI agent orchestrator for Claude Code with three orchestration styles — queen (a director agent delegates to workers), rules-based (declarative state transitions), and event-based (triggers on lifecycle events). Clear info and error messages steer the agent through the development lifecycle; project state lives in PostgreSQL instead of GitHub issues. Eventually rewritten as several smaller, narrower-scoped projects rather than continued as one.",
+      "sv": "CLI-baserat orkestreringsverktyg för Claude Code med tre orkestreringsstilar — queen (en dirigerande agent delegerar till arbetare), regelbaserat (deklarativa tillståndsövergångar) och händelsebaserat (utlösare på livscykelhändelser). Tydliga info- och felmeddelanden styr agenten genom utvecklingscykeln; projektets tillstånd lagras i PostgreSQL istället för GitHub issues. Skrevs till slut om som flera mindre projekt med smalare scope snarare än att fortsätta som en enhet."
     },
     "stack": ["Rust", "PostgreSQL", "Svelte"],
     "skills": ["Agent orchestration", "Agentic workflows", "MCP"],
