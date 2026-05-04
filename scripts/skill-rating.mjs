@@ -284,6 +284,11 @@ for (const r of rated) {
   categoryAgg.get(r.categoryKey).skills.push(r);
 }
 
+// Category headline weights — top skill counts twice as much as #2, which
+// counts twice as much as #3. You get hired for the spike, not the
+// average; the rating should reflect that specialties dominate.
+const CATEGORY_WEIGHTS = [4, 2, 1];
+
 const categories = [...categoryAgg.values()].map((c) => {
   const sorted = [...c.skills].sort((a, b) => b.rating - a.rating);
   // Average the strongest skills, but only count ones above "pretty bad".
@@ -291,7 +296,9 @@ const categories = [...categoryAgg.values()].map((c) => {
   // one project) shouldn't drag down a domain the engineer is competent in.
   const meaningful = sorted.filter((s) => s.rating >= 3).slice(0, 3);
   const sample = meaningful.length ? meaningful : sorted.slice(0, 1);
-  const avg = sample.reduce((a, b) => a + b.rating, 0) / sample.length;
+  const w = CATEGORY_WEIGHTS.slice(0, sample.length);
+  const wSum = w.reduce((a, b) => a + b, 0);
+  const avg = sample.reduce((acc, s, i) => acc + s.rating * w[i], 0) / wSum;
   return {
     key: c.key,
     label: c.label,
@@ -388,7 +395,7 @@ console.log(`  Class: ${characterClass}`);
 console.log(`  As of: ${TODAY.toISOString().slice(0, 10)}`);
 console.log();
 console.log(line());
-console.log("  CATEGORY STATS  (avg of top 3 meaningful skills, ≥ 3.0)");
+console.log("  CATEGORY STATS  (weighted top 3, spike counts most)");
 console.log(line());
 for (const c of categories) {
   console.log(
