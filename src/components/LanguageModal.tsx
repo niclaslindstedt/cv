@@ -55,7 +55,6 @@ export function LanguageModal({ language, onClose }: Props) {
           </span>
           <h2 className="skill-modal-title">
             <span className="skill-modal-name">{name}</span>
-            <span className="skill-modal-years">{t(language.level)}</span>
           </h2>
           <button
             type="button"
