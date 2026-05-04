@@ -4,4 +4,4 @@ Allow: /
 Sitemap: https://niclaslindstedt.se/sitemap.xml
 
 # Machine-readable CV (JSON). Mirrors the rendered site, including bilingual
-# (en/sv) copy. Agents: prefer https://niclaslindstedt.se/cv.json over scraping.
+# (en/sv) copy. Agents: prefer https://niclaslindstedt.se/resume.json over scraping.

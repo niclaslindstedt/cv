@@ -1,4 +1,4 @@
-.PHONY: install build test test-coverage test-visual test-visual-update test-a11y test-a11y-manual test-pa11y lighthouse lint typecheck fmt fmt-check validate clean dev preview generate og print-html pdf sitemap cv-json local
+.PHONY: install build test test-coverage test-visual test-visual-update test-a11y test-a11y-manual test-pa11y lighthouse lint typecheck fmt fmt-check validate clean dev preview generate og print-html pdf sitemap resume-json local
 
 install:
 	npm ci
@@ -68,8 +68,8 @@ pdf:
 sitemap:
 	npm run generate:sitemap
 
-cv-json:
-	npm run generate:cv-json
+resume-json:
+	npm run generate:resume-json
 
 dev:
 	npm run dev
