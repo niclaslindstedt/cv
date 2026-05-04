@@ -102,6 +102,13 @@ try {
       html, body { background: #fff; color: #111; margin: 0; }
       body::before { display: none !important; }
       .print-view { display: block !important; }
+      /* The bundled stylesheet's @media print rules don't apply when this
+         page is viewed (or scanned by axe) in screen mode, so the global
+         link color from base.css would render print URLs in light blue —
+         failing WCAG AA contrast on white. Force printed links to inherit
+         the body's near-black so the static page passes a11y audits without
+         affecting the @media print output. */
+      .print-view a { color: inherit; text-decoration: none; }
     </style>
   </head>
   <body>

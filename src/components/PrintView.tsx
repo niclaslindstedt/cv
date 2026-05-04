@@ -18,7 +18,7 @@ const printData = printDataRaw as PrintData;
 
 export function PrintView() {
   return (
-    <section className="print-view" aria-hidden="true">
+    <section className="print-view">
       <PrintSettingsStyle settings={printData.settings} />
       <PrintHero />
       <ExperienceSection />
