@@ -151,7 +151,8 @@
         "name": { "type": "string", "minLength": 1 },
         "tagline": { "$ref": "#/$defs/localizedString" },
         "description": { "$ref": "#/$defs/localizedString" },
-        "range": { "$ref": "#/$defs/localizedString" }
+        "range": { "$ref": "#/$defs/localizedString" },
+        "url": { "type": "string", "format": "uri" }
       }
     },
     "education": {

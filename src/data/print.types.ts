@@ -36,6 +36,7 @@ export type PrintProject = {
   tagline: LocalizedString;
   description?: LocalizedString;
   range?: LocalizedString;
+  url?: string;
 };
 
 export type PrintEducation = {
