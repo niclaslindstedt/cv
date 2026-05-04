@@ -77,11 +77,12 @@ The same assembled CV drives every visible artifact:
   1200×630 PNG via satori into `public/og-image.png` during `prebuild`.
 - **A sitemap** — `scripts/generate-sitemap.mjs` writes `dist/sitemap.xml`
   after `vite build`.
-- **A machine-readable CV** — `scripts/generate-cv-json.mjs` writes the
-  fully assembled CV to `dist/cv.json` so agents can fetch the structured
-  source instead of scraping HTML. Discoverable via `robots.txt`,
-  `sitemap.xml`, and a `<link rel="alternate" type="application/json">`
-  in the document head.
+- **A machine-readable résumé** — `scripts/generate-resume-json.mjs`
+  writes the fully assembled CV to `dist/resume.json` so agents can
+  fetch the structured source instead of scraping HTML. Discoverable
+  via `robots.txt`, `sitemap.xml`, and a
+  `<link rel="alternate" type="application/json">` in the document
+  head.
 - **An in-page search index** — `scripts/generate-search-index.mjs`
   builds `src/data/search-index.json` from the CV plus hidden `aliases`
   on individual records.
@@ -96,7 +97,7 @@ Two custom Vite plugins live in `vite.config.ts`:
 - `cvMetaHtmlPlugin` injects the SEO `<head>` block at build time.
 
 `npm run build` chains `tsc -b` → `vite build` →
-`generate:print-html` → `generate:pdf` → `generate:cv-json` →
+`generate:print-html` → `generate:pdf` → `generate:resume-json` →
 `generate:sitemap`. Pre-build
 hooks regenerate the timeline, GitHub activity, per-project commit
 stats, print JSON, search index, and OG image. The data fetchers
