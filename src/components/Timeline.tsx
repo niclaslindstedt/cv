@@ -177,7 +177,11 @@ export function Timeline() {
   const sideProjectDetailsRef = useRef<HTMLElement>(null);
   const otherDetailsRef = useRef<HTMLElement>(null);
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
-  const pinchRef = useRef<{ dist: number } | null>(null);
+  const pinchStartRef = useRef<{
+    dist: number;
+    scale: number;
+    monthAtMidpoint: number;
+  } | null>(null);
   const pendingPinchRef = useRef<{ dist: number; midpoint: number } | null>(
     null,
   );
@@ -688,16 +692,27 @@ export function Timeline() {
   useModalFocus(sideProjectDetailsRef, detailsKind === "sideProject");
   useModalFocus(otherDetailsRef, otherDetailsActive);
 
-  const syncPinchBaseline = () => {
+  const beginPinch = () => {
     const pts = Array.from(pointersRef.current.values());
     if (pts.length < 2) {
-      pinchRef.current = null;
+      pinchStartRef.current = null;
       pendingPinchRef.current = null;
       return;
     }
-    const dx = pts[1].x - pts[0].x;
-    const dy = pts[1].y - pts[0].y;
-    pinchRef.current = { dist: Math.hypot(dx, dy) || 1 };
+    const [a, b] = pts;
+    const dist = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+    const midpoint = (a.x + b.x) / 2;
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const rect = viewport.getBoundingClientRect();
+    const offset = clamp(midpoint - rect.left, 0, viewport.clientWidth);
+    const monthPxNow = BASE_MONTH_PX * scaleRef.current;
+    const monthAtMidpoint = (viewport.scrollLeft + offset) / monthPxNow;
+    pinchStartRef.current = {
+      dist,
+      scale: scaleRef.current,
+      monthAtMidpoint,
+    };
     pendingPinchRef.current = null;
   };
 
@@ -705,12 +720,24 @@ export function Timeline() {
     pinchRafRef.current = null;
     const pending = pendingPinchRef.current;
     pendingPinchRef.current = null;
-    if (!pending || !pinchRef.current) return;
-    const ratio = pending.dist / pinchRef.current.dist;
-    if (Math.abs(ratio - 1) < 0.0005) return;
-    pinchRef.current.dist = pending.dist;
-    captureZoomAnchor(pending.midpoint);
-    setScale((s) => clamp(s * ratio, MIN_SCALE, MAX_SCALE));
+    const start = pinchStartRef.current;
+    const viewport = viewportRef.current;
+    if (!pending || !start || !viewport) return;
+    const targetScale = clamp(
+      start.scale * (pending.dist / start.dist),
+      MIN_SCALE,
+      MAX_SCALE,
+    );
+    const rect = viewport.getBoundingClientRect();
+    const offset = clamp(pending.midpoint - rect.left, 0, viewport.clientWidth);
+    // Pin the gesture-start month under the (now possibly shifted)
+    // midpoint so content under the fingers tracks them. The layout
+    // effect on `scale` reads zoomAnchorRef and writes scrollLeft.
+    zoomAnchorRef.current = {
+      pixelOffset: offset,
+      monthAtPixel: start.monthAtMidpoint,
+    };
+    setScale(targetScale);
   };
 
   const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -718,7 +745,7 @@ export function Timeline() {
     pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointersRef.current.size >= 2) {
       cancelScaleTween();
-      syncPinchBaseline();
+      beginPinch();
     }
   };
 
@@ -726,7 +753,7 @@ export function Timeline() {
     if (e.pointerType !== "touch") return;
     if (!pointersRef.current.has(e.pointerId)) return;
     pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    if (!pinchRef.current || pointersRef.current.size < 2) return;
+    if (!pinchStartRef.current || pointersRef.current.size < 2) return;
     const pts = Array.from(pointersRef.current.values());
     const dx = pts[1].x - pts[0].x;
     const dy = pts[1].y - pts[0].y;
@@ -741,14 +768,14 @@ export function Timeline() {
   const handlePointerEnd = (e: ReactPointerEvent<HTMLDivElement>) => {
     pointersRef.current.delete(e.pointerId);
     if (pointersRef.current.size < 2) {
-      pinchRef.current = null;
+      pinchStartRef.current = null;
       pendingPinchRef.current = null;
       if (pinchRafRef.current !== null) {
         cancelAnimationFrame(pinchRafRef.current);
         pinchRafRef.current = null;
       }
     } else {
-      syncPinchBaseline();
+      beginPinch();
     }
   };
 
