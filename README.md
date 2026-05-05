@@ -76,7 +76,8 @@ The same assembled CV drives every visible artifact:
 - **An OG share image** — `scripts/generate-og-image.mjs` renders a
   1200×630 PNG via satori into `public/og-image.png` during `prebuild`.
 - **A sitemap** — `scripts/generate-sitemap.mjs` writes `dist/sitemap.xml`
-  after `vite build`. Lists `/`, `/timeline`, and `/resume.json`.
+  after `vite build`. Lists `/`, `/timeline`, `/resume.json`, `/cv.json`,
+  and `/llms.txt`.
 - **A standalone `/timeline` page** — `scripts/generate-timeline-html.mjs`
   copies `dist/index.html` to `dist/timeline.html` with the head meta
   retargeted (canonical, title, description, OG/Twitter) so direct hits
@@ -85,10 +86,18 @@ The same assembled CV drives every visible artifact:
   the static file just gives crawlers something indexable.
 - **A machine-readable résumé** — `scripts/generate-resume-json.mjs`
   writes the fully assembled CV to `dist/resume.json` so agents can
-  fetch the structured source instead of scraping HTML. Discoverable
-  via `robots.txt`, `sitemap.xml`, and a
-  `<link rel="alternate" type="application/json">` in the document
+  fetch the structured source instead of scraping HTML, plus a
+  byte-identical `dist/cv.json` alias for the path LLMs commonly guess.
+  Discoverable via `robots.txt`, `sitemap.xml`, and
+  `<link rel="alternate" type="application/json">` tags in the document
   head.
+- **An LLM index file** — `scripts/generate-llms-txt.mjs` writes
+  `dist/llms.txt` following the [llmstxt.org](https://llmstxt.org/)
+  convention. Small markdown index pointing LLMs at `/resume.json` plus
+  a baked summary of the experience and side projects so an agent that
+  only fetches this one file can still answer "which jobs are listed
+  there". Discoverable via `robots.txt`, `sitemap.xml`, and a
+  `<link rel="alternate" type="text/markdown">` in the document head.
 - **An in-page search index** — `scripts/generate-search-index.mjs`
   builds `src/data/search-index.json` from the CV plus hidden `aliases`
   on individual records.
@@ -104,7 +113,7 @@ Two custom Vite plugins live in `vite.config.ts`:
 
 `npm run build` chains `tsc -b` → `vite build` →
 `generate:print-html` → `generate:pdf` → `generate:resume-json` →
-`generate:timeline-html` → `generate:sitemap`. Pre-build
+`generate:llms-txt` → `generate:timeline-html` → `generate:sitemap`. Pre-build
 hooks regenerate the timeline, GitHub activity, per-project commit
 stats, print JSON, search index, and OG image. The data fetchers
 gracefully degrade when their tokens are missing — the GitHub commit

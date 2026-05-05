@@ -3,5 +3,8 @@ Allow: /
 
 Sitemap: https://niclaslindstedt.se/sitemap.xml
 
-# Machine-readable CV (JSON). Mirrors the rendered site, including bilingual
-# (en/sv) copy. Agents: prefer https://niclaslindstedt.se/resume.json over scraping.
+# LLM-friendly entry points. The rendered site is also pre-rendered into the
+# static HTML, but agents whose fetchers truncate the page should start here:
+#
+#   /llms.txt   — small markdown index (llmstxt.org convention)
+#   /resume.json — full structured CV (bilingual en/sv); /cv.json is an alias
