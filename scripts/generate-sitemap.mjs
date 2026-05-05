@@ -1,6 +1,8 @@
-// Emits dist/sitemap.xml after `vite build`. The CV is a single-page site, so
-// the sitemap has exactly one URL — but having it makes Search Console happy
-// and gives crawlers a canonical pointer plus a fresh lastmod.
+// Emits dist/sitemap.xml after `vite build`. The CV is single-page on the
+// home route, but the SPA also exposes /timeline as a directly addressable
+// URL (paired with dist/timeline.html so direct hits don't fall through to
+// public/404.html). Listing both, plus /resume.json, gives crawlers a
+// canonical pointer with a fresh lastmod.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -16,24 +18,34 @@ const cv = loadCv();
 const SITE_URL = cv.meta.siteUrl.replace(/\/$/, "");
 const lastmod = new Date().toISOString();
 
+function localizedPage(pathname, priority) {
+  const loc = `${SITE_URL}${pathname}`;
+  return `  <url>
+    <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${priority}</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="${loc}" />
+    <xhtml:link rel="alternate" hreflang="sv" href="${loc}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${loc}" />
+  </url>`;
+}
+
+function asset(pathname, priority) {
+  return `  <url>
+    <loc>${SITE_URL}${pathname}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+}
+
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>${SITE_URL}/</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}/" />
-    <xhtml:link rel="alternate" hreflang="sv" href="${SITE_URL}/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/" />
-  </url>
-  <url>
-    <loc>${SITE_URL}/resume.json</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+${localizedPage("/", "1.0")}
+${localizedPage("/timeline", "0.9")}
+${asset("/resume.json", "0.8")}
 </urlset>
 `;
 
