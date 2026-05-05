@@ -29,7 +29,16 @@ if (typeof window !== "undefined") {
   });
 }
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+// scripts/generate-static-index.mjs ships a pre-rendered <App /> inside
+// #root so crawlers and no-JS clients see the full resume. Clear it first
+// so React starts from an empty container — we deliberately don't hydrate
+// because the server-render is locked to en / dark, and any visitor with
+// a different stored language or theme would otherwise hit a hydration
+// mismatch on every load.
+const rootEl = document.getElementById("root")!;
+while (rootEl.firstChild) rootEl.removeChild(rootEl.firstChild);
+
+ReactDOM.createRoot(rootEl).render(
   <React.StrictMode>
     <LanguageProvider>
       <App />
