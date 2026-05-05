@@ -105,6 +105,35 @@ function buildProjectGraph(): Record<string, unknown>[] {
     });
 }
 
+function buildHasOccupation(): Array<Record<string, unknown>> {
+  // schema.org Person.hasOccupation. Listing every employment entry here
+  // (not just the current one in worksFor) so an LLM that only inspects
+  // <head> still sees the full work history. We use Role + memberOf
+  // Organization, the standard pattern for time-bounded affiliations.
+  const sorted = [...cv.experience].sort((a, b) =>
+    a.startDate < b.startDate ? 1 : -1,
+  );
+  return sorted.map((entry) => {
+    const company = cv.companies.find((c) => c.id === entry.companyId);
+    const latestRole = entry.roles?.[entry.roles.length - 1];
+    const role: Record<string, unknown> = {
+      "@type": "Role",
+      roleName: latestRole?.title?.en ?? "Role",
+      startDate: entry.startDate,
+    };
+    if (entry.endDate) role.endDate = entry.endDate;
+    if (company) {
+      const org: Record<string, unknown> = {
+        "@type": "Organization",
+        name: company.name,
+      };
+      if (company.url) org.url = company.url;
+      role.memberOf = org;
+    }
+    return role;
+  });
+}
+
 function buildJsonLd(): string {
   const { firstName, lastName } = buildPersonName();
   const sameAs = cv.links.map((l) => l.url);
@@ -123,6 +152,7 @@ function buildJsonLd(): string {
     sameAs,
     knowsAbout: buildKnowsAbout(),
     alumniOf: buildAlumniOf(),
+    hasOccupation: buildHasOccupation(),
   };
   if (worksFor) person.worksFor = worksFor;
   const website = {
