@@ -150,6 +150,8 @@ function buildHeadInjection(goatcounterEndpoint: string | undefined): string {
     `<link rel="alternate" hreflang="sv" href="${attr(CANONICAL_URL)}" />`,
     `<link rel="alternate" hreflang="x-default" href="${attr(CANONICAL_URL)}" />`,
     `<link rel="alternate" type="application/json" title="Résumé (JSON)" href="${attr(`${SITE_URL}/resume.json`)}" />`,
+    `<link rel="alternate" type="application/json" title="Résumé (JSON, /cv.json alias)" href="${attr(`${SITE_URL}/cv.json`)}" />`,
+    `<link rel="alternate" type="text/markdown" title="LLM index (llms.txt)" href="${attr(`${SITE_URL}/llms.txt`)}" />`,
     `<meta name="author" content="${attr(cv.name)}" />`,
     `<meta name="keywords" content="${attr(seo.keywords.join(", "))}" />`,
     `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`,

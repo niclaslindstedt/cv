@@ -1,8 +1,9 @@
 // Emits dist/sitemap.xml after `vite build`. The CV is single-page on the
 // home route, but the SPA also exposes /timeline as a directly addressable
 // URL (paired with dist/timeline.html so direct hits don't fall through to
-// public/404.html). Listing both, plus /resume.json, gives crawlers a
-// canonical pointer with a fresh lastmod.
+// public/404.html). Listing both, plus /resume.json (and the /cv.json alias)
+// and /llms.txt, gives crawlers and LLMs a canonical pointer with a fresh
+// lastmod.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -46,6 +47,8 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
 ${localizedPage("/", "1.0")}
 ${localizedPage("/timeline", "0.9")}
 ${asset("/resume.json", "0.8")}
+${asset("/cv.json", "0.8")}
+${asset("/llms.txt", "0.8")}
 </urlset>
 `;
 
