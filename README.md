@@ -76,7 +76,13 @@ The same assembled CV drives every visible artifact:
 - **An OG share image** — `scripts/generate-og-image.mjs` renders a
   1200×630 PNG via satori into `public/og-image.png` during `prebuild`.
 - **A sitemap** — `scripts/generate-sitemap.mjs` writes `dist/sitemap.xml`
-  after `vite build`.
+  after `vite build`. Lists `/`, `/timeline`, and `/resume.json`.
+- **A standalone `/timeline` page** — `scripts/generate-timeline-html.mjs`
+  copies `dist/index.html` to `dist/timeline.html` with the head meta
+  retargeted (canonical, title, description, OG/Twitter) so direct hits
+  to `/timeline` resolve to a 200 response on GitHub Pages instead of
+  falling through to `public/404.html`. The SPA still owns rendering —
+  the static file just gives crawlers something indexable.
 - **A machine-readable résumé** — `scripts/generate-resume-json.mjs`
   writes the fully assembled CV to `dist/resume.json` so agents can
   fetch the structured source instead of scraping HTML. Discoverable
@@ -98,7 +104,7 @@ Two custom Vite plugins live in `vite.config.ts`:
 
 `npm run build` chains `tsc -b` → `vite build` →
 `generate:print-html` → `generate:pdf` → `generate:resume-json` →
-`generate:sitemap`. Pre-build
+`generate:timeline-html` → `generate:sitemap`. Pre-build
 hooks regenerate the timeline, GitHub activity, per-project commit
 stats, print JSON, search index, and OG image. The data fetchers
 gracefully degrade when their tokens are missing — the GitHub commit
