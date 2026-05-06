@@ -210,6 +210,11 @@
     content: "> ";
   }
 
+  .print-tags strong {
+    color: #111;
+    font-weight: 400;
+  }
+
   .print-notes {
     margin: 0 0 var(--print-spacing-paragraph, 4pt);
     font-size: 9.5pt;
@@ -253,6 +258,8 @@
     letter-spacing: 0.06em;
     color: #555;
     margin: 0 0 4pt;
+    break-after: avoid;
+    page-break-after: avoid;
   }
 
   .print-assignments {
@@ -282,17 +289,29 @@
 
   /* Projects ----------------------------------------------------------- */
 
+  /* Rendered as plain block-level divs (not <ul>/<li>): Chromium's PDF
+     engine ignores break-inside: avoid on list items often enough that
+     keeping projects intact across page breaks requires regular blocks.
+     The bullet is drawn manually via .print-project::before. */
   .print-projects {
-    list-style: disc;
-    padding: 0 0 0 16pt;
     margin: 0;
   }
 
   .print-project {
     margin: 0 0 2pt;
     line-height: 1.4;
-    break-inside: avoid;
-    page-break-inside: avoid;
+    padding-left: 16pt;
+    position: relative;
+    display: flow-root;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-project::before {
+    content: "•";
+    position: absolute;
+    left: 4pt;
+    top: 0;
   }
 
   .print-project:last-child {
@@ -310,14 +329,20 @@
   }
 
   /* The URL is the whole point of putting it in print: a reader holding the
-     PDF needs to know where to find the project. Block-level so it sits on
-     its own line under the description, slightly muted so it doesn't compete
-     with the project name. */
+     PDF needs to know where to find the project. Rendered as inline content
+     with a forced newline via ::before, so the URL stays part of the same
+     text flow as the description; that way the parent .print-project's
+     break-inside: avoid actually keeps the URL glued to the description.
+     A block-level child here would create a break candidate Chromium can
+     still land on even with break-before: avoid set. */
   .print-project-url {
-    display: block;
     font-size: 9.5pt;
     color: #555;
-    margin-top: 1pt;
+  }
+
+  .print-project-url::before {
+    content: "\A";
+    white-space: pre;
   }
 
   .print-project-url a {
@@ -417,10 +442,17 @@
     color: #444;
   }
 
-  /* Page-break safety: never split a section header from its first item. */
+  /* Page-break safety: never split a section header from its first item.
+     Both the immediate sibling container (so the container itself stays
+     glued to the heading) and the first item inside it carry break-before:
+     avoid. Covers both <ul>/<li> sections (experience, education, courses,
+     skills, languages) and the <div>-based Projects section. */
+  .print-section-title + ul,
+  .print-section-title + div,
   .print-section-title + ul > li:first-child,
   .print-section-title + ul > li:first-child .print-job-title,
-  .print-section-title + ul > li:first-child .print-edu-head {
+  .print-section-title + ul > li:first-child .print-edu-head,
+  .print-section-title + div > .print-project:first-child {
     break-before: avoid;
     page-break-before: avoid;
   }

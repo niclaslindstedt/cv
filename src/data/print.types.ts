@@ -13,7 +13,8 @@ export type PrintAssignment = {
   range: LocalizedString;
   tagline: LocalizedString;
   description?: LocalizedString;
-  tags: string[];
+  stack: string[];
+  skills: string[];
   notes?: LocalizedString;
   roleHistory: PrintRoleHistoryEntry[];
 };
@@ -25,7 +26,8 @@ export type PrintExperience = {
   engagement?: LocalizedString;
   tagline: LocalizedString;
   description?: LocalizedString;
-  tags: string[];
+  stack: string[];
+  skills: string[];
   notes?: LocalizedString;
   roleHistory: PrintRoleHistoryEntry[];
   assignments: PrintAssignment[];

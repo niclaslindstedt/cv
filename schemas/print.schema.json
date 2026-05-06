@@ -96,7 +96,8 @@
         "company",
         "range",
         "tagline",
-        "tags",
+        "stack",
+        "skills",
         "roleHistory",
         "assignments"
       ],
@@ -107,7 +108,11 @@
         "engagement": { "$ref": "#/$defs/localizedString" },
         "tagline": { "$ref": "#/$defs/localizedString" },
         "description": { "$ref": "#/$defs/localizedString" },
-        "tags": {
+        "stack": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "skills": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 }
         },
@@ -125,14 +130,26 @@
     "assignment": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["role", "client", "range", "tagline", "tags", "roleHistory"],
+      "required": [
+        "role",
+        "client",
+        "range",
+        "tagline",
+        "stack",
+        "skills",
+        "roleHistory"
+      ],
       "properties": {
         "role": { "$ref": "#/$defs/localizedString" },
         "client": { "type": "string", "minLength": 1 },
         "range": { "$ref": "#/$defs/localizedString" },
         "tagline": { "$ref": "#/$defs/localizedString" },
         "description": { "$ref": "#/$defs/localizedString" },
-        "tags": {
+        "stack": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "skills": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 }
         },

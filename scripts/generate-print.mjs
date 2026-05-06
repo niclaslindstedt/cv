@@ -2,9 +2,10 @@
 // Bakes a print-ready, denormalized CV into src/data/print.json.
 //
 // PrintView consumes this directly: dates are formatted, role chains
-// flattened, company taglines inlined, skills + stack merged. The print
-// component then renders simple semantic HTML without depending on the
-// screen component tree.
+// flattened, company taglines inlined, stack and skills deduped (and
+// kept as separate lists so the print view can label each line). The
+// print component then renders simple semantic HTML without depending
+// on the screen component tree.
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -106,22 +107,30 @@ function buildRoleHistory(sortedRoles) {
   }));
 }
 
-function mergeTags(...lists) {
+function dedupeList(list) {
   const seen = new Set();
   const out = [];
-  for (const list of lists) {
-    for (const raw of list ?? []) {
-      // Skip unused stack entries — the printed CV only lists tech the
-      // holder personally practiced.
-      if (raw && typeof raw === "object" && raw.unused === true) continue;
-      const item = typeof raw === "string" ? raw : raw?.name;
-      if (item && !seen.has(item)) {
-        seen.add(item);
-        out.push(item);
-      }
+  for (const raw of list ?? []) {
+    // Skip unused stack entries — the printed CV only lists tech the
+    // holder personally practiced.
+    if (raw && typeof raw === "object" && raw.unused === true) continue;
+    const item = typeof raw === "string" ? raw : raw?.name;
+    if (item && !seen.has(item)) {
+      seen.add(item);
+      out.push(item);
     }
   }
   return out;
+}
+
+// Stack wins on conflicts: anything that appears in both lists is
+// rendered (and bolded) as part of stack, then dropped from skills so
+// the merged tag line never repeats a name.
+function buildStackAndSkills(stack, skills) {
+  const stackList = dedupeList(stack);
+  const stackSet = new Set(stackList);
+  const skillsList = dedupeList(skills).filter((name) => !stackSet.has(name));
+  return { stack: stackList, skills: skillsList };
 }
 
 function resolveCompany(companies, id) {
@@ -141,7 +150,7 @@ function buildAssignment(assignment, companies) {
     client: client.name,
     range: formatRange(assignment.startDate, assignment.endDate),
     tagline: client.tagline,
-    tags: mergeTags(assignment.stack, assignment.skills),
+    ...buildStackAndSkills(assignment.stack, assignment.skills),
     roleHistory: buildRoleHistory(sortedRoles),
   };
   const description = assignment.printDescription ?? assignment.jobDescription;
@@ -160,7 +169,7 @@ function buildExperience(item, companies) {
     company: company.name,
     range: formatRange(item.startDate, item.endDate),
     tagline: company.tagline,
-    tags: mergeTags(stack, item.skills),
+    ...buildStackAndSkills(stack, item.skills),
     roleHistory: buildRoleHistory(sortedRoles),
     assignments: [...(item.assignments ?? [])]
       .sort((a, b) => b.startDate.localeCompare(a.startDate))

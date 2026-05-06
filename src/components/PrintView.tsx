@@ -149,9 +149,7 @@ function ExperienceEntry({ item }: { item: PrintExperience }) {
           {renderInlineCode(t(item.description ?? item.tagline))}
         </p>
       </div>
-      {item.tags.length > 0 && (
-        <p className="print-tags">{item.tags.join(", ")}</p>
-      )}
+      <StackAndSkills stack={item.stack} skills={item.skills} />
       {includeNotes && item.notes && (
         <p className="print-notes">{renderInlineCode(t(item.notes))}</p>
       )}
@@ -186,13 +184,33 @@ function AssignmentEntry({ item }: { item: PrintAssignment }) {
       <p className="print-job-tagline">
         {renderInlineCode(t(item.description ?? item.tagline))}
       </p>
-      {item.tags.length > 0 && (
-        <p className="print-tags">{item.tags.join(", ")}</p>
-      )}
+      <StackAndSkills stack={item.stack} skills={item.skills} />
       {includeNotes && item.notes && (
         <p className="print-notes">{renderInlineCode(t(item.notes))}</p>
       )}
     </li>
+  );
+}
+
+function StackAndSkills({
+  stack,
+  skills,
+}: {
+  stack: string[];
+  skills: string[];
+}) {
+  if (stack.length === 0 && skills.length === 0) return null;
+  return (
+    <p className="print-tags">
+      {stack.map((name, i) => (
+        <span key={`s-${name}`}>
+          {i > 0 && ", "}
+          <strong>{name}</strong>
+        </span>
+      ))}
+      {stack.length > 0 && skills.length > 0 && ", "}
+      {skills.join(", ")}
+    </p>
   );
 }
 
@@ -216,11 +234,11 @@ function ProjectsSection() {
   return (
     <section className="print-section">
       <h2 className="print-section-title">{t(printData.sections.projects)}</h2>
-      <ul className="print-projects">
+      <div className="print-projects">
         {printData.projects.map((p) => (
           <ProjectEntry key={p.name} item={p} />
         ))}
-      </ul>
+      </div>
     </section>
   );
 }
@@ -228,7 +246,7 @@ function ProjectsSection() {
 function ProjectEntry({ item }: { item: PrintProject }) {
   const { t } = useLang();
   return (
-    <li className="print-project">
+    <div className="print-project">
       <strong className="print-project-name">{item.name}</strong>
       {item.range && (
         <span className="print-project-range">
@@ -246,7 +264,7 @@ function ProjectEntry({ item }: { item: PrintProject }) {
           <a href={item.url}>{displayUrl(item.url)}</a>
         </span>
       )}
-    </li>
+    </div>
   );
 }
 
