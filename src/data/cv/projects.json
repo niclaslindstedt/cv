@@ -109,8 +109,8 @@
   {
     "name": "ztf",
     "tagline": {
-      "en": "Fuzzy AAA testing for agent and orchestration outputs.",
-      "sv": "Fuzzy AAA-testning för utdata från agenter och orkestreringar."
+      "en": "Agent-assisted fuzzy AAA testing for agent and orchestration outputs.",
+      "sv": "Agent-assisterad fuzzy AAA-testning för utdata från agenter och orkestreringar."
     },
     "description": {
       "en": "An agent testing framework for fuzzy AAA testing — the cases where the value being asserted isn't something a regex or schema can settle. Aimed at validating agent and orchestration outputs, it uses zag underneath so the validator can run on a different provider than the system under test. Validating a Claude run with Codex (or vice versa) keeps self-preference bias out of the verdict.",
@@ -138,8 +138,8 @@
   {
     "name": "oss-spec",
     "tagline": {
-      "en": "A spec for how open source projects are built — and a CLI that keeps repos honest.",
-      "sv": "En specifikation för hur open source-projekt byggs — och ett CLI som håller repon i linje."
+      "en": "A spec for how open source projects are built — and a CLI that keeps repos up-to-spec.",
+      "sv": "En specifikation för hur open source-projekt byggs — och ett CLI som håller repon spec-konforma."
     },
     "description": {
       "en": "A specification — and a CLI to enforce it — for how open source projects should be structured, developed, validated, and deployed. Bootstraps a fresh repo with documentation, GitHub Actions, Claude skills, release pipelines, and licensing already in place, so spinning up a new idea is friction-free. Pointed at an existing project it audits drift, auto-fixes what it can, and files an issue per remaining violation. A meta-take on spec-driven development: the spec defines how the application is built, not what it does.",
@@ -165,12 +165,12 @@
   {
     "name": "blog",
     "tagline": {
-      "en": "An admin-free AI blog with a closeable terminal simulator — Claude ships every post.",
-      "sv": "En adminfri AI-blogg med en stängbar terminalsimulator — Claude publicerar varje inlägg."
+      "en": "A personal AI blog with agent-assisted administration — no CMS, no admin UI, no editor.",
+      "sv": "En personlig AI-blogg med agent-assisterad administration — ingen CMS, inget adminläge, ingen editor."
     },
     "description": {
-      "en": "A nerdy personal blog about AI projects and unconventional ways to use AI. The site renders as a terminal simulator that can be closed to reveal a normal blog underneath. The innovation is that the entire administration layer is gone — there is no CMS, no admin UI, and no editor. Claude skills add, update, and delete posts: writing a non-technical companion version, handling tags and categories, fixing typos, and pushing the result to the repo, where a GitHub Pages deploy picks it up and the blog is live.",
-      "sv": "En nördig personlig blogg om AI-projekt och okonventionella sätt att använda AI. Sajten renderas som en terminalsimulator som kan stängas för att visa en vanlig blogg under. Det innovativa är att hela administrationslagret är borta — ingen CMS, inget adminläge, ingen editor. Claude-skills lägger till, uppdaterar och tar bort inlägg: skriver en icke-teknisk parallellversion, hanterar taggar och kategorier, rättar stavfel och pushar resultatet till repot, där en GitHub Pages-deploy plockar upp det och bloggen är uppe."
+      "en": "A nerdy personal blog about AI projects and unconventional ways to use AI. The innovation is agent-assisted administration: no CMS, no admin UI, no editor — Claude skills add, update, and delete posts, write non-technical companion versions, fix typos, and push the result to the repo for a GitHub Pages deploy.",
+      "sv": "En nördig personlig blogg om AI-projekt och okonventionella sätt att använda AI. Det innovativa är agent-assisterad administration: ingen CMS, inget adminläge, ingen editor — Claude-skills lägger till, uppdaterar och tar bort inlägg, skriver icke-tekniska parallellversioner, rättar stavfel och pushar resultatet till repot för en GitHub Pages-deploy."
     },
     "stack": [
       "TypeScript",
@@ -194,16 +194,16 @@
   {
     "name": "cv",
     "tagline": {
-      "en": "The site you're on — a personal CV built from JSON, written from a phone.",
-      "sv": "Sajten du befinner dig på — ett personligt CV byggt från JSON, skrivet från en telefon."
+      "en": "A personal website built to be generated from a schema-validated JSON résumé.",
+      "sv": "En personlig webbsajt byggd för att genereras från ett schemavaliderat JSON-CV."
     },
     "description": {
-      "en": "This site. The whole CV — content, structure, and most of the code — was written on an iPhone with the Claude Code App. The source is a set of schema-validated JSON documents that the build pipeline turns into the React site, an interactive timeline, a search index, and downloadable PDFs in English and Swedish. Adding a new role or project is one ask to Claude; GitHub Actions rebuilds and redeploys the site automatically.",
-      "sv": "Den här sajten. Hela CV:t — innehåll, struktur och större delen av koden — skrevs på en iPhone med Claude Code-appen. Källan är ett antal schemavaliderade JSON-dokument som byggpipen omvandlar till React-sajten, en interaktiv tidslinje, ett sökindex och nedladdningsbara PDF:er på engelska och svenska. Att lägga till en ny roll eller ett nytt projekt är en fråga till Claude; GitHub Actions bygger om och driftsätter sajten automatiskt."
+      "en": "A personal website built to be generated from a schema-validated JSON résumé. The whole CV — content, structure, and most of the code — was written on an iPhone with the Claude Code App. The same JSON drives the React site, an interactive timeline, a search index, and PDFs in English and Swedish; GitHub Actions rebuilds and redeploys on every change.",
+      "sv": "En personlig webbsajt byggd för att genereras från ett schemavaliderat JSON-CV. Hela CV:t — innehåll, struktur och större delen av koden — skrevs på en iPhone med Claude Code-appen. Samma JSON driver React-sajten, en interaktiv tidslinje, ett sökindex och PDF:er på engelska och svenska; GitHub Actions bygger om och driftsätter vid varje ändring."
     },
     "printDescription": {
-      "en": "Personal CV built from a set of schema-validated JSON documents that the pipeline renders as the React site, an interactive timeline, a search index, and PDFs in English and Swedish. Written entirely on an iPhone with the Claude Code App; updates ship via GitHub Actions.",
-      "sv": "Personligt CV byggt från ett antal schemavaliderade JSON-dokument som pipen renderar till React-sajten, en interaktiv tidslinje, ett sökindex och PDF:er på engelska och svenska. Skrivet helt på en iPhone med Claude Code-appen; uppdateringar släpps via GitHub Actions."
+      "en": "Personal website built to be generated from a schema-validated JSON résumé, written on an iPhone with the Claude Code App; updates ship via GitHub Actions.",
+      "sv": "Personlig webbsajt byggd för att genereras från ett schemavaliderat JSON-CV, skriven på en iPhone med Claude Code-appen; uppdateringar släpps via GitHub Actions."
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
     "skills": ["Claude Code", "Agent skills", "SEO", "WCAG"],
@@ -246,8 +246,8 @@
       "sv": "Ett CLI-baserat orkestreringsverktyg för Claude Code — queen, regelbaserat och event-baserat."
     },
     "description": {
-      "en": "A CLI agent orchestrator for Claude Code. Everything happens through the CLI, which supports three orchestration styles — queen orchestration, where a director agent delegates to workers; rules-based orchestration, driven by declarative state transitions; and event-based orchestration, fired by triggers on lifecycle events. Clear, informative info and error messages steer the agent through the development lifecycle, and project state lives in a PostgreSQL database, replacing the common pattern of leaning on GitHub issues as the state store. The project eventually grew large enough that the wiser path turned out to be a rewrite split across several smaller, narrower-scoped projects rather than continued development in Swarm itself.",
-      "sv": "Ett CLI-baserat orkestreringsverktyg för agenter i Claude Code. Allt sker via CLI:t, som stödjer tre orkestreringsstilar — queen-orkestrering, där en dirigerande agent delegerar till arbetare; regelbaserad orkestrering, styrd av deklarativa tillståndsövergångar; och event-baserad orkestrering, som triggas av utlösare på lifecycle events. Tydliga, informativa info- och felmeddelanden styr agenten genom utvecklingscykeln, och projektets tillstånd lagras i en PostgreSQL-databas, vilket ersätter det vanliga mönstret att luta sig mot GitHub issues som tillståndslager. Projektet växte till slut till en sådan storlek att den klokare vägen visade sig vara att skriva om och dela upp det i flera mindre projekt med smalare scope, snarare än att fortsätta utvecklingen i Swarm självt."
+      "en": "A CLI agent orchestrator for Claude Code. Everything happens through the CLI, which supports three orchestration styles — queen orchestration, where a director agent delegates to workers; rules-based orchestration, driven by declarative state transitions; and event-based orchestration, fired by triggers on lifecycle events. Clear, informative info and error messages steer the agent through the development lifecycle, with project state held in a PostgreSQL-backed project-management system — tickets, pull requests, epics, and the rest — built into Swarm itself rather than leaning on GitHub. The project eventually grew large enough that the wiser path turned out to be a rewrite split across several smaller, narrower-scoped projects rather than continued development in Swarm itself.",
+      "sv": "Ett CLI-baserat orkestreringsverktyg för agenter i Claude Code. Allt sker via CLI:t, som stödjer tre orkestreringsstilar — queen-orkestrering, där en dirigerande agent delegerar till arbetare; regelbaserad orkestrering, styrd av deklarativa tillståndsövergångar; och event-baserad orkestrering, som triggas av utlösare på lifecycle events. Tydliga, informativa info- och felmeddelanden styr agenten genom utvecklingscykeln, och projektets tillstånd hålls i ett PostgreSQL-baserat projekthanteringssystem — tickets, pull requests, epics och allt annat — inbyggt i Swarm istället för att luta sig mot GitHub. Projektet växte till slut till en sådan storlek att den klokare vägen visade sig vara att skriva om och dela upp det i flera mindre projekt med smalare scope, snarare än att fortsätta utvecklingen i Swarm självt."
     },
     "stack": ["Rust", "PostgreSQL", "Svelte"],
     "skills": ["Agent orchestration", "Agentic workflows", "MCP"],
@@ -350,8 +350,8 @@
   {
     "name": "docker-backup",
     "tagline": {
-      "en": "Encrypted, compressed Docker and host backups, shipped as a 12 MB Bash image.",
-      "sv": "Krypterade, komprimerade säkerhetskopior för Docker och värd, levererade som en 12 MB Bash-image."
+      "en": "Encrypted, compressed backups of host and container data — shipped as a 12 MB Docker image.",
+      "sv": "Krypterade, komprimerade säkerhetskopior av värd- och kontainerdata — levererade som en 12 MB Docker-image."
     },
     "description": {
       "en": "A backup system written entirely in Bash and packaged as a 12 MB Docker image. Backs up host folders or the contents of sibling containers, compresses and encrypts the archive, and uploads it to one or several remote destinations. Ships with its own end-to-end test framework — also Bash — that exercises the full backup-and-restore path against real targets so regressions surface before they reach production. Distributed as multi-arch images on Docker Hub.",
