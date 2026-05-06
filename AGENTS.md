@@ -161,8 +161,8 @@ imports from `components/`. Keep it that way.
 - **Visual snapshots.** Any change that alters rendered pixels — text
   in a snapshotted view, styles, layout, fonts, component shape —
   needs the affected baselines re-recorded in the same branch. See
-  § Visual snapshots below for the workflow. Run it proactively;
-  don't wait for CI to flag the drift.
+  `.claude/rules/visual-snapshots.md` for the workflow. Run it
+  proactively; don't wait for CI to flag the drift.
 - **Bilingual copy (`en` / `sv`).** User-visible strings in
   `src/data/cv.json` and `src/data/cv/*.json` are
   `{ "en": "...", "sv": "..." }` pairs. Both must convey the same
@@ -177,104 +177,23 @@ imports from `components/`. Keep it that way.
   translate cleanly. The `update-cv` skill has the longer rationale
   and term list under "Bilingual copy (`en` / `sv`)".
 
-## Visual snapshots
+## Path-scoped rules
 
-The Visual workflow (`tests/visual/`) does strict pixel comparison
-against PNGs committed under `tests/visual/__screenshots__/`.
-Threshold is `maxDiffPixelRatio: 0.01` in `playwright.config.ts`.
-Baselines were recorded on Linux and CI runs on `ubuntu-latest` —
-re-recording on macOS or Windows produces sub-pixel font drift that
-fails CI on the next run.
+Detailed guidance for specific areas of the codebase lives in
+`.claude/rules/*.md`, each scoped via `paths:` frontmatter. Claude
+Code auto-loads a rule file when it reads a file matching the rule's
+`paths:` glob, so the always-loaded `AGENTS.md` stays small. Other
+agents (which only read `AGENTS.md`) should consult the matching rule
+file directly when working in the listed area — the content is
+authoritative and not duplicated here.
 
-### When to expect baselines need updating
+| Rule file                           | Read when working on …                                                                                            |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `.claude/rules/visual-snapshots.md` | UI-touching files: `src/styles/**`, `src/components/**`, `src/data/cv.json`, `src/data/cv/**`, `tests/visual/**`. |
+| `.claude/rules/tests.md`            | `tests/**`, `vitest.config.ts`, any `playwright*.config.ts`.                                                      |
 
-Treat any of these as a guaranteed rebaseline before pushing:
-
-- **Text edits to rendered copy** in `src/data/cv.json` or
-  `src/data/cv/*.json` — `tagline`, `description`, `summary`,
-  `area`, `name`, project copy, anything that ends up inside a
-  snapshotted view. Reflow alone trips the threshold.
-- **Style changes** under `src/styles/` (tokens, layout, typography,
-  color, spacing, motion, component CSS).
-- **Component changes** — adding, removing, reordering, or
-  restructuring sections, cards, or fields.
-- **Dependency bumps** that ship glyphs or rendering (`@fontsource/*`,
-  `playwright` — Playwright updates can bring a new bundled
-  Chromium).
-
-Snapshot → source quick map (the `debug-visual` skill has the full
-table and diagnostic procedure):
-
-| Snapshot family                                  | Driven by                                                                 |
-| ------------------------------------------------ | ------------------------------------------------------------------------- |
-| `hero-{en,sv}-{dark,light}`                      | `Hero.tsx`, `hero.css`, `cv.json` (`name`, `summary`, `tagline`, `links`) |
-| `focus-{en,sv}-{dark,light}` (section card grid) | `Focus.tsx`, `focus.css`, `cv/focus.json` (`tagline`, `since`, `area`)    |
-| `modal-focus-*` (skill modal body)               | `cv/focus.json` `description` text in particular                          |
-| `homepage-*` (full above-fold page)              | Anything above the fold — collateral from hero / focus / token changes    |
-
-### Workflow
-
-When you make a change that the list above flags as visual:
-
-1. `make build && CI=1 npm run test:visual` — use `CI=1` so retries
-   and worker count match GitHub Actions.
-2. If failures match the change's intent and **only those**
-   snapshots failed, regenerate:
-   `CI=1 npm run test:visual:update` (alias of `make test-visual-update`).
-3. Re-run `CI=1 npm run test:visual` to confirm a clean pass.
-4. `git status --short` must show **only** modified `*.png` files
-   under `tests/visual/__screenshots__/`. Anything else means the
-   tree was dirty — revert the noise before committing.
-5. Commit the rebaseline as its own `test(visual): …` commit
-   referencing the change that drove it (don't fold it into the
-   feature commit — keeps the diff legible). Push and let CI
-   confirm.
-
-For predictable changes (text rewrites, isolated CSS retunes), do
-this proactively before pushing the feature commit. For ambiguous
-or cascading failures, invoke the `debug-visual` skill instead of
-re-recording blind.
-
-### Scoping a run
-
-`test:visual` and `test:visual:update` pass extra arguments straight
-through to `playwright test`, so when you know which snapshots a
-change touches you can run (and rebaseline) just those instead of
-the full suite. Three filters, combinable:
-
-- **By file** — `npm run test:visual -- tests/visual/modals.test.ts`
-  runs only the modals spec.
-- **By test title** (`-g` / `--grep`) — `npm run test:visual -- -g "hero"`
-  matches the strings inside `test("…")`. Examples of titles in the
-  current suite: `hero — en / dark`, `skill modal — en / dark`,
-  `search modal (results) — en / dark`, `experience section — en / dark`,
-  `full page — en / dark (above the fold)`.
-- **By project** — `--project chromium-desktop` or
-  `--project chromium-mobile` limits the viewport.
-
-The same flags work for updating: e.g.
-`CI=1 npm run test:visual:update -- tests/visual/modals.test.ts -g "skill" --project chromium-desktop`
-rebaselines just `skill modal — en / dark` on desktop. After a
-scoped update, still run the full `CI=1 npm run test:visual` once
-before pushing to confirm nothing else drifted, and keep the
-`git status --short` guardrail — only the intended `*.png` files
-should appear.
-
-Use scoping when you're confident the change is local (a single
-modal's copy, one section's CSS). For ambiguous or cascading
-changes, run the full suite — partial rebaselines hide drift in
-snapshots you didn't think to include.
-
-### Guardrails
-
-- **Linux only for re-recording.** Other OSes will fail CI.
-- **Never re-record on a dirty tree.** The rebaseline commit must
-  contain only `*.png` modifications under `tests/visual/__screenshots__/`.
-- **Never re-record to silence a regression.** If a snapshot the
-  change shouldn't affect is failing, inspect the diff PNGs in
-  `test-results/` and fix the code.
-- **Don't widen `maxDiffPixelRatio`** or disable retries to make CI
-  green. The 0.01 tolerance is calibrated for sub-pixel font noise.
+When you add a new rule file, list it here so non-Claude agents can
+find it.
 
 ## Documentation sync points
 
@@ -298,62 +217,36 @@ When you change X, update Y:
 
 ## Test conventions
 
-Tests live under `tests/` at the repo root (`OSS_SPEC.md` §20.3):
+Tests live under `tests/` at the repo root (`OSS_SPEC.md` §20.3),
+split into per-domain subdirectories: `data/`, `unit/`, `visual/`,
+`a11y/`, `a11y-manual/`. All test files end in `.test.ts` /
+`.test.mts` / `.tests.ts` per `OSS_SPEC.md` §20.2 (regex
+`_?[Tt]ests?$` on the stem). Vitest picks them up via
+`vitest.config.ts`; Playwright suites under `tests/visual/`,
+`tests/a11y/`, and `tests/a11y-manual/` are excluded from the
+Vitest `include` so Playwright owns them. Don't import test code
+from `src/`. When adding a new top-level test domain, extend
+`vitest.config.ts` `include` rather than scattering discovery
+across multiple configs.
 
-- `tests/data/` — schema roundtrip + the `load-cv` deep-merge contract.
-- `tests/unit/` — pure-function unit tests (currently `utils/date`).
-- `tests/visual/` — Playwright visual regression. Baseline PNGs are
-  committed under `tests/visual/__screenshots__/` and were recorded on
-  Linux; CI runs on `ubuntu-latest` for the same reason. Re-record with
-  `make test-visual-update` only after an intentional UI change, and
-  commit the new pixels in the same PR.
-- `tests/a11y/` — Playwright + axe-core WCAG 2.2 AA scan of the built
-  site, driven by `playwright.a11y.config.ts`. Asserts zero violations
-  tagged `wcag2a` / `wcag2aa` / `wcag21a` / `wcag21aa` / `wcag22a` /
-  `wcag22aa` for both languages × both themes × desktop + mobile
-  viewports. A second pass collects AAA-tier findings (`wcag2aaa` /
-  `wcag21aaa` / `wcag22aaa`) and surfaces them as console output and
-  attached JSON on the test report; AAA findings never fail the test.
-- `tests/a11y-manual/` — Playwright specs for the WCAG checks axe
-  cannot express: reflow at 320 CSS px (SC 1.4.10), resize-text at
-  200% (SC 1.4.4), focus-not-obscured (SC 2.4.11). Driven by
-  `playwright.a11y-manual.config.ts` and run via
-  `make test-a11y-manual`. **Not gated in CI** — they need a real
-  browser and some are slightly noisy under heavy load — but they
-  must be green locally before any launch. The `verify-wcag` skill
-  promotes new untestable findings into this directory.
-
-All test files end in `.test.ts` / `.test.mts` / `.tests.ts` per
-`OSS_SPEC.md` §20.2 (regex `_?[Tt]ests?$` on the stem). Vitest picks
-them up via `vitest.config.ts`; visual and a11y specs under
-`tests/visual/`, `tests/a11y/`, and `tests/a11y-manual/` are excluded
-from the Vitest `include` so Playwright owns them. Don't import test
-code from `src/`.
-
-When adding a new top-level test domain (e.g. integration tests),
-extend `vitest.config.ts` `include` rather than scattering test
-discovery across multiple configs.
+See `.claude/rules/tests.md` for the per-domain breakdown (what
+each suite covers, how it runs, what gates CI).
 
 ## Maintenance skills
 
 The repo ships Claude skills under `.agent/skills/` (with
-`.claude/skills` symlinked to it — `OSS_SPEC.md` §21.2):
-
-| Skill                         | Purpose                                                                                                                                                                                                                               |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `update-cv`                   | Add/update/remove entries in `src/data/cv.json` and the per-category files in `src/data/cv/`; recommends what to change                                                                                                               |
-| `update-company-descriptions` | Rewrite `companies[].description` from each company's `sourceUrls` (data-only field)                                                                                                                                                  |
-| `update-summary`              | Interactively rewrite `cv.summary` and `cv.longSummary` from facts already in the CV                                                                                                                                                  |
-| `update-readme`               | Resync `README.md` with the code it describes                                                                                                                                                                                         |
-| `sync-design`                 | Audit `src/styles/` and `src/components/` against `docs/DESIGN.md` (the design source of truth); propose patches, apply on confirmation                                                                                               |
-| `sync-cross-browser`          | Audit `src/styles/` for cross-browser CSS drift with Safari as the master; propose patches to bring Chrome and Firefox into line                                                                                                      |
-| `debug-visual`                | Diagnose a failing Visual workflow, decide whether the snapshot drift is intentional, re-record baselines if so, and commit the pixels                                                                                                |
-| `verify-wcag`                 | Walk the manual WCAG 2.2 checklist for everything axe-core can't catch (keyboard, focus order, screen-reader semantics, motion, reflow, target size, label/alt-text quality); ships the spec under `.agent/skills/verify-wcag/specs/` |
-| `maintenance`                 | Umbrella skill — routes to every `update-*` and `sync-*`                                                                                                                                                                              |
+`.claude/skills` symlinked to it — `OSS_SPEC.md` §21.2). Each skill is
+self-describing via its frontmatter; Claude lists them automatically.
+The high-level shape: `update-*` skills (`update-cv`,
+`update-company-descriptions`, `update-summary`, `update-readme`)
+mutate drift-prone artifacts; `sync-*` skills (`sync-design`,
+`sync-cross-browser`) audit and propose patches; `debug-visual` and
+`verify-wcag` handle their named workflows; `maintenance` is the
+umbrella that routes through every `update-*` and `sync-*` in order.
 
 Invoke `maintenance` when you've landed a batch of changes and want a
-single pass that brings drift-prone artifacts back in sync. Invoke a
-specific `update-*` skill when you know which artifact is stale.
+single pass that brings everything back in sync. Invoke a specific
+skill when you know which artifact is stale.
 
 ## Website staleness policy
 
