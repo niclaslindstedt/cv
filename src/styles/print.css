@@ -443,18 +443,22 @@
   }
 
   /* Page-break safety: never split a section header from its first item.
-     Both the immediate sibling container (so the container itself stays
-     glued to the heading) and the first item inside it carry break-before:
-     avoid. Covers both <ul>/<li> sections (experience, education, courses,
-     skills, languages) and the <div>-based Projects section. */
+     Covers <ul>/<li> sections (experience, education, courses, skills,
+     languages) where break-before: avoid + break-after: avoid hints are
+     enough. The Projects section uses an explicit `.print-section-head`
+     wrapper instead — Chromium routinely orphans the heading there, so a
+     break-inside: avoid block is the only reliable fix. */
   .print-section-title + ul,
-  .print-section-title + div,
   .print-section-title + ul > li:first-child,
   .print-section-title + ul > li:first-child .print-job-title,
-  .print-section-title + ul > li:first-child .print-edu-head,
-  .print-section-title + div > .print-project:first-child {
+  .print-section-title + ul > li:first-child .print-edu-head {
     break-before: avoid;
     page-break-before: avoid;
+  }
+
+  .print-section-head {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   a {

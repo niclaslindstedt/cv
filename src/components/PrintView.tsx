@@ -231,14 +231,27 @@ function RoleHistory({ roles }: { roles: PrintRoleHistoryEntry[] }) {
 
 function ProjectsSection() {
   const { t } = useLang();
+  const [first, ...rest] = printData.projects;
   return (
     <section className="print-section">
-      <h2 className="print-section-title">{t(printData.sections.projects)}</h2>
-      <div className="print-projects">
-        {printData.projects.map((p) => (
-          <ProjectEntry key={p.name} item={p} />
-        ))}
+      {/* Heading + first project share a break-inside: avoid wrapper so the
+          heading can never appear alone at the bottom of a page. Chromium
+          ignores break-after: avoid + break-before: avoid hints between
+          siblings often enough that a single must-stay-together block is
+          the only reliable way to glue them. */}
+      <div className="print-section-head">
+        <h2 className="print-section-title">
+          {t(printData.sections.projects)}
+        </h2>
+        {first && <ProjectEntry item={first} />}
       </div>
+      {rest.length > 0 && (
+        <div className="print-projects">
+          {rest.map((p) => (
+            <ProjectEntry key={p.name} item={p} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
