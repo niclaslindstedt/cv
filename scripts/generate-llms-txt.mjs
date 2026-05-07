@@ -31,7 +31,7 @@ if (!fs.existsSync(DIST)) {
 }
 
 const cv = loadCv();
-const SITE_URL = cv.meta.siteUrl.replace(/\/$/, "");
+const SITE_URL = cv.meta.website.replace(/\/$/, "");
 
 function abs(pathname) {
   return `${SITE_URL}${pathname}`;

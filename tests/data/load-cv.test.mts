@@ -45,14 +45,14 @@ describe("loadCvWithParts placeholder expansion", () => {
   it("leaves non-sentinel top-level values untouched", () => {
     const root = write("cv.json", {
       name: "Test",
-      meta: { siteUrl: "https://example.com" },
+      meta: { website: "https://example.com" },
       focus: "{...}",
     });
     write("cv/focus.json", []);
 
     const { cv } = loadCvWithParts(root);
 
-    expect(cv.meta).toEqual({ siteUrl: "https://example.com" });
+    expect(cv.meta).toEqual({ website: "https://example.com" });
   });
 });
 

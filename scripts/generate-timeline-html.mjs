@@ -25,7 +25,7 @@ if (!fs.existsSync(INDEX_HTML)) {
 }
 
 const cv = loadCv();
-const SITE_URL = cv.meta.siteUrl.replace(/\/$/, "");
+const SITE_URL = cv.meta.website.replace(/\/$/, "");
 const TIMELINE_URL = `${SITE_URL}/timeline`;
 const baseTitle = cv.meta.documentTitle.en;
 const TITLE = `Career timeline — ${baseTitle}`;

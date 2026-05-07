@@ -110,9 +110,9 @@
     "meta": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["siteUrl", "documentTitle", "description", "seo"],
+      "required": ["website", "documentTitle", "description", "seo"],
       "properties": {
-        "siteUrl": {
+        "website": {
           "type": "string",
           "format": "uri",
           "description": "Canonical absolute URL of the deployed site, used to build canonical/OG links and the sitemap."
@@ -136,7 +136,7 @@
         "image": {
           "type": "string",
           "minLength": 1,
-          "description": "Site-relative path to the social/OG image (resolved against meta.siteUrl)."
+          "description": "Site-relative path to the social/OG image (resolved against meta.website)."
         },
         "locale": {
           "type": "string",

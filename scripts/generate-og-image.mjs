@@ -38,7 +38,7 @@ async function loadTtf(file) {
 const interRegular = await loadTtf("inter-latin-400-normal.woff2");
 const interBold = await loadTtf("inter-latin-700-normal.woff2");
 
-const host = new URL(cv.meta.siteUrl).host;
+const host = new URL(cv.meta.website).host;
 
 function text(value, style) {
   return { type: "div", props: { style, children: value } };

@@ -61,6 +61,7 @@
 
   .print-view {
     display: block;
+    position: relative;
     color: #111;
     font-family: var(
       --print-font-family,
@@ -82,6 +83,29 @@
 
   .print-hero {
     margin-bottom: var(--print-spacing-header-to-body, 20pt);
+  }
+
+  /* First-page header — pinned to the top-right of the content area via
+     position: absolute so it doesn't push the name down. The print-view
+     is position: relative so absolute coords resolve against it; on
+     subsequent pages the eyebrow doesn't render (absolute positioning
+     only paints once at its anchor location). Chromium's PDF engine
+     clips content outside the @page content box, so we can't put the
+     eyebrow in the physical page margin (Chrome lacks @page margin-box
+     support); instead it shares a row with the name, which is harmless
+     because the name is left-aligned and the eyebrow is short and
+     right-aligned. */
+  .print-eyebrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    font-family: var(--print-heading-font-family, inherit);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 9pt;
+    font-weight: 600;
+    color: #777;
   }
 
   .print-name {

@@ -82,7 +82,7 @@ function buildSettingsCss(s: PrintSettings): string {
 }
 
 function PrintHero() {
-  const { t } = useLang();
+  const { t, ui } = useLang();
   const contact = printData.contact;
   const contactParts = contact
     ? [contact.email, contact.phone, contact.address].filter(
@@ -91,6 +91,7 @@ function PrintHero() {
     : [];
   return (
     <header className="print-hero">
+      <p className="print-eyebrow">{ui.hero.eyebrow}</p>
       <h1 className="print-name">{printData.name}</h1>
       <p className="print-title">{t(printData.title)}</p>
       {contactParts.length > 0 && (

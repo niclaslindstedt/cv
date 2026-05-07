@@ -21,6 +21,9 @@ import { loadCv } from "../src/data/load-cv.mjs";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
+const PKG = JSON.parse(
+  fs.readFileSync(path.join(ROOT, "package.json"), "utf8"),
+);
 
 if (!fs.existsSync(DIST)) {
   console.error("dist/ does not exist — run `vite build` before generate-pdf.");
@@ -70,8 +73,8 @@ async function stampMetadata(pdfPath, lang) {
   doc.setAuthor(cv.name);
   if (subject) doc.setSubject(subject);
   if (keywords.length > 0) doc.setKeywords(keywords);
-  doc.setCreator("https://github.com/niclaslindstedt/cv");
-  doc.setProducer("https://github.com/niclaslindstedt/cv");
+  if (PKG.repository?.url) doc.setCreator(PKG.repository.url);
+  if (cv.meta?.website) doc.setProducer(cv.meta.website);
   doc.setCreationDate(now);
   doc.setModificationDate(now);
 

@@ -4,6 +4,11 @@
   "version": "0.0.1",
   "license": "UNLICENSED",
   "type": "module",
+  "homepage": "https://niclaslindstedt.se",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/niclaslindstedt/cv"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && npm run generate:print-html && npm run generate:pdf && npm run generate:resume-json && npm run generate:llms-txt && npm run generate:timeline-html && npm run generate:static-index && npm run generate:sitemap",

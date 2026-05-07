@@ -16,7 +16,7 @@ const ROOT = path.resolve(__dirname, "..");
 
 const cv = loadCv();
 
-const SITE_URL = cv.meta.siteUrl.replace(/\/$/, "");
+const SITE_URL = cv.meta.website.replace(/\/$/, "");
 const lastmod = new Date().toISOString();
 
 function localizedPage(pathname, priority) {

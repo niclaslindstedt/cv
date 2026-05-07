@@ -7,7 +7,7 @@ const cv = loadCv();
 
 declare const process: { env: Record<string, string | undefined> };
 
-const SITE_URL = cv.meta.siteUrl.replace(/\/$/, "");
+const SITE_URL = cv.meta.website.replace(/\/$/, "");
 const TITLE_EN = cv.meta.documentTitle.en;
 const DESCRIPTION_EN = cv.meta.description.en;
 const SUMMARY_EN = cv.summary.en;

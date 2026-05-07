@@ -10,7 +10,7 @@ export type Seo = {
 };
 
 export type Meta = {
-  siteUrl: string;
+  website: string;
   documentTitle: LocalizedString;
   description: LocalizedString;
   seo: Seo;

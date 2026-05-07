@@ -211,7 +211,7 @@ When you change X, update Y:
 | `schemas/timeline.schema.json`                      | `src/data/timeline.types.ts` + `scripts/generate-timeline.mjs`                                             |
 | `schemas/print.schema.json`                         | `src/data/print.types.ts` + `scripts/generate-print.mjs` + `PrintView` + `scripts/generate-print-html.mjs` |
 | `schemas/search-index.schema.json`                  | `src/data/search-index.types.ts` + `scripts/generate-search-index.mjs` + `src/utils/search.ts`             |
-| `cv.meta` (siteUrl / seo)                           | `vite.config.ts` `cvMetaHtmlPlugin` reads these directly                                                   |
+| `cv.meta` (website / seo)                           | `vite.config.ts` `cvMetaHtmlPlugin` reads these directly                                                   |
 | Node version in CI                                  | `.nvmrc`, `.github/workflows/pages.yml` (keep in sync)                                                     |
 | `src/styles/tokens.css` or any new visual pattern   | `docs/DESIGN.md` (in the **same** PR)                                                                      |
 
@@ -231,6 +231,56 @@ across multiple configs.
 
 See `.claude/rules/tests.md` for the per-domain breakdown (what
 each suite covers, how it runs, what gates CI).
+
+## Debugging PDF prints
+
+Agents can't open PDFs directly, but they can render the generated
+`dist/cv-<lang>.pdf` to JPEG and read it back as an image to verify
+layout, page-break behaviour, header position, and other print-only
+visuals.
+
+Tooling: `pdftoppm` (poppler) is preinstalled on the dev machine.
+`pdfinfo` (also poppler) shows page count + Info-dict metadata.
+
+Round-trip:
+
+1. Refresh the PDF. **Always go through Vite when CSS changed**, or
+   the print HTML will reference a stale hashed bundle and the PDF
+   will look unchanged:
+   - **CSS or component changes** (almost always the case when
+     debugging visuals): `make build` (public) or `make local`
+     (with `cv.local.json` merged in). These run `vite build` so
+     `dist/assets/index-*.css` and the `<link href>` in
+     `dist/print-<lang>.html` get a fresh hash.
+   - **Data-only changes** (you only edited
+     `src/data/cv/*.json` and not styles): the cheaper
+     `npm run generate:print && npm run generate:print-html && npm run generate:pdf`
+     loop is fine — no CSS rebuild needed. Prefix with `CV_LOCAL=1`
+     to merge the local override.
+   - When in doubt, use `make local`. It's slower but never
+     leaves you debugging stale CSS.
+2. Render to JPEG into a scratch dir:
+   `pdftoppm -jpeg -r 110 dist/cv-en.pdf /tmp/cv-debug/page`
+   Flags: `-r 110` is enough resolution to read body text; bump to
+   `-r 150` for fine spacing checks. Add `-f 1 -l 1` to render only
+   page 1 (faster, smaller payload). Output is
+   `/tmp/cv-debug/page-1.jpg`, `page-2.jpg`, …
+3. Read the rendered page back via the `Read` tool — the
+   harness renders the JPEG as a visible image so layout can
+   actually be inspected.
+4. Inspect Info-dict metadata (Title, Author, Creator/Producer,
+   CreationDate) with `pdfinfo dist/cv-en.pdf`.
+
+Sanity check after a CSS edit: `grep -o "<class>{[^}]*}" dist/assets/index-*.css`
+should show the new declarations. If it doesn't, you skipped Vite —
+re-run `make local`.
+
+Anything print-only — `src/components/PrintView.tsx`,
+`src/styles/print.css`, `scripts/generate-print.mjs`,
+`scripts/generate-print-html.mjs`, `src/data/cv/print.json` —
+should be verified through this round-trip before claiming a fix
+landed. Visual snapshots (`tests/visual/__screenshots__/`) only
+cover the SPA, not the PDF.
 
 ## Maintenance skills
 
