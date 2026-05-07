@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
@@ -34,6 +35,31 @@ function emit(data) {
   } else {
     writeFileSync(outPath, serialized);
   }
+}
+
+// Pull project-stats.json from origin/data-cache so token-less builds (fresh
+// clone, contributor without a PAT, ad-hoc local PDF) still get the dates.
+// data-refresh.yml is the sole writer of that branch, so this read is safe.
+function readFromDataCache() {
+  const probe = spawnSync(
+    "git",
+    ["show", "origin/data-cache:src/data/project-stats.json"],
+    { encoding: "utf8" },
+  );
+  if (probe.status === 0 && probe.stdout) return probe.stdout;
+  const fetched = spawnSync(
+    "git",
+    ["fetch", "origin", "data-cache", "--depth", "1"],
+    { stdio: ["ignore", "ignore", "pipe"] },
+  );
+  if (fetched.status !== 0) return null;
+  const retry = spawnSync(
+    "git",
+    ["show", "origin/data-cache:src/data/project-stats.json"],
+    { encoding: "utf8" },
+  );
+  if (retry.status === 0 && retry.stdout) return retry.stdout;
+  return null;
 }
 
 function extractUsername(cv) {
@@ -249,10 +275,22 @@ async function main() {
       );
       return;
     }
+    const fromDataCache = readFromDataCache();
+    if (fromDataCache) {
+      if (toStdout) {
+        process.stdout.write(fromDataCache);
+      } else {
+        writeFileSync(outPath, fromDataCache);
+        console.log(
+          "PROJECT_STATS_TOKEN/GITHUB_TOKEN not set — restored project-stats.json from origin/data-cache.",
+        );
+      }
+      return;
+    }
     emit({ enabled: false, projects: {} });
     if (!toStdout) {
       console.warn(
-        "PROJECT_STATS_TOKEN/GITHUB_TOKEN not set and no cache — wrote disabled project stats file.",
+        "PROJECT_STATS_TOKEN/GITHUB_TOKEN not set and no cache (local or data-cache) — wrote disabled project stats file.",
       );
     }
     return;
