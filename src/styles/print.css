@@ -456,9 +456,29 @@
     page-break-before: avoid;
   }
 
+  /* `display: inline-block` is the most reliable Chromium PDF
+     workaround for break-inside: avoid being ignored on regular blocks
+     and on `display: table` divs (table cells become anonymous rows
+     that Chromium happily breaks between). inline-block boxes are
+     treated as atomic replaced-like elements for fragmentation, so the
+     wrapper truly cannot be split. width: 100% keeps normal flow width;
+     vertical-align: top suppresses the inline-block baseline gap. */
   .print-section-head {
-    break-inside: avoid;
-    page-break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Cancel the inner project's own break-inside avoid + flow-root inside
+     the section-head wrapper. Two nested `break-inside: avoid` blocks
+     confuse Chromium enough that the outer one stops being honored — the
+     wrapper alone is what we need here. */
+  .print-section-head .print-project {
+    display: block;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
   }
 
   a {
