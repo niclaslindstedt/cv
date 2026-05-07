@@ -13,6 +13,7 @@ import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { PDFDocument } from "pdf-lib";
 import puppeteer from "puppeteer";
 
 import { loadCv } from "../src/data/load-cv.mjs";
@@ -54,6 +55,28 @@ function pdfFilenameFor(base, lang) {
   const ext = path.extname(base);
   const stem = ext ? base.slice(0, -ext.length) : base;
   return `${stem}-${lang}${ext}`;
+}
+
+async function stampMetadata(pdfPath, lang) {
+  const bytes = fs.readFileSync(pdfPath);
+  const doc = await PDFDocument.load(bytes, { updateMetadata: false });
+
+  const title = cv.meta?.documentTitle?.[lang] ?? cv.name;
+  const subject = cv.meta?.description?.[lang];
+  const keywords = cv.meta?.seo?.keywords ?? [];
+  const now = new Date();
+
+  doc.setTitle(title);
+  doc.setAuthor(cv.name);
+  if (subject) doc.setSubject(subject);
+  if (keywords.length > 0) doc.setKeywords(keywords);
+  doc.setCreator("https://github.com/niclaslindstedt/cv");
+  doc.setProducer("https://github.com/niclaslindstedt/cv");
+  doc.setCreationDate(now);
+  doc.setModificationDate(now);
+
+  const out = await doc.save({ useObjectStreams: false });
+  fs.writeFileSync(pdfPath, out);
 }
 
 const MIME = {
@@ -154,6 +177,8 @@ try {
       margin: { top: "1.5cm", right: "1.5cm", bottom: "1.5cm", left: "1.5cm" },
     });
     await page.close();
+
+    await stampMetadata(outPath, lang);
 
     const { size } = fs.statSync(outPath);
     console.log(`Wrote ${path.relative(ROOT, outPath)} (${size} bytes).`);
