@@ -207,6 +207,7 @@
     },
     "stack": ["TypeScript", "React", "Node.js", "GitHub actions"],
     "skills": ["Claude Code", "Agent skills", "SEO", "WCAG"],
+    "homepage": "https://niclaslindstedt.se",
     "github": [
       {
         "owner": "niclaslindstedt",
