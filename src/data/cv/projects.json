@@ -36,7 +36,7 @@
       }
     ],
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/zag",
+    "homepage": "https://zag.niclaslindstedt.se",
     "cratesIo": "zag",
     "npm": "@nlindstedt/zag-agent",
     "pypi": "zag-agent",
@@ -72,7 +72,7 @@
       }
     ],
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/zig",
+    "homepage": "https://zig.niclaslindstedt.se",
     "cratesIo": "zig-cli",
     "npm": "@nlindstedt/zig-workflow",
     "aliases": ["zig workflow", "zwf", "agent workflow runner"]
@@ -102,7 +102,7 @@
       }
     ],
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/zad",
+    "homepage": "https://zad.niclaslindstedt.se",
     "cratesIo": "zad",
     "aliases": ["agent permissions", "scoped agent access"]
   },
@@ -131,9 +131,37 @@
       }
     ],
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/ztf",
+    "homepage": "https://ztf.niclaslindstedt.se",
     "cratesIo": "ztf",
     "aliases": ["agent terminal forwarder", "agent terminal"]
+  },
+  {
+    "name": "spotifai",
+    "tagline": {
+      "en": "A natural-language CLI for managing your Spotify and YouTube Music libraries — built on zag and zad.",
+      "sv": "Ett CLI på naturligt språk för att hantera dina Spotify- och YouTube Music-bibliotek — byggt på zag och zad."
+    },
+    "description": {
+      "en": "A Rust CLI for managing a music library in natural language. `spotifai ask` answers read-only questions about what's in the library; `spotifai playlist` builds new playlists conversationally; `spotifai export | import` migrates between providers, resolving tracks by ISRC. Spotify is the default backend; YouTube Music is a `--provider` flag away, and a third backend is one new variant plus a policy file. zag handles the agent side and zad signs per-command permission profiles at install time, so `ask` cannot widen its own access at runtime — destructive verbs stay denied even when the model asks for them.",
+      "sv": "Ett Rust-CLI för att hantera ett musikbibliotek på naturligt språk. `spotifai ask` svarar på read-only-frågor om vad som finns i biblioteket; `spotifai playlist` bygger nya spellistor konversationsvis; `spotifai export | import` migrerar mellan leverantörer och matchar spår via ISRC. Spotify är standard, YouTube Music ligger en `--provider`-flagga bort, och en tredje leverantör är en ny variant plus en policyfil. zag hanterar agentdelen och zad signerar permissions-profiler per kommando vid installation, så att `ask` inte kan utöka sin egen åtkomst i körtid — destruktiva verb förblir nekade även när modellen ber om dem."
+    },
+    "stack": ["Rust"],
+    "skills": ["Integrations", "Agent security", "Claude Code", "Agent skills"],
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "spotifai"
+      }
+    ],
+    "openSource": true,
+    "homepage": "https://spotifai.niclaslindstedt.se",
+    "cratesIo": "spotifai",
+    "aliases": [
+      "spotify cli",
+      "youtube music cli",
+      "natural language music",
+      "playlist agent"
+    ]
   },
   {
     "name": "oss-spec",
@@ -236,7 +264,7 @@
       }
     ],
     "openSource": true,
-    "homepage": "https://niclaslindstedt.github.io/juris/",
+    "homepage": "https://juris.niclaslindstedt.se",
     "pypi": "juris",
     "aliases": ["legal", "law"]
   },
