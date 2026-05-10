@@ -146,12 +146,7 @@
       "sv": "Ett Rust-CLI för att hantera ett musikbibliotek på naturligt språk. `spotifai ask` svarar på read-only-frågor om vad som finns i biblioteket; `spotifai playlist` bygger nya spellistor konversationsvis; `spotifai export | import` migrerar mellan leverantörer och matchar spår via ISRC. Spotify är standard, YouTube Music ligger en `--provider`-flagga bort, och en tredje leverantör är en ny variant plus en policyfil. zag hanterar agentdelen och zad signerar permissions-profiler per kommando vid installation, så att `ask` inte kan utöka sin egen åtkomst i körtid — destruktiva verb förblir nekade även när modellen ber om dem."
     },
     "stack": ["Rust"],
-    "skills": [
-      "Integrations",
-      "Agent security",
-      "Claude Code",
-      "Agent skills"
-    ],
+    "skills": ["Integrations", "Agent security", "Claude Code", "Agent skills"],
     "github": [
       {
         "owner": "niclaslindstedt",
