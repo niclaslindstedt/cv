@@ -1,66 +1,78 @@
 {
   "enabled": true,
   "username": "niclaslindstedt",
-  "fetchedAt": "2026-05-10T06:21:17.851Z",
+  "fetchedAt": "2026-05-11T06:32:21.444Z",
   "projects": {
     "niclaslindstedt/zag": {
       "owner": "niclaslindstedt",
       "repo": "zag",
       "username": "niclaslindstedt",
-      "headSha": "a954328dc6afb22d6678d00cba059deb8a2eb0c5",
+      "headSha": "4a837b468c708dff517cdfa2a06187ad975d0438",
       "firstCommitDate": "2026-01-13",
-      "lastCommitDate": "2026-05-01",
-      "totalCommits": 338,
+      "lastCommitDate": "2026-05-10",
+      "totalCommits": 343,
       "commitsByYear": {
-        "2026": 338
+        "2026": 343
       }
     },
     "niclaslindstedt/zig": {
       "owner": "niclaslindstedt",
       "repo": "zig",
       "username": "niclaslindstedt",
-      "headSha": "4b43d541e39363d2cc83d71772471ffcf69a5396",
+      "headSha": "db3a41cbc2dc4ac00a4f267a5a71dbe438f2b68f",
       "firstCommitDate": "2026-04-08",
-      "lastCommitDate": "2026-05-03",
-      "totalCommits": 99,
+      "lastCommitDate": "2026-05-10",
+      "totalCommits": 105,
       "commitsByYear": {
-        "2026": 99
+        "2026": 105
       }
     },
     "niclaslindstedt/zad": {
       "owner": "niclaslindstedt",
       "repo": "zad",
       "username": "niclaslindstedt",
-      "headSha": "49b5bfcf23bcf22f704ebf8abd440be328ff1d26",
+      "headSha": "e3afacbc31fb3a5394d76e8be6067970c15052b0",
       "firstCommitDate": "2026-04-17",
-      "lastCommitDate": "2026-05-09",
-      "totalCommits": 47,
+      "lastCommitDate": "2026-05-10",
+      "totalCommits": 57,
       "commitsByYear": {
-        "2026": 47
+        "2026": 57
       }
     },
     "niclaslindstedt/ztf": {
       "owner": "niclaslindstedt",
       "repo": "ztf",
       "username": "niclaslindstedt",
-      "headSha": "7c1154f287c2bd7191d5e9e0b1500bf165793ea7",
+      "headSha": "570678aa6ec662b2fbd5e0a11e54890834152399",
       "firstCommitDate": "2026-04-17",
-      "lastCommitDate": "2026-04-20",
-      "totalCommits": 9,
+      "lastCommitDate": "2026-05-10",
+      "totalCommits": 16,
       "commitsByYear": {
-        "2026": 9
+        "2026": 16
+      }
+    },
+    "niclaslindstedt/spotifai": {
+      "owner": "niclaslindstedt",
+      "repo": "spotifai",
+      "username": "niclaslindstedt",
+      "headSha": "c8d3af708bd6af2b34445c89c6dba48f60c434bc",
+      "firstCommitDate": "2026-05-07",
+      "lastCommitDate": "2026-05-10",
+      "totalCommits": 27,
+      "commitsByYear": {
+        "2026": 27
       }
     },
     "niclaslindstedt/oss-spec": {
       "owner": "niclaslindstedt",
       "repo": "oss-spec",
       "username": "niclaslindstedt",
-      "headSha": "eac48c3a82850492b4662ba9f2aacaed0167537a",
+      "headSha": "13dc1024baacdb8e9f73ce6211a192960df30441",
       "firstCommitDate": "2026-04-11",
-      "lastCommitDate": "2026-04-21",
-      "totalCommits": 43,
+      "lastCommitDate": "2026-05-10",
+      "totalCommits": 48,
       "commitsByYear": {
-        "2026": 43
+        "2026": 48
       }
     },
     "niclaslindstedt/blog": {
@@ -79,24 +91,24 @@
       "owner": "niclaslindstedt",
       "repo": "cv",
       "username": "niclaslindstedt",
-      "headSha": "b779ae583379bf8bcc31bff81c796fd89eb68f86",
+      "headSha": "26d062ff042f3856c73a77ab4b79bfa4731d639f",
       "firstCommitDate": "2026-04-20",
-      "lastCommitDate": "2026-05-09",
-      "totalCommits": 436,
+      "lastCommitDate": "2026-05-10",
+      "totalCommits": 437,
       "commitsByYear": {
-        "2026": 436
+        "2026": 437
       }
     },
     "niclaslindstedt/juris": {
       "owner": "niclaslindstedt",
       "repo": "juris",
       "username": "niclaslindstedt",
-      "headSha": "542585e8adb30adec1cd83b007dd6f3163b228ee",
+      "headSha": "2eaafd0560cc3b33ccbaf23294b431f9c9710f98",
       "firstCommitDate": "2026-04-05",
-      "lastCommitDate": "2026-05-03",
-      "totalCommits": 78,
+      "lastCommitDate": "2026-05-10",
+      "totalCommits": 81,
       "commitsByYear": {
-        "2026": 78
+        "2026": 81
       }
     },
     "niclaslindstedt/swarm-cli": {
