@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "username": "niclaslindstedt",
-  "fetchedAt": "2026-05-12T06:22:45.551Z",
+  "fetchedAt": "2026-05-13T06:29:38.324Z",
   "projects": {
     "niclaslindstedt/zag": {
       "owner": "niclaslindstedt",
@@ -19,24 +19,24 @@
       "owner": "niclaslindstedt",
       "repo": "zig",
       "username": "niclaslindstedt",
-      "headSha": "db3a41cbc2dc4ac00a4f267a5a71dbe438f2b68f",
+      "headSha": "d677ca1f7192694eb54f4100896372bcf43c8894",
       "firstCommitDate": "2026-04-08",
-      "lastCommitDate": "2026-05-10",
-      "totalCommits": 105,
+      "lastCommitDate": "2026-05-12",
+      "totalCommits": 106,
       "commitsByYear": {
-        "2026": 105
+        "2026": 106
       }
     },
     "niclaslindstedt/zad": {
       "owner": "niclaslindstedt",
       "repo": "zad",
       "username": "niclaslindstedt",
-      "headSha": "5f97c5df9c2a2acf974a4c80e4d1e05ebe0eeabc",
+      "headSha": "60818bb45c90695816b976320bc75bbaf99bcc19",
       "firstCommitDate": "2026-04-17",
       "lastCommitDate": "2026-05-12",
-      "totalCommits": 62,
+      "totalCommits": 65,
       "commitsByYear": {
-        "2026": 62
+        "2026": 65
       }
     },
     "niclaslindstedt/ztf": {
@@ -55,36 +55,36 @@
       "owner": "niclaslindstedt",
       "repo": "spotifai",
       "username": "niclaslindstedt",
-      "headSha": "0ff0dac43a64c91a452ea1e792012c778941c1a2",
+      "headSha": "3a04cab72bc950202913e37e26ea7dbf7b2e8912",
       "firstCommitDate": "2026-05-07",
       "lastCommitDate": "2026-05-12",
-      "totalCommits": 37,
+      "totalCommits": 45,
       "commitsByYear": {
-        "2026": 37
+        "2026": 45
       }
     },
     "niclaslindstedt/oss-spec": {
       "owner": "niclaslindstedt",
       "repo": "oss-spec",
       "username": "niclaslindstedt",
-      "headSha": "13dc1024baacdb8e9f73ce6211a192960df30441",
+      "headSha": "200c76cb988e8c7df3fd5d620dc3befd3eace38e",
       "firstCommitDate": "2026-04-11",
-      "lastCommitDate": "2026-05-10",
-      "totalCommits": 48,
+      "lastCommitDate": "2026-05-12",
+      "totalCommits": 49,
       "commitsByYear": {
-        "2026": 48
+        "2026": 49
       }
     },
     "niclaslindstedt/blog": {
       "owner": "niclaslindstedt",
       "repo": "blog",
       "username": "niclaslindstedt",
-      "headSha": "d21950a828cf91639248c705d45d78ed28ab27ee",
+      "headSha": "8e592510e30c2a6b5da486f21a84deec0ddb923b",
       "firstCommitDate": "2026-04-20",
-      "lastCommitDate": "2026-05-07",
-      "totalCommits": 99,
+      "lastCommitDate": "2026-05-12",
+      "totalCommits": 107,
       "commitsByYear": {
-        "2026": 99
+        "2026": 107
       }
     },
     "niclaslindstedt/cv": {
