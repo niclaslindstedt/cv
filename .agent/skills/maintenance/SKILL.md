@@ -14,22 +14,25 @@ skills and aggregates their output.
 Run the skills below in order. Skip a row if its target artifact does
 not exist yet.
 
-| Order | Skill                | Target                                                    |
-| ----- | -------------------- | --------------------------------------------------------- |
-| 1     | `update-readme`      | `README.md`                                               |
-| 2     | `sync-design`        | `src/styles/` + `src/components/` ↔ `docs/DESIGN.md`      |
-| 3     | `sync-cross-browser` | `src/styles/` cross-browser parity (Safari is the master) |
-| 4     | `sync-oss-spec`      | Whole repo ↔ `OSS_SPEC.md` (final residual-drift sweep)   |
+| Order | Skill                | Target                                                        |
+| ----- | -------------------- | ------------------------------------------------------------- |
+| 1     | `update-docs`        | `docs/` ↔ source (tokens, schemas, scripts, search internals) |
+| 2     | `update-readme`      | `README.md`                                                   |
+| 3     | `sync-design`        | `src/styles/` + `src/components/` ↔ `docs/DESIGN.md`          |
+| 4     | `sync-cross-browser` | `src/styles/` cross-browser parity (Safari is the master)     |
+| 5     | `sync-oss-spec`      | Whole repo ↔ `OSS_SPEC.md` (final residual-drift sweep)       |
 
 Add a row every time a new `update-*` or `sync-*` skill is added —
 the registry is the only source of truth for which sync skills exist.
 
-Run order matters: `update-readme` first so any upstream documentation
-moves are reconciled before downstream skills read them; `sync-design`
-runs after so it can react to documentation drift exposed by the
-README sweep; `sync-cross-browser` runs next so any property-level
-patches it applies sit on top of a design-conformant tree (it never
-retunes design tokens, only adds missing prefixes and standard pairs);
+Run order matters: `update-docs` first so prose in `docs/` is
+reconciled against the code before any downstream skill reads it;
+`update-readme` next so the README picks up any docs-section renames
+or content changes; `sync-design` runs after so it can react to
+documentation drift exposed by the docs and README sweeps;
+`sync-cross-browser` runs next so any property-level patches it
+applies sit on top of a design-conformant tree (it never retunes
+design tokens, only adds missing prefixes and standard pairs);
 `sync-oss-spec` runs last as the residual-drift sweep that catches
 any structural conformance gaps the per-artifact skills did not
 touch (per `OSS_SPEC.md` §21.5).

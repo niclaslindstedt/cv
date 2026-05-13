@@ -92,6 +92,12 @@ function PrintHero() {
   return (
     <header className="print-hero">
       <p className="print-eyebrow">{ui.hero.eyebrow}</p>
+      {/* TODO: demote to <h2>. The static-index SSR pass emits both this
+          h1 and the screen Hero's h1 into the same dist/index.html, which
+          trips the §11.3.10 "exactly one <h1>" rule. The print stylesheet
+          targets `.print-name` regardless of tag, and the standalone PDF
+          is a separate document context, so the demote is purely
+          structural. */}
       <h1 className="print-name">{printData.name}</h1>
       <p className="print-title">{t(printData.title)}</p>
       {contactParts.length > 0 && (

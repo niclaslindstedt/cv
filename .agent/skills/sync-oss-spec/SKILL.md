@@ -21,19 +21,34 @@ as its primary validator: the bash mirror, fetched on demand via
 ephemeral CI without a Rust toolchain, and freshly-cloned checkouts
 where installing the binary would be too slow.
 
-## Known deviation
+## Known deviations
 
-`AGENTS.md` records one intentional deviation from the spec: this
-project ships a **proprietary `LICENSE`** (all rights reserved) rather
-than an SPDX-identified open-source license. The site is a personal
-CV, not an OSS library. Treat any §2 finding about the license as
-**expected** — do not silently rewrite `LICENSE` to MIT/Apache/etc. If
-the validator flags §2, confirm with the user before changing it.
+`AGENTS.md` § "OSS_SPEC.md conformance" records the intentional
+deviations from the spec. Treat each of the findings below as
+**expected** — surface them in the run report, but do not silently
+add the files or rewrite the workflows.
 
-All other spec requirements are followed to the extent applicable for
-a frontend static site with no CLI and no LLM calls. CLI-only sections
-(§12 in full, §19 structured logging for diagnostic CLI output) do not
-apply and any findings tied to those sections can be skipped.
+- **§2 proprietary `LICENSE`.** The site ships a proprietary license
+  (all rights reserved) rather than an SPDX-identified open-source
+  license. It is a personal CV, not an OSS library. Do not silently
+  rewrite `LICENSE` to MIT/Apache/etc. If the validator flags §2,
+  confirm with the user before changing it.
+- **§8.4 missing `CHANGELOG.md` and §10.3 missing `version-bump.yml`
+  / `release.yml`.** The site deploys to GitHub Pages on every push
+  to `main` via `.github/workflows/pages.yml`; it does not publish
+  versioned artifacts. There are no `v*` tags, no semver bumps, and
+  no registry to publish to, so the §8.4 changelog and the two §10.3
+  release workflows do not apply. Do not create stub files for
+  these — they would invite drift and stale CI runs.
+- **§12 CLI requirements.** There is no CLI in this project. Skip
+  the entire §12 checklist.
+- **§19 logging in non-CLI build tooling.** `console.log` calls
+  inside `scripts/*.mjs` are diagnostic-only build output, not a
+  user-facing CLI surface. §19's structured-logging mandate does
+  not apply.
+
+All other spec requirements are followed to the extent applicable
+for a frontend static site with no CLI and no LLM calls.
 
 ## Tracking mechanism
 
@@ -91,9 +106,11 @@ baseline.
 | §3 missing `README.md` sections                                           | Edit `README.md`; run `update-readme` afterwards if extensive rewording is needed                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | §4/§5/§6 missing `CONTRIBUTING.md` / `CODE_OF_CONDUCT.md` / `SECURITY.md` | Create the file with the minimum content mandated by the corresponding spec section                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | §7.1 tool-specific guidance file is not a symlink                         | Replace the regular file with `ln -s AGENTS.md <path>` (e.g. `ln -s AGENTS.md CLAUDE.md`, `ln -s ../AGENTS.md .github/copilot-instructions.md`)                                                                                                                                                                                                                                                                                                                                                                                           |
-| §8.4 missing `CHANGELOG.md`                                               | Create an empty Keep-a-Changelog-formatted file; do **not** hand-author entries                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| §8.4 missing `CHANGELOG.md`                                               | **Expected deviation** — this site does not publish versioned artifacts (deploys to Pages on every push), so there is nothing to changelog. Confirm with the user before creating a stub.                                                                                                                                                                                                                                                                                                                                                 |
 | §9 Makefile target missing                                                | Add the missing target to `Makefile` and verify it runs end-to-end. The full target set this repo maintains is documented in `AGENTS.md` § "Build and test commands".                                                                                                                                                                                                                                                                                                                                                                     |
-| §10.1/§10.3/§10.4 missing workflow                                        | Create `.github/workflows/<file>.yml`; cross-reference the upstream `templates/_common/.github/workflows/` for the canonical template                                                                                                                                                                                                                                                                                                                                                                                                     |
+| §10.1/§10.4 missing workflow                                              | Create `.github/workflows/<file>.yml`; cross-reference the upstream `templates/_common/.github/workflows/` for the canonical template                                                                                                                                                                                                                                                                                                                                                                                                     |
+| §10.3 missing `version-bump.yml` / `release.yml`                          | **Expected deviation** — no versioned release pipeline (the site auto-deploys to Pages on every push to `main`). Confirm with the user before adding the workflows.                                                                                                                                                                                                                                                                                                                                                                       |
+| §11.3 SEO scaffolding (`seo.yml`, `check-seo` script)                     | Add `scripts/check-seo.mjs` walking every HTML file under `dist/` and asserting the §11.3.10 invariants, plus `.github/workflows/seo.yml` running it on push + PR. Mirror the pattern in `.github/workflows/ci.yml`. Add the `seo` badge to `README.md` per §11.3.11.                                                                                                                                                                                                                                                                     |
 | §10.3 floating or under-pinned toolchain                                  | Edit the workflow to pin at or above the spec minimums (see upstream `MIN_TOOLCHAIN_VERSIONS` in `src/validate/toolchain.rs`). Node version in `.nvmrc` and `.github/workflows/pages.yml` must stay in sync — see `AGENTS.md` "Documentation sync points".                                                                                                                                                                                                                                                                                |
 | §11.1 missing `docs/` content                                             | Create the topic file under `docs/` (this repo currently ships `docs/DESIGN.md` and `docs/SEARCH.md`).                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | §11.2 website drift                                                       | **N/A for this repo** — the deployed site _is_ the built React app; there is no separate `website/` scaffold yet. See `AGENTS.md` § "Website staleness policy". When/if a `website/` directory is added, follow up with `update-website`.                                                                                                                                                                                                                                                                                                 |
@@ -119,9 +136,10 @@ baseline.
   violation plus every AI checklist item worth acting on.
 
 - Walk the mapping table and fix each violation at its source. Skip
-  the known deviations (§2 proprietary license; §12 CLI requirements;
-  §19 print statements in non-CLI build tooling) without silencing
-  them — note them in the run report so the deviation stays visible.
+  the known deviations (§2 proprietary license; §8.4 CHANGELOG;
+  §10.3 release workflows; §12 CLI requirements; §19 print
+  statements in non-CLI build tooling) without silencing them — note
+  them in the run report so the deviation stays visible.
 
 - If a fix requires a propagation step (e.g. a new mandate in the
   spec needs to land upstream first), hand off to the upstream

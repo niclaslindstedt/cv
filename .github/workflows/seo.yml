@@ -1,0 +1,35 @@
+name: SEO
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Restore data-cache JSONs
+        # Mirrors ci.yml — keep the data-cache prefetch in sync. Building the
+        # site without these JSONs would fall back to GraphQL calls, which is
+        # not allowed on PR runs.
+        run: |
+          set -e
+          if git fetch origin data-cache --depth 1 2>/dev/null; then
+            mkdir -p src/data
+            git show origin/data-cache:src/data/github-activity.json \
+              > src/data/github-activity.json 2>/dev/null || true
+            git show origin/data-cache:src/data/project-stats.json \
+              > src/data/project-stats.json 2>/dev/null || true
+          fi
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: make build
+      - run: make check-seo

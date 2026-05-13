@@ -17,27 +17,28 @@ CLI; tests live under `tests/` (Vitest + Playwright).
 Prefer `make` targets over raw `npm run` commands so local and CI stay
 in sync:
 
-| Command                   | What it does                                                                                                                                                                                                                                                                     |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `make install`            | `npm ci`                                                                                                                                                                                                                                                                         |
-| `make dev`                | Start Vite dev server                                                                                                                                                                                                                                                            |
-| `make build`              | Type-check and produce production build                                                                                                                                                                                                                                          |
-| `make preview`            | Preview the production build                                                                                                                                                                                                                                                     |
-| `make lint`               | ESLint + TypeScript type-check                                                                                                                                                                                                                                                   |
-| `make typecheck`          | `tsc -b --noEmit` only                                                                                                                                                                                                                                                           |
-| `make fmt`                | Prettier rewrite in place                                                                                                                                                                                                                                                        |
-| `make fmt-check`          | Prettier check without writing                                                                                                                                                                                                                                                   |
-| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json`                                                                                                                                                                                 |
-| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in                                                                                                                                                                                         |
-| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                                                                                                                                                                                                              |
-| `make test-coverage`      | Vitest with v8 coverage                                                                                                                                                                                                                                                          |
-| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                                                                                                                                                                                                    |
-| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                                                                                                                                                                                                        |
-| `make test-a11y`          | Playwright + axe-core WCAG 2.2 AA scan of the built site, plus an advisory AAA pass that logs but never fails (`playwright.a11y.config.ts`)                                                                                                                                      |
-| `make test-a11y-manual`   | Local-only Playwright suite encoding the WCAG checks axe can't express — reflow at 320 CSS px (1.4.10), resize-text at 200% (1.4.4), focus-not-obscured (2.4.11). Driven by `playwright.a11y-manual.config.ts`. Not gated in CI; run before launches and after big UI overhauls. |
-| `make test-pa11y`         | pa11y-ci (HTML CodeSniffer) WCAG 2.2 AAA scan against the preview server. Slow; run locally before launches or via the daily `Accessibility (deep)` workflow. Set `PA11Y_ADVISORY=1` to log without failing.                                                                     |
-| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                                                                                                                                                                                                  |
-| `make clean`              | Remove `dist/` and Vite cache                                                                                                                                                                                                                                                    |
+| Command                   | What it does                                                                                                                                                                                                                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `make install`            | `npm ci`                                                                                                                                                                                                                                                                              |
+| `make dev`                | Start Vite dev server                                                                                                                                                                                                                                                                 |
+| `make build`              | Type-check and produce production build                                                                                                                                                                                                                                               |
+| `make preview`            | Preview the production build                                                                                                                                                                                                                                                          |
+| `make lint`               | ESLint + TypeScript type-check                                                                                                                                                                                                                                                        |
+| `make typecheck`          | `tsc -b --noEmit` only                                                                                                                                                                                                                                                                |
+| `make fmt`                | Prettier rewrite in place                                                                                                                                                                                                                                                             |
+| `make fmt-check`          | Prettier check without writing                                                                                                                                                                                                                                                        |
+| `make validate`           | Assemble `src/data/cv.json` + `src/data/cv/*.json` and validate against `schemas/cv.schema.json`                                                                                                                                                                                      |
+| `make local`              | Build with `CV_LOCAL=1` so the gitignored `src/data/cv.local.json` override is merged in                                                                                                                                                                                              |
+| `make test`               | Vitest suite — schema roundtrip, `load-cv` deep-merge, `utils/date`                                                                                                                                                                                                                   |
+| `make test-coverage`      | Vitest with v8 coverage                                                                                                                                                                                                                                                               |
+| `make test-visual`        | Playwright visual regression vs. baselines in `tests/visual/__screenshots__/`                                                                                                                                                                                                         |
+| `make test-visual-update` | Re-record visual baselines after an intentional UI change                                                                                                                                                                                                                             |
+| `make test-a11y`          | Playwright + axe-core WCAG 2.2 AA scan of the built site, plus an advisory AAA pass that logs but never fails (`playwright.a11y.config.ts`)                                                                                                                                           |
+| `make test-a11y-manual`   | Local-only Playwright suite encoding the WCAG checks axe can't express — reflow at 320 CSS px (1.4.10), resize-text at 200% (1.4.4), focus-not-obscured (2.4.11). Driven by `playwright.a11y-manual.config.ts`. Not gated in CI; run before launches and after big UI overhauls.      |
+| `make test-pa11y`         | pa11y-ci (HTML CodeSniffer) WCAG 2.2 AAA scan against the preview server. Slow; run locally before launches or via the daily `Accessibility (deep)` workflow. Set `PA11Y_ADVISORY=1` to log without failing.                                                                          |
+| `make lighthouse`         | `lhci autorun` against `dist/`; budgets in `.lighthouserc.json`                                                                                                                                                                                                                       |
+| `make check-seo`          | Walks every user-facing HTML file under `dist/` and asserts the §11.3.10 structural SEO invariants (per-route `<title>` + meta description + canonical, single `<h1>`, heading hierarchy, og:image resolves, sitemap completeness, robots/llms.txt presence). Run after `make build`. |
+| `make clean`              | Remove `dist/` and Vite cache                                                                                                                                                                                                                                                         |
 
 CI is split into independent workflows. The per-PR ones each carry a
 one-word status badge and run on every push and pull request; the
@@ -64,6 +65,11 @@ scheduled ones run on cron and are advisory:
   with `PA11Y_ADVISORY=1`).
 - **Lighthouse** (`.github/workflows/lighthouse.yml`) — `make build`,
   then `make lighthouse` to assert Web-Vitals + category-score budgets.
+- **SEO** (`.github/workflows/seo.yml`) — `make build`, then
+  `make check-seo` (Node script under `scripts/check-seo.mjs`) to
+  enforce the §11.3.10 structural SEO invariants per page in `dist/`.
+  Fails on any violation; emits `::error::` annotations on the
+  offending file.
 - **Dependabot** (`.github/workflows/dependabot.yml`) — fails when any
   Dependabot PR is open so the README badge turns red until the queue is
   cleared. Re-runs hourly via cron and on PR open/close events.
@@ -288,15 +294,15 @@ The repo ships Claude skills under `.agent/skills/` (with
 `.claude/skills` symlinked to it — `OSS_SPEC.md` §21.2). Each skill is
 self-describing via its frontmatter; Claude lists them automatically.
 The high-level shape: `update-*` skills (`update-cv`,
-`update-company-descriptions`, `update-summary`, `update-readme`)
-mutate drift-prone artifacts; `sync-*` skills (`sync-design`,
-`sync-cross-browser`, `sync-oss-spec`) audit and propose patches;
-`debug-visual` and `verify-wcag` handle their named workflows;
-`maintenance` is the umbrella that routes through every `update-*`
-and `sync-*` in order. `sync-oss-spec` in particular is the residual-
-drift sweep against `OSS_SPEC.md` itself — it runs the upstream
-nonbinary validator and fixes whatever structural conformance gaps
-the per-artifact skills did not touch (`OSS_SPEC.md` §21.5).
+`update-company-descriptions`, `update-summary`, `update-readme`,
+`update-docs`) mutate drift-prone artifacts; `sync-*` skills
+(`sync-design`, `sync-cross-browser`, `sync-oss-spec`) audit and
+propose patches; `debug-visual` and `verify-wcag` handle their named
+workflows; `maintenance` is the umbrella that routes through every
+`update-*` and `sync-*` in order. `sync-oss-spec` in particular is the
+residual-drift sweep against `OSS_SPEC.md` itself — it runs the
+upstream nonbinary validator and fixes whatever structural conformance
+gaps the per-artifact skills did not touch (`OSS_SPEC.md` §21.5).
 
 Invoke `maintenance` when you've landed a batch of changes and want a
 single pass that brings everything back in sync. Invoke a specific
@@ -313,9 +319,25 @@ the deployed site always reflects the latest released version.
 
 ## OSS_SPEC.md conformance
 
-`OSS_SPEC.md` lives at the repo root for reference. The project
-**intentionally uses a proprietary license** (all rights reserved) rather
-than an SPDX-identified open-source license — it is a personal site, not
-an OSS library. This is a known deviation from §2 of the spec. All other
-spec requirements are followed to the extent applicable for a frontend
-static site with no CLI and no LLM calls.
+`OSS_SPEC.md` lives at the repo root for reference. The project follows
+it to the extent applicable for a frontend static site with no CLI and
+no LLM calls. The known, intentional deviations are:
+
+- **§2 proprietary license.** The repo ships a proprietary `LICENSE`
+  (all rights reserved) rather than an SPDX-identified open-source
+  license. It is a personal site, not an OSS library.
+- **§8.4 CHANGELOG.md, §10.3 release pipeline.** The site deploys to
+  GitHub Pages on every push to `main` (see `.github/workflows/pages.yml`)
+  and does not publish versioned artifacts — there are no `v*` tags,
+  no semver bumps, and no package registry to publish to. The §8.4
+  CHANGELOG.md, §10.3 `version-bump.yml`, and §10.3 `release.yml`
+  workflows therefore do not apply. The `sync-oss-spec` skill knows
+  these are expected and lists them under "Known deviation".
+- **§12 CLI requirements.** There is no CLI in this project; the entire
+  §12 checklist is skipped.
+- **§19 logging in non-CLI build tooling.** The `console.log` calls
+  inside `scripts/*.mjs` are diagnostic-only build output, not a
+  user-facing CLI surface; §19's structured-logging mandate does not
+  apply.
+
+All other spec requirements are followed.
