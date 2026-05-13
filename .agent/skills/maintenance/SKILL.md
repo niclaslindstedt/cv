@@ -19,6 +19,7 @@ not exist yet.
 | 1     | `update-readme`      | `README.md`                                               |
 | 2     | `sync-design`        | `src/styles/` + `src/components/` ↔ `docs/DESIGN.md`      |
 | 3     | `sync-cross-browser` | `src/styles/` cross-browser parity (Safari is the master) |
+| 4     | `sync-oss-spec`      | Whole repo ↔ `OSS_SPEC.md` (final residual-drift sweep)   |
 
 Add a row every time a new `update-*` or `sync-*` skill is added —
 the registry is the only source of truth for which sync skills exist.
@@ -26,9 +27,12 @@ the registry is the only source of truth for which sync skills exist.
 Run order matters: `update-readme` first so any upstream documentation
 moves are reconciled before downstream skills read them; `sync-design`
 runs after so it can react to documentation drift exposed by the
-README sweep; `sync-cross-browser` runs last so any property-level
+README sweep; `sync-cross-browser` runs next so any property-level
 patches it applies sit on top of a design-conformant tree (it never
-retunes design tokens, only adds missing prefixes and standard pairs).
+retunes design tokens, only adds missing prefixes and standard pairs);
+`sync-oss-spec` runs last as the residual-drift sweep that catches
+any structural conformance gaps the per-artifact skills did not
+touch (per `OSS_SPEC.md` §21.5).
 
 ## Tracking mechanism
 

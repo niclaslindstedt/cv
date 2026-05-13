@@ -290,9 +290,13 @@ self-describing via its frontmatter; Claude lists them automatically.
 The high-level shape: `update-*` skills (`update-cv`,
 `update-company-descriptions`, `update-summary`, `update-readme`)
 mutate drift-prone artifacts; `sync-*` skills (`sync-design`,
-`sync-cross-browser`) audit and propose patches; `debug-visual` and
-`verify-wcag` handle their named workflows; `maintenance` is the
-umbrella that routes through every `update-*` and `sync-*` in order.
+`sync-cross-browser`, `sync-oss-spec`) audit and propose patches;
+`debug-visual` and `verify-wcag` handle their named workflows;
+`maintenance` is the umbrella that routes through every `update-*`
+and `sync-*` in order. `sync-oss-spec` in particular is the residual-
+drift sweep against `OSS_SPEC.md` itself — it runs the upstream
+nonbinary validator and fixes whatever structural conformance gaps
+the per-artifact skills did not touch (`OSS_SPEC.md` §21.5).
 
 Invoke `maintenance` when you've landed a batch of changes and want a
 single pass that brings everything back in sync. Invoke a specific
