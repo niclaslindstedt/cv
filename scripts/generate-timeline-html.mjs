@@ -29,7 +29,7 @@ const SITE_URL = cv.meta.website.replace(/\/$/, "");
 const TIMELINE_URL = `${SITE_URL}/timeline`;
 const baseTitle = cv.meta.documentTitle.en;
 const TITLE = `Career timeline — ${baseTitle}`;
-const DESCRIPTION = `Interactive career timeline for ${cv.name} — every role, side project, education programme, and course mapped chronologically alongside GitHub commit activity.`;
+const DESCRIPTION = `Interactive career timeline for ${cv.name} — roles, side projects, education, and courses plotted against GitHub commit activity.`;
 
 let html = fs.readFileSync(INDEX_HTML, "utf8");
 

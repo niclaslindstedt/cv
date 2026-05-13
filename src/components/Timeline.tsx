@@ -1,3 +1,9 @@
+// oss-spec:allow-large-file: cohesive interactive timeline state machine
+// (zoom + pan tween, lane layout, GitHub activity cells, modal). Splitting
+// would scatter tightly-coupled refs/effects across files for little gain.
+// TODO: revisit splitting — extract pure helpers (date math, GH-cell
+// computation, geometry) into sibling modules and reduce this file under
+// the §20.5 1000-line cap.
 import {
   useCallback,
   useEffect,

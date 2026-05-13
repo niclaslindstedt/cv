@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && npm run generate:print-html && npm run generate:pdf && npm run generate:resume-json && npm run generate:llms-txt && npm run generate:timeline-html && npm run generate:static-index && npm run generate:sitemap",
+    "build": "tsc -b && vite build && npm run generate:print-html && npm run generate:pdf && npm run generate:resume-json && npm run generate:llms-txt && npm run generate:static-index && npm run generate:timeline-html && npm run generate:sitemap",
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
@@ -44,6 +44,7 @@
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "generate:resume-json": "node scripts/generate-resume-json.mjs",
     "generate:llms-txt": "node scripts/generate-llms-txt.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
     "generate:search-index": "node scripts/generate-search-index.mjs",
     "generate:data": "node scripts/generate-github-activity.mjs && node scripts/generate-project-stats.mjs && node scripts/generate-timeline.mjs && node scripts/generate-print.mjs && node scripts/generate-search-index.mjs",
     "ensure:data": "node scripts/ensure-generated-data.mjs",

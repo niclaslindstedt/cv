@@ -3,6 +3,7 @@
 [![CI](https://github.com/niclaslindstedt/cv/actions/workflows/ci.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/ci.yml)
 [![Visual](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/visual.yml)
 [![Accessibility](https://github.com/niclaslindstedt/cv/actions/workflows/a11y.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/a11y.yml)
+[![SEO](https://github.com/niclaslindstedt/cv/actions/workflows/seo.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/seo.yml)
 [![Lighthouse](https://github.com/niclaslindstedt/cv/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/lighthouse.yml)
 [![Pages](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/pages.yml)
 [![Dependabot](https://github.com/niclaslindstedt/cv/actions/workflows/dependabot.yml/badge.svg)](https://github.com/niclaslindstedt/cv/actions/workflows/dependabot.yml)

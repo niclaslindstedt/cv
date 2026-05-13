@@ -163,6 +163,7 @@ function buildHeadInjection(goatcounterEndpoint: string | undefined): string {
     `<meta property="og:image" content="${attr(OG_IMAGE_URL)}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image:alt" content="${attr(`${TITLE_EN} — social-share card`)}" />`,
     `<meta property="og:locale" content="${attr(seo.locale)}" />`,
     `<meta property="og:locale:alternate" content="${attr(seo.alternateLocale)}" />`,
     `<meta property="profile:first_name" content="${attr(firstName)}" />`,
@@ -171,6 +172,7 @@ function buildHeadInjection(goatcounterEndpoint: string | undefined): string {
     `<meta name="twitter:title" content="${attr(TITLE_EN)}" />`,
     `<meta name="twitter:description" content="${attr(DESCRIPTION_EN)}" />`,
     `<meta name="twitter:image" content="${attr(OG_IMAGE_URL)}" />`,
+    `<meta name="twitter:image:alt" content="${attr(`${TITLE_EN} — social-share card`)}" />`,
     `<script type="application/ld+json">${buildJsonLd()}</script>`,
   ];
   if (goatcounterEndpoint) {
