@@ -1,18 +1,18 @@
 {
   "enabled": true,
   "username": "niclaslindstedt",
-  "fetchedAt": "2026-05-15T06:31:25.084Z",
+  "fetchedAt": "2026-05-16T06:12:15.653Z",
   "projects": {
     "niclaslindstedt/zag": {
       "owner": "niclaslindstedt",
       "repo": "zag",
       "username": "niclaslindstedt",
-      "headSha": "4a837b468c708dff517cdfa2a06187ad975d0438",
+      "headSha": "5a67559b5ed08a9513d47587c46c289fd44d7257",
       "firstCommitDate": "2026-01-13",
-      "lastCommitDate": "2026-05-10",
-      "totalCommits": 343,
+      "lastCommitDate": "2026-05-15",
+      "totalCommits": 352,
       "commitsByYear": {
-        "2026": 343
+        "2026": 352
       }
     },
     "niclaslindstedt/zig": {
@@ -31,12 +31,12 @@
       "owner": "niclaslindstedt",
       "repo": "zad",
       "username": "niclaslindstedt",
-      "headSha": "80262323a0e07fa1af482806780edff363d941d2",
+      "headSha": "eb39e5cbb1fe4ed17ea468ced347fda2230160d2",
       "firstCommitDate": "2026-04-17",
-      "lastCommitDate": "2026-05-14",
-      "totalCommits": 66,
+      "lastCommitDate": "2026-05-15",
+      "totalCommits": 68,
       "commitsByYear": {
-        "2026": 66
+        "2026": 68
       }
     },
     "niclaslindstedt/ztf": {
@@ -55,12 +55,12 @@
       "owner": "niclaslindstedt",
       "repo": "spotifai",
       "username": "niclaslindstedt",
-      "headSha": "7684bd3aa363a483a657a1c714fb13d618a3ef0b",
+      "headSha": "7e205cb9ba4304ba73d040f57ed3a80b8fac42ee",
       "firstCommitDate": "2026-05-07",
-      "lastCommitDate": "2026-05-14",
-      "totalCommits": 50,
+      "lastCommitDate": "2026-05-15",
+      "totalCommits": 52,
       "commitsByYear": {
-        "2026": 50
+        "2026": 52
       }
     },
     "niclaslindstedt/oss-spec": {
@@ -103,12 +103,12 @@
       "owner": "niclaslindstedt",
       "repo": "juris",
       "username": "niclaslindstedt",
-      "headSha": "e0f349967dcfbef9a15367e5f1398a0b313cdeb3",
+      "headSha": "53dea8d84707db5c93d46a54abbe337634448b65",
       "firstCommitDate": "2026-04-05",
-      "lastCommitDate": "2026-05-14",
-      "totalCommits": 84,
+      "lastCommitDate": "2026-05-15",
+      "totalCommits": 86,
       "commitsByYear": {
-        "2026": 84
+        "2026": 86
       }
     },
     "niclaslindstedt/swarm-cli": {
