@@ -72,7 +72,9 @@ scheduled ones run on cron and are advisory:
   offending file.
 - **Dependabot** (`.github/workflows/dependabot.yml`) — fails when any
   Dependabot PR is open so the README badge turns red until the queue is
-  cleared. Re-runs hourly via cron and on PR open/close events.
+  cleared. Re-runs hourly via cron and on every push to `main`; does not
+  run on individual pull requests so it never adds a failing check to
+  unrelated PRs.
 
 Deployment runs separately in **Pages** (`.github/workflows/pages.yml`)
 on every push to `main`.
