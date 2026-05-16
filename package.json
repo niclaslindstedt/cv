@@ -81,7 +81,7 @@
     "pa11y-ci": "^4.1.0",
     "pdf-lib": "^1.17.1",
     "prettier": "^3.8.3",
-    "puppeteer": "^24.42.0",
+    "puppeteer": "^24.43.1",
     "satori": "^0.26.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.2",
