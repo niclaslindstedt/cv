@@ -1,18 +1,18 @@
 {
   "enabled": true,
   "username": "niclaslindstedt",
-  "fetchedAt": "2026-05-16T06:12:15.653Z",
+  "fetchedAt": "2026-05-17T06:28:43.992Z",
   "projects": {
     "niclaslindstedt/zag": {
       "owner": "niclaslindstedt",
       "repo": "zag",
       "username": "niclaslindstedt",
-      "headSha": "5a67559b5ed08a9513d47587c46c289fd44d7257",
+      "headSha": "54c70b93c7942b247acb98f8988e198aa44e2904",
       "firstCommitDate": "2026-01-13",
-      "lastCommitDate": "2026-05-15",
-      "totalCommits": 352,
+      "lastCommitDate": "2026-05-16",
+      "totalCommits": 353,
       "commitsByYear": {
-        "2026": 352
+        "2026": 353
       }
     },
     "niclaslindstedt/zig": {
@@ -31,12 +31,12 @@
       "owner": "niclaslindstedt",
       "repo": "zad",
       "username": "niclaslindstedt",
-      "headSha": "eb39e5cbb1fe4ed17ea468ced347fda2230160d2",
+      "headSha": "cde0948ef779427c8b537e85756425cd44b80a0d",
       "firstCommitDate": "2026-04-17",
-      "lastCommitDate": "2026-05-15",
-      "totalCommits": 68,
+      "lastCommitDate": "2026-05-16",
+      "totalCommits": 70,
       "commitsByYear": {
-        "2026": 68
+        "2026": 70
       }
     },
     "niclaslindstedt/ztf": {
@@ -55,12 +55,12 @@
       "owner": "niclaslindstedt",
       "repo": "spotifai",
       "username": "niclaslindstedt",
-      "headSha": "7e205cb9ba4304ba73d040f57ed3a80b8fac42ee",
+      "headSha": "3ab6086bfde100417c05e7c980eb7dc0b097aa0b",
       "firstCommitDate": "2026-05-07",
-      "lastCommitDate": "2026-05-15",
-      "totalCommits": 52,
+      "lastCommitDate": "2026-05-16",
+      "totalCommits": 53,
       "commitsByYear": {
-        "2026": 52
+        "2026": 53
       }
     },
     "niclaslindstedt/oss-spec": {
@@ -91,12 +91,12 @@
       "owner": "niclaslindstedt",
       "repo": "cv",
       "username": "niclaslindstedt",
-      "headSha": "846ef7c814bf5b2f8661e151295d0d525e339159",
+      "headSha": "1c98b0c6888502adba65eeb77bc07b8ef2fc5952",
       "firstCommitDate": "2026-04-20",
-      "lastCommitDate": "2026-05-13",
-      "totalCommits": 440,
+      "lastCommitDate": "2026-05-16",
+      "totalCommits": 442,
       "commitsByYear": {
-        "2026": 440
+        "2026": 442
       }
     },
     "niclaslindstedt/juris": {
