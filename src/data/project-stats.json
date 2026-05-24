@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "username": "niclaslindstedt",
-  "fetchedAt": "2026-05-23T06:20:56.092Z",
+  "fetchedAt": "2026-05-24T06:31:35.489Z",
   "projects": {
     "niclaslindstedt/zag": {
       "owner": "niclaslindstedt",
@@ -67,12 +67,12 @@
       "owner": "niclaslindstedt",
       "repo": "oss-spec",
       "username": "niclaslindstedt",
-      "headSha": "200c76cb988e8c7df3fd5d620dc3befd3eace38e",
+      "headSha": "8e36caa2668834689df9afd8ba77d8236f7ce020",
       "firstCommitDate": "2026-04-11",
-      "lastCommitDate": "2026-05-12",
-      "totalCommits": 49,
+      "lastCommitDate": "2026-05-23",
+      "totalCommits": 50,
       "commitsByYear": {
-        "2026": 49
+        "2026": 50
       }
     },
     "niclaslindstedt/blog": {
