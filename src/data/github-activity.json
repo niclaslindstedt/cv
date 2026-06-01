@@ -2,7 +2,7 @@
   "enabled": true,
   "username": "niclaslindstedt",
   "profileUrl": "https://www.github.com/niclaslindstedt",
-  "fetchedAt": "2026-05-31T06:41:59.523Z",
+  "fetchedAt": "2026-06-01T07:00:06.110Z",
   "maxDailyCommits": 148,
   "years": [
     {
@@ -5666,9 +5666,9 @@
     },
     {
       "year": 2026,
-      "totalCommits": 5988,
+      "totalCommits": 6027,
       "busiestMonth": 5,
-      "busiestMonthCount": 2057,
+      "busiestMonthCount": 2096,
       "busiestWeekStart": "2026-05-24",
       "busiestWeekCount": 720,
       "busiestDay": "2026-05-24",
@@ -5824,7 +5824,7 @@
         135,
         101,
         46,
-        2,
+        41,
         0,
         0,
         0,
