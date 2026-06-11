@@ -31,5 +31,21 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Provide Chrome for puppeteer
+        # `make build` bakes the PDF via puppeteer (generate-pdf.mjs), but the
+        # runner image ships a broken ~/.cache/puppeteer (version folder
+        # without the executable) and `npx puppeteer browsers install chrome`
+        # exits 0 without installing anything. Prefer the image's preinstalled
+        # Chrome; fall back to a clean puppeteer download. The --version call
+        # fails the job loudly if neither path yields a working binary.
+        run: |
+          BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium-browser || true)"
+          if [ -z "$BIN" ] || ! "$BIN" --version; then
+            rm -rf "$HOME/.cache/puppeteer/chrome"
+            npx puppeteer browsers install chrome
+            BIN="$(node -e 'process.stdout.write(require("puppeteer").executablePath())')"
+          fi
+          "$BIN" --version
+          echo "PUPPETEER_EXECUTABLE_PATH=$BIN" >> "$GITHUB_ENV"
       - run: make build
       - run: make check-seo
