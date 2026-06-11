@@ -18,15 +18,22 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - name: Install puppeteer Chrome
-        # The runner image ships a partial ~/.cache/puppeteer (the version
-        # folder exists without the chrome executable), which makes both the
-        # `npm ci` postinstall download and a plain install skip or fail.
-        # Clear it and install the pinned Chrome that `make build` needs to
-        # bake the PDF (generate-pdf.mjs).
+      - name: Provide Chrome for puppeteer
+        # `make build` bakes the PDF via puppeteer (generate-pdf.mjs), but the
+        # runner image ships a broken ~/.cache/puppeteer (version folder
+        # without the executable) and `npx puppeteer browsers install chrome`
+        # exits 0 without installing anything. Prefer the image's preinstalled
+        # Chrome; fall back to a clean puppeteer download. The --version call
+        # fails the job loudly if neither path yields a working binary.
         run: |
-          rm -rf "$HOME/.cache/puppeteer/chrome"
-          npx puppeteer browsers install chrome
+          BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium-browser || true)"
+          if [ -z "$BIN" ] || ! "$BIN" --version; then
+            rm -rf "$HOME/.cache/puppeteer/chrome"
+            npx puppeteer browsers install chrome
+            BIN="$(node -e 'process.stdout.write(require("puppeteer").executablePath())')"
+          fi
+          "$BIN" --version
+          echo "PUPPETEER_EXECUTABLE_PATH=$BIN" >> "$GITHUB_ENV"
       # Build without GitHub tokens so generate-github-activity and
       # generate-project-stats fall back to their committed `enabled: false`
       # caches. With tokens present they refetch live data, which makes the
