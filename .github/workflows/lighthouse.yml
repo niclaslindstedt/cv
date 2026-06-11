@@ -21,6 +21,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PROJECT_STATS_TOKEN: ${{ secrets.PROJECT_STATS_TOKEN }}
+      - name: Install puppeteer Chrome
+        # `npm ci` no longer reliably leaves puppeteer's pinned Chrome in the
+        # runner cache; `make build` needs it to bake the PDF (generate-pdf.mjs).
+        run: npx puppeteer browsers install chrome
       - run: make build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

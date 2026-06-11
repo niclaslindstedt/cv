@@ -18,6 +18,10 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Install puppeteer Chrome
+        # `npm ci` no longer reliably leaves puppeteer's pinned Chrome in the
+        # runner cache; `make build` needs it to bake the PDF (generate-pdf.mjs).
+        run: npx puppeteer browsers install chrome
       # Build without GitHub tokens so generate-github-activity and
       # generate-project-stats fall back to their committed `enabled: false`
       # caches. With tokens present they refetch live data, which makes the

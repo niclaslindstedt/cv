@@ -36,6 +36,10 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Install puppeteer Chrome
+        # `npm ci` no longer reliably leaves puppeteer's pinned Chrome in the
+        # runner cache; `make build` needs it to bake the PDF (generate-pdf.mjs).
+        run: npx puppeteer browsers install chrome
       - run: make fmt-check
       - run: make validate
       - run: make lint
