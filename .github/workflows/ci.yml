@@ -37,9 +37,14 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Install puppeteer Chrome
-        # `npm ci` no longer reliably leaves puppeteer's pinned Chrome in the
-        # runner cache; `make build` needs it to bake the PDF (generate-pdf.mjs).
-        run: npx puppeteer browsers install chrome
+        # The runner image ships a partial ~/.cache/puppeteer (the version
+        # folder exists without the chrome executable), which makes both the
+        # `npm ci` postinstall download and a plain install skip or fail.
+        # Clear it and install the pinned Chrome that `make build` needs to
+        # bake the PDF (generate-pdf.mjs).
+        run: |
+          rm -rf "$HOME/.cache/puppeteer/chrome"
+          npx puppeteer browsers install chrome
       - run: make fmt-check
       - run: make validate
       - run: make lint
