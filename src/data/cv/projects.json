@@ -1,5 +1,36 @@
 [
   {
+    "name": "budget",
+    "tagline": {
+      "en": "A local-first budget PWA — no backend, encrypted, syncs via Dropbox or Google Drive.",
+      "sv": "En local-first budget-PWA — ingen backend, krypterad, synkar via Dropbox eller Google Drive."
+    },
+    "description": {
+      "en": "A local-first budget app with no backend: data lives on the device, encrypted at rest with the account password via the Web Crypto API. Runs as an installable PWA on phone and desktop and syncs through pluggable storage backends — browser storage, a local folder, Dropbox, or Google Drive over OAuth PKCE — with conflict resolution and timestamped cloud backups. Developed entirely on a phone with Claude Code, leaning heavily on agent skills; GitHub Actions deploys every change to GitHub Pages.",
+      "sv": "En local-first budgetapp utan backend: datan ligger på enheten, krypterad med kontolösenordet via Web Crypto API. Körs som en installerbar PWA på mobil och desktop och synkar genom utbytbara lagringsbackends — webbläsarlagring, en lokal mapp, Dropbox eller Google Drive över OAuth PKCE — med konflikthantering och tidsstämplade backuper i molnet. Utvecklad helt på mobilen med Claude Code, med tungt stöd av agent skills; GitHub Actions driftsätter varje ändring till GitHub Pages."
+    },
+    "printDescription": {
+      "en": "Local-first budget app with no backend: an installable PWA for phone and desktop that encrypts data with the account password and syncs via Dropbox, Google Drive, or a local folder. Built entirely on a phone with Claude Code and agent skills; deployed with GitHub Actions.",
+      "sv": "Local-first budgetapp utan backend: en installerbar PWA för mobil och desktop som krypterar datan med kontolösenordet och synkar via Dropbox, Google Drive eller en lokal mapp. Byggd helt på mobilen med Claude Code och agent skills; driftsätts med GitHub Actions."
+    },
+    "stack": ["TypeScript", "React", "GitHub actions"],
+    "skills": ["Claude Code", "Agent skills"],
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "budget"
+      }
+    ],
+    "openSource": true,
+    "homepage": "https://budget.niclaslindstedt.se",
+    "aliases": [
+      "budget app",
+      "personal finance",
+      "local-first budget",
+      "pwa budget"
+    ]
+  },
+  {
     "name": "zag",
     "tagline": {
       "en": "A unified CLI and SDK for AI coding agents — change providers with a flag.",
@@ -189,37 +220,6 @@
     "openSource": true,
     "cratesIo": "oss-spec",
     "aliases": ["open source spec", "oss specification", "ossspec"]
-  },
-  {
-    "name": "budget",
-    "tagline": {
-      "en": "A local-first budget PWA — no backend, encrypted, syncs via Dropbox or Google Drive.",
-      "sv": "En local-first budget-PWA — ingen backend, krypterad, synkar via Dropbox eller Google Drive."
-    },
-    "description": {
-      "en": "A local-first budget app with no backend: data lives on the device, encrypted at rest with the account password via the Web Crypto API. Runs as an installable PWA on phone and desktop and syncs through pluggable storage backends — browser storage, a local folder, Dropbox, or Google Drive over OAuth PKCE — with conflict resolution and timestamped cloud backups. Developed entirely on a phone with Claude Code, leaning heavily on agent skills; GitHub Actions deploys every change to GitHub Pages.",
-      "sv": "En local-first budgetapp utan backend: datan ligger på enheten, krypterad med kontolösenordet via Web Crypto API. Körs som en installerbar PWA på mobil och desktop och synkar genom utbytbara lagringsbackends — webbläsarlagring, en lokal mapp, Dropbox eller Google Drive över OAuth PKCE — med konflikthantering och tidsstämplade backuper i molnet. Utvecklad helt på mobilen med Claude Code, med tungt stöd av agent skills; GitHub Actions driftsätter varje ändring till GitHub Pages."
-    },
-    "printDescription": {
-      "en": "Local-first budget app with no backend: an installable PWA for phone and desktop that encrypts data with the account password and syncs via Dropbox, Google Drive, or a local folder. Built entirely on a phone with Claude Code and agent skills; deployed with GitHub Actions.",
-      "sv": "Local-first budgetapp utan backend: en installerbar PWA för mobil och desktop som krypterar datan med kontolösenordet och synkar via Dropbox, Google Drive eller en lokal mapp. Byggd helt på mobilen med Claude Code och agent skills; driftsätts med GitHub Actions."
-    },
-    "stack": ["TypeScript", "React", "GitHub actions"],
-    "skills": ["Claude Code", "Agent skills", "Integrations", "Cybersecurity"],
-    "github": [
-      {
-        "owner": "niclaslindstedt",
-        "repo": "budget"
-      }
-    ],
-    "openSource": true,
-    "homepage": "https://budget.niclaslindstedt.se",
-    "aliases": [
-      "budget app",
-      "personal finance",
-      "local-first budget",
-      "pwa budget"
-    ]
   },
   {
     "name": "blog",
