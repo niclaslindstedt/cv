@@ -86,6 +86,7 @@ export function buildSkillUsageMap(
   };
 
   for (const project of cv.projects) {
+    if (project.timelineOnly) continue;
     for (const tag of uniq(usedStackNames(project.stack), project.skills)) {
       push(tag, {
         kind: "project",
@@ -240,6 +241,7 @@ export function buildUnusedStackUsageMap(
       .map((e) => e.name);
 
   for (const project of cv.projects) {
+    if (project.timelineOnly) continue;
     for (const name of unusedNames(project.stack)) {
       push(name, {
         kind: "project",
@@ -300,6 +302,7 @@ export function buildUnusedStackOnlySet(cv: CV): Set<string> {
   };
 
   for (const project of cv.projects) {
+    if (project.timelineOnly) continue;
     recordStack(project.stack);
     addUsed(project.skills);
   }

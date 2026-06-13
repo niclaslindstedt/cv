@@ -303,6 +303,10 @@
           "pattern": "^[A-Za-z][A-Za-z0-9_.-]*$",
           "description": "NuGet package id. When set, the project modal renders a 'View on NuGet' link to https://www.nuget.org/packages/{name}/."
         },
+        "timelineOnly": {
+          "type": "boolean",
+          "description": "When true, the project is demoted to the timeline only: it appears on the 'Side projects' track of the timeline (still requires github repos with commit stats) but is hidden from the homepage Projects section, the printed/PDF CV, the on-site search index, and skill-usage references. Use for side work worth showing on the timeline that doesn't warrant a card. Defaults to false."
+        },
         "aliases": { "$ref": "#/$defs/aliasList" }
       }
     },
