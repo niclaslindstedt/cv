@@ -152,8 +152,10 @@ function buildRecords(cv) {
     });
   });
 
-  // Projects.
+  // Projects. timelineOnly projects are demoted to the timeline track and are
+  // not searchable — they have no card or modal to open from a result.
   cv.projects.forEach((project) => {
+    if (project.timelineOnly) return;
     emit({
       id: `project-${project.name}`,
       kind: "project",

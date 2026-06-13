@@ -349,7 +349,9 @@ function buildPrintData(cv, projectStats) {
       languages: cv.sections.languages,
     },
     experience: cv.experience.map((e) => buildExperience(e, companies)),
-    projects: cv.projects.map((p) => buildProject(p, projectStats)),
+    projects: cv.projects
+      .filter((p) => !p.timelineOnly)
+      .map((p) => buildProject(p, projectStats)),
     education: cv.education.map(buildEducation),
     courses: cv.courses.map(buildCourse),
     skills: cv.skills.map(buildSkillGroup),

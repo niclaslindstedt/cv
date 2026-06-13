@@ -72,6 +72,12 @@ export function App() {
     () => new Map<string, Project>(cv.projects.map((p) => [p.name, p])),
     [],
   );
+  // Projects flagged `timelineOnly` are demoted to the timeline's Side
+  // projects track and never get a card in the Projects section.
+  const visibleProjects = useMemo(
+    () => cv.projects.filter((p) => !p.timelineOnly),
+    [],
+  );
   const focusByAreaEn = useMemo(
     () => new Map<string, FocusArea>(cv.focus.map((f) => [f.area.en, f])),
     [],
@@ -289,7 +295,7 @@ export function App() {
           />
           <Projects
             title={t(cv.sections.projects)}
-            projects={cv.projects}
+            projects={visibleProjects}
             onSkillClick={setSelectedSkill}
             onProjectClick={setSelectedProject}
           />

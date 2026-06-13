@@ -279,6 +279,14 @@ true` renders the link as a pill (used for the blog link). The
   goes stale on its own.
 - **Remove** — delete by `name`. Also check `focus[]` and the `ai`
   skill group for stale references to the project's domain.
+- **`timelineOnly`** (optional boolean, default false) — set `true`
+  to demote a project to the timeline only. It still appears on the
+  "Side projects" track of the timeline (so it needs `github` repos
+  with commit stats), but is hidden from the homepage Projects
+  section, the printed/PDF CV, the on-site search index, and
+  skill-usage references. Use it for side work worth showing on the
+  timeline that doesn't warrant a card. A `timelineOnly` project does
+  not need a `printDescription` (it never prints).
 
 ### `companies[]`
 

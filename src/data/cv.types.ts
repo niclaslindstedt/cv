@@ -71,6 +71,7 @@ export type Project = {
   pypi?: string;
   npm?: string;
   nuget?: string;
+  timelineOnly?: boolean;
   aliases?: string[];
 };
 
