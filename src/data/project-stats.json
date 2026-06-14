@@ -1,18 +1,18 @@
 {
   "enabled": true,
   "username": "niclaslindstedt",
-  "fetchedAt": "2026-06-13T06:40:55.863Z",
+  "fetchedAt": "2026-06-14T06:55:26.689Z",
   "projects": {
     "niclaslindstedt/budget": {
       "owner": "niclaslindstedt",
       "repo": "budget",
       "username": "niclaslindstedt",
-      "headSha": "56d497340955c0ce4bcb617fbca4406d23550657",
+      "headSha": "cec07288f709d671e00e1a018d7fc473e7cb3f8b",
       "firstCommitDate": "2026-05-16",
-      "lastCommitDate": "2026-06-12",
-      "totalCommits": 1003,
+      "lastCommitDate": "2026-06-13",
+      "totalCommits": 1016,
       "commitsByYear": {
-        "2026": 1003
+        "2026": 1016
       }
     },
     "niclaslindstedt/zag": {
@@ -79,12 +79,12 @@
       "owner": "niclaslindstedt",
       "repo": "oss-spec",
       "username": "niclaslindstedt",
-      "headSha": "8e36caa2668834689df9afd8ba77d8236f7ce020",
+      "headSha": "8307955868f5b3a6ca4978c0375265d2cd29cf5f",
       "firstCommitDate": "2026-04-11",
-      "lastCommitDate": "2026-05-23",
-      "totalCommits": 50,
+      "lastCommitDate": "2026-06-13",
+      "totalCommits": 51,
       "commitsByYear": {
-        "2026": 50
+        "2026": 51
       }
     },
     "niclaslindstedt/blog": {
@@ -103,12 +103,12 @@
       "owner": "niclaslindstedt",
       "repo": "cv",
       "username": "niclaslindstedt",
-      "headSha": "5684d8a6e48629b8c7d151938a39f295d3a55f3d",
+      "headSha": "4c923f9f5de028f3c7d8b76f6304f8ce735a1439",
       "firstCommitDate": "2026-04-20",
-      "lastCommitDate": "2026-06-12",
-      "totalCommits": 444,
+      "lastCommitDate": "2026-06-13",
+      "totalCommits": 445,
       "commitsByYear": {
-        "2026": 444
+        "2026": 445
       }
     },
     "niclaslindstedt/juris": {
