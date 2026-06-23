@@ -12,7 +12,7 @@ jobs:
   seo:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Restore data-cache JSONs
         # Mirrors ci.yml — keep the data-cache prefetch in sync. Building the
         # site without these JSONs would fall back to GraphQL calls, which is
