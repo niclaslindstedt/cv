@@ -40,14 +40,23 @@ export function Projects({
   const decoratedProjects = useMemo(() => {
     const now = nowMs();
     return [...projects]
-      .map((project) => {
+      .map((project, index) => {
         const stats = aggregateProjectStats(project.github, projectStats);
         const lastMs = lastCommitMs(stats);
         const isActive =
           Number.isFinite(lastMs) && now - lastMs <= ACTIVE_WINDOW_MS;
-        return { project, stats, lastMs, isActive };
+        return { project, stats, lastMs, isActive, index };
       })
-      .sort((a, b) => b.lastMs - a.lastMs);
+      .sort((a, b) => {
+        // Pinned projects lead the section regardless of commit recency,
+        // keeping their JSON order relative to each other; everything else
+        // falls back to most-recent-commit-first.
+        const aPinned = a.project.pinned === true;
+        const bPinned = b.project.pinned === true;
+        if (aPinned !== bPinned) return aPinned ? -1 : 1;
+        if (aPinned && bPinned) return a.index - b.index;
+        return b.lastMs - a.lastMs;
+      });
   }, [projects]);
   return (
     <Section id="projects" title={title} category="project">
