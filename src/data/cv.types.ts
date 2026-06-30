@@ -72,6 +72,7 @@ export type Project = {
   npm?: string;
   nuget?: string;
   timelineOnly?: boolean;
+  pinned?: boolean;
   aliases?: string[];
 };
 
