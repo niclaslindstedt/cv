@@ -31,6 +31,64 @@
     ]
   },
   {
+    "name": "notes",
+    "tagline": {
+      "en": "A local-first note-taking PWA — installable, offline, no account, no backend.",
+      "sv": "En local-first PWA för anteckningar — installerbar, offline, inget konto, ingen backend."
+    },
+    "description": {
+      "en": "A tiny, fast note-taking app that lives in the browser. It installs to the home screen as a PWA and runs full-screen and offline; notes are stored locally on the device with no account and no backend. Mobile-first by design — the desktop layout is the same UI given more room — and built on the same stack and conventions as checklist.",
+      "sv": "En liten, snabb anteckningsapp som lever i webbläsaren. Den installeras på hemskärmen som en PWA och körs i fullskärm och offline; anteckningarna lagras lokalt på enheten utan konto och utan backend. Mobile-first i grunden — desktop-layouten är samma UI med mer plats — och byggd på samma stack och konventioner som checklist."
+    },
+    "printDescription": {
+      "en": "Local-first note-taking PWA: installable, full-screen, and offline, with notes stored on the device — no account, no backend. Mobile-first, built on the same stack as checklist; deployed to GitHub Pages.",
+      "sv": "Local-first PWA för anteckningar: installerbar, fullskärm och offline, med anteckningar lagrade på enheten — inget konto, ingen backend. Mobile-first, byggd på samma stack som checklist; driftsätts till GitHub Pages."
+    },
+    "stack": ["TypeScript", "React", "GitHub actions"],
+    "skills": ["Claude Code", "Agent skills"],
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "notes"
+      }
+    ],
+    "openSource": true,
+    "homepage": "https://notes.niclaslindstedt.se",
+    "aliases": ["note taking", "notes app", "local-first notes", "pwa notes"]
+  },
+  {
+    "name": "checklist",
+    "tagline": {
+      "en": "A local-first checklist PWA — monospaced, swipe to archive, optional cloud sync.",
+      "sv": "En local-first checklist-PWA — monospace, swipe för att arkivera, valfri cloud sync."
+    },
+    "description": {
+      "en": "A quiet, monospaced checklist app that runs entirely in the browser. Add items and check them off, swipe a row to archive or delete, and copy a list as task-markdown to share it. All data lives on the device by default; optional Google Drive or Dropbox sync uses each provider's app-folder scope so it can only see files it created, with a conflict prompt for edits made on two devices at once. Namespaces keep separate lists in separate folders, any list can be AES-GCM encrypted with a passphrase, and eleven themes ship out of the box. Installable and offline as a PWA.",
+      "sv": "En stillsam, monospace-checklist-app som körs helt i webbläsaren. Lägg till poster och bocka av dem, swipe:a en rad för att arkivera eller ta bort, och kopiera en lista som task-markdown för att dela den. All data ligger på enheten som standard; valfri sync mot Google Drive eller Dropbox använder varje leverantörs app-folder-scope så att den bara ser filer den själv skapat, med en conflict-prompt för ändringar gjorda på två enheter samtidigt. Namespaces håller separata listor i separata mappar, vilken lista som helst kan AES-GCM-krypteras med en lösenfras, och elva teman följer med. Installerbar och offline som en PWA."
+    },
+    "printDescription": {
+      "en": "Local-first checklist PWA with a quiet, monospaced UI: add, check off, swipe to archive or delete, and copy lists as task-markdown. Stores data on the device; optional AES-GCM encryption and per-list Google Drive or Dropbox sync over app-folder scope. Built with React, TypeScript, and Tailwind; deployed to GitHub Pages.",
+      "sv": "Local-first checklist-PWA med ett stillsamt, monospace-gränssnitt: lägg till, bocka av, swipe:a för att arkivera eller ta bort, och kopiera listor som task-markdown. Lagrar data på enheten; valfri AES-GCM-kryptering och per-lista-sync mot Google Drive eller Dropbox över app-folder-scope. Byggd med React, TypeScript och Tailwind; driftsätts till GitHub Pages."
+    },
+    "stack": ["TypeScript", "React", "GitHub actions"],
+    "skills": ["Claude Code", "Agent skills"],
+    "github": [
+      {
+        "owner": "niclaslindstedt",
+        "repo": "checklist"
+      }
+    ],
+    "openSource": true,
+    "homepage": "https://checklist.niclaslindstedt.se",
+    "aliases": [
+      "checklist app",
+      "todo list",
+      "task list",
+      "local-first checklist",
+      "pwa checklist"
+    ]
+  },
+  {
     "name": "zag",
     "tagline": {
       "en": "A unified CLI and SDK for AI coding agents — change providers with a flag.",
