@@ -1,20 +1,8 @@
 {
   "enabled": true,
   "username": "niclaslindstedt",
-  "fetchedAt": "2026-06-30T16:59:05.101Z",
+  "fetchedAt": "2026-07-01T06:48:08.807Z",
   "projects": {
-    "niclaslindstedt/budget": {
-      "owner": "niclaslindstedt",
-      "repo": "budget",
-      "username": "niclaslindstedt",
-      "headSha": "4e95577ef7af5515b5dbf856437abca4ce94e298",
-      "firstCommitDate": "2026-05-16",
-      "lastCommitDate": "2026-06-30",
-      "totalCommits": 1116,
-      "commitsByYear": {
-        "2026": 1116
-      }
-    },
     "niclaslindstedt/notes": {
       "owner": "niclaslindstedt",
       "repo": "notes",
@@ -37,6 +25,18 @@
       "totalCommits": 227,
       "commitsByYear": {
         "2026": 227
+      }
+    },
+    "niclaslindstedt/budget": {
+      "owner": "niclaslindstedt",
+      "repo": "budget",
+      "username": "niclaslindstedt",
+      "headSha": "4e95577ef7af5515b5dbf856437abca4ce94e298",
+      "firstCommitDate": "2026-05-16",
+      "lastCommitDate": "2026-06-30",
+      "totalCommits": 1116,
+      "commitsByYear": {
+        "2026": 1116
       }
     },
     "niclaslindstedt/zag": {
@@ -127,12 +127,12 @@
       "owner": "niclaslindstedt",
       "repo": "cv",
       "username": "niclaslindstedt",
-      "headSha": "01ac2bb0e4ad1b2eb75f3a5dc63c7f2898456ae8",
+      "headSha": "5ba9e98dcf2f9825e4e9dcd8685a4dd9c5a60ecf",
       "firstCommitDate": "2026-04-20",
       "lastCommitDate": "2026-06-30",
-      "totalCommits": 446,
+      "totalCommits": 447,
       "commitsByYear": {
-        "2026": 446
+        "2026": 447
       }
     },
     "niclaslindstedt/juris": {
