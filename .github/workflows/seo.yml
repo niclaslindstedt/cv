@@ -26,7 +26,7 @@ jobs:
             git show origin/data-cache:src/data/project-stats.json \
               > src/data/project-stats.json 2>/dev/null || true
           fi
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm

@@ -41,7 +41,7 @@ jobs:
           else
             echo "data-cache branch not found — proceeding without prefetch."
           fi
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
