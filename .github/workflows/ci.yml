@@ -12,7 +12,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Restore data-cache JSONs
         # See pages.yml for rationale. CI must not call the GraphQL API on
         # every PR push — that's where the rate-limit budget gets burned.
